@@ -20,7 +20,7 @@ def create_engine_mysql(db_user='root', pwd=None, host='localhost', port='3306',
 	if pwd is None:
 		engine_string = u'mysql+pymysql://%s@%s:%s/%s' %(db_user, host, port, db_name)
 	else:
-		engine_string = u''
+		engine_string = u'mysql+pymysql://%s:%s@%s:%s/%s' %(db_user, pwd, host, port, db_name)
 	return create_engine(engine_string)
 
 
