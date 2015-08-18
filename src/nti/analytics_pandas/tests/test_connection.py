@@ -25,6 +25,7 @@ from nti.analytics.database.interfaces import IAnalyticsDB
 from nti.analytics.database.database import AnalyticsDB
 from nti.analytics.database.sessions import get_session_by_id
 from nti.analytics.database.sessions import Sessions
+from nti.analytics_pandas import databases
 
 class TestConnection(unittest.TestCase):
 	def setUp(self):
