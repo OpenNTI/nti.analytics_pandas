@@ -25,7 +25,7 @@ from nti.analytics.database.interfaces import IAnalyticsDB
 from nti.analytics.database.database import AnalyticsDB
 from nti.analytics.database.sessions import get_session_by_id
 from nti.analytics.database.sessions import Sessions
-from nti.analytics_pandas import databases
+
 
 class TestConnection(unittest.TestCase):
 	def setUp(self):
@@ -41,7 +41,13 @@ class TestConnection(unittest.TestCase):
 		result = get_session_by_id(1)
 		assert_that (result.user_id, equal_to(184))
 
-	def test_query_sessions(self):
+	def test_query_count_session(self):
 		result = self.session.query( Sessions ).count()
 		assert_that(result, greater_than(100000))
+
+	def test_query_session(self):
+		query = self.session.query(Sessions).limit(10)
+		columns = Sessions.__table__.columns.keys()
+		assert_that(len(columns), equal_to(6))
+		
 		
