@@ -20,6 +20,8 @@ from hamcrest import less_than_or_equal_to
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 from nti.analytics_pandas.queries.forums import QueryForumsCreated
 from nti.analytics_pandas.queries.forums import QueryForumsCommentsCreated
+from nti.analytics_pandas.queries.forums import QueryForumCommentFavorites
+from nti.analytics_pandas.queries.forums import QueryForumCommentLikes
 
 class TestForums(AnalyticsPandasTestBase):
 	def setUp(self):
@@ -38,3 +40,17 @@ class TestForums(AnalyticsPandasTestBase):
 		qfcc = QueryForumsCommentsCreated(self.session)
 		dataframe = qfcc.filter_by_period_of_time(start_date, end_date)
 		assert_that(len(dataframe.index), equal_to(3164))
+
+	def test_query_forums_comment_favorites_by_period_of_time(self):
+		start_date = u'2015-03-01' 
+		end_date = u'2015-05-31'
+		qfcf = QueryForumCommentFavorites(self.session)
+		dataframe = qfcf.filter_by_period_of_time(start_date,end_date)
+		assert_that(len(dataframe.index), equal_to(0))
+
+	def test_query_forums_comment_likes_by_period_of_time(self):
+		start_date = u'2015-03-01' 
+		end_date = u'2015-05-31'
+		qfcl = QueryForumCommentLikes(self.session)
+		dataframe = qfcl.filter_by_period_of_time(start_date,end_date)
+		assert_that(len(dataframe.index), equal_to(78))
