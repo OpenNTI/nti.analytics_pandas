@@ -23,5 +23,19 @@ class QueryForumsCreated(object):
 		columns = ForumsCreated.__table__.columns.keys()
 		dataframe = orm_dataframe(query, columns)
 		return dataframe
-		
+	
+
+class QueryForumsCommentsCreated(object):
+	def __init__(self, session):
+		self.session = session
+
+	def filter_by_period_of_time(self, start_date=None, end_date = None):
+		fcc = ForumCommentsCreated
+		query = self.session.query(fcc.timestamp, fcc.course_id, fcc.user_id, fcc.topic_id).filter(fcc.timestamp.between(start_date, end_date))
+		columns = ForumCommentsCreated.__table__.columns.keys()
+		dataframe = orm_dataframe(query, columns)
+		return dataframe
+
+
+
 

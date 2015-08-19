@@ -19,14 +19,22 @@ from hamcrest import less_than_or_equal_to
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 from nti.analytics_pandas.queries.forums import QueryForumsCreated
+from nti.analytics_pandas.queries.forums import QueryForumsCommentsCreated
 
 class TestForums(AnalyticsPandasTestBase):
 	def setUp(self):
 		super(TestForums, self).setUp()
 
-	def test_query_filter_by_period_of_time(self):
+	def test_query_forums_created_by_period_of_time(self):
 		start_date = u'2015-03-01' 
 		end_date = u'2015-05-31'
 		qfc = QueryForumsCreated(self.session)
 		dataframe = qfc.filter_by_period_of_time(start_date, end_date)
 		assert_that(len(dataframe.index), equal_to(34))
+
+	def test_query_forums_comments_created_by_period_of_time(self):
+		start_date = u'2015-03-01' 
+		end_date = u'2015-05-31'
+		qfcc = QueryForumsCommentsCreated(self.session)
+		dataframe = qfcc.filter_by_period_of_time(start_date, end_date)
+		assert_that(len(dataframe.index), equal_to(3164))
