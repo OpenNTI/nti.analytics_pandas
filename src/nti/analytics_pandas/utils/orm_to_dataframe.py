@@ -15,5 +15,8 @@ def orm_dataframe(orm_query, columns):
 	takes sqlachemy orm query and a list of its columns and transform it to pandas dataframe
 	"""
 	def create_row(i):
-		return dict([(col, getattr(i, col))for col in columns])
+		dictionary = {}
+		for col in columns:
+			if hasattr(i, col) : dictionary[col] = getattr(i, col)
+		return dictionary
 	return DataFrame([create_row(i) for i in orm_query])
