@@ -33,6 +33,6 @@ class TestConnection(AnalyticsPandasTestBase):
 
 	def test_query_session(self):
 		query = self.session.query(Sessions).limit(10)
-		columns = getattr(Sessions,'__table__').columns.keys()
+		columns = getattr(Sessions, '__table__').columns.keys()
 		assert_that(len(columns), equal_to(6))
 		orm_dataframe(query, columns)
