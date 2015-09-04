@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-.. $Id: notes.py 71540 2015-08-24 16:41:40Z carlos.sanchez $
+.. $Id: enrollments.py 71540 2015-08-24 16:41:40Z carlos.sanchez $
 """
 
 from __future__ import print_function, unicode_literals, absolute_import, division
