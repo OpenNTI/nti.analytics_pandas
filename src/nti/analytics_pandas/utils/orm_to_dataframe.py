@@ -22,4 +22,5 @@ def orm_dataframe(orm_query, columns):
 			if hasattr(i, col) : dictionary[col] = getattr(i, col)
 		return dictionary
 
-	return DataFrame([create_row(i) for i in orm_query])
+	result = DataFrame([create_row(i) for i in orm_query])
+	return result
