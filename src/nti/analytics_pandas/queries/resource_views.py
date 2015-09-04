@@ -26,7 +26,9 @@ class ResourceViewsMixin(object):
 		return table.columns.keys()
 
 class QueryCourseResourceViews(ResourceViewsMixin):
+
 	table = CourseResourceViews
+	
 	def filter_by_period_of_time(self, start_date=None, end_date=None):
 		crv = self.table
 		query = self.session.query( crv.resource_view_id,

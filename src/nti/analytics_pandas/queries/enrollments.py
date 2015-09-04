@@ -29,7 +29,9 @@ class EnrollmentsMixin(object):
 		return table.columns.keys()
 
 class QueryCourseCatalogViews(EnrollmentsMixin):
+
 	table = CourseCatalogViews
+
 	def filter_by_period_of_time(self, start_date=None, end_date=None):
 		ccv = self.table
 		query = self.session.query( ccv.timestamp,
@@ -42,7 +44,9 @@ class QueryCourseCatalogViews(EnrollmentsMixin):
 		return dataframe
 
 class QueryCourseEnrollments(EnrollmentsMixin):
+
 	table = CourseEnrollments
+
 	def filter_by_period_of_time(self, start_date=None, end_date=None):
 		ce = self.table
 		query = self.session.query( ce.timestamp,
@@ -54,7 +58,9 @@ class QueryCourseEnrollments(EnrollmentsMixin):
 		return dataframe
 
 class QueryEnrollmentTypes(EnrollmentsMixin):
+
 	table = EnrollmentTypes
+
 	def get_enrollment_types(self):
 		et = self.table
 		query = self.session.query(et.type_id,
@@ -63,7 +69,9 @@ class QueryEnrollmentTypes(EnrollmentsMixin):
 		return dataframe
 
 class QueryCourseDrops(EnrollmentsMixin):
+
 	table = CourseDrops
+
 	def filter_by_period_of_time(self, start_date=None, end_date=None):
 		cd = self.table
 		query = self.session.query( cd.timestamp,

@@ -26,7 +26,9 @@ class VideosMixin(object):
 		return table.columns.keys()
 
 class QueryVideoEvents(VideosMixin):
+
 	table = VideoEvents
+
 	def filter_by_period_of_time(self, start_date=None, end_date=None):
 		ve = self.table
 		query = self.session.query( ve.video_view_id,
