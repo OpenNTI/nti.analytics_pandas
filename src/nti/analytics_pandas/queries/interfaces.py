@@ -9,45 +9,48 @@ __docformat__ = "restructuredtext en"
 
 from zope import interface
 
-class IQueryTopicsCreated(interface.Interface):
+class IQuery(interface.Interface):
+	pass
+
+class IQueryTopicsCreated(IQuery):
 	"""
 	a utility to query all topics created given a period of time and return the result
 	in a DataFrame
 	"""
 
-class IQueryTopicsLikes(interface.Interface):
+class IQueryTopicsLikes(IQuery):
 	"""
 	query all topics likes given a period of time and return the result in a DataFrame
 	"""
 
-class IQueryTopicsFavorites(interface.Interface):
+class IQueryTopicsFavorites(IQuery):
 	"""
 	query all topics likes given a period of time and store the result in a DataFrame
 	"""
 
-class IQueryTopicsViewed(interface.Interface):
+class IQueryTopicsViewed(IQuery):
 	"""
 	query all topics likes given a period of time and return the result in a DataFrame
 	"""
 
-class IQueryForumsCreated(interface.Interface):
+class IQueryForumsCreated(IQuery):
 	"""
 	query all forums created given a period of time, store query result in a DataFrame
 	"""
 
-class IQueryForumCommentsCreated(interface.Interface):
+class IQueryForumCommentsCreated(IQuery):
 	"""
 	query all forum's comments created given a period of time, store query result in a
 	DataFrame
 	"""
 
-class IQueryForumCommentsLikes(interface.Interface):
+class IQueryForumCommentsLikes(IQuery):
 	"""
 	query all forum's comments likes given a period of time, store query result
 	in a DataFrame
 	"""
 
-class IQueryForumCommentsFavorites(interface.Interface):
+class IQueryForumCommentsFavorites(IQuery):
 	"""
 	query all forum's comments  favorites given a period of time, store query result
 	in a DataFrame
