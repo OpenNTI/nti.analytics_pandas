@@ -16,7 +16,7 @@ class TestVideos(AnalyticsPandasTestBase):
 	def setUp(self):
 		super(TestVideos, self).setUp()
 
-	def test_query_course_catalog_views_by_period_of_time(self):
+	def test_query_video_events_by_period_of_time(self):
 		start_date = u'2015-03-01'
 		end_date = u'2015-05-31'
 		qve = QueryVideoEvents(self.session)
