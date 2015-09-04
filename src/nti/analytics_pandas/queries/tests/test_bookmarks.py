@@ -9,9 +9,10 @@ __docformat__ = "restructuredtext en"
 
 from hamcrest import equal_to
 from hamcrest import assert_that
-from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
 from nti.analytics_pandas.queries.bookmarks import QueryBookmarksCreated
+
+from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
 class TestBookmarks(AnalyticsPandasTestBase):
 	def setUp(self):

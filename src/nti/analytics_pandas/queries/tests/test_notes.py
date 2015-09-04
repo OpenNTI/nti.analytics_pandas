@@ -9,12 +9,13 @@ __docformat__ = "restructuredtext en"
 
 from hamcrest import equal_to
 from hamcrest import assert_that
-from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
-from nti.analytics_pandas.queries.notes import QueryNotesCreated
-from nti.analytics_pandas.queries.notes import QueryNotesViewed
-from nti.analytics_pandas.queries.notes import QueryNoteFavorites
 from nti.analytics_pandas.queries.notes import QueryNoteLikes
+from nti.analytics_pandas.queries.notes import QueryNotesViewed
+from nti.analytics_pandas.queries.notes import QueryNotesCreated
+from nti.analytics_pandas.queries.notes import QueryNoteFavorites
+
+from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
 class TestNotes(AnalyticsPandasTestBase):
 	def setUp(self):

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-.. $Id: resource_views.py 71540 2015-08-24 16:41:40Z carlos.sanchez $
+.. $Id$
 """
 
 from __future__ import print_function, unicode_literals, absolute_import, division
@@ -39,4 +39,3 @@ class QueryCourseResourceViews(ResourceViewsMixin):
 									crv.context_path).filter(crv.timestamp.between(start_date, end_date))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
-

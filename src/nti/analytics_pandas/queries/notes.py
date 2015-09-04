@@ -1,16 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-.. $Id: notes.py 71540 2015-08-24 16:41:40Z carlos.sanchez $
+.. $Id$
 """
 
 from __future__ import print_function, unicode_literals, absolute_import, division
 __docformat__ = "restructuredtext en"
 
-from nti.analytics.database.resource_tags import NotesCreated
-from nti.analytics.database.resource_tags import NotesViewed
-from nti.analytics.database.resource_tags import NoteFavorites
 from nti.analytics.database.resource_tags import NoteLikes
+from nti.analytics.database.resource_tags import NotesViewed
+from nti.analytics.database.resource_tags import NotesCreated
+from nti.analytics.database.resource_tags import NoteFavorites
 
 from nti.common.property import Lazy
 

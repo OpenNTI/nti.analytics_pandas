@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-.. $Id: videos.py 71540 2015-08-24 16:41:40Z carlos.sanchez $
+.. $Id$
 """
 
 from __future__ import print_function, unicode_literals, absolute_import, division
@@ -29,7 +29,7 @@ class QueryVideoEvents(VideosMixin):
 	table = VideoEvents
 	def filter_by_period_of_time(self, start_date=None, end_date=None):
 		ve = self.table
-		query = self.session.query(	ve.video_view_id,
+		query = self.session.query( ve.video_view_id,
 									ve.timestamp,
 									ve.course_id,
 									ve.resource_id,
@@ -44,4 +44,3 @@ class QueryVideoEvents(VideosMixin):
 									ve.play_speed).filter(ve.timestamp.between(start_date, end_date))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
-

@@ -4,13 +4,16 @@
 from __future__ import print_function, unicode_literals, absolute_import, division
 __docformat__ = "restructuredtext en"
 
+# disable: accessing protected members, too many methods
+# pylint: disable=W0212,R0904
+
 from hamcrest import equal_to
 from hamcrest import assert_that
 
-from nti.analytics_pandas.queries.enrollments import QueryCourseCatalogViews;
-from nti.analytics_pandas.queries.enrollments import QueryCourseEnrollments
 from nti.analytics_pandas.queries.enrollments import QueryCourseDrops
 from nti.analytics_pandas.queries.enrollments import QueryEnrollmentTypes
+from nti.analytics_pandas.queries.enrollments import QueryCourseEnrollments
+from nti.analytics_pandas.queries.enrollments import QueryCourseCatalogViews
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
@@ -45,5 +48,3 @@ class TestEnrollments(AnalyticsPandasTestBase):
 		dataframe = qet.get_enrollment_types()
 		assert_that(len(dataframe.index), equal_to(5))
 
-
-	

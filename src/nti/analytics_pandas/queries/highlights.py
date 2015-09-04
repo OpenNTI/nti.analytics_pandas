@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-.. $Id: highlights.py 71540 2015-08-24 16:41:40Z carlos.sanchez $
+.. $Id$
 """
 
 from __future__ import print_function, unicode_literals, absolute_import, division
@@ -32,7 +32,7 @@ class QueryHighlightsCreated(HighlightsMixin):
 	def filter_by_period_of_time(self, start_date=None, end_date=None):
 		hc = self.table
 		query = self.session.query( hc.highlight_id,
-									hc.timestamp, 
+									hc.timestamp,
 									hc.deleted,
 									hc.resource_id,
 									hc.session_id,

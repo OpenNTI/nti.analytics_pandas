@@ -1,16 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-.. $Id: enrollments.py 71540 2015-08-24 16:41:40Z carlos.sanchez $
+.. $Id$
 """
 
 from __future__ import print_function, unicode_literals, absolute_import, division
 __docformat__ = "restructuredtext en"
 
-from nti.analytics.database.enrollments import CourseCatalogViews
-from nti.analytics.database.enrollments import CourseEnrollments
 from nti.analytics.database.enrollments import CourseDrops
 from nti.analytics.database.enrollments import EnrollmentTypes
+from nti.analytics.database.enrollments import CourseEnrollments
+from nti.analytics.database.enrollments import CourseCatalogViews
 
 from nti.common.property import Lazy
 
@@ -57,7 +57,7 @@ class QueryEnrollmentTypes(EnrollmentsMixin):
 	table = EnrollmentTypes
 	def get_enrollment_types(self):
 		et = self.table
-		query = self.session.query(	et.type_id,
+		query = self.session.query(et.type_id,
 									et.type_name)
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
@@ -72,4 +72,3 @@ class QueryCourseDrops(EnrollmentsMixin):
 									cd.user_id).filter(cd.timestamp.between(start_date, end_date))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
-
