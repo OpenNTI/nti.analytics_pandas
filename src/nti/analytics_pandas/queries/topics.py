@@ -12,23 +12,11 @@ from nti.analytics.database.boards import TopicsViewed
 from nti.analytics.database.boards import TopicsCreated
 from nti.analytics.database.boards import TopicFavorites
 
-from nti.common.property import Lazy
+from .mixins import TableQueryMixin
 
 from . import orm_dataframe
 
-class TopicsMixin(object):
-
-	table = None
-
-	def __init__(self, session):
-		self.session = session
-
-	@Lazy
-	def columns(self):
-		table = getattr(self.table, '__table__')
-		return table.columns.keys()
-
-class QueryTopicsCreated(TopicsMixin):
+class QueryTopicsCreated(TableQueryMixin):
 
 	table = TopicsCreated
 
@@ -42,7 +30,7 @@ class QueryTopicsCreated(TopicsMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
-class QueryTopicsViewed(TopicsMixin):
+class QueryTopicsViewed(TableQueryMixin):
 
 	table = TopicsViewed
 
@@ -59,7 +47,7 @@ class QueryTopicsViewed(TopicsMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
-class QueryTopicFavorites(TopicsMixin):
+class QueryTopicFavorites(TableQueryMixin):
 
 	table = TopicFavorites
 
@@ -74,7 +62,7 @@ class QueryTopicFavorites(TopicsMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
-class QueryTopicLikes(TopicsMixin):
+class QueryTopicLikes(TableQueryMixin):
 
 	table = TopicLikes
 

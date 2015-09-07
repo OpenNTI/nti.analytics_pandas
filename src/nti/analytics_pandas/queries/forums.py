@@ -12,23 +12,11 @@ from nti.analytics.database.boards import ForumCommentLikes
 from nti.analytics.database.boards import ForumCommentsCreated
 from nti.analytics.database.boards import ForumCommentFavorites
 
-from nti.common.property import Lazy
+from .mixins import TableQueryMixin
 
 from . import orm_dataframe
 
-class ForumsMixin(object):
-
-	table = None
-
-	def __init__(self, session):
-		self.session = session
-
-	@Lazy
-	def columns(self):
-		table = getattr(self.table, '__table__')
-		return table.columns.keys()
-
-class QueryForumsCreated(ForumsMixin):
+class QueryForumsCreated(TableQueryMixin):
 
 	table = ForumsCreated
 
@@ -42,7 +30,7 @@ class QueryForumsCreated(ForumsMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
-class QueryForumsCommentsCreated(ForumsMixin):
+class QueryForumsCommentsCreated(TableQueryMixin):
 
 	table = ForumCommentsCreated
 
@@ -55,7 +43,7 @@ class QueryForumsCommentsCreated(ForumsMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
-class QueryForumCommentFavorites(ForumsMixin):
+class QueryForumCommentFavorites(TableQueryMixin):
 
 	table = ForumCommentFavorites
 
@@ -70,7 +58,7 @@ class QueryForumCommentFavorites(ForumsMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
-class QueryForumCommentLikes(ForumsMixin):
+class QueryForumCommentLikes(TableQueryMixin):
 
 	table = ForumCommentLikes
 

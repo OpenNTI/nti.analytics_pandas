@@ -12,23 +12,11 @@ from nti.analytics.database.enrollments import EnrollmentTypes
 from nti.analytics.database.enrollments import CourseEnrollments
 from nti.analytics.database.enrollments import CourseCatalogViews
 
-from nti.common.property import Lazy
+from .mixins import TableQueryMixin
 
 from . import orm_dataframe
 
-class EnrollmentsMixin(object):
-
-	table = None
-
-	def __init__(self, session):
-		self.session = session
-
-	@Lazy
-	def columns(self):
-		table = getattr(self.table, '__table__')
-		return table.columns.keys()
-
-class QueryCourseCatalogViews(EnrollmentsMixin):
+class QueryCourseCatalogViews(TableQueryMixin):
 
 	table = CourseCatalogViews
 
@@ -43,7 +31,7 @@ class QueryCourseCatalogViews(EnrollmentsMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
-class QueryCourseEnrollments(EnrollmentsMixin):
+class QueryCourseEnrollments(TableQueryMixin):
 
 	table = CourseEnrollments
 
@@ -57,7 +45,7 @@ class QueryCourseEnrollments(EnrollmentsMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
-class QueryEnrollmentTypes(EnrollmentsMixin):
+class QueryEnrollmentTypes(TableQueryMixin):
 
 	table = EnrollmentTypes
 
@@ -68,7 +56,7 @@ class QueryEnrollmentTypes(EnrollmentsMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
-class QueryCourseDrops(EnrollmentsMixin):
+class QueryCourseDrops(TableQueryMixin):
 
 	table = CourseDrops
 

@@ -12,23 +12,11 @@ from nti.analytics.database.resource_tags import NotesViewed
 from nti.analytics.database.resource_tags import NotesCreated
 from nti.analytics.database.resource_tags import NoteFavorites
 
-from nti.common.property import Lazy
+from .mixins import TableQueryMixin
 
 from . import orm_dataframe
 
-class NotesMixin(object):
-
-	table = None
-
-	def __init__(self, session):
-		self.session = session
-
-	@Lazy
-	def columns(self):
-		table = getattr(self.table, '__table__')
-		return table.columns.keys()
-
-class QueryNotesCreated(NotesMixin):
+class QueryNotesCreated(TableQueryMixin):
 
 	table = NotesCreated
 
@@ -50,7 +38,7 @@ class QueryNotesCreated(NotesMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
-class QueryNotesViewed(NotesMixin):
+class QueryNotesViewed(TableQueryMixin):
 
 	table = NotesViewed
 
@@ -66,7 +54,7 @@ class QueryNotesViewed(NotesMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
-class QueryNoteFavorites(NotesMixin):
+class QueryNoteFavorites(TableQueryMixin):
 
 	table = NoteFavorites
 
@@ -81,7 +69,7 @@ class QueryNoteFavorites(NotesMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
-class QueryNoteLikes(NotesMixin):
+class QueryNoteLikes(TableQueryMixin):
 
 	table = NoteLikes
 

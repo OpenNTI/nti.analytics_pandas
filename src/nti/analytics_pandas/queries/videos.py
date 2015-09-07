@@ -9,23 +9,11 @@ __docformat__ = "restructuredtext en"
 
 from nti.analytics.database.resource_views import VideoEvents
 
-from nti.common.property import Lazy
+from .mixins import TableQueryMixin
 
 from . import orm_dataframe
 
-class VideosMixin(object):
-
-	table = None
-
-	def __init__(self, session):
-		self.session = session
-
-	@Lazy
-	def columns(self):
-		table = getattr(self.table, '__table__')
-		return table.columns.keys()
-
-class QueryVideoEvents(VideosMixin):
+class QueryVideoEvents(TableQueryMixin):
 
 	table = VideoEvents
 
