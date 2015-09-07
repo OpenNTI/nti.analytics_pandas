@@ -11,7 +11,7 @@ from nti.analytics.database.resource_tags import HighlightsCreated
 
 from nti.common.property import Lazy
 
-from ..utils.orm_to_dataframe import orm_dataframe
+from . import orm_dataframe
 
 class HighlightsMixin(object):
 

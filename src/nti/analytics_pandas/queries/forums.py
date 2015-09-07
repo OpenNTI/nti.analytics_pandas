@@ -14,7 +14,7 @@ from nti.analytics.database.boards import ForumCommentFavorites
 
 from nti.common.property import Lazy
 
-from ..utils.orm_to_dataframe import orm_dataframe
+from . import orm_dataframe
 
 class ForumsMixin(object):
 
