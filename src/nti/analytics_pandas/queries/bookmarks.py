@@ -12,7 +12,6 @@ from nti.analytics.database.resource_tags import BookmarksCreated
 from .mixins import TableQueryMixin
 
 from . import orm_dataframe
-from sqlalchemy import and_
 
 class QueryBookmarksCreated(TableQueryMixin):
 
