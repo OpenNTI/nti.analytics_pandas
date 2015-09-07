@@ -8,3 +8,6 @@ from __future__ import print_function, unicode_literals, absolute_import, divisi
 __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
+
+from .string_folder import StringFolder
+from .orm_to_dataframe import orm_dataframe
