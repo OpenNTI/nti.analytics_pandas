@@ -30,7 +30,7 @@ class QueryForumsCreated(TableQueryMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
-	def filter_by_period_of_time_and_course_id(self, start_date=None, end_date=None, course_id=[]):
+	def filter_by_period_of_time_and_course_id(self, start_date=None, end_date=None, course_id=()):
 		tc = self.table
 		query = self.session.query(tc.timestamp,
 								   tc.forum_ds_id,
@@ -52,7 +52,7 @@ class QueryForumsCommentsCreated(TableQueryMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
-	def filter_by_period_of_time_and_course_id(self, start_date=None, end_date=None, course_id=[]):
+	def filter_by_period_of_time_and_course_id(self, start_date=None, end_date=None, course_id=()):
 		fcc = self.table
 		query = self.session.query(fcc.timestamp,
 								   fcc.user_id,
@@ -75,7 +75,7 @@ class QueryForumCommentFavorites(TableQueryMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
-	def filter_by_period_of_time_and_course_id(self, start_date=None, end_date=None, course_id=[]):
+	def filter_by_period_of_time_and_course_id(self, start_date=None, end_date=None, course_id=()):
 		fcf = self.table
 		query = self.session.query(fcf.timestamp,
 								   fcf.session_id,
@@ -100,7 +100,7 @@ class QueryForumCommentLikes(TableQueryMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
-	def filter_by_period_of_time_and_course_id(self, start_date=None, end_date=None, course_id=[]):
+	def filter_by_period_of_time_and_course_id(self, start_date=None, end_date=None, course_id=()):
 		fcl = ForumCommentLikes
 		query = self.session.query(fcl.timestamp,
 								   fcl.session_id,

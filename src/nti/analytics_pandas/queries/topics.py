@@ -30,7 +30,7 @@ class QueryTopicsCreated(TableQueryMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
-	def filter_by_period_of_time_and_course_id(self, start_date, end_date, course_id=[]):
+	def filter_by_period_of_time_and_course_id(self, start_date, end_date, course_id=()):
 		tc = self.table
 		query = self.session.query(tc.timestamp,
 								   tc.user_id,
@@ -56,7 +56,7 @@ class QueryTopicsViewed(TableQueryMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
-	def filter_by_period_of_time_and_course_id(self, start_date, end_date, course_id=[]):
+	def filter_by_period_of_time_and_course_id(self, start_date, end_date, course_id=()):
 		tv = self.table
 		query = self.session.query(tv.timestamp,
 								   tv.user_id,
@@ -83,7 +83,7 @@ class QueryTopicFavorites(TableQueryMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
-	def filter_by_period_of_time_and_course_id(self, start_date, end_date, course_id=[]):
+	def filter_by_period_of_time_and_course_id(self, start_date, end_date, course_id=()):
 		tf = self.table
 		query = self.session.query(tf.timestamp,
 								   tf.session_id,
@@ -108,7 +108,7 @@ class QueryTopicLikes(TableQueryMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
-	def filter_by_period_of_time_and_course_id(self, start_date, end_date, course_id=[]):
+	def filter_by_period_of_time_and_course_id(self, start_date, end_date, course_id=()):
 		tl = self.table
 		query = self.session.query(tl.timestamp,
 								   tl.session_id,

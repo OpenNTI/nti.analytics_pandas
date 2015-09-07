@@ -31,7 +31,7 @@ class QueryCourseCatalogViews(TableQueryMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
-	def filter_by_period_of_time_and_course_id(self, start_date=None, end_date=None, course_id=[]):
+	def filter_by_period_of_time_and_course_id(self, start_date=None, end_date=None, course_id=()):
 		ccv = self.table
 		query = self.session.query( ccv.timestamp,
 									ccv.course_id,
@@ -56,7 +56,7 @@ class QueryCourseEnrollments(TableQueryMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
-	def filter_by_period_of_time_and_course_id(self, start_date=None, end_date=None, course_id=[]):
+	def filter_by_period_of_time_and_course_id(self, start_date=None, end_date=None, course_id=()):
 		ce = self.table
 		query = self.session.query( ce.timestamp,
 									ce.type_id,
@@ -88,7 +88,7 @@ class QueryCourseDrops(TableQueryMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
-	def filter_by_period_of_time_and_course_id(self, start_date=None, end_date=None, course_id=[]):
+	def filter_by_period_of_time_and_course_id(self, start_date=None, end_date=None, course_id=()):
 		cd = self.table
 		query = self.session.query( cd.timestamp,
 									cd.course_id,

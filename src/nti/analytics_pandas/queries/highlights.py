@@ -29,7 +29,7 @@ class QueryHighlightsCreated(TableQueryMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
-	def filter_by_period_of_time_and_course_id(self, start_date=None, end_date=None, course_id=[]):
+	def filter_by_period_of_time_and_course_id(self, start_date=None, end_date=None, course_id=()):
 		hc = self.table
 		query = self.session.query( hc.highlight_id,
 									hc.timestamp,
