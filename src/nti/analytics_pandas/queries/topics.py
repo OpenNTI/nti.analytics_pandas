@@ -30,6 +30,15 @@ class QueryTopicsCreated(TableQueryMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
+	def filter_by_period_of_time_and_course_id(self, start_date, end_date, course_id=[]):
+		tc = self.table
+		query = self.session.query(tc.timestamp,
+								   tc.user_id,
+								   tc.session_id,
+								   tc.topic_ds_id).filter(tc.timestamp.between(start_date, end_date)).filter(tc.course_id.in_(course_id))
+		dataframe = orm_dataframe(query, self.columns)
+		return dataframe
+
 class QueryTopicsViewed(TableQueryMixin):
 
 	table = TopicsViewed
@@ -44,6 +53,18 @@ class QueryTopicsViewed(TableQueryMixin):
 								   tv.topic_id,
 								   tv.time_length,
 								   tv.context_path).filter(tv.timestamp.between(start_date, end_date))
+		dataframe = orm_dataframe(query, self.columns)
+		return dataframe
+
+	def filter_by_period_of_time_and_course_id(self, start_date, end_date, course_id=[]):
+		tv = self.table
+		query = self.session.query(tv.timestamp,
+								   tv.user_id,
+								   tv.session_id,
+								   tv.forum_id,
+								   tv.topic_id,
+								   tv.time_length,
+								   tv.context_path).filter(tv.timestamp.between(start_date, end_date)).filter(tv.course_id.in_(course_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
@@ -62,6 +83,16 @@ class QueryTopicFavorites(TableQueryMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
+	def filter_by_period_of_time_and_course_id(self, start_date, end_date, course_id=[]):
+		tf = self.table
+		query = self.session.query(tf.timestamp,
+								   tf.session_id,
+								   tf.user_id,
+								   tf.topic_id,
+								   tf.creator_id).filter(tf.timestamp.between(start_date, end_date)).filter(tf.course_id.in_(course_id))
+		dataframe = orm_dataframe(query, self.columns)
+		return dataframe
+
 class QueryTopicLikes(TableQueryMixin):
 
 	table = TopicLikes
@@ -74,5 +105,15 @@ class QueryTopicLikes(TableQueryMixin):
 								   tl.topic_id,
 								   tl.creator_id,
 								   tl.course_id).filter(tl.timestamp.between(start_date, end_date))
+		dataframe = orm_dataframe(query, self.columns)
+		return dataframe
+
+	def filter_by_period_of_time_and_course_id(self, start_date, end_date, course_id=[]):
+		tl = self.table
+		query = self.session.query(tl.timestamp,
+								   tl.session_id,
+								   tl.user_id,
+								   tl.topic_id,
+								   tl.creator_id).filter(tl.timestamp.between(start_date, end_date)).filter(tl.course_id.in_(course_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe

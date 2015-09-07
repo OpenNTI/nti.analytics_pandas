@@ -34,3 +34,20 @@ class QueryVideoEvents(TableQueryMixin):
 									ve.play_speed).filter(ve.timestamp.between(start_date, end_date))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
+
+	def filter_by_period_of_time_and_course_id(self, start_date=None, end_date=None, course_id=[]):
+		ve = self.table
+		query = self.session.query( ve.video_view_id,
+									ve.timestamp,
+									ve.resource_id,
+									ve.context_path,
+									ve.time_length,
+									ve.video_event_type,
+									ve.video_start_time,
+									ve.video_end_time,
+									ve.with_transcript,
+									ve.session_id,
+									ve.user_id,
+									ve.play_speed).filter(ve.timestamp.between(start_date, end_date)).filter(ve.course_id.in_(course_id))
+		dataframe = orm_dataframe(query, self.columns)
+		return dataframe

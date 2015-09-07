@@ -25,3 +25,11 @@ class TestVideos(AnalyticsPandasTestBase):
 		qve = QueryVideoEvents(self.session)
 		dataframe = qve.filter_by_period_of_time(start_date, end_date)
 		assert_that(len(dataframe.index), equal_to(105505))
+
+	def test_query_video_events_by_period_of_time_and_course_id(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		course_id = ['388']
+		qve = QueryVideoEvents(self.session)
+		dataframe = qve.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
+		assert_that(len(dataframe.index), equal_to(1480))

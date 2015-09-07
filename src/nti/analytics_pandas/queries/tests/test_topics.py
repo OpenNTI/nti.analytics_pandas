@@ -29,12 +29,28 @@ class TestTopics(AnalyticsPandasTestBase):
 		dataframe = qtc.filter_by_period_of_time(start_date, end_date)
 		assert_that(len(dataframe), equal_to(219))
 
+	def test_query_topics_created_by_period_of_time_and_course_id(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		course_id = ['388']
+		qtc = QueryTopicsCreated(self.session)
+		dataframe = qtc.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
+		assert_that(len(dataframe), equal_to(151))
+
 	def test_query_topics_viewed_by_period_of_time(self):
 		start_date = u'2015-03-01'
 		end_date = u'2015-05-31'
 		qtv = QueryTopicsViewed(self.session)
 		dataframe = qtv.filter_by_period_of_time(start_date, end_date)
 		assert_that(len(dataframe), equal_to(12797))
+
+	def test_query_topics_viewed_by_period_of_time_and_course_id(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		course_id = ['388']
+		qtv = QueryTopicsViewed(self.session)
+		dataframe = qtv.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
+		assert_that(len(dataframe), equal_to(1610))
 
 	def test_query_topic_favorites_by_period_of_time(self):
 		start_date = u'2015-03-01'
@@ -43,9 +59,25 @@ class TestTopics(AnalyticsPandasTestBase):
 		dataframe = qtf.filter_by_period_of_time(start_date, end_date)
 		assert_that(len(dataframe), equal_to(14))
 
+	def test_query_topic_favorites_by_period_of_time_and_course_id(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		course_id = ['388']
+		qtf = QueryTopicFavorites(self.session)
+		dataframe = qtf.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
+		assert_that(len(dataframe), equal_to(6))
+
 	def test_query_topic_likes_by_period_of_time(self):
 		start_date = u'2015-03-01'
 		end_date = u'2015-05-31'
 		qtl = QueryTopicLikes(self.session)
 		dataframe = qtl.filter_by_period_of_time(start_date, end_date)
 		assert_that(len(dataframe), equal_to(1))
+
+	def test_query_topic_likes_by_period_of_time_and_course_id(self):
+		start_date = u'2015-03-01'
+		end_date = u'2015-05-31'
+		course_id = ['388']
+		qtl = QueryTopicLikes(self.session)
+		dataframe = qtl.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
+		assert_that(len(dataframe), equal_to(0))
