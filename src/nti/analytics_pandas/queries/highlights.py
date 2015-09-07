@@ -28,3 +28,14 @@ class QueryHighlightsCreated(TableQueryMixin):
 									hc.course_id).filter(hc.timestamp.between(start_date, end_date))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
+
+	def filter_by_period_of_time_and_course_id(self, start_date=None, end_date=None, course_id=[]):
+		hc = self.table
+		query = self.session.query( hc.highlight_id,
+									hc.timestamp,
+									hc.deleted,
+									hc.resource_id,
+									hc.session_id,
+									hc.user_id).filter(hc.timestamp.between(start_date, end_date)).filter(hc.course_id.in_(course_id))
+		dataframe = orm_dataframe(query, self.columns)
+		return dataframe

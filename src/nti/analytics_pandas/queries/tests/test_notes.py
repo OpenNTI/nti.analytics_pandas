@@ -28,12 +28,28 @@ class TestNotes(AnalyticsPandasTestBase):
 		dataframe = qnc.filter_by_period_of_time(start_date, end_date)
 		assert_that(len(dataframe.index), equal_to(688))
 
+	def test_query_notes_created_by_period_of_time_and_course_id(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		course_id = ['388']
+		qnc = QueryNotesCreated(self.session)
+		dataframe = qnc.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
+		assert_that(len(dataframe.index), equal_to(34))
+
 	def test_query_notes_viewed_by_period_of_time(self):
 		start_date = u'2015-03-01'
 		end_date = u'2015-05-31'
 		qnv = QueryNotesViewed(self.session)
 		dataframe = qnv.filter_by_period_of_time(start_date, end_date)
 		assert_that(len(dataframe.index), equal_to(7471))
+
+	def test_query_notes_viewed_by_period_of_time_and_course_id(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		course_id = ['388']
+		qnv = QueryNotesViewed(self.session)
+		dataframe = qnv.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
+		assert_that(len(dataframe.index), equal_to(157))
 
 	def test_query_note_favorites_by_period_of_time(self):
 		start_date = u'2015-03-01'
@@ -42,9 +58,25 @@ class TestNotes(AnalyticsPandasTestBase):
 		dataframe = qnf.filter_by_period_of_time(start_date, end_date)
 		assert_that(len(dataframe.index), equal_to(5))
 
+	def test_query_note_favorites_by_period_of_time_and_course_id(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		course_id = ['388']
+		qnf = QueryNoteFavorites(self.session)
+		dataframe = qnf.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
+		assert_that(len(dataframe.index), equal_to(0))
+
 	def test_query_note_likes_by_period_of_time(self):
 		start_date = u'2015-03-01'
 		end_date = u'2015-05-31'
 		qnl = QueryNoteLikes(self.session)
 		dataframe = qnl.filter_by_period_of_time(start_date, end_date)
 		assert_that(len(dataframe.index), equal_to(18))
+
+	def test_query_note_likes_by_period_of_time_and_course_id(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		course_id = ['388']
+		qnl = QueryNoteLikes(self.session)
+		dataframe = qnl.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
+		assert_that(len(dataframe.index), equal_to(0))

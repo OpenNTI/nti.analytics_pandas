@@ -38,6 +38,23 @@ class QueryNotesCreated(TableQueryMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
+	def filter_by_period_of_time_and_course_id(self, start_date=None, end_date=None, course_id=[]):
+		nc = self.table
+		query = self.session.query(nc.note_id,
+								   nc.timestamp,
+								   nc.resource_id,
+								   nc.user_id,
+								   nc.parent_user_id,
+								   nc.session_id,
+								   nc.sharing,
+								   nc.favorite_count,
+								   nc.like_count,
+								   nc.note_length,
+								   nc.is_flagged,
+								   nc.deleted).filter(nc.timestamp.between(start_date, end_date)).filter(nc.course_id.in_(course_id))
+		dataframe = orm_dataframe(query, self.columns)
+		return dataframe
+
 class QueryNotesViewed(TableQueryMixin):
 
 	table = NotesViewed
@@ -51,6 +68,17 @@ class QueryNotesViewed(TableQueryMixin):
 								   nv.session_id,
 								   nv.resource_id,
 								   nv.context_path).filter(nv.timestamp.between(start_date, end_date))
+		dataframe = orm_dataframe(query, self.columns)
+		return dataframe
+
+	def filter_by_period_of_time_and_course_id(self, start_date=None, end_date=None, course_id=[]):
+		nv = self.table
+		query = self.session.query(nv.note_id,
+								   nv.timestamp,
+								   nv.user_id,
+								   nv.session_id,
+								   nv.resource_id,
+								   nv.context_path).filter(nv.timestamp.between(start_date, end_date)).filter(nv.course_id.in_(course_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
@@ -69,6 +97,16 @@ class QueryNoteFavorites(TableQueryMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
+	def filter_by_period_of_time_and_course_id(self, start_date=None, end_date=None, course_id=[]):
+		nf = self.table
+		query = self.session.query(nf.note_id,
+								   nf.timestamp,
+								   nf.user_id,
+								   nf.session_id,
+								   nf.creator_id).filter(nf.timestamp.between(start_date, end_date)).filter(nf.course_id.in_(course_id))
+		dataframe = orm_dataframe(query, self.columns)
+		return dataframe
+
 class QueryNoteLikes(TableQueryMixin):
 
 	table = NoteLikes
@@ -81,5 +119,15 @@ class QueryNoteLikes(TableQueryMixin):
 								   nl.user_id,
 								   nl.session_id,
 								   nl.creator_id).filter(nl.timestamp.between(start_date, end_date))
+		dataframe = orm_dataframe(query, self.columns)
+		return dataframe
+
+	def filter_by_period_of_time_and_course_id(self, start_date=None, end_date=None, course_id=[]):
+		nl = self.table
+		query = self.session.query(nl.note_id,
+								   nl.timestamp,
+								   nl.user_id,
+								   nl.session_id,
+								   nl.creator_id).filter(nl.timestamp.between(start_date, end_date)).filter(nl.course_id.in_(course_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe

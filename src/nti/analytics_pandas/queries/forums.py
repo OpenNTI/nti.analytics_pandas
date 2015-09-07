@@ -97,7 +97,6 @@ class QueryForumCommentLikes(TableQueryMixin):
 								   fcl.comment_id,
 								   fcl.creator_id,
 								   fcl.course_id).filter(fcl.timestamp.between(start_date, end_date))
-
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
