@@ -29,6 +29,14 @@ class TestEnrollments(AnalyticsPandasTestBase):
 		dataframe = qccv.filter_by_period_of_time(start_date, end_date)
 		assert_that(len(dataframe.index), equal_to(4880))
 
+	def test_query_course_catalog_views_by_period_of_time_and_course_id(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		course_id = ['388']
+		qccv = QueryCourseCatalogViews(self.session)
+		dataframe = qccv.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
+		assert_that(len(dataframe.index), equal_to(409))
+
 	def test_query_course_enrollments_by_period_of_time(self):
 		start_date = u'2015-03-01'
 		end_date = u'2015-05-31'
@@ -36,12 +44,28 @@ class TestEnrollments(AnalyticsPandasTestBase):
 		dataframe = qce.filter_by_period_of_time(start_date, end_date)
 		assert_that(len(dataframe.index), equal_to(2718))
 
+	def test_query_course_enrollments_by_period_of_time_and_course_id(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		course_id = ['388']
+		qce = QueryCourseEnrollments(self.session)
+		dataframe = qce.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
+		assert_that(len(dataframe.index), equal_to(571))
+
 	def test_query_course_drops_by_period_of_time(self):
 		start_date = u'2015-03-01'
 		end_date = u'2015-05-31'
 		qcd = QueryCourseDrops(self.session)
 		dataframe = qcd.filter_by_period_of_time(start_date, end_date)
 		assert_that(len(dataframe.index), equal_to(180))
+
+	def test_query_course_drops_by_period_of_time_and_course_id(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		course_id = ['388']
+		qcd = QueryCourseDrops(self.session)
+		dataframe = qcd.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
+		assert_that(len(dataframe.index), equal_to(23))
 
 	def test_query_enrollment_types(self):
 		qet = QueryEnrollmentTypes(self.session)
