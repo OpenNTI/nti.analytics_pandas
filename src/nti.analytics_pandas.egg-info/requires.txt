@@ -1,3 +1,0 @@
-setuptools
-nti.analytics
-pandas
