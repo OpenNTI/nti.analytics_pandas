@@ -47,7 +47,7 @@ class BookmarkCreationTimeseries(object):
 		return unique_users_per_period_df
 
 
-	def explore_ratio_of_events_over_unique_based_timestamp_date(self):
+	def explore_ratio_of_events_over_unique_users_based_timestamp_date(self):
 		events_df = self.explore_number_of_events_based_timestamp_date()
 		unique_users_df = self.explore_unique_users_based_timestamp_date()
 		merge_df = events_df.join(unique_users_df)

@@ -18,7 +18,7 @@ class TestBookmarksEDA(AnalyticsPandasTestBase):
 	def setUp(self):
 		super(TestBookmarksEDA, self).setUp()
 
-	def test_explore_number_of_events_based_timestamp_date(self):
+	def test_bookmarks_creation_based_on_timestamp_date(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
 		course_id = ['388']
@@ -31,5 +31,5 @@ class TestBookmarksEDA(AnalyticsPandasTestBase):
 		unique_users_by_date = bct.explore_unique_users_based_timestamp_date()
 		assert_that(len(unique_users_by_date.index), equal_to(20))
 
-		ratio_df = bct.explore_ratio_of_events_over_unique_based_timestamp_date()
+		ratio_df = bct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
 		assert_that(len(ratio_df.index), equal_to(20))
