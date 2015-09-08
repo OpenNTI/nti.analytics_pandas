@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*
 """
-.. $Id: dataframe_operation.py 72381 2015-09-04 18:25:32Z carlos.sanchez $
+.. $Id$
 """
 
 from __future__ import print_function, unicode_literals, absolute_import, division

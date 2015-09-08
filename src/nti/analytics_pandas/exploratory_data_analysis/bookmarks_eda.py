@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-.. $Id: bookmarks_eda.py 72510 2015-09-07 18:18:43Z carlos.sanchez $
+.. $Id$
 """
 
 from __future__ import print_function, unicode_literals, absolute_import, division

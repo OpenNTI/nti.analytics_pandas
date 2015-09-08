@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-.. $Id: enrollments_eda.py 72519 2015-09-08 08:38:51Z egawati.panjei $
+.. $Id$
 """
 
 from __future__ import print_function, unicode_literals, absolute_import, division
