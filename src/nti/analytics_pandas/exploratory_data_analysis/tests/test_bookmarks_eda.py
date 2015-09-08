@@ -14,6 +14,8 @@ from nti.analytics_pandas.exploratory_data_analysis.bookmarks_eda import Bookmar
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
+import numpy as np
+
 class TestBookmarksEDA(AnalyticsPandasTestBase):
 	def setUp(self):
 		super(TestBookmarksEDA, self).setUp()
@@ -27,6 +29,9 @@ class TestBookmarksEDA(AnalyticsPandasTestBase):
 		
 		event_by_date_df = bct.explore_number_of_events_based_timestamp_date()
 		assert_that(len(event_by_date_df.index), equal_to(20))
+
+		total_events = np.sum(event_by_date_df['total_bookmarks_created'])
+		assert_that(total_events, equal_to(54))
 
 		unique_users_by_date = bct.explore_unique_users_based_timestamp_date()
 		assert_that(len(unique_users_by_date.index), equal_to(20))
