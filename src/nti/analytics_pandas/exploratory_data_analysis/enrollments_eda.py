@@ -11,8 +11,6 @@ import pandas as pd
 
 from ..queries.enrollments import QueryCourseCatalogViews
 
-from . import add_timestamp_period_date
-
 class CourseCatalogViewsTimeseries(object):
 	"""
 	analyze the number of course catalog views given time period and list of course id
@@ -28,9 +26,29 @@ class CourseCatalogViewsTimeseries(object):
 		else:
 			self.dataframe = qccv.filter_by_period_of_time(start_date, end_date)
 
+	def add_timestamp_period_date(self):
+		df = self.dataframe
+		df['timestamp_period'] = df['timestamp'].apply(lambda x: x.strftime('%Y-%m-%d'))
+		return df
+
 	def explore_number_of_events_based_timestamp_date(self):
-		df = add_timestamp_period_date(self.dataframe)
+		df = self.add_timestamp_period_date()
 		grouped = df.groupby('timestamp_period')
+		df.reset_index(inplace=True)
 		timestamp_period_df = grouped.aggregate(pd.Series.nunique)
-		timestamp_period_df.rename(columns={'index':'total_course_catalog_views'}, inplace=True)
+		timestamp_period_df.rename(columns = {'index':'total_course_catalog_views'}, inplace=True)
 		return timestamp_period_df
+
+	def explore_unique_users_based_timestamp_date(self):
+		df = self.add_timestamp_period_date()
+		grouped = df.groupby('timestamp_period')
+		unique_users_per_period_df = grouped.agg({'user_id' : pd.Series.nunique})
+		unique_users_per_period_df.rename(columns = {'user_id' : 'total_unique_users'}, inplace=True)
+		return unique_users_per_period_df
+
+	def explore_ratio_of_events_over_unique_users_based_timestamp_date(self):
+		events_df = self.explore_number_of_events_based_timestamp_date()
+		unique_users_df = self.explore_unique_users_based_timestamp_date()
+		merge_df = events_df.join(unique_users_df)
+		merge_df['ratio'] = merge_df['total_course_catalog_views']/merge_df['total_unique_users']
+		return merge_df

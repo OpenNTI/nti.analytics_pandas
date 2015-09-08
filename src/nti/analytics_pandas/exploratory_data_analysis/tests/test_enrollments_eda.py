@@ -31,3 +31,10 @@ class TestCourseCatalogViewsEDA(AnalyticsPandasTestBase):
 		assert_that(len(events_df.index), equal_to(109))
 		total_events = np.sum(events_df['total_course_catalog_views'])
 		assert_that(total_events, equal_to(409))
+
+
+		unique_users_df = ccvt.explore_unique_users_based_timestamp_date()
+		assert_that(len(unique_users_df.index), equal_to(109))
+
+		ratio_df = ccvt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		assert_that(len(ratio_df.index), equal_to(109))
