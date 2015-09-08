@@ -34,7 +34,6 @@ class QueryCourseCatalogViews(TableQueryMixin):
 	def filter_by_period_of_time_and_course_id(self, start_date=None, end_date=None, course_id=()):
 		ccv = self.table
 		query = self.session.query( ccv.timestamp,
-									ccv.course_id,
 									ccv.time_length,
 									ccv.session_id,
 									ccv.user_id,
