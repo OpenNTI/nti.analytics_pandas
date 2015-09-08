@@ -12,7 +12,7 @@ from hamcrest import assert_that
 
 import numpy as np
 
-from nti.analytics_pandas.exploratory_data_analysis.enrollments_eda import CourseCatalogViewsTimeseries
+from nti.analytics_pandas.analysis.enrollments import CourseCatalogViewsTimeseries
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 

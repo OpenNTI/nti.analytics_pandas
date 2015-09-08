@@ -10,7 +10,7 @@ __docformat__ = "restructuredtext en"
 from hamcrest import equal_to
 from hamcrest import assert_that
 
-from nti.analytics_pandas.exploratory_data_analysis.bookmarks_eda import BookmarkCreationTimeseries
+from nti.analytics_pandas.analysis.bookmarks import BookmarkCreationTimeseries
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
