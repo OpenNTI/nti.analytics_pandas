@@ -9,4 +9,4 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
-from ..utils.dataframe_operation import add_timestamp_period_date
+from ..utils import add_timestamp_period_date

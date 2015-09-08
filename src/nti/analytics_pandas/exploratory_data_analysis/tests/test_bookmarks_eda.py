@@ -17,6 +17,7 @@ from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 import numpy as np
 
 class TestBookmarksEDA(AnalyticsPandasTestBase):
+
 	def setUp(self):
 		super(TestBookmarksEDA, self).setUp()
 
@@ -26,7 +27,7 @@ class TestBookmarksEDA(AnalyticsPandasTestBase):
 		course_id = ['388']
 		bct = BookmarkCreationTimeseries(self.session, start_date, end_date, course_id)
 		assert_that(len(bct.dataframe.index), equal_to(54))
-		
+
 		event_by_date_df = bct.explore_number_of_events_based_timestamp_date()
 		assert_that(len(event_by_date_df.index), equal_to(20))
 
