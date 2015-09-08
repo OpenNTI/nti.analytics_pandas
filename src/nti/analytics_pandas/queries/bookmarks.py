@@ -30,7 +30,6 @@ class QueryBookmarksCreated(TableQueryMixin):
 		return dataframe
 
 	def filter_by_course_id_and_period_of_time(self, start_date=None, end_date=None, course_id=()):
-		print(course_id)
 		bc = self.table
 		query = self.session.query( bc.bookmark_id,
 									bc.timestamp,
