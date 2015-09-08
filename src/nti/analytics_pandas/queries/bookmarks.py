@@ -37,7 +37,6 @@ class QueryBookmarksCreated(TableQueryMixin):
 									bc.deleted,
 									bc.resource_id,
 									bc.session_id,
-									bc.user_id,
-									bc.course_id).filter(bc.timestamp.between(start_date, end_date)).filter(bc.course_id.in_(course_id))
+									bc.user_id).filter(bc.timestamp.between(start_date, end_date)).filter(bc.course_id.in_(course_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe

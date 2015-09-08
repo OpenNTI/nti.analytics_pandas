@@ -21,14 +21,14 @@ class TestBookmarks(AnalyticsPandasTestBase):
 	def test_query_bookmarks_created_by_period_of_time(self):
 		start_date = u'2015-03-01'
 		end_date = u'2015-05-31'
-		qhc = QueryBookmarksCreated(self.session)
-		dataframe = qhc.filter_by_period_of_time(start_date, end_date)
+		qbc = QueryBookmarksCreated(self.session)
+		dataframe = qbc.filter_by_period_of_time(start_date, end_date)
 		assert_that(len(dataframe.index), equal_to(160))
 
 	def test_query_bookmarks_created_by_time_period_course_id(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
 		course_id = ['388']
-		qhc = QueryBookmarksCreated(self.session)
-		dataframe = qhc.filter_by_course_id_and_period_of_time(start_date, end_date, course_id)
+		qbc = QueryBookmarksCreated(self.session)
+		dataframe = qbc.filter_by_course_id_and_period_of_time(start_date, end_date, course_id)
 		assert_that(len(dataframe.index), equal_to(54))
