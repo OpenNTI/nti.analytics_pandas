@@ -9,7 +9,7 @@ __docformat__ = "restructuredtext en"
 
 import pandas as pd
 
-from ..queries.enrollments import QueryCourseCatalogViews
+from ..queries import QueryCourseCatalogViews
 
 class CourseCatalogViewsTimeseries(object):
 	"""
