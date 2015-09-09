@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*
 """
-.. $Id: common_analysis_methods.py 72535 2015-09-08 15:09:38Z carlos.sanchez $
+.. $Id$
 """
 
 from __future__ import print_function, unicode_literals, absolute_import, division

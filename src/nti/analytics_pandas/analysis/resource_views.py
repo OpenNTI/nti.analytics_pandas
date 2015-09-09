@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-.. $Id: resource_views.py 72614 2015-09-09 08:17:26Z egawati.panjei $
+.. $Id$
 """
 
 from __future__ import print_function, unicode_literals, absolute_import, division
