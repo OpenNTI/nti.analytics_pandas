@@ -15,3 +15,4 @@ def add_timestamp_period_date(df, index_name=None):
 	df['timestamp_period'] = df['timestamp'].apply(lambda x: x.strftime('%Y-%m-%d'))
 	df.reset_index(inplace=True)
 	return df
+

@@ -14,6 +14,7 @@ import numpy as np
 
 from nti.analytics_pandas.analysis.enrollments import CourseCatalogViewsTimeseries
 from nti.analytics_pandas.analysis.enrollments import CourseEnrollmentsTimeseries
+from nti.analytics_pandas.analysis.enrollments import CourseDropsTimeseries
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
@@ -57,5 +58,23 @@ class TestCourseCatalogViewsEDA(AnalyticsPandasTestBase):
 
 		ratio_df = cet.explore_ratio_of_events_over_unique_users_based_timestamp_date()
 		assert_that(len(ratio_df.index), equal_to(100))
+
+	def test_course_drops_based_on_timestamp_date(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		cdt = CourseDropsTimeseries(self.session, start_date, end_date, course_id)
+
+		events_df = cdt.explore_number_of_events_based_timestamp_date()
+		assert_that(len(events_df.index), equal_to(19))
+		total_events = np.sum(events_df['total_enrollments'])
+		assert_that(total_events, equal_to(23))
+
+
+		unique_users_df = cdt.explore_unique_users_based_timestamp_date()
+		assert_that(len(unique_users_df.index), equal_to(19))
+
+		ratio_df = cdt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		assert_that(len(ratio_df.index), equal_to(19))
 
 

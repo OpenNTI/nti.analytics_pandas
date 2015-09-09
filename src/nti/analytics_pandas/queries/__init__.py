@@ -13,3 +13,5 @@ from ..utils import orm_dataframe
 
 from .bookmarks import QueryBookmarksCreated
 from .enrollments import QueryCourseCatalogViews
+from .enrollments import QueryCourseEnrollments
+from .enrollments import QueryCourseDrops
