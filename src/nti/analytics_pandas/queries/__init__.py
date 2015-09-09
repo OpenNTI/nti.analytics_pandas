@@ -15,3 +15,7 @@ from .bookmarks import QueryBookmarksCreated
 from .enrollments import QueryCourseCatalogViews
 from .enrollments import QueryCourseEnrollments
 from .enrollments import QueryCourseDrops
+from .forums import QueryForumsCreated
+from .forums import QueryForumsCommentsCreated
+from .forums import QueryForumCommentFavorites
+from .forums import QueryForumCommentLikes

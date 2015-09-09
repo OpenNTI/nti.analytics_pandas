@@ -20,6 +20,13 @@ def add_timestamp_period_date(df):
 	df['timestamp_period'] = df['timestamp'].apply(lambda x: x.strftime('%Y-%m-%d'))
 	return df
 
+def explore_number_of_events_based_timestamp_date_(df):
+	df = add_timestamp_period_date(df)
+	grouped = df.groupby('timestamp_period')
+	df.reset_index(inplace=True)
+	events_df = grouped.aggregate(pd.Series.nunique)
+	return events_df
+
 def explore_unique_users_based_timestamp_date_(df):
 	df = add_timestamp_period_date(df)
 	grouped = df.groupby('timestamp_period')

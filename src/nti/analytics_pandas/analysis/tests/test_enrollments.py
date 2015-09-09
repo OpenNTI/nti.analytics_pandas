@@ -67,7 +67,7 @@ class TestCourseCatalogViewsEDA(AnalyticsPandasTestBase):
 
 		events_df = cdt.explore_number_of_events_based_timestamp_date()
 		assert_that(len(events_df.index), equal_to(19))
-		total_events = np.sum(events_df['total_enrollments'])
+		total_events = np.sum(events_df['total_drops'])
 		assert_that(total_events, equal_to(23))
 
 
