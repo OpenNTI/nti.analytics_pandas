@@ -10,14 +10,14 @@ __docformat__ = "restructuredtext en"
 from hamcrest import equal_to
 from hamcrest import assert_that
 
-from nti.analytics_pandas.analysis.topics import TopicsCreationTimeseries
+import numpy as np
+
 from nti.analytics_pandas.analysis.topics import TopicViewsTimeseries
 from nti.analytics_pandas.analysis.topics import TopicLikesTimeseries
+from nti.analytics_pandas.analysis.topics import TopicsCreationTimeseries
 from nti.analytics_pandas.analysis.topics import TopicFavoritesTimeseries
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
-
-import numpy as np
 
 class TestTopicsEDA(AnalyticsPandasTestBase):
 

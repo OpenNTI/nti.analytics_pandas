@@ -13,8 +13,8 @@ from hamcrest import assert_that
 import numpy as np
 
 from nti.analytics_pandas.analysis.forums import ForumsCreatedTimeseries
-from nti.analytics_pandas.analysis.forums import ForumsCommentsCreatedTimeseries
 from nti.analytics_pandas.analysis.forums import ForumCommentLikesTimeseries
+from nti.analytics_pandas.analysis.forums import ForumsCommentsCreatedTimeseries
 from nti.analytics_pandas.analysis.forums import ForumCommentFavoritesTimeseries
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
@@ -68,7 +68,7 @@ class TestForumsCreatedEDA(AnalyticsPandasTestBase):
 		events_df = fclt.explore_number_of_events_based_timestamp_date()
 		assert_that(events_df, equal_to(None))
 
-		unique_users_df = fclt.explore_unique_users_based_timestamp_date()
+		_ = fclt.explore_unique_users_based_timestamp_date()
 		assert_that(events_df, equal_to(None))
 
 		ratio_df = fclt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
