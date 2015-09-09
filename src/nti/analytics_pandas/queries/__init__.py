@@ -28,3 +28,5 @@ from .notes import QueryNotesCreated
 from .notes import QueryNotesViewed
 from .notes import QueryNoteFavorites
 from .notes import QueryNoteLikes
+
+from .resource_views import QueryCourseResourceViews
