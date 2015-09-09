@@ -19,3 +19,4 @@ from .forums import QueryForumsCreated
 from .forums import QueryForumsCommentsCreated
 from .forums import QueryForumCommentFavorites
 from .forums import QueryForumCommentLikes
+from .highlights import QueryHighlightsCreated
