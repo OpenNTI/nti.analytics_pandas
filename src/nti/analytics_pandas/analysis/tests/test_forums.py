@@ -14,6 +14,9 @@ import numpy as np
 
 from nti.analytics_pandas.analysis.forums import ForumsCreatedTimeseries
 from nti.analytics_pandas.analysis.forums import ForumsCommentsCreatedTimeseries
+from nti.analytics_pandas.analysis.forums import ForumCommentLikesTimeseries
+from nti.analytics_pandas.analysis.forums import ForumCommentFavoritesTimeseries
+
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
 class TestForumsCreatedEDA(AnalyticsPandasTestBase):
@@ -55,3 +58,34 @@ class TestForumsCreatedEDA(AnalyticsPandasTestBase):
 
 		ratio_df = fcct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
 		assert_that(len(ratio_df.index), equal_to(70))
+
+	def test_forum_comment_likes_based_on_timestamp_date(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		fclt = ForumCommentLikesTimeseries(self.session, start_date, end_date, course_id)
+
+		events_df = fclt.explore_number_of_events_based_timestamp_date()
+		assert_that(events_df, equal_to(None))
+
+		unique_users_df = fclt.explore_unique_users_based_timestamp_date()
+		assert_that(events_df, equal_to(None))
+
+		ratio_df = fclt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		assert_that(ratio_df, equal_to(None))
+
+
+	def test_forum_comment_favorites_based_on_timestamp_date(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		fcft = ForumCommentFavoritesTimeseries(self.session, start_date, end_date, course_id)
+
+		events_df = fcft.explore_number_of_events_based_timestamp_date()
+		assert_that(events_df, equal_to(None))
+
+		unique_users_df = fcft.explore_unique_users_based_timestamp_date()
+		assert_that(unique_users_df, equal_to(None))
+
+		ratio_df = fcft.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		assert_that(ratio_df, equal_to(None))
