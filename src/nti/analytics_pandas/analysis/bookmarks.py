@@ -32,7 +32,8 @@ class BookmarkCreationTimeseries(object):
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
-		events_df.rename(columns={'index':'total_bookmarks_created'}, inplace=True)
+		if events_df is not None :
+			events_df.rename(columns={'index':'total_bookmarks_created'}, inplace=True)
 		return events_df
 
 	def explore_unique_users_based_timestamp_date(self):

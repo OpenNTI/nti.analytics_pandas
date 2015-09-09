@@ -12,6 +12,8 @@ from hamcrest import assert_that
 
 from nti.analytics_pandas.analysis.notes import NotesCreationTimeseries
 from nti.analytics_pandas.analysis.notes import NotesViewTimeseries
+from nti.analytics_pandas.analysis.notes import NoteLikesTimeseries
+from nti.analytics_pandas.analysis.notes import NoteFavoritesTimeseries
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
@@ -59,4 +61,36 @@ class TestNotesEDA(AnalyticsPandasTestBase):
 
 		ratio_df = nvt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
 		assert_that(len(ratio_df.index), equal_to(42))
+
+	def test_note_likes_based_on_timestamp_date(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		nlt = NoteLikesTimeseries(self.session, start_date, end_date, course_id)
+		assert_that(len(nlt.dataframe.index), equal_to(0))
+
+		event_by_date_df = nlt.explore_number_of_events_based_timestamp_date()
+		assert_that(event_by_date_df, equal_to(None))
+
+		unique_users_by_date = nlt.explore_unique_users_based_timestamp_date()
+		assert_that(unique_users_by_date, equal_to(None))
+
+		ratio_df = nlt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		assert_that(ratio_df, equal_to(None))
+
+	def test_note_favorites_based_on_timestamp_date(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		nft = NoteFavoritesTimeseries(self.session, start_date, end_date, course_id)
+		assert_that(len(nft.dataframe.index), equal_to(0))
+
+		event_by_date_df = nft.explore_number_of_events_based_timestamp_date()
+		assert_that(event_by_date_df, equal_to(None))
+
+		unique_users_by_date = nft.explore_unique_users_based_timestamp_date()
+		assert_that(unique_users_by_date, equal_to(None))
+
+		ratio_df = nft.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		assert_that(ratio_df, equal_to(None))
 

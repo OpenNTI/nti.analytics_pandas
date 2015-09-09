@@ -34,7 +34,8 @@ class CourseCatalogViewsTimeseries(object):
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
-		events_df.rename(columns={'index':'total_course_catalog_views'}, inplace=True)
+		if events_df is not None :
+			events_df.rename(columns={'index':'total_course_catalog_views'}, inplace=True)
 		return events_df
 
 	def explore_unique_users_based_timestamp_date(self):
@@ -64,7 +65,8 @@ class CourseEnrollmentsTimeseries(object):
 	
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
-		events_df.rename(columns={'index':'total_enrollments'}, inplace=True)
+		if events_df is not None :
+			events_df.rename(columns={'index':'total_enrollments'}, inplace=True)
 		return events_df
 
 	def explore_unique_users_based_timestamp_date(self):
@@ -93,7 +95,8 @@ class CourseDropsTimeseries(object):
 	
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
-		events_df.rename(columns={'index':'total_drops'}, inplace=True)
+		if events_df is not None :
+			events_df.rename(columns={'index':'total_drops'}, inplace=True)
 		return events_df
 
 	def explore_unique_users_based_timestamp_date(self):
