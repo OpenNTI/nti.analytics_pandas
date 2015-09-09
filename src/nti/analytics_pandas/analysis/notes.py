@@ -35,7 +35,8 @@ class NotesCreationTimeseries(object):
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
-		events_df.rename(columns={'index':'total_notes_created'}, inplace=True)
+		if events_df is not None :
+			events_df.rename(columns={'index':'total_notes_created'}, inplace=True)
 		return events_df
 
 	def explore_unique_users_based_timestamp_date(self):
@@ -65,7 +66,8 @@ class NotesViewTimeseries(object):
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
-		events_df.rename(columns={'index':'total_notes_viewed'}, inplace=True)
+		if events_df is not None :
+			events_df.rename(columns={'index':'total_notes_viewed'}, inplace=True)
 		return events_df
 
 	def explore_unique_users_based_timestamp_date(self):
@@ -76,4 +78,35 @@ class NotesViewTimeseries(object):
 		events_df = self.explore_number_of_events_based_timestamp_date()
 		unique_users_df = self.explore_unique_users_based_timestamp_date()
 		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(events_df, 'total_notes_viewed', unique_users_df)
+		return merge_df
+
+class NoteLikesTimeseries(object):
+	"""
+	analyze the number of note likes given time period and list of course id
+	"""
+
+	def __init__(self, session, start_date, end_date, course_id=None):
+		self.session = session
+		qnl = self.query_notes_viewed = QueryNoteLikes(self.session)
+		if isinstance (course_id, (tuple, list)):
+			self.dataframe = qnl.filter_by_period_of_time_and_course_id(start_date, 
+																		end_date, 
+																		course_id)
+		else :
+			self.dataframe = qnl.filter_by_period_of_time(start_date, end_date)
+
+	def explore_number_of_events_based_timestamp_date(self):
+		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
+		if events_df is not None :
+			events_df.rename(columns={'index':'total_note_likes'}, inplace=True)
+		return events_df
+
+	def explore_unique_users_based_timestamp_date(self):
+		unique_users_per_period_df = explore_unique_users_based_timestamp_date_(self.dataframe)
+		return unique_users_per_period_df
+
+	def explore_ratio_of_events_over_unique_users_based_timestamp_date(self):
+		events_df = self.explore_number_of_events_based_timestamp_date()
+		unique_users_df = self.explore_unique_users_based_timestamp_date()
+		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(events_df, 'total_note_likes', unique_users_df)
 		return merge_df
