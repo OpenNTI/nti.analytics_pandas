@@ -7,16 +7,16 @@
 from __future__ import print_function, unicode_literals, absolute_import, division
 __docformat__ = "restructuredtext en"
 
-import pandas as pd
+logger = __import__('logging').getLogger(__name__)
 
 from ..queries import QueryTopicLikes
 from ..queries import QueryTopicsViewed
 from ..queries import QueryTopicsCreated
 from ..queries import QueryTopicFavorites
 
-from nti.analytics_pandas.analysis.common import explore_number_of_events_based_timestamp_date_
-from nti.analytics_pandas.analysis.common import explore_unique_users_based_timestamp_date_
-from nti.analytics_pandas.analysis.common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
+from .common import explore_unique_users_based_timestamp_date_
+from .common import explore_number_of_events_based_timestamp_date_
+from .common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
 
 class TopicsCreationTimeseries(object):
 	"""
@@ -27,8 +27,8 @@ class TopicsCreationTimeseries(object):
 		self.session = session
 		qtc = self.query_topics_created = QueryTopicsCreated(self.session)
 		if isinstance (course_id, (tuple, list)):
-			self.dataframe = qtc.filter_by_period_of_time_and_course_id(start_date, 
-																		end_date, 
+			self.dataframe = qtc.filter_by_period_of_time_and_course_id(start_date,
+																		end_date,
 																		course_id)
 		else :
 			self.dataframe = qtc.filter_by_period_of_time(start_date, end_date)
@@ -46,7 +46,8 @@ class TopicsCreationTimeseries(object):
 	def explore_ratio_of_events_over_unique_users_based_timestamp_date(self):
 		events_df = self.explore_number_of_events_based_timestamp_date()
 		unique_users_df = self.explore_unique_users_based_timestamp_date()
-		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(events_df, 'total_topics_created', unique_users_df)
+		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
+											events_df, 'total_topics_created', unique_users_df)
 		return merge_df
 
 class TopicLikesTimeseries(object):
@@ -58,8 +59,8 @@ class TopicLikesTimeseries(object):
 		self.session = session
 		qtl = self.query_topic_likes = QueryTopicLikes(self.session)
 		if isinstance (course_id, (tuple, list)):
-			self.dataframe = qtl.filter_by_period_of_time_and_course_id(start_date, 
-																		end_date, 
+			self.dataframe = qtl.filter_by_period_of_time_and_course_id(start_date,
+																		end_date,
 																		course_id)
 		else :
 			self.dataframe = qtl.filter_by_period_of_time(start_date, end_date)
@@ -77,7 +78,8 @@ class TopicLikesTimeseries(object):
 	def explore_ratio_of_events_over_unique_users_based_timestamp_date(self):
 		events_df = self.explore_number_of_events_based_timestamp_date()
 		unique_users_df = self.explore_unique_users_based_timestamp_date()
-		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(events_df, 'total_topic_likes', unique_users_df)
+		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
+												events_df, 'total_topic_likes', unique_users_df)
 		return merge_df
 
 class TopicViewsTimeseries(object):
@@ -89,8 +91,8 @@ class TopicViewsTimeseries(object):
 		self.session = session
 		qtv = self.query_topics_viewed = QueryTopicsViewed(self.session)
 		if isinstance (course_id, (tuple, list)):
-			self.dataframe = qtv.filter_by_period_of_time_and_course_id(start_date, 
-																		end_date, 
+			self.dataframe = qtv.filter_by_period_of_time_and_course_id(start_date,
+																		end_date,
 																		course_id)
 		else :
 			self.dataframe = qtv.filter_by_period_of_time(start_date, end_date)
@@ -108,7 +110,8 @@ class TopicViewsTimeseries(object):
 	def explore_ratio_of_events_over_unique_users_based_timestamp_date(self):
 		events_df = self.explore_number_of_events_based_timestamp_date()
 		unique_users_df = self.explore_unique_users_based_timestamp_date()
-		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(events_df, 'total_topics_viewed', unique_users_df)
+		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
+											events_df, 'total_topics_viewed', unique_users_df)
 		return merge_df
 
 class TopicFavoritesTimeseries(object):
@@ -120,8 +123,8 @@ class TopicFavoritesTimeseries(object):
 		self.session = session
 		qtf = self.query_topic_favorites = QueryTopicFavorites(self.session)
 		if isinstance (course_id, (tuple, list)):
-			self.dataframe = qtf.filter_by_period_of_time_and_course_id(start_date, 
-																		end_date, 
+			self.dataframe = qtf.filter_by_period_of_time_and_course_id(start_date,
+																		end_date,
 																		course_id)
 		else :
 			self.dataframe = qtf.filter_by_period_of_time(start_date, end_date)
@@ -139,5 +142,6 @@ class TopicFavoritesTimeseries(object):
 	def explore_ratio_of_events_over_unique_users_based_timestamp_date(self):
 		events_df = self.explore_number_of_events_based_timestamp_date()
 		unique_users_df = self.explore_unique_users_based_timestamp_date()
-		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(events_df, 'total_topic_favorites', unique_users_df)
+		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
+										events_df, 'total_topic_favorites', unique_users_df)
 		return merge_df

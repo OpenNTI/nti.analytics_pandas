@@ -7,11 +7,13 @@
 from __future__ import print_function, unicode_literals, absolute_import, division
 __docformat__ = "restructuredtext en"
 
+logger = __import__('logging').getLogger(__name__)
+
 from ..queries import QueryBookmarksCreated
 
-from nti.analytics_pandas.analysis.common import explore_number_of_events_based_timestamp_date_
-from nti.analytics_pandas.analysis.common import explore_unique_users_based_timestamp_date_
-from nti.analytics_pandas.analysis.common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
+from .common import explore_unique_users_based_timestamp_date_
+from .common import explore_number_of_events_based_timestamp_date_
+from .common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
 
 class BookmarkCreationTimeseries(object):
 	"""
@@ -22,8 +24,8 @@ class BookmarkCreationTimeseries(object):
 		self.session = session
 		qbc = self.query_bookmarks_created = QueryBookmarksCreated(self.session)
 		if isinstance (course_id, (tuple, list)):
-			self.dataframe = qbc.filter_by_course_id_and_period_of_time(start_date, 
-																		end_date, 
+			self.dataframe = qbc.filter_by_course_id_and_period_of_time(start_date,
+																		end_date,
 																		course_id)
 		else :
 			self.dataframe = qbc.filter_by_period_of_time(start_date, end_date)
@@ -41,5 +43,6 @@ class BookmarkCreationTimeseries(object):
 	def explore_ratio_of_events_over_unique_users_based_timestamp_date(self):
 		events_df = self.explore_number_of_events_based_timestamp_date()
 		unique_users_df = self.explore_unique_users_based_timestamp_date()
-		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(events_df, 'total_bookmarks_created', unique_users_df)
+		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
+										events_df, 'total_bookmarks_created', unique_users_df)
 		return merge_df

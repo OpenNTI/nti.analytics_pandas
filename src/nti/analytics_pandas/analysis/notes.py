@@ -7,16 +7,16 @@
 from __future__ import print_function, unicode_literals, absolute_import, division
 __docformat__ = "restructuredtext en"
 
-import pandas as pd
+logger = __import__('logging').getLogger(__name__)
 
-from ..queries import QueryNotesCreated
-from ..queries import QueryNotesViewed
-from ..queries import QueryNoteFavorites
 from ..queries import QueryNoteLikes
+from ..queries import QueryNotesViewed
+from ..queries import QueryNotesCreated
+from ..queries import QueryNoteFavorites
 
-from nti.analytics_pandas.analysis.common import explore_number_of_events_based_timestamp_date_
-from nti.analytics_pandas.analysis.common import explore_unique_users_based_timestamp_date_
-from nti.analytics_pandas.analysis.common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
+from .common import explore_unique_users_based_timestamp_date_
+from .common import explore_number_of_events_based_timestamp_date_
+from .common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
 
 class NotesCreationTimeseries(object):
 	"""
@@ -27,8 +27,8 @@ class NotesCreationTimeseries(object):
 		self.session = session
 		qnc = self.query_notes_created = QueryNotesCreated(self.session)
 		if isinstance (course_id, (tuple, list)):
-			self.dataframe = qnc.filter_by_period_of_time_and_course_id(start_date, 
-																		end_date, 
+			self.dataframe = qnc.filter_by_period_of_time_and_course_id(start_date,
+																		end_date,
 																		course_id)
 		else :
 			self.dataframe = qnc.filter_by_period_of_time(start_date, end_date)
@@ -46,7 +46,8 @@ class NotesCreationTimeseries(object):
 	def explore_ratio_of_events_over_unique_users_based_timestamp_date(self):
 		events_df = self.explore_number_of_events_based_timestamp_date()
 		unique_users_df = self.explore_unique_users_based_timestamp_date()
-		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(events_df, 'total_notes_created', unique_users_df)
+		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
+										events_df, 'total_notes_created', unique_users_df)
 		return merge_df
 
 class NotesViewTimeseries(object):
@@ -58,8 +59,8 @@ class NotesViewTimeseries(object):
 		self.session = session
 		qnv = self.query_notes_viewed = QueryNotesViewed(self.session)
 		if isinstance (course_id, (tuple, list)):
-			self.dataframe = qnv.filter_by_period_of_time_and_course_id(start_date, 
-																		end_date, 
+			self.dataframe = qnv.filter_by_period_of_time_and_course_id(start_date,
+																		end_date,
 																		course_id)
 		else :
 			self.dataframe = qnv.filter_by_period_of_time(start_date, end_date)
@@ -77,7 +78,8 @@ class NotesViewTimeseries(object):
 	def explore_ratio_of_events_over_unique_users_based_timestamp_date(self):
 		events_df = self.explore_number_of_events_based_timestamp_date()
 		unique_users_df = self.explore_unique_users_based_timestamp_date()
-		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(events_df, 'total_notes_viewed', unique_users_df)
+		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
+											events_df, 'total_notes_viewed', unique_users_df)
 		return merge_df
 
 class NoteLikesTimeseries(object):
@@ -89,8 +91,8 @@ class NoteLikesTimeseries(object):
 		self.session = session
 		qnl = self.query_notes_viewed = QueryNoteLikes(self.session)
 		if isinstance (course_id, (tuple, list)):
-			self.dataframe = qnl.filter_by_period_of_time_and_course_id(start_date, 
-																		end_date, 
+			self.dataframe = qnl.filter_by_period_of_time_and_course_id(start_date,
+																		end_date,
 																		course_id)
 		else :
 			self.dataframe = qnl.filter_by_period_of_time(start_date, end_date)
@@ -108,7 +110,8 @@ class NoteLikesTimeseries(object):
 	def explore_ratio_of_events_over_unique_users_based_timestamp_date(self):
 		events_df = self.explore_number_of_events_based_timestamp_date()
 		unique_users_df = self.explore_unique_users_based_timestamp_date()
-		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(events_df, 'total_note_likes', unique_users_df)
+		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
+												events_df, 'total_note_likes', unique_users_df)
 		return merge_df
 
 class NoteFavoritesTimeseries(object):
@@ -120,8 +123,8 @@ class NoteFavoritesTimeseries(object):
 		self.session = session
 		qnf = self.query_notes_viewed = QueryNoteFavorites(self.session)
 		if isinstance (course_id, (tuple, list)):
-			self.dataframe = qnf.filter_by_period_of_time_and_course_id(start_date, 
-																		end_date, 
+			self.dataframe = qnf.filter_by_period_of_time_and_course_id(start_date,
+																		end_date,
 																		course_id)
 		else :
 			self.dataframe = qnf.filter_by_period_of_time(start_date, end_date)
@@ -139,5 +142,6 @@ class NoteFavoritesTimeseries(object):
 	def explore_ratio_of_events_over_unique_users_based_timestamp_date(self):
 		events_df = self.explore_number_of_events_based_timestamp_date()
 		unique_users_df = self.explore_unique_users_based_timestamp_date()
-		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(events_df, 'total_note_favorites', unique_users_df)
+		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
+											events_df, 'total_note_favorites', unique_users_df)
 		return merge_df

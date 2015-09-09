@@ -7,15 +7,15 @@
 from __future__ import print_function, unicode_literals, absolute_import, division
 __docformat__ = "restructuredtext en"
 
-import pandas as pd
+logger = __import__('logging').getLogger(__name__)
 
-from ..queries import QueryCourseCatalogViews
-from ..queries import QueryCourseEnrollments
 from ..queries import QueryCourseDrops
+from ..queries import QueryCourseEnrollments
+from ..queries import QueryCourseCatalogViews
 
-from nti.analytics_pandas.analysis.common import explore_number_of_events_based_timestamp_date_
-from nti.analytics_pandas.analysis.common import explore_unique_users_based_timestamp_date_
-from nti.analytics_pandas.analysis.common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
+from .common import explore_unique_users_based_timestamp_date_
+from .common import explore_number_of_events_based_timestamp_date_
+from .common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
 
 class CourseCatalogViewsTimeseries(object):
 	"""
@@ -45,7 +45,8 @@ class CourseCatalogViewsTimeseries(object):
 	def explore_ratio_of_events_over_unique_users_based_timestamp_date(self):
 		events_df = self.explore_number_of_events_based_timestamp_date()
 		unique_users_df = self.explore_unique_users_based_timestamp_date()
-		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(events_df, 'total_course_catalog_views', unique_users_df)
+		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
+										events_df, 'total_course_catalog_views', unique_users_df)
 		return merge_df
 
 
@@ -62,7 +63,7 @@ class CourseEnrollmentsTimeseries(object):
 																		 course_id)
 		else:
 			self.dataframe = qce.filter_by_period_of_time(start_date, end_date)
-	
+
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
 		if events_df is not None :
@@ -76,7 +77,8 @@ class CourseEnrollmentsTimeseries(object):
 	def explore_ratio_of_events_over_unique_users_based_timestamp_date(self):
 		events_df = self.explore_number_of_events_based_timestamp_date()
 		unique_users_df = self.explore_unique_users_based_timestamp_date()
-		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(events_df, 'total_enrollments', unique_users_df)
+		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
+												events_df, 'total_enrollments', unique_users_df)
 		return merge_df
 
 class CourseDropsTimeseries(object):
@@ -92,7 +94,7 @@ class CourseDropsTimeseries(object):
 																		 course_id)
 		else:
 			self.dataframe = qcd.filter_by_period_of_time(start_date, end_date)
-	
+
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
 		if events_df is not None :
@@ -106,10 +108,7 @@ class CourseDropsTimeseries(object):
 	def explore_ratio_of_events_over_unique_users_based_timestamp_date(self):
 		events_df = self.explore_number_of_events_based_timestamp_date()
 		unique_users_df = self.explore_unique_users_based_timestamp_date()
-		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(events_df, 'total_drops', unique_users_df)
+		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
+												events_df, 'total_drops', unique_users_df)
 		return merge_df
-
-
-
-
 

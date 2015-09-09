@@ -7,13 +7,13 @@
 from __future__ import print_function, unicode_literals, absolute_import, division
 __docformat__ = "restructuredtext en"
 
-import pandas as pd
+logger = __import__('logging').getLogger(__name__)
 
 from ..queries import QueryHighlightsCreated
 
-from nti.analytics_pandas.analysis.common import explore_number_of_events_based_timestamp_date_
-from nti.analytics_pandas.analysis.common import explore_unique_users_based_timestamp_date_
-from nti.analytics_pandas.analysis.common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
+from .common import explore_unique_users_based_timestamp_date_
+from .common import explore_number_of_events_based_timestamp_date_
+from .common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
 
 class HighlightsCreationTimeseries(object):
 	"""
@@ -24,8 +24,8 @@ class HighlightsCreationTimeseries(object):
 		self.session = session
 		qhc = self.query_highlights_created = QueryHighlightsCreated(self.session)
 		if isinstance (course_id, (tuple, list)):
-			self.dataframe = qhc.filter_by_period_of_time_and_course_id(start_date, 
-																		end_date, 
+			self.dataframe = qhc.filter_by_period_of_time_and_course_id(start_date,
+																		end_date,
 																		course_id)
 		else :
 			self.dataframe = qhc.filter_by_period_of_time(start_date, end_date)
@@ -43,5 +43,6 @@ class HighlightsCreationTimeseries(object):
 	def explore_ratio_of_events_over_unique_users_based_timestamp_date(self):
 		events_df = self.explore_number_of_events_based_timestamp_date()
 		unique_users_df = self.explore_unique_users_based_timestamp_date()
-		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(events_df, 'total_highlights_created', unique_users_df)
+		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
+										events_df, 'total_highlights_created', unique_users_df)
 		return merge_df

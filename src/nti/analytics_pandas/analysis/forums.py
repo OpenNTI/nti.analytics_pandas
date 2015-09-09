@@ -7,22 +7,22 @@
 from __future__ import print_function, unicode_literals, absolute_import, division
 __docformat__ = "restructuredtext en"
 
-import pandas as pd
+logger = __import__('logging').getLogger(__name__)
 
 from ..queries import QueryForumsCreated
+from ..queries import QueryForumCommentLikes
 from ..queries import QueryForumsCommentsCreated
 from ..queries import QueryForumCommentFavorites
-from ..queries import QueryForumCommentLikes
-from ..queries import QueryForumCommentFavorites
 
-from nti.analytics_pandas.analysis.common import explore_number_of_events_based_timestamp_date_
-from nti.analytics_pandas.analysis.common import explore_unique_users_based_timestamp_date_
-from nti.analytics_pandas.analysis.common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
+from .common import explore_unique_users_based_timestamp_date_
+from .common import explore_number_of_events_based_timestamp_date_
+from .common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
 
 class ForumsCreatedTimeseries(object):
 	"""
 	analyze the number of forums created given time period and list of course id
 	"""
+
 	def __init__(self, session, start_date, end_date, course_id=None):
 		self.session = session
 		qfc = self.query_forums_created = QueryForumsCreated(self.session)
@@ -46,7 +46,8 @@ class ForumsCreatedTimeseries(object):
 	def explore_ratio_of_events_over_unique_users_based_timestamp_date(self):
 		events_df = self.explore_number_of_events_based_timestamp_date()
 		unique_users_df = self.explore_unique_users_based_timestamp_date()
-		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(events_df, 'total_forums_created', unique_users_df)
+		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
+											events_df, 'total_forums_created', unique_users_df)
 		return merge_df
 
 class ForumsCommentsCreatedTimeseries(object):
@@ -76,7 +77,8 @@ class ForumsCommentsCreatedTimeseries(object):
 	def explore_ratio_of_events_over_unique_users_based_timestamp_date(self):
 		events_df = self.explore_number_of_events_based_timestamp_date()
 		unique_users_df = self.explore_unique_users_based_timestamp_date()
-		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(events_df, 'total_forums_comments_created', unique_users_df)
+		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
+									events_df, 'total_forums_comments_created', unique_users_df)
 		return merge_df
 
 class ForumCommentLikesTimeseries(object):
@@ -106,13 +108,15 @@ class ForumCommentLikesTimeseries(object):
 	def explore_ratio_of_events_over_unique_users_based_timestamp_date(self):
 		events_df = self.explore_number_of_events_based_timestamp_date()
 		unique_users_df = self.explore_unique_users_based_timestamp_date()
-		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(events_df, 'total_forum_comment_likes', unique_users_df)
+		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
+										events_df, 'total_forum_comment_likes', unique_users_df)
 		return merge_df
 
 class ForumCommentFavoritesTimeseries(object):
 	"""
 	analyze the number of forum comment favorites given time period and list of course id
 	"""
+
 	def __init__(self, session, start_date, end_date, course_id=None):
 		self.session = session
 		qfcf = self.query_forum_comment_favorites = QueryForumCommentFavorites(self.session)
@@ -125,7 +129,7 @@ class ForumCommentFavoritesTimeseries(object):
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
-		if events_df is not None : 
+		if events_df is not None :
 			events_df.rename(columns={'index':'total_forum_comment_favorites'}, inplace=True)
 		return events_df
 
@@ -136,5 +140,6 @@ class ForumCommentFavoritesTimeseries(object):
 	def explore_ratio_of_events_over_unique_users_based_timestamp_date(self):
 		events_df = self.explore_number_of_events_based_timestamp_date()
 		unique_users_df = self.explore_unique_users_based_timestamp_date()
-		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(events_df, 'total_forum_comment_favorites', unique_users_df)
+		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
+									events_df, 'total_forum_comment_favorites', unique_users_df)
 		return merge_df
