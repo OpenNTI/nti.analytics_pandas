@@ -12,6 +12,8 @@ from hamcrest import assert_that
 
 from nti.analytics_pandas.analysis.topics import TopicsCreationTimeseries
 from nti.analytics_pandas.analysis.topics import TopicViewsTimeseries
+from nti.analytics_pandas.analysis.topics import TopicLikesTimeseries
+from nti.analytics_pandas.analysis.topics import TopicFavoritesTimeseries
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
@@ -59,3 +61,38 @@ class TestTopicsEDA(AnalyticsPandasTestBase):
 
 		ratio_df = tvt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
 		assert_that(len(ratio_df.index), equal_to(109))
+
+	def test_topic_likes_based_on_timestamp_date(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		tlt = TopicLikesTimeseries(self.session, start_date, end_date, course_id)
+		assert_that(len(tlt.dataframe.index), equal_to(0))
+
+		event_by_date_df = tlt.explore_number_of_events_based_timestamp_date()
+		assert_that(event_by_date_df, equal_to(None))
+
+		unique_users_by_date = tlt.explore_unique_users_based_timestamp_date()
+		assert_that(unique_users_by_date, equal_to(None))
+
+		ratio_df = tlt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		assert_that(ratio_df, equal_to(None))
+
+	def test_topic_favorites_based_on_timestamp_date(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		tft = TopicFavoritesTimeseries(self.session, start_date, end_date, course_id)
+		assert_that(len(tft.dataframe.index), equal_to(6))
+
+		event_by_date_df = tft.explore_number_of_events_based_timestamp_date()
+		assert_that(len(event_by_date_df.index), equal_to(4))
+
+		total_events = np.sum(event_by_date_df['total_topic_favorites'])
+		assert_that(total_events, equal_to(len(tft.dataframe.index)))
+
+		unique_users_by_date = tft.explore_unique_users_based_timestamp_date()
+		assert_that(len(unique_users_by_date.index), equal_to(4))
+
+		ratio_df = tft.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		assert_that(len(ratio_df.index), equal_to(4))
