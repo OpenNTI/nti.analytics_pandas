@@ -13,9 +13,9 @@ from ..queries import QueryCourseCatalogViews
 from ..queries import QueryCourseEnrollments
 from ..queries import QueryCourseDrops
 
-from .common_analysis_methods import explore_number_of_events_based_timestamp_date_
-from .common_analysis_methods import explore_unique_users_based_timestamp_date_
-from .common_analysis_methods import explore_ratio_of_events_over_unique_users_based_timestamp_date_
+from nti.analytics_pandas.analysis.common import explore_number_of_events_based_timestamp_date_
+from nti.analytics_pandas.analysis.common import explore_unique_users_based_timestamp_date_
+from nti.analytics_pandas.analysis.common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
 
 class CourseCatalogViewsTimeseries(object):
 	"""
