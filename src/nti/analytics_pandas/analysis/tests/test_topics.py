@@ -11,6 +11,7 @@ from hamcrest import equal_to
 from hamcrest import assert_that
 
 from nti.analytics_pandas.analysis.topics import TopicsCreationTimeseries
+from nti.analytics_pandas.analysis.topics import TopicViewsTimeseries
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
@@ -39,3 +40,22 @@ class TestTopicsEDA(AnalyticsPandasTestBase):
 
 		ratio_df = tct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
 		assert_that(len(ratio_df.index), equal_to(2))
+
+	def test_topic_views_based_on_timestamp_date(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		tvt = TopicViewsTimeseries(self.session, start_date, end_date, course_id)
+		assert_that(len(tvt.dataframe.index), equal_to(1610))
+
+		event_by_date_df = tvt.explore_number_of_events_based_timestamp_date()
+		assert_that(len(event_by_date_df.index), equal_to(109))
+
+		total_events = np.sum(event_by_date_df['total_topics_viewed'])
+		assert_that(total_events, equal_to(len(tvt.dataframe.index)))
+
+		unique_users_by_date = tvt.explore_unique_users_based_timestamp_date()
+		assert_that(len(unique_users_by_date.index), equal_to(109))
+
+		ratio_df = tvt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		assert_that(len(ratio_df.index), equal_to(109))
