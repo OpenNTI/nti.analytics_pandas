@@ -7,6 +7,8 @@
 from __future__ import print_function, unicode_literals, absolute_import, division
 __docformat__ = "restructuredtext en"
 
+logger = __import__('logging').getLogger(__name__)
+
 from nti.analytics.database.boards import TopicLikes
 from nti.analytics.database.boards import TopicsViewed
 from nti.analytics.database.boards import TopicsCreated
