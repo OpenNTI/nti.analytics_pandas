@@ -30,3 +30,10 @@ from .notes import QueryNoteFavorites
 from .notes import QueryNoteLikes
 
 from .resource_views import QueryCourseResourceViews
+
+from .topics import QueryTopicLikes
+from .topics import QueryTopicsViewed
+from .topics import QueryTopicsCreated
+from .topics import QueryTopicFavorites
+
+
