@@ -47,3 +47,33 @@ class NotesCreationTimeseries(object):
 		unique_users_df = self.explore_unique_users_based_timestamp_date()
 		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(events_df, 'total_notes_created', unique_users_df)
 		return merge_df
+
+class NotesViewTimeseries(object):
+	"""
+	analyze the number of notes viewed given time period and list of course id
+	"""
+
+	def __init__(self, session, start_date, end_date, course_id=None):
+		self.session = session
+		qnv = self.query_notes_viewed = QueryNotesViewed(self.session)
+		if isinstance (course_id, (tuple, list)):
+			self.dataframe = qnv.filter_by_period_of_time_and_course_id(start_date, 
+																		end_date, 
+																		course_id)
+		else :
+			self.dataframe = qnv.filter_by_period_of_time(start_date, end_date)
+
+	def explore_number_of_events_based_timestamp_date(self):
+		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
+		events_df.rename(columns={'index':'total_notes_viewed'}, inplace=True)
+		return events_df
+
+	def explore_unique_users_based_timestamp_date(self):
+		unique_users_per_period_df = explore_unique_users_based_timestamp_date_(self.dataframe)
+		return unique_users_per_period_df
+
+	def explore_ratio_of_events_over_unique_users_based_timestamp_date(self):
+		events_df = self.explore_number_of_events_based_timestamp_date()
+		unique_users_df = self.explore_unique_users_based_timestamp_date()
+		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(events_df, 'total_notes_viewed', unique_users_df)
+		return merge_df
