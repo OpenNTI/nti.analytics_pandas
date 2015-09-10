@@ -14,6 +14,7 @@ from nti.analytics.database.resources import Resources
 from .mixins import TableQueryMixin
 
 from . import orm_dataframe
+from sqlalchemy.sql import compiler
 
 class QueryResources(TableQueryMixin):
 
@@ -35,7 +36,7 @@ class QueryResources(TableQueryMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
-	def get_resources_given_id(self, resources_id=()):
+	def get_resources_given_id(self, resources_id=None):
 		r = self.table
 		query = self.session.query(	r.resource_id,
 									r.resource_ds_id,
@@ -47,7 +48,7 @@ class QueryResources(TableQueryMixin):
 	def add_resource_type(self, dataframe):
 		def label_resource_type(resource_ds_id):
 			if u'.ntivideo.' in resource_ds_id:
-				return 'uvideo'
+				return u'video'
 			elif u'NTISlideVideo' in resource_ds_id:
 				return u'slide video'
 			elif u'.relatedworkref.' in resource_ds_id:

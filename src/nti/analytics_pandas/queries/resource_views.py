@@ -14,6 +14,9 @@ from nti.analytics.database.resource_views import CourseResourceViews
 from .mixins import TableQueryMixin
 
 from . import orm_dataframe
+from .resources import QueryResources
+
+import numpy as np
 
 class QueryCourseResourceViews(TableQueryMixin):
 
@@ -43,3 +46,12 @@ class QueryCourseResourceViews(TableQueryMixin):
 									crv.context_path).filter(crv.timestamp.between(start_date, end_date)).filter(crv.course_id.in_(course_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
+
+	def add_resource_type(self,dataframe):
+		resources_id = np.unique(dataframe['resource_id'].values.ravel()).tolist()
+		qr = QueryResources(self.session)
+		resources_df = qr.get_resources_ds_id_given_id(resources_id)
+		resources_df = qr.add_resource_type(resources_df)
+		resources_df = resources_df[['resource_id', 'resource_type']]
+		new_df = dataframe.merge(resources_df)
+		return new_df

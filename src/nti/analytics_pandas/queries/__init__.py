@@ -37,3 +37,5 @@ from .topics import QueryTopicsCreated
 from .topics import QueryTopicFavorites
 
 from .videos import QueryVideoEvents
+
+from .resources import QueryResources

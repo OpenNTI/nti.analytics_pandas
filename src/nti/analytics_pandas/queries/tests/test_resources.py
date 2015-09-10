@@ -51,4 +51,3 @@ class TestResources(AnalyticsPandasTestBase):
 		index = dataframe[dataframe['resource_id'] == np.int(13590)].index.tolist()
 		idx = index[0]
 		assert_that(dataframe['resource_type'].iloc[idx], equal_to(u'in class discussion'))
-
