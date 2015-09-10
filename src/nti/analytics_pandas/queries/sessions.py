@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-.. $Id: sessions.py 72636 2015-09-09 15:04:50Z carlos.sanchez $
+.. $Id$
 """
 
 from __future__ import print_function, unicode_literals, absolute_import, division
@@ -42,5 +42,3 @@ class QueryUserAgents(TableQueryMixin):
 									ua.user_agent).filter(ua.user_agent_id.in_(user_agents_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
-
-
