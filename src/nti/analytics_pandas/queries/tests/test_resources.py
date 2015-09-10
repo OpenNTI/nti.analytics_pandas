@@ -15,6 +15,7 @@ from nti.analytics_pandas.queries.resources import QueryResources
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
 import pandas as pd
+import numpy as np
 
 class TestResources(AnalyticsPandasTestBase):
 
@@ -40,4 +41,14 @@ class TestResources(AnalyticsPandasTestBase):
 		assert_that(len(dataframe.index), equal_to(4))
 		assert_that(dataframe.resource_id.iloc[3], equal_to(13))
 		assert_that(dataframe['max_time_length'].iloc[0], equal_to(None))
+
+	def test_add_resource_type(self):
+		qr = QueryResources(self.session)
+		dataframe = qr.get_all_resources()
+		dataframe = qr.add_resource_type(dataframe)
+		assert_that(dataframe['resource_type'].iloc[3], equal_to(u'self assessment'))
+
+		index = dataframe[dataframe['resource_id'] == np.int(13590)].index.tolist()
+		idx = index[0]
+		assert_that(dataframe['resource_type'].iloc[idx], equal_to(u'in class discussion'))
 
