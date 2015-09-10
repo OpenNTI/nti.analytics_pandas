@@ -30,7 +30,7 @@ class QueryResources(TableQueryMixin):
 
 	def get_resources_ds_id_given_id(self, resource_id=()):
 		r = self.table
-		query = self.session.query(	r.resource_id,
+		query = self.session.query(r.resource_id,
 									r.resource_ds_id).filter(r.resource_id.in_(resource_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
@@ -42,7 +42,7 @@ class QueryResources(TableQueryMixin):
 									r.resource_display_name,
 									r.max_time_length).filter(r.resource_id.in_(resources_id))
 		dataframe = orm_dataframe(query, self.columns)
-		return dataframe		
+		return dataframe
 
 	def add_resource_type(self, dataframe):
 		def label_resource_type(resource_ds_id):
@@ -70,7 +70,7 @@ class QueryResources(TableQueryMixin):
 					return u'self_check'
 				elif u'quiz' in resource_ds_id:
 					return u'quiz'
-				else : 
+				else :
 					return u'naq_qid'
 			elif u'self_assessment' in resource_ds_id:
 				return u'self assessment'
@@ -96,9 +96,8 @@ class QueryResources(TableQueryMixin):
 				return u'nticard'
 			elif u'JSON:Timeline' in resource_ds_id:
 				return u'timeline'
- 			else:
+			else:
 				return u'unknown'
 
 		dataframe['resource_type'] = dataframe['resource_ds_id'].apply(lambda x: label_resource_type(x))
 		return dataframe
-	
