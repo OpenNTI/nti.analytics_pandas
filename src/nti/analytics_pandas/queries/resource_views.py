@@ -11,20 +11,19 @@ logger = __import__('logging').getLogger(__name__)
 
 from nti.analytics.database.resource_views import CourseResourceViews
 
+from .common import add_resource_type_
+
 from .mixins import TableQueryMixin
 
 from . import orm_dataframe
-from .common import add_resource_type_
-
-import numpy as np
 
 class QueryCourseResourceViews(TableQueryMixin):
 
 	table = CourseResourceViews
-	
+
 	def filter_by_period_of_time(self, start_date=None, end_date=None):
 		crv = self.table
-		query = self.session.query( crv.resource_view_id,
+		query = self.session.query(crv.resource_view_id,
 									crv.timestamp,
 									crv.course_id,
 									crv.resource_id,
@@ -37,7 +36,7 @@ class QueryCourseResourceViews(TableQueryMixin):
 
 	def filter_by_period_of_time_and_course_id(self, start_date=None, end_date=None, course_id=()):
 		crv = self.table
-		query = self.session.query( crv.resource_view_id,
+		query = self.session.query(crv.resource_view_id,
 									crv.timestamp,
 									crv.resource_id,
 									crv.time_length,
@@ -47,6 +46,6 @@ class QueryCourseResourceViews(TableQueryMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
-	def add_resource_type(self,dataframe):
+	def add_resource_type(self, dataframe):
 		new_df = add_resource_type_(self.session, dataframe)
 		return new_df
