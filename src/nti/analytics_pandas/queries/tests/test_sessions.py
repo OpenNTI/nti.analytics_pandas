@@ -14,6 +14,7 @@ from nti.analytics_pandas.queries.sessions import QuerySessions
 from nti.analytics_pandas.queries.sessions import QueryUserAgents
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
+import numpy as np
 
 class TestSessions(AnalyticsPandasTestBase):
 
@@ -34,3 +35,14 @@ class TestSessions(AnalyticsPandasTestBase):
 		assert_that(len(dataframe.index), 5)
 		assert_that(dataframe.columns, has_item('user_agent_id'))
 		assert_that(dataframe.columns, has_item('user_agent'))
+
+	def test_user_agents_device(self):
+		qua = QueryUserAgents(self.session)
+		user_agents_id = [2944, 742, 1894, 245, 732, 2932]
+		dataframe = qua.get_user_agents_by_id(user_agents_id)
+		new_df = qua.add_device_type(dataframe)
+		assert_that(len(dataframe.index),equal_to(len(new_df.index)))
+
+		index = dataframe[dataframe['user_agent_id'] == np.int(2932)].index.tolist()
+		idx = index[0]
+		assert_that(dataframe['device_type'].iloc[idx], equal_to(u'iPad'))

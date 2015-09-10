@@ -15,6 +15,7 @@ from nti.analytics.database.sessions import UserAgents
 from .mixins import TableQueryMixin
 
 from . import orm_dataframe
+from user_agents import parse
 
 class QuerySessions(TableQueryMixin):
 
@@ -42,3 +43,23 @@ class QueryUserAgents(TableQueryMixin):
 									ua.user_agent).filter(ua.user_agent_id.in_(user_agents_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
+
+	@classmethod
+	def _label_user_agents(cls, ua_string):
+		if 'iPad' in ua_string:
+			return 'iPad'
+		else:
+			user_agent = parse(ua_string)
+			if user_agent.is_mobile :
+				return 'mobile'
+			elif user_agent.is_tablet :
+				return 'tablet'
+			elif user_agent.is_pc :
+				return 'pc'
+			else :
+				return 'unknown'
+
+	def add_device_type(self, ua_dataframe):
+		index = ua_dataframe['user_agent']
+		ua_dataframe['device_type'] = index.apply(lambda x : self._label_user_agents(x))
+		return ua_dataframe
