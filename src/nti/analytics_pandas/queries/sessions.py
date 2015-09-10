@@ -9,13 +9,16 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
+from .. import MessageFactory as _
+
+from user_agents import parse
+
 from nti.analytics.database.sessions import Sessions
 from nti.analytics.database.sessions import UserAgents
 
 from .mixins import TableQueryMixin
 
 from . import orm_dataframe
-from user_agents import parse
 
 class QuerySessions(TableQueryMixin):
 
@@ -32,7 +35,6 @@ class QuerySessions(TableQueryMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
-
 class QueryUserAgents(TableQueryMixin):
 
 	table = UserAgents
@@ -47,17 +49,17 @@ class QueryUserAgents(TableQueryMixin):
 	@classmethod
 	def _label_user_agents(cls, ua_string):
 		if 'iPad' in ua_string:
-			return 'iPad'
+			return _('iPad')
 		else:
 			user_agent = parse(ua_string)
 			if user_agent.is_mobile :
-				return 'mobile'
+				return _('mobile')
 			elif user_agent.is_tablet :
-				return 'tablet'
+				return _('tablet')
 			elif user_agent.is_pc :
-				return 'pc'
+				return _('pc')
 			else :
-				return 'unknown'
+				return _('unknown')
 
 	def add_device_type(self, ua_dataframe):
 		index = ua_dataframe['user_agent']

@@ -7,14 +7,16 @@ __docformat__ = "restructuredtext en"
 # disable: accessing protected members, too many methods
 # pylint: disable=W0212,R0904
 
+from hamcrest import equal_to
 from hamcrest import has_item
 from hamcrest import assert_that
+
+import numpy as np
 
 from nti.analytics_pandas.queries.sessions import QuerySessions
 from nti.analytics_pandas.queries.sessions import QueryUserAgents
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
-import numpy as np
 
 class TestSessions(AnalyticsPandasTestBase):
 
@@ -41,8 +43,7 @@ class TestSessions(AnalyticsPandasTestBase):
 		user_agents_id = [2944, 742, 1894, 245, 732, 2932]
 		dataframe = qua.get_user_agents_by_id(user_agents_id)
 		new_df = qua.add_device_type(dataframe)
-		assert_that(len(dataframe.index),equal_to(len(new_df.index)))
+		assert_that(len(dataframe.index), equal_to(len(new_df.index)))
 
 		index = dataframe[dataframe['user_agent_id'] == np.int(2932)].index.tolist()
-		idx = index[0]
-		assert_that(dataframe['device_type'].iloc[idx], equal_to(u'iPad'))
+		assert_that(dataframe['device_type'].iloc[index[0]], equal_to(u'iPad'))
