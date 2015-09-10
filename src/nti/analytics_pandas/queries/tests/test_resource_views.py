@@ -8,6 +8,7 @@ __docformat__ = "restructuredtext en"
 # pylint: disable=W0212,R0904
 
 from hamcrest import equal_to
+from hamcrest import has_item
 from hamcrest import assert_that
 
 from nti.analytics_pandas.queries.resource_views import QueryCourseResourceViews
@@ -36,7 +37,7 @@ class TestResourceViews(AnalyticsPandasTestBase):
 		assert_that(len(dataframe.index), equal_to(4240))
 
 	
-	def test_query_course_resources_view_add_resource_type(self):
+	def test_query_course_resource_views_add_resource_type(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
 		course_id = ['388']
@@ -45,3 +46,4 @@ class TestResourceViews(AnalyticsPandasTestBase):
 		new_df = qcrv.add_resource_type(dataframe)
 		assert_that(len(dataframe.index), equal_to(len(new_df.index)))
 		assert_that(len(new_df), equal_to(4240))
+		assert_that(new_df.columns, has_item('resource_type'))
