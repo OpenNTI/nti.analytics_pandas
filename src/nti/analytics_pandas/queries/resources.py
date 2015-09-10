@@ -14,7 +14,6 @@ from nti.analytics.database.resources import Resources
 from .mixins import TableQueryMixin
 
 from . import orm_dataframe
-from sqlalchemy.sql import compiler
 
 class QueryResources(TableQueryMixin):
 

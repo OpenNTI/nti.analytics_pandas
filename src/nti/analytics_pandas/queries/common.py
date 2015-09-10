@@ -24,3 +24,4 @@ def add_resource_type_(session,dataframe):
 		new_df = dataframe.merge(resources_df)
 		return new_df
 	return dataframe
+
