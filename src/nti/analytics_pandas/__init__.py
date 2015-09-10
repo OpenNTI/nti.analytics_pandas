@@ -9,4 +9,4 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
-from nti.analytics import MessageFactory as _
+from nti.analytics import MessageFactory
