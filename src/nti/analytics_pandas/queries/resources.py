@@ -97,7 +97,6 @@ class QueryResources(TableQueryMixin):
 			elif u'JSON:Timeline' in resource_ds_id:
 				return u'timeline'
  			else:
-				print(resource_ds_id)
 				return u'unknown'
 
 		dataframe['resource_type'] = dataframe['resource_ds_id'].apply(lambda x: label_resource_type(x))
