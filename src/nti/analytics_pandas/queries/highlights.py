@@ -13,9 +13,10 @@ from nti.analytics.database.resource_tags import HighlightsCreated
 
 from .mixins import TableQueryMixin
 
-from . import orm_dataframe
-from .common import add_resource_type_
 from .common import add_device_type_
+from .common import add_resource_type_
+
+from . import orm_dataframe
 
 class QueryHighlightsCreated(TableQueryMixin):
 
