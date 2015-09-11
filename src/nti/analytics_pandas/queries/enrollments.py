@@ -17,6 +17,7 @@ from nti.analytics.database.enrollments import CourseCatalogViews
 from .mixins import TableQueryMixin
 
 from . import orm_dataframe
+from .common import add_device_type_
 
 class QueryCourseCatalogViews(TableQueryMixin):
 
@@ -43,6 +44,10 @@ class QueryCourseCatalogViews(TableQueryMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
+	def add_device_type(self, dataframe):
+		new_df = add_device_type_(self.session, dataframe)
+		return new_df
+
 class QueryCourseEnrollments(TableQueryMixin):
 
 	table = CourseEnrollments
@@ -65,6 +70,10 @@ class QueryCourseEnrollments(TableQueryMixin):
 									ce.user_id).filter(ce.timestamp.between(start_date, end_date)).filter(ce.course_id.in_(course_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
+
+	def add_device_type(self, dataframe):
+		new_df = add_device_type_(self.session, dataframe)
+		return new_df
 
 class QueryEnrollmentTypes(TableQueryMixin):
 	table = EnrollmentTypes
@@ -97,3 +106,7 @@ class QueryCourseDrops(TableQueryMixin):
 									cd.user_id).filter(cd.timestamp.between(start_date, end_date)).filter(cd.course_id.in_(course_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
+
+	def add_device_type(self, dataframe):
+		new_df = add_device_type_(self.session, dataframe)
+		return new_df
