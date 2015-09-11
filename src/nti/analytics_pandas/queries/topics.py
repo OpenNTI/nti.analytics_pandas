@@ -17,6 +17,8 @@ from nti.analytics.database.boards import TopicFavorites
 from .mixins import TableQueryMixin
 
 from . import orm_dataframe
+from .common import add_device_type_
+
 
 class QueryTopicsCreated(TableQueryMixin):
 
@@ -40,6 +42,11 @@ class QueryTopicsCreated(TableQueryMixin):
 								   tc.topic_ds_id).filter(tc.timestamp.between(start_date, end_date)).filter(tc.course_id.in_(course_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
+
+	def add_device_type(self, dataframe):
+		new_df = add_device_type_(self.session, dataframe)
+		return new_df
+
 
 class QueryTopicsViewed(TableQueryMixin):
 
@@ -70,6 +77,11 @@ class QueryTopicsViewed(TableQueryMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
+	def add_device_type(self, dataframe):
+		new_df = add_device_type_(self.session, dataframe)
+		return new_df
+
+
 class QueryTopicFavorites(TableQueryMixin):
 
 	table = TopicFavorites
@@ -95,6 +107,11 @@ class QueryTopicFavorites(TableQueryMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
+	def add_device_type(self, dataframe):
+		new_df = add_device_type_(self.session, dataframe)
+		return new_df
+
+
 class QueryTopicLikes(TableQueryMixin):
 
 	table = TopicLikes
@@ -119,3 +136,7 @@ class QueryTopicLikes(TableQueryMixin):
 								   tl.creator_id).filter(tl.timestamp.between(start_date, end_date)).filter(tl.course_id.in_(course_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
+
+	def add_device_type(self, dataframe):
+		new_df = add_device_type_(self.session, dataframe)
+		return new_df

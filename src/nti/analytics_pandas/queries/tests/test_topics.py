@@ -9,6 +9,7 @@ __docformat__ = "restructuredtext en"
 
 from hamcrest import equal_to
 from hamcrest import assert_that
+from hamcrest import has_item
 
 from nti.analytics_pandas.queries.topics import QueryTopicLikes
 from nti.analytics_pandas.queries.topics import QueryTopicsViewed
@@ -37,6 +38,17 @@ class TestTopics(AnalyticsPandasTestBase):
 		dataframe = qtc.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
 		assert_that(len(dataframe), equal_to(151))
 
+	def test_query_topics_created_add_device_type(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		course_id = ['388']
+		qtc = QueryTopicsCreated(self.session)
+		dataframe = qtc.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
+		assert_that(len(dataframe), equal_to(151))
+		new_df = qtc.add_device_type(dataframe)
+		assert_that(len(dataframe.index), equal_to(len(new_df.index)))
+		assert_that(new_df.columns, has_item('device_type'))
+
 	def test_query_topics_viewed_by_period_of_time(self):
 		start_date = u'2015-03-01'
 		end_date = u'2015-05-31'
@@ -51,6 +63,17 @@ class TestTopics(AnalyticsPandasTestBase):
 		qtv = QueryTopicsViewed(self.session)
 		dataframe = qtv.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
 		assert_that(len(dataframe), equal_to(1610))
+
+	def test_query_topics_viewed_add_device_type(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		course_id = ['388']
+		qtv = QueryTopicsViewed(self.session)
+		dataframe = qtv.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
+		assert_that(len(dataframe), equal_to(1610))
+		new_df = qtv.add_device_type(dataframe)
+		assert_that(len(dataframe.index), equal_to(len(new_df.index)))
+		assert_that(new_df.columns, has_item('device_type'))
 
 	def test_query_topic_favorites_by_period_of_time(self):
 		start_date = u'2015-03-01'
@@ -67,6 +90,17 @@ class TestTopics(AnalyticsPandasTestBase):
 		dataframe = qtf.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
 		assert_that(len(dataframe), equal_to(6))
 
+	def test_query_topic_favorites_add_device_type(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		course_id = ['388']
+		qtf = QueryTopicFavorites(self.session)
+		dataframe = qtf.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
+		assert_that(len(dataframe), equal_to(6))
+		new_df = qtf.add_device_type(dataframe)
+		assert_that(len(dataframe.index), equal_to(len(new_df.index)))
+		assert_that(new_df.columns, has_item('device_type'))
+
 	def test_query_topic_likes_by_period_of_time(self):
 		start_date = u'2015-03-01'
 		end_date = u'2015-05-31'
@@ -81,3 +115,13 @@ class TestTopics(AnalyticsPandasTestBase):
 		qtl = QueryTopicLikes(self.session)
 		dataframe = qtl.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
 		assert_that(len(dataframe), equal_to(0))
+
+	def test_query_topic_likes_add_device_type(self):
+		start_date = u'2015-03-01'
+		end_date = u'2015-05-31'
+		course_id = ['388']
+		qtl = QueryTopicLikes(self.session)
+		dataframe = qtl.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
+		assert_that(len(dataframe), equal_to(0))
+		new_df = qtl.add_device_type(dataframe)
+		assert_that(new_df, equal_to(None))
