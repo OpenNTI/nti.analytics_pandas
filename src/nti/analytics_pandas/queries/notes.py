@@ -17,6 +17,8 @@ from nti.analytics.database.resource_tags import NoteFavorites
 from .mixins import TableQueryMixin
 
 from . import orm_dataframe
+from .common import add_resource_type_
+from .common import add_device_type_
 
 class QueryNotesCreated(TableQueryMixin):
 
@@ -57,6 +59,14 @@ class QueryNotesCreated(TableQueryMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
+	def add_resource_type(self, dataframe):
+		new_df = add_resource_type_(self.session, dataframe)
+		return new_df
+
+	def add_device_type(self, dataframe):	
+		new_df = add_device_type_(self.session, dataframe)
+		return new_df
+
 class QueryNotesViewed(TableQueryMixin):
 
 	table = NotesViewed
@@ -84,6 +94,14 @@ class QueryNotesViewed(TableQueryMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
+	def add_resource_type(self, dataframe):
+		new_df = add_resource_type_(self.session, dataframe)
+		return new_df
+
+	def add_device_type(self, dataframe):	
+		new_df = add_device_type_(self.session, dataframe)
+		return new_df
+
 class QueryNoteFavorites(TableQueryMixin):
 
 	table = NoteFavorites
@@ -109,6 +127,14 @@ class QueryNoteFavorites(TableQueryMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
+	def add_resource_type(self, dataframe):
+		new_df = add_resource_type_(self.session, dataframe)
+		return new_df
+
+	def add_device_type(self, dataframe):	
+		new_df = add_device_type_(self.session, dataframe)
+		return new_df
+
 class QueryNoteLikes(TableQueryMixin):
 
 	table = NoteLikes
@@ -133,3 +159,11 @@ class QueryNoteLikes(TableQueryMixin):
 								   nl.creator_id).filter(nl.timestamp.between(start_date, end_date)).filter(nl.course_id.in_(course_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
+
+	def add_resource_type(self, dataframe):
+		new_df = add_resource_type_(self.session, dataframe)
+		return new_df
+
+	def add_device_type(self, dataframe):	
+		new_df = add_device_type_(self.session, dataframe)
+		return new_df
