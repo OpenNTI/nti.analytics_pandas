@@ -9,7 +9,6 @@ __docformat__ = "restructuredtext en"
 
 from hamcrest import equal_to
 from hamcrest import assert_that
-from hamcrest import has_item
 
 from nti.analytics_pandas.queries.courses import QueryCourses
 
@@ -28,4 +27,3 @@ class TestCourses(AnalyticsPandasTestBase):
 		context_name = u'%ANTH%1613%'
 		dataframe = qc.filter_by_context_name(context_name)
 		assert_that(len(dataframe.index), equal_to(2))
-	
