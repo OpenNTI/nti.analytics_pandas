@@ -17,12 +17,13 @@ from .sessions import QueryUserAgents
 
 def add_resource_type_(session, dataframe):
 	if 'resource_id' in dataframe.columns:
-		resources_id = np.unique(dataframe['resource_id'].values.ravel()).tolist()
+		resources_id = np.unique(dataframe['resource_id'].values.ravel())
+		resources_id = resources_id[~np.isnan(resources_id)].tolist()
 		qr = QueryResources(session)
 		resources_df = qr.get_resources_ds_id_given_id(resources_id)
 		resources_df = qr.add_resource_type(resources_df)
 		resources_df = resources_df[['resource_id', 'resource_type']]
-		new_df = dataframe.merge(resources_df)
+		new_df = dataframe.merge(resources_df, how='left')
 		return new_df
 	return dataframe
 
