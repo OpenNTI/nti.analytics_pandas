@@ -17,6 +17,7 @@ from nti.analytics.database.boards import ForumCommentFavorites
 from .mixins import TableQueryMixin
 
 from . import orm_dataframe
+from .common import add_device_type_
 
 class QueryForumsCreated(TableQueryMixin):
 
@@ -41,6 +42,10 @@ class QueryForumsCreated(TableQueryMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
+	def add_device_type(self, dataframe):
+		new_df = add_device_type_(self.session, dataframe)
+		return new_df
+
 class QueryForumsCommentsCreated(TableQueryMixin):
 
 	table = ForumCommentsCreated
@@ -50,7 +55,8 @@ class QueryForumsCommentsCreated(TableQueryMixin):
 		query = self.session.query(fcc.timestamp,
 								   fcc.course_id,
 								   fcc.user_id,
-								   fcc.topic_id).filter(fcc.timestamp.between(start_date, end_date))
+								   fcc.topic_id, 
+								   fcc.session_id).filter(fcc.timestamp.between(start_date, end_date))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
@@ -58,9 +64,14 @@ class QueryForumsCommentsCreated(TableQueryMixin):
 		fcc = self.table
 		query = self.session.query(fcc.timestamp,
 								   fcc.user_id,
-								   fcc.topic_id).filter(fcc.timestamp.between(start_date, end_date)).filter(fcc.course_id.in_(course_id))
+								   fcc.topic_id,
+								   fcc.session_id).filter(fcc.timestamp.between(start_date, end_date)).filter(fcc.course_id.in_(course_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
+
+	def add_device_type(self, dataframe):
+		new_df = add_device_type_(self.session, dataframe)
+		return new_df
 
 
 class QueryForumCommentFavorites(TableQueryMixin):
@@ -87,6 +98,10 @@ class QueryForumCommentFavorites(TableQueryMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
+	def add_device_type(self, dataframe):
+		new_df = add_device_type_(self.session, dataframe)
+		return new_df
+
 
 class QueryForumCommentLikes(TableQueryMixin):
 	table = ForumCommentLikes
@@ -111,3 +126,7 @@ class QueryForumCommentLikes(TableQueryMixin):
 								   fcl.creator_id).filter(fcl.timestamp.between(start_date, end_date)).filter(fcl.course_id.in_(course_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
+
+	def add_device_type(self, dataframe):
+		new_df = add_device_type_(self.session, dataframe)
+		return new_df
