@@ -35,6 +35,13 @@ class QuerySessions(TableQueryMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
+	def get_sessions_user_agent_id(self, sessions_id):
+		s = self.table
+		query = self.session.query(	s.session_id,
+									s.user_agent_id).filter(s.session_id.in_(sessions_id))
+		dataframe = orm_dataframe(query, self.columns)
+		return dataframe
+
 class QueryUserAgents(TableQueryMixin):
 
 	table = UserAgents

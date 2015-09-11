@@ -12,6 +12,7 @@ logger = __import__('logging').getLogger(__name__)
 from nti.analytics.database.resource_views import CourseResourceViews
 
 from .common import add_resource_type_
+from .common import add_device_type_
 
 from .mixins import TableQueryMixin
 
@@ -48,4 +49,8 @@ class QueryCourseResourceViews(TableQueryMixin):
 
 	def add_resource_type(self, dataframe):
 		new_df = add_resource_type_(self.session, dataframe)
+		return new_df
+
+	def add_device_type(self, dataframe):
+		new_df = add_device_type_(self.session, dataframe)
 		return new_df

@@ -12,6 +12,8 @@ logger = __import__('logging').getLogger(__name__)
 import numpy as np
 
 from .resources import QueryResources
+from .sessions import QuerySessions
+from .sessions import QueryUserAgents
 
 def add_resource_type_(session, dataframe):
 	if 'resource_id' in dataframe.columns:
@@ -23,3 +25,22 @@ def add_resource_type_(session, dataframe):
 		new_df = dataframe.merge(resources_df)
 		return new_df
 	return dataframe
+
+
+def add_device_type_(session, dataframe):
+	if 'session_id' in dataframe.columns:
+		sessions_id = np.unique(dataframe['session_id'].values.ravel())
+		sessions_id = sessions_id[~np.isnan(sessions_id)].tolist()
+		qs = QuerySessions(session)
+		session_df = qs.get_sessions_user_agent_id(sessions_id)
+
+		user_agents_id = np.unique(session_df['user_agent_id'].values.ravel())
+		user_agents_id = user_agents_id[~np.isnan(user_agents_id)].tolist() 
+		qua = QueryUserAgents(session)
+		user_agent_df = qua.get_user_agents_by_id(user_agents_id)
+		user_agent_df = qua.add_device_type(user_agent_df)
+
+		new_df = dataframe.merge(session_df, how = 'left').merge(user_agent_df, how = 'left')
+		
+		return new_df
+
