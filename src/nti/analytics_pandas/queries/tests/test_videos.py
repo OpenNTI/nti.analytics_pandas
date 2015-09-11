@@ -9,6 +9,7 @@ __docformat__ = "restructuredtext en"
 
 from hamcrest import equal_to
 from hamcrest import assert_that
+from hamcrest import has_item
 
 from nti.analytics_pandas.queries.videos import QueryVideoEvents
 
@@ -33,3 +34,25 @@ class TestVideos(AnalyticsPandasTestBase):
 		qve = QueryVideoEvents(self.session)
 		dataframe = qve.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
 		assert_that(len(dataframe.index), equal_to(1480))
+
+	def test_query_video_events_add_device_type(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		course_id = ['388']
+		qve = QueryVideoEvents(self.session)
+		dataframe = qve.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
+		assert_that(len(dataframe.index), equal_to(1480))
+		new_df = qve.add_device_type(dataframe)
+		assert_that(len(dataframe.index), equal_to(len(new_df.index)))
+		assert_that(new_df.columns, has_item('device_type'))
+
+	def test_query_video_events_add_resource_type(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		course_id = ['388']
+		qve = QueryVideoEvents(self.session)
+		dataframe = qve.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
+		assert_that(len(dataframe.index), equal_to(1480))
+		new_df = qve.add_resource_type(dataframe)
+		assert_that(len(dataframe.index), equal_to(len(new_df.index)))
+		assert_that(new_df.columns, has_item('resource_type'))
