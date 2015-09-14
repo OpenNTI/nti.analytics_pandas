@@ -52,12 +52,10 @@ class BookmarkCreationTimeseries(object):
 		if events_df is not None :
 			events_df.rename(columns={'index':'total_bookmarks_created'}, inplace=True)
 		events_df = events_df[['total_bookmarks_created']]
-		print(events_df['total_bookmarks_created'].sum())
 		return events_df
 
 	def explore_unique_users_based_timestamp_date(self):
 		unique_users_per_period_df = explore_unique_users_based_timestamp_date_(self.dataframe)
-		print(unique_users_per_period_df['total_unique_users'].sum())
 		return unique_users_per_period_df
 
 	def explore_ratio_of_events_over_unique_users_based_timestamp_date(self):

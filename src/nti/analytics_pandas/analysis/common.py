@@ -11,16 +11,6 @@ logger = __import__('logging').getLogger(__name__)
 
 import pandas as pd
 
-def add_timestamp_period_date_with_index(df, index_name=None):
-	df.set_index(index_name, inplace=True)
-	df['timestamp_period'] = df['timestamp'].apply(lambda x: x.strftime('%Y-%m-%d'))
-	df.reset_index(inplace=True)
-	return df
-
-def add_timestamp_period_date(df):
-	df['timestamp_period'] = df['timestamp'].apply(lambda x: x.strftime('%Y-%m-%d'))
-	return df
-
 def add_timestamp_period(df, period_format=u'%Y-%m-%d'):
 	if 'timestamp' in df.columns:
 		df['timestamp_period'] = df['timestamp'].apply(lambda x: x.strftime(period_format))
@@ -28,7 +18,6 @@ def add_timestamp_period(df, period_format=u'%Y-%m-%d'):
 
 def explore_number_of_events_based_timestamp_date_(df):
 	if len(df.index) > 0 :
-		#df = add_timestamp_period_date(df)
 		grouped = df.groupby('timestamp_period')
 		df.reset_index(inplace=True)
 		events_df = grouped.aggregate(pd.Series.nunique)
@@ -36,7 +25,6 @@ def explore_number_of_events_based_timestamp_date_(df):
 
 def explore_unique_users_based_timestamp_date_(df):
 	if len(df.index) > 0 :
-		#df = add_timestamp_period_date(df)
 		grouped = df.groupby('timestamp_period')
 		unique_users_per_period_df = grouped.agg({'user_id' : pd.Series.nunique})
 		unique_users_per_period_df.rename(columns={'user_id' : 'total_unique_users'}, inplace=True)
