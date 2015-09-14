@@ -9,22 +9,24 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
+import pandas as pd
+
 from ..queries import QueryBookmarksCreated
 
+from .common import analyze_types_
+from .common import add_timestamp_period
 from .common import explore_unique_users_based_timestamp_date_
 from .common import explore_number_of_events_based_timestamp_date_
 from .common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
-from .common import analyze_types_
-from .common import add_timestamp_period
-
-import pandas as pd
 
 class BookmarkCreationTimeseries(object):
 	"""
 	analyze the number of bookmarks creation given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date, course_id=None, with_resource_type=True, with_device_type=True, time_period_date = True):
+	def __init__(self, session, start_date, end_date, course_id=None, 
+				 with_resource_type=True, with_device_type=True, time_period_date=True):
+
 		self.session = session
 		qbc = self.query_bookmarks_created = QueryBookmarksCreated(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -36,12 +38,12 @@ class BookmarkCreationTimeseries(object):
 
 		if with_resource_type:
 			new_df = qbc.add_resource_type(self.dataframe)
-			if new_df is not None: 
+			if new_df is not None:
 				self.dataframe = new_df
 
 		if with_device_type:
 			new_df = qbc.add_device_type(self.dataframe)
-			if new_df is not None: 
+			if new_df is not None:
 				self.dataframe = new_df
 
 		if time_period_date :
@@ -86,4 +88,3 @@ class BookmarkCreationTimeseries(object):
 						'user_id'		: pd.Series.nunique	}
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
 		return df
-
