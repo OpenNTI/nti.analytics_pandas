@@ -23,9 +23,6 @@ from nti.testing.layers import ConfiguringLayerMixin
 
 from nti.dataserver.tests.mock_dataserver import DSInjectorMixin
 
-
-DEFAULT_URI = u'http://localhost:7474/db/data/'
-
 class SharedConfiguringTestLayer(ZopeComponentLayer,
                                  GCLayerMixin,
                                  ConfiguringLayerMixin,
@@ -60,12 +57,13 @@ from nti.analytics.tests import NTIAnalyticsTestCase
 class NTIAnalyticsPandasTestCase(NTIAnalyticsTestCase):
     layer = SharedConfiguringTestLayer
 
-from nti.analytics.database.interfaces import IAnalyticsDB
 from nti.analytics.database.database import AnalyticsDB
-
+from nti.analytics.database.interfaces import IAnalyticsDB
 
 class AnalyticsPandasTestBase(unittest.TestCase):
+    
     def setUp(self):
+        #TODO: Change to local SQLListe dB
         self.db = AnalyticsDB( dburi="mysql+pymysql://root@localhost:3306/Analytics")
         component.getGlobalSiteManager().registerUtility( self.db, IAnalyticsDB )
         self.session = self.db.session
