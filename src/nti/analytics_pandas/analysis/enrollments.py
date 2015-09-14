@@ -17,6 +17,10 @@ from .common import explore_unique_users_based_timestamp_date_
 from .common import explore_number_of_events_based_timestamp_date_
 from .common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
 from .common import add_timestamp_period
+from .common import analyze_types_
+
+import pandas as pd
+import numpy as np
 
 class CourseCatalogViewsTimeseries(object):
 	"""
@@ -57,6 +61,16 @@ class CourseCatalogViewsTimeseries(object):
 		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
 										events_df, 'total_course_catalog_views', unique_users_df)
 		return merge_df
+
+	def analyze_device_types(self):
+		group_by_items = ['timestamp_period', 'device_type']
+		agg_columns = {	'time_length'	: np.mean,
+						'user_id'		: pd.Series.nunique}
+		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
+		df.rename(columns={	'user_id'		:'number_of_unique_users',
+							'time_length'	:'average_time_length'}, 
+							inplace=True)
+		return df
 
 
 class CourseEnrollmentsTimeseries(object):

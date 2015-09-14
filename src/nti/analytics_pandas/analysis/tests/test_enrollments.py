@@ -38,9 +38,13 @@ class TestCourseCatalogViewsEDA(AnalyticsPandasTestBase):
 
 		unique_users_df = ccvt.explore_unique_users_based_timestamp_date()
 		assert_that(len(unique_users_df.index), equal_to(109))
-
 		ratio_df = ccvt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
 		assert_that(len(ratio_df.index), equal_to(109))
+
+		df = ccvt.analyze_device_types()
+		assert_that(len(df.index), equal_to(133))
+		assert_that(df.columns, has_item('number_of_unique_users'))
+		assert_that(df.columns, has_item('average_time_length'))
 
 	def test_course_enrollments_based_on_timestamp_date(self):
 		start_date = '2015-01-01'
