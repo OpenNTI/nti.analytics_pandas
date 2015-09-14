@@ -45,6 +45,7 @@ class TestCourseCatalogViewsEDA(AnalyticsPandasTestBase):
 		assert_that(len(df.index), equal_to(133))
 		assert_that(df.columns, has_item('number_of_unique_users'))
 		assert_that(df.columns, has_item('average_time_length'))
+		assert_that(len(df.sum(level = 'timestamp_period')), equal_to(109))
 
 	def test_course_enrollments_based_on_timestamp_date(self):
 		start_date = '2015-01-01'
