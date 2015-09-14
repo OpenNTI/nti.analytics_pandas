@@ -88,4 +88,9 @@ class TestCourseCatalogViewsEDA(AnalyticsPandasTestBase):
 		ratio_df = cdt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
 		assert_that(len(ratio_df.index), equal_to(19))
 
+		df = cdt.analyze_device_types()
+		#the length of df.sum(level = 'timestamp_period') should be equal to the length of ratio_df,
+		#yet some session_id values are null
+		assert_that(len(df.sum(level = 'timestamp_period')), equal_to(18))
+
 

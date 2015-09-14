@@ -166,3 +166,10 @@ class CourseDropsTimeseries(object):
 												events_df, 'total_drops', unique_users_df)
 		return merge_df
 
+	def analyze_device_types(self):
+		group_by_items = ['timestamp_period', 'device_type']
+		agg_columns = {	'user_id'    : pd.Series.nunique}
+		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
+		df.rename(columns={	'user_id':'number_of_unique_users'}, 
+							inplace=True)
+		return df
