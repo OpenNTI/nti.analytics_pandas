@@ -58,12 +58,17 @@ class TestCourseCatalogViewsEDA(AnalyticsPandasTestBase):
 		total_events = np.sum(events_df['total_enrollments'])
 		assert_that(total_events, equal_to(571))
 
-
 		unique_users_df = cet.explore_unique_users_based_timestamp_date()
 		assert_that(len(unique_users_df.index), equal_to(100))
 
 		ratio_df = cet.explore_ratio_of_events_over_unique_users_based_timestamp_date()
 		assert_that(len(ratio_df.index), equal_to(100))
+	
+		df = cet.analyze_device_enrollment_types()
+		#the length of df.sum(level = 'timestamp_period') should be equal to the length of ratio_df,
+		#yet some session_id values are null
+		assert_that(len(df.sum(level = 'timestamp_period')), equal_to(93))
+
 
 	def test_course_drops_based_on_timestamp_date(self):
 		start_date = '2015-01-01'

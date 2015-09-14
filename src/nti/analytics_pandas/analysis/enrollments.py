@@ -12,6 +12,7 @@ logger = __import__('logging').getLogger(__name__)
 from ..queries import QueryCourseDrops
 from ..queries import QueryCourseEnrollments
 from ..queries import QueryCourseCatalogViews
+from ..queries import QueryEnrollmentTypes
 
 from .common import explore_unique_users_based_timestamp_date_
 from .common import explore_number_of_events_based_timestamp_date_
@@ -77,7 +78,7 @@ class CourseEnrollmentsTimeseries(object):
 	"""
 	analyze the number of course enrollments given time period and list of course id
 	"""
-	def __init__(self, session, start_date, end_date, course_id=None, with_device_type=True, time_period_date=True):
+	def __init__(self, session, start_date, end_date, course_id=None, with_device_type=True, time_period_date=True, enrollment_type = True):
 		self.session = session
 		qce = self.query_course_enrollments = QueryCourseEnrollments(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -95,10 +96,16 @@ class CourseEnrollmentsTimeseries(object):
 		if time_period_date :
 			self.dataframe = add_timestamp_period(self.dataframe)
 
+		if enrollment_type :
+			qet =  QueryEnrollmentTypes(session)
+			enrollment_type_df = qet.get_enrollment_types()
+			self.dataframe = self.dataframe.merge(enrollment_type_df, how = 'left')
+
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
 		if events_df is not None :
 			events_df.rename(columns={'index':'total_enrollments'}, inplace=True)
+		events_df = events_df[['total_enrollments']]
 		return events_df
 
 	def explore_unique_users_based_timestamp_date(self):
@@ -111,6 +118,15 @@ class CourseEnrollmentsTimeseries(object):
 		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
 												events_df, 'total_enrollments', unique_users_df)
 		return merge_df
+
+	def analyze_device_enrollment_types(self):
+		group_by_items = ['timestamp_period', 'device_type', 'type_name']
+		agg_columns = {	'user_id'    : pd.Series.nunique,
+						'session_id' : pd.Series.nunique}
+		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
+		df.rename(columns={	'user_id':'number_of_unique_users'}, 
+							inplace=True)
+		return df
 
 class CourseDropsTimeseries(object):
 	"""
