@@ -9,6 +9,7 @@ __docformat__ = "restructuredtext en"
 
 from hamcrest import equal_to
 from hamcrest import assert_that
+from hamcrest import has_item
 
 import numpy as np
 
@@ -28,7 +29,7 @@ class TestCourseCatalogViewsEDA(AnalyticsPandasTestBase):
 		end_date = '2015-05-31'
 		course_id = ['388']
 		ccvt = CourseCatalogViewsTimeseries(self.session, start_date, end_date, course_id)
-
+		assert_that(ccvt.dataframe.columns, has_item('device_type'))
 		events_df = ccvt.explore_number_of_events_based_timestamp_date()
 		assert_that(len(events_df.index), equal_to(109))
 		total_events = np.sum(events_df['total_course_catalog_views'])
@@ -46,7 +47,7 @@ class TestCourseCatalogViewsEDA(AnalyticsPandasTestBase):
 		end_date = '2015-05-31'
 		course_id = ['388']
 		cet = CourseEnrollmentsTimeseries(self.session, start_date, end_date, course_id)
-
+		assert_that(cet.dataframe.columns, has_item('device_type'))
 		events_df = cet.explore_number_of_events_based_timestamp_date()
 		assert_that(len(events_df.index), equal_to(100))
 		total_events = np.sum(events_df['total_enrollments'])
@@ -64,7 +65,7 @@ class TestCourseCatalogViewsEDA(AnalyticsPandasTestBase):
 		end_date = '2015-05-31'
 		course_id = ['388']
 		cdt = CourseDropsTimeseries(self.session, start_date, end_date, course_id)
-
+		assert_that(cdt.dataframe.columns, has_item('device_type'))
 		events_df = cdt.explore_number_of_events_based_timestamp_date()
 		assert_that(len(events_df.index), equal_to(19))
 		total_events = np.sum(events_df['total_drops'])

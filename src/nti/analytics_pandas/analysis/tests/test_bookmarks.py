@@ -9,6 +9,7 @@ __docformat__ = "restructuredtext en"
 
 from hamcrest import equal_to
 from hamcrest import assert_that
+from hamcrest import has_item
 
 from nti.analytics_pandas.analysis.bookmarks import BookmarkCreationTimeseries
 
@@ -27,6 +28,8 @@ class TestBookmarksEDA(AnalyticsPandasTestBase):
 		course_id = ['388']
 		bct = BookmarkCreationTimeseries(self.session, start_date, end_date, course_id)
 		assert_that(len(bct.dataframe.index), equal_to(54))
+		assert_that(bct.dataframe.columns, has_item('resource_type'))
+		assert_that(bct.dataframe.columns, has_item('device_type'))
 
 		event_by_date_df = bct.explore_number_of_events_based_timestamp_date()
 		assert_that(len(event_by_date_df.index), equal_to(20))

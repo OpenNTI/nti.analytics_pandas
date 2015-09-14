@@ -20,7 +20,7 @@ class BookmarkCreationTimeseries(object):
 	analyze the number of bookmarks creation given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date, course_id=None):
+	def __init__(self, session, start_date, end_date, course_id=None, with_resource_type=True, with_device_type=True):
 		self.session = session
 		qbc = self.query_bookmarks_created = QueryBookmarksCreated(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -29,6 +29,16 @@ class BookmarkCreationTimeseries(object):
 																		course_id)
 		else :
 			self.dataframe = qbc.filter_by_period_of_time(start_date, end_date)
+
+		if with_resource_type:
+			new_df = qbc.add_resource_type(self.dataframe)
+			if new_df is not None: 
+				self.dataframe = new_df
+
+		if with_device_type:
+			new_df = qbc.add_device_type(self.dataframe)
+			if new_df is not None: 
+				self.dataframe = new_df
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)

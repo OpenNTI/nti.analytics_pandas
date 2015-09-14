@@ -23,7 +23,7 @@ class NotesCreationTimeseries(object):
 	analyze the number of notes created given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date, course_id=None):
+	def __init__(self, session, start_date, end_date, course_id=None, with_resource_type = True, with_device_type = True):
 		self.session = session
 		qnc = self.query_notes_created = QueryNotesCreated(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -32,6 +32,17 @@ class NotesCreationTimeseries(object):
 																		course_id)
 		else :
 			self.dataframe = qnc.filter_by_period_of_time(start_date, end_date)
+
+		if with_device_type:
+			new_df = qnc.add_device_type(self.dataframe)
+			if new_df is not None: 
+				self.dataframe = new_df
+
+		if with_resource_type:
+			new_df = qnc.add_resource_type(self.dataframe)
+			if new_df is not None: 
+				self.dataframe = new_df
+
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
@@ -55,7 +66,7 @@ class NotesViewTimeseries(object):
 	analyze the number of notes viewed given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date, course_id=None):
+	def __init__(self, session, start_date, end_date, course_id=None, with_resource_type=True, with_device_type=True):
 		self.session = session
 		qnv = self.query_notes_viewed = QueryNotesViewed(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -64,6 +75,16 @@ class NotesViewTimeseries(object):
 																		course_id)
 		else :
 			self.dataframe = qnv.filter_by_period_of_time(start_date, end_date)
+
+		if with_device_type:
+			new_df = qnv.add_device_type(self.dataframe)
+			if new_df is not None: 
+				self.dataframe = new_df
+
+		if with_resource_type:
+			new_df = qnv.add_resource_type(self.dataframe)
+			if new_df is not None: 
+				self.dataframe = new_df
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
@@ -87,7 +108,7 @@ class NoteLikesTimeseries(object):
 	analyze the number of note likes given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date, course_id=None):
+	def __init__(self, session, start_date, end_date, course_id=None, with_resource_type=True, with_device_type=True):
 		self.session = session
 		qnl = self.query_notes_viewed = QueryNoteLikes(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -96,6 +117,16 @@ class NoteLikesTimeseries(object):
 																		course_id)
 		else :
 			self.dataframe = qnl.filter_by_period_of_time(start_date, end_date)
+
+		if with_device_type:
+			new_df = qnl.add_device_type(self.dataframe)
+			if new_df is not None: 
+				self.dataframe = new_df
+
+		if with_resource_type:
+			new_df = qnl.add_resource_type(self.dataframe)
+			if new_df is not None: 
+				self.dataframe = new_df
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
@@ -119,7 +150,7 @@ class NoteFavoritesTimeseries(object):
 	analyze the number of note favorites given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date, course_id=None):
+	def __init__(self, session, start_date, end_date, course_id=None, with_resource_type=True, with_device_type=True):
 		self.session = session
 		qnf = self.query_notes_viewed = QueryNoteFavorites(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -128,6 +159,16 @@ class NoteFavoritesTimeseries(object):
 																		course_id)
 		else :
 			self.dataframe = qnf.filter_by_period_of_time(start_date, end_date)
+
+		if with_device_type:
+			new_df = qnf.add_device_type(self.dataframe)
+			if new_df is not None: 
+				self.dataframe = new_df
+
+		if with_resource_type:
+			new_df = qnf.add_resource_type(self.dataframe)
+			if new_df is not None: 
+				self.dataframe = new_df
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)

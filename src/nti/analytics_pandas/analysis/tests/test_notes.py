@@ -9,6 +9,7 @@ __docformat__ = "restructuredtext en"
 
 from hamcrest import equal_to
 from hamcrest import assert_that
+from hamcrest import has_item
 
 import numpy as np
 
@@ -30,6 +31,8 @@ class TestNotesEDA(AnalyticsPandasTestBase):
 		course_id = ['388']
 		nct = NotesCreationTimeseries(self.session, start_date, end_date, course_id)
 		assert_that(len(nct.dataframe.index), equal_to(34))
+		assert_that(nct.dataframe.columns, has_item('device_type'))
+		assert_that(nct.dataframe.columns, has_item('resource_type'))
 
 		event_by_date_df = nct.explore_number_of_events_based_timestamp_date()
 		assert_that(len(event_by_date_df.index), equal_to(20))
@@ -49,6 +52,8 @@ class TestNotesEDA(AnalyticsPandasTestBase):
 		course_id = ['388']
 		nvt = NotesViewTimeseries(self.session, start_date, end_date, course_id)
 		assert_that(len(nvt.dataframe.index), equal_to(157))
+		assert_that(nvt.dataframe.columns, has_item('device_type'))
+		assert_that(nvt.dataframe.columns, has_item('resource_type'))
 
 		event_by_date_df = nvt.explore_number_of_events_based_timestamp_date()
 		assert_that(len(event_by_date_df.index), equal_to(42))

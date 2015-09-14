@@ -9,7 +9,7 @@ __docformat__ = "restructuredtext en"
 
 from hamcrest import equal_to
 from hamcrest import assert_that
-
+from hamcrest import has_item
 from nti.analytics_pandas.analysis.videos import  VideoEventsTimeseries
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
@@ -26,6 +26,7 @@ class TestVideosEDA(AnalyticsPandasTestBase):
 		course_id = ['388']
 		vet = VideoEventsTimeseries(self.session, start_date, end_date, course_id)
 		assert_that(len(vet.dataframe.index), equal_to(1480))
+		assert_that(vet.dataframe.columns, has_item('device_type'))
 
 		event_by_date_df = vet.explore_number_of_events_based_timestamp_date()
 		assert_that(len(event_by_date_df.index), equal_to(95))

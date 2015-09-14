@@ -9,6 +9,7 @@ __docformat__ = "restructuredtext en"
 
 from hamcrest import equal_to
 from hamcrest import assert_that
+from hamcrest import has_item
 
 import numpy as np
 
@@ -29,7 +30,6 @@ class TestForumsCreatedEDA(AnalyticsPandasTestBase):
 		end_date = '2015-05-31'
 		course_id = ['388']
 		fct = ForumsCreatedTimeseries(self.session, start_date, end_date, course_id)
-
 		events_df = fct.explore_number_of_events_based_timestamp_date()
 		assert_that(len(events_df.index), equal_to(1))
 		total_events = np.sum(events_df['total_forums_created'])

@@ -20,7 +20,7 @@ class VideoEventsTimeseries(object):
 	analyze the number of video events given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date, course_id=None):
+	def __init__(self, session, start_date, end_date, course_id=None, with_device_type=True):
 		self.session = session
 		qve = self.query_videos_event = QueryVideoEvents(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -29,6 +29,11 @@ class VideoEventsTimeseries(object):
 																		course_id)
 		else :
 			self.dataframe = qve.filter_by_period_of_time(start_date, end_date)
+
+		if with_device_type:
+			new_df = qve.add_device_type(self.dataframe)
+			if new_df is not None: 
+				self.dataframe = new_df
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)

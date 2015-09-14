@@ -20,7 +20,7 @@ class ResourceViewsTimeseries(object):
 	analyze the number of resource views given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date, course_id=None):
+	def __init__(self, session, start_date, end_date, course_id=None, with_resource_type=True, with_device_type=True):
 		self.session = session
 		qrv = self.query_resources_view = QueryCourseResourceViews(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -29,6 +29,16 @@ class ResourceViewsTimeseries(object):
 																		course_id)
 		else :
 			self.dataframe = qrv.filter_by_period_of_time(start_date, end_date)
+
+		if with_device_type:
+			new_df = qrv.add_device_type(self.dataframe)
+			if new_df is not None: 
+				self.dataframe = new_df
+
+		if with_resource_type:
+			new_df = qrv.add_resource_type(self.dataframe)
+			if new_df is not None: 
+				self.dataframe = new_df
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)

@@ -9,6 +9,7 @@ __docformat__ = "restructuredtext en"
 
 from hamcrest import equal_to
 from hamcrest import assert_that
+from hamcrest import has_item
 
 import numpy as np
 
@@ -30,6 +31,7 @@ class TestTopicsEDA(AnalyticsPandasTestBase):
 		course_id = ['388']
 		tct = TopicsCreationTimeseries(self.session, start_date, end_date, course_id)
 		assert_that(len(tct.dataframe.index), equal_to(151))
+		assert_that(tct.dataframe.columns, has_item('device_type'))
 
 		event_by_date_df = tct.explore_number_of_events_based_timestamp_date()
 		assert_that(len(event_by_date_df.index), equal_to(2))
@@ -49,6 +51,7 @@ class TestTopicsEDA(AnalyticsPandasTestBase):
 		course_id = ['388']
 		tvt = TopicViewsTimeseries(self.session, start_date, end_date, course_id)
 		assert_that(len(tvt.dataframe.index), equal_to(1610))
+		assert_that(tvt.dataframe.columns, has_item('device_type'))
 
 		event_by_date_df = tvt.explore_number_of_events_based_timestamp_date()
 		assert_that(len(event_by_date_df.index), equal_to(109))
@@ -84,6 +87,7 @@ class TestTopicsEDA(AnalyticsPandasTestBase):
 		course_id = ['388']
 		tft = TopicFavoritesTimeseries(self.session, start_date, end_date, course_id)
 		assert_that(len(tft.dataframe.index), equal_to(6))
+		assert_that(tft.dataframe.columns, has_item('device_type'))
 
 		event_by_date_df = tft.explore_number_of_events_based_timestamp_date()
 		assert_that(len(event_by_date_df.index), equal_to(4))

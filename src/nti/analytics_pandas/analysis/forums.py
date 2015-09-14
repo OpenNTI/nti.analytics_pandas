@@ -23,7 +23,7 @@ class ForumsCreatedTimeseries(object):
 	analyze the number of forums created given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date, course_id=None):
+	def __init__(self, session, start_date, end_date, course_id=None, with_device_type = True):
 		self.session = session
 		qfc = self.query_forums_created = QueryForumsCreated(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -32,6 +32,11 @@ class ForumsCreatedTimeseries(object):
 																		 course_id)
 		else:
 			self.dataframe = qfc.filter_by_period_of_time(start_date, end_date)
+
+		if with_device_type:
+			new_df = qfc.add_device_type(self.dataframe)
+			if new_df is not None: 
+				self.dataframe = new_df
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
@@ -54,7 +59,7 @@ class ForumsCommentsCreatedTimeseries(object):
 	"""
 	analyze the number of forums comments created given time period and list of course id
 	"""
-	def __init__(self, session, start_date, end_date, course_id=None):
+	def __init__(self, session, start_date, end_date, course_id=None, with_device_type=True):
 		self.session = session
 		qfcc = self.query_forums_comments_created = QueryForumsCommentsCreated(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -63,6 +68,11 @@ class ForumsCommentsCreatedTimeseries(object):
 																		 course_id)
 		else:
 			self.dataframe = qfcc.filter_by_period_of_time(start_date, end_date)
+
+		if with_device_type:
+			new_df = qfcc.add_device_type(self.dataframe)
+			if new_df is not None: 
+				self.dataframe = new_df
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
@@ -85,7 +95,7 @@ class ForumCommentLikesTimeseries(object):
 	"""
 	analyze the number of forum comment likes given time period and list of course id
 	"""
-	def __init__(self, session, start_date, end_date, course_id=None):
+	def __init__(self, session, start_date, end_date, course_id=None, with_device_type=True):
 		self.session = session
 		qfcl = self.query_forum_comment_likes = QueryForumCommentLikes(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -94,6 +104,11 @@ class ForumCommentLikesTimeseries(object):
 																		 course_id)
 		else:
 			self.dataframe = qfcl.filter_by_period_of_time(start_date, end_date)
+
+		if with_device_type:
+			new_df = qfcl.add_device_type(self.dataframe)
+			if new_df is not None: 
+				self.dataframe = new_df
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
@@ -117,7 +132,7 @@ class ForumCommentFavoritesTimeseries(object):
 	analyze the number of forum comment favorites given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date, course_id=None):
+	def __init__(self, session, start_date, end_date, course_id=None, with_device_type=True):
 		self.session = session
 		qfcf = self.query_forum_comment_favorites = QueryForumCommentFavorites(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -126,6 +141,11 @@ class ForumCommentFavoritesTimeseries(object):
 																		 course_id)
 		else:
 			self.dataframe = qfcf.filter_by_period_of_time(start_date, end_date)
+
+		if with_device_type:
+			new_df = qfcf.add_device_type(self.dataframe)
+			if new_df is not None: 
+				self.dataframe = new_df
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
