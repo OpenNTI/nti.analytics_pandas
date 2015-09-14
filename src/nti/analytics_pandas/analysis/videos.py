@@ -14,13 +14,14 @@ from ..queries import QueryVideoEvents
 from .common import explore_unique_users_based_timestamp_date_
 from .common import explore_number_of_events_based_timestamp_date_
 from .common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
+from .common import add_timestamp_period
 
 class VideoEventsTimeseries(object):
 	"""
 	analyze the number of video events given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date, course_id=None, with_device_type=True):
+	def __init__(self, session, start_date, end_date, course_id=None, with_device_type=True, time_period_date=True):
 		self.session = session
 		qve = self.query_videos_event = QueryVideoEvents(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -35,10 +36,14 @@ class VideoEventsTimeseries(object):
 			if new_df is not None: 
 				self.dataframe = new_df
 
+		if time_period_date :
+			self.dataframe = add_timestamp_period(self.dataframe)
+
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
 		if events_df is not None :
 			events_df.rename(columns={'index':'total_video_events'}, inplace=True)
+		events_df = events_df[['total_video_events']]
 		return events_df
 
 	def explore_unique_users_based_timestamp_date(self):

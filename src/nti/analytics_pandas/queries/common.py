@@ -49,3 +49,4 @@ def add_device_type_(session, dataframe):
 		new_df = dataframe.merge(session_df, how = 'left').merge(user_agent_df, how = 'left')
 		return new_df
 
+

@@ -80,7 +80,7 @@ class QueryEnrollmentTypes(TableQueryMixin):
 
 	def get_enrollment_types(self):
 		et = self.table
-		query = self.session.query(et.type_id,
+		query = self.session.query(	et.type_id,
 									et.type_name)
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe

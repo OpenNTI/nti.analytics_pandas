@@ -17,13 +17,14 @@ from ..queries import QueryTopicFavorites
 from .common import explore_unique_users_based_timestamp_date_
 from .common import explore_number_of_events_based_timestamp_date_
 from .common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
+from .common import add_timestamp_period
 
 class TopicsCreationTimeseries(object):
 	"""
 	analyze the number of topics created given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date, course_id=None, with_device_type=True):
+	def __init__(self, session, start_date, end_date, course_id=None, with_device_type=True, time_period_date=True):
 		self.session = session
 		qtc = self.query_topics_created = QueryTopicsCreated(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -37,6 +38,9 @@ class TopicsCreationTimeseries(object):
 			new_df = qtc.add_device_type(self.dataframe)
 			if new_df is not None: 
 				self.dataframe = new_df
+
+		if time_period_date :
+			self.dataframe = add_timestamp_period(self.dataframe)
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
@@ -60,7 +64,7 @@ class TopicLikesTimeseries(object):
 	analyze the number of topic likes given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date, course_id=None, with_device_type=True):
+	def __init__(self, session, start_date, end_date, course_id=None, with_device_type=True, time_period_date=True):
 		self.session = session
 		qtl = self.query_topic_likes = QueryTopicLikes(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -74,6 +78,9 @@ class TopicLikesTimeseries(object):
 			new_df = qtl.add_device_type(self.dataframe)
 			if new_df is not None: 
 				self.dataframe = new_df
+
+		if time_period_date :
+			self.dataframe = add_timestamp_period(self.dataframe)
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
@@ -97,7 +104,7 @@ class TopicViewsTimeseries(object):
 	analyze the number of topics viewed given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date, course_id=None, with_device_type=True):
+	def __init__(self, session, start_date, end_date, course_id=None, with_device_type=True, time_period_date=True):
 		self.session = session
 		qtv = self.query_topics_viewed = QueryTopicsViewed(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -111,6 +118,9 @@ class TopicViewsTimeseries(object):
 			new_df = qtv.add_device_type(self.dataframe)
 			if new_df is not None: 
 				self.dataframe = new_df
+
+		if time_period_date :
+			self.dataframe = add_timestamp_period(self.dataframe)
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
@@ -134,7 +144,7 @@ class TopicFavoritesTimeseries(object):
 	analyze the number of topic favorites given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date, course_id=None, with_device_type=True):
+	def __init__(self, session, start_date, end_date, course_id=None, with_device_type=True, time_period_date=True):
 		self.session = session
 		qtf = self.query_topic_favorites = QueryTopicFavorites(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -148,6 +158,9 @@ class TopicFavoritesTimeseries(object):
 			new_df = qtf.add_device_type(self.dataframe)
 			if new_df is not None: 
 				self.dataframe = new_df
+
+		if time_period_date :
+			self.dataframe = add_timestamp_period(self.dataframe)
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)

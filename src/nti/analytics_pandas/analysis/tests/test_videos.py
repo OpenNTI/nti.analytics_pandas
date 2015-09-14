@@ -30,6 +30,7 @@ class TestVideosEDA(AnalyticsPandasTestBase):
 
 		event_by_date_df = vet.explore_number_of_events_based_timestamp_date()
 		assert_that(len(event_by_date_df.index), equal_to(95))
+		print(event_by_date_df)
 
 		total_events = np.sum(event_by_date_df['total_video_events'])
 		assert_that(total_events, equal_to(len(vet.dataframe.index)))
@@ -39,3 +40,7 @@ class TestVideosEDA(AnalyticsPandasTestBase):
 
 		ratio_df = vet.explore_ratio_of_events_over_unique_users_based_timestamp_date()
 		assert_that(len(ratio_df.index), equal_to(95))
+		##print(ratio_df)
+		#print(ratio_df.describe())
+
+

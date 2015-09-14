@@ -16,13 +16,14 @@ from ..queries import QueryCourseCatalogViews
 from .common import explore_unique_users_based_timestamp_date_
 from .common import explore_number_of_events_based_timestamp_date_
 from .common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
+from .common import add_timestamp_period
 
 class CourseCatalogViewsTimeseries(object):
 	"""
 	analyze the number of course catalog views given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date, course_id=None, with_device_type=True):
+	def __init__(self, session, start_date, end_date, course_id=None, with_device_type=True, time_period_date=True):
 		self.session = session
 		qccv = self.query_course_catalog_views = QueryCourseCatalogViews(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -36,6 +37,9 @@ class CourseCatalogViewsTimeseries(object):
 			new_df = qccv.add_device_type(self.dataframe)
 			if new_df is not None: 
 				self.dataframe = new_df
+		
+		if time_period_date :
+			self.dataframe = add_timestamp_period(self.dataframe)
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
@@ -59,7 +63,7 @@ class CourseEnrollmentsTimeseries(object):
 	"""
 	analyze the number of course enrollments given time period and list of course id
 	"""
-	def __init__(self, session, start_date, end_date, course_id=None, with_device_type=True):
+	def __init__(self, session, start_date, end_date, course_id=None, with_device_type=True, time_period_date=True):
 		self.session = session
 		qce = self.query_course_enrollments = QueryCourseEnrollments(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -73,6 +77,9 @@ class CourseEnrollmentsTimeseries(object):
 			new_df = qce.add_device_type(self.dataframe)
 			if new_df is not None: 
 				self.dataframe = new_df
+
+		if time_period_date :
+			self.dataframe = add_timestamp_period(self.dataframe)
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
@@ -95,7 +102,7 @@ class CourseDropsTimeseries(object):
 	"""
 	analyze the number of course drops given time period and list of course id
 	"""
-	def __init__(self, session, start_date, end_date, course_id=None, with_device_type=True):
+	def __init__(self, session, start_date, end_date, course_id=None, with_device_type=True, time_period_date=True):
 		self.session = session
 		qcd = self.query_course_drops = QueryCourseDrops(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -109,6 +116,8 @@ class CourseDropsTimeseries(object):
 			new_df = qcd.add_device_type(self.dataframe)
 			if new_df is not None: 
 				self.dataframe = new_df
+		if time_period_date :
+			self.dataframe = add_timestamp_period(self.dataframe)
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)

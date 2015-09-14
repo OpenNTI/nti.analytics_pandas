@@ -14,13 +14,14 @@ from ..queries import QueryHighlightsCreated
 from .common import explore_unique_users_based_timestamp_date_
 from .common import explore_number_of_events_based_timestamp_date_
 from .common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
+from .common import add_timestamp_period
 
 class HighlightsCreationTimeseries(object):
 	"""
 	analyze the number of highlights creation given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date, course_id=None, with_resource_type=True, with_device_type=True):
+	def __init__(self, session, start_date, end_date, course_id=None, with_resource_type=True, with_device_type=True, time_period_date=True):
 		self.session = session
 		qhc = self.query_highlights_created = QueryHighlightsCreated(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -39,6 +40,9 @@ class HighlightsCreationTimeseries(object):
 			new_df = qhc.add_resource_type(self.dataframe)
 			if new_df is not None: 
 				self.dataframe = new_df
+
+		if time_period_date :
+			self.dataframe = add_timestamp_period(self.dataframe)
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
