@@ -42,3 +42,14 @@ class TestBookmarksEDA(AnalyticsPandasTestBase):
 
 		ratio_df = bct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
 		assert_that(len(ratio_df.index), equal_to(20))
+
+		df = bct.analyze_resource_types()
+		assert_that(len(df), equal_to(22))
+		assert_that(len(df.sum(level = 'timestamp_period')), equal_to(20))
+		assert_that(len(df.sum(level = 'resource_type')), equal_to(2))
+
+		df = bct.analyze_device_types()
+		assert_that(len(df), equal_to(20))
+		assert_that(len(df.sum(level = 'timestamp_period')), equal_to(20))
+		assert_that(len(df.sum(level = 'device_type')), equal_to(1))
+
