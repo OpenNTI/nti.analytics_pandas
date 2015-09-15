@@ -73,3 +73,23 @@ class HighlightsCreationTimeseries(object):
 							 'highlight_id'	:'number_of_highlight_created'}, 
 					inplace=True)
 		return df
+
+	def analyze_resource_types(self):
+		group_by_items = ['timestamp_period', 'resource_type']
+		agg_columns = {	'user_id'	  	: pd.Series.nunique,
+						'highlight_id' 	: pd.Series.nunique}
+		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
+		df.rename(columns = {'user_id'		:'number_of_unique_users',
+							 'highlight_id'	:'number_of_highlight_created'}, 
+					inplace=True)
+		return df
+
+	def analyze_resource_device_types(self):
+		group_by_items = ['timestamp_period', 'resource_type', 'device_type']
+		agg_columns = {	'user_id'	  	: pd.Series.nunique,
+						'highlight_id' 	: pd.Series.nunique}
+		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
+		df.rename(columns = {'user_id'		:'number_of_unique_users',
+							 'highlight_id'	:'number_of_highlight_created'}, 
+					inplace=True)
+		return df

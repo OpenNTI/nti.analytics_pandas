@@ -46,3 +46,11 @@ class TestHighlightsEDA(AnalyticsPandasTestBase):
 		df = hct.analyze_device_types()
 		assert_that(df.columns, has_item('number_of_unique_users'))
 		assert_that(df.columns, has_item('number_of_highlight_created'))
+
+		df = hct.analyze_resource_types()
+		assert_that(df.columns, has_item('number_of_unique_users'))
+		assert_that(df.columns, has_item('number_of_highlight_created'))
+
+		df = hct.analyze_resource_device_types()
+		assert_that(df.columns, has_item('number_of_unique_users'))
+		assert_that(df.columns, has_item('number_of_highlight_created'))		
