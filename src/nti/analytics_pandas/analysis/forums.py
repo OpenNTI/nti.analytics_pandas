@@ -169,6 +169,17 @@ class ForumCommentLikesTimeseries(object):
 										events_df, 'total_forum_comment_likes', unique_users_df)
 		return merge_df
 
+	def analyze_device_types(self):
+		if 'device_type' in self.dataframe.columns:
+			group_by_items = ['timestamp_period', 'device_type']
+			agg_columns = {	'comment_id'	: pd.Series.nunique,
+							'user_id'		: pd.Series.nunique}
+			df = analyze_types_(self.dataframe, group_by_items, agg_columns)
+			df.rename(columns={	'comment_id'	 :'number_of_comments_liked',
+								'user_id'		 :'number_of_unique_users'},
+						inplace=True)
+			return df
+
 class ForumCommentFavoritesTimeseries(object):
 	"""
 	analyze the number of forum comment favorites given time period and list of course id
@@ -208,3 +219,14 @@ class ForumCommentFavoritesTimeseries(object):
 		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
 									events_df, 'total_forum_comment_favorites', unique_users_df)
 		return merge_df
+
+	def analyze_device_types(self):
+		if 'device_type' in self.dataframe.columns:
+			group_by_items = ['timestamp_period', 'device_type']
+			agg_columns = {	'comment_id'	: pd.Series.nunique,
+							'user_id'		: pd.Series.nunique}
+			df = analyze_types_(self.dataframe, group_by_items, agg_columns)
+			df.rename(columns={	'comment_id'	 :'number_of_comments_favorite',
+								'user_id'		 :'number_of_unique_users'},
+						inplace=True)
+			return df

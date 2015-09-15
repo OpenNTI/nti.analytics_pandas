@@ -86,6 +86,9 @@ class TestForumsCreatedEDA(AnalyticsPandasTestBase):
 		ratio_df = fclt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
 		assert_that(ratio_df, equal_to(None))
 
+		df = fclt.analyze_device_types()
+		assert_that(df, equal_to(None))
+
 
 	def test_forum_comment_favorites_based_on_timestamp_date(self):
 		start_date = '2015-01-01'
@@ -101,3 +104,6 @@ class TestForumsCreatedEDA(AnalyticsPandasTestBase):
 
 		ratio_df = fcft.explore_ratio_of_events_over_unique_users_based_timestamp_date()
 		assert_that(ratio_df, equal_to(None))
+
+		df = fcft.analyze_device_types()
+		assert_that(df, equal_to(None))
