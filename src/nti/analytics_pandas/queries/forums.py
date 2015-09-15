@@ -55,7 +55,7 @@ class QueryForumsCommentsCreated(TableQueryMixin):
 		query = self.session.query(fcc.timestamp,
 								   fcc.course_id,
 								   fcc.user_id,
-								   fcc.topic_id, 
+								   fcc.topic_id,
 								   fcc.session_id,
 								   fcc.favorite_count,
 								   fcc.like_count,
@@ -73,7 +73,7 @@ class QueryForumsCommentsCreated(TableQueryMixin):
 		fcc = self.table
 		query = self.session.query(fcc.timestamp,
 								   fcc.user_id,
-								   fcc.topic_id, 
+								   fcc.topic_id,
 								   fcc.session_id,
 								   fcc.favorite_count,
 								   fcc.like_count,
@@ -91,8 +91,8 @@ class QueryForumsCommentsCreated(TableQueryMixin):
 		new_df = add_device_type_(self.session, dataframe)
 		return new_df
 
-
 class QueryForumCommentFavorites(TableQueryMixin):
+
 	table = ForumCommentFavorites
 
 	def filter_by_period_of_time(self, start_date=None, end_date=None):
@@ -120,8 +120,8 @@ class QueryForumCommentFavorites(TableQueryMixin):
 		new_df = add_device_type_(self.session, dataframe)
 		return new_df
 
-
 class QueryForumCommentLikes(TableQueryMixin):
+
 	table = ForumCommentLikes
 
 	def filter_by_period_of_time(self, start_date=None, end_date=None):
