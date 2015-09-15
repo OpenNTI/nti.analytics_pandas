@@ -18,13 +18,17 @@ from .common import explore_unique_users_based_timestamp_date_
 from .common import explore_number_of_events_based_timestamp_date_
 from .common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
 from .common import add_timestamp_period
+from .common import analyze_types_
+
+import pandas as pd
 
 class NotesCreationTimeseries(object):
 	"""
 	analyze the number of notes created given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date, course_id=None, with_resource_type = True, with_device_type = True, time_period_date=True):
+	def __init__(self, session, start_date, end_date, course_id=None, with_resource_type = True, 
+				with_device_type = True, time_period_date=True):
 		self.session = session
 		qnc = self.query_notes_created = QueryNotesCreated(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -47,7 +51,6 @@ class NotesCreationTimeseries(object):
 		if time_period_date :
 			self.dataframe = add_timestamp_period(self.dataframe)
 
-
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
 		if events_df is not None :
@@ -64,6 +67,37 @@ class NotesCreationTimeseries(object):
 		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
 										events_df, 'total_notes_created', unique_users_df)
 		return merge_df
+
+	def analyze_device_types(self):
+		group_by_items = ['timestamp_period', 'device_type', 'sharing']
+		agg_columns = {	'user_id'	: pd.Series.nunique,
+						'note_id' 	: pd.Series.nunique}
+		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
+		df.rename(columns = {'user_id'	:'number_of_unique_users',
+							 'note_id'	:'number_of_note_created'}, 
+					inplace=True)
+		return df
+
+	def analyze_resource_types(self):
+		group_by_items = ['timestamp_period', 'resource_type', 'sharing']
+		agg_columns = {	'user_id'	: pd.Series.nunique,
+						'note_id' 	: pd.Series.nunique}
+		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
+		df.rename(columns = {'user_id'	:'number_of_unique_users',
+							 'note_id'	:'number_of_note_created'}, 
+					inplace=True)
+		return df
+
+	def analyze_resource_device_types(self):
+		group_by_items = ['timestamp_period', 'resource_type', 'sharing', 'device_type']
+		agg_columns = {	'user_id'	: pd.Series.nunique,
+						'note_id' 	: pd.Series.nunique}
+		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
+		df.rename(columns = {'user_id'	:'number_of_unique_users',
+							 'note_id'	:'number_of_note_created'}, 
+					inplace=True)
+		return df
+
 
 class NotesViewTimeseries(object):
 	"""

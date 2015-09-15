@@ -46,6 +46,18 @@ class TestNotesEDA(AnalyticsPandasTestBase):
 		ratio_df = nct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
 		assert_that(len(ratio_df.index), equal_to(20))
 
+		df = nct.analyze_device_types()
+		assert_that(df.columns, has_item('number_of_unique_users'))
+		assert_that(df.columns, has_item('number_of_note_created'))
+
+		df = nct.analyze_resource_types()
+		assert_that(df.columns, has_item('number_of_unique_users'))
+		assert_that(df.columns, has_item('number_of_note_created'))
+
+		df = nct.analyze_resource_device_types()
+		assert_that(df.columns, has_item('number_of_unique_users'))
+		assert_that(df.columns, has_item('number_of_note_created'))
+
 	def test_notes_view_based_on_timestamp_date(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
