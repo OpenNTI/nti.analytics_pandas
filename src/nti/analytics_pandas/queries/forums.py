@@ -56,7 +56,16 @@ class QueryForumsCommentsCreated(TableQueryMixin):
 								   fcc.course_id,
 								   fcc.user_id,
 								   fcc.topic_id, 
-								   fcc.session_id).filter(fcc.timestamp.between(start_date, end_date))
+								   fcc.session_id,
+								   fcc.favorite_count,
+								   fcc.like_count,
+								   fcc.comment_length,
+								   fcc.comment_id,
+								   fcc.forum_id,
+								   fcc.parent_id,
+								   fcc.parent_user_id,
+								   fcc.is_flagged,
+								   fcc.deleted).filter(fcc.timestamp.between(start_date, end_date))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
@@ -64,8 +73,17 @@ class QueryForumsCommentsCreated(TableQueryMixin):
 		fcc = self.table
 		query = self.session.query(fcc.timestamp,
 								   fcc.user_id,
-								   fcc.topic_id,
-								   fcc.session_id).filter(fcc.timestamp.between(start_date, end_date)).filter(fcc.course_id.in_(course_id))
+								   fcc.topic_id, 
+								   fcc.session_id,
+								   fcc.favorite_count,
+								   fcc.like_count,
+								   fcc.comment_length,
+								   fcc.comment_id,
+								   fcc.forum_id,
+								   fcc.parent_id,
+								   fcc.parent_user_id,
+								   fcc.is_flagged,
+								   fcc.deleted).filter(fcc.timestamp.between(start_date, end_date)).filter(fcc.course_id.in_(course_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 

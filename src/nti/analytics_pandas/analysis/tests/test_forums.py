@@ -63,6 +63,14 @@ class TestForumsCreatedEDA(AnalyticsPandasTestBase):
 		ratio_df = fcct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
 		assert_that(len(ratio_df.index), equal_to(70))
 
+		df = fcct.analyze_device_types()
+		assert_that(df.columns, has_item('number_of_comment_created'))
+		assert_that(df.columns, has_item('number_of_unique_users'))
+		assert_that(df.columns, has_item('average_comment_length'))
+		assert_that(df.columns, has_item('favorite_count'))
+		assert_that(df.columns, has_item('like_count'))
+
+
 	def test_forum_comment_likes_based_on_timestamp_date(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
