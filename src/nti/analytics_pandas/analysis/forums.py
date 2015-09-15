@@ -18,13 +18,17 @@ from .common import explore_unique_users_based_timestamp_date_
 from .common import explore_number_of_events_based_timestamp_date_
 from .common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
 from .common import add_timestamp_period
+from .common import analyze_types_
+
+import pandas as pd
 
 class ForumsCreatedTimeseries(object):
 	"""
 	analyze the number of forums created given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date, course_id=None, with_device_type = True, time_period_date=True):
+	def __init__(self, session, start_date, end_date, course_id=None, with_device_type = True, 
+				time_period_date=True):
 		self.session = session
 		qfc = self.query_forums_created = QueryForumsCreated(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -58,6 +62,18 @@ class ForumsCreatedTimeseries(object):
 		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
 											events_df, 'total_forums_created', unique_users_df)
 		return merge_df
+
+	def analyze_device_types(self):
+		if 'device_type' in self.dataframe.columns:
+			group_by_items = ['timestamp_period', 'device_type']
+			agg_columns = {	'forum_id'	: pd.Series.nunique,
+							'user_id'		: pd.Series.nunique }
+			df = analyze_types_(self.dataframe, group_by_items, agg_columns)
+			df.rename(columns={	'forum_id'		:'number_of_forums_created',
+								'user_id'		:'number_of_unique_users'},
+						inplace=True)
+			return df
+
 
 class ForumsCommentsCreatedTimeseries(object):
 	"""

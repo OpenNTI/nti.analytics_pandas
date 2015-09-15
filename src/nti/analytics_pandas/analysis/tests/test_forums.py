@@ -42,6 +42,10 @@ class TestForumsCreatedEDA(AnalyticsPandasTestBase):
 		ratio_df = fct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
 		assert_that(len(ratio_df.index), equal_to(1))
 
+		#df is None since the session_id in forumscreated of given course and time period is NULL
+		df = fct.analyze_device_types()
+		assert_that(df, equal_to(None))
+
 	def test_forums_comments_created_based_on_timestamp_date(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
