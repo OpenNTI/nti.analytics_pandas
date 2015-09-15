@@ -15,6 +15,9 @@ from .common import explore_unique_users_based_timestamp_date_
 from .common import explore_number_of_events_based_timestamp_date_
 from .common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
 from .common import add_timestamp_period
+from .common import analyze_types_
+
+import pandas as pd
 
 class HighlightsCreationTimeseries(object):
 	"""
@@ -60,3 +63,13 @@ class HighlightsCreationTimeseries(object):
 		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
 										events_df, 'total_highlights_created', unique_users_df)
 		return merge_df
+
+	def analyze_device_types(self):
+		group_by_items = ['timestamp_period', 'device_type']
+		agg_columns = {	'user_id'	  	: pd.Series.nunique,
+						'highlight_id' 	: pd.Series.nunique}
+		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
+		df.rename(columns = {'user_id'		:'number_of_unique_users',
+							 'highlight_id'	:'number_of_highlight_created'}, 
+					inplace=True)
+		return df

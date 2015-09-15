@@ -42,3 +42,7 @@ class TestHighlightsEDA(AnalyticsPandasTestBase):
 
 		ratio_df = hct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
 		assert_that(len(ratio_df.index), equal_to(36))
+
+		df = hct.analyze_device_types()
+		assert_that(df.columns, has_item('number_of_unique_users'))
+		assert_that(df.columns, has_item('number_of_highlight_created'))
