@@ -21,6 +21,7 @@ from .common import add_timestamp_period
 from .common import analyze_types_
 
 import pandas as pd
+import numpy as np
 
 class ForumsCreatedTimeseries(object):
 	"""
@@ -113,6 +114,21 @@ class ForumsCommentsCreatedTimeseries(object):
 		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
 									events_df, 'total_forums_comments_created', unique_users_df)
 		return merge_df
+
+	def analyze_device_types(self):
+		if 'device_type' in self.dataframe.columns:
+			group_by_items = ['timestamp_period', 'device_type']
+			agg_columns = {	'comment_id'	: pd.Series.nunique,
+							'user_id'		: pd.Series.nunique,
+							'comment_length': np.mean,
+							'like_count'	: np.sum,
+							'favorite_count': np.sum}
+			df = analyze_types_(self.dataframe, group_by_items, agg_columns)
+			df.rename(columns={	'comment_id'	 :'number_of_comment_created',
+								'user_id'		 :'number_of_unique_users',
+								'comment_length' :'average_comment_length'},
+						inplace=True)
+			return df
 
 class ForumCommentLikesTimeseries(object):
 	"""
