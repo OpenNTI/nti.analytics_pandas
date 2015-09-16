@@ -19,6 +19,7 @@ from nti.analytics_pandas.analysis.notes import NotesCreationTimeseries
 from nti.analytics_pandas.analysis.notes import NoteFavoritesTimeseries
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
+from nti.analytics_pandas.utils import get_values_of_series_categorical_index_
 
 class TestNotesEDA(AnalyticsPandasTestBase):
 
@@ -85,6 +86,10 @@ class TestNotesEDA(AnalyticsPandasTestBase):
 
 		most_viewed_notes = nvt.get_the_most_viewed_notes()
 		assert_that(len(most_viewed_notes), equal_to(10))
+		index_values = get_values_of_series_categorical_index_(most_viewed_notes)
+		assert_that(type(index_values), equal_to(np.ndarray))
+
+
 
 	def test_note_likes_based_on_timestamp_date(self):
 		start_date = '2015-01-01'

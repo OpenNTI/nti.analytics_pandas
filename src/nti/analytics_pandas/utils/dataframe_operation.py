@@ -9,3 +9,11 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
+import pandas
+
+def get_values_of_series_categorical_index_(categorical_series):
+	index = categorical_series.index.values
+	if isinstance(index, pandas.core.categorical.Categorical):
+		return index.get_values()
+
+
