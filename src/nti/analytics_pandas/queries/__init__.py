@@ -40,3 +40,5 @@ from .topics import QueryTopicFavorites
 from .videos import QueryVideoEvents
 
 from .resources import QueryResources
+
+from .users import QueryUsers

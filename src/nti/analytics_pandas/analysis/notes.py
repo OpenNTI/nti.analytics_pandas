@@ -13,6 +13,7 @@ from ..queries import QueryNoteLikes
 from ..queries import QueryNotesViewed
 from ..queries import QueryNotesCreated
 from ..queries import QueryNoteFavorites
+from ..queries import QueryUsers
 
 from .common import explore_unique_users_based_timestamp_date_
 from .common import explore_number_of_events_based_timestamp_date_

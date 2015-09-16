@@ -11,4 +11,3 @@ logger = __import__('logging').getLogger(__name__)
 
 from .string_folder import StringFolder
 from .orm_to_dataframe import orm_dataframe
-from .dataframe_operation import add_timestamp_period_date
