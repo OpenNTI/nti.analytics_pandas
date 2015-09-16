@@ -20,9 +20,9 @@ from .common import explore_number_of_events_based_timestamp_date_
 from .common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
 from .common import add_timestamp_period
 from .common import analyze_types_
-from .common import cast_columns_as_category_
 
 from ..utils import get_values_of_series_categorical_index_
+from ..utils import cast_columns_as_category_
 
 import pandas as pd
 
@@ -191,6 +191,10 @@ class NotesViewTimeseries(object):
 		df = df.merge(note_author_df).merge(author_name_df)
 		df.rename(columns={'user_id':'author_id', 'username' : 'author_name'}, inplace=True)
 		return df
+
+	def get_the_most_active_users(self, max_rank_number=10):
+		df = self.dataframe
+		most_active_users = df.groupby('user_id').size().order(ascending=False)[:max_rank_number]
 
 
 class NoteLikesTimeseries(object):

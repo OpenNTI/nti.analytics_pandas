@@ -16,4 +16,10 @@ def get_values_of_series_categorical_index_(categorical_series):
 	if isinstance(index, pandas.core.categorical.Categorical):
 		return index.get_values()
 
+def cast_columns_as_category_(df, list_of_columns):
+	for column in list_of_columns:
+		df[column] = df[column].astype('category')
+	return df
+
+
 

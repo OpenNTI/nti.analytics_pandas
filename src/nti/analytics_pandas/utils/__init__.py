@@ -12,3 +12,4 @@ logger = __import__('logging').getLogger(__name__)
 from .string_folder import StringFolder
 from .orm_to_dataframe import orm_dataframe
 from .dataframe_operation import get_values_of_series_categorical_index_
+from .dataframe_operation import cast_columns_as_category_
