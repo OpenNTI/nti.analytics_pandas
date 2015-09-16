@@ -16,8 +16,9 @@ from nti.analytics.database.enrollments import CourseCatalogViews
 
 from .mixins import TableQueryMixin
 
-from . import orm_dataframe
 from .common import add_device_type_
+
+from . import orm_dataframe
 
 class QueryCourseCatalogViews(TableQueryMixin):
 
@@ -25,22 +26,22 @@ class QueryCourseCatalogViews(TableQueryMixin):
 
 	def filter_by_period_of_time(self, start_date=None, end_date=None):
 		ccv = self.table
-		query = self.session.query( ccv.timestamp,
-									ccv.course_id,
-									ccv.time_length,
-									ccv.session_id,
-									ccv.user_id,
-									ccv.context_path).filter(ccv.timestamp.between(start_date, end_date))
+		query = self.session.query(ccv.timestamp,
+								   ccv.course_id,
+								   ccv.time_length,
+								   ccv.session_id,
+								   ccv.user_id,
+								   ccv.context_path).filter(ccv.timestamp.between(start_date, end_date))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
 	def filter_by_period_of_time_and_course_id(self, start_date=None, end_date=None, course_id=()):
 		ccv = self.table
-		query = self.session.query( ccv.timestamp,
-									ccv.time_length,
-									ccv.session_id,
-									ccv.user_id,
-									ccv.context_path).filter(ccv.timestamp.between(start_date, end_date)).filter(ccv.course_id.in_(course_id))
+		query = self.session.query(ccv.timestamp,
+								   ccv.time_length,
+								   ccv.session_id,
+								   ccv.user_id,
+								   ccv.context_path).filter(ccv.timestamp.between(start_date, end_date)).filter(ccv.course_id.in_(course_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
@@ -54,20 +55,20 @@ class QueryCourseEnrollments(TableQueryMixin):
 
 	def filter_by_period_of_time(self, start_date=None, end_date=None):
 		ce = self.table
-		query = self.session.query( ce.timestamp,
-									ce.course_id,
-									ce.type_id,
-									ce.session_id,
-									ce.user_id).filter(ce.timestamp.between(start_date, end_date))
+		query = self.session.query(ce.timestamp,
+								   ce.course_id,
+								   ce.type_id,
+								   ce.session_id,
+								   ce.user_id).filter(ce.timestamp.between(start_date, end_date))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
 	def filter_by_period_of_time_and_course_id(self, start_date=None, end_date=None, course_id=()):
 		ce = self.table
-		query = self.session.query( ce.timestamp,
-									ce.type_id,
-									ce.session_id,
-									ce.user_id).filter(ce.timestamp.between(start_date, end_date)).filter(ce.course_id.in_(course_id))
+		query = self.session.query(ce.timestamp,
+								   ce.type_id,
+								   ce.session_id,
+								   ce.user_id).filter(ce.timestamp.between(start_date, end_date)).filter(ce.course_id.in_(course_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
@@ -80,8 +81,8 @@ class QueryEnrollmentTypes(TableQueryMixin):
 
 	def get_enrollment_types(self):
 		et = self.table
-		query = self.session.query(	et.type_id,
-									et.type_name)
+		query = self.session.query(et.type_id,
+								   et.type_name)
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
@@ -91,19 +92,19 @@ class QueryCourseDrops(TableQueryMixin):
 
 	def filter_by_period_of_time(self, start_date=None, end_date=None):
 		cd = self.table
-		query = self.session.query( cd.timestamp,
-									cd.course_id,
-									cd.session_id,
-									cd.user_id).filter(cd.timestamp.between(start_date, end_date))
+		query = self.session.query(cd.timestamp,
+								   cd.course_id,
+								   cd.session_id,
+								   cd.user_id).filter(cd.timestamp.between(start_date, end_date))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
 	def filter_by_period_of_time_and_course_id(self, start_date=None, end_date=None, course_id=()):
 		cd = self.table
-		query = self.session.query( cd.timestamp,
-									cd.course_id,
-									cd.session_id,
-									cd.user_id).filter(cd.timestamp.between(start_date, end_date)).filter(cd.course_id.in_(course_id))
+		query = self.session.query(cd.timestamp,
+								   cd.course_id,
+								   cd.session_id,
+								   cd.user_id).filter(cd.timestamp.between(start_date, end_date)).filter(cd.course_id.in_(course_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
