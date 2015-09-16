@@ -10,6 +10,8 @@ __docformat__ = "restructuredtext en"
 logger = __import__('logging').getLogger(__name__)
 
 import pandas as pd
+from ..queries import QueryUsers
+from ..utils import get_values_of_series_categorical_index_
 
 def add_timestamp_period(df, period_format=u'%Y-%m-%d'):
 	if 'timestamp' in df.columns:
@@ -46,5 +48,11 @@ def analyze_types_(df, group_by_items, agg_columns=None):
 		else :
 			events_df = grouped.aggregate(pd.Series.nunique)
 		return events_df
+
+def get_most_active_users_(df, session, max_rank_number=10):
+	most_active_user_id = df.groupby('user_id').size().order(ascending=False)[:max_rank_number]
+	users_id = get_values_of_series_categorical_index_(most_active_user_id).tolist()
+	most_active_user_df = QueryUsers(session).get_username_filter_by_user_id(users_id)
+	return most_active_user_df
 
 

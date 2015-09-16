@@ -90,8 +90,10 @@ class TestNotesEDA(AnalyticsPandasTestBase):
 		assert_that(type(index_values), equal_to(np.ndarray))
 
 		most_viewed_notes_author_df = nvt.get_the_most_viewed_notes_and_its_author()
-		assert_that(len(most_viewed_notes), len(most_viewed_notes_author_df))
+		assert_that(len(most_viewed_notes), equal_to(len(most_viewed_notes_author_df.index)))
 		
+		most_active_users_df = nvt.get_the_most_active_users()
+		assert_that(len(most_active_users_df.index), equal_to(10))
 
 
 	def test_note_likes_based_on_timestamp_date(self):
