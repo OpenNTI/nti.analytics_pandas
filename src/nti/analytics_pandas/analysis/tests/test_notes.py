@@ -79,6 +79,13 @@ class TestNotesEDA(AnalyticsPandasTestBase):
 		ratio_df = nvt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
 		assert_that(len(ratio_df.index), equal_to(42))
 
+		df  = nvt.analyze_device_types()
+		assert_that(df.columns, has_item('number_of_unique_users'))
+		assert_that(df.columns, has_item('number_of_unique_notes_viewed'))
+
+		most_viewed_notes = nvt.get_the_most_viewed_notes()
+		assert_that(len(most_viewed_notes), equal_to(10))
+
 	def test_note_likes_based_on_timestamp_date(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'

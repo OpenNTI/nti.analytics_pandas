@@ -19,6 +19,7 @@ from .common import explore_number_of_events_based_timestamp_date_
 from .common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
 from .common import add_timestamp_period
 from .common import analyze_types_
+from .common import cast_columns_as_category_
 
 import pandas as pd
 
@@ -127,6 +128,8 @@ class NotesViewTimeseries(object):
 		if time_period_date :
 			self.dataframe = add_timestamp_period(self.dataframe)
 
+		categorical_columns = ['note_id', 'resource_type', 'device_type', 'user_id']
+		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
@@ -144,6 +147,33 @@ class NotesViewTimeseries(object):
 		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
 											events_df, 'total_notes_viewed', unique_users_df)
 		return merge_df
+
+	def analyze_device_types(self):
+		"""
+		group notes viewed dataframe by timestamp_period and device_type
+		count the number of unique users and unique notes in each group
+		return the result as dataframe
+
+		"""
+		group_by_items = ['timestamp_period', 'device_type']
+		agg_columns = {	'user_id'	: pd.Series.nunique,
+						'note_id' 	: pd.Series.nunique}
+
+		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
+		df.rename(columns = {'user_id'	:'number_of_unique_users',
+							 'note_id'	:'number_of_unique_notes_viewed'}, 
+					inplace=True)
+
+		return df
+
+	def get_the_most_viewed_notes(self, max_rank_number = 10):
+		"""
+		find the top n most viewed notes 
+		"""
+		df = self.dataframe
+		most_viewed = df.groupby('note_id').size().order(ascending=False)[:max_rank_number]
+		return most_viewed
+
 
 class NoteLikesTimeseries(object):
 	"""
