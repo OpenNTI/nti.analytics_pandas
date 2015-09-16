@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-.. $Id: users.py 72803 2015-09-11 15:50:12Z carlos.sanchez $
+.. $Id$
 """
 
 from __future__ import print_function, unicode_literals, absolute_import, division
@@ -32,7 +32,7 @@ class QueryUsers(TableQueryMixin):
 
 	def get_username_filter_by_user_id(self, users_id):
 		u = self.table
-		query = self.session.query(	u.user_id,
+		query = self.session.query(u.user_id,
 									u.username).filter(u.user_id.in_(users_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe

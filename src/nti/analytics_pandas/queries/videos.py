@@ -13,9 +13,10 @@ from nti.analytics.database.resource_views import VideoEvents
 
 from .mixins import TableQueryMixin
 
-from . import orm_dataframe
 from .common import add_device_type_
 from .common import add_resource_type_
+
+from . import orm_dataframe
 
 class QueryVideoEvents(TableQueryMixin):
 
@@ -41,7 +42,7 @@ class QueryVideoEvents(TableQueryMixin):
 
 	def filter_by_period_of_time_and_course_id(self, start_date=None, end_date=None, course_id=()):
 		ve = self.table
-		query = self.session.query( ve.video_view_id,
+		query = self.session.query(ve.video_view_id,
 									ve.timestamp,
 									ve.resource_id,
 									ve.context_path,
@@ -63,5 +64,3 @@ class QueryVideoEvents(TableQueryMixin):
 	def add_resource_type(self, dataframe):
 		new_df = add_resource_type_(self.session, dataframe)
 		return new_df
-
-	

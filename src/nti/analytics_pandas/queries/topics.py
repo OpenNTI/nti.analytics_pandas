@@ -16,9 +16,9 @@ from nti.analytics.database.boards import TopicFavorites
 
 from .mixins import TableQueryMixin
 
-from . import orm_dataframe
 from .common import add_device_type_
 
+from . import orm_dataframe
 
 class QueryTopicsCreated(TableQueryMixin):
 
@@ -81,7 +81,6 @@ class QueryTopicsViewed(TableQueryMixin):
 		new_df = add_device_type_(self.session, dataframe)
 		return new_df
 
-
 class QueryTopicFavorites(TableQueryMixin):
 
 	table = TopicFavorites
@@ -110,7 +109,6 @@ class QueryTopicFavorites(TableQueryMixin):
 	def add_device_type(self, dataframe):
 		new_df = add_device_type_(self.session, dataframe)
 		return new_df
-
 
 class QueryTopicLikes(TableQueryMixin):
 
