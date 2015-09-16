@@ -46,3 +46,9 @@ def analyze_types_(df, group_by_items, agg_columns=None):
 		else :
 			events_df = grouped.aggregate(pd.Series.nunique)
 		return events_df
+
+def cast_columns_as_category_(df, list_of_columns):
+	for column in list_of_columns:
+		df[column] = df[column].astype('category')
+	return df
+
