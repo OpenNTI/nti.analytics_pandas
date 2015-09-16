@@ -189,7 +189,9 @@ class NotesViewTimeseries(object):
 		author_name_df = QueryUsers(self.session).get_username_filter_by_user_id(authors_id)
 
 		df = df.merge(note_author_df).merge(author_name_df)
+		df.rename(columns={'user_id':'author_id', 'username' : 'author_name'}, inplace=True)
 		return df
+
 
 class NoteLikesTimeseries(object):
 	"""
