@@ -29,3 +29,10 @@ class QueryUsers(TableQueryMixin):
 									u.create_date).filter(u.user_id.in_(users_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
+
+	def get_username_filter_by_user_id(self, users_id):
+		u = self.table
+		query = self.session.query(	u.user_id,
+									u.username).filter(u.user_id.in_(users_id))
+		dataframe = orm_dataframe(query, self.columns)
+		return dataframe

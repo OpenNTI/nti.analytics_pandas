@@ -22,6 +22,8 @@ from .common import add_timestamp_period
 from .common import analyze_types_
 from .common import cast_columns_as_category_
 
+from ..utils import get_values_of_series_categorical_index_
+
 import pandas as pd
 
 class NotesCreationTimeseries(object):
@@ -169,12 +171,25 @@ class NotesViewTimeseries(object):
 
 	def get_the_most_viewed_notes(self, max_rank_number = 10):
 		"""
-		find the top n most viewed notes 
+		find the top n most viewed notes and return as pandas.Series
 		"""
 		df = self.dataframe
 		most_viewed = df.groupby('note_id').size().order(ascending=False)[:max_rank_number]
 		return most_viewed
 
+	def get_the_most_viewed_notes_and_its_author(self, max_rank_number=10):
+		most_views = self.get_the_most_viewed_notes(max_rank_number)
+		df = most_views.to_frame(name='number_of_notes_viewed')		
+		df.reset_index(level=0, inplace=True)
+
+		notes_id = get_values_of_series_categorical_index_(most_views).tolist()
+		note_author_df = QueryNotesCreated(self.session).get_author_id_filter_by_note_id(notes_id)
+		
+		authors_id = note_author_df['user_id'].values.tolist()
+		author_name_df = QueryUsers(self.session).get_username_filter_by_user_id(authors_id)
+
+		df = df.merge(note_author_df).merge(author_name_df)
+		return df
 
 class NoteLikesTimeseries(object):
 	"""
