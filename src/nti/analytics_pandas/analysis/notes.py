@@ -153,7 +153,7 @@ class NotesViewTimeseries(object):
 											events_df, 'total_note_views', unique_users_df)
 		return merge_df
 
-	def analyze_device_types(self):
+	def analyze_unique_items_based_on_device_type(self):
 		"""
 		group notes viewed dataframe by timestamp_period and device_type
 		count the number of unique users and unique notes in each group
@@ -168,8 +168,21 @@ class NotesViewTimeseries(object):
 		df.rename(columns = {'user_id'	:'number_of_unique_users',
 							 'note_id'	:'number_of_unique_notes_viewed'}, 
 					inplace=True)
-
 		return df
+
+	def analyze_total_events_based_on_device_type(self):
+		"""
+		group notes viewed dataframe by timestamp_period and device_type
+		count the total number of notes views
+		"""
+		group_by_items = ['timestamp_period', 'device_type']
+		agg_columns = {	'note_id' 	: pd.Series.count}
+
+		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
+		df.rename(columns = {'note_id'	:'total_note_views'}, 
+					inplace=True)
+		return df
+
 
 	def get_the_most_viewed_notes(self, max_rank_number = 10):
 		"""

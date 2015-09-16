@@ -80,9 +80,12 @@ class TestNotesEDA(AnalyticsPandasTestBase):
 		ratio_df = nvt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
 		assert_that(len(ratio_df.index), equal_to(42))
 
-		df  = nvt.analyze_device_types()
+		df  = nvt.analyze_unique_items_based_on_device_type()
 		assert_that(df.columns, has_item('number_of_unique_users'))
 		assert_that(df.columns, has_item('number_of_unique_notes_viewed'))
+
+		df  = nvt.analyze_total_events_based_on_device_type()
+		assert_that(df.columns, has_item('total_note_views'))
 
 		assert_that(len(ratio_df.index), equal_to(len(df.sum(level='timestamp_period'))))
 
