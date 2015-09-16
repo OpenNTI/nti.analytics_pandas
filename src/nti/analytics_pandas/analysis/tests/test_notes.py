@@ -71,7 +71,7 @@ class TestNotesEDA(AnalyticsPandasTestBase):
 		event_by_date_df = nvt.explore_number_of_events_based_timestamp_date()
 		assert_that(len(event_by_date_df.index), equal_to(42))
 
-		total_events = np.sum(event_by_date_df['total_notes_viewed'])
+		total_events = np.sum(event_by_date_df['total_note_views'])
 		assert_that(total_events, equal_to(len(nvt.dataframe.index)))
 
 		unique_users_by_date = nvt.explore_unique_users_based_timestamp_date()
@@ -83,6 +83,8 @@ class TestNotesEDA(AnalyticsPandasTestBase):
 		df  = nvt.analyze_device_types()
 		assert_that(df.columns, has_item('number_of_unique_users'))
 		assert_that(df.columns, has_item('number_of_unique_notes_viewed'))
+
+		assert_that(len(ratio_df.index), equal_to(len(df.sum(level='timestamp_period'))))
 
 		most_viewed_notes = nvt.get_the_most_viewed_notes()
 		assert_that(len(most_viewed_notes), equal_to(10))

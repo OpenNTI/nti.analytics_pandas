@@ -138,7 +138,8 @@ class NotesViewTimeseries(object):
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
 		if events_df is not None :
-			events_df.rename(columns={'index':'total_notes_viewed'}, inplace=True)
+			events_df.rename(columns={'index':'total_note_views'}, inplace=True)
+		events_df = events_df[['total_note_views']]
 		return events_df
 
 	def explore_unique_users_based_timestamp_date(self):
@@ -149,7 +150,7 @@ class NotesViewTimeseries(object):
 		events_df = self.explore_number_of_events_based_timestamp_date()
 		unique_users_df = self.explore_unique_users_based_timestamp_date()
 		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
-											events_df, 'total_notes_viewed', unique_users_df)
+											events_df, 'total_note_views', unique_users_df)
 		return merge_df
 
 	def analyze_device_types(self):
