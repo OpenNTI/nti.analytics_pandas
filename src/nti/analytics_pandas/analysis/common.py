@@ -51,8 +51,17 @@ def analyze_types_(df, group_by_items, agg_columns=None):
 
 def get_most_active_users_(df, session, max_rank_number=10):
 	most_active_user_id = df.groupby('user_id').size().order(ascending=False)[:max_rank_number]
+	most_active_user_id_df = most_active_user_id.to_frame(name='number_of_activities')		
+	most_active_user_id_df.reset_index(level=0, inplace=True)
+
 	users_id = get_values_of_series_categorical_index_(most_active_user_id).tolist()
 	most_active_user_df = QueryUsers(session).get_username_filter_by_user_id(users_id)
+	
+	most_active_user_df = most_active_user_df.merge(most_active_user_id_df)
+
+	most_active_user_df.sort(['number_of_activities'], ascending=[0], inplace=True)
+	most_active_user_df.reset_index(inplace=True, drop=True)
+
 	return most_active_user_df
 
 
