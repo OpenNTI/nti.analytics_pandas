@@ -179,7 +179,7 @@ class NotesViewTimeseries(object):
 
 	def get_the_most_viewed_notes_and_its_author(self, max_rank_number=10):
 		most_views = self.get_the_most_viewed_notes(max_rank_number)
-		df = most_views.to_frame(name='number_of_notes_viewed')		
+		df = most_views.to_frame(name='number_of_views')		
 		df.reset_index(level=0, inplace=True)
 
 		notes_id = get_values_of_series_categorical_index_(most_views).tolist()
