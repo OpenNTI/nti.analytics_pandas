@@ -13,13 +13,13 @@ import pandas as pd
 
 from ..queries import QueryBookmarksCreated
 
+from ..utils import cast_columns_as_category_
+
 from .common import analyze_types_
 from .common import add_timestamp_period
 from .common import explore_unique_users_based_timestamp_date_
 from .common import explore_number_of_events_based_timestamp_date_
 from .common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
-
-from ..utils import cast_columns_as_category_
 
 class BookmarkCreationTimeseries(object):
 	"""
