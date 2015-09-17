@@ -46,6 +46,13 @@ class QueryResources(TableQueryMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
+	def get_resource_display_name_given_id(self, resources_id=None):
+		r = self.table
+		query = self.session.query( r.resource_id,
+									r.resource_display_name).filter(r.resource_id.in_(resources_id))
+		dataframe = orm_dataframe(query, self.columns)
+		return dataframe
+
 	@classmethod
 	def _label_resource_type(cls, resource_ds_id):
 		# video

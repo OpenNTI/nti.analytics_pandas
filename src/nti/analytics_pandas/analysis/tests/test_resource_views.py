@@ -57,3 +57,15 @@ class TestResourceViewsEDA(AnalyticsPandasTestBase):
 		assert_that(df.columns, has_item('number_of_unique_users'))
 		assert_that(df.columns, has_item('number_of_resource_views'))
 		assert_that(len(ratio_df.index), equal_to(len(df.sum(level='timestamp_period'))))
+
+		df = rvt.get_the_most_active_users()
+		assert_that(df.columns, has_item('user_id'))
+		assert_that(df.columns, has_item('number_of_activities'))
+		assert_that(len(df.index), equal_to(10))
+
+		df = rvt.get_the_most_viewed_resources()
+		assert_that(df.columns, has_item('resource_id'))
+		assert_that(df.columns, has_item('resource_display_name'))
+		assert_that(df.columns, has_item('resource_type'))
+		assert_that(df.columns, has_item('number_of_views'))
+		assert_that(len(df.index), equal_to(10))
