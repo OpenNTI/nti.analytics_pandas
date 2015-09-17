@@ -14,10 +14,11 @@ from nti.analytics.database.boards import ForumCommentLikes
 from nti.analytics.database.boards import ForumCommentsCreated
 from nti.analytics.database.boards import ForumCommentFavorites
 
+from .common import add_device_type_
+
 from .mixins import TableQueryMixin
 
 from . import orm_dataframe
-from .common import add_device_type_
 
 class QueryForumsCreated(TableQueryMixin):
 
