@@ -42,3 +42,7 @@ class TestResourceViewsEDA(AnalyticsPandasTestBase):
 
 		ratio_df = rvt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
 		assert_that(len(ratio_df.index), equal_to(129))
+
+		df = rvt.analyze_events_based_on_resource_type()
+		assert_that(df.columns, has_item('number_of_unique_users'))
+		assert_that(df.columns, has_item('number_of_resource_views'))
