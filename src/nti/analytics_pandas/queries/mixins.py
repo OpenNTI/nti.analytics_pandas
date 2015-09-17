@@ -22,3 +22,6 @@ class TableQueryMixin(object):
 	def columns(self):
 		table = getattr(self.table, '__table__')
 		return table.columns.keys()
+
+	def query(self, *args, **kwargs):
+		return self.session.query(*args, **kwargs)
