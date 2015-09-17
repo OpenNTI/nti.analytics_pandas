@@ -65,3 +65,4 @@ def get_most_active_users_(df, session, max_rank_number=10):
 	return most_active_user_df
 
 
+

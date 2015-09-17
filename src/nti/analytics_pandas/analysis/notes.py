@@ -56,6 +56,9 @@ class NotesCreationTimeseries(object):
 		if time_period_date :
 			self.dataframe = add_timestamp_period(self.dataframe)
 
+		categorical_columns = ['note_id', 'resource_type', 'device_type', 'user_id']
+		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
+
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
 		if events_df is not None :
@@ -102,6 +105,9 @@ class NotesCreationTimeseries(object):
 							 'note_id'	:'number_of_note_created'}, 
 					inplace=True)
 		return df
+
+	def get_the_most_active_users(self,max_rank_number=10):
+		return get_most_active_users_(self.dataframe, self.session, max_rank_number)
 
 
 class NotesViewTimeseries(object):
@@ -153,7 +159,7 @@ class NotesViewTimeseries(object):
 											events_df, 'total_note_views', unique_users_df)
 		return merge_df
 
-	def analyze_unique_items_based_on_device_type(self):
+	def analyze_unique_events_based_on_device_type(self):
 		"""
 		group notes viewed dataframe by timestamp_period and device_type
 		count the number of unique users and unique notes in each group
@@ -161,6 +167,24 @@ class NotesViewTimeseries(object):
 
 		"""
 		group_by_items = ['timestamp_period', 'device_type']
+		agg_columns = {	'user_id'	: pd.Series.nunique,
+						'note_id' 	: pd.Series.nunique}
+
+		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
+		df.rename(columns = {'user_id'	:'number_of_unique_users',
+							 'note_id'	:'number_of_unique_notes_viewed'}, 
+					inplace=True)
+
+		return df
+
+	def analyze_unique_events_based_on_resource_type(self):
+		"""
+		group notes viewed dataframe by timestamp_period and resource_type
+		count the number of unique users and unique notes in each group
+		return the result as dataframe
+
+		"""
+		group_by_items = ['timestamp_period', 'resource_type']
 		agg_columns = {	'user_id'	: pd.Series.nunique,
 						'note_id' 	: pd.Series.nunique}
 
@@ -176,6 +200,19 @@ class NotesViewTimeseries(object):
 		count the total number of notes views
 		"""
 		group_by_items = ['timestamp_period', 'device_type']
+		agg_columns = {	'note_id' 	: pd.Series.count}
+
+		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
+		df.rename(columns = {'note_id'	:'total_note_views'}, 
+					inplace=True)
+		return df
+
+	def analyze_total_events_based_on_resource_type(self):
+		"""
+		group notes viewed dataframe by timestamp_period and resource_type
+		count the total number of notes views
+		"""
+		group_by_items = ['timestamp_period', 'resource_type']
 		agg_columns = {	'note_id' 	: pd.Series.count}
 
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
@@ -209,6 +246,7 @@ class NotesViewTimeseries(object):
 
 	def get_the_most_active_users(self,max_rank_number=10):
 		return get_most_active_users_(self.dataframe, self.session, max_rank_number)
+
 
 
 class NoteLikesTimeseries(object):

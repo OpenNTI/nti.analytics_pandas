@@ -60,3 +60,23 @@ class ResourceViewsTimeseries(object):
 		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
 											events_df, 'total_resource_views', unique_users_df)
 		return merge_df
+
+	def analyze_events_based_on_resource_type(self):
+		"""
+		group course resource views dataframe by timestamp_period and resource_type
+		count the number of unique users and unique resource in each group
+		return the result as dataframe
+
+		"""
+		group_by_items = ['timestamp_period', 'resource_type']
+		agg_columns = {	'user_id'			: pd.Series.nunique,
+						'resource_view_id' 	: pd.Series.nunique}
+
+		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
+		df.rename(columns = {'user_id'	:'number_of_unique_users',
+							 'resource_view_id'	:'number_of_resource_views'}, 
+					inplace=True)
+		return df
+
+
+

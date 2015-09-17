@@ -59,6 +59,9 @@ class TestNotesEDA(AnalyticsPandasTestBase):
 		assert_that(df.columns, has_item('number_of_unique_users'))
 		assert_that(df.columns, has_item('number_of_note_created'))
 
+		df = nct.get_the_most_active_users()
+		assert_that(len(df.index), equal_to(10))
+
 	def test_notes_view_based_on_timestamp_date(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
@@ -80,13 +83,12 @@ class TestNotesEDA(AnalyticsPandasTestBase):
 		ratio_df = nvt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
 		assert_that(len(ratio_df.index), equal_to(42))
 
-		df  = nvt.analyze_unique_items_based_on_device_type()
+		df  = nvt.analyze_unique_events_based_on_device_type()
 		assert_that(df.columns, has_item('number_of_unique_users'))
 		assert_that(df.columns, has_item('number_of_unique_notes_viewed'))
 
 		df  = nvt.analyze_total_events_based_on_device_type()
 		assert_that(df.columns, has_item('total_note_views'))
-
 		assert_that(len(ratio_df.index), equal_to(len(df.sum(level='timestamp_period'))))
 
 		most_viewed_notes = nvt.get_the_most_viewed_notes()
@@ -100,6 +102,14 @@ class TestNotesEDA(AnalyticsPandasTestBase):
 		most_active_users_df = nvt.get_the_most_active_users()
 		assert_that(len(most_active_users_df.index), equal_to(10))
 
+		df = nvt.analyze_unique_events_based_on_resource_type()
+		assert_that(df.columns, has_item('number_of_unique_users'))
+		assert_that(df.columns, has_item('number_of_unique_notes_viewed'))
+
+
+		df = nvt.analyze_total_events_based_on_resource_type()
+		assert_that(df.columns, has_item('total_note_views'))
+		assert_that(len(ratio_df.index), equal_to(len(df.sum(level='timestamp_period'))))
 
 	def test_note_likes_based_on_timestamp_date(self):
 		start_date = '2015-01-01'
