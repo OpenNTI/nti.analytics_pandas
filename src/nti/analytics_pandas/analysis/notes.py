@@ -9,31 +9,31 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
+import pandas as pd
+
+from ..queries import QueryUsers
 from ..queries import QueryNoteLikes
 from ..queries import QueryNotesViewed
 from ..queries import QueryNotesCreated
 from ..queries import QueryNoteFavorites
-from ..queries import QueryUsers
 
+from ..utils import cast_columns_as_category_
+from ..utils import get_values_of_series_categorical_index_
+
+from .common import analyze_types_
+from .common import add_timestamp_period
+from .common import get_most_active_users_
 from .common import explore_unique_users_based_timestamp_date_
 from .common import explore_number_of_events_based_timestamp_date_
 from .common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
-from .common import add_timestamp_period
-from .common import analyze_types_
-from .common import get_most_active_users_
-
-from ..utils import get_values_of_series_categorical_index_
-from ..utils import cast_columns_as_category_
-
-import pandas as pd
 
 class NotesCreationTimeseries(object):
 	"""
 	analyze the number of notes created given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date, course_id=None, with_resource_type = True, 
-				with_device_type = True, time_period_date=True):
+	def __init__(self, session, start_date, end_date, course_id=None, with_resource_type=True,
+				 with_device_type=True, time_period_date=True):
 		self.session = session
 		qnc = self.query_notes_created = QueryNotesCreated(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -45,12 +45,12 @@ class NotesCreationTimeseries(object):
 
 		if with_device_type:
 			new_df = qnc.add_device_type(self.dataframe)
-			if new_df is not None: 
+			if new_df is not None:
 				self.dataframe = new_df
 
 		if with_resource_type:
 			new_df = qnc.add_resource_type(self.dataframe)
-			if new_df is not None: 
+			if new_df is not None:
 				self.dataframe = new_df
 
 		if time_period_date :
@@ -81,8 +81,8 @@ class NotesCreationTimeseries(object):
 		agg_columns = {	'user_id'	: pd.Series.nunique,
 						'note_id' 	: pd.Series.nunique}
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
-		df.rename(columns = {'user_id'	:'number_of_unique_users',
-							 'note_id'	:'number_of_note_created'}, 
+		df.rename(columns={'user_id'	:'number_of_unique_users',
+							 'note_id'	:'number_of_note_created'},
 					inplace=True)
 		return df
 
@@ -91,8 +91,8 @@ class NotesCreationTimeseries(object):
 		agg_columns = {	'user_id'	: pd.Series.nunique,
 						'note_id' 	: pd.Series.nunique}
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
-		df.rename(columns = {'user_id'	:'number_of_unique_users',
-							 'note_id'	:'number_of_note_created'}, 
+		df.rename(columns={'user_id'	:'number_of_unique_users',
+							 'note_id'	:'number_of_note_created'},
 					inplace=True)
 		return df
 
@@ -101,21 +101,21 @@ class NotesCreationTimeseries(object):
 		agg_columns = {	'user_id'	: pd.Series.nunique,
 						'note_id' 	: pd.Series.nunique}
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
-		df.rename(columns = {'user_id'	:'number_of_unique_users',
-							 'note_id'	:'number_of_note_created'}, 
+		df.rename(columns={'user_id'	:'number_of_unique_users',
+							 'note_id'	:'number_of_note_created'},
 					inplace=True)
 		return df
 
-	def get_the_most_active_users(self,max_rank_number=10):
+	def get_the_most_active_users(self, max_rank_number=10):
 		return get_most_active_users_(self.dataframe, self.session, max_rank_number)
-
 
 class NotesViewTimeseries(object):
 	"""
 	analyze the number of notes viewed given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date, course_id=None, with_resource_type=True, with_device_type=True, time_period_date=True):
+	def __init__(self, session, start_date, end_date, course_id=None, 
+				 with_resource_type=True, with_device_type=True, time_period_date=True):
 		self.session = session
 		qnv = self.query_notes_viewed = QueryNotesViewed(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -127,12 +127,12 @@ class NotesViewTimeseries(object):
 
 		if with_device_type:
 			new_df = qnv.add_device_type(self.dataframe)
-			if new_df is not None: 
+			if new_df is not None:
 				self.dataframe = new_df
 
 		if with_resource_type:
 			new_df = qnv.add_resource_type(self.dataframe)
-			if new_df is not None: 
+			if new_df is not None:
 				self.dataframe = new_df
 
 		if time_period_date :
@@ -171,8 +171,8 @@ class NotesViewTimeseries(object):
 						'note_id' 	: pd.Series.nunique}
 
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
-		df.rename(columns = {'user_id'	:'number_of_unique_users',
-							 'note_id'	:'number_of_unique_notes_viewed'}, 
+		df.rename(columns={'user_id'	:'number_of_unique_users',
+							 'note_id'	:'number_of_unique_notes_viewed'},
 					inplace=True)
 
 		return df
@@ -189,8 +189,8 @@ class NotesViewTimeseries(object):
 						'note_id' 	: pd.Series.nunique}
 
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
-		df.rename(columns = {'user_id'	:'number_of_unique_users',
-							 'note_id'	:'number_of_unique_notes_viewed'}, 
+		df.rename(columns={'user_id'	:'number_of_unique_users',
+							 'note_id'	:'number_of_unique_notes_viewed'},
 					inplace=True)
 		return df
 
@@ -203,7 +203,7 @@ class NotesViewTimeseries(object):
 		agg_columns = {	'note_id' 	: pd.Series.count}
 
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
-		df.rename(columns = {'note_id'	:'total_note_views'}, 
+		df.rename(columns={'note_id'	:'total_note_views'},
 					inplace=True)
 		return df
 
@@ -216,12 +216,11 @@ class NotesViewTimeseries(object):
 		agg_columns = {	'note_id' 	: pd.Series.count}
 
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
-		df.rename(columns = {'note_id'	:'total_note_views'}, 
+		df.rename(columns={'note_id'	:'total_note_views'},
 					inplace=True)
 		return df
 
-
-	def get_the_most_viewed_notes(self, max_rank_number = 10):
+	def get_the_most_viewed_notes(self, max_rank_number=10):
 		"""
 		find the top n most viewed notes and return as pandas.Series
 		"""
@@ -231,12 +230,12 @@ class NotesViewTimeseries(object):
 
 	def get_the_most_viewed_notes_and_its_author(self, max_rank_number=10):
 		most_views = self.get_the_most_viewed_notes(max_rank_number)
-		df = most_views.to_frame(name='number_of_views')		
+		df = most_views.to_frame(name='number_of_views')
 		df.reset_index(level=0, inplace=True)
 
 		notes_id = get_values_of_series_categorical_index_(most_views).tolist()
 		note_author_df = QueryNotesCreated(self.session).get_author_id_filter_by_note_id(notes_id)
-		
+
 		authors_id = note_author_df['user_id'].values.tolist()
 		author_name_df = QueryUsers(self.session).get_username_filter_by_user_id(authors_id)
 
@@ -244,17 +243,16 @@ class NotesViewTimeseries(object):
 		df.rename(columns={'user_id':'author_id', 'username' : 'author_name'}, inplace=True)
 		return df
 
-	def get_the_most_active_users(self,max_rank_number=10):
+	def get_the_most_active_users(self, max_rank_number=10):
 		return get_most_active_users_(self.dataframe, self.session, max_rank_number)
-
-
 
 class NoteLikesTimeseries(object):
 	"""
 	analyze the number of note likes given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date, course_id=None, with_resource_type=True, with_device_type=True, time_period_date=True):
+	def __init__(self, session, start_date, end_date, course_id=None, 
+				 with_resource_type=True, with_device_type=True, time_period_date=True):
 		self.session = session
 		qnl = self.query_notes_viewed = QueryNoteLikes(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -266,12 +264,12 @@ class NoteLikesTimeseries(object):
 
 		if with_device_type:
 			new_df = qnl.add_device_type(self.dataframe)
-			if new_df is not None: 
+			if new_df is not None:
 				self.dataframe = new_df
 
 		if with_resource_type:
 			new_df = qnl.add_resource_type(self.dataframe)
-			if new_df is not None: 
+			if new_df is not None:
 				self.dataframe = new_df
 
 		if time_period_date :
@@ -299,7 +297,8 @@ class NoteFavoritesTimeseries(object):
 	analyze the number of note favorites given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date, course_id=None, with_resource_type=True, with_device_type=True, time_period_date=True):
+	def __init__(self, session, start_date, end_date, course_id=None, 
+				 with_resource_type=True, with_device_type=True, time_period_date=True):
 		self.session = session
 		qnf = self.query_notes_viewed = QueryNoteFavorites(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -311,12 +310,12 @@ class NoteFavoritesTimeseries(object):
 
 		if with_device_type:
 			new_df = qnf.add_device_type(self.dataframe)
-			if new_df is not None: 
+			if new_df is not None:
 				self.dataframe = new_df
 
 		if with_resource_type:
 			new_df = qnf.add_resource_type(self.dataframe)
-			if new_df is not None: 
+			if new_df is not None:
 				self.dataframe = new_df
 
 		if time_period_date :

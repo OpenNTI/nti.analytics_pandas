@@ -11,17 +11,18 @@ logger = __import__('logging').getLogger(__name__)
 
 from ..queries import QueryVideoEvents
 
+from .common import add_timestamp_period
 from .common import explore_unique_users_based_timestamp_date_
 from .common import explore_number_of_events_based_timestamp_date_
 from .common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
-from .common import add_timestamp_period
 
 class VideoEventsTimeseries(object):
 	"""
 	analyze the number of video events given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date, course_id=None, with_device_type=True, time_period_date=True):
+	def __init__(self, session, start_date, end_date, course_id=None,
+				 with_device_type=True, time_period_date=True):
 		self.session = session
 		qve = self.query_videos_event = QueryVideoEvents(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -33,7 +34,7 @@ class VideoEventsTimeseries(object):
 
 		if with_device_type:
 			new_df = qve.add_device_type(self.dataframe)
-			if new_df is not None: 
+			if new_df is not None:
 				self.dataframe = new_df
 
 		if time_period_date :
