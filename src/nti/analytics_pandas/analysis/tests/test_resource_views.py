@@ -46,3 +46,14 @@ class TestResourceViewsEDA(AnalyticsPandasTestBase):
 		df = rvt.analyze_events_based_on_resource_type()
 		assert_that(df.columns, has_item('number_of_unique_users'))
 		assert_that(df.columns, has_item('number_of_resource_views'))
+		assert_that(len(ratio_df.index), equal_to(len(df.sum(level='timestamp_period'))))
+
+		df = rvt.analyze_events_based_on_device_type()
+		assert_that(df.columns, has_item('number_of_unique_users'))
+		assert_that(df.columns, has_item('number_of_resource_views'))
+		assert_that(len(ratio_df.index), equal_to(len(df.sum(level='timestamp_period'))))
+
+		df = rvt.analyze_events_based_on_resource_device_type()
+		assert_that(df.columns, has_item('number_of_unique_users'))
+		assert_that(df.columns, has_item('number_of_resource_views'))
+		assert_that(len(ratio_df.index), equal_to(len(df.sum(level='timestamp_period'))))
