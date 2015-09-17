@@ -23,6 +23,7 @@ from ..utils import get_values_of_series_categorical_index_
 from ..utils import cast_columns_as_category_
 
 import pandas as pd
+import numpy as np
 
 class ResourceViewsTimeseries(object):
 	"""
@@ -53,7 +54,7 @@ class ResourceViewsTimeseries(object):
 			self.dataframe = add_timestamp_period(self.dataframe)
 
 
-		categorical_columns = ['resource_type', 'device_type', 'user_id', 'resource_id']
+		categorical_columns = ['resource_id', 'resource_type', 'device_type', 'user_id']
 		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def explore_number_of_events_based_timestamp_date(self):
@@ -125,7 +126,8 @@ class ResourceViewsTimeseries(object):
 
 	def get_the_most_viewed_resources(self, max_rank_number = 10):
 		"""
-		find the top n most viewed resource
+		find the top n most viewed resources
+		return a dataframe with columns : resource_id, resource_display_name, resource_type, and number_of_views
 		"""
 		temp_df = self.dataframe
 
@@ -144,6 +146,22 @@ class ResourceViewsTimeseries(object):
 
 		df = df.merge(resource_df).merge(resource_type_df)
 		return df
+
+	def analyze_user_activities_on_resource_views(self):
+		"""
+		analyze how users viewing resources based on resource and device type
+		#TODO : find out why print(result) causes error : AttributeError: 'Categorical' object has no attribute 'flags'
+		however print(result.head()) or print(result.tail()) causes no trouble
+		"""
+		df = self.dataframe
+		group_by_columns = ['timestamp_period', 'user_id', 'resource_type','device_type']
+		agg_columns = { 'time_length' : [np.mean, np.sum],
+						'resource_id' : pd.Series.nunique}
+		result = df.groupby(group_by_columns).aggregate(agg_columns)
+		return result
+
+
+
 
 
 

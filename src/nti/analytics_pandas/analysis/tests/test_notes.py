@@ -51,9 +51,11 @@ class TestNotesEDA(AnalyticsPandasTestBase):
 		assert_that(df.columns, has_item('number_of_unique_users'))
 		assert_that(df.columns, has_item('number_of_note_created'))
 
+
 		df = nct.analyze_resource_types()
 		assert_that(df.columns, has_item('number_of_unique_users'))
 		assert_that(df.columns, has_item('number_of_note_created'))
+
 
 		df = nct.analyze_resource_device_types()
 		assert_that(df.columns, has_item('number_of_unique_users'))
