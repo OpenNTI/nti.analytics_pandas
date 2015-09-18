@@ -65,3 +65,10 @@ def get_most_active_users_(df, session, max_rank_number=10):
 	most_active_user_df.reset_index(inplace=True, drop=True)
 
 	return most_active_user_df
+
+def generate_pivot_table(df, index_columns, values_columns, agg_funcs):
+	table = pd.pivot_table(	df,
+							index=index_columns,
+							values=values_columns,
+							aggfunc=agg_funcs,fill_value=0)
+	return table
