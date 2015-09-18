@@ -160,7 +160,11 @@ class ResourceViewsTimeseries(object):
 		df = self.dataframe
 		group_by_columns = ['timestamp_period', 'user_id', 'resource_type', 'device_type']
 		agg_columns = { 'time_length' : [np.mean, np.sum],
-						'resource_id' : pd.Series.nunique}
+						'resource_id' : pd.Series.nunique,
+						'resource_view_id' : pd.Series.count}
 		result = df.groupby(group_by_columns).aggregate(agg_columns)
 		result.reset_index(inplace=True)
+		result.rename(columns={	'resource_id' 		: 'number_of_unique_resource',
+								'resource_view_id'	: 'number_of_resource_views'},
+					inplace=True)
 		return result
