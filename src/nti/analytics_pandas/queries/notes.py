@@ -70,11 +70,10 @@ class QueryNotesCreated(TableQueryMixin):
 		new_df = add_device_type_(self.session, dataframe)
 		return new_df
 
-	
 	def get_author_id_filter_by_note_id(self, notes_id):
 		nc = self.table
-		query = self.session.query(	nc.note_id, 
-									nc.user_id).filter(nc.note_id.in_(notes_id))
+		query = self.query(	nc.note_id, 
+							nc.user_id).filter(nc.note_id.in_(notes_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
