@@ -55,6 +55,8 @@ class ResourceViewsTimeseries(object):
 		if time_period_date :
 			self.dataframe = add_timestamp_period(self.dataframe)
 
+		print(self.dataframe.dtypes)
+
 		categorical_columns = ['resource_id', 'resource_type', 'device_type', 'user_id']
 		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
@@ -117,6 +119,9 @@ class ResourceViewsTimeseries(object):
 							'resource_view_id'	:'number_of_resource_views',
 							'resource_id' : 'number_of_unique_resource'},
 					inplace=True)
+		##need to reset index to avoid 
+		##TODO : check if we can do it without reset_index after updating to pandas 0.17.0
+		df.reset_index(inplace=True)
 		return df
 
 	def get_the_most_active_users(self, max_rank_number=10):
@@ -151,12 +156,11 @@ class ResourceViewsTimeseries(object):
 	def analyze_user_activities_on_resource_views(self):
 		"""
 		analyze how users viewing resources based on resource and device type
-		#TODO : find out why print(result) causes error : AttributeError: 'Categorical' object has no attribute 'flags'
-		however print(result.head()) or print(result.tail()) causes no trouble
 		"""
 		df = self.dataframe
 		group_by_columns = ['timestamp_period', 'user_id', 'resource_type', 'device_type']
 		agg_columns = { 'time_length' : [np.mean, np.sum],
 						'resource_id' : pd.Series.nunique}
 		result = df.groupby(group_by_columns).aggregate(agg_columns)
+		result.reset_index(inplace=True)
 		return result
