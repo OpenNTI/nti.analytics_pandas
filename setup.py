@@ -31,6 +31,7 @@ setup(
 	install_requires=[
 		'setuptools',
 		'nti.analytics',
+		'numpy',
 		'pandas'
 	],
 	entry_points=entry_points
