@@ -31,7 +31,8 @@ def explore_unique_users_based_timestamp_date_(df):
 	if len(df.index) > 0 :
 		grouped = df.groupby('timestamp_period')
 		unique_users_per_period_df = grouped.aggregate({'user_id' : pd.Series.nunique})
-		unique_users_per_period_df.rename(columns={'user_id' : 'total_unique_users'}, inplace=True)
+		unique_users_per_period_df.rename(columns={'user_id' : 'total_unique_users'}, 
+										  inplace=True)
 		return unique_users_per_period_df
 
 def explore_ratio_of_events_over_unique_users_based_timestamp_date_(events_df,

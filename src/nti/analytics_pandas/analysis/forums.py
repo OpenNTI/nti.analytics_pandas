@@ -9,27 +9,29 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
+import pandas as pd
+
+import numpy as np
+
 from ..queries import QueryForumsCreated
 from ..queries import QueryForumCommentLikes
 from ..queries import QueryForumsCommentsCreated
 from ..queries import QueryForumCommentFavorites
 
+from .common import analyze_types_
+from .common import add_timestamp_period
 from .common import explore_unique_users_based_timestamp_date_
 from .common import explore_number_of_events_based_timestamp_date_
 from .common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
-from .common import add_timestamp_period
-from .common import analyze_types_
-
-import pandas as pd
-import numpy as np
 
 class ForumsCreatedTimeseries(object):
 	"""
 	analyze the number of forums created given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date, course_id=None, with_device_type = True, 
-				time_period_date=True):
+	def __init__(self, session, start_date, end_date, course_id=None, 
+				 with_device_type=True, time_period_date=True):
+
 		self.session = session
 		qfc = self.query_forums_created = QueryForumsCreated(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -41,7 +43,7 @@ class ForumsCreatedTimeseries(object):
 
 		if with_device_type:
 			new_df = qfc.add_device_type(self.dataframe)
-			if new_df is not None: 
+			if new_df is not None:
 				self.dataframe = new_df
 
 		if time_period_date :
@@ -75,12 +77,14 @@ class ForumsCreatedTimeseries(object):
 						inplace=True)
 			return df
 
-
 class ForumsCommentsCreatedTimeseries(object):
 	"""
 	analyze the number of forums comments created given time period and list of course id
 	"""
-	def __init__(self, session, start_date, end_date, course_id=None, with_device_type=True, time_period_date=True):
+
+	def __init__(self, session, start_date, end_date, course_id=None, 
+				 with_device_type=True, time_period_date=True):
+
 		self.session = session
 		qfcc = self.query_forums_comments_created = QueryForumsCommentsCreated(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -92,7 +96,7 @@ class ForumsCommentsCreatedTimeseries(object):
 
 		if with_device_type:
 			new_df = qfcc.add_device_type(self.dataframe)
-			if new_df is not None: 
+			if new_df is not None:
 				self.dataframe = new_df
 
 		if time_period_date :
@@ -134,7 +138,10 @@ class ForumCommentLikesTimeseries(object):
 	"""
 	analyze the number of forum comment likes given time period and list of course id
 	"""
-	def __init__(self, session, start_date, end_date, course_id=None, with_device_type=True, time_period_date=True):
+
+	def __init__(self, session, start_date, end_date, course_id=None, 
+				 with_device_type=True, time_period_date=True):
+
 		self.session = session
 		qfcl = self.query_forum_comment_likes = QueryForumCommentLikes(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -146,7 +153,7 @@ class ForumCommentLikesTimeseries(object):
 
 		if with_device_type:
 			new_df = qfcl.add_device_type(self.dataframe)
-			if new_df is not None: 
+			if new_df is not None:
 				self.dataframe = new_df
 
 		if time_period_date :
@@ -185,7 +192,8 @@ class ForumCommentFavoritesTimeseries(object):
 	analyze the number of forum comment favorites given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date, course_id=None, with_device_type=True, time_period_date=True):
+	def __init__(self, session, start_date, end_date, course_id=None, 
+				 with_device_type=True, time_period_date=True):
 		self.session = session
 		qfcf = self.query_forum_comment_favorites = QueryForumCommentFavorites(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -197,7 +205,7 @@ class ForumCommentFavoritesTimeseries(object):
 
 		if with_device_type:
 			new_df = qfcf.add_device_type(self.dataframe)
-			if new_df is not None: 
+			if new_df is not None:
 				self.dataframe = new_df
 
 		if time_period_date :
@@ -224,9 +232,9 @@ class ForumCommentFavoritesTimeseries(object):
 		if 'device_type' in self.dataframe.columns:
 			group_by_items = ['timestamp_period', 'device_type']
 			agg_columns = {	'comment_id'	: pd.Series.nunique,
-							'user_id'		: pd.Series.nunique}
+							'user_id'		: pd.Series.nunique }
 			df = analyze_types_(self.dataframe, group_by_items, agg_columns)
 			df.rename(columns={	'comment_id'	 :'number_of_comments_favorite',
 								'user_id'		 :'number_of_unique_users'},
-						inplace=True)
+					  inplace=True)
 			return df

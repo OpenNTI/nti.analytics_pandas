@@ -55,8 +55,6 @@ class ResourceViewsTimeseries(object):
 		if time_period_date :
 			self.dataframe = add_timestamp_period(self.dataframe)
 
-		print(self.dataframe.dtypes)
-
 		categorical_columns = ['resource_id', 'resource_type', 'device_type', 'user_id']
 		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
@@ -80,8 +78,8 @@ class ResourceViewsTimeseries(object):
 	def analyze_events_based_on_resource_type(self):
 		"""
 		group course resource views dataframe by timestamp_period and resource_type
-		count the number of unique users, number of resource views and number of unique resources in each group
-		return the result as dataframe
+		count the number of unique users, number of resource views and number of unique
+		resources in each group return the result as dataframe
 
 		"""
 		group_by_columns = ['timestamp_period', 'resource_type']
@@ -91,8 +89,8 @@ class ResourceViewsTimeseries(object):
 	def analyze_events_based_on_device_type(self):
 		"""
 		group course resource views dataframe by timestamp_period and device_type
-		count the number of unique users, number of resource views and number of unique resources in each group
-		return the result as dataframe
+		count the number of unique users, number of resource views and number of unique 
+		resources in each group return the result as dataframe
 
 		"""
 		group_by_columns = ['timestamp_period', 'device_type']
@@ -101,9 +99,9 @@ class ResourceViewsTimeseries(object):
 
 	def analyze_events_based_on_resource_device_type(self):
 		"""
-		group course resource views dataframe by timestamp_period, resource_type and device_type
-		count the number of unique users, number of resource views and number of unique resources in each group
-		return the result as dataframe
+		group course resource views dataframe by timestamp_period, resource_type and
+		device_type count the number of unique users, number of resource views and 
+		number of unique resources in each group return the result as dataframe
 
 		"""
 		group_by_columns = ['timestamp_period', 'resource_type', 'device_type']
@@ -119,8 +117,8 @@ class ResourceViewsTimeseries(object):
 							'resource_view_id'	:'number_of_resource_views',
 							'resource_id' : 'number_of_unique_resource'},
 					inplace=True)
-		##need to reset index to avoid 
-		##TODO : check if we can do it without reset_index after updating to pandas 0.17.0
+		# need to reset index to avoid
+		# TODO: check if we can do it without reset_index after updating to pandas 0.17.0
 		df.reset_index(inplace=True)
 		return df
 
@@ -133,7 +131,8 @@ class ResourceViewsTimeseries(object):
 	def get_the_most_viewed_resources(self, max_rank_number=10):
 		"""
 		find the top n most viewed resources
-		return a dataframe with columns : resource_id, resource_display_name, resource_type, and number_of_views
+		return a dataframe with columns : 
+			resource_id, resource_display_name, resource_type, and number_of_views
 		"""
 		temp_df = self.dataframe
 
@@ -161,10 +160,10 @@ class ResourceViewsTimeseries(object):
 		group_by_columns = ['timestamp_period', 'user_id', 'resource_type', 'device_type']
 		agg_columns = { 'time_length' : [np.mean, np.sum],
 						'resource_id' : pd.Series.nunique,
-						'resource_view_id' : pd.Series.count}
+						'resource_view_id' : pd.Series.count }
 		result = df.groupby(group_by_columns).aggregate(agg_columns)
 		result.reset_index(inplace=True)
 		result.rename(columns={	'resource_id' 		: 'number_of_unique_resource',
-								'resource_view_id'	: 'number_of_resource_views'},
-					inplace=True)
+								'resource_view_id'	: 'number_of_resource_views' },
+					  inplace=True)
 		return result
