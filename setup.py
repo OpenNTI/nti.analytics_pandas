@@ -33,6 +33,7 @@ setup(
 		'nti.analytics',
 		'numpy',
 		'pandas',
+		'pypdf2',
 		'pygal'
 	],
 	entry_points=entry_points
