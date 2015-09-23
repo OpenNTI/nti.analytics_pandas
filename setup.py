@@ -50,8 +50,12 @@ setup(
 		'pygal',
 		'sqlalchemy',
 		'zope.component',
+        'zope.event',
 		'zope.i18nmessageid',
 		'zope.interface',
+        'zope.location',
+        'zope.proxy',
+        'zope.schema',
 		'zope.security',
 		'nti.analytics_database',
 		'nti.common'
