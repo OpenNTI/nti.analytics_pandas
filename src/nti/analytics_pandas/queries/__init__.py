@@ -13,22 +13,22 @@ from ..utils import orm_dataframe
 
 from .bookmarks import QueryBookmarksCreated
 
-from .enrollments import QueryCourseCatalogViews
-from .enrollments import QueryCourseEnrollments
 from .enrollments import QueryCourseDrops
 from .enrollments import QueryEnrollmentTypes
+from .enrollments import QueryCourseEnrollments
+from .enrollments import QueryCourseCatalogViews
 
 from .forums import QueryForumsCreated
+from .forums import QueryForumCommentLikes
 from .forums import QueryForumsCommentsCreated
 from .forums import QueryForumCommentFavorites
-from .forums import QueryForumCommentLikes
 
 from .highlights import QueryHighlightsCreated
 
-from .notes import QueryNotesCreated
-from .notes import QueryNotesViewed
-from .notes import QueryNoteFavorites
 from .notes import QueryNoteLikes
+from .notes import QueryNotesViewed
+from .notes import QueryNotesCreated
+from .notes import QueryNoteFavorites
 
 from .resource_views import QueryCourseResourceViews
 

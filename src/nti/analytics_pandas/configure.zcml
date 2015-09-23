@@ -9,7 +9,4 @@
 	<include package="zope.component" />
 	<include package="zope.security" />
 
-	<include package="nti.analytics" />
-
 </configure>
-

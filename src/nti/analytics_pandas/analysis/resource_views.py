@@ -9,9 +9,9 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
-import pandas as pd
-
 import numpy as np
+
+import pandas as pd
 
 from ..queries import QueryResources
 from ..queries import QueryCourseResourceViews

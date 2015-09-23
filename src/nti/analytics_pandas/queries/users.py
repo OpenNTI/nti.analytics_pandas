@@ -9,7 +9,7 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
-from nti.analytics.database.users import Users
+from nti.analytics_database.users import Users
 
 from .mixins import TableQueryMixin
 

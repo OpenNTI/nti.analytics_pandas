@@ -9,7 +9,7 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
-from nti.analytics.database.resource_views import CourseResourceViews
+from nti.analytics_database.resource_views import CourseResourceViews
 
 from .common import add_device_type_
 from .common import add_resource_type_

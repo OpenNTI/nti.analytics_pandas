@@ -9,10 +9,10 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
-from nti.analytics.database.boards import ForumsCreated
-from nti.analytics.database.boards import ForumCommentLikes
-from nti.analytics.database.boards import ForumCommentsCreated
-from nti.analytics.database.boards import ForumCommentFavorites
+from nti.analytics_database.boards import ForumsCreated
+from nti.analytics_database.boards import ForumCommentLikes
+from nti.analytics_database.boards import ForumCommentsCreated
+from nti.analytics_database.boards import ForumCommentFavorites
 
 from .common import add_device_type_
 

@@ -11,7 +11,7 @@ logger = __import__('logging').getLogger(__name__)
 
 from .. import MessageFactory as _
 
-from nti.analytics.database.resources import Resources
+from nti.analytics_database.resources import Resources
 
 from .mixins import TableQueryMixin
 

@@ -14,9 +14,9 @@ import pandas as pd
 import numpy as np
 
 from ..queries import QueryCourseDrops
+from ..queries import QueryEnrollmentTypes
 from ..queries import QueryCourseEnrollments
 from ..queries import QueryCourseCatalogViews
-from ..queries import QueryEnrollmentTypes
 
 from .common import analyze_types_
 from .common import add_timestamp_period

@@ -9,10 +9,10 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
-from nti.analytics.database.enrollments import CourseDrops
-from nti.analytics.database.enrollments import EnrollmentTypes
-from nti.analytics.database.enrollments import CourseEnrollments
-from nti.analytics.database.enrollments import CourseCatalogViews
+from nti.analytics_database.enrollments import CourseDrops
+from nti.analytics_database.enrollments import EnrollmentTypes
+from nti.analytics_database.enrollments import CourseEnrollments
+from nti.analytics_database.enrollments import CourseCatalogViews
 
 from .mixins import TableQueryMixin
 

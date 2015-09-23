@@ -9,10 +9,10 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
-from nti.analytics.database.boards import TopicLikes
-from nti.analytics.database.boards import TopicsViewed
-from nti.analytics.database.boards import TopicsCreated
-from nti.analytics.database.boards import TopicFavorites
+from nti.analytics_database.boards import TopicLikes
+from nti.analytics_database.boards import TopicsViewed
+from nti.analytics_database.boards import TopicsCreated
+from nti.analytics_database.boards import TopicFavorites
 
 from .mixins import TableQueryMixin
 
