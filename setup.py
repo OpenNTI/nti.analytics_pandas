@@ -56,6 +56,7 @@ setup(
 		'nti.analytics_database',
 		'nti.common'
 	],
+	tests_require=TESTS_REQUIRE,
 	entry_points=entry_points,
 	extras_require={
         'test': TESTS_REQUIRE,
