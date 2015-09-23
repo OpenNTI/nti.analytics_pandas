@@ -32,7 +32,8 @@ setup(
 		'setuptools',
 		'nti.analytics',
 		'numpy',
-		'pandas'
+		'pandas',
+		'pygal'
 	],
 	entry_points=entry_points
 )
