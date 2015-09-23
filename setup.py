@@ -59,5 +59,22 @@ setup(
 	entry_points=entry_points,
 	extras_require={
         'test': TESTS_REQUIRE,
+        'tools': [
+			'epydoc >= 3.0.1',	# auto-api docs
+			'httpie',
+			'ipython',
+			'logilab_astng >= 0.24.3',
+			'pip',
+			'pudb >= 2013.5.1',
+			'pylint',  # install astroid
+			'readline',
+			'rope',
+			'ropemode',
+			'virtualenv',
+			'virtualenvwrapper',
+			'z3c.dependencychecker',
+			'Babel >= 1.3',
+			'lingua',
+		]
     },
 )
