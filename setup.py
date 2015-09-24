@@ -65,12 +65,12 @@ setup(
 	extras_require={
         'test': TESTS_REQUIRE,
         'tools': [
-			'epydoc >= 3.0.1',	# auto-api docs
+			'epydoc',	# auto-api docs
 			'httpie',
 			'ipython',
-			'logilab_astng >= 0.24.3',
+			'logilab_astng',
 			'pip',
-			'pudb >= 2013.5.1',
+			'pudb',
 			'pylint',  # install astroid
 			'readline',
 			'rope',
@@ -78,7 +78,7 @@ setup(
 			'virtualenv',
 			'virtualenvwrapper',
 			'z3c.dependencychecker',
-			'Babel >= 1.3',
+			'Babel',
 			'lingua',
 		]
     },
