@@ -50,22 +50,22 @@ class SharedConfiguringTestLayer(ZopeComponentLayer,
     def testTearDown(cls):
         pass
 
-from sqlalchemy import create_engine
 from sqlalchemy.pool import StaticPool
 from sqlalchemy.orm import sessionmaker, scoped_session
+from sqlalchemy import create_engine as sqlalchemy_create_engine
 
 def create_engine(dburi, pool_size=30, max_overflow=10, pool_recycle=300):    
     try:
         if dburi == 'sqlite://':
-            result = create_engine(dburi,
-                                   connect_args={'check_same_thread':False},
-                                   poolclass=StaticPool)
+            result = sqlalchemy_create_engine(dburi,
+                                              connect_args={'check_same_thread':False},
+                                              poolclass=StaticPool)
 
         else:
-            result = create_engine( dburi,
-                                    pool_size=pool_size,
-                                    max_overflow=max_overflow,
-                                    pool_recycle=pool_recycle)
+            result = sqlalchemy_create_engine( dburi,
+                                               pool_size=pool_size,
+                                               max_overflow=max_overflow,
+                                               pool_recycle=pool_recycle)
     except TypeError:
         # SQLite does not use pooling anymore.
         result = create_engine(dburi)
