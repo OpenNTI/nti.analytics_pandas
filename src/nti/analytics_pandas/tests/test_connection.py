@@ -11,12 +11,20 @@ from hamcrest import equal_to
 from hamcrest import assert_that
 from hamcrest import greater_than
 
-from nti.analytics.database.sessions import Sessions
-from nti.analytics.database.sessions import get_session_by_id
+from sqlalchemy.orm.session import make_transient
+
+from nti.analytics_database.sessions import Sessions
 
 from nti.analytics_pandas.utils.orm_to_dataframe import orm_dataframe
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
+
+def get_session_by_id(session, session_id):
+	session_record = session.query(Sessions).filter(
+								   Sessions.session_id == session_id).first()
+	if session_record:
+		make_transient(session_record)
+	return session_record
 
 class TestConnection(AnalyticsPandasTestBase):
 
@@ -24,7 +32,7 @@ class TestConnection(AnalyticsPandasTestBase):
 		super(TestConnection, self).setUp()
 
 	def test_query_get_session_by_id(self):
-		result = get_session_by_id(1)
+		result = get_session_by_id(self.session, 1)
 		assert_that (result.user_id, equal_to(184))
 
 	def test_query_count_session(self):

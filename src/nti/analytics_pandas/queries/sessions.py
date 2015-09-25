@@ -13,8 +13,8 @@ from .. import MessageFactory as _
 
 from user_agents import parse
 
-from nti.analytics.database.sessions import Sessions
-from nti.analytics.database.sessions import UserAgents
+from nti.analytics_database.sessions import Sessions
+from nti.analytics_database.sessions import UserAgents
 
 from .mixins import TableQueryMixin
 
