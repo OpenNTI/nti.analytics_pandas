@@ -7,12 +7,6 @@ __docformat__ = "restructuredtext en"
 # disable: accessing protected members, too many methods
 # pylint: disable=W0212,R0904
 
-from hamcrest import equal_to
-from hamcrest import assert_that
-from hamcrest import has_item
-
-import numpy as np
-
 from nti.analytics_pandas.analysis.resource_views import ResourceViewsTimeseries
 from nti.analytics_pandas.analysis.plots.resource_views import ResourceViewsTimeseriesPlot
 
@@ -29,6 +23,6 @@ class TestResourceViewsEDA(AnalyticsPandasTestBase):
 		course_id = ['388']
 		rvt = ResourceViewsTimeseries(self.session, start_date, end_date, course_id)
 		rvtp = ResourceViewsTimeseriesPlot(rvt)
-		figure = rvtp.explore_events()
-		#TODO : save the figure
-		#figure.savefig('filepath')
+		_ = rvtp.explore_events()
+		# TODO : save the figure
+		# figure.savefig('filepath')
