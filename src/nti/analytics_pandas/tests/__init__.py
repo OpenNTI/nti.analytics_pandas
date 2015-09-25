@@ -14,6 +14,7 @@ import tempfile
 import unittest
 
 import zope.testing.cleanup
+
 from zope import component
 
 from nti.testing.layers import find_test
@@ -21,12 +22,9 @@ from nti.testing.layers import GCLayerMixin
 from nti.testing.layers import ZopeComponentLayer
 from nti.testing.layers import ConfiguringLayerMixin
 
-from nti.dataserver.tests.mock_dataserver import DSInjectorMixin
-
 class SharedConfiguringTestLayer(ZopeComponentLayer,
                                  GCLayerMixin,
-                                 ConfiguringLayerMixin,
-                                 DSInjectorMixin):
+                                 ConfiguringLayerMixin):
 
     set_up_packages = ('nti.analytics', 'nti.analytics_pandas')
 
@@ -52,22 +50,47 @@ class SharedConfiguringTestLayer(ZopeComponentLayer,
     def testTearDown(cls):
         pass
 
-from nti.analytics.tests import NTIAnalyticsTestCase
+from sqlalchemy import create_engine
+from sqlalchemy.pool import StaticPool
+from sqlalchemy.orm import sessionmaker, scoped_session
 
-class NTIAnalyticsPandasTestCase(NTIAnalyticsTestCase):
-    layer = SharedConfiguringTestLayer
+def create_engine(dburi, pool_size=30, max_overflow=10, pool_recycle=300):    
+    try:
+        if dburi == 'sqlite://':
+            result = create_engine(dburi,
+                                   connect_args={'check_same_thread':False},
+                                   poolclass=StaticPool)
 
-from nti.analytics.database.database import AnalyticsDB
-from nti.analytics.database.interfaces import IAnalyticsDB
+        else:
+            result = create_engine( dburi,
+                                    pool_size=pool_size,
+                                    max_overflow=max_overflow,
+                                    pool_recycle=pool_recycle)
+    except TypeError:
+        # SQLite does not use pooling anymore.
+        result = create_engine(dburi)
+    return result
+
+def create_sessionmaker(engine, autoflush=True, twophase=True):
+    result = sessionmaker(bind=engine,
+                          autoflush=autoflush,
+                          twophase=twophase)
+    return result
+
+def create_session(sessionmaker):
+    return scoped_session(sessionmaker)
+
+from nti.analytics_database import Base
 
 class AnalyticsPandasTestBase(unittest.TestCase):
     
     def setUp(self):
-        #TODO: Change to local SQLListe dB
-        self.db = AnalyticsDB( dburi="mysql+pymysql://root@localhost:3306/Analytics")
-        component.getGlobalSiteManager().registerUtility( self.db, IAnalyticsDB )
-        self.session = self.db.session
+        # TODO: Fix URI
+        dburi="mysql+pymysql://root@localhost:3306/Analytics"
+        self.engine = create_engine(dburi)
+        self.metadata = getattr(Base, 'metadata').create_all(self.engine)
+        self.sessionmaker = create_sessionmaker(self.engine)
+        self.session = create_session(self.sessionmaker)
 
     def tearDown(self):
-        component.getGlobalSiteManager().unregisterUtility( self.db )
         self.session.close()
