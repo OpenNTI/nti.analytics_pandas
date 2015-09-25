@@ -68,7 +68,7 @@ def create_engine(dburi, pool_size=30, max_overflow=10, pool_recycle=300):
                                                pool_recycle=pool_recycle)
     except TypeError:
         # SQLite does not use pooling anymore.
-        result = create_engine(dburi)
+        result = sqlalchemy_create_engine(dburi)
     return result
 
 def create_sessionmaker(engine, autoflush=True, twophase=True):
