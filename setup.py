@@ -51,6 +51,7 @@ setup(
         'pandas',
         'pypdf2',
         'pygal',
+        'user_agents',
         'sqlalchemy',
         'zope.component',
         'zope.event',
