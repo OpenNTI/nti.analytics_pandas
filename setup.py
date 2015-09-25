@@ -45,6 +45,7 @@ setup(
 	namespace_packages=['nti'],
 	install_requires=[
         'setuptools',
+        # 'ggplot',
         'lxml',
         'matplotlib',
         'numpy',
@@ -53,6 +54,7 @@ setup(
         'pypdf2',
         'pygal',
         'user_agents',
+        # 'scipy', required by ggplot, does not work very well with buildout
         'sqlalchemy',
         'zope.component',
         'zope.event',
