@@ -43,6 +43,7 @@ setup(
 	namespace_packages=['nti'],
 	install_requires=[
         'setuptools',
+        'lxml',
         'matplotlib',
         'numpy',
         'pandas',
