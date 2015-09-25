@@ -49,6 +49,7 @@ setup(
         'matplotlib',
         'numpy',
         'pandas',
+        'pymysql',
         'pypdf2',
         'pygal',
         'user_agents',
