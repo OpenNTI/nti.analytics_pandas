@@ -11,16 +11,13 @@ logger = __import__('logging').getLogger(__name__)
 
 from pandas import DataFrame
 
+def create_row(obj, columns):
+	dictionary = {col:getattr(obj, col) for col in columns if hasattr(obj, col)}
+	return dictionary
+
 def orm_dataframe(orm_query, columns):
 	"""
 	takes sqlachemy orm query and a list of its columns and transform it to pandas dataframe
 	"""
-
-	def create_row(i):
-		dictionary = {}
-		for col in columns:
-			if hasattr(i, col) : dictionary[col] = getattr(i, col)
-		return dictionary
-
-	result = DataFrame([create_row(i) for i in orm_query])
+	result = DataFrame([create_row(i, columns) for i in orm_query])
 	return result
