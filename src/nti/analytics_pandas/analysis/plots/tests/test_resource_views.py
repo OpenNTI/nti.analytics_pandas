@@ -24,5 +24,11 @@ class TestResourceViewsEDA(AnalyticsPandasTestBase):
 		rvt = ResourceViewsTimeseries(self.session, start_date, end_date, course_id)
 		rvtp = ResourceViewsTimeseriesPlot(rvt)
 		_ = rvtp.explore_events()
-		# TODO : save the figure
-		# figure.savefig('filepath')
+
+	def test_resource_and_device_type_analysis(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		rvt = ResourceViewsTimeseries(self.session, start_date, end_date, course_id)
+		rvtp = ResourceViewsTimeseriesPlot(rvt)
+		_ = rvtp.analyze_resource_type()

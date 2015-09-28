@@ -57,5 +57,36 @@ class  ResourceViewsTimeseriesPlot(object):
 		#ggsave(plot_resource_views, 'resource_views.png')
 		#ggsave(plot_unique_users, 'unique_users.png')
 		#ggsave(plot_ratio, 'ratio.png')
-		print(plot_resource_views)
+		#print(plot_resource_views)
 		return plot_resource_views, plot_unique_users, plot_ratio
+
+	def analyze_resource_type(self):
+		"""
+		plot resource views based on resource type
+		"""
+		rvt = self.rvt
+		df = rvt.analyze_events_based_on_resource_type()
+		df.reset_index(inplace=True, drop=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		plot_resource_views = ggplot(df, aes(x='timestamp_period', y='number_of_resource_views', color='resource_type')) + \
+					geom_point() + \
+					ggtitle('Number of resource views on each resource type') + \
+					scale_x_date(breaks = "1 month", minor_breaks = "1 week", labels=date_format("%y-%m-%d")) + \
+					ylab('Number of resource_views') + \
+					xlab('Date')
+		plot_unique_users = ggplot(df, aes(x='timestamp_period', y='number_of_unique_users', color='resource_type')) + \
+					geom_point() + \
+					ggtitle('Number of unique users viewing each resource type at given time period') + \
+					scale_x_date(breaks = "1 month", minor_breaks = "1 week", labels=date_format("%y-%m-%d")) + \
+					ylab('Number of unique users') + \
+					xlab('Date')
+		plot_unique_resources = ggplot(df, aes(x='timestamp_period', y='number_of_unique_resource', color='resource_type')) + \
+					geom_point() + \
+					ggtitle('Number of unique course resource on each resource type at given time period') + \
+					scale_x_date(breaks = "1 month", minor_breaks = "1 week", labels=date_format("%y-%m-%d")) + \
+					ylab('Number of unique course resource') + \
+					xlab('Date')
+		#print(plot_unique_resources)
+		return plot_resource_views, plot_unique_users, plot_unique_resources
+
+		
