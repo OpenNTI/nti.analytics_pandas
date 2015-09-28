@@ -35,23 +35,27 @@ class  ResourceViewsTimeseriesPlot(object):
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		plot_resource_views = ggplot(df, aes(x='timestamp_period', y='total_resource_views')) + \
 					geom_point(color = 'orange') + \
+					geom_line() + \
 					ggtitle('Number of resource views during period of time') + \
-					scale_x_date(labels='%Y-%m-%d', breaks=date_breaks('1 week')) + \
+					scale_x_date(breaks = "1 month", minor_breaks = "1 week", labels=date_format("%y-%m-%d")) + \
 					ylab('Number of resource views') + \
 					xlab('Date')
 		plot_unique_users = ggplot(df, aes(x='timestamp_period', y='total_unique_users')) + \
 					geom_point(color = 'blue') + \
+					geom_line() + \
 					ggtitle('Number of unique users viewing resource during period of time') + \
-					scale_x_date(labels='%Y-%m-%d', breaks=date_breaks('1 week')) + \
+					scale_x_date(breaks = "1 month", minor_breaks = "1 week", labels=date_format("%y-%m-%d")) + \
 					ylab('Number of resource views') + \
 					xlab('Date')
 		plot_ratio = ggplot(df, aes(x='timestamp_period', y='ratio')) + \
 					geom_point(color = 'red') + \
+					geom_line() + \
 					ggtitle('Ratio of resource views over unique user on each available date') + \
-					scale_x_date(labels='%b%d', breaks=date_breaks('1 week')) + \
+					scale_x_date(breaks = "1 month", minor_breaks = "1 week", labels=date_format("%y-%m-%d")) + \
 					ylab('Ratio') + \
 					xlab('Date')
 		#ggsave(plot_resource_views, 'resource_views.png')
 		#ggsave(plot_unique_users, 'unique_users.png')
 		#ggsave(plot_ratio, 'ratio.png')
+		print(plot_resource_views)
 		return plot_resource_views, plot_unique_users, plot_ratio
