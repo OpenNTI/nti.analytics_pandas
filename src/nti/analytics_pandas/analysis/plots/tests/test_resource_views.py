@@ -32,3 +32,4 @@ class TestResourceViewsEDA(AnalyticsPandasTestBase):
 		rvt = ResourceViewsTimeseries(self.session, start_date, end_date, course_id)
 		rvtp = ResourceViewsTimeseriesPlot(rvt)
 		_ = rvtp.analyze_resource_type()
+		_ = rvtp.analyze_device_type()
