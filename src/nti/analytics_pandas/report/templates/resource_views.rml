@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE document SYSTEM "rml.dtd">
+<document filename="course_resource_views.pdf">
+	<stylesheet>
+	</stylesheet>
+	<pageDrawing>
+		<drawCentredString x="4.1in" y="5.8in">
+		TODO : replace this with course resource views content.
+		</drawCentredString>
+	</pageDrawing>
+</document>
