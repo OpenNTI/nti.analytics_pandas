@@ -4,20 +4,20 @@ from setuptools import setup, find_packages
 VERSION = '0.0.0'
 
 entry_points = {
-    'console_scripts': [
-    ],
+	'console_scripts': [
+	],
 }
 
 TESTS_REQUIRE = [
-    'fudge',
-    'nose',
-    'nose-timer',
-    'nose-pudb',
-    'nose-progressive',
-    'nose2[coverage_plugin]',
-    'pyhamcrest',
-    'nti.nose_traceback_info',
-    'nti.testing',
+	'fudge',
+	'nose',
+	'nose-timer',
+	'nose-pudb',
+	'nose-progressive',
+	'nose2[coverage_plugin]',
+	'pyhamcrest',
+	'nti.nose_traceback_info',
+	'nti.testing',
 ]
 
 setup(
@@ -44,39 +44,44 @@ setup(
 	package_dir={'': 'src'},
 	namespace_packages=['nti'],
 	install_requires=[
-        'setuptools',
-        # 'ggplot',
-        'lxml',
-        'matplotlib',
-        'numpy',
-        'pandas',
-        'pymysql',
-        'pypdf2',
-        'pygal',
-        'reportlab',
-        'user_agents',
-        # 'scipy', required by ggplot, does not work very well with buildout
-        'sqlalchemy',
-        'z3c.rml',
-        'zope.component',
-        'zope.event',
-        'zope.i18nmessageid',
-        'zope.interface',
-        'zope.location',
-        'zope.proxy',
-        'zope.schema',
-        'zope.security',
-        'zope.tal',
-        'zope.tales',
-        'nti.analytics_database',
-        'nti.common'
+		'setuptools',
+		# 'ggplot',
+		'lxml',
+		'matplotlib',
+		'numpy',
+		'pandas',
+		'pymysql',
+		'pypdf2',
+		'pygal',
+		'reportlab',
+		'user_agents',
+		# 'scipy', required by ggplot, does not work very well with buildout
+		'sqlalchemy',
+		'z3c.rml',
+		'z3c.macro',
+		'z3c.pagelet',
+		'z3c.template',
+		'zope.component',
+		'zope.contentprovider',
+		'zope.event',
+		'zope.i18nmessageid',
+		'zope.interface',
+		'zope.location',
+		'zope.proxy',
+		'zope.schema',
+		'zope.security',
+		'zope.tal',
+		'zope.tales',
+		'zope.viewlet',
+		'nti.analytics_database',
+		'nti.common'
 	],
 	tests_require=TESTS_REQUIRE,
 	entry_points=entry_points,
 	extras_require={
-        'test': TESTS_REQUIRE,
-        'tools': [
-			'epydoc',	# auto-api docs
+		'test': TESTS_REQUIRE,
+		'tools': [
+			'epydoc',  # auto-api docs
 			'httpie',
 			'ipython',
 			'logilab_astng',
@@ -92,6 +97,6 @@ setup(
 			'Babel',
 			'lingua',
 		]
-    },
-    test_suite='nose2.compat.unittest.collector'
+	},
+	test_suite='nose2.compat.unittest.collector'
 )
