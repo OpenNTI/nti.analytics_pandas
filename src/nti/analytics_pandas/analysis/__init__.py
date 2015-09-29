@@ -9,7 +9,5 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
-
 from .plots import ResourceViewsTimeseriesPlot
 from .resource_views import ResourceViewsTimeseries
-

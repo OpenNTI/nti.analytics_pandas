@@ -9,8 +9,8 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
-from .analysis import ResourceViewsTimeseries
-from .analysis import ResourceViewsTimeseriesPlot
+from ..analysis import ResourceViewsTimeseries
+from ..analysis import ResourceViewsTimeseriesPlot
 
 class ResourceViewsTimeseriesReport(object):
 	def __init__(self, session, start_date, end_date, courses_id):
@@ -19,6 +19,6 @@ class ResourceViewsTimeseriesReport(object):
 
 	def generate_events_plots(self):
 		pass
-		# rvtp = self.rvtp	
+		# rvtp = self.rvtp
 		# plot_resource_views, plot_unique_users, plot_ratio = rvtp.explore_events()
-		#TODO : generate images on the fly and render them along with template to pdf
+		# TODO : generate images on the fly and render them along with template to pdf
