@@ -53,9 +53,11 @@ setup(
         'pymysql',
         'pypdf2',
         'pygal',
+        'reportlab',
         'user_agents',
         # 'scipy', required by ggplot, does not work very well with buildout
         'sqlalchemy',
+        'z3c.rml',
         'zope.component',
         'zope.event',
         'zope.i18nmessageid',
@@ -64,6 +66,8 @@ setup(
         'zope.proxy',
         'zope.schema',
         'zope.security',
+        'zope.tal',
+        'zope.tales',
         'nti.analytics_database',
         'nti.common'
 	],
