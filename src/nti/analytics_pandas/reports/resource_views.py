@@ -17,7 +17,7 @@ from .mixins import AbstractReportView
 class ResourceViewsTimeseriesReport(AbstractReportView):
 	
 	def __init__(self, session, start_date, end_date, courses_id):
-		AbstractReportView.__init__() # TODO: Set context
+		AbstractReportView.__init__(self, context=self)
 		self.rvt = rvt = ResourceViewsTimeseries(session, start_date, end_date, courses_id)
 		self.rvtp = ResourceViewsTimeseriesPlot(rvt)
 
