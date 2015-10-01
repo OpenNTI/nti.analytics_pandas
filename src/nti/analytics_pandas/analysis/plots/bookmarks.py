@@ -96,7 +96,7 @@ class BookmarksTimeseriesPlot(object):
 				xlab('Date')
 
 		plot_unique_users = \
-				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users')) + \
+				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users', color='resource_type')) + \
 				geom_point(color='blue') + \
 				geom_line() + \
 				ggtitle('Number of unique users creating bookmarks during period of time') + \
@@ -106,7 +106,7 @@ class BookmarksTimeseriesPlot(object):
 				xlab('Date')
 
 		plot_ratio = \
-				ggplot(df, aes(x='timestamp_period', y='ratio')) + \
+				ggplot(df, aes(x='timestamp_period', y='ratio',  color='resource_type')) + \
 				geom_point(color='red') + \
 				geom_line() + \
 				ggtitle('Ratio of bookmark creation over unique user on each available date') + \
@@ -115,5 +115,4 @@ class BookmarksTimeseriesPlot(object):
 				ylab('Ratio') + \
 				xlab('Date')
 
-		print(plot_bookmarks_creation)
 		return (plot_bookmarks_creation, plot_unique_users, plot_ratio)
