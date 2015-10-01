@@ -12,10 +12,10 @@ from nti.analytics_pandas.analysis.plots.resource_views import ResourceViewsTime
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
-class TestResourceViewsEDA(AnalyticsPandasTestBase):
+class TestResourceViewsPlot(AnalyticsPandasTestBase):
 
 	def setUp(self):
-		super(TestResourceViewsEDA, self).setUp()
+		super(TestResourceViewsPlot, self).setUp()
 
 	def test_explore_events(self):
 		start_date = '2015-01-01'
