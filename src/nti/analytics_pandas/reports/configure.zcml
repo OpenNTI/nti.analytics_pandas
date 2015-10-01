@@ -30,12 +30,6 @@
 		 with z3c.layout, content providers and the like. I may switch
 		 over to that before too long.
 	-->
-	<z3c:macro
-		template="templates/std_report_macros.pt"
-		name="header_graphic"
-		for="zope.interface.Interface"
-		view=".interfaces.IPDFReportView"
-		layer="*" />
 
 	<z3c:macro
 		template="templates/std_report_macros.pt"
