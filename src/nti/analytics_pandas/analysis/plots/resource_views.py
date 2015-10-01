@@ -149,7 +149,4 @@ class  ResourceViewsTimeseriesPlot(object):
 				scale_x_date(breaks="1 month", minor_breaks="1 week", labels=date_format("%y-%m-%d")) + \
 				ylab('Number of unique course resource') + \
 				xlab('Date')
-		print(plot_resource_views)
-		print(plot_unique_users)
-		print(plot_unique_resources)
 		return (plot_resource_views, plot_unique_users, plot_unique_resources)
