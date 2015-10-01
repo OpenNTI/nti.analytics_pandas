@@ -14,17 +14,15 @@ import pandas as pd
 from ggplot import aes
 from ggplot import xlab
 from ggplot import ylab
+from ggplot import theme
 from ggplot import ggplot
 from ggplot import ggtitle
 from ggplot import geom_line
+from ggplot import facet_wrap
 from ggplot import geom_point
 from ggplot import date_format
 from ggplot import scale_x_date
-from ggplot import theme
 from ggplot import element_text
-from ggplot import facet_wrap
-from ggplot import facet_grid
-from ggplot import labs
 
 class  ResourceViewsTimeseriesPlot(object):
 
