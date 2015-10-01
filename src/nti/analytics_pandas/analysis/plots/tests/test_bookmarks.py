@@ -8,7 +8,7 @@ __docformat__ = "restructuredtext en"
 # pylint: disable=W0212,R0904
 
 from nti.analytics_pandas.analysis.bookmarks import BookmarkCreationTimeseries
-from nti.analytics_pandas.analysis.plots.bookmarks import BookmarksTimeseriesPlot 
+from nti.analytics_pandas.analysis.plots.bookmarks import BookmarksTimeseriesPlot
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
