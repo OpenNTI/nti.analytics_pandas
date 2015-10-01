@@ -31,7 +31,7 @@ class  ResourceViewsTimeseriesPlot(object):
 		"""
 		self.rvt = rvt
 
-	def explore_events(self):
+	def explore_events(self, period_breaks  = '1 week', minor_period_breaks = '1 day'):
 		"""
 		return scatter plots of resource views during period of time
 		it consists of :
@@ -50,7 +50,7 @@ class  ResourceViewsTimeseriesPlot(object):
 				geom_line() + \
 				ggtitle('Number of resource views during period of time') + \
 				theme(title=element_text(size=10,face="bold")) + \
-				scale_x_date(breaks="1 month", minor_breaks="1 week", labels=date_format("%y-%m-%d")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
 				ylab('Number of resource views') + \
 				xlab('Date')
 
@@ -60,7 +60,7 @@ class  ResourceViewsTimeseriesPlot(object):
 				geom_line() + \
 				ggtitle('Number of unique users viewing resource during period of time') + \
 				theme(title=element_text(size=10,face="bold")) + \
-				scale_x_date(breaks="1 month", minor_breaks="1 week", labels=date_format("%y-%m-%d")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
 				ylab('Number of resource views') + \
 				xlab('Date')
 
@@ -70,13 +70,13 @@ class  ResourceViewsTimeseriesPlot(object):
 				geom_line() + \
 				ggtitle('Ratio of resource views over unique user on each available date') + \
 				theme(title=element_text(size=10,face="bold")) + \
-				scale_x_date(breaks="1 month", minor_breaks="1 week", labels=date_format("%y-%m-%d")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
 				ylab('Ratio') + \
 				xlab('Date')
 
 		return (plot_resource_views, plot_unique_users, plot_ratio)
 
-	def analyze_resource_type(self):
+	def analyze_resource_type(self, period_breaks  = '1 week', minor_period_breaks = '1 day'):
 		"""
 		plot resource views based on resource type
 		"""
@@ -90,7 +90,7 @@ class  ResourceViewsTimeseriesPlot(object):
 				geom_point() + \
 				ggtitle('Number of resource views on each resource type') + \
 				theme(title=element_text(size=10,face="bold")) + \
-				scale_x_date(breaks="1 month", minor_breaks="1 week", labels=date_format("%y-%m-%d")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
 				ylab('Number of resource_views') + \
 				xlab('Date')
 
@@ -99,7 +99,7 @@ class  ResourceViewsTimeseriesPlot(object):
 				geom_point() + \
 				ggtitle('Number of unique users viewing each resource type at given time period') + \
 				theme(title=element_text(size=10,face="bold")) + \
-				scale_x_date(breaks="1 month", minor_breaks="1 week", labels=date_format("%y-%m-%d")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
 				ylab('Number of unique users') + \
 				xlab('Date')
 
@@ -108,13 +108,13 @@ class  ResourceViewsTimeseriesPlot(object):
 				geom_point() + \
 				ggtitle('Number of unique course resource on each resource type at given time period') + \
 				theme(title=element_text(size=10,face="bold")) + \
-				scale_x_date(breaks="1 month", minor_breaks="1 week", labels=date_format("%y-%m-%d")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
 				ylab('Number of unique course resource') + \
 				xlab('Date')
 
 		return (plot_resource_views, plot_unique_users, plot_unique_resources)
 
-	def analyze_device_type(self):
+	def analyze_device_type(self, period_breaks  = '1 week', minor_period_breaks = '1 day'):
 		"""
 		plot course resource views based on device type (user agent)
 		"""
@@ -128,7 +128,7 @@ class  ResourceViewsTimeseriesPlot(object):
 				geom_point() + \
 				ggtitle('Number of resource views using each device type') + \
 				theme(title=element_text(size=10,face="bold")) + \
-				scale_x_date(breaks="1 month", minor_breaks="1 week", labels=date_format("%y-%m-%d")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
 				ylab('Number of resource_views') + \
 				xlab('Date')
 
@@ -137,7 +137,7 @@ class  ResourceViewsTimeseriesPlot(object):
 				geom_point() + \
 				ggtitle('Number of unique users viewing course resource given time period group by device type') + \
 				theme(title=element_text(size=10,face="bold")) + \
-				scale_x_date(breaks="1 month", minor_breaks="1 week", labels=date_format("%y-%m-%d")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
 				ylab('Number of unique users') + \
 				xlab('Date')
 
@@ -146,7 +146,7 @@ class  ResourceViewsTimeseriesPlot(object):
 				geom_point() + \
 				ggtitle('Number of unique course resource viewed on each device type at given time period') + \
 				theme(title=element_text(size=10,face="bold")) + \
-				scale_x_date(breaks="1 month", minor_breaks="1 week", labels=date_format("%y-%m-%d")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
 				ylab('Number of unique course resource') + \
 				xlab('Date')
 		return (plot_resource_views, plot_unique_users, plot_unique_resources)
