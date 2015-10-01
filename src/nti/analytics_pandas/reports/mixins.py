@@ -34,14 +34,16 @@ def adjust_timestamp( timestamp ):
 	date = datetime.utcfromtimestamp( timestamp )
 	return _adjust_date( date )
 
-def _format_datetime( local_date ):
-	"""Returns a string formatted datetime object"""
+def format_datetime( local_date ):
+	"""
+	Returns a string formatted datetime object
+	"""
 	return local_date.strftime("%Y-%m-%d %H:%M")
 
 @interface.implementer(IPDFReportView)
 class AbstractReportView(BrowserPagelet):
 
-	def __init__(self, context, request):
+	def __init__(self, context, request=None):
 		self.options = {}
 		BrowserPagelet.__init__(self, context, request)
 
