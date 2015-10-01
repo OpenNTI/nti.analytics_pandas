@@ -19,7 +19,7 @@ from z3c.pagelet.browser import BrowserPagelet
 
 from .interfaces import IPDFReportView
 
-def _adjust_date( date ):
+def adjust_date( date ):
 	"""
 	Takes a date and returns a timezoned datetime
 	"""
@@ -32,7 +32,7 @@ def adjust_timestamp( timestamp ):
 	Takes a timestamp and returns a timezoned datetime
 	"""
 	date = datetime.utcfromtimestamp( timestamp )
-	return _adjust_date( date )
+	return adjust_date( date )
 
 def format_datetime( local_date ):
 	"""
@@ -43,12 +43,12 @@ def format_datetime( local_date ):
 @interface.implementer(IPDFReportView)
 class AbstractReportView(BrowserPagelet):
 
-	def __init__(self, context, request=None):
+	def __init__(self, context=None, request=None):
 		self.options = {}
 		BrowserPagelet.__init__(self, context, request)
 
 	def generate_footer(self):
-		date = _adjust_date(datetime.utcnow())
+		date = adjust_date(datetime.utcnow())
 		date = date.strftime('%b %d, %Y %I:%M %p')
 		title = self.report_title
 		course = self.course_name()

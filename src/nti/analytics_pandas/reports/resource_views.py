@@ -12,8 +12,12 @@ logger = __import__('logging').getLogger(__name__)
 from ..analysis import ResourceViewsTimeseries
 from ..analysis import ResourceViewsTimeseriesPlot
 
-class ResourceViewsTimeseriesReport(object):
+from .mixins import AbstractReportView
+
+class ResourceViewsTimeseriesReport(AbstractReportView):
+	
 	def __init__(self, session, start_date, end_date, courses_id):
+		AbstractReportView.__init__() # TODO: Set context
 		self.rvt = rvt = ResourceViewsTimeseries(session, start_date, end_date, courses_id)
 		self.rvtp = ResourceViewsTimeseriesPlot(rvt)
 
