@@ -155,6 +155,11 @@ class  ResourceViewsTimeseriesPlot(object):
 		return (plot_resource_views, plot_unique_users, plot_unique_resources)
 
 	def analyze_events_based_on_resource_device_type(self, period_breaks  = '1 month', minor_period_breaks = '1 week'):
+		"""
+		plot course resource views based on resource_type type (user agent).
+		Group the graphics into different types of user agent (device type)
+		"""
+
 		rvt = self.rvt
 		df = rvt.analyze_events_based_on_resource_device_type()
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
@@ -167,4 +172,25 @@ class  ResourceViewsTimeseriesPlot(object):
 				ylab('Number of resource views') + \
 				xlab('Date') + \
 				facet_wrap('device_type', scales="free")
-		return plot_resource_views
+
+		plot_unique_users = \
+				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users', color='device_type')) + \
+				geom_point() + \
+				ggtitle('Number of unique users viewing course resource given time period group by device type') + \
+				theme(title=element_text(size=10,face="bold")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				ylab('Number of unique users') + \
+				xlab('Date') + \
+				facet_wrap('device_type', scales="free")
+
+		plot_unique_resources = \
+				ggplot(df, aes(x='timestamp_period', y='number_of_unique_resource', color='device_type')) + \
+				geom_point() + \
+				ggtitle('Number of unique course resource viewed on each device type at given time period') + \
+				theme(title=element_text(size=10,face="bold")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				ylab('Number of unique course resource') + \
+				xlab('Date') + \
+				facet_wrap('device_type', scales="free")
+
+		return (plot_resource_views, plot_unique_users, plot_unique_resources)
