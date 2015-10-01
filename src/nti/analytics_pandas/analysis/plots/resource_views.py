@@ -22,6 +22,9 @@ from ggplot import date_format
 from ggplot import scale_x_date
 from ggplot import theme
 from ggplot import element_text
+from ggplot import facet_wrap
+from ggplot import facet_grid
+from ggplot import labs
 
 class  ResourceViewsTimeseriesPlot(object):
 
@@ -91,7 +94,7 @@ class  ResourceViewsTimeseriesPlot(object):
 				ggtitle('Number of resource views on each resource type') + \
 				theme(title=element_text(size=10,face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
-				ylab('Number of resource_views') + \
+				ylab('Number of resource views') + \
 				xlab('Date')
 
 		plot_unique_users = \
@@ -129,7 +132,7 @@ class  ResourceViewsTimeseriesPlot(object):
 				ggtitle('Number of resource views using each device type') + \
 				theme(title=element_text(size=10,face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
-				ylab('Number of resource_views') + \
+				ylab('Number of resource views') + \
 				xlab('Date')
 
 		plot_unique_users = \
@@ -150,3 +153,18 @@ class  ResourceViewsTimeseriesPlot(object):
 				ylab('Number of unique course resource') + \
 				xlab('Date')
 		return (plot_resource_views, plot_unique_users, plot_unique_resources)
+
+	def analyze_events_based_on_resource_device_type(self, period_breaks  = '1 month', minor_period_breaks = '1 week'):
+		rvt = self.rvt
+		df = rvt.analyze_events_based_on_resource_device_type()
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		plot_resource_views = \
+				ggplot(df, aes(x='timestamp_period', y='number_of_resource_views', color='resource_type')) + \
+				geom_point() + \
+				ggtitle('Number of resource views using each device type') + \
+				theme(title=element_text(size=10,face="bold")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				ylab('Number of resource views') + \
+				xlab('Date') + \
+				facet_wrap('device_type', scales="free")
+		return plot_resource_views
