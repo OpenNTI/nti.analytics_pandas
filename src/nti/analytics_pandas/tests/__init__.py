@@ -7,17 +7,12 @@ __docformat__ = "restructuredtext en"
 # disable: accessing protected members, too many methods
 # pylint: disable=W0212,R0904
 
-import os
-import uuid
-import shutil
-import tempfile
 import unittest
-
-import zope.testing.cleanup
 
 from zope import component
 
-from nti.testing.layers import find_test
+from zope.testing import cleanup as testing_cleanup
+
 from nti.testing.layers import GCLayerMixin
 from nti.testing.layers import ZopeComponentLayer
 from nti.testing.layers import ConfiguringLayerMixin
@@ -26,25 +21,20 @@ class SharedConfiguringTestLayer(ZopeComponentLayer,
                                  GCLayerMixin,
                                  ConfiguringLayerMixin):
 
-    set_up_packages = ('nti.analytics_pandas')
+    set_up_packages = ('nti.analytics_pandas',)
 
     @classmethod
     def setUp(cls):
         cls.setUpPackages()
-        cls.old_data_dir = os.getenv('DATASERVER_DATA_DIR')
-        cls.new_data_dir = tempfile.mkdtemp(dir="/tmp")
-        os.environ['DATASERVER_DATA_DIR'] = cls.new_data_dir
 
     @classmethod
     def tearDown(cls):
         cls.tearDownPackages()
-        zope.testing.cleanup.cleanUp()
+        testing_cleanup.cleanUp()
 
     @classmethod
     def testSetUp(cls, test=None):
-        cls.setUpTestDS(test)
-        shutil.rmtree(cls.new_data_dir, True)
-        os.environ['DATASERVER_DATA_DIR'] = cls.old_data_dir or '/tmp'
+        pass
 
     @classmethod
     def testTearDown(cls):
@@ -83,6 +73,8 @@ def create_session(sessionmaker):
 from nti.analytics_database import Base
 
 class AnalyticsPandasTestBase(unittest.TestCase):
+    
+    layer = SharedConfiguringTestLayer
     
     def setUp(self):
         # TODO: Fix URI
