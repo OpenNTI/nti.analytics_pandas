@@ -74,22 +74,25 @@ class BookmarkCreationTimeseries(object):
 
 	def analyze_resource_types(self):
 		group_by_items = ['timestamp_period', 'resource_type']
-		agg_columns = {	'bookmark_id' 	: pd.Series.nunique,
-						'user_id'		: pd.Series.nunique,
-						'device_type'	: pd.Series.nunique}
-		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
+		df = self.process_analysis_by_type(group_by_items)
 		return df
 
 	def analyze_device_types(self):
 		group_by_items = ['timestamp_period', 'device_type']
+		df = self.process_analysis_by_type(group_by_items)	
+		return df
+
+	def process_analysis_by_type(self, group_by_columns):
 		agg_columns = {	'bookmark_id' 	: pd.Series.nunique,
 						'user_id'		: pd.Series.nunique }
-		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
+		df = analyze_types_(self.dataframe, group_by_columns, agg_columns)
+		df.rename(columns={	'bookmark_id'	:'number_of_bookmark_creation',
+							'user_id'		:'number_of_unique_users'},
+					inplace=True)
+		df['ratio'] = df['number_of_bookmark_creation'] / df['number_of_unique_users']
 		return df
 
 	def analyze_resource_device_types(self):
 		group_by_items = ['timestamp_period', 'resource_type', 'device_type']
-		agg_columns = {	'bookmark_id' 	: pd.Series.nunique,
-						'user_id'		: pd.Series.nunique	}
-		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
+		df = self.process_analysis_by_type(group_by_items)
 		return df
