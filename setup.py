@@ -52,7 +52,7 @@ setup(
 		'pandas',
 		'pymysql',
 		'pypdf2',
-		'pygal',
+		'pytz',
 		'reportlab',
 		'user_agents',
 		# 'scipy', required by ggplot, does not work very well with buildout
@@ -74,7 +74,8 @@ setup(
 		'zope.tales',
 		'zope.viewlet',
 		'nti.analytics_database',
-		'nti.common'
+		'nti.common',
+		'nti.schema'
 	],
 	tests_require=TESTS_REQUIRE,
 	entry_points=entry_points,
