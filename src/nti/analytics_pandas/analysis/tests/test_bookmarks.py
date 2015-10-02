@@ -8,14 +8,14 @@ __docformat__ = "restructuredtext en"
 # pylint: disable=W0212,R0904
 
 from hamcrest import equal_to
-from hamcrest import assert_that
 from hamcrest import has_item
+from hamcrest import assert_that
+
+import numpy as np
 
 from nti.analytics_pandas.analysis.bookmarks import BookmarkCreationTimeseries
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
-
-import numpy as np
 
 class TestBookmarksEDA(AnalyticsPandasTestBase):
 
@@ -45,12 +45,11 @@ class TestBookmarksEDA(AnalyticsPandasTestBase):
 
 		df, resource_df = bct.analyze_resource_types()
 		assert_that(len(df), equal_to(22))
-		assert_that(len(df.sum(level = 'timestamp_period')), equal_to(20))
-		assert_that(len(df.sum(level = 'resource_type')), equal_to(2))
+		assert_that(len(df.sum(level='timestamp_period')), equal_to(20))
+		assert_that(len(df.sum(level='resource_type')), equal_to(2))
 		assert_that(len(resource_df.index), equal_to(2))
 
 		df = bct.analyze_device_types()
 		assert_that(len(df), equal_to(20))
-		assert_that(len(df.sum(level = 'timestamp_period')), equal_to(20))
-		assert_that(len(df.sum(level = 'device_type')), equal_to(1))
-
+		assert_that(len(df.sum(level='timestamp_period')), equal_to(20))
+		assert_that(len(df.sum(level='device_type')), equal_to(1))

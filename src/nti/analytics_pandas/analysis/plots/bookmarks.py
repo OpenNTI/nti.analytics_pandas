@@ -18,11 +18,11 @@ from ggplot import theme
 from ggplot import ggplot
 from ggplot import ggtitle
 from ggplot import geom_line
+from ggplot import facet_wrap
 from ggplot import geom_point
 from ggplot import date_format
 from ggplot import scale_x_date
 from ggplot import element_text
-from ggplot import facet_wrap
 from ggplot import geom_histogram
 
 class BookmarksTimeseriesPlot(object):
@@ -125,7 +125,7 @@ class BookmarksTimeseriesPlot(object):
 				ylab('Number of bookmark creation') + \
 				xlab('Resource type')
 
-		return (plot_bookmarks_creation, plot_unique_users, plot_ratio)
+		return (plot_bookmarks_creation, plot_unique_users, plot_ratio, plot_total_bookmark_on_each_type)
 
 	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
@@ -135,7 +135,7 @@ class BookmarksTimeseriesPlot(object):
 		df = bct.analyze_device_types()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
-		
+
 		plot_bookmarks_creation = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_bookmark_creation', color='device_type')) + \
 				geom_point(color='orange') + \
@@ -183,7 +183,7 @@ class BookmarksTimeseriesPlot(object):
 				ggplot(df, aes(x='timestamp_period', y='number_of_bookmark_creation', color='resource_type')) + \
 				geom_point() + \
 				ggtitle('Number of bookmark creation using each device type') + \
-				theme(title=element_text(size=8,face="bold")) + \
+				theme(title=element_text(size=8, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
 				ylab('Number of resource views') + \
 				xlab('Date') + \
@@ -193,7 +193,7 @@ class BookmarksTimeseriesPlot(object):
 				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users', color='resource_type')) + \
 				geom_point() + \
 				ggtitle('Number of unique users creating bookmarks during time period group by device type') + \
-				theme(title=element_text(size=8,face="bold")) + \
+				theme(title=element_text(size=8, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
 				ylab('Number of unique users') + \
 				xlab('Date') + \
@@ -207,9 +207,6 @@ class BookmarksTimeseriesPlot(object):
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
 				ylab('Ratio') + \
 				xlab('Date') + \
-				facet_wrap('device_type', scales="free") 
+				facet_wrap('device_type', scales="free")
 
 		return (plot_bookmarks_creation, plot_unique_users, plot_ratio)
-
-
-

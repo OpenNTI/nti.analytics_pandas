@@ -51,7 +51,9 @@ class  ResourceViewsTimeseriesPlot(object):
 				geom_line() + \
 				ggtitle('Number of resource views during period of time') + \
 				theme(title=element_text(size=10,face="bold")) + \
-				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				scale_x_date(breaks=period_breaks, 
+							 minor_breaks=minor_period_breaks, 
+							 labels=date_format("%y-%m-%d")) + \
 				ylab('Number of resource views') + \
 				xlab('Date')
 
@@ -61,7 +63,9 @@ class  ResourceViewsTimeseriesPlot(object):
 				geom_line() + \
 				ggtitle('Number of unique users viewing resource during period of time') + \
 				theme(title=element_text(size=10,face="bold")) + \
-				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				scale_x_date(breaks=period_breaks, 
+							 minor_breaks=minor_period_breaks, 
+							 labels=date_format("%y-%m-%d")) + \
 				ylab('Number of unique users') + \
 				xlab('Date')
 
@@ -71,7 +75,9 @@ class  ResourceViewsTimeseriesPlot(object):
 				geom_line() + \
 				ggtitle('Ratio of resource views over unique user on each available date') + \
 				theme(title=element_text(size=10,face="bold")) + \
-				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				scale_x_date(breaks=period_breaks, 
+							 minor_breaks=minor_period_breaks, 
+							 labels=date_format("%y-%m-%d")) + \
 				ylab('Ratio') + \
 				xlab('Date')
 

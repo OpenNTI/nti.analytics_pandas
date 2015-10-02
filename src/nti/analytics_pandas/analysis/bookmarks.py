@@ -10,6 +10,7 @@ __docformat__ = "restructuredtext en"
 logger = __import__('logging').getLogger(__name__)
 
 import numpy as np
+
 import pandas as pd
 
 from ..queries import QueryBookmarksCreated
@@ -27,7 +28,7 @@ class BookmarkCreationTimeseries(object):
 	analyze the number of bookmarks creation given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date, course_id=None, 
+	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_resource_type=True, with_device_type=True, time_period_date=True):
 
 		self.session = session
@@ -76,17 +77,15 @@ class BookmarkCreationTimeseries(object):
 	def analyze_resource_types(self):
 		group_by_items = ['timestamp_period', 'resource_type']
 		df = self.process_analysis_by_type(group_by_items)
-
 		resource_df = df[['number_of_bookmark_creation']]
 		resource_df.reset_index(inplace=True)
 		grouped = resource_df.groupby(['resource_type'])
 		resource_df = grouped.aggregate({'number_of_bookmark_creation' : np.sum})
-		
 		return df, resource_df
 
 	def analyze_device_types(self):
 		group_by_items = ['timestamp_period', 'device_type']
-		df = self.process_analysis_by_type(group_by_items)	
+		df = self.process_analysis_by_type(group_by_items)
 		return df
 
 	def process_analysis_by_type(self, group_by_columns):
@@ -103,4 +102,3 @@ class BookmarkCreationTimeseries(object):
 		group_by_items = ['timestamp_period', 'resource_type', 'device_type']
 		df = self.process_analysis_by_type(group_by_items)
 		return df
-
