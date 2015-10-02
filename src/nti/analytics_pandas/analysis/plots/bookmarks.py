@@ -23,6 +23,7 @@ from ggplot import date_format
 from ggplot import scale_x_date
 from ggplot import element_text
 from ggplot import facet_wrap
+from ggplot import geom_histogram
 
 class BookmarksTimeseriesPlot(object):
 	def __init__(self, bct):
@@ -81,7 +82,7 @@ class BookmarksTimeseriesPlot(object):
 		plot bookmark creation based on resource type
 		"""
 		bct = self.bct
-		df = bct.analyze_resource_types()
+		df, resource_df = bct.analyze_resource_types()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
@@ -114,6 +115,15 @@ class BookmarksTimeseriesPlot(object):
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
 				ylab('Ratio') + \
 				xlab('Date')
+
+		resource_df.reset_index(inplace=True)
+		plot_total_bookmark_on_each_type = \
+				ggplot(resource_df, aes(x='resource_type', y='number_of_bookmark_creation')) + \
+				geom_histogram(stat="bar") + \
+				ggtitle('Number of bookmark creation on each resource type') + \
+				theme(title=element_text(size=10, face="bold")) + \
+				ylab('Number of bookmark creation') + \
+				xlab('Resource type')
 
 		return (plot_bookmarks_creation, plot_unique_users, plot_ratio)
 
