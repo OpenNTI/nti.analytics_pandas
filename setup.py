@@ -53,13 +53,15 @@ setup(
 		'pymysql',
 		'pypdf2',
 		'pytz',
-		'reportlab',\
+		'reportlab',
 		# 'scipy', required by ggplot, does not work very well with buildout
 		'sqlalchemy',
 		'user_agents',
 		'z3c.rml',
 		'z3c.macro',
 		'z3c.pagelet',
+		'z3c.pt',
+		'z3c.ptcompat',
 		'z3c.template',
 		'zope.browserpage',
 		'zope.component',
