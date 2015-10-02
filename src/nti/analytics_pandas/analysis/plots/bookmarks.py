@@ -22,6 +22,7 @@ from ggplot import geom_point
 from ggplot import date_format
 from ggplot import scale_x_date
 from ggplot import element_text
+from ggplot import facet_wrap
 
 class BookmarksTimeseriesPlot(object):
 	def __init__(self, bct):
@@ -156,5 +157,50 @@ class BookmarksTimeseriesPlot(object):
 				xlab('Date')
 
 		return (plot_bookmarks_creation, plot_unique_users, plot_ratio)
+
+	def analyze_resource_device_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
+		"""
+		Plot bookmark creation based on resource type.
+		Show scatter plot of all types of user agent (device type)
+		##TODO : fix legend for resource_type
+		"""
+		bct = self.bct
+		df = bct.analyze_resource_device_types()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		plot_bookmarks_creation = \
+				ggplot(df, aes(x='timestamp_period', y='number_of_bookmark_creation', color='resource_type')) + \
+				geom_point() + \
+				ggtitle('Number of bookmark creation using each device type') + \
+				theme(title=element_text(size=10,face="bold")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				ylab('Number of resource views') + \
+				xlab('Date') + \
+				facet_wrap('device_type', scales="free")
+
+		plot_unique_users = \
+				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users', color='resource_type')) + \
+				geom_point() + \
+				ggtitle('Number of unique users creating bookmarks during time period group by device type') + \
+				theme(title=element_text(size=10,face="bold")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				ylab('Number of unique users') + \
+				xlab('Date') + \
+				facet_wrap('device_type', scales="free")
+
+		plot_ratio = \
+				ggplot(df, aes(x='timestamp_period', y='ratio', color='resource_type')) + \
+				geom_point(color='red') + \
+				geom_line() + \
+				ggtitle('Ratio of bookmark creation over unique user on each available date') + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				ylab('Ratio') + \
+				xlab('Date') + \
+				facet_wrap('device_type', scales="free") 
+
+		return (plot_bookmarks_creation, plot_unique_users, plot_ratio)
+
 
 
