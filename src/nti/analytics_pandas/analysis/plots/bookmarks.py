@@ -115,3 +115,46 @@ class BookmarksTimeseriesPlot(object):
 				xlab('Date')
 
 		return (plot_bookmarks_creation, plot_unique_users, plot_ratio)
+
+	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
+		"""
+		plot bookmark creation based on device type
+		"""
+		bct = self.bct
+		df = bct.analyze_device_types()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		
+		plot_bookmarks_creation = \
+				ggplot(df, aes(x='timestamp_period', y='number_of_bookmark_creation', color='device_type')) + \
+				geom_point(color='orange') + \
+				geom_line() + \
+				ggtitle('Number of bookmark creation during period of time') + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				ylab('Number of bookmark creation') + \
+				xlab('Date')
+
+		plot_unique_users = \
+				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users', color='device_type')) + \
+				geom_point(color='blue') + \
+				geom_line() + \
+				ggtitle('Number of unique users creating bookmarks during period of time') + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				ylab('Number of unique users') + \
+				xlab('Date')
+
+		plot_ratio = \
+				ggplot(df, aes(x='timestamp_period', y='ratio', color='device_type')) + \
+				geom_point(color='red') + \
+				geom_line() + \
+				ggtitle('Ratio of bookmark creation over unique user on each available date') + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				ylab('Ratio') + \
+				xlab('Date')
+
+		return (plot_bookmarks_creation, plot_unique_users, plot_ratio)
+
+
