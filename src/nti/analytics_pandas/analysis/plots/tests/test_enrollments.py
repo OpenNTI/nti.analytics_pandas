@@ -52,13 +52,13 @@ class TestCourseEnrollmentsPlot(AnalyticsPandasTestBase):
 		cetp = CourseEnrollmentsTimeseriesPlot(cet)
 		_ = cetp.explore_events()
 
-	def test_analyze_device_types(self):
+	def test_analyze_device_enrollment_types(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
 		course_id = ['388']
 		cet = CourseEnrollmentsTimeseries(self.session, start_date, end_date)
 		cetp = CourseEnrollmentsTimeseriesPlot(cet)
-		_ = cetp.analyze_device_types()
+		_ = cetp.analyze_device_enrollment_types()
 
 
 class TestCourseDropsPlot(AnalyticsPandasTestBase):
