@@ -95,9 +95,19 @@ class CourseCatalogViewsTimeseriesPlot(object):
 				geom_point() + \
 				geom_line() + \
 				ggtitle('Average time length user spent viewing course catalog during period of time') + \
-				theme(title=element_text(size=8, face="bold")) + \
+				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
 				ylab('Average time length (in second)') + \
+				xlab('Date')
+
+		plot_catalog_view_events = \
+				ggplot(df, aes(x='timestamp_period', y='number_of_course_catalog_views', color='device_type')) + \
+				geom_point() + \
+				geom_line() + \
+				ggtitle('Number of course catalog views during period of time') + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				ylab('Number of unique users') + \
 				xlab('Date')
 
 		plot_unique_users = \
@@ -110,5 +120,5 @@ class CourseCatalogViewsTimeseriesPlot(object):
 				ylab('Number of unique users') + \
 				xlab('Date')
 
-		return (plot_average_time_length, plot_unique_users)
+		return(plot_average_time_length, plot_catalog_view_events, plot_unique_users)
 

@@ -69,10 +69,12 @@ class CourseCatalogViewsTimeseries(object):
 	def analyze_device_types(self):
 		group_by_items = ['timestamp_period', 'device_type']
 		agg_columns = {	'time_length'	: np.mean,
-						'user_id'		: pd.Series.nunique}
+						'user_id'		: pd.Series.nunique,
+						'session_id'	: pd.Series.count}
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
 		df.rename(columns={	'user_id'		:'number_of_unique_users',
-							'time_length'	:'average_time_length'},
+							'time_length'	:'average_time_length',
+							'session_id'	:'number_of_course_catalog_views'},
 							inplace=True)
 		return df
 
