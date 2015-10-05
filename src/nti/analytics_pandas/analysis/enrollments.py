@@ -52,6 +52,7 @@ class CourseCatalogViewsTimeseries(object):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
 		if events_df is not None :
 			events_df.rename(columns={'index':'total_course_catalog_views'}, inplace=True)
+		events_df = events_df[['total_course_catalog_views']]
 		return events_df
 
 	def explore_unique_users_based_timestamp_date(self):
