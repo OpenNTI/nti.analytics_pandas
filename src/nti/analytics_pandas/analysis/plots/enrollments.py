@@ -137,7 +137,7 @@ class CourseEnrollmentsTimeseriesPlot(object):
 		df = cet.explore_number_of_events_based_timestamp_date()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
-		plot_course_enrollment = \
+		plot_course_enrollments = \
 				ggplot(df, aes(x='timestamp_period', y='total_enrollments')) + \
 				geom_point() + \
 				geom_line() + \
@@ -146,4 +146,21 @@ class CourseEnrollmentsTimeseriesPlot(object):
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
 				ylab('Number of enrollments') + \
 				xlab('Date')
-		return(plot_course_enrollment)
+		return(plot_course_enrollments)
+
+	def analyze_device_types(self, period_breaks='1 month', minor_period_breaks='1 week'):
+		cet = self.cet
+		df = cet.analyze_device_enrollment_types()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		plot_course_enrollments = \
+				ggplot(df, aes(x='timestamp_period', y='number_of_enrollments', color='device_type')) + \
+				geom_point() + \
+				geom_line() + \
+				ggtitle('Number of enrollments during period of time') + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				ylab('Number of enrollments') + \
+				xlab('Date')
+		return(plot_course_enrollments)
+
