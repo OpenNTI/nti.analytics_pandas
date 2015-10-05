@@ -7,13 +7,13 @@ __docformat__ = "restructuredtext en"
 # disable: accessing protected members, too many methods
 # pylint: disable=W0212,R0904
 
-from nti.analytics_pandas.analysis.enrollments import CourseCatalogViewsTimeseries
-from nti.analytics_pandas.analysis.enrollments import CourseEnrollmentsTimeseries
 from nti.analytics_pandas.analysis.enrollments import CourseDropsTimeseries
+from nti.analytics_pandas.analysis.enrollments import CourseEnrollmentsTimeseries
+from nti.analytics_pandas.analysis.enrollments import CourseCatalogViewsTimeseries
 
-from nti.analytics_pandas.analysis.plots.enrollments import CourseCatalogViewsTimeseriesPlot
-from nti.analytics_pandas.analysis.plots.enrollments import CourseEnrollmentsTimeseriesPlot
 from nti.analytics_pandas.analysis.plots.enrollments import CourseDropsTimeseriesPlot
+from nti.analytics_pandas.analysis.plots.enrollments import CourseEnrollmentsTimeseriesPlot
+from nti.analytics_pandas.analysis.plots.enrollments import CourseCatalogViewsTimeseriesPlot
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
@@ -38,7 +38,6 @@ class TestCourseCatalogViewsPlot(AnalyticsPandasTestBase):
 		ccvtp = CourseCatalogViewsTimeseriesPlot(ccvt)
 		_ = ccvtp.analyze_device_types()
 
-
 class TestCourseEnrollmentsPlot(AnalyticsPandasTestBase):
 
 	def setUp(self):
@@ -59,7 +58,6 @@ class TestCourseEnrollmentsPlot(AnalyticsPandasTestBase):
 		cet = CourseEnrollmentsTimeseries(self.session, start_date, end_date, course_id)
 		cetp = CourseEnrollmentsTimeseriesPlot(cet)
 		_ = cetp.analyze_device_enrollment_types()
-
 
 class TestCourseDropsPlot(AnalyticsPandasTestBase):
 

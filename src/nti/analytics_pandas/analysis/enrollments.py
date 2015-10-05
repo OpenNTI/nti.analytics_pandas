@@ -82,14 +82,15 @@ class CourseEnrollmentsTimeseries(object):
 	"""
 	analyze the number of course enrollments given time period and list of course id
 	"""
+
 	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_device_type=True, time_period_date=True, enrollment_type=True):
 		self.session = session
 		qce = self.query_course_enrollments = QueryCourseEnrollments(self.session)
 		if isinstance (course_id, (tuple, list)):
 			self.dataframe = qce.filter_by_period_of_time_and_course_id(start_date,
-																		 end_date,
-																		 course_id)
+																		end_date,
+																		course_id)
 		else:
 			self.dataframe = qce.filter_by_period_of_time(start_date, end_date)
 
@@ -136,15 +137,15 @@ class CourseDropsTimeseries(object):
 	"""
 	analyze the number of course drops given time period and list of course id
 	"""
-	def __init__(self, session, start_date, end_date, course_id=None, 
+	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_device_type=True, time_period_date=True, enrollment_type=True):
 
 		self.session = session
 		qcd = self.query_course_drops = QueryCourseDrops(self.session)
 		if isinstance (course_id, (tuple, list)):
 			self.dataframe = qcd.filter_by_period_of_time_and_course_id(start_date,
-																		 end_date,
-																		 course_id)
+																		end_date,
+																		course_id)
 		else:
 			self.dataframe = qcd.filter_by_period_of_time(start_date, end_date)
 
@@ -154,7 +155,7 @@ class CourseDropsTimeseries(object):
 				self.dataframe = new_df
 		if time_period_date :
 			self.dataframe = add_timestamp_period(self.dataframe)
-		
+
 		if enrollment_type :
 			qet = QueryEnrollmentTypes(session)
 			cet = QueryCourseEnrollments(session)

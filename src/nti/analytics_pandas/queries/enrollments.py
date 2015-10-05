@@ -83,6 +83,7 @@ class QueryCourseEnrollments(TableQueryMixin):
 		return dataframe
 
 class QueryEnrollmentTypes(TableQueryMixin):
+
 	table = EnrollmentTypes
 
 	def get_enrollment_types(self):
