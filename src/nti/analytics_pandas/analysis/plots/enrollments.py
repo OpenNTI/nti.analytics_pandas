@@ -78,3 +78,37 @@ class CourseCatalogViewsTimeseriesPlot(object):
 		return(plot_catalog_views, plot_unique_users, plot_ratio)
 
 
+	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
+		"""
+		plot course catalog views based on user agent (device type)
+		the plots consists of :
+		- average time length users spent on viewing course catalog during time period
+		- number of unique users during time period for each type of user agent
+		"""
+		ccvt = self.ccvt
+		df = ccvt.analyze_device_types()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		
+		plot_average_time_length = \
+				ggplot(df, aes(x='timestamp_period', y='average_time_length', color='device_type')) + \
+				geom_point() + \
+				geom_line() + \
+				ggtitle('Average time length user spent viewing course catalog during period of time') + \
+				theme(title=element_text(size=8, face="bold")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				ylab('Average time length (in second)') + \
+				xlab('Date')
+
+		plot_unique_users = \
+				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users', color='device_type')) + \
+				geom_point() + \
+				geom_line() + \
+				ggtitle('Number of unique users viewing course catalog during period of time') + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				ylab('Number of unique users') + \
+				xlab('Date')
+
+		return (plot_average_time_length, plot_unique_users)
+

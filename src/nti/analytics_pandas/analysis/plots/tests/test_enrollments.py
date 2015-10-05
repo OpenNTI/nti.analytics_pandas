@@ -24,3 +24,11 @@ class TestCourseCatalogViewsPlot(AnalyticsPandasTestBase):
 		ccvt = CourseCatalogViewsTimeseries(self.session, start_date, end_date, course_id)
 		ccvtp = CourseCatalogViewsTimeseriesPlot(ccvt)
 		_ = ccvtp.explore_events()
+
+	def test_analyze_device_types_plot(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		ccvt = CourseCatalogViewsTimeseries(self.session, start_date, end_date, course_id)
+		ccvtp = CourseCatalogViewsTimeseriesPlot(ccvt)
+		_ = ccvtp.analyze_device_types()
