@@ -8,7 +8,10 @@ __docformat__ = "restructuredtext en"
 # pylint: disable=W0212,R0904
 
 from nti.analytics_pandas.analysis.enrollments import CourseCatalogViewsTimeseries
+from nti.analytics_pandas.analysis.enrollments import CourseEnrollmentsTimeseries
+
 from nti.analytics_pandas.analysis.plots.enrollments import CourseCatalogViewsTimeseriesPlot
+from nti.analytics_pandas.analysis.plots.enrollments import CourseEnrollmentsTimeseriesPlot
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
@@ -32,3 +35,16 @@ class TestCourseCatalogViewsPlot(AnalyticsPandasTestBase):
 		ccvt = CourseCatalogViewsTimeseries(self.session, start_date, end_date, course_id)
 		ccvtp = CourseCatalogViewsTimeseriesPlot(ccvt)
 		_ = ccvtp.analyze_device_types()
+
+class TestCourseEnrollmentsPlot(AnalyticsPandasTestBase):
+
+	def setUp(self):
+		super(TestCourseEnrollmentsPlot, self).setUp()
+
+	def test_explore_events_course_enrollments(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		cet = CourseEnrollmentsTimeseries(self.session, start_date, end_date)
+		cetp = CourseEnrollmentsTimeseriesPlot(cet)
+		_ = cetp.explore_events()

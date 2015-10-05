@@ -122,3 +122,28 @@ class CourseCatalogViewsTimeseriesPlot(object):
 
 		return(plot_average_time_length, plot_catalog_view_events, plot_unique_users)
 
+class CourseEnrollmentsTimeseriesPlot(object):
+	def __init__(self, cet):
+		"""
+		cevt = CourseEnrollmentsTimeseries
+		"""
+		self.cet = cet
+
+	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
+		"""
+		return scatter plots of course enrollments during period of time
+		"""
+		cet = self.cet
+		df = cet.explore_number_of_events_based_timestamp_date()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		plot_course_enrollment = \
+				ggplot(df, aes(x='timestamp_period', y='total_enrollments')) + \
+				geom_point() + \
+				geom_line() + \
+				ggtitle('Number of enrollments during period of time') + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				ylab('Number of enrollments') + \
+				xlab('Date')
+		return(plot_course_enrollment)
