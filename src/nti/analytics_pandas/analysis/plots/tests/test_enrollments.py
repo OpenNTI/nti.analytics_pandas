@@ -48,7 +48,7 @@ class TestCourseEnrollmentsPlot(AnalyticsPandasTestBase):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
 		course_id = ['388']
-		cet = CourseEnrollmentsTimeseries(self.session, start_date, end_date)
+		cet = CourseEnrollmentsTimeseries(self.session, start_date, end_date, course_id)
 		cetp = CourseEnrollmentsTimeseriesPlot(cet)
 		_ = cetp.explore_events()
 
@@ -56,7 +56,7 @@ class TestCourseEnrollmentsPlot(AnalyticsPandasTestBase):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
 		course_id = ['388']
-		cet = CourseEnrollmentsTimeseries(self.session, start_date, end_date)
+		cet = CourseEnrollmentsTimeseries(self.session, start_date, end_date, course_id)
 		cetp = CourseEnrollmentsTimeseriesPlot(cet)
 		_ = cetp.analyze_device_enrollment_types()
 
@@ -70,6 +70,14 @@ class TestCourseDropsPlot(AnalyticsPandasTestBase):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
 		course_id = ['388']
-		cdt = CourseDropsTimeseries(self.session, start_date, end_date)
+		cdt = CourseDropsTimeseries(self.session, start_date, end_date, course_id)
 		cdtp = CourseDropsTimeseriesPlot(cdt)
 		_ = cdtp.explore_events()
+
+	def test_analyze_device_types(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		cdt = CourseDropsTimeseries(self.session, start_date, end_date, course_id)
+		cdtp = CourseDropsTimeseriesPlot(cdt)
+		_ = cdtp.analyze_device_enrollment_types()

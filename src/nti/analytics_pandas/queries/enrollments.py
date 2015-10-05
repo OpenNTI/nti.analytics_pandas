@@ -76,6 +76,12 @@ class QueryCourseEnrollments(TableQueryMixin):
 		new_df = add_device_type_(self.session, dataframe)
 		return new_df
 
+	def filter_by_user_id(self, courses_id):
+		ce = self.table
+		query = self.session.query(ce.user_id, ce.type_id).filter(ce.course_id.in_(courses_id))
+		dataframe = orm_dataframe(query, self.columns)
+		return dataframe
+
 class QueryEnrollmentTypes(TableQueryMixin):
 	table = EnrollmentTypes
 

@@ -152,7 +152,7 @@ class CourseEnrollmentsTimeseriesPlot(object):
 
 	def analyze_device_enrollment_types(self, period_breaks='1 month', minor_period_breaks='1 week'):
 		"""
-		return a plot of the course enrollments grouped by user agent (device_type)
+		return plots of the course enrollments grouped by user agent (device_type) and enrollment type
 		"""
 		cet = self.cet
 		df = cet.analyze_device_enrollment_types()
@@ -211,3 +211,34 @@ class CourseDropsTimeseriesPlot(object):
 
 		return(plot_course_drops)
 
+	def analyze_device_enrollment_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
+		"""
+		return plots of the course drops grouped by user agent (device_type) and enrollment type
+		"""
+		cdt = self.cdt
+		df = cdt.analyze_device_types()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		
+		df.rename(columns={	'type_name':'enrollment_type'}, inplace=True)
+	
+		plot_course_drops_by_device = \
+				ggplot(df, aes(x='timestamp_period', y='number_of_course_drops', color='device_type')) + \
+				geom_point() + \
+				ggtitle('Number of course drops grouped by device type during period of time') + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				ylab('Number of course drops') + \
+				xlab('Date')
+
+		
+		plot_course_drops_by_enrollment_type = \
+				ggplot(df, aes(x='timestamp_period', y='number_of_course_drops', color='enrollment_type')) + \
+				geom_point() + \
+				ggtitle('Number of course drops grouped by enrollment types during period of time') + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				ylab('Number of course drops') + \
+				xlab('Date')		
+		
+		return(plot_course_drops_by_device, plot_course_drops_by_enrollment_type)

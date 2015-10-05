@@ -137,7 +137,8 @@ class CourseDropsTimeseries(object):
 	analyze the number of course drops given time period and list of course id
 	"""
 	def __init__(self, session, start_date, end_date, course_id=None, 
-				 with_device_type=True, time_period_date=True):
+				 with_device_type=True, time_period_date=True, enrollment_type=True):
+
 		self.session = session
 		qcd = self.query_course_drops = QueryCourseDrops(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -153,6 +154,14 @@ class CourseDropsTimeseries(object):
 				self.dataframe = new_df
 		if time_period_date :
 			self.dataframe = add_timestamp_period(self.dataframe)
+		
+		if enrollment_type :
+			qet = QueryEnrollmentTypes(session)
+			cet = QueryCourseEnrollments(session)
+			enrollment_type_df = qet.get_enrollment_types()
+			user_enrollment_type_df = cet.filter_by_user_id(course_id)
+			user_enrollment_type_df = user_enrollment_type_df.merge(enrollment_type_df)
+			self.dataframe = self.dataframe.merge(user_enrollment_type_df, how='left')
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
@@ -172,7 +181,7 @@ class CourseDropsTimeseries(object):
 		return merge_df
 
 	def analyze_device_types(self):
-		group_by_items = ['timestamp_period', 'device_type']
+		group_by_items = ['timestamp_period', 'device_type', 'type_name']
 		agg_columns = {	'user_id'	: pd.Series.nunique}
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
 		df.rename(columns={'user_id':'number_of_course_drops'}, inplace=True)
