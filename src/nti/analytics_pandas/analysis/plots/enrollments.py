@@ -149,6 +149,9 @@ class CourseEnrollmentsTimeseriesPlot(object):
 		return(plot_course_enrollments)
 
 	def analyze_device_types(self, period_breaks='1 month', minor_period_breaks='1 week'):
+		"""
+		return a plot of the course enrollments grouped by user agent (device_type)
+		"""
 		cet = self.cet
 		df = cet.analyze_device_enrollment_types()
 		df.reset_index(inplace=True)
@@ -163,4 +166,31 @@ class CourseEnrollmentsTimeseriesPlot(object):
 				ylab('Number of enrollments') + \
 				xlab('Date')
 		return(plot_course_enrollments)
+
+
+class CourseDropsTimeseriesPlot(object):
+	def __init__(self, cdt):
+		"""
+		cdvt = CourseDropsTimeseries
+		"""
+		self.cdt = cdt
+
+	def explore_events(self, period_breaks='1 month', minor_period_breaks='1 week'):
+		"""
+		return scatter plots of course enrollments during period of time
+		"""
+		cdt = self.cdt
+		df = cdt.explore_number_of_events_based_timestamp_date()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		plot_course_drops = \
+				ggplot(df, aes(x='timestamp_period', y='total_drops')) + \
+				geom_point() + \
+				geom_line() + \
+				ggtitle('Number of course drops during period of time') + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				ylab('Number of drops') + \
+				xlab('Date')
+		return(plot_course_drops)
 

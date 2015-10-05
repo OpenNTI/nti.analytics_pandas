@@ -9,9 +9,11 @@ __docformat__ = "restructuredtext en"
 
 from nti.analytics_pandas.analysis.enrollments import CourseCatalogViewsTimeseries
 from nti.analytics_pandas.analysis.enrollments import CourseEnrollmentsTimeseries
+from nti.analytics_pandas.analysis.enrollments import CourseDropsTimeseries
 
 from nti.analytics_pandas.analysis.plots.enrollments import CourseCatalogViewsTimeseriesPlot
 from nti.analytics_pandas.analysis.plots.enrollments import CourseEnrollmentsTimeseriesPlot
+from nti.analytics_pandas.analysis.plots.enrollments import CourseDropsTimeseriesPlot
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
@@ -36,6 +38,7 @@ class TestCourseCatalogViewsPlot(AnalyticsPandasTestBase):
 		ccvtp = CourseCatalogViewsTimeseriesPlot(ccvt)
 		_ = ccvtp.analyze_device_types()
 
+
 class TestCourseEnrollmentsPlot(AnalyticsPandasTestBase):
 
 	def setUp(self):
@@ -56,3 +59,17 @@ class TestCourseEnrollmentsPlot(AnalyticsPandasTestBase):
 		cet = CourseEnrollmentsTimeseries(self.session, start_date, end_date)
 		cetp = CourseEnrollmentsTimeseriesPlot(cet)
 		_ = cetp.analyze_device_types()
+
+
+class TestCourseDropsPlot(AnalyticsPandasTestBase):
+
+	def setUp(self):
+		super(TestCourseDropsPlot, self).setUp()
+
+	def test_explore_events_course_drops(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		cdt = CourseDropsTimeseries(self.session, start_date, end_date)
+		cdtp = CourseDropsTimeseriesPlot(cdt)
+		_ = cdtp.explore_events()
