@@ -17,10 +17,12 @@ from ggplot import ylab
 from ggplot import theme
 from ggplot import ggplot
 from ggplot import ggtitle
+from ggplot import geom_histogram
 from ggplot import geom_line
 from ggplot import geom_point
 from ggplot import date_format
 from ggplot import scale_x_date
+from ggplot import scale_x_discrete
 from ggplot import element_text
 
 class ForumsCreatedTimeseriesPlot(object):
@@ -235,5 +237,21 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 				xlab('Date')
 
 		return(plot_forums_comments_creation, plot_unique_users, plot_ratio, plot_average_comment_length)
+
+	def plot_the_most_active_users(self, max_rank_number=10):
+		fcct =self.fcct
+		users_df = fcct.get_the_most_active_users(max_rank_number)
+		if users_df is None : return
+		plot_users = \
+				ggplot(users_df, aes(x='username', y='number_of_comments_created')) + \
+				geom_histogram(stat="identity") + \
+				ggtitle('The most active users by forum comment count') + \
+				theme(title=element_text(size=10, face="bold"), axis_text_x=element_text(angle = 90, hjust = 1)) + \
+				scale_x_discrete('username') + \
+				ylab('Number of comments') + \
+				xlab('Date')
+		return plot_users
+
+
 
 
