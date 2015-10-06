@@ -10,10 +10,12 @@ __docformat__ = "restructuredtext en"
 from nti.analytics_pandas.analysis.forums import ForumsCreatedTimeseries
 from nti.analytics_pandas.analysis.forums import ForumsCommentsCreatedTimeseries
 from nti.analytics_pandas.analysis.forums import ForumCommentLikesTimeseries
+from nti.analytics_pandas.analysis.forums import ForumCommentFavoritesTimeseries
 
 from nti.analytics_pandas.analysis.plots.forums import ForumsCreatedTimeseriesPlot
 from nti.analytics_pandas.analysis.plots.forums import ForumsCommentsCreatedTimeseriesPlot
 from nti.analytics_pandas.analysis.plots.forums import ForumCommentLikesTimeseriesPlot
+from nti.analytics_pandas.analysis.plots.forums import ForumCommentFavoritesTimeseriesPlot
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
@@ -73,12 +75,23 @@ class TestForumCommentLikesPlot(AnalyticsPandasTestBase):
 		super(TestForumCommentLikesPlot, self).setUp()
 
 	def test_analyze_device_types_forum_comment_likes(self):
-		print('here')
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
 		course_id = ['388']
 		fclt = ForumCommentLikesTimeseries(self.session, start_date, end_date, course_id)
 		fcltp = ForumCommentLikesTimeseriesPlot(fclt)
 		_ = fcltp.analyze_device_types()
+
+class TestForumCommentFavoritesPlot(AnalyticsPandasTestBase):
+	def setUp(self):
+		super(TestForumCommentFavoritesPlot, self).setUp()
+
+	def test_analyze_device_types_forum_comment_favorites(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		fcft = ForumCommentFavoritesTimeseries(self.session, start_date, end_date, course_id)
+		fcftp = ForumCommentFavoritesTimeseriesPlot(fcft)
+		_ = fcftp.analyze_device_types()
 
 

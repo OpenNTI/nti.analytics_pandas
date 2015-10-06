@@ -280,7 +280,7 @@ class ForumCommentLikesTimeseriesPlot(object):
 				ggtitle('Number of comment likes during period of time') + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
-				ylab('Number of likes') + \
+				ylab('Likes count') + \
 				xlab('Date')
 
 		plot_unique_users = \
@@ -294,3 +294,43 @@ class ForumCommentLikesTimeseriesPlot(object):
 				xlab('Date')
 
 		return(plot_comment_likes, plot_unique_users)
+
+class ForumCommentFavoritesTimeseriesPlot(object):
+	def __init__(self, fcft):
+		"""
+		fcft = ForumCommentFavoritesTimeseries
+		"""
+		self.fcft = fcft
+
+	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
+		"""
+		plot the number of comment favorites on each available date during time period.
+		It also shows the number of unique users adding favorites
+		"""
+		fcft = self.fcft
+		df = fcft.analyze_device_types()
+		if df is None : return
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		plot_comment_favorites = \
+				ggplot(df, aes(x='timestamp_period', y='number_of_favorites', color='device_type')) + \
+				geom_point() + \
+				geom_line() + \
+				ggtitle('Number of comment likes during period of time') + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				ylab('Favorites count') + \
+				xlab('Date')
+
+		plot_unique_users = \
+				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users', color='device_type')) + \
+				geom_point() + \
+				geom_line() + \
+				ggtitle('Number of unique users adding favorite to forum comments during period of time') + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				ylab('Number of unique users') + \
+				xlab('Date')
+
+		return(plot_comment_favorites, plot_unique_users)
