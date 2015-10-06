@@ -145,7 +145,8 @@ class ForumsCommentsCreatedTimeseries(object):
 	def get_the_most_active_users(self, max_rank_number=10):
 		users_df = get_most_active_users_(self.dataframe, self.session, max_rank_number)
 		if users_df is not None :
-			users_df.rename(columns={'number_of_activities' : 'number_of_comments_created'})
+			users_df.rename(columns={'number_of_activities' : 'number_of_comments_created'}, 
+							inplace =True)
 		return users_df
 
 class ForumCommentLikesTimeseries(object):
