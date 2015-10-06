@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-.. $Id: forums.py 74106 2015-10-05 14:30:59Z carlos.sanchez $
+.. $Id$
 """
 
 from __future__ import print_function, unicode_literals, absolute_import, division
@@ -17,15 +17,16 @@ from ggplot import ylab
 from ggplot import theme
 from ggplot import ggplot
 from ggplot import ggtitle
-from ggplot import geom_histogram
 from ggplot import geom_line
 from ggplot import geom_point
 from ggplot import date_format
-from ggplot import scale_x_date
-from ggplot import scale_x_discrete
 from ggplot import element_text
+from ggplot import scale_x_date
+from ggplot import geom_histogram
+from ggplot import scale_x_discrete
 
 class ForumsCreatedTimeseriesPlot(object):
+
 	def __init__(self, fct):
 		"""
 		fct = ForumsCreatedTimeseries
@@ -42,7 +43,8 @@ class ForumsCreatedTimeseriesPlot(object):
 		"""
 		fct = self.fct
 		df = fct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
-		if df is None : return
+		if df is None: 
+			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
@@ -76,7 +78,7 @@ class ForumsCreatedTimeseriesPlot(object):
 				ylab('Ratio') + \
 				xlab('Date')
 
-		return(plot_forums_creation, plot_unique_users, plot_ratio)
+		return (plot_forums_creation, plot_unique_users, plot_ratio)
 
 	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
@@ -89,7 +91,8 @@ class ForumsCreatedTimeseriesPlot(object):
 
 		fct = self.fct
 		df = fct.analyze_device_types()
-		if df is None : return 
+		if df is None:
+			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		df['ratio'] = df['number_of_forums_created'] / df['number_of_unique_users']
@@ -126,8 +129,8 @@ class ForumsCreatedTimeseriesPlot(object):
 
 		return (plot_forums_creation, plot_unique_users, plot_ratio)
 
-
 class ForumsCommentsCreatedTimeseriesPlot(object):
+
 	def __init__(self, fcct):
 		"""
 		fcct = ForumsCommentsCreatedTimeseries
@@ -144,7 +147,8 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 		"""
 		fcct = self.fcct
 		df = fcct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
-		if df is None : return
+		if df is None: 
+			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
@@ -178,7 +182,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 				ylab('Ratio') + \
 				xlab('Date')
 
-		return(plot_forums_comments_creation, plot_unique_users, plot_ratio)
+		return (plot_forums_comments_creation, plot_unique_users, plot_ratio)
 
 	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
@@ -191,7 +195,8 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 		"""
 		fcct = self.fcct
 		df = fcct.analyze_device_types()
-		if df is None : return
+		if df is None: 
+			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		df['ratio'] = df['number_of_comment_created'] / df['number_of_unique_users']
@@ -236,26 +241,26 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 				ylab('Ratio') + \
 				xlab('Date')
 
-		return(plot_forums_comments_creation, plot_unique_users, plot_ratio, plot_average_comment_length)
+		return (plot_forums_comments_creation, plot_unique_users, plot_ratio, plot_average_comment_length)
 
 	def plot_the_most_active_users(self, max_rank_number=10):
-		fcct =self.fcct
+		fcct = self.fcct
 		users_df = fcct.get_the_most_active_users(max_rank_number)
 		if users_df is None : return
-		
+
 		plot_users = \
 				ggplot(users_df, aes(x='username', y='number_of_comments_created')) + \
 				geom_histogram(stat="identity") + \
 				ggtitle('The most active users by forum comment count') + \
-				theme(title=element_text(size=10, face="bold"), axis_text_x=element_text(angle = 90, hjust = 1)) + \
+				theme(title=element_text(size=10, face="bold"), axis_text_x=element_text(angle=90, hjust=1)) + \
 				scale_x_discrete('username') + \
 				ylab('Number of comments') + \
 				xlab('Date')
-		
+
 		return plot_users
 
-
 class ForumCommentLikesTimeseriesPlot(object):
+
 	def __init__(self, fclt):
 		"""
 		fclt = ForumCommentLikesTimeseries
@@ -269,7 +274,8 @@ class ForumCommentLikesTimeseriesPlot(object):
 		"""
 		fclt = self.fclt
 		df = fclt.analyze_device_types()
-		if df is None : return
+		if df is None: 
+			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
@@ -293,9 +299,10 @@ class ForumCommentLikesTimeseriesPlot(object):
 				ylab('Number of unique users') + \
 				xlab('Date')
 
-		return(plot_comment_likes, plot_unique_users)
+		return (plot_comment_likes, plot_unique_users)
 
 class ForumCommentFavoritesTimeseriesPlot(object):
+
 	def __init__(self, fcft):
 		"""
 		fcft = ForumCommentFavoritesTimeseries
@@ -309,7 +316,8 @@ class ForumCommentFavoritesTimeseriesPlot(object):
 		"""
 		fcft = self.fcft
 		df = fcft.analyze_device_types()
-		if df is None : return
+		if df is None: 
+			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
@@ -333,4 +341,4 @@ class ForumCommentFavoritesTimeseriesPlot(object):
 				ylab('Number of unique users') + \
 				xlab('Date')
 
-		return(plot_comment_favorites, plot_unique_users)
+		return (plot_comment_favorites, plot_unique_users)

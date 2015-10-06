@@ -20,10 +20,10 @@ from ..queries import QueryForumCommentFavorites
 
 from .common import analyze_types_
 from .common import add_timestamp_period
+from .common import get_most_active_users_
 from .common import explore_unique_users_based_timestamp_date_
 from .common import explore_number_of_events_based_timestamp_date_
 from .common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
-from .common import get_most_active_users_
 
 from ..utils import cast_columns_as_category_
 
@@ -32,7 +32,7 @@ class ForumsCreatedTimeseries(object):
 	analyze the number of forums created given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date, course_id=None, 
+	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_device_type=True, time_period_date=True):
 
 		self.session = session
@@ -86,7 +86,7 @@ class ForumsCommentsCreatedTimeseries(object):
 	analyze the number of forums comments created given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date, course_id=None, 
+	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_device_type=True, time_period_date=True):
 
 		self.session = session
@@ -145,8 +145,8 @@ class ForumsCommentsCreatedTimeseries(object):
 	def get_the_most_active_users(self, max_rank_number=10):
 		users_df = get_most_active_users_(self.dataframe, self.session, max_rank_number)
 		if users_df is not None :
-			users_df.rename(columns={'number_of_activities' : 'number_of_comments_created'}, 
-							inplace =True)
+			users_df.rename(columns={'number_of_activities' : 'number_of_comments_created'},
+							inplace=True)
 		return users_df
 
 class ForumCommentLikesTimeseries(object):
@@ -154,7 +154,7 @@ class ForumCommentLikesTimeseries(object):
 	analyze the number of forum comment likes given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date, course_id=None, 
+	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_device_type=True, time_period_date=True):
 
 		self.session = session
@@ -208,7 +208,7 @@ class ForumCommentFavoritesTimeseries(object):
 	analyze the number of forum comment favorites given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date, course_id=None, 
+	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_device_type=True, time_period_date=True):
 		self.session = session
 		qfcf = self.query_forum_comment_favorites = QueryForumCommentFavorites(self.session)

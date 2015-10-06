@@ -8,8 +8,8 @@ __docformat__ = "restructuredtext en"
 # pylint: disable=W0212,R0904
 
 from hamcrest import equal_to
-from hamcrest import assert_that
 from hamcrest import has_item
+from hamcrest import assert_that
 
 import numpy as np
 
@@ -53,4 +53,4 @@ class TestHighlightsEDA(AnalyticsPandasTestBase):
 
 		df = hct.analyze_resource_device_types()
 		assert_that(df.columns, has_item('number_of_unique_users'))
-		assert_that(df.columns, has_item('number_of_highlight_created'))		
+		assert_that(df.columns, has_item('number_of_highlight_created'))

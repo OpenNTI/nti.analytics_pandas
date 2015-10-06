@@ -35,7 +35,6 @@ class TestForumsCreatedEDA(AnalyticsPandasTestBase):
 		total_events = np.sum(events_df['total_forums_created'])
 		assert_that(total_events, equal_to(4))
 
-
 		unique_users_df = fct.explore_unique_users_based_timestamp_date()
 		assert_that(len(unique_users_df.index), equal_to(1))
 
@@ -73,7 +72,6 @@ class TestForumsCreatedEDA(AnalyticsPandasTestBase):
 		most_active_users_df = fcct.get_the_most_active_users(max_rank_number=10)
 		assert_that(len(most_active_users_df.index), equal_to(10))
 
-
 	def test_forum_comment_likes_based_on_timestamp_date(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
@@ -91,7 +89,6 @@ class TestForumsCreatedEDA(AnalyticsPandasTestBase):
 
 		df = fclt.analyze_device_types()
 		assert_that(df, equal_to(None))
-
 
 	def test_forum_comment_favorites_based_on_timestamp_date(self):
 		start_date = '2015-01-01'

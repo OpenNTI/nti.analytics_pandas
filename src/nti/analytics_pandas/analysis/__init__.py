@@ -10,10 +10,14 @@ __docformat__ = "restructuredtext en"
 logger = __import__('logging').getLogger(__name__)
 
 from .plots import ResourceViewsTimeseriesPlot
+
 from .bookmarks import BookmarkCreationTimeseries
-from .resource_views import ResourceViewsTimeseries
+
 from .enrollments import CourseCatalogViewsTimeseries
+
+from .resource_views import ResourceViewsTimeseries
+
 from .forums import ForumsCreatedTimeseries
-from .forums import ForumsCommentsCreatedTimeseries
 from .forums import ForumCommentLikesTimeseries
+from .forums import ForumsCommentsCreatedTimeseries
 from .forums import ForumCommentFavoritesTimeseries

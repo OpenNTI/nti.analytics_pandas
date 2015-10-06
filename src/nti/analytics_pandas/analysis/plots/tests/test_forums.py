@@ -8,13 +8,13 @@ __docformat__ = "restructuredtext en"
 # pylint: disable=W0212,R0904
 
 from nti.analytics_pandas.analysis.forums import ForumsCreatedTimeseries
-from nti.analytics_pandas.analysis.forums import ForumsCommentsCreatedTimeseries
 from nti.analytics_pandas.analysis.forums import ForumCommentLikesTimeseries
+from nti.analytics_pandas.analysis.forums import ForumsCommentsCreatedTimeseries
 from nti.analytics_pandas.analysis.forums import ForumCommentFavoritesTimeseries
 
 from nti.analytics_pandas.analysis.plots.forums import ForumsCreatedTimeseriesPlot
-from nti.analytics_pandas.analysis.plots.forums import ForumsCommentsCreatedTimeseriesPlot
 from nti.analytics_pandas.analysis.plots.forums import ForumCommentLikesTimeseriesPlot
+from nti.analytics_pandas.analysis.plots.forums import ForumsCommentsCreatedTimeseriesPlot
 from nti.analytics_pandas.analysis.plots.forums import ForumCommentFavoritesTimeseriesPlot
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
@@ -59,7 +59,7 @@ class TestForumCommentsCreatedPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		fcct = ForumsCommentsCreatedTimeseries(self.session, start_date, end_date, course_id)
 		fcctp = ForumsCommentsCreatedTimeseriesPlot(fcct)
-		_  = fcctp.analyze_device_types()
+		_ = fcctp.analyze_device_types()
 
 	def test_the_most_active_users(self):
 		start_date = '2015-01-01'
@@ -69,8 +69,8 @@ class TestForumCommentsCreatedPlot(AnalyticsPandasTestBase):
 		fcctp = ForumsCommentsCreatedTimeseriesPlot(fcct)
 		_ = fcctp.plot_the_most_active_users()
 
-
 class TestForumCommentLikesPlot(AnalyticsPandasTestBase):
+
 	def setUp(self):
 		super(TestForumCommentLikesPlot, self).setUp()
 
@@ -83,6 +83,7 @@ class TestForumCommentLikesPlot(AnalyticsPandasTestBase):
 		_ = fcltp.analyze_device_types()
 
 class TestForumCommentFavoritesPlot(AnalyticsPandasTestBase):
+
 	def setUp(self):
 		super(TestForumCommentFavoritesPlot, self).setUp()
 
@@ -93,5 +94,3 @@ class TestForumCommentFavoritesPlot(AnalyticsPandasTestBase):
 		fcft = ForumCommentFavoritesTimeseries(self.session, start_date, end_date, course_id)
 		fcftp = ForumCommentFavoritesTimeseriesPlot(fcft)
 		_ = fcftp.analyze_device_types()
-
-

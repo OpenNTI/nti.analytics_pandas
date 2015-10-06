@@ -20,8 +20,8 @@ from ggplot import ggtitle
 from ggplot import geom_line
 from ggplot import geom_point
 from ggplot import date_format
-from ggplot import scale_x_date
 from ggplot import element_text
+from ggplot import scale_x_date
 
 class CourseCatalogViewsTimeseriesPlot(object):
 
@@ -41,7 +41,8 @@ class CourseCatalogViewsTimeseriesPlot(object):
 		"""
 		ccvt = self.ccvt
 		df = ccvt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
-		if df is None : return
+		if df is None:
+			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
@@ -75,8 +76,7 @@ class CourseCatalogViewsTimeseriesPlot(object):
 				ylab('Ratio') + \
 				xlab('Date')
 
-		return(plot_catalog_views, plot_unique_users, plot_ratio)
-
+		return (plot_catalog_views, plot_unique_users, plot_ratio)
 
 	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
@@ -87,7 +87,8 @@ class CourseCatalogViewsTimeseriesPlot(object):
 		"""
 		ccvt = self.ccvt
 		df = ccvt.analyze_device_types()
-		if df is None : return
+		if df is None:
+			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
@@ -121,7 +122,7 @@ class CourseCatalogViewsTimeseriesPlot(object):
 				ylab('Number of unique users') + \
 				xlab('Date')
 
-		return(plot_average_time_length, plot_catalog_view_events, plot_unique_users)
+		return (plot_average_time_length, plot_catalog_view_events, plot_unique_users)
 
 class CourseEnrollmentsTimeseriesPlot(object):
 
@@ -137,7 +138,8 @@ class CourseEnrollmentsTimeseriesPlot(object):
 		"""
 		cet = self.cet
 		df = cet.explore_number_of_events_based_timestamp_date()
-		if df is None : return
+		if df is None:
+			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
@@ -151,7 +153,7 @@ class CourseEnrollmentsTimeseriesPlot(object):
 				ylab('Number of enrollments') + \
 				xlab('Date')
 
-		return(plot_course_enrollments)
+		return (plot_course_enrollments)
 
 	def analyze_device_enrollment_types(self, period_breaks='1 month', minor_period_breaks='1 week'):
 		"""
@@ -159,7 +161,8 @@ class CourseEnrollmentsTimeseriesPlot(object):
 		"""
 		cet = self.cet
 		df = cet.analyze_device_enrollment_types()
-		if df is None : return
+		if df is None:
+			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		df.rename(columns={	'type_name':'enrollment_type'}, inplace=True)
@@ -184,7 +187,7 @@ class CourseEnrollmentsTimeseriesPlot(object):
 				ylab('Number of enrollments') + \
 				xlab('Date')
 
-		return(plot_course_enrollments_by_device, plot_course_enrollments_by_type)
+		return (plot_course_enrollments_by_device, plot_course_enrollments_by_type)
 
 class CourseDropsTimeseriesPlot(object):
 
@@ -200,7 +203,8 @@ class CourseDropsTimeseriesPlot(object):
 		"""
 		cdt = self.cdt
 		df = cdt.explore_number_of_events_based_timestamp_date()
-		if df is None : return
+		if df is None:
+			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
@@ -214,7 +218,7 @@ class CourseDropsTimeseriesPlot(object):
 				ylab('Number of drops') + \
 				xlab('Date')
 
-		return(plot_course_drops)
+		return (plot_course_drops)
 
 	def analyze_device_enrollment_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
@@ -222,7 +226,8 @@ class CourseDropsTimeseriesPlot(object):
 		"""
 		cdt = self.cdt
 		df = cdt.analyze_device_types()
-		if df is None : return
+		if df is None:
+			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
@@ -247,4 +252,4 @@ class CourseDropsTimeseriesPlot(object):
 				ylab('Number of course drops') + \
 				xlab('Date')
 
-		return(plot_course_drops_by_device, plot_course_drops_by_enrollment_type)
+		return (plot_course_drops_by_device, plot_course_drops_by_enrollment_type)

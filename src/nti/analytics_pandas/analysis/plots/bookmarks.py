@@ -26,6 +26,7 @@ from ggplot import element_text
 from ggplot import geom_histogram
 
 class BookmarksTimeseriesPlot(object):
+
 	def __init__(self, bct):
 		"""
 		bct = BookmarkCreationTimeseries
@@ -42,7 +43,8 @@ class BookmarksTimeseriesPlot(object):
 		"""
 		bct = self.bct
 		df = bct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
-		if df is None : return
+		if df is None:
+			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
@@ -84,7 +86,8 @@ class BookmarksTimeseriesPlot(object):
 		"""
 		bct = self.bct
 		df, resource_df = bct.analyze_resource_types()
-		if df is None : return
+		if df is None:
+			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
@@ -135,7 +138,8 @@ class BookmarksTimeseriesPlot(object):
 		"""
 		bct = self.bct
 		df = bct.analyze_device_types()
-		if df is None : return
+		if df is None:
+			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
@@ -179,7 +183,8 @@ class BookmarksTimeseriesPlot(object):
 		"""
 		bct = self.bct
 		df = bct.analyze_resource_device_types()
-		if df is None : return
+		if df is None:
+			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 

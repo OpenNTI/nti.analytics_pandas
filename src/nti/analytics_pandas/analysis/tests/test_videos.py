@@ -8,12 +8,14 @@ __docformat__ = "restructuredtext en"
 # pylint: disable=W0212,R0904
 
 from hamcrest import equal_to
-from hamcrest import assert_that
 from hamcrest import has_item
-from nti.analytics_pandas.analysis.videos import  VideoEventsTimeseries
-from nti.analytics_pandas.tests import AnalyticsPandasTestBase
+from hamcrest import assert_that
 
 import numpy as np
+
+from nti.analytics_pandas.analysis.videos import  VideoEventsTimeseries
+
+from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
 class TestVideosEDA(AnalyticsPandasTestBase):
 
@@ -39,5 +41,3 @@ class TestVideosEDA(AnalyticsPandasTestBase):
 
 		ratio_df = vet.explore_ratio_of_events_over_unique_users_based_timestamp_date()
 		assert_that(len(ratio_df.index), equal_to(95))
-
-

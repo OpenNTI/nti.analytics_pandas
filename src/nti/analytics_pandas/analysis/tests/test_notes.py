@@ -8,18 +8,18 @@ __docformat__ = "restructuredtext en"
 # pylint: disable=W0212,R0904
 
 from hamcrest import equal_to
-from hamcrest import assert_that
 from hamcrest import has_item
+from hamcrest import assert_that
 
 import numpy as np
 
-from nti.analytics_pandas.analysis.notes import NotesViewTimeseries
 from nti.analytics_pandas.analysis.notes import NoteLikesTimeseries
+from nti.analytics_pandas.analysis.notes import NotesViewTimeseries
 from nti.analytics_pandas.analysis.notes import NotesCreationTimeseries
 from nti.analytics_pandas.analysis.notes import NoteFavoritesTimeseries
+from nti.analytics_pandas.utils import get_values_of_series_categorical_index_
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
-from nti.analytics_pandas.utils import get_values_of_series_categorical_index_
 
 class TestNotesEDA(AnalyticsPandasTestBase):
 
@@ -85,11 +85,11 @@ class TestNotesEDA(AnalyticsPandasTestBase):
 		ratio_df = nvt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
 		assert_that(len(ratio_df.index), equal_to(42))
 
-		df  = nvt.analyze_unique_events_based_on_device_type()
+		df = nvt.analyze_unique_events_based_on_device_type()
 		assert_that(df.columns, has_item('number_of_unique_users'))
 		assert_that(df.columns, has_item('number_of_unique_notes_viewed'))
 
-		df  = nvt.analyze_total_events_based_on_device_type()
+		df = nvt.analyze_total_events_based_on_device_type()
 		assert_that(df.columns, has_item('total_note_views'))
 		assert_that(len(ratio_df.index), equal_to(len(df.sum(level='timestamp_period'))))
 
@@ -100,14 +100,13 @@ class TestNotesEDA(AnalyticsPandasTestBase):
 
 		most_viewed_notes_author_df = nvt.get_the_most_viewed_notes_and_its_author()
 		assert_that(len(most_viewed_notes), equal_to(len(most_viewed_notes_author_df.index)))
-		
+
 		most_active_users_df = nvt.get_the_most_active_users()
 		assert_that(len(most_active_users_df.index), equal_to(10))
 
 		df = nvt.analyze_unique_events_based_on_resource_type()
 		assert_that(df.columns, has_item('number_of_unique_users'))
 		assert_that(df.columns, has_item('number_of_unique_notes_viewed'))
-
 
 		df = nvt.analyze_total_events_based_on_resource_type()
 		assert_that(df.columns, has_item('total_note_views'))
@@ -144,4 +143,3 @@ class TestNotesEDA(AnalyticsPandasTestBase):
 
 		ratio_df = nft.explore_ratio_of_events_over_unique_users_based_timestamp_date()
 		assert_that(ratio_df, equal_to(None))
-
