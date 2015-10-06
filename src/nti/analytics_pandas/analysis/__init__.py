@@ -13,3 +13,7 @@ from .plots import ResourceViewsTimeseriesPlot
 from .bookmarks import BookmarkCreationTimeseries
 from .resource_views import ResourceViewsTimeseries
 from .enrollments import CourseCatalogViewsTimeseries
+from .forums import ForumsCreatedTimeseries
+from .forums import ForumsCommentsCreatedTimeseries
+from .forums import ForumCommentLikesTimeseries
+from .forums import ForumCommentFavoritesTimeseries
