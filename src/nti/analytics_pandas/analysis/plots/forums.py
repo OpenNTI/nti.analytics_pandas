@@ -40,6 +40,7 @@ class ForumsCreatedTimeseriesPlot(object):
 		"""
 		fct = self.fct
 		df = fct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		if df is None : return
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
@@ -75,7 +76,107 @@ class ForumsCreatedTimeseriesPlot(object):
 
 		return(plot_forums_creation, plot_unique_users, plot_ratio)
 
-	def analyze_device_types(self):
+	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
+		"""
+		return scatter plots of forums creation grouped by device type during period of time
+		it consists of :
+			- number of forums creation
+			- number of unique users
+			- ratio of forums creation over unique users
+		"""
+
 		fct = self.fct
 		df = fct.analyze_device_types()
-		print(df.dtypes)
+		if df is None : return 
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		df['ratio'] = df['number_of_forums_created'] / df['number_of_unique_users']
+
+		plot_forums_creation = \
+				ggplot(df, aes(x='timestamp_period', y='number_of_forums_created', color='device_type')) + \
+				geom_point() + \
+				geom_line() + \
+				ggtitle('Number of forums created during period of time') + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				ylab('Number of course catalog views') + \
+				xlab('Date')
+
+		plot_unique_users = \
+				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users', color='device_type')) + \
+				geom_point() + \
+				geom_line() + \
+				ggtitle('Number of unique users creating forums during period of time') + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				ylab('Number of unique users') + \
+				xlab('Date')
+
+		plot_ratio = \
+				ggplot(df, aes(x='timestamp_period', y='ratio', color='device_type')) + \
+				geom_point() + \
+				geom_line() + \
+				ggtitle('Ratio of forums creation over unique user on each available date') + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				ylab('Ratio') + \
+				xlab('Date')
+
+		return (plot_forums_creation, plot_unique_users, plot_ratio)
+
+
+class ForumsCommentsCreatedTimeseriesPlot(object):
+	def __init__(self, fcct):
+		"""
+		fcct = ForumsCommentsCreatedTimeseries
+		"""
+		self.fcct = fcct
+
+	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
+		"""
+		return scatter plots of forum comments creation during period of time
+		it consists of :
+			- number of forums comment creation
+			- number of unique users
+			- ratio of forum comment creation over unique users
+		"""
+		fcct = self.fcct
+		df = fcct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		if df is None : return
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		plot_forums_comments_creation = \
+				ggplot(df, aes(x='timestamp_period', y='total_forums_comments_created')) + \
+				geom_point(color='orange') + \
+				geom_line() + \
+				ggtitle('Number of forums comments created during period of time') + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				ylab('Number of course catalog views') + \
+				xlab('Date')
+
+		plot_unique_users = \
+				ggplot(df, aes(x='timestamp_period', y='total_unique_users')) + \
+				geom_point(color='blue') + \
+				geom_line() + \
+				ggtitle('Number of unique users creating forums comments during period of time') + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				ylab('Number of unique users') + \
+				xlab('Date')
+
+		plot_ratio = \
+				ggplot(df, aes(x='timestamp_period', y='ratio')) + \
+				geom_point(color='red') + \
+				geom_line() + \
+				ggtitle('Ratio of forums comments creation over unique user on each available date') + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				ylab('Ratio') + \
+				xlab('Date')
+
+		return(plot_forums_comments_creation, plot_unique_users, plot_ratio)
+
+
+
