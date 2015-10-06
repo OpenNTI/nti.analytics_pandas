@@ -242,6 +242,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 		fcct =self.fcct
 		users_df = fcct.get_the_most_active_users(max_rank_number)
 		if users_df is None : return
+		
 		plot_users = \
 				ggplot(users_df, aes(x='username', y='number_of_comments_created')) + \
 				geom_histogram(stat="identity") + \
@@ -250,8 +251,46 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 				scale_x_discrete('username') + \
 				ylab('Number of comments') + \
 				xlab('Date')
+		
 		return plot_users
 
 
+class ForumCommentLikesTimeseriesPlot(object):
+	def __init__(self, fclt):
+		"""
+		fclt = ForumCommentLikesTimeseries
+		"""
+		self.fclt = fclt
 
+	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
+		"""
+		plot the number of comments liked on each available date during time period.
+		It also shows the number of unique users liking comments
+		"""
+		fclt = self.fclt
+		df = fclt.analyze_device_types()
+		if df is None : return
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
+		plot_comment_likes = \
+				ggplot(df, aes(x='timestamp_period', y='number_of_likes', color='device_type')) + \
+				geom_point() + \
+				geom_line() + \
+				ggtitle('Number of comment likes during period of time') + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				ylab('Number of likes') + \
+				xlab('Date')
+
+		plot_unique_users = \
+				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users', color='device_type')) + \
+				geom_point() + \
+				geom_line() + \
+				ggtitle('Number of unique users liking forum comments during period of time') + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				ylab('Number of unique users') + \
+				xlab('Date')
+
+		return(plot_comment_likes, plot_unique_users)

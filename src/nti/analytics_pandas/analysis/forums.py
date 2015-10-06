@@ -195,10 +195,10 @@ class ForumCommentLikesTimeseries(object):
 	def analyze_device_types(self):
 		if 'device_type' in self.dataframe.columns:
 			group_by_items = ['timestamp_period', 'device_type']
-			agg_columns = {	'comment_id'	: pd.Series.nunique,
+			agg_columns = {	'comment_id'	: pd.Series.count,
 							'user_id'		: pd.Series.nunique}
 			df = analyze_types_(self.dataframe, group_by_items, agg_columns)
-			df.rename(columns={	'comment_id'	 :'number_of_comments_liked',
+			df.rename(columns={	'comment_id'	 :'number_of_likes',
 								'user_id'		 :'number_of_unique_users'},
 						inplace=True)
 			return df
