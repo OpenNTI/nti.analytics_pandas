@@ -41,6 +41,7 @@ class CourseCatalogViewsTimeseriesPlot(object):
 		"""
 		ccvt = self.ccvt
 		df = ccvt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		if df is None : return
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
@@ -86,6 +87,7 @@ class CourseCatalogViewsTimeseriesPlot(object):
 		"""
 		ccvt = self.ccvt
 		df = ccvt.analyze_device_types()
+		if df is None : return
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
@@ -135,6 +137,7 @@ class CourseEnrollmentsTimeseriesPlot(object):
 		"""
 		cet = self.cet
 		df = cet.explore_number_of_events_based_timestamp_date()
+		if df is None : return
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
@@ -156,6 +159,7 @@ class CourseEnrollmentsTimeseriesPlot(object):
 		"""
 		cet = self.cet
 		df = cet.analyze_device_enrollment_types()
+		if df is None : return
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		df.rename(columns={	'type_name':'enrollment_type'}, inplace=True)
@@ -196,6 +200,7 @@ class CourseDropsTimeseriesPlot(object):
 		"""
 		cdt = self.cdt
 		df = cdt.explore_number_of_events_based_timestamp_date()
+		if df is None : return
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
@@ -217,6 +222,7 @@ class CourseDropsTimeseriesPlot(object):
 		"""
 		cdt = self.cdt
 		df = cdt.analyze_device_types()
+		if df is None : return
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
