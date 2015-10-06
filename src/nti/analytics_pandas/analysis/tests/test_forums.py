@@ -70,6 +70,9 @@ class TestForumsCreatedEDA(AnalyticsPandasTestBase):
 		assert_that(df.columns, has_item('favorite_count'))
 		assert_that(df.columns, has_item('like_count'))
 
+		most_active_users_df = fcct.get_the_most_active_users(max_rank_number=10)
+		assert_that(len(most_active_users_df.index), equal_to(10))
+
 
 	def test_forum_comment_likes_based_on_timestamp_date(self):
 		start_date = '2015-01-01'

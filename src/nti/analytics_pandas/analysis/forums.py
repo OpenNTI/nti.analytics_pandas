@@ -23,6 +23,9 @@ from .common import add_timestamp_period
 from .common import explore_unique_users_based_timestamp_date_
 from .common import explore_number_of_events_based_timestamp_date_
 from .common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
+from .common import get_most_active_users_
+
+from ..utils import cast_columns_as_category_
 
 class ForumsCreatedTimeseries(object):
 	"""
@@ -53,7 +56,7 @@ class ForumsCreatedTimeseries(object):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
 		if events_df is not None :
 			events_df.rename(columns={'index':'total_forums_created'}, inplace=True)
-		events_df = events_df[['total_forums_created']]
+			events_df = events_df[['total_forums_created']]
 		return events_df
 
 	def explore_unique_users_based_timestamp_date(self):
@@ -103,11 +106,14 @@ class ForumsCommentsCreatedTimeseries(object):
 		if time_period_date :
 			self.dataframe = add_timestamp_period(self.dataframe)
 
+		categorical_columns = ['forum_id', 'parent_user_id', 'device_type', 'user_id']
+		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
+
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
 		if events_df is not None :
 			events_df.rename(columns={'index':'total_forums_comments_created'}, inplace=True)
-		events_df = events_df[['total_forums_comments_created']]
+			events_df = events_df[['total_forums_comments_created']]
 		return events_df
 
 	def explore_unique_users_based_timestamp_date(self):
@@ -135,6 +141,12 @@ class ForumsCommentsCreatedTimeseries(object):
 								'comment_length' :'average_comment_length'},
 						inplace=True)
 			return df
+
+	def get_the_most_active_users(self, max_rank_number=10):
+		users_df = get_most_active_users_(self.dataframe, self.session, max_rank_number)
+		if users_df is not None :
+			users_df.rename(columns={'number_of_activities' : 'number_of_comments_created'})
+		return users_df
 
 class ForumCommentLikesTimeseries(object):
 	"""
@@ -165,7 +177,7 @@ class ForumCommentLikesTimeseries(object):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
 		if events_df is not None :
 			events_df.rename(columns={'index':'total_forum_comment_likes'}, inplace=True)
-		events_df = events_df[['total_forum_comment_likes']]
+			events_df = events_df[['total_forum_comment_likes']]
 		return events_df
 
 	def explore_unique_users_based_timestamp_date(self):
@@ -218,7 +230,7 @@ class ForumCommentFavoritesTimeseries(object):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
 		if events_df is not None :
 			events_df.rename(columns={'index':'total_forum_comment_favorites'}, inplace=True)
-		events_df = events_df[['total_forum_comment_favorites']]
+			events_df = events_df[['total_forum_comment_favorites']]
 		return events_df
 
 	def explore_unique_users_based_timestamp_date(self):
