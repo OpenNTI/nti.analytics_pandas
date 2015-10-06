@@ -178,5 +178,62 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 
 		return(plot_forums_comments_creation, plot_unique_users, plot_ratio)
 
+	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
+		"""
+		return scatter plots of forum comments creation grouped by device_type during period of time
+		it consists of :
+			- number of forums comment creation
+			- number of unique users
+			- ratio of forum comment creation over unique users
+			- average comment length
+		"""
+		fcct = self.fcct
+		df = fcct.analyze_device_types()
+		if df is None : return
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		df['ratio'] = df['number_of_comment_created'] / df['number_of_unique_users']
+
+		plot_forums_comments_creation = \
+				ggplot(df, aes(x='timestamp_period', y='number_of_comment_created', color='device_type')) + \
+				geom_point() + \
+				geom_line() + \
+				ggtitle('Number of forums comments created during period of time') + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				ylab('Number of course catalog views') + \
+				xlab('Date')
+
+		plot_unique_users = \
+				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users', color='device_type')) + \
+				geom_point() + \
+				geom_line() + \
+				ggtitle('Number of unique users creating forums comments during period of time') + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				ylab('Number of unique users') + \
+				xlab('Date')
+
+		plot_ratio = \
+				ggplot(df, aes(x='timestamp_period', y='ratio', color='device_type')) + \
+				geom_point() + \
+				geom_line() + \
+				ggtitle('Ratio of forums comments creation over unique user on each available date') + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				ylab('Ratio') + \
+				xlab('Date')
+
+		plot_average_comment_length = \
+				ggplot(df, aes(x='timestamp_period', y='average_comment_length', color='device_type')) + \
+				geom_point(color='red') + \
+				geom_line() + \
+				ggtitle('Average forums comments length on each available date') + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				ylab('Ratio') + \
+				xlab('Date')
+
+		return(plot_forums_comments_creation, plot_unique_users, plot_ratio, plot_average_comment_length)
 
 

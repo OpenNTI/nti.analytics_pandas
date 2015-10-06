@@ -48,3 +48,11 @@ class TestForumCommentsCreatedPlot(AnalyticsPandasTestBase):
 		fcct = ForumsCommentsCreatedTimeseries(self.session, start_date, end_date, course_id)
 		fcctp = ForumsCommentsCreatedTimeseriesPlot(fcct)
 		_ = fcctp.explore_events()
+
+	def test_analyze_device_types_forums_comments_created(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		fcct = ForumsCommentsCreatedTimeseries(self.session, start_date, end_date, course_id)
+		fcctp = ForumsCommentsCreatedTimeseriesPlot(fcct)
+		_  = fcctp.analyze_device_types()
