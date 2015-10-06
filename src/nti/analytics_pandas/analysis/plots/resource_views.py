@@ -42,6 +42,7 @@ class  ResourceViewsTimeseriesPlot(object):
 		"""
 		rvt = self.rvt
 		df = rvt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		if df is None : return
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
@@ -89,6 +90,7 @@ class  ResourceViewsTimeseriesPlot(object):
 		"""
 		rvt = self.rvt
 		df = rvt.analyze_events_based_on_resource_type()
+		if df is None : return
 		df.reset_index(inplace=True, drop=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
@@ -127,6 +129,7 @@ class  ResourceViewsTimeseriesPlot(object):
 		"""
 		rvt = self.rvt
 		df = rvt.analyze_events_based_on_device_type()
+		if df is None : return
 		df.reset_index(inplace=True, drop=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
@@ -166,6 +169,7 @@ class  ResourceViewsTimeseriesPlot(object):
 
 		rvt = self.rvt
 		df = rvt.analyze_events_based_on_resource_device_type()
+		if df is None : return
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		plot_resource_views = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_resource_views', color='resource_type')) + \
