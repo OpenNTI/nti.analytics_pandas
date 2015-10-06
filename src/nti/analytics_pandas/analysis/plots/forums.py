@@ -74,3 +74,8 @@ class ForumsCreatedTimeseriesPlot(object):
 				xlab('Date')
 
 		return(plot_forums_creation, plot_unique_users, plot_ratio)
+
+	def analyze_device_types(self):
+		fct = self.fct
+		df = fct.analyze_device_types()
+		print(df.dtypes)
