@@ -34,6 +34,8 @@ class ResourceViewsTimeseries(object):
 	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_resource_type=True, with_device_type=True, time_period_date=True):
 		self.session = session
+		self.start_date = start_date
+		self.end_date = end_date
 		qrv = self.query_resources_view = QueryCourseResourceViews(self.session)
 		if isinstance (course_id, (tuple, list)):
 			self.dataframe = qrv.filter_by_period_of_time_and_course_id(start_date,
