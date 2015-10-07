@@ -224,7 +224,8 @@ class BookmarksTimeseriesPlot(object):
 	def plot_the_most_active_users(self, max_rank_number=10):
 		bct = self.bct
 		users_df = bct.get_the_most_active_users(max_rank_number)
-		if users_df is None : return
+		if users_df is None : 
+			return ()
 
 		plot_users = \
 				ggplot(users_df, aes(x='username', y='number_of_bookmarks_created')) + \

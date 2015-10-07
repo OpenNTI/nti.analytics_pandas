@@ -12,6 +12,8 @@ logger = __import__('logging').getLogger(__name__)
 import numpy as np
 import pandas as pd
 
+from datetime import datetime
+
 from ggplot import aes
 from ggplot import xlab
 from ggplot import ylab
@@ -53,8 +55,8 @@ class  ResourceViewsTimeseriesPlot(object):
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
-		start_date = np.datetime64(rvt.start_date)
-		end_date = np.datetime64(rvt.end_date)
+		start_date = datetime.strptime(rvt.start_date, '%Y-%m-%d')
+		end_date = datetime.strptime(rvt.end_date, '%Y-%m-%d')
 
 		y_max = pd.Series.max(df['total_resource_views']) + 1
 		plot_resource_views = \
@@ -63,10 +65,7 @@ class  ResourceViewsTimeseriesPlot(object):
 				geom_line() + \
 				ggtitle('Number of resource views during period of time') + \
 				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_date(breaks=period_breaks,
-							 minor_breaks=minor_period_breaks,
-							 labels=date_format("%y-%m-%d"),
-							 expand=(0,0)) + \
+				scale_x_discrete(labels='timestamp_period') + \
 				ylab('Number of resource views') + \
 				xlab('Date') + \
 				ylim(0,y_max) 
@@ -78,9 +77,7 @@ class  ResourceViewsTimeseriesPlot(object):
 				geom_line() + \
 				ggtitle('Number of unique users viewing resource during period of time') + \
 				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_date(breaks=period_breaks,
-							 minor_breaks=minor_period_breaks,
-							 labels=date_format("%y-%m-%d")) + \
+				scale_x_discrete(labels='timestamp_period') + \
 				ylab('Number of unique users') + \
 				xlab('Date') + \
 				ylim(0,y_max) 
@@ -92,9 +89,7 @@ class  ResourceViewsTimeseriesPlot(object):
 				geom_line() + \
 				ggtitle('Ratio of resource views over unique user on each available date') + \
 				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_date(breaks=period_breaks,
-							 minor_breaks=minor_period_breaks,
-							 labels=date_format("%y-%m-%d")) + \
+				scale_x_discrete(labels='timestamp_period') + \
 				ylab('Ratio') + \
 				xlab('Date') + \
 				ylim(0, y_max)
