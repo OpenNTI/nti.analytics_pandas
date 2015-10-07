@@ -24,6 +24,8 @@ from ggplot import geom_point
 from ggplot import date_format
 from ggplot import element_text
 from ggplot import scale_x_date
+from ggplot import xlim
+from ggplot import ylim
 from ggplot import ggsave
 
 class  ResourceViewsTimeseriesPlot(object):
@@ -49,6 +51,7 @@ class  ResourceViewsTimeseriesPlot(object):
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
+		y_max = pd.Series.max(df['total_resource_views']) + 1
 		plot_resource_views = \
 				ggplot(df, aes(x='timestamp_period', y='total_resource_views')) + \
 				geom_point(color='orange') + \
@@ -59,8 +62,10 @@ class  ResourceViewsTimeseriesPlot(object):
 							 minor_breaks=minor_period_breaks,
 							 labels=date_format("%y-%m-%d")) + \
 				ylab('Number of resource views') + \
-				xlab('Date')
+				xlab('Date') + \
+				ylim(0,y_max) 
 
+		y_max = pd.Series.max(df['total_unique_users']) + 1
 		plot_unique_users = \
 				ggplot(df, aes(x='timestamp_period', y='total_unique_users')) + \
 				geom_point(color='blue') + \
@@ -71,8 +76,10 @@ class  ResourceViewsTimeseriesPlot(object):
 							 minor_breaks=minor_period_breaks,
 							 labels=date_format("%y-%m-%d")) + \
 				ylab('Number of unique users') + \
-				xlab('Date')
+				xlab('Date') + \
+				ylim(0,y_max) 
 
+		y_max = pd.Series.max(df['ratio']) + 1		
 		plot_ratio = \
 				ggplot(df, aes(x='timestamp_period', y='ratio')) + \
 				geom_point(color='red') + \
@@ -83,7 +90,8 @@ class  ResourceViewsTimeseriesPlot(object):
 							 minor_breaks=minor_period_breaks,
 							 labels=date_format("%y-%m-%d")) + \
 				ylab('Ratio') + \
-				xlab('Date')
+				xlab('Date') + \
+				ylim(0, y_max)
 
 		
 		return(plot_resource_views, plot_unique_users, plot_ratio)
@@ -100,7 +108,7 @@ class  ResourceViewsTimeseriesPlot(object):
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		df['ratio'] = df['number_of_resource_views'] / df['number_of_unique_users']
 
-
+		y_max = pd.Series.max(df['number_of_resource_views']) + 1
 		plot_resource_views = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_resource_views', color='resource_type')) + \
 				geom_point() + \
@@ -109,8 +117,10 @@ class  ResourceViewsTimeseriesPlot(object):
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, 
 					labels=date_format("%y-%m-%d")) + \
 				ylab('Number of resource views') + \
-				xlab('Date')
+				xlab('Date') + \
+				ylim(0, y_max)
 
+		y_max = pd.Series.max(df['number_of_unique_users']) + 1
 		plot_unique_users = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users', color='resource_type')) + \
 				geom_point() + \
@@ -118,8 +128,10 @@ class  ResourceViewsTimeseriesPlot(object):
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
 				ylab('Number of unique users') + \
-				xlab('Date')
+				xlab('Date') + \
+				ylim(0, y_max)
 
+		y_max = pd.Series.max(df['number_of_unique_resource']) + 1
 		plot_unique_resources = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_unique_resource', color='resource_type')) + \
 				geom_point() + \
@@ -127,8 +139,10 @@ class  ResourceViewsTimeseriesPlot(object):
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
 				ylab('Number of unique course resource') + \
-				xlab('Date')
+				xlab('Date') + \
+				ylim(0, y_max)
 
+		y_max = pd.Series.max(df['ratio']) + 1
 		plot_ratio = \
 				ggplot(df, aes(x='timestamp_period', y='ratio', color='resource_type')) + \
 				geom_point() + \
@@ -136,7 +150,9 @@ class  ResourceViewsTimeseriesPlot(object):
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
 				ylab('Number of resource views') + \
-				xlab('Date')
+				xlab('Date') + \
+				ylim(0, y_max)
+
 
 		return (plot_resource_views, plot_unique_users, plot_unique_resources, plot_ratio)
 
@@ -152,6 +168,7 @@ class  ResourceViewsTimeseriesPlot(object):
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		df['ratio'] = df['number_of_resource_views'] / df['number_of_unique_users']
 
+		y_max = pd.Series.max(df['number_of_resource_views']) + 1
 		plot_resource_views = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_resource_views', color='device_type')) + \
 				geom_point() + \
@@ -159,8 +176,10 @@ class  ResourceViewsTimeseriesPlot(object):
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
 				ylab('Number of resource views') + \
-				xlab('Date')
+				xlab('Date') + \
+				ylim(0, y_max)
 
+		y_max = pd.Series.max(df['number_of_unique_users']) + 1
 		plot_unique_users = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users', color='device_type')) + \
 				geom_point() + \
@@ -168,8 +187,10 @@ class  ResourceViewsTimeseriesPlot(object):
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
 				ylab('Number of unique users') + \
-				xlab('Date')
+				xlab('Date') + \
+				ylim(0, y_max)
 
+		y_max = pd.Series.max(df['number_of_unique_resource']) + 1
 		plot_unique_resources = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_unique_resource', color='device_type')) + \
 				geom_point() + \
@@ -177,8 +198,10 @@ class  ResourceViewsTimeseriesPlot(object):
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
 				ylab('Number of unique course resource') + \
-				xlab('Date')
+				xlab('Date') + \
+				ylim(0, y_max)
 
+		y_max = pd.Series.max(df['ratio']) + 1
 		plot_ratio = \
 				ggplot(df, aes(x='timestamp_period', y='ratio', color='device_type')) + \
 				geom_point() + \
@@ -186,7 +209,8 @@ class  ResourceViewsTimeseriesPlot(object):
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
 				ylab('Ratio') + \
-				xlab('Date')
+				xlab('Date') + \
+				ylim(0, y_max)
 
 		return (plot_resource_views, plot_unique_users, plot_unique_resources)
 
@@ -201,6 +225,9 @@ class  ResourceViewsTimeseriesPlot(object):
 		if df is None:
 			return ()
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		df['ratio'] = df['number_of_resource_views'] / df['number_of_unique_users']
+		
+		y_max = pd.Series.max(df['number_of_resource_views']) + 1
 		plot_resource_views = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_resource_views', color='resource_type')) + \
 				geom_point() + \
@@ -209,8 +236,10 @@ class  ResourceViewsTimeseriesPlot(object):
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
 				ylab('Number of resource views') + \
 				xlab('Date') + \
+				ylim(0, y_max) + \
 				facet_wrap('device_type', scales="free")
 
+		y_max = pd.Series.max(df['number_of_unique_users']) + 1
 		plot_unique_users = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users', color='resource_type')) + \
 				geom_point() + \
@@ -219,8 +248,10 @@ class  ResourceViewsTimeseriesPlot(object):
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
 				ylab('Number of unique users') + \
 				xlab('Date') + \
+				ylim(0, y_max) +\
 				facet_wrap('device_type', scales="free")
 
+		y_max = pd.Series.max(df['number_of_unique_resource']) + 1
 		plot_unique_resources = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_unique_resource', color='resource_type')) + \
 				geom_point() + \
@@ -229,6 +260,19 @@ class  ResourceViewsTimeseriesPlot(object):
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
 				ylab('Number of unique course resource') + \
 				xlab('Date') + \
+				ylim(0, y_max) + \
+				facet_wrap('device_type', scales="free")
+
+		y_max = pd.Series.max(df['ratio']) + 1
+		plot_ratio = \
+				ggplot(df, aes(x='timestamp_period', y='ratio', color='resource_type')) + \
+				geom_point() + \
+				ggtitle('Ratio of resource views over unique users during time period') + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				ylab('Ratio') + \
+				xlab('Date') + \
+				ylim(0, y_max) + \
 				facet_wrap('device_type', scales="free")
 
 		return (plot_resource_views, plot_unique_users, plot_unique_resources)
