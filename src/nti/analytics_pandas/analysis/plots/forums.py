@@ -255,7 +255,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 				theme(title=element_text(size=10, face="bold"), axis_text_x=element_text(angle=90, hjust=1)) + \
 				scale_x_discrete('username') + \
 				ylab('Number of comments') + \
-				xlab('Date')
+				xlab('Username')
 
 		return plot_users
 

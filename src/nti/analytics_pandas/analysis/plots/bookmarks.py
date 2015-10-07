@@ -22,6 +22,7 @@ from ggplot import facet_wrap
 from ggplot import geom_point
 from ggplot import date_format
 from ggplot import scale_x_date
+from ggplot import scale_x_discrete
 from ggplot import element_text
 from ggplot import geom_histogram
 
@@ -219,3 +220,19 @@ class BookmarksTimeseriesPlot(object):
 				facet_wrap('device_type', scales="free")
 
 		return (plot_bookmarks_creation, plot_unique_users, plot_ratio)
+
+	def plot_the_most_active_users(self, max_rank_number=10):
+		bct = self.bct
+		users_df = bct.get_the_most_active_users(max_rank_number)
+		if users_df is None : return
+
+		plot_users = \
+				ggplot(users_df, aes(x='username', y='number_of_bookmarks_created')) + \
+				geom_histogram(stat="bar") + \
+				ggtitle('The most active users creating bookmarks') + \
+				theme(title=element_text(size=10, face="bold"), axis_text_x=element_text(angle=90, hjust=1)) + \
+				scale_x_discrete('username') + \
+				ylab('Number of bookmarks created') + \
+				xlab('Username')
+				
+		return plot_users

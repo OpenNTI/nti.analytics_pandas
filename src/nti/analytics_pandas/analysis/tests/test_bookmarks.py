@@ -53,3 +53,7 @@ class TestBookmarksEDA(AnalyticsPandasTestBase):
 		assert_that(len(df), equal_to(20))
 		assert_that(len(df.sum(level='timestamp_period')), equal_to(20))
 		assert_that(len(df.sum(level='device_type')), equal_to(1))
+
+		users_df = bct.get_the_most_active_users(max_rank_number = 10)
+		##there is only one users creating 54 bookmarks within the time period (user_id = 56606)
+		assert_that(len(users_df.index), equal_to(1))

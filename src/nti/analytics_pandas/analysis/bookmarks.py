@@ -22,6 +22,7 @@ from .common import add_timestamp_period
 from .common import explore_unique_users_based_timestamp_date_
 from .common import explore_number_of_events_based_timestamp_date_
 from .common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
+from .common import get_most_active_users_
 
 class BookmarkCreationTimeseries(object):
 	"""
@@ -102,3 +103,10 @@ class BookmarkCreationTimeseries(object):
 		group_by_items = ['timestamp_period', 'resource_type', 'device_type']
 		df = self.process_analysis_by_type(group_by_items)
 		return df
+
+	def get_the_most_active_users(self, max_rank_number=10):
+		users_df = get_most_active_users_(self.dataframe, self.session, max_rank_number)
+		if users_df is not None :
+			users_df.rename(columns={'number_of_activities' : 'number_of_bookmarks_created'},
+							inplace=True)
+		return users_df
