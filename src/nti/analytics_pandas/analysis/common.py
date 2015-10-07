@@ -15,7 +15,7 @@ from ..queries import QueryUsers
 
 from ..utils import get_values_of_series_categorical_index_
 
-def add_timestamp_period(df, period_format=u'%Y-%m-%d'):
+def add_timestamp_period_(df, period_format=u'%Y-%m-%d'):
 	if 'timestamp' in df.columns:
 		df['timestamp_period'] = df['timestamp'].apply(lambda x: x.strftime(period_format))
 	return df

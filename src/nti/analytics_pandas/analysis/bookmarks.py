@@ -18,11 +18,11 @@ from ..queries import QueryBookmarksCreated
 from ..utils import cast_columns_as_category_
 
 from .common import analyze_types_
-from .common import add_timestamp_period
+from .common import add_timestamp_period_
+from .common import get_most_active_users_
 from .common import explore_unique_users_based_timestamp_date_
 from .common import explore_number_of_events_based_timestamp_date_
 from .common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
-from .common import get_most_active_users_
 
 class BookmarkCreationTimeseries(object):
 	"""
@@ -52,7 +52,7 @@ class BookmarkCreationTimeseries(object):
 				self.dataframe = new_df
 
 		if time_period_date :
-			self.dataframe = add_timestamp_period(self.dataframe)
+			self.dataframe = add_timestamp_period_(self.dataframe)
 
 		categorical_columns = ['bookmark_id', 'user_id', 'device_type', 'resource_type']
 		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
@@ -82,7 +82,7 @@ class BookmarkCreationTimeseries(object):
 		resource_df.reset_index(inplace=True)
 		grouped = resource_df.groupby(['resource_type'])
 		resource_df = grouped.aggregate({'number_of_bookmark_creation' : np.sum})
-		return df, resource_df
+		return (df, resource_df)
 
 	def analyze_device_types(self):
 		group_by_items = ['timestamp_period', 'device_type']

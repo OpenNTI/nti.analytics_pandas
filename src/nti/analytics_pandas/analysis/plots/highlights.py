@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-.. $Id: highlights.py 74263 2015-10-07 03:31:36Z egawati.panjei $
+.. $Id$
 """
 
 from __future__ import print_function, unicode_literals, absolute_import, division
@@ -18,13 +18,10 @@ from ggplot import theme
 from ggplot import ggplot
 from ggplot import ggtitle
 from ggplot import geom_line
-from ggplot import facet_wrap
 from ggplot import geom_point
 from ggplot import date_format
 from ggplot import scale_x_date
-from ggplot import scale_x_discrete
 from ggplot import element_text
-from ggplot import geom_histogram
 
 class HighlightsCreationTimeseriesPlot(object):
 
@@ -71,4 +68,4 @@ class HighlightsCreationTimeseriesPlot(object):
 				ylab('Ratio') + \
 				xlab('Date')
 
-		return(plot_highlights_creation, plot_unique_users, plot_ratio)
+		return (plot_highlights_creation, plot_unique_users, plot_ratio)

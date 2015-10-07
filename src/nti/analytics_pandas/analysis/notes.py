@@ -21,7 +21,7 @@ from ..utils import cast_columns_as_category_
 from ..utils import get_values_of_series_categorical_index_
 
 from .common import analyze_types_
-from .common import add_timestamp_period
+from .common import add_timestamp_period_
 from .common import get_most_active_users_
 from .common import explore_unique_users_based_timestamp_date_
 from .common import explore_number_of_events_based_timestamp_date_
@@ -54,7 +54,7 @@ class NotesCreationTimeseries(object):
 				self.dataframe = new_df
 
 		if time_period_date :
-			self.dataframe = add_timestamp_period(self.dataframe)
+			self.dataframe = add_timestamp_period_(self.dataframe)
 
 		categorical_columns = ['note_id', 'resource_type', 'device_type', 'user_id']
 		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
@@ -114,7 +114,7 @@ class NotesViewTimeseries(object):
 	analyze the number of notes viewed given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date, course_id=None, 
+	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_resource_type=True, with_device_type=True, time_period_date=True):
 		self.session = session
 		qnv = self.query_notes_viewed = QueryNotesViewed(self.session)
@@ -136,7 +136,7 @@ class NotesViewTimeseries(object):
 				self.dataframe = new_df
 
 		if time_period_date :
-			self.dataframe = add_timestamp_period(self.dataframe)
+			self.dataframe = add_timestamp_period_(self.dataframe)
 
 		categorical_columns = ['note_id', 'resource_type', 'device_type', 'user_id']
 		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
@@ -251,7 +251,7 @@ class NoteLikesTimeseries(object):
 	analyze the number of note likes given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date, course_id=None, 
+	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_resource_type=True, with_device_type=True, time_period_date=True):
 		self.session = session
 		qnl = self.query_notes_viewed = QueryNoteLikes(self.session)
@@ -273,7 +273,7 @@ class NoteLikesTimeseries(object):
 				self.dataframe = new_df
 
 		if time_period_date :
-			self.dataframe = add_timestamp_period(self.dataframe)
+			self.dataframe = add_timestamp_period_(self.dataframe)
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
@@ -297,7 +297,7 @@ class NoteFavoritesTimeseries(object):
 	analyze the number of note favorites given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date, course_id=None, 
+	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_resource_type=True, with_device_type=True, time_period_date=True):
 		self.session = session
 		qnf = self.query_notes_viewed = QueryNoteFavorites(self.session)
@@ -319,7 +319,7 @@ class NoteFavoritesTimeseries(object):
 				self.dataframe = new_df
 
 		if time_period_date :
-			self.dataframe = add_timestamp_period(self.dataframe)
+			self.dataframe = add_timestamp_period_(self.dataframe)
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)

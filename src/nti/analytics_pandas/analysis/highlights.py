@@ -14,7 +14,7 @@ import pandas as pd
 from ..queries import QueryHighlightsCreated
 
 from .common import analyze_types_
-from .common import add_timestamp_period
+from .common import add_timestamp_period_
 from .common import explore_unique_users_based_timestamp_date_
 from .common import explore_number_of_events_based_timestamp_date_
 from .common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
@@ -46,7 +46,7 @@ class HighlightsCreationTimeseries(object):
 				self.dataframe = new_df
 
 		if time_period_date :
-			self.dataframe = add_timestamp_period(self.dataframe)
+			self.dataframe = add_timestamp_period_(self.dataframe)
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)

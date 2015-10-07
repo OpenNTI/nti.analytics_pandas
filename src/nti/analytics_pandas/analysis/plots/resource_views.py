@@ -9,13 +9,13 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
-import numpy as np
 import pandas as pd
 
 from datetime import datetime
 
 from ggplot import aes
 from ggplot import xlab
+from ggplot import ylim
 from ggplot import ylab
 from ggplot import theme
 from ggplot import ggplot
@@ -26,11 +26,8 @@ from ggplot import geom_point
 from ggplot import date_format
 from ggplot import element_text
 from ggplot import scale_x_date
-from ggplot import scale_x_discrete
-from ggplot import xlim
-from ggplot import ylim
-from ggplot import ggsave
 from ggplot import geom_histogram
+from ggplot import scale_x_discrete
 
 class  ResourceViewsTimeseriesPlot(object):
 
@@ -55,8 +52,8 @@ class  ResourceViewsTimeseriesPlot(object):
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
-		start_date = datetime.strptime(rvt.start_date, '%Y-%m-%d')
-		end_date = datetime.strptime(rvt.end_date, '%Y-%m-%d')
+		_ = datetime.strptime(rvt.start_date, '%Y-%m-%d')
+		_ = datetime.strptime(rvt.end_date, '%Y-%m-%d')
 
 		y_max = pd.Series.max(df['total_resource_views']) + 1
 		plot_resource_views = \
@@ -68,7 +65,7 @@ class  ResourceViewsTimeseriesPlot(object):
 				scale_x_discrete(labels='timestamp_period') + \
 				ylab('Number of resource views') + \
 				xlab('Date') + \
-				ylim(0,y_max) 
+				ylim(0, y_max)
 
 		y_max = pd.Series.max(df['total_unique_users']) + 1
 		plot_unique_users = \
@@ -80,9 +77,9 @@ class  ResourceViewsTimeseriesPlot(object):
 				scale_x_discrete(labels='timestamp_period') + \
 				ylab('Number of unique users') + \
 				xlab('Date') + \
-				ylim(0,y_max) 
+				ylim(0, y_max)
 
-		y_max = pd.Series.max(df['ratio']) + 1		
+		y_max = pd.Series.max(df['ratio']) + 1
 		plot_ratio = \
 				ggplot(df, aes(x='timestamp_period', y='ratio')) + \
 				geom_point(color='red') + \
@@ -94,7 +91,7 @@ class  ResourceViewsTimeseriesPlot(object):
 				xlab('Date') + \
 				ylim(0, y_max)
 
-		return(plot_resource_views, plot_unique_users, plot_ratio)
+		return (plot_resource_views, plot_unique_users, plot_ratio)
 
 	def analyze_resource_type(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
@@ -114,7 +111,7 @@ class  ResourceViewsTimeseriesPlot(object):
 				geom_point() + \
 				ggtitle('Number of resource views on each resource type') + \
 				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, 
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks,
 					labels=date_format("%y-%m-%d")) + \
 				ylab('Number of resource views') + \
 				xlab('Date') + \
@@ -152,7 +149,6 @@ class  ResourceViewsTimeseriesPlot(object):
 				ylab('Number of resource views') + \
 				xlab('Date') + \
 				ylim(0, y_max)
-
 
 		return (plot_resource_views, plot_unique_users, plot_unique_resources, plot_ratio)
 
@@ -212,7 +208,7 @@ class  ResourceViewsTimeseriesPlot(object):
 				xlab('Date') + \
 				ylim(0, y_max)
 
-		return (plot_resource_views, plot_unique_users, plot_unique_resources)
+		return (plot_resource_views, plot_unique_users, plot_unique_resources, plot_ratio)
 
 	def analyze_events_based_on_resource_device_type(self, period_breaks='1 month', minor_period_breaks='1 week'):
 		"""
@@ -226,7 +222,7 @@ class  ResourceViewsTimeseriesPlot(object):
 			return ()
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		df['ratio'] = df['number_of_resource_views'] / df['number_of_unique_users']
-		
+
 		y_max = pd.Series.max(df['number_of_resource_views']) + 1
 		plot_resource_views = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_resource_views', color='resource_type')) + \
@@ -248,7 +244,7 @@ class  ResourceViewsTimeseriesPlot(object):
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
 				ylab('Number of unique users') + \
 				xlab('Date') + \
-				ylim(0, y_max) +\
+				ylim(0, y_max) + \
 				facet_wrap('device_type', scales="free")
 
 		y_max = pd.Series.max(df['number_of_unique_resource']) + 1
@@ -275,13 +271,13 @@ class  ResourceViewsTimeseriesPlot(object):
 				ylim(0, y_max) + \
 				facet_wrap('device_type', scales="free")
 
-		return (plot_resource_views, plot_unique_users, plot_unique_resources)
+		return (plot_resource_views, plot_unique_users, plot_unique_resources, plot_ratio)
 
 	def plot_most_active_users(self, max_rank_number=10):
 		rvt = self.rvt
 		users_df = rvt.get_the_most_active_users(max_rank_number)
-		if users_df is None : 
-			return 
+		if users_df is None :
+			return
 		users_df.rename(columns={'number_of_activities' : 'number_of_resource_views'},
 					inplace=True)
 
@@ -293,5 +289,5 @@ class  ResourceViewsTimeseriesPlot(object):
 				scale_x_discrete('username') + \
 				ylab('Number of resource viewed') + \
 				xlab('Username')
-				
+
 		return (plot_users)

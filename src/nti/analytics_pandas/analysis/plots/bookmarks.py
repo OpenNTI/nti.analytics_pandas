@@ -21,10 +21,10 @@ from ggplot import geom_line
 from ggplot import facet_wrap
 from ggplot import geom_point
 from ggplot import date_format
-from ggplot import scale_x_date
-from ggplot import scale_x_discrete
 from ggplot import element_text
+from ggplot import scale_x_date
 from ggplot import geom_histogram
+from ggplot import scale_x_discrete
 
 class BookmarksTimeseriesPlot(object):
 
@@ -224,7 +224,7 @@ class BookmarksTimeseriesPlot(object):
 	def plot_the_most_active_users(self, max_rank_number=10):
 		bct = self.bct
 		users_df = bct.get_the_most_active_users(max_rank_number)
-		if users_df is None : 
+		if users_df is None :
 			return ()
 
 		plot_users = \
@@ -235,5 +235,5 @@ class BookmarksTimeseriesPlot(object):
 				scale_x_discrete('username') + \
 				ylab('Number of bookmarks created') + \
 				xlab('Username')
-				
-		return(plot_users)
+
+		return (plot_users)
