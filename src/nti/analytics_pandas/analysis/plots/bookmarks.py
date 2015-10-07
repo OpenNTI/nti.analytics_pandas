@@ -228,11 +228,11 @@ class BookmarksTimeseriesPlot(object):
 
 		plot_users = \
 				ggplot(users_df, aes(x='username', y='number_of_bookmarks_created')) + \
-				geom_histogram(stat="bar") + \
+				geom_histogram(stat="identity") + \
 				ggtitle('The most active users creating bookmarks') + \
 				theme(title=element_text(size=10, face="bold"), axis_text_x=element_text(angle=90, hjust=1)) + \
 				scale_x_discrete('username') + \
 				ylab('Number of bookmarks created') + \
 				xlab('Username')
 				
-		return plot_users
+		return(plot_users)

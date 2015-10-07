@@ -24,9 +24,11 @@ from ggplot import geom_point
 from ggplot import date_format
 from ggplot import element_text
 from ggplot import scale_x_date
+from ggplot import scale_x_discrete
 from ggplot import xlim
 from ggplot import ylim
 from ggplot import ggsave
+from ggplot import geom_histogram
 
 class  ResourceViewsTimeseriesPlot(object):
 
@@ -51,6 +53,9 @@ class  ResourceViewsTimeseriesPlot(object):
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
+		start_date = np.datetime64(rvt.start_date)
+		end_date = np.datetime64(rvt.end_date)
+
 		y_max = pd.Series.max(df['total_resource_views']) + 1
 		plot_resource_views = \
 				ggplot(df, aes(x='timestamp_period', y='total_resource_views')) + \
@@ -60,7 +65,8 @@ class  ResourceViewsTimeseriesPlot(object):
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks,
 							 minor_breaks=minor_period_breaks,
-							 labels=date_format("%y-%m-%d")) + \
+							 labels=date_format("%y-%m-%d"),
+							 expand=(0,0)) + \
 				ylab('Number of resource views') + \
 				xlab('Date') + \
 				ylim(0,y_max) 
@@ -93,7 +99,6 @@ class  ResourceViewsTimeseriesPlot(object):
 				xlab('Date') + \
 				ylim(0, y_max)
 
-		
 		return(plot_resource_views, plot_unique_users, plot_ratio)
 
 	def analyze_resource_type(self, period_breaks='1 week', minor_period_breaks='1 day'):
@@ -276,3 +281,22 @@ class  ResourceViewsTimeseriesPlot(object):
 				facet_wrap('device_type', scales="free")
 
 		return (plot_resource_views, plot_unique_users, plot_unique_resources)
+
+	def plot_most_active_users(self, max_rank_number=10):
+		rvt = self.rvt
+		users_df = rvt.get_the_most_active_users(max_rank_number)
+		if users_df is None : 
+			return 
+		users_df.rename(columns={'number_of_activities' : 'number_of_resource_views'},
+					inplace=True)
+
+		plot_users = \
+				ggplot(users_df, aes(x='username', y='number_of_resource_views')) + \
+				geom_histogram(stat="identity") + \
+				ggtitle('The most active users viewing resource') + \
+				theme(title=element_text(size=10, face="bold"), axis_text_x=element_text(angle=90, hjust=1)) + \
+				scale_x_discrete('username') + \
+				ylab('Number of resource viewed') + \
+				xlab('Username')
+				
+		return (plot_users)

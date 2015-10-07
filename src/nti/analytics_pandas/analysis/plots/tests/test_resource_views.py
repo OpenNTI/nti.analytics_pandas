@@ -41,3 +41,11 @@ class TestResourceViewsPlot(AnalyticsPandasTestBase):
 		rvt = ResourceViewsTimeseries(self.session, start_date, end_date, course_id)
 		rvtp = ResourceViewsTimeseriesPlot(rvt)
 		_ = rvtp.analyze_events_based_on_resource_device_type()
+
+	def test_plot_most_active_users(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		rvt = ResourceViewsTimeseries(self.session, start_date, end_date, course_id)
+		rvtp = ResourceViewsTimeseriesPlot(rvt)
+		_ = rvtp.plot_most_active_users()
