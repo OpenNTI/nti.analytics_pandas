@@ -172,3 +172,20 @@ class NotesCreationTimeseriesPlot(object):
 				ylim(0, y_max)
 
 		return(plot_notes_creation, plot_unique_users, plot_ratio)
+
+	def plot_the_most_active_users(self, max_rank_number=10):
+		nct = self.nct
+		users_df = nct.get_the_most_active_users(max_rank_number)
+		if users_df is None :
+			return ()
+
+		plot_users = \
+				ggplot(users_df, aes(x='username', y='number_of_notes_created')) + \
+				geom_histogram(stat="identity") + \
+				ggtitle('The most active users creating notes') + \
+				theme(title=element_text(size=10, face="bold"), axis_text_x=element_text(angle=15, hjust=1)) + \
+				scale_x_discrete('username') + \
+				ylab('Number of notes created') + \
+				xlab('Username')
+
+		return(plot_users)

@@ -108,7 +108,11 @@ class NotesCreationTimeseries(object):
 		return df
 
 	def get_the_most_active_users(self, max_rank_number=10):
-		return get_most_active_users_(self.dataframe, self.session, max_rank_number)
+		users_df = get_most_active_users_(self.dataframe, self.session, max_rank_number)
+		if users_df is not None :
+			users_df.rename(columns={'number_of_activities' : 'number_of_notes_created'},
+							inplace=True)
+		return users_df
 
 class NotesViewTimeseries(object):
 	"""

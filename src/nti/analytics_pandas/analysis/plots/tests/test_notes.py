@@ -40,3 +40,11 @@ class TestNotesCreationPlot(AnalyticsPandasTestBase):
 		nct = NotesCreationTimeseries(self.session, start_date, end_date, course_id)
 		nctp = NotesCreationTimeseriesPlot(nct)
 		_ = nctp.analyze_resource_types()
+
+	def test_plot_most_active_users(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		nct = NotesCreationTimeseries(self.session, start_date, end_date, course_id)
+		nctp = NotesCreationTimeseriesPlot(nct)
+		_ = nctp.plot_the_most_active_users()
