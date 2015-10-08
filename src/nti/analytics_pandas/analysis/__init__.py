@@ -9,6 +9,8 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
+from .. import MessageFactory
+
 from .plots import ResourceViewsTimeseriesPlot
 
 from .bookmarks import BookmarkCreationTimeseries

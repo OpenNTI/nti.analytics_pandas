@@ -40,7 +40,7 @@ class NotesCreationTimeseries(object):
 			self.dataframe = qnc.filter_by_period_of_time_and_course_id(start_date,
 																		end_date,
 																		course_id)
-		else :
+		else:
 			self.dataframe = qnc.filter_by_period_of_time(start_date, end_date)
 
 		if with_device_type:
@@ -127,7 +127,7 @@ class NotesViewTimeseries(object):
 			self.dataframe = qnv.filter_by_period_of_time_and_course_id(start_date,
 																		end_date,
 																		course_id)
-		else :
+		else:
 			self.dataframe = qnv.filter_by_period_of_time(start_date, end_date)
 
 		if with_device_type:
@@ -264,7 +264,7 @@ class NoteLikesTimeseries(object):
 			self.dataframe = qnl.filter_by_period_of_time_and_course_id(start_date,
 																		end_date,
 																		course_id)
-		else :
+		else:
 			self.dataframe = qnl.filter_by_period_of_time(start_date, end_date)
 
 		if with_device_type:
@@ -310,7 +310,7 @@ class NoteFavoritesTimeseries(object):
 			self.dataframe = qnf.filter_by_period_of_time_and_course_id(start_date,
 																		end_date,
 																		course_id)
-		else :
+		else:
 			self.dataframe = qnf.filter_by_period_of_time(start_date, end_date)
 
 		if with_device_type:
