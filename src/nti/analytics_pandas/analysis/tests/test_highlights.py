@@ -54,3 +54,6 @@ class TestHighlightsEDA(AnalyticsPandasTestBase):
 		df = hct.analyze_resource_device_types()
 		assert_that(df.columns, has_item('number_of_unique_users'))
 		assert_that(df.columns, has_item('number_of_highlight_created'))
+
+		users_df = hct.get_the_most_active_users(max_rank_number = 10)
+		assert_that(len(users_df.index), equal_to(10))

@@ -17,6 +17,7 @@ from ggplot import ylab
 from ggplot import theme
 from ggplot import ggplot
 from ggplot import ggtitle
+from ggplot import geom_histogram
 from ggplot import geom_line
 from ggplot import geom_point
 from ggplot import date_format
@@ -172,3 +173,20 @@ class HighlightsCreationTimeseriesPlot(object):
 				ylim(0, y_max)
 
 		return (plot_highlights_creation, plot_unique_users, plot_ratio)
+
+	def plot_the_most_active_users(self, max_rank_number=10):
+		hct = self.hct
+		users_df = hct.get_the_most_active_users(max_rank_number)
+		if users_df is None :
+			return ()
+
+		plot_users = \
+				ggplot(users_df, aes(x='username', y='number_of_highlights_created')) + \
+				geom_histogram(stat="identity") + \
+				ggtitle('The most active users creating highlights') + \
+				theme(title=element_text(size=10, face="bold"), axis_text_x=element_text(angle=15, hjust=1)) + \
+				scale_x_discrete('username') + \
+				ylab('Number of highlights created') + \
+				xlab('Username')
+
+		return(plot_users)
