@@ -37,7 +37,8 @@ class HighlightsCreationTimeseriesPlot(object):
 	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		hct = self.hct
 		df = hct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
-		if df is None : return
+		if df is None : 
+			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
@@ -53,7 +54,7 @@ class HighlightsCreationTimeseriesPlot(object):
 				xlab('Date') + \
 				ylim(0, y_max)
 
-		y_max = pd.Series.max(df['total_unique_users'])
+		y_max = pd.Series.max(df['total_unique_users']) + 1
 		plot_unique_users = \
 				ggplot(df, aes(x='timestamp_period', y='total_unique_users')) + \
 				geom_point(color='blue') + \
@@ -65,7 +66,7 @@ class HighlightsCreationTimeseriesPlot(object):
 				xlab('Date') + \
 				ylim(0, y_max)
 
-		y_max = pd.Series.max(df['ratio'])
+		y_max = pd.Series.max(df['ratio']) + 1
 		plot_ratio = \
 				ggplot(df, aes(x='timestamp_period', y='ratio')) + \
 				geom_point(color='red') + \

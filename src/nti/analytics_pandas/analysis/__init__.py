@@ -21,3 +21,8 @@ from .forums import ForumsCreatedTimeseries
 from .forums import ForumCommentLikesTimeseries
 from .forums import ForumsCommentsCreatedTimeseries
 from .forums import ForumCommentFavoritesTimeseries
+
+from .notes import NotesCreationTimeseries
+from .notes import NotesViewTimeseries
+from .notes import NoteLikesTimeseries
+from .notes import NoteFavoritesTimeseries
