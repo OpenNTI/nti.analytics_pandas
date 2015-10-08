@@ -87,7 +87,6 @@ class NotesCreationTimeseriesPlot(object):
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		df['ratio'] = df['number_of_note_created'] / df['number_of_unique_users']
-		print(df.dtypes)
 
 		y_max = pd.Series.max(df['number_of_note_created']) + 1
 		plot_notes_creation = \
