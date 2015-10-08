@@ -40,6 +40,7 @@ class HighlightsCreationTimeseriesPlot(object):
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
+		y_max = pd.Series.max(df['total_highlights_created']) + 1
 		plot_highlights_creation = \
 				ggplot(df, aes(x='timestamp_period', y='total_highlights_created')) + \
 				geom_point(color='orange') + \
@@ -48,8 +49,10 @@ class HighlightsCreationTimeseriesPlot(object):
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
 				ylab('Number of highlights created') + \
-				xlab('Date')
+				xlab('Date') + \
+				ylim(0, y_max)
 
+		y_max = pd.Series.max(df['total_unique_users'])
 		plot_unique_users = \
 				ggplot(df, aes(x='timestamp_period', y='total_unique_users')) + \
 				geom_point(color='blue') + \
@@ -58,8 +61,10 @@ class HighlightsCreationTimeseriesPlot(object):
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
 				ylab('Number of unique users') + \
-				xlab('Date')
+				xlab('Date') + \
+				ylim(0, y_max)
 
+		y_max = pd.Series.max(df['ratio'])
 		plot_ratio = \
 				ggplot(df, aes(x='timestamp_period', y='ratio')) + \
 				geom_point(color='red') + \
@@ -68,7 +73,8 @@ class HighlightsCreationTimeseriesPlot(object):
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
 				ylab('Ratio') + \
-				xlab('Date')
+				xlab('Date') + \
+				ylim(0, y_max)
 
 		return (plot_highlights_creation, plot_unique_users, plot_ratio)
 
@@ -118,3 +124,51 @@ class HighlightsCreationTimeseriesPlot(object):
 				xlab('Date') + \
 				ylim(0, y_max)
 		return(plot_highlights_creation, plot_unique_users, plot_ratio)
+
+	def analyze_resource_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
+		hct = self.hct
+		df = hct.analyze_resource_types()
+		if df is None:
+			return ()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		df['ratio'] = df['number_of_highlight_created'] / df['number_of_unique_users']
+		
+		y_max = pd.Series.max(df['number_of_highlight_created']) + 1
+		plot_highlights_creation = \
+				ggplot(df, aes(x='timestamp_period', y='number_of_highlight_created', color='resource_type')) + \
+				geom_point() + \
+				geom_line() + \
+				ggtitle('Number of highlights created grouped by resource type') + \
+				theme(title=element_text(size=10, face="bold"), axis_text_x=element_text(angle=45, hjust=1)) + \
+				scale_x_date(labels=date_format("%y-%m-%d")) + \
+				ylab('Number of highlights created') + \
+				xlab('Date') + \
+				ylim(0, y_max)
+
+		y_max = pd.Series.max(df['number_of_unique_users']) + 1
+		plot_unique_users = \
+				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users', color='resource_type')) + \
+				geom_point() + \
+				geom_line() + \
+				ggtitle('Number of unique users creating highlights grouped by resource type during time period') + \
+				theme(title=element_text(size=10, face="bold"), axis_text_x=element_text(angle=45, hjust=1)) + \
+				scale_x_date(labels=date_format("%y-%m-%d")) + \
+				ylab('Number of unique users') + \
+				xlab('Date') + \
+				ylim(0, y_max)
+
+
+		y_max = pd.Series.max(df['ratio']) + 1
+		plot_ratio = \
+				ggplot(df, aes(x='timestamp_period', y='ratio', color='resource_type')) + \
+				geom_point() + \
+				geom_line() + \
+				ggtitle('Ratio of highlights created over unique users grouped by resource type ') + \
+				theme(title=element_text(size=10, face="bold"), axis_text_x=element_text(angle=45, hjust=1)) + \
+				scale_x_date(labels=date_format("%y-%m-%d")) + \
+				ylab('Ratio') + \
+				xlab('Date') + \
+				ylim(0, y_max)
+
+		return (plot_highlights_creation, plot_unique_users, plot_ratio)
