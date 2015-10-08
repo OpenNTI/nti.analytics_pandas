@@ -109,6 +109,68 @@ class  ResourceViewsTimeseriesPlot(object):
 		plot_resource_views = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_resource_views', color='resource_type')) + \
 				geom_point() + \
+				geom_line() + \
+				ggtitle('Number of resource views on each resource type') + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_discrete(labels='timestamp_period') + \
+				ylab('Number of resource views') + \
+				xlab('Date') + \
+				ylim(0, y_max)
+
+		y_max = pd.Series.max(df['number_of_unique_users']) + 1
+		plot_unique_users = \
+				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users', color='resource_type')) + \
+				geom_point() + \
+				geom_line() + \
+				ggtitle('Number of unique users viewing each resource type at given time period') + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_discrete(labels='timestamp_period') + \
+				ylab('Number of unique users') + \
+				xlab('Date') + \
+				ylim(0, y_max)
+
+		y_max = pd.Series.max(df['number_of_unique_resource']) + 1
+		plot_unique_resources = \
+				ggplot(df, aes(x='timestamp_period', y='number_of_unique_resource', color='resource_type')) + \
+				geom_point() + \
+				geom_line() + \
+				ggtitle('Number of unique course resource viewed during time period') + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_discrete(labels='timestamp_period') + \
+				ylab('Number of unique course resource') + \
+				xlab('Date') + \
+				ylim(0, y_max)
+
+		y_max = pd.Series.max(df['ratio']) + 1
+		plot_ratio = \
+				ggplot(df, aes(x='timestamp_period', y='ratio', color='resource_type')) + \
+				geom_point() + \
+				geom_line() + \
+				ggtitle('Ratio of resource views over unique users grouped by resource type ') + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_discrete(labels='timestamp_period') + \
+				ylab('Ratio') + \
+				xlab('Date') + \
+				ylim(0, y_max)
+
+		return(plot_resource_views, plot_unique_users, plot_unique_resources, plot_ratio)
+
+	def analyze_resource_type_scatter_plot(self, period_breaks='1 week', minor_period_breaks='1 day'):
+		"""
+		plot resource views based on resource type
+		"""
+		rvt = self.rvt
+		df = rvt.analyze_events_based_on_resource_type()
+		if df is None:
+			return ()
+		df.reset_index(inplace=True, drop=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		df['ratio'] = df['number_of_resource_views'] / df['number_of_unique_users']
+
+		y_max = pd.Series.max(df['number_of_resource_views']) + 1
+		plot_resource_views = \
+				ggplot(df, aes(x='timestamp_period', y='number_of_resource_views', color='resource_type')) + \
+				geom_point() + \
 				ggtitle('Number of resource views on each resource type') + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks,
@@ -146,13 +208,75 @@ class  ResourceViewsTimeseriesPlot(object):
 				ggtitle('Ratio of resource views over unique users grouped by resource type ') + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
-				ylab('Number of resource views') + \
+				ylab('Ratio') + \
 				xlab('Date') + \
 				ylim(0, y_max)
 
 		return(plot_resource_views, plot_unique_users, plot_unique_resources, plot_ratio)
 
 	def analyze_device_type(self, period_breaks='1 week', minor_period_breaks='1 day'):
+		"""
+		plot course resource views based on device type (user agent)
+		"""
+		rvt = self.rvt
+		df = rvt.analyze_events_based_on_device_type()
+		if df is None:
+			return ()
+		df.reset_index(inplace=True, drop=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		df['ratio'] = df['number_of_resource_views'] / df['number_of_unique_users']
+
+		y_max = pd.Series.max(df['number_of_resource_views']) + 1
+		plot_resource_views = \
+				ggplot(df, aes(x='timestamp_period', y='number_of_resource_views', color='device_type')) + \
+				geom_point() + \
+				geom_line() + \
+				ggtitle('Number of resource views grouped by device type') + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_discrete(labels='timestamp_period') + \
+				ylab('Number of resource views') + \
+				xlab('Date') + \
+				ylim(0, y_max)
+
+		y_max = pd.Series.max(df['number_of_unique_users']) + 1
+		plot_unique_users = \
+				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users', color='device_type')) + \
+				geom_point() + \
+				geom_line() + \
+				ggtitle('Number of unique users viewing course resource grouped by device type during time period') + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_discrete(labels='timestamp_period') + \
+				ylab('Number of unique users') + \
+				xlab('Date') + \
+				ylim(0, y_max)
+
+		y_max = pd.Series.max(df['number_of_unique_resource']) + 1
+		plot_unique_resources = \
+				ggplot(df, aes(x='timestamp_period', y='number_of_unique_resource', color='device_type')) + \
+				geom_point() + \
+				geom_line() + \
+				ggtitle('Number of unique course resource viewed on each device type during time period') + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_discrete(labels='timestamp_period') + \
+				ylab('Number of unique course resource') + \
+				xlab('Date') + \
+				ylim(0, y_max)
+
+		y_max = pd.Series.max(df['ratio']) + 1
+		plot_ratio = \
+				ggplot(df, aes(x='timestamp_period', y='ratio', color='device_type')) + \
+				geom_point() + \
+				geom_line() + \
+				ggtitle('Ratio of resource views over unique users grouped by device type') + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_discrete(labels='timestamp_period') + \
+				ylab('Ratio') + \
+				xlab('Date') + \
+				ylim(0, y_max)
+
+		return(plot_resource_views, plot_unique_users, plot_unique_resources, plot_ratio)
+
+	def analyze_device_type_scatter_plot(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
 		plot course resource views based on device type (user agent)
 		"""

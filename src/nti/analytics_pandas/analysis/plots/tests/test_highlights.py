@@ -24,3 +24,11 @@ class TestHighlightsCreationPlot(AnalyticsPandasTestBase):
 		hct = HighlightsCreationTimeseries(self.session, start_date, end_date, course_id)
 		hctp = HighlightsCreationTimeseriesPlot(hct)
 		_ = hctp.explore_events()
+
+	def test_analyze_device_types(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		hct = HighlightsCreationTimeseries(self.session, start_date, end_date, course_id)
+		hctp = HighlightsCreationTimeseriesPlot(hct)
+		_ = hctp.analyze_device_types()
