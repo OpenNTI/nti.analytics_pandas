@@ -8,8 +8,8 @@ __docformat__ = "restructuredtext en"
 # pylint: disable=W0212,R0904
 
 from hamcrest import equal_to
-from hamcrest import assert_that
 from hamcrest import has_item
+from hamcrest import assert_that
 
 from nti.analytics_pandas.queries.notes import QueryNoteLikes
 from nti.analytics_pandas.queries.notes import QueryNotesViewed
@@ -19,6 +19,7 @@ from nti.analytics_pandas.queries.notes import QueryNoteFavorites
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
 class TestNotes(AnalyticsPandasTestBase):
+
 	def setUp(self):
 		super(TestNotes, self).setUp()
 
@@ -96,7 +97,6 @@ class TestNotes(AnalyticsPandasTestBase):
 		new_df = qnv.add_resource_type(dataframe)
 		assert_that(len(dataframe.index), equal_to(len(new_df.index)))
 		assert_that(new_df.columns, has_item('resource_type'))
-
 
 	def test_query_notes_viewed_add_sharing_type(self):
 		start_date = u'2015-01-01'

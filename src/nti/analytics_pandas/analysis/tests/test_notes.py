@@ -17,6 +17,7 @@ from nti.analytics_pandas.analysis.notes import NoteLikesTimeseries
 from nti.analytics_pandas.analysis.notes import NotesViewTimeseries
 from nti.analytics_pandas.analysis.notes import NotesCreationTimeseries
 from nti.analytics_pandas.analysis.notes import NoteFavoritesTimeseries
+
 from nti.analytics_pandas.utils import get_values_of_series_categorical_index_
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase

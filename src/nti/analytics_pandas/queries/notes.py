@@ -74,7 +74,7 @@ class QueryNotesCreated(TableQueryMixin):
 
 	def get_author_id_filter_by_note_id(self, notes_id):
 		nc = self.table
-		query = self.query(	nc.note_id, 
+		query = self.query(nc.note_id,
 							nc.user_id).filter(nc.note_id.in_(notes_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
@@ -191,6 +191,7 @@ class QueryNoteLikes(TableQueryMixin):
 		return new_df
 
 def add_sharing_type_(session, dataframe):
+
 	if 'note_id' in dataframe:
 		notes_id = np.unique(dataframe['note_id'].values.ravel())
 		if len(notes_id) == 1 and notes_id[0] is None:
@@ -200,4 +201,3 @@ def add_sharing_type_(session, dataframe):
 		notes_df = qnc.get_sharing_type_filter_by_note_id(notes_id)
 		new_df = dataframe.merge(notes_df, how='left')
 		return new_df
-

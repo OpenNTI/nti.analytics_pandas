@@ -240,6 +240,7 @@ class NotesCreationTimeseriesPlot(object):
 		return(plot_notes_creation, plot_unique_users, plot_ratio)
 
 class NotesViewTimeseriesPlot(object):
+
 	def __init__(self, nvt):
 		"""
 		nvt = NotesViewTimeseries
@@ -308,4 +309,3 @@ class NotesViewTimeseriesPlot(object):
 				xlab(_('Username'))
 
 		return (plot_users)
-

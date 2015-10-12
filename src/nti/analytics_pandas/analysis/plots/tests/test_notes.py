@@ -7,10 +7,11 @@ __docformat__ = "restructuredtext en"
 # disable: accessing protected members, too many methods
 # pylint: disable=W0212,R0904
 
-from nti.analytics_pandas.analysis.notes import NotesCreationTimeseries
 from nti.analytics_pandas.analysis.notes import NotesViewTimeseries
-from nti.analytics_pandas.analysis.plots.notes import NotesCreationTimeseriesPlot
+from nti.analytics_pandas.analysis.notes import NotesCreationTimeseries
 from nti.analytics_pandas.analysis.plots.notes import NotesViewTimeseriesPlot
+from nti.analytics_pandas.analysis.plots.notes import NotesCreationTimeseriesPlot
+
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
 class TestNotesCreationPlot(AnalyticsPandasTestBase):
@@ -58,7 +59,6 @@ class TestNotesCreationPlot(AnalyticsPandasTestBase):
 		nctp = NotesCreationTimeseriesPlot(nct)
 		_ = nctp.analyze_sharing_types()
 
-
 class TestNoteViewsPlot(AnalyticsPandasTestBase):
 
 	def setUp(self):
@@ -79,4 +79,3 @@ class TestNoteViewsPlot(AnalyticsPandasTestBase):
 		nvt = NotesViewTimeseries(self.session, start_date, end_date, course_id)
 		nvtp = NotesViewTimeseriesPlot(nvt)
 		_ = nvtp.plot_the_most_active_users()
-
