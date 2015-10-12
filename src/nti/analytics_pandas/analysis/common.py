@@ -53,7 +53,7 @@ def analyze_types_(df, group_by_items, agg_columns=None):
 		return events_df
 
 def get_most_active_users_(df, session, max_rank_number=10):
-	most_active_user_id = df.groupby('user_id').size().order(ascending=False)[:max_rank_number]
+	most_active_user_id = df.groupby('user_id').size().sort_values(ascending=False)[:max_rank_number]
 	most_active_user_id_df = most_active_user_id.to_frame(name='number_of_activities')
 	most_active_user_id_df.reset_index(level=0, inplace=True)
 
