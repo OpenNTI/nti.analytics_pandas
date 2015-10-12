@@ -64,6 +64,11 @@ class TestNotesEDA(AnalyticsPandasTestBase):
 		df = nct.get_the_most_active_users()
 		assert_that(len(df.index), equal_to(10))
 
+		df = nct.analyze_sharing_types()
+		assert_that(df.columns, has_item('number_of_unique_users'))
+		assert_that(df.columns, has_item('number_of_note_created'))
+		assert_that(df.columns, has_item('ratio'))
+
 	def test_notes_view_based_on_timestamp_date(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'

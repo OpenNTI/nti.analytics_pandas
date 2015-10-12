@@ -96,7 +96,7 @@ class NotesCreationTimeseriesPlot(object):
 				ggplot(df, aes(x='timestamp_period', y='number_of_note_created', colour='device_type')) + \
 				geom_point() + \
 				geom_line() + \
-				ggtitle(_('Number of notes created during grouped by device type period of time')) + \
+				ggtitle(_('Number of notes created grouped by device type during period of time')) + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
 				ylab(_('Number of notes created')) + \
@@ -143,7 +143,7 @@ class NotesCreationTimeseriesPlot(object):
 				ggplot(df, aes(x='timestamp_period', y='number_of_note_created', colour='resource_type')) + \
 				geom_point() + \
 				geom_line() + \
-				ggtitle(_('Number of notes created during grouped by resource type period of time')) + \
+				ggtitle(_('Number of notes created grouped by resource type during period of time')) + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
 				ylab(_('Number of notes created')) + \
@@ -192,3 +192,49 @@ class NotesCreationTimeseriesPlot(object):
 				xlab(_('Username'))
 
 		return (plot_users)
+
+	def analyze_sharing_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
+		nct = self.nct
+		df = nct.analyze_sharing_types()
+		if df is None:
+			return ()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		y_max = pd.Series.max(df['number_of_note_created']) + 1
+		plot_notes_creation = \
+				ggplot(df, aes(x='timestamp_period', y='number_of_note_created', colour='sharing')) + \
+				geom_point() + \
+				geom_line() + \
+				ggtitle(_('Number of notes created grouped by sharing type during period of time')) + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				ylab(_('Number of notes created')) + \
+				xlab(_('Date')) + \
+				ylim(0, y_max)
+
+		y_max = pd.Series.max(df['number_of_unique_users']) + 1
+		plot_unique_users = \
+				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users', colour='sharing')) + \
+				geom_point() + \
+				geom_line() + \
+				ggtitle(_('Number of unique users creating notes grouped by sharing type during period of time')) + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				ylab(_('Number of unique users')) + \
+				xlab(_('Date')) + \
+				ylim(0, y_max)
+
+		y_max = pd.Series.max(df['ratio']) + 1
+		plot_ratio = \
+				ggplot(df, aes(x='timestamp_period', y='ratio', colour='sharing')) + \
+				geom_point() + \
+				geom_line() + \
+				ggtitle(_('Ratio of notes created over unique user grouped by sharing type during time period')) + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				ylab(_('Ratio')) + \
+				xlab(_('Date')) + \
+				ylim(0, y_max)
+
+		return(plot_notes_creation, plot_unique_users, plot_ratio)

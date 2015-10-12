@@ -114,7 +114,7 @@ class NotesCreationTimeseries(object):
 							inplace=True)
 		return users_df
 
-	def analyze_sharing_type(self):
+	def analyze_sharing_types(self):
 		group_by_items = ['timestamp_period', 'sharing']
 		agg_columns = {	'user_id'	: pd.Series.nunique,
 						'note_id' 	: pd.Series.nunique}
@@ -122,7 +122,7 @@ class NotesCreationTimeseries(object):
 		df.rename(columns={'user_id'	:'number_of_unique_users',
 							 'note_id'	:'number_of_note_created'},
 					inplace=True)
-		df['ratio'] = df['number_of_unique_users'] / df['number_of_note_created']
+		df['ratio'] = df['number_of_note_created'] / df['number_of_unique_users']
 		return df
 
 class NotesViewTimeseries(object):
