@@ -291,3 +291,21 @@ class NotesViewTimeseriesPlot(object):
 				ylim(0, y_max)
 
 		return(plot_notes_creation, plot_unique_users, plot_ratio)
+
+	def plot_the_most_active_users(self, max_rank_number=10):
+		nvt = self.nvt
+		users_df = nvt.get_the_most_active_users(max_rank_number)
+		if users_df is None :
+			return ()
+
+		plot_users = \
+				ggplot(users_df, aes(x='username', y='number_of_notes_viewed')) + \
+				geom_histogram(stat="identity") + \
+				ggtitle(_('The most active users viewing notes')) + \
+				theme(title=element_text(size=10, face="bold"), axis_text_x=element_text(angle=15, hjust=1)) + \
+				scale_x_discrete('username') + \
+				ylab(_('Number of notes viewed')) + \
+				xlab(_('Username'))
+
+		return (plot_users)
+
