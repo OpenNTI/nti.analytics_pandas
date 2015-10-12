@@ -117,6 +117,12 @@ class TestNotesEDA(AnalyticsPandasTestBase):
 		assert_that(df.columns, has_item('total_note_views'))
 		assert_that(len(ratio_df.index), equal_to(len(df.sum(level='timestamp_period'))))
 
+		df = nvt.analyze_total_events_based_on_sharing_type()
+		assert_that(df.columns, has_item('total_notes_viewed'))
+		assert_that(df.columns, has_item('total_unique_users'))
+		assert_that(df.columns, has_item('ratio'))
+		assert_that(len(ratio_df.index), equal_to(len(df.sum(level='timestamp_period'))))
+
 	def test_note_likes_based_on_timestamp_date(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'

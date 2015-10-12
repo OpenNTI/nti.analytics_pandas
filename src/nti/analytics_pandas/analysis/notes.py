@@ -131,7 +131,8 @@ class NotesViewTimeseries(object):
 	"""
 
 	def __init__(self, session, start_date, end_date, course_id=None,
-				 with_resource_type=True, with_device_type=True, time_period_date=True):
+				 with_resource_type=True, with_device_type=True, 
+				 time_period_date=True, with_sharing_type = True):
 		self.session = session
 		qnv = self.query_notes_viewed = QueryNotesViewed(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -153,6 +154,11 @@ class NotesViewTimeseries(object):
 
 		if time_period_date :
 			self.dataframe = add_timestamp_period_(self.dataframe)
+
+		if with_sharing_type:
+			new_df = qnv.add_sharing_type(self.dataframe)
+			if new_df is not None:
+				self.dataframe = new_df
 
 		categorical_columns = ['note_id', 'resource_type', 'device_type', 'user_id']
 		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
@@ -234,6 +240,23 @@ class NotesViewTimeseries(object):
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
 		df.rename(columns={'note_id'	:'total_note_views'},
 					inplace=True)
+		return df
+
+	def analyze_total_events_based_on_sharing_type(self):
+		"""
+		group notes viewed dataframe by timestamp_period and sharing type
+		count the total number of notes views, unique users and ratio of number of notes viewed over unique users
+		"""
+		group_by_items = ['timestamp_period', 'sharing']
+		agg_columns = {	'note_id' 	: pd.Series.count,
+						'user_id'	: pd.Series.nunique}
+
+		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
+		df.rename(columns={	'note_id'	:'total_notes_viewed',
+							'user_id'	:'total_unique_users'},
+					inplace=True)
+		
+		df['ratio'] = df['total_notes_viewed'] / df['total_unique_users']
 		return df
 
 	def get_the_most_viewed_notes(self, max_rank_number=10):
