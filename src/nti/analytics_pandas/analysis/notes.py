@@ -56,7 +56,7 @@ class NotesCreationTimeseries(object):
 		if time_period_date :
 			self.dataframe = add_timestamp_period_(self.dataframe)
 
-		categorical_columns = ['note_id', 'resource_type', 'device_type', 'user_id']
+		categorical_columns = ['note_id', 'resource_type', 'device_type', 'user_id', 'sharing']
 		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def explore_number_of_events_based_timestamp_date(self):
@@ -113,6 +113,17 @@ class NotesCreationTimeseries(object):
 			users_df.rename(columns={'number_of_activities' : 'number_of_notes_created'},
 							inplace=True)
 		return users_df
+
+	def analyze_sharing_type(self):
+		group_by_items = ['timestamp_period', 'sharing']
+		agg_columns = {	'user_id'	: pd.Series.nunique,
+						'note_id' 	: pd.Series.nunique}
+		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
+		df.rename(columns={'user_id'	:'number_of_unique_users',
+							 'note_id'	:'number_of_note_created'},
+					inplace=True)
+		df['ratio'] = df['number_of_unique_users'] / df['number_of_note_created']
+		return df
 
 class NotesViewTimeseries(object):
 	"""
