@@ -97,6 +97,18 @@ class TestNotes(AnalyticsPandasTestBase):
 		assert_that(len(dataframe.index), equal_to(len(new_df.index)))
 		assert_that(new_df.columns, has_item('resource_type'))
 
+
+	def test_query_notes_viewed_add_sharing_type(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		course_id = ['388']
+		qnv = QueryNotesViewed(self.session)
+		dataframe = qnv.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
+		assert_that(len(dataframe.index), equal_to(157))
+		new_df = qnv.add_sharing_type(dataframe)
+		assert_that(len(dataframe.index), equal_to(len(new_df.index)))
+		assert_that(new_df.columns, has_item('sharing'))
+
 	def test_query_note_favorites_by_period_of_time(self):
 		start_date = u'2015-03-01'
 		end_date = u'2015-05-31'

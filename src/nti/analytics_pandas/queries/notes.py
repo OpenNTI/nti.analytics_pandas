@@ -9,6 +9,8 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
+import numpy as np
+
 from nti.analytics_database.resource_tags import NoteLikes
 from nti.analytics_database.resource_tags import NotesViewed
 from nti.analytics_database.resource_tags import NotesCreated
@@ -77,6 +79,12 @@ class QueryNotesCreated(TableQueryMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
+	def get_sharing_type_filter_by_note_id(self, notes_id):
+		nc = self.table
+		query = self.query(nc.note_id, nc.sharing).filter(nc.note_id.in_(notes_id))
+		dataframe = orm_dataframe(query, self.columns)
+		return dataframe
+
 class QueryNotesViewed(TableQueryMixin):
 
 	table = NotesViewed
@@ -110,6 +118,10 @@ class QueryNotesViewed(TableQueryMixin):
 
 	def add_device_type(self, dataframe):
 		new_df = add_device_type_(self.session, dataframe)
+		return new_df
+
+	def add_sharing_type(self, dataframe):
+		new_df = add_sharing_type_(self.session, dataframe)
 		return new_df
 
 class QueryNoteFavorites(TableQueryMixin):
@@ -177,3 +189,15 @@ class QueryNoteLikes(TableQueryMixin):
 	def add_device_type(self, dataframe):
 		new_df = add_device_type_(self.session, dataframe)
 		return new_df
+
+def add_sharing_type_(session, dataframe):
+	if 'note_id' in dataframe:
+		notes_id = np.unique(dataframe['note_id'].values.ravel())
+		if len(notes_id) == 1 and notes_id[0] is None:
+			return
+		notes_id = notes_id[~np.isnan(notes_id)].tolist()
+		qnc = QueryNotesCreated(session)
+		notes_df = qnc.get_sharing_type_filter_by_note_id(notes_id)
+		new_df = dataframe.merge(notes_df, how='left')
+		return new_df
+
