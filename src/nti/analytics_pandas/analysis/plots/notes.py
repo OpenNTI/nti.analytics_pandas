@@ -238,3 +238,56 @@ class NotesCreationTimeseriesPlot(object):
 				ylim(0, y_max)
 
 		return(plot_notes_creation, plot_unique_users, plot_ratio)
+
+class NotesViewTimeseriesPlot(object):
+	def __init__(self, nvt):
+		"""
+		nvt = NotesViewTimeseries
+		"""
+		self.nvt = nvt
+
+	def analyze_total_events_based_on_sharing_type(self, period_breaks='1 week', minor_period_breaks='1 day'):
+		nvt = self.nvt
+		df = nvt.analyze_total_events_based_on_sharing_type()
+		if df is None:
+			return ()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		y_max = pd.Series.max(df['total_notes_viewed']) + 1
+		plot_notes_creation = \
+				ggplot(df, aes(x='timestamp_period', y='total_notes_viewed', colour='sharing')) + \
+				geom_point() + \
+				geom_line() + \
+				ggtitle(_('Number of notes viewed grouped by sharing type during period of time')) + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				ylab(_('Number of notes viewed')) + \
+				xlab(_('Date')) + \
+				ylim(0, y_max)
+
+		y_max = pd.Series.max(df['total_unique_users']) + 1
+		plot_unique_users = \
+				ggplot(df, aes(x='timestamp_period', y='total_unique_users', colour='sharing')) + \
+				geom_point() + \
+				geom_line() + \
+				ggtitle(_('Number of unique users viewing notes grouped by sharing type during period of time')) + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				ylab(_('Number of unique users')) + \
+				xlab(_('Date')) + \
+				ylim(0, y_max)
+
+		y_max = pd.Series.max(df['ratio']) + 1
+		plot_ratio = \
+				ggplot(df, aes(x='timestamp_period', y='ratio', colour='sharing')) + \
+				geom_point() + \
+				geom_line() + \
+				ggtitle(_('Ratio of notes viewed over unique user grouped by sharing type during time period')) + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				ylab(_('Ratio')) + \
+				xlab(_('Date')) + \
+				ylim(0, y_max)
+
+		return(plot_notes_creation, plot_unique_users, plot_ratio)
