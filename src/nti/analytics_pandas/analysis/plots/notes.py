@@ -404,3 +404,49 @@ class NotesViewTimeseriesPlot(object):
 
 		return (plot_notes_viewed, plot_unique_users, plot_ratio)
 
+	def analyze_total_events_based_on_resource_type(self, period_breaks='1 day', minor_period_breaks='1 day'):
+		nvt = self.nvt
+		df = nvt.analyze_total_events_based_on_resource_type()
+		if df is None:
+			return ()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		y_max = pd.Series.max(df['total_notes_viewed']) + 1
+		plot_notes_viewed = \
+				ggplot(df, aes(x='timestamp_period', y='total_notes_viewed', colour='resource_type')) + \
+				geom_line() + \
+				geom_point() + \
+				ggtitle(_('Number of notes viewed grouped by resource type during period of time')) + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=date_breaks(period_breaks), labels=date_format("%y-%m-%d")) + \
+				ylab(_('Number of notes viewed')) + \
+				xlab(_('Date')) + \
+				ylim(0, y_max)
+
+		y_max = pd.Series.max(df['total_unique_users']) + 1
+		plot_unique_users = \
+				ggplot(df, aes(x='timestamp_period', y='total_unique_users', colour='resource_type')) + \
+				geom_line() + \
+				geom_point() + \
+				ggtitle(_('Number of unique users viewing notes grouped by resource type during period of time')) + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=date_breaks(period_breaks), labels=date_format("%y-%m-%d")) + \
+				ylab(_('Number of unique users')) + \
+				xlab(_('Date')) + \
+				ylim(0, y_max)
+
+		y_max = pd.Series.max(df['ratio']) + 1
+		plot_ratio = \
+				ggplot(df, aes(x='timestamp_period', y='ratio', colour='resource_type')) + \
+				geom_line() + \
+				geom_point() + \
+				ggtitle(_('Ratio of notes viewed over unique user grouped by resource type during time period')) + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=date_breaks(period_breaks), labels=date_format("%y-%m-%d")) + \
+				ylab(_('Ratio')) + \
+				xlab(_('Date')) + \
+				ylim(0, y_max)
+
+		return (plot_notes_viewed, plot_unique_users, plot_ratio)
+

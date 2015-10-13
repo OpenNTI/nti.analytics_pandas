@@ -70,7 +70,7 @@ class TestNoteViewsPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		nvt = NotesViewTimeseries(self.session, start_date, end_date, course_id)
 		nvtp = NotesViewTimeseriesPlot(nvt)
-		_ = nvtp.analyze_total_events_based_on_sharing_type()
+		_ = nvtp.analyze_total_events_based_on_sharing_type(period_breaks='1 week')
 
 	def test_analyze_total_events_based_on_device_type(self):
 		start_date = '2015-01-01'
@@ -78,7 +78,15 @@ class TestNoteViewsPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		nvt = NotesViewTimeseries(self.session, start_date, end_date, course_id)
 		nvtp = NotesViewTimeseriesPlot(nvt)
-		_ = nvtp.analyze_total_events_based_on_device_type()
+		_ = nvtp.analyze_total_events_based_on_device_type(period_breaks='1 week')
+
+	def test_analyze_total_events_based_on_resource_type(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		nvt = NotesViewTimeseries(self.session, start_date, end_date, course_id)
+		nvtp = NotesViewTimeseriesPlot(nvt)
+		_ = nvtp.analyze_total_events_based_on_resource_type(period_breaks='1 week')
 
 	def test_plot_most_active_users(self):
 		start_date = '2015-01-01'
@@ -94,5 +102,5 @@ class TestNoteViewsPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		nvt = NotesViewTimeseries(self.session, start_date, end_date, course_id)
 		nvtp = NotesViewTimeseriesPlot(nvt)
-		_ = nvtp.explore_events()
+		_ = nvtp.explore_events(period_breaks='1 week')
 
