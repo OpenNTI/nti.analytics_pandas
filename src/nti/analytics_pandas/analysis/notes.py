@@ -81,7 +81,7 @@ class NotesCreationTimeseries(object):
 		return merge_df
 
 	def analyze_device_types(self):
-		group_by_items = ['timestamp_period', 'device_type', 'sharing']
+		group_by_items = ['timestamp_period', 'device_type']
 		agg_columns = {	'user_id'	: pd.Series.nunique,
 						'note_id' 	: pd.Series.nunique}
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
@@ -91,7 +91,7 @@ class NotesCreationTimeseries(object):
 		return df
 
 	def analyze_resource_types(self):
-		group_by_items = ['timestamp_period', 'resource_type', 'sharing']
+		group_by_items = ['timestamp_period', 'resource_type']
 		agg_columns = {	'user_id'	: pd.Series.nunique,
 						'note_id' 	: pd.Series.nunique}
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
@@ -101,7 +101,7 @@ class NotesCreationTimeseries(object):
 		return df
 
 	def analyze_resource_device_types(self):
-		group_by_items = ['timestamp_period', 'resource_type', 'sharing', 'device_type']
+		group_by_items = ['timestamp_period', 'resource_type', 'device_type']
 		agg_columns = {	'user_id'	: pd.Series.nunique,
 						'note_id' 	: pd.Series.nunique}
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
@@ -163,7 +163,7 @@ class NotesViewTimeseries(object):
 			if new_df is not None:
 				self.dataframe = new_df
 
-		categorical_columns = ['note_id', 'resource_type', 'device_type', 'user_id']
+		categorical_columns = ['note_id', 'resource_type', 'device_type', 'user_id', 'sharing']
 		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def explore_number_of_events_based_timestamp_date(self):
