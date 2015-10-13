@@ -111,5 +111,3 @@ class TestNoteViewsPlot(AnalyticsPandasTestBase):
 		nvt = NotesViewTimeseries(self.session, start_date, end_date, course_id)
 		nvtp = NotesViewTimeseriesPlot(nvt)
 		_ = nvtp.analyze_unique_events_based_on_sharing_type()
-
-
