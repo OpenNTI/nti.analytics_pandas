@@ -33,3 +33,9 @@ class TestCourses(AnalyticsPandasTestBase):
 		context_ids = ['1068', '1096', '1097', '1098', '1099']
 		dataframe = qc.filter_by_context_ids(context_ids)
 		assert_that(len(dataframe.index), equal_to(5))
+
+	def test_get_context_name(self):
+		qc = QueryCourses(self.session)
+		context_ids = ['1068', '1096', '1097', '1098', '1099']
+		dataframe = qc.get_context_name(context_ids)
+		assert_that(len(dataframe.index), equal_to(5))

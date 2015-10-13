@@ -46,3 +46,9 @@ class QueryCourses(TableQueryMixin):
 									c.crn).filter(c.context_id.in_(context_ids))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
+
+	def get_context_name(self, context_ids):
+		c = self.table
+		query = self.session.query(c.context_id, c.context_name).filter(c.context_id.in_(context_ids))
+		dataframe = orm_dataframe(query, self.columns)
+		return dataframe
