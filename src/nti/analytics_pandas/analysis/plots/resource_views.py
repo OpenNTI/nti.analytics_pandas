@@ -58,8 +58,8 @@ class  ResourceViewsTimeseriesPlot(object):
 		y_max = pd.Series.max(df['total_resource_views']) + 1
 		plot_resource_views = \
 				ggplot(df, aes(x='timestamp_period', y='total_resource_views')) + \
-				geom_point(color='orange') + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle(_('Number of resource views during period of time')) + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_discrete(labels='timestamp_period') + \
@@ -70,8 +70,8 @@ class  ResourceViewsTimeseriesPlot(object):
 		y_max = pd.Series.max(df['total_unique_users']) + 1
 		plot_unique_users = \
 				ggplot(df, aes(x='timestamp_period', y='total_unique_users')) + \
-				geom_point(color='blue') + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle(_('Number of unique users viewing resource during period of time')) + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_discrete(labels='timestamp_period') + \
@@ -82,8 +82,8 @@ class  ResourceViewsTimeseriesPlot(object):
 		y_max = pd.Series.max(df['ratio']) + 1
 		plot_ratio = \
 				ggplot(df, aes(x='timestamp_period', y='ratio')) + \
-				geom_point(color='red') + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle(_('Ratio of resource views over unique user on each available date')) + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_discrete(labels='timestamp_period') + \
@@ -108,8 +108,8 @@ class  ResourceViewsTimeseriesPlot(object):
 		y_max = pd.Series.max(df['number_of_resource_views']) + 1
 		plot_resource_views = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_resource_views', color='resource_type')) + \
-				geom_point() + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle(_('Number of resource views on each resource type')) + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_discrete(labels='timestamp_period') + \
@@ -120,8 +120,8 @@ class  ResourceViewsTimeseriesPlot(object):
 		y_max = pd.Series.max(df['number_of_unique_users']) + 1
 		plot_unique_users = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users', color='resource_type')) + \
-				geom_point() + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle(_('Number of unique users viewing each resource type at given time period')) + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_discrete(labels='timestamp_period') + \
@@ -132,8 +132,8 @@ class  ResourceViewsTimeseriesPlot(object):
 		y_max = pd.Series.max(df['number_of_unique_resource']) + 1
 		plot_unique_resources = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_unique_resource', color='resource_type')) + \
-				geom_point() + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle(_('Number of unique course resource viewed during time period')) + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_discrete(labels='timestamp_period') + \
@@ -144,8 +144,8 @@ class  ResourceViewsTimeseriesPlot(object):
 		y_max = pd.Series.max(df['ratio']) + 1
 		plot_ratio = \
 				ggplot(df, aes(x='timestamp_period', y='ratio', color='resource_type')) + \
-				geom_point() + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle(_('Ratio of resource views over unique users grouped by resource type')) + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_discrete(labels='timestamp_period') + \
@@ -229,8 +229,8 @@ class  ResourceViewsTimeseriesPlot(object):
 		y_max = pd.Series.max(df['number_of_resource_views']) + 1
 		plot_resource_views = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_resource_views', color='device_type')) + \
-				geom_point() + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle(_('Number of resource views grouped by device type')) + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_discrete(labels='timestamp_period') + \
@@ -241,8 +241,8 @@ class  ResourceViewsTimeseriesPlot(object):
 		y_max = pd.Series.max(df['number_of_unique_users']) + 1
 		plot_unique_users = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users', color='device_type')) + \
-				geom_point() + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle(_('Number of unique users viewing course resource grouped by device type during time period')) + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_discrete(labels='timestamp_period') + \
@@ -253,8 +253,8 @@ class  ResourceViewsTimeseriesPlot(object):
 		y_max = pd.Series.max(df['number_of_unique_resource']) + 1
 		plot_unique_resources = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_unique_resource', color='device_type')) + \
-				geom_point() + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle(_('Number of unique course resource viewed on each device type during time period')) + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_discrete(labels='timestamp_period') + \
@@ -265,8 +265,8 @@ class  ResourceViewsTimeseriesPlot(object):
 		y_max = pd.Series.max(df['ratio']) + 1
 		plot_ratio = \
 				ggplot(df, aes(x='timestamp_period', y='ratio', color='device_type')) + \
-				geom_point() + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle(_('Ratio of resource views over unique users grouped by device type')) + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_discrete(labels='timestamp_period') + \

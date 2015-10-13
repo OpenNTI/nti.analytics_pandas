@@ -51,8 +51,8 @@ class BookmarksTimeseriesPlot(object):
 
 		plot_bookmarks_creation = \
 				ggplot(df, aes(x='timestamp_period', y='total_bookmarks_created')) + \
-				geom_point(color='orange') + \
 				geom_line() + \
+				geom_point(color='orange') + \
 				ggtitle('Number of bookmark creation during period of time') + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
@@ -61,8 +61,8 @@ class BookmarksTimeseriesPlot(object):
 
 		plot_unique_users = \
 				ggplot(df, aes(x='timestamp_period', y='total_unique_users')) + \
-				geom_point(color='blue') + \
 				geom_line() + \
+				geom_point(color='blue') + \
 				ggtitle('Number of unique users creating bookmarks during period of time') + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
@@ -71,8 +71,8 @@ class BookmarksTimeseriesPlot(object):
 
 		plot_ratio = \
 				ggplot(df, aes(x='timestamp_period', y='ratio')) + \
-				geom_point(color='red') + \
 				geom_line() + \
+				geom_point(color='red') + \
 				ggtitle('Ratio of bookmark creation over unique user on each available date') + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
@@ -94,8 +94,8 @@ class BookmarksTimeseriesPlot(object):
 
 		plot_bookmarks_creation = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_bookmark_creation', color='resource_type')) + \
-				geom_point(color='orange') + \
 				geom_line() + \
+				geom_point(color='orange') + \
 				ggtitle('Number of bookmark creation during period of time') + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
@@ -104,8 +104,8 @@ class BookmarksTimeseriesPlot(object):
 
 		plot_unique_users = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users', color='resource_type')) + \
-				geom_point(color='blue') + \
 				geom_line() + \
+				geom_point(color='blue') + \
 				ggtitle('Number of unique users creating bookmarks during period of time') + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
@@ -114,8 +114,8 @@ class BookmarksTimeseriesPlot(object):
 
 		plot_ratio = \
 				ggplot(df, aes(x='timestamp_period', y='ratio', color='resource_type')) + \
-				geom_point(color='red') + \
 				geom_line() + \
+				geom_point(color='red') + \
 				ggtitle('Ratio of bookmark creation over unique user on each available date') + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
@@ -146,8 +146,8 @@ class BookmarksTimeseriesPlot(object):
 
 		plot_bookmarks_creation = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_bookmark_creation', color='device_type')) + \
-				geom_point(color='orange') + \
 				geom_line() + \
+				geom_point(color='orange') + \
 				ggtitle('Number of bookmark creation during period of time') + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
@@ -156,8 +156,8 @@ class BookmarksTimeseriesPlot(object):
 
 		plot_unique_users = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users', color='device_type')) + \
-				geom_point(color='blue') + \
 				geom_line() + \
+				geom_point(color='blue') + \
 				ggtitle('Number of unique users creating bookmarks during period of time') + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
@@ -166,8 +166,8 @@ class BookmarksTimeseriesPlot(object):
 
 		plot_ratio = \
 				ggplot(df, aes(x='timestamp_period', y='ratio', color='device_type')) + \
-				geom_point(color='red') + \
 				geom_line() + \
+				geom_point(color='red') + \
 				ggtitle('Ratio of bookmark creation over unique user on each available date') + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \

@@ -52,8 +52,8 @@ class ForumsCreatedTimeseriesPlot(object):
 
 		plot_forums_creation = \
 				ggplot(df, aes(x='timestamp_period', y='total_forums_created')) + \
-				geom_point(color='orange') + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle(_('Number of forums created during period of time')) + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
@@ -62,8 +62,8 @@ class ForumsCreatedTimeseriesPlot(object):
 
 		plot_unique_users = \
 				ggplot(df, aes(x='timestamp_period', y='total_unique_users')) + \
-				geom_point(color='blue') + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle(_('Number of unique users creating forums during period of time')) + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
@@ -72,8 +72,8 @@ class ForumsCreatedTimeseriesPlot(object):
 
 		plot_ratio = \
 				ggplot(df, aes(x='timestamp_period', y='ratio')) + \
-				geom_point(color='red') + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle(_('Ratio of forums creation over unique user on each available date')) + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
@@ -101,8 +101,8 @@ class ForumsCreatedTimeseriesPlot(object):
 
 		plot_forums_creation = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_forums_created', color='device_type')) + \
-				geom_point() + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle(_('Number of forums created during period of time')) + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
@@ -111,8 +111,8 @@ class ForumsCreatedTimeseriesPlot(object):
 
 		plot_unique_users = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users', color='device_type')) + \
-				geom_point() + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle(_('Number of unique users creating forums during period of time')) + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
@@ -121,8 +121,8 @@ class ForumsCreatedTimeseriesPlot(object):
 
 		plot_ratio = \
 				ggplot(df, aes(x='timestamp_period', y='ratio', color='device_type')) + \
-				geom_point() + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle(_('Ratio of forums creation over unique user on each available date')) + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
@@ -156,8 +156,8 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 
 		plot_forums_comments_creation = \
 				ggplot(df, aes(x='timestamp_period', y='total_forums_comments_created')) + \
-				geom_point(color='orange') + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle(_('Number of forums comments created during period of time')) + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
@@ -166,8 +166,8 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 
 		plot_unique_users = \
 				ggplot(df, aes(x='timestamp_period', y='total_unique_users')) + \
-				geom_point(color='blue') + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle(_('Number of unique users creating forums comments during period of time')) + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
@@ -176,8 +176,8 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 
 		plot_ratio = \
 				ggplot(df, aes(x='timestamp_period', y='ratio')) + \
-				geom_point(color='red') + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle(_('Ratio of forums comments creation over unique user on each available date')) + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
@@ -205,8 +205,8 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 
 		plot_forums_comments_creation = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_comment_created', color='device_type')) + \
-				geom_point() + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle(_('Number of forums comments created during period of time')) + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
@@ -215,8 +215,8 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 
 		plot_unique_users = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users', color='device_type')) + \
-				geom_point() + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle(_('Number of unique users creating forums comments during period of time')) + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
@@ -225,8 +225,8 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 
 		plot_ratio = \
 				ggplot(df, aes(x='timestamp_period', y='ratio', color='device_type')) + \
-				geom_point() + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle(_('Ratio of forums comments creation over unique user on each available date')) + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
@@ -235,8 +235,8 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 
 		plot_average_comment_length = \
 				ggplot(df, aes(x='timestamp_period', y='average_comment_length', color='device_type')) + \
-				geom_point(color='red') + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle(_('Average forums comments length on each available date')) + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
@@ -283,8 +283,8 @@ class ForumCommentLikesTimeseriesPlot(object):
 
 		plot_comment_likes = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_likes', color='device_type')) + \
-				geom_point() + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle(_('Number of comment likes during period of time')) + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
@@ -293,8 +293,8 @@ class ForumCommentLikesTimeseriesPlot(object):
 
 		plot_unique_users = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users', color='device_type')) + \
-				geom_point() + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle(_('Number of unique users liking forum comments during period of time')) + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
@@ -325,8 +325,8 @@ class ForumCommentFavoritesTimeseriesPlot(object):
 
 		plot_comment_favorites = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_favorites', color='device_type')) + \
-				geom_point() + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle(_('Number of comment likes during period of time')) + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
@@ -335,8 +335,8 @@ class ForumCommentFavoritesTimeseriesPlot(object):
 
 		plot_unique_users = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users', color='device_type')) + \
-				geom_point() + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle(_('Number of unique users adding favorite to forum comments during period of time')) + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \

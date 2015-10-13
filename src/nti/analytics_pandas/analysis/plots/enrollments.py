@@ -48,8 +48,8 @@ class CourseCatalogViewsTimeseriesPlot(object):
 
 		plot_catalog_views = \
 				ggplot(df, aes(x='timestamp_period', y='total_course_catalog_views')) + \
-				geom_point(color='orange') + \
 				geom_line() + \
+				geom_point(color='orange') + \
 				ggtitle('Number of course catalog views during period of time') + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
@@ -58,8 +58,8 @@ class CourseCatalogViewsTimeseriesPlot(object):
 
 		plot_unique_users = \
 				ggplot(df, aes(x='timestamp_period', y='total_unique_users')) + \
-				geom_point(color='blue') + \
 				geom_line() + \
+				geom_point(color='blue') + \
 				ggtitle('Number of unique users viewing course catalog during period of time') + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
@@ -68,8 +68,8 @@ class CourseCatalogViewsTimeseriesPlot(object):
 
 		plot_ratio = \
 				ggplot(df, aes(x='timestamp_period', y='ratio')) + \
-				geom_point(color='red') + \
 				geom_line() + \
+				geom_point(color='red') + \
 				ggtitle('Ratio of course catalog views over unique user on each available date') + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
@@ -94,8 +94,8 @@ class CourseCatalogViewsTimeseriesPlot(object):
 
 		plot_average_time_length = \
 				ggplot(df, aes(x='timestamp_period', y='average_time_length', color='device_type')) + \
-				geom_point() + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle('Average time length user spent viewing course catalog during period of time') + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
@@ -104,8 +104,8 @@ class CourseCatalogViewsTimeseriesPlot(object):
 
 		plot_catalog_view_events = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_course_catalog_views', color='device_type')) + \
-				geom_point() + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle('Number of course catalog views during period of time') + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
@@ -114,8 +114,8 @@ class CourseCatalogViewsTimeseriesPlot(object):
 
 		plot_unique_users = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users', color='device_type')) + \
-				geom_point() + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle('Number of unique users viewing course catalog during period of time') + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
@@ -145,8 +145,8 @@ class CourseEnrollmentsTimeseriesPlot(object):
 
 		plot_course_enrollments = \
 				ggplot(df, aes(x='timestamp_period', y='total_enrollments')) + \
-				geom_point() + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle('Number of enrollments during period of time') + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
@@ -169,8 +169,8 @@ class CourseEnrollmentsTimeseriesPlot(object):
 
 		plot_course_enrollments_by_device = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_enrollments', color='device_type')) + \
-				geom_point() + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle('Number of enrollments during period of time') + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
@@ -179,8 +179,8 @@ class CourseEnrollmentsTimeseriesPlot(object):
 
 		plot_course_enrollments_by_type = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_enrollments', color='enrollment_type')) + \
-				geom_point() + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle('Number of enrollments during period of time') + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
@@ -210,8 +210,8 @@ class CourseDropsTimeseriesPlot(object):
 
 		plot_course_drops = \
 				ggplot(df, aes(x='timestamp_period', y='total_drops')) + \
-				geom_point() + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle('Number of course drops during period of time') + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \

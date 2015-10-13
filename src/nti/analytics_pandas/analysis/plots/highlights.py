@@ -47,8 +47,8 @@ class HighlightsCreationTimeseriesPlot(object):
 		y_max = pd.Series.max(df['total_highlights_created']) + 1
 		plot_highlights_creation = \
 				ggplot(df, aes(x='timestamp_period', y='total_highlights_created')) + \
-				geom_point(color='orange') + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle(_('Number of highlights created during period of time')) + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
@@ -59,8 +59,8 @@ class HighlightsCreationTimeseriesPlot(object):
 		y_max = pd.Series.max(df['total_unique_users']) + 1
 		plot_unique_users = \
 				ggplot(df, aes(x='timestamp_period', y='total_unique_users')) + \
-				geom_point(color='blue') + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle(_('Number of unique users creating highlights during period of time')) + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
@@ -71,8 +71,8 @@ class HighlightsCreationTimeseriesPlot(object):
 		y_max = pd.Series.max(df['ratio']) + 1
 		plot_ratio = \
 				ggplot(df, aes(x='timestamp_period', y='ratio')) + \
-				geom_point(color='red') + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle(_('Ratio of highlights created over unique user on each available date')) + \
 				theme(title=element_text(size=10, face="bold")) + \
 				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
@@ -94,8 +94,8 @@ class HighlightsCreationTimeseriesPlot(object):
 		y_max = pd.Series.max(df['number_of_highlight_created']) + 1
 		plot_highlights_creation = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_highlight_created', color='device_type')) + \
-				geom_point() + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle(_('Number of highlights created  using each device type')) + \
 				theme(title=element_text(size=10, face="bold"), axis_text_x=element_text(angle=45, hjust=1)) + \
 				scale_x_date(labels=date_format("%y-%m-%d")) + \
@@ -106,8 +106,8 @@ class HighlightsCreationTimeseriesPlot(object):
 		y_max = pd.Series.max(df['number_of_unique_users']) + 1
 		plot_unique_users = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users', color='device_type')) + \
-				geom_point() + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle(_('Number of unique users creating highlights using each device types during time period')) + \
 				theme(title=element_text(size=10, face="bold"), axis_text_x=element_text(angle=45, hjust=1)) + \
 				scale_x_date(labels=date_format("%y-%m-%d")) + \
@@ -118,8 +118,8 @@ class HighlightsCreationTimeseriesPlot(object):
 		y_max = pd.Series.max(df['ratio']) + 1
 		plot_ratio = \
 				ggplot(df, aes(x='timestamp_period', y='ratio', color='device_type')) + \
-				geom_point() + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle(_('Ratio of highlights created over unique users grouped by device type')) + \
 				theme(title=element_text(size=10, face="bold"), axis_text_x=element_text(angle=45, hjust=1)) + \
 				scale_x_date(labels=date_format("%y-%m-%d")) + \
@@ -140,8 +140,8 @@ class HighlightsCreationTimeseriesPlot(object):
 		y_max = pd.Series.max(df['number_of_highlight_created']) + 1
 		plot_highlights_creation = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_highlight_created', color='resource_type')) + \
-				geom_point() + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle(_('Number of highlights created grouped by resource type')) + \
 				theme(title=element_text(size=10, face="bold"), axis_text_x=element_text(angle=45, hjust=1)) + \
 				scale_x_date(labels=date_format("%y-%m-%d")) + \
@@ -152,8 +152,8 @@ class HighlightsCreationTimeseriesPlot(object):
 		y_max = pd.Series.max(df['number_of_unique_users']) + 1
 		plot_unique_users = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users', color='resource_type')) + \
-				geom_point() + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle(_('Number of unique users creating highlights grouped by resource type during time period')) + \
 				theme(title=element_text(size=10, face="bold"), axis_text_x=element_text(angle=45, hjust=1)) + \
 				scale_x_date(labels=date_format("%y-%m-%d")) + \
@@ -164,8 +164,8 @@ class HighlightsCreationTimeseriesPlot(object):
 		y_max = pd.Series.max(df['ratio']) + 1
 		plot_ratio = \
 				ggplot(df, aes(x='timestamp_period', y='ratio', color='resource_type')) + \
-				geom_point() + \
 				geom_line() + \
+				geom_point() + \
 				ggtitle(_('Ratio of highlights created over unique users grouped by resource type')) + \
 				theme(title=element_text(size=10, face="bold"), axis_text_x=element_text(angle=45, hjust=1)) + \
 				scale_x_date(labels=date_format("%y-%m-%d")) + \
