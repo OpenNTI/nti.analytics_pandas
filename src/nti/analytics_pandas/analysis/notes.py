@@ -219,6 +219,24 @@ class NotesViewTimeseries(object):
 					inplace=True)
 		return df
 
+	def analyze_unique_events_based_on_sharing_type(self):
+		"""
+		group notes viewed dataframe by timestamp_period and sharing type
+		count the number of unique users and unique notes in each group
+		return the result as dataframe
+
+		"""
+		group_by_items = ['timestamp_period', 'sharing']
+		agg_columns = {	'user_id'	: pd.Series.nunique,
+						'note_id' 	: pd.Series.nunique}
+
+		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
+		df.rename(columns={'user_id'	:'number_of_unique_users',
+							 'note_id'	:'number_of_unique_notes_viewed'},
+					inplace=True)
+
+		return df
+
 	def analyze_total_events_based_on_device_type(self):
 		"""
 		group notes viewed dataframe by timestamp_period and device_type

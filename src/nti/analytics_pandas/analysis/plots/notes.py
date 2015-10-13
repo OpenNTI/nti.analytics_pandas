@@ -450,3 +450,25 @@ class NotesViewTimeseriesPlot(object):
 
 		return (plot_notes_viewed, plot_unique_users, plot_ratio)
 
+	def analyze_unique_events_based_on_sharing_type(self, period_breaks='1 day', minor_period_breaks='1 day'):
+		nvt = self.nvt
+		df = nvt.analyze_unique_events_based_on_sharing_type()
+		if df is None:
+			return ()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		y_max = pd.Series.max(df['number_of_unique_notes_viewed']) + 1
+		plot_unique_notes_viewed = \
+				ggplot(df, aes(x='timestamp_period', y='number_of_unique_notes_viewed', colour='sharing')) + \
+				geom_line() + \
+				geom_point() + \
+				ggtitle(_('Number of unique notes viewed grouped by sharing type during period of time')) + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=date_breaks(period_breaks), labels=date_format("%y-%m-%d")) + \
+				ylab(_('Number of notes viewed')) + \
+				xlab(_('Date')) + \
+				ylim(0, y_max)
+
+		return (plot_unique_notes_viewed)
+
