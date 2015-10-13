@@ -22,6 +22,7 @@ from ggplot import ggplot
 from ggplot import ggtitle
 from ggplot import geom_line
 from ggplot import geom_point
+from ggplot import date_breaks
 from ggplot import date_format
 from ggplot import element_text
 from ggplot import scale_x_date
@@ -247,6 +248,53 @@ class NotesViewTimeseriesPlot(object):
 		"""
 		self.nvt = nvt
 
+	def explore_events(self, period_breaks='1 day', minor_period_breaks='1 day'):
+		nvt = self.nvt
+		df = nvt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		if df is None:
+			return ()
+
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		y_max = pd.Series.max(df['total_note_views']) + 1
+		plot_notes_viewed = \
+				ggplot(df, aes(x='timestamp_period', y='total_note_views')) + \
+				geom_point() + \
+				geom_line() + \
+				ggtitle(_('Number of notes viewed during period of time')) + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=date_breaks(period_breaks), labels=date_format("%y-%m-%d")) + \
+				ylab(_('Number of notes viewed')) + \
+				xlab(_('Date')) + \
+				ylim(0, y_max)
+
+		y_max = pd.Series.max(df['total_unique_users']) + 1
+		plot_unique_users = \
+				ggplot(df, aes(x='timestamp_period', y='total_unique_users')) + \
+				geom_point() + \
+				geom_line() + \
+				ggtitle(_('Number of unique users viewing notes during period of time')) + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=date_breaks(period_breaks), labels=date_format("%y-%m-%d")) + \
+				ylab(_('Number of unique users')) + \
+				xlab(_('Date')) + \
+				ylim(0, y_max)
+
+		y_max = pd.Series.max(df['ratio']) + 1
+		plot_ratio = \
+				ggplot(df, aes(x='timestamp_period', y='ratio')) + \
+				geom_point() + \
+				geom_line() + \
+				ggtitle(_('Ratio of notes viewed over unique users during time period')) + \
+				theme(title=element_text(size=10, face="bold")) + \
+				scale_x_date(breaks=date_breaks(period_breaks), labels=date_format("%y-%m-%d")) + \
+				ylab(_('Ratio')) + \
+				xlab(_('Date')) + \
+				ylim(0, y_max)
+
+		print(plot_notes_viewed, plot_unique_users, plot_ratio)
+
 	def analyze_total_events_based_on_sharing_type(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		nvt = self.nvt
 		df = nvt.analyze_total_events_based_on_sharing_type()
@@ -256,13 +304,13 @@ class NotesViewTimeseriesPlot(object):
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
 		y_max = pd.Series.max(df['total_notes_viewed']) + 1
-		plot_notes_creation = \
+		plot_notes_viewed = \
 				ggplot(df, aes(x='timestamp_period', y='total_notes_viewed', colour='sharing')) + \
 				geom_point() + \
 				geom_line() + \
 				ggtitle(_('Number of notes viewed grouped by sharing type during period of time')) + \
 				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				scale_x_date(breaks=date_breaks(period_breaks), labels=date_format("%y-%m-%d")) + \
 				ylab(_('Number of notes viewed')) + \
 				xlab(_('Date')) + \
 				ylim(0, y_max)
@@ -274,7 +322,7 @@ class NotesViewTimeseriesPlot(object):
 				geom_line() + \
 				ggtitle(_('Number of unique users viewing notes grouped by sharing type during period of time')) + \
 				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				scale_x_date(breaks=date_breaks(period_breaks), labels=date_format("%y-%m-%d")) + \
 				ylab(_('Number of unique users')) + \
 				xlab(_('Date')) + \
 				ylim(0, y_max)
@@ -286,12 +334,12 @@ class NotesViewTimeseriesPlot(object):
 				geom_line() + \
 				ggtitle(_('Ratio of notes viewed over unique user grouped by sharing type during time period')) + \
 				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
+				scale_x_date(breaks=date_breaks(period_breaks), labels=date_format("%y-%m-%d")) + \
 				ylab(_('Ratio')) + \
 				xlab(_('Date')) + \
 				ylim(0, y_max)
 
-		return(plot_notes_creation, plot_unique_users, plot_ratio)
+		return(plot_notes_viewed, plot_unique_users, plot_ratio)
 
 	def plot_the_most_active_users(self, max_rank_number=10):
 		nvt = self.nvt

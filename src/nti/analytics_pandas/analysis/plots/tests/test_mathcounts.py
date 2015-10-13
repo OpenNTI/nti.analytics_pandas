@@ -79,3 +79,11 @@ class TestNoteViewsPlot(AnalyticsPandasTestBase):
 		nvt = NotesViewTimeseries(self.session, start_date, end_date, course_id)
 		nvtp = NotesViewTimeseriesPlot(nvt)
 		_ = nvtp.plot_the_most_active_users()
+
+	def test_explore_events(self):
+		start_date = '2015-10-05'
+		end_date = '2015-12-04'
+		course_id = ['1068', '1096', '1097', '1098', '1099']
+		nvt = NotesViewTimeseries(self.session, start_date, end_date, course_id)
+		nvtp = NotesViewTimeseriesPlot(nvt)
+		_ = nvtp.explore_events()
