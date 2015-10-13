@@ -43,6 +43,9 @@ class NotesCreationTimeseries(object):
 		else:
 			self.dataframe = qnc.filter_by_period_of_time(start_date, end_date)
 
+		if len(self.dataframe) <=0 :
+			return
+
 		if with_device_type:
 			new_df = qnc.add_device_type(self.dataframe)
 			if new_df is not None:
