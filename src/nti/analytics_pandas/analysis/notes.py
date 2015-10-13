@@ -225,11 +225,14 @@ class NotesViewTimeseries(object):
 		count the total number of notes views
 		"""
 		group_by_items = ['timestamp_period', 'device_type']
-		agg_columns = {	'note_id' 	: pd.Series.count}
+		agg_columns = {	'user_id'	: pd.Series.nunique,
+						'note_id' 	: pd.Series.count}
 
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
-		df.rename(columns={'note_id'	:'total_note_views'},
+		df.rename(columns={ 'note_id'	:'total_notes_viewed',
+							'user_id'	:'total_unique_users'},
 					inplace=True)
+		df['ratio'] = df['total_notes_viewed'] / df['total_unique_users']
 		return df
 
 	def analyze_total_events_based_on_resource_type(self):
@@ -241,8 +244,10 @@ class NotesViewTimeseries(object):
 		agg_columns = {	'note_id' 	: pd.Series.count}
 
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
-		df.rename(columns={'note_id'	:'total_note_views'},
+		df.rename(columns={ 'note_id'	:'total_notes_viewed',
+							'user_id'	:'total_unique_users'},
 					inplace=True)
+		df['ratio'] = df['total_notes_viewed'] / df['total_unique_users']
 		return df
 
 	def analyze_total_events_based_on_sharing_type(self):
