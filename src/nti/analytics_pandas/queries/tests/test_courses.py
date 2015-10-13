@@ -22,8 +22,14 @@ class TestCourses(AnalyticsPandasTestBase):
 		qc = QueryCourses(self.session)
 		context_name = u'%ANTH%'
 		dataframe = qc.filter_by_context_name(context_name)
-		assert_that(len(dataframe.index), equal_to(5))
+		assert_that(len(dataframe.index), equal_to(6))
 
 		context_name = u'%ANTH%1613%'
 		dataframe = qc.filter_by_context_name(context_name)
-		assert_that(len(dataframe.index), equal_to(2))
+		assert_that(len(dataframe.index), equal_to(3))
+
+	def test_filter_by_context_ids(self):
+		qc = QueryCourses(self.session)
+		context_ids = ['1068', '1096', '1097', '1098', '1099']
+		dataframe = qc.filter_by_context_ids(context_ids)
+		assert_that(len(dataframe.index), equal_to(5))
