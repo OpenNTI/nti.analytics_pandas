@@ -60,4 +60,10 @@
 			 provides="zope.contentprovider.interfaces.IContentProvider"
 			 factory=".contentproviders.DummyContentProvider" />
 
+	<!-- Resource views report -->
+	<z3c:template
+		template="templates/resource_views.rml"
+		for=".resource_views.ResourceViewsTimeseriesReport"
+		layer="*" />
+
 </configure>
