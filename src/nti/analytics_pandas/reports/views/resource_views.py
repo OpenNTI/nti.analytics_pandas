@@ -31,8 +31,12 @@ class ResourceViewsTimeseriesReportView(AbstractReportView):
 	def __init__(self, context):
 		AbstractReportView.__init__(self, context=context)
 
-	def _build_data(self, title=_('Resource Views')):
-		self.options['title'] = title
+	@property
+	def report_title(self):
+		return _('Resource Views')
+	
+	def _build_data(self, data=_('sample')):
+		self.options['data'] = data
 		return self.options
 
 	def __call__(self):

@@ -1,11 +1,131 @@
-<metal:block
-	xmlns:tal="http://xml.zope.org/namespaces/tal"
-	xmlns:metal="http://xml.zope.org/namespaces/metal"
-	tal:define="options view/options">
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE document SYSTEM "rml_1_0.dtd">
+<document filename="Report.pdf"
+		  invariant="1"
+		  compression="1"
+		  title="Report"
+		  creator="NextThought"
+		  author="NextThought"
+		  xmlns:tal="http://xml.zope.org/namespaces/tal"
+		  xmlns:metal="http://xml.zope.org/namespaces/metal"
+		  tal:attributes="filename view/filename; title view/report_title">
 
-	<h1 style="h1" fontSize="18" spaceAfter=".2in"
-		tal:content="options/title">
-		Title
-	</h1>
+	<docinit>
+		<registerTTFont faceName="OpenSans" fileName="[nti.analytics_pandas.reports]/fonts/OpenSans-Regular.ttf" />
+		<registerTTFont faceName="OpenSansBold" fileName="[nti.analytics_pandas.reports]/fonts/OpenSans-Bold.ttf" />
+		<registerTTFont faceName="OpenSansLight" fileName="[nti.analytics_pandas.reports]/fonts/OpenSans-Light.ttf" />
+		<registerTTFont faceName="OpenSansSemiBold" fileName="[nti.analytics_pandas.reports]/fonts/OpenSans-Semibold.ttf" />
+	</docinit>
 
-</metal:block>
+	<template pagesize="(842,595)" leftMargin="72" showBoundary="0">
+		<pageTemplate id="cover" autoNextTemplate="main">
+			<frame id="main_header"
+				   x1="7in" y1="6.8in"
+				   width="4in" height="1.3in"
+				   showBoundary="0" />
+			<frame id="first" x1="0.5in" y1="0.5in" width="10in" height="6in"/>
+		</pageTemplate>
+
+		<pageTemplate id="main">
+			<frame id="first" x1="0.5in" y1="0.5in" width="10in" height="7.5in" showBoundary="0"/>
+			<pageGraphics>
+				<place x=".5in" y="0.1in" width="7in" height=".3in">
+                	<para 	style="footer"
+                			tal:attributes="fontSize python: '8' if len( view.generate_footer() ) > 100 else '10'"
+                			tal:content="view/generate_footer">
+                			Student Participation Report - jzuech - CHEM4970 - Apr 11, 2014 01:06 PM
+                	</para>
+				</place>
+				<drawCentredString x="10.8in" y="0.3in">
+					<pageNumber/>
+   				</drawCentredString>
+   			</pageGraphics>
+		</pageTemplate>
+
+	</template>
+
+	<stylesheet metal:define-macro="stylesheet">
+		<paraStyle 	name="report_title"
+					fontSize="20"
+					alignment='right' spaceAfter=".2in"
+					textColor="#494949" fontName="OpenSansLight"/>
+
+		<paraStyle name="h1" fontSize="30" textColor="#494949" fontName="OpenSansLight"/>
+
+		<paraStyle name="h2" fontSize="15" textColor="#494949" fontName="OpenSans"
+					spaceBefore=".5in" spaceAfter=".3in"/>
+
+		<paraStyle name="h3" fontSize="10" textColor="#494949" fontName="OpenSans"
+					spaceBefore=".3in" spaceAfter=".3in"/>
+
+		<paraStyle name="normal" fontName="OpenSans" fontSize="12" textColor="#494949"
+				   leading="15" spaceAfter=".5in" />
+
+		<paraStyle name="subdesc" fontName="OpenSans" fontSize="10" textColor="#494949"
+				   leading="13" spaceAfter=".5in" />
+
+		<paraStyle name="sendTo" leftIndent="0.5in" parent="normal" textColor="#494949"
+				   spaceBefore="10"/>
+
+		<paraStyle name="footer" fontName="OpenSansLight" textColor="#b8b8b8" fontSize="10" />
+
+		<!-- column header, should match the 0,0:-1,0 entry below -->
+		<paraStyle name="header" textColor="#b8b8b8" fontName="OpenSansBold" size="10" />
+		<paraStyle name="header_r" textColor="#b8b8b8" fontName="OpenSansBold" size="10" alignment="right" />
+
+		<!-- data, should match the entry below -->
+		<paraStyle name="data" textColor="#757474" fontName="OpenSans" size="12" />
+
+		<paraStyle name="question" fontName="OpenSans" fontSize="12" textColor="#494949" />
+
+		<paraStyle name="answer" fontName="OpenSans" fontSize="12" textColor="#494949"
+				   leading="15" />
+
+		<blockTableStyle id="default">
+			<lineStyle 	start="0,0" stop="-1,-1"
+						kind="linebelow"
+						thickness="1"
+					   	colorName="#e9e9e9"/>
+			<!-- Header row -->
+			<blockTextColor start="0,0" stop="-1,0" colorName="#b8b8b8" />
+			<blockFont start="0,0" stop="-1,0" name="OpenSansBold" size="10" />
+
+			<!-- Data rows -->
+			<blockTextColor start="0,1" stop="-1,-1" colorName="#757474" />
+			<blockFont start="0,1" stop="-1,-1" name="OpenSansLight" size="12" />
+
+			<!-- First column onward. Since we have one fixed decimal point,
+				 we should be able to line everything except the first column-->
+			<blockAlignment start="1,0" stop="-1,-1" value="right" />
+
+		</blockTableStyle>
+
+		<blockTableStyle id="header_table">
+			<blockFont start="0,0" stop="-1,-1" name="OpenSans" size="10" />
+		</blockTableStyle>
+
+	</stylesheet>
+	
+	<story firstPageTemplate="cover">
+
+		<title 	style="report_title" alignment="left"
+				leftIndent=".07in"
+				tal:content="view/report_title" >Report Title</title>
+		
+		<nextFrame />
+   	
+		<metal:block
+			xmlns:tal="http://xml.zope.org/namespaces/tal"
+			xmlns:metal="http://xml.zope.org/namespaces/metal"
+			tal:define="options view/options">
+		
+			<h1 style="h1" fontSize="18" spaceAfter=".2in"
+				tal:content="options/data">
+				Title
+			</h1>
+		
+		</metal:block>
+
+	</story>
+
+</document>

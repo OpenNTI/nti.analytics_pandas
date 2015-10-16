@@ -24,11 +24,6 @@
 	<include package="z3c.pagelet" /> <!-- pagelet contentprovider -->
 	
 	<!-- Default macros for the reports -->
-	<!--
-		 NOTE: There is probably a better, more modern way
-		 with z3c.layout, content providers and the like. I may switch
-		 over to that before too long.
-	-->
 	<z3c:macro
 		template="templates/std_report_macros.pt"
 		name="stylesheet"
@@ -49,7 +44,7 @@
 		for="zope.interface.Interface"
 		view="zope.interface.Interface"
 		layer="*" />
-
+	
 	<!-- A default header_table that does nothing -->
 	<adapter name="header_table"
 			 for="zope.interface.Interface
