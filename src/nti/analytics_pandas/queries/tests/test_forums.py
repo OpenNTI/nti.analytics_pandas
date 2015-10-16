@@ -8,8 +8,8 @@ __docformat__ = "restructuredtext en"
 # pylint: disable=W0212,R0904
 
 from hamcrest import equal_to
-from hamcrest import assert_that
 from hamcrest import has_item
+from hamcrest import assert_that
 
 from nti.analytics_pandas.queries.forums import QueryForumsCreated
 from nti.analytics_pandas.queries.forums import QueryForumCommentLikes
@@ -100,7 +100,6 @@ class TestForums(AnalyticsPandasTestBase):
 		assert_that(len(dataframe.index), equal_to(0))
 		new_df = qfcf.add_device_type(dataframe)
 		assert_that(new_df, equal_to(None))
-		
 
 	def test_query_forums_comment_likes_by_period_of_time(self):
 		start_date = u'2015-03-01'

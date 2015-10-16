@@ -10,12 +10,11 @@ __docformat__ = "restructuredtext en"
 from hamcrest import equal_to
 from hamcrest import assert_that
 
+import numpy as np
+
 from nti.analytics_pandas.queries.resources import QueryResources
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
-
-import pandas as pd
-import numpy as np
 
 class TestResources(AnalyticsPandasTestBase):
 

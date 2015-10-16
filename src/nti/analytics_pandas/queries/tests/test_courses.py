@@ -15,6 +15,7 @@ from nti.analytics_pandas.queries.courses import QueryCourses
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
 class TestCourses(AnalyticsPandasTestBase):
+
 	def setUp(self):
 		super(TestCourses, self).setUp()
 

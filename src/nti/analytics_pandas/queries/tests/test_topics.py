@@ -8,8 +8,8 @@ __docformat__ = "restructuredtext en"
 # pylint: disable=W0212,R0904
 
 from hamcrest import equal_to
-from hamcrest import assert_that
 from hamcrest import has_item
+from hamcrest import assert_that
 
 from nti.analytics_pandas.queries.topics import QueryTopicLikes
 from nti.analytics_pandas.queries.topics import QueryTopicsViewed

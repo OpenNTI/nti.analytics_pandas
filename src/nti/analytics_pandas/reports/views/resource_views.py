@@ -16,13 +16,21 @@ from .mixins import AbstractReportView
 
 class ResourceViewsTimeseriesReport(AbstractReportView):
 	
-	def __init__(self, session, start_date, end_date, courses_id):
-		AbstractReportView.__init__(self, context=self)
-		self.rvt = ResourceViewsTimeseries(session, start_date, end_date, courses_id)
-		self.rvtp = ResourceViewsTimeseriesPlot(self.rvt)
+	rvt = None
+	rvtp = None
 
-	def generate_events_plots(self):
-		pass
-		# rvtp = self.rvtp
-		# plot_resource_views, plot_unique_users, plot_ratio = rvtp.explore_events()
-		# TODO : generate images on the fly and render them along with template to pdf
+	def __init__(self, session=None, start_date=None, end_date=None, courses=None):
+		AbstractReportView.__init__(self, context=self)
+		self.session = session
+		self.courses = courses
+		self.end_date = end_date
+		self.start_date = start_date
+		
+	def __call__(self):
+		if self.session is None:
+			return
+		self.rvt = ResourceViewsTimeseries(self.session, 
+										   self.start_date, 
+										   self.end_date, 
+										   self.courses)
+		self.rvtp = ResourceViewsTimeseriesPlot(self.rvt)

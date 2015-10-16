@@ -60,7 +60,6 @@ class TestNotes(AnalyticsPandasTestBase):
 		assert_that(len(dataframe.index), equal_to(len(new_df.index)))
 		assert_that(new_df.columns, has_item('resource_type'))
 
-
 	def test_query_notes_viewed_by_period_of_time(self):
 		start_date = u'2015-03-01'
 		end_date = u'2015-05-31'

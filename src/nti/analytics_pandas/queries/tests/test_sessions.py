@@ -41,6 +41,7 @@ class TestSessions(AnalyticsPandasTestBase):
 	def test_user_agents_device(self):
 		qua = QueryUserAgents(self.session)
 		user_agents_id = [2944, 742, 1894, 245, 732, 2932]
+		
 		dataframe = qua.get_user_agents_by_id(user_agents_id)
 		new_df = qua.add_device_type(dataframe)
 		assert_that(len(dataframe.index), equal_to(len(new_df.index)))

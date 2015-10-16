@@ -16,6 +16,7 @@ from nti.analytics_pandas.queries.bookmarks import QueryBookmarksCreated
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
 class TestBookmarks(AnalyticsPandasTestBase):
+
 	def setUp(self):
 		super(TestBookmarks, self).setUp()
 
@@ -56,5 +57,3 @@ class TestBookmarks(AnalyticsPandasTestBase):
 		new_df = qbc.add_resource_type(dataframe)
 		assert_that(len(dataframe.index), equal_to(len(new_df.index)))
 		assert_that(new_df.columns, has_item('resource_type'))
-
-

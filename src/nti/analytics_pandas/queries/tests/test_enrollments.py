@@ -8,8 +8,8 @@ __docformat__ = "restructuredtext en"
 # pylint: disable=W0212,R0904
 
 from hamcrest import equal_to
-from hamcrest import assert_that
 from hamcrest import has_item
+from hamcrest import assert_that
 
 from nti.analytics_pandas.queries.enrollments import QueryCourseDrops
 from nti.analytics_pandas.queries.enrollments import QueryEnrollmentTypes
@@ -105,4 +105,3 @@ class TestEnrollments(AnalyticsPandasTestBase):
 		qet = QueryEnrollmentTypes(self.session)
 		dataframe = qet.get_enrollment_types()
 		assert_that(len(dataframe.index), equal_to(5))
-

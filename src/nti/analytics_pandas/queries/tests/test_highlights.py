@@ -8,14 +8,15 @@ __docformat__ = "restructuredtext en"
 # pylint: disable=W0212,R0904
 
 from hamcrest import equal_to
-from hamcrest import assert_that
 from hamcrest import has_item
+from hamcrest import assert_that
 
 from nti.analytics_pandas.queries.highlights import QueryHighlightsCreated
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
 class TestHighlights(AnalyticsPandasTestBase):
+
 	def setUp(self):
 		super(TestHighlights, self).setUp()
 
@@ -55,5 +56,3 @@ class TestHighlights(AnalyticsPandasTestBase):
 		new_df = qhc.add_resource_type(dataframe)
 		assert_that(len(dataframe.index), equal_to(len(new_df.index)))
 		assert_that(new_df.columns, has_item('resource_type'))
-
-
