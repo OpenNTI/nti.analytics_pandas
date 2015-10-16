@@ -45,7 +45,7 @@ class BookmarksTimeseriesPlot(object):
 				y_axis_field='total_bookmarks_created',
 				x_axis_label='Date', 
 				y_axis_label='Number of bookmarks created', 
-				title='Number of bookmark creation during period of time', 
+				title='Number of bookmark created during period of time', 
 				period_breaks=period_breaks,
 				minor_breaks=minor_period_breaks)
 
