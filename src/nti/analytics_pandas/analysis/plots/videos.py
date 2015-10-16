@@ -123,7 +123,8 @@ class VideoEventsTimeseriesPlot(object):
 		return (plot_video_events, plot_unique_users, plot_ratio)
 
 	def generate_plots_video_events(self, df, period_breaks, minor_period_breaks, event_type):
-		title = 'Number of video %s during period of time' % (event_type)
+		title =_("Number of video ${event_type} during period of time",
+				 mapping={'event_type' : event_type })
 		plot_video_events = line_plot_x_axis_date(df=df,
 				x_axis_field=_('timestamp_period'),
 				y_axis_field=_('number_of_video_events'),
@@ -133,7 +134,8 @@ class VideoEventsTimeseriesPlot(object):
 				period_breaks=period_breaks,
 				minor_breaks=minor_period_breaks)
 
-		title = 'Number of unique users who %s video during period of time' % (event_type)
+		title =_("Number of unique users who ${event_type} video during period of time",
+				 mapping={'event_type' : event_type })
 		plot_unique_users = line_plot_x_axis_date(df=df,
 				x_axis_field=_('timestamp_period'),
 				y_axis_field=_('number_of_unique_users'),
@@ -143,7 +145,8 @@ class VideoEventsTimeseriesPlot(object):
 				period_breaks=period_breaks,
 				minor_breaks=minor_period_breaks)
 
-		title = 'Ratio of video %s over unique user on each available date' % (event_type)
+		title =_("Ratio of video ${event_type} over unique user on each available date",
+				 mapping={'event_type' : event_type })
 		plot_ratio = line_plot_x_axis_date(df=df,
 				x_axis_field=_('timestamp_period'),
 				y_axis_field=_('ratio'),
