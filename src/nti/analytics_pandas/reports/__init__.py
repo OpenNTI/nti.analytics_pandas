@@ -14,12 +14,12 @@ from six import string_types
 
 from zope.browserpage import viewpagetemplatefile
 
+from zope.pagetemplate.pagetemplatefile import package_home
+
 # Make viewlets use our version of page template files
 # Unfortunately, the zope.browserpage VPT is slightly
 # incompatible in calling convention
 from zope.viewlet import viewlet
-
-from zope.pagetemplate.pagetemplatefile import package_home
 
 from z3c.template import template
 
