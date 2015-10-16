@@ -44,14 +44,6 @@
 		for="zope.interface.Interface"
 		view="zope.interface.Interface"
 		layer="*" />
-	
-	<!-- A default header_table that does nothing -->
-	<adapter name="header_table"
-			 for="zope.interface.Interface
-				  *
-				  zope.interface.Interface"
-			 provides="zope.contentprovider.interfaces.IContentProvider"
-			 factory=".contentproviders.DummyContentProvider" />
 
 	<include package=".views" file="configure.zcml" />
 
