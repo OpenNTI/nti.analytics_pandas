@@ -11,23 +11,6 @@ logger = __import__('logging').getLogger(__name__)
 
 import pandas as pd
 
-from ggplot import aes
-from ggplot import xlab
-from ggplot import ylab
-from ggplot import ylim
-from ggplot import theme
-from ggplot import ggplot
-from ggplot import ggtitle
-from ggplot import geom_line
-from ggplot import geom_point
-from ggplot import date_breaks
-from ggplot import date_format
-from ggplot import element_text
-from ggplot import scale_x_date
-from ggplot import geom_histogram
-from ggplot import scale_x_discrete
-from ggplot import facet_wrap
-
 from .commons import facet_line_plot_x_axis_date
 from .commons import group_line_plot_x_axis_date
 from .commons import histogram_plot
@@ -203,7 +186,7 @@ class BookmarksTimeseriesPlot(object):
 			y_axis_field = 'number_of_bookmark_creation',
 			x_axis_label = 'Date', 
 			y_axis_label = 'Number of resource views', 
-			title = 'Number of bookmarks created using each device type', 
+			title = 'Number of bookmarks created using each device type grouped by resource types', 
 			period_breaks = period_breaks, 
 			group_by = 'resource_type', 
 			facet = 'device_type',
@@ -211,27 +194,33 @@ class BookmarksTimeseriesPlot(object):
 			scales='free', 
 			text_size = 8)
 
-		plot_unique_users = \
-				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users', color='resource_type')) + \
-				geom_point() + \
-				ggtitle('Number of unique users creating bookmarks during time period group by device type') + \
-				theme(title=element_text(size=8, face="bold")) + \
-				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
-				ylab('Number of unique users') + \
-				xlab('Date') + \
-				facet_wrap('device_type', scales="free")
+		plot_unique_users = facet_line_plot_x_axis_date(df=df, 
+			x_axis_field = 'timestamp_period', 
+			y_axis_field = 'number_of_unique_users',
+			x_axis_label = 'Date', 
+			y_axis_label = 'Number of unique users', 
+			title = 'Number of unique users creating bookmarks grouped by resource types during time period',
+			period_breaks = period_breaks, 
+			group_by = 'resource_type', 
+			facet = 'device_type',
+			minor_breaks=minor_period_breaks, 
+			scales='free', 
+			text_size = 8)
 
-		plot_ratio = \
-				ggplot(df, aes(x='timestamp_period', y='ratio', color='resource_type')) + \
-				geom_point() + \
-				ggtitle('Ratio of bookmark creation over unique user on each available date') + \
-				theme(title=element_text(size=8, face="bold")) + \
-				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
-				ylab('Ratio') + \
-				xlab('Date') + \
-				facet_wrap('device_type', scales="free")
+		plot_ratio = facet_line_plot_x_axis_date(df=df, 
+			x_axis_field = 'timestamp_period', 
+			y_axis_field = 'ratio',
+			x_axis_label = 'Date', 
+			y_axis_label = 'Ratio', 
+			title = 'Ratio of bookmark creation over unique user on each available date',
+			period_breaks = period_breaks, 
+			group_by = 'resource_type', 
+			facet = 'device_type',
+			minor_breaks=minor_period_breaks, 
+			scales='free', 
+			text_size = 8)
 
-		return(plot_bookmarks_creation, plot_unique_users, plot_ratio)
+		return (plot_bookmarks_creation, plot_unique_users, plot_ratio)
 
 	def plot_the_most_active_users(self, max_rank_number=10):
 		bct = self.bct

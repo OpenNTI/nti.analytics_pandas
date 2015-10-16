@@ -85,7 +85,7 @@ def facet_line_plot_x_axis_date(df, x_axis_field, y_axis_field,
 		theme(title=element_text(size=text_size, face="bold")) + \
 		ylab(_(y_axis_label)) + \
 		xlab(_(x_axis_label)) + \
-		facet_wrap('device_type', scales="free")
+		facet_wrap(facet, scales=scales)
 
 	if minor_breaks is not None:
 		line_plot = line_plot + scale_x_date(breaks=period_breaks, minor_breaks=minor_breaks, labels=date_format("%y-%m-%d")) 
