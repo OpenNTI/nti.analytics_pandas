@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE document SYSTEM "rml_1_0.dtd">
-<document filename="ForumParticipationReport.pdf"
+<document filename="Report.pdf"
 		  invariant="1"
 		  compression="1"
-		  title="Forum Participation Report"
+		  title="Report"
 		  creator="NextThought"
 		  author="NextThought"
 		  xmlns:tal="http://xml.zope.org/namespaces/tal"
@@ -32,10 +32,9 @@
 	<!--
 		Create page templates for every section_name in a specified template.
 		This is necessary to get the section_name header to change dynamically.
-		Used in topic reports.
 	-->
 	<metal:block metal:define-macro="section_page_templates">
-		<tal:block tal:repeat="section_template_name options/section_scoped_comments/keys"
+		<tal:block 	tal:repeat="section_template_name options/section_scoped_comments/keys"
 					tal:condition="options/section_scoped_comments | nothing">
 			<pageTemplate id="" tal:attributes="id section_template_name">
 				<frame id="first" x1="0.5in" y1=".5in" width="10in" height="7in" showBoundary="0"/>

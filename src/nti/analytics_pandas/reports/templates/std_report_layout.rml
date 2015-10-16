@@ -19,9 +19,6 @@
 
 	<template pagesize="(842,595)" leftMargin="72" showBoundary="0">
 		<pageTemplate id="cover" autoNextTemplate="main">
-			<pageGraphics>
-				<image metal:use-macro="macro:header_graphic" />
-			</pageGraphics>
 			<frame id="main_header"
 				   x1="7in" y1="6.8in"
 				   width="4in" height="1.3in"
