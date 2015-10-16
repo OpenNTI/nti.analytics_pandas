@@ -17,7 +17,7 @@ from zope import interface
 
 from z3c.pagelet.browser import BrowserPagelet
 
-from .interfaces import IPDFReportView
+from ..interfaces import IPDFReportView
 
 def adjust_date( date ):
 	"""

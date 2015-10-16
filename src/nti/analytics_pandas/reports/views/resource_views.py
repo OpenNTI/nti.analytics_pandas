@@ -9,8 +9,8 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
-from ..analysis import ResourceViewsTimeseries
-from ..analysis import ResourceViewsTimeseriesPlot
+from ...analysis import ResourceViewsTimeseries
+from ...analysis import ResourceViewsTimeseriesPlot
 
 from .mixins import AbstractReportView
 
