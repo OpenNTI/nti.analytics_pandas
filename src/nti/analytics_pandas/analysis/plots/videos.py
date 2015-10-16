@@ -97,7 +97,7 @@ class VideoEventsTimeseriesPlot(object):
 				y_axis_label=_('Number of video events'),
 				title=_('Number of video events grouped by resource type during period of time'),
 				period_breaks=period_breaks,
-				group_by=_('video_event_type'),
+				group_by='video_event_type',
 				minor_breaks=minor_period_breaks)
 
 		plot_unique_users = group_line_plot_x_axis_date(df=df,
@@ -107,7 +107,7 @@ class VideoEventsTimeseriesPlot(object):
 				y_axis_label=_('Number of unique users'),
 				title=_('Number of unique users creating video events during period of time'),
 				period_breaks=period_breaks,
-				group_by=_('video_event_type'),
+				group_by='video_event_type',
 				minor_breaks=minor_period_breaks)
 
 		plot_ratio = group_line_plot_x_axis_date(df=df,
@@ -117,7 +117,7 @@ class VideoEventsTimeseriesPlot(object):
 				y_axis_label=_('Ratio'),
 				title=_('Ratio of video events over unique user on each available date'),
 				period_breaks=period_breaks,
-				group_by=_('video_event_type'),
+				group_by='video_event_type',
 				minor_breaks=minor_period_breaks)
 
 		return (plot_video_events, plot_unique_users, plot_ratio)
