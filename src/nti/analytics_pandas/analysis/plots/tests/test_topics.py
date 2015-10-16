@@ -7,10 +7,11 @@ __docformat__ = "restructuredtext en"
 # disable: accessing protected members, too many methods
 # pylint: disable=W0212,R0904
 
-from nti.analytics_pandas.analysis.topics import TopicsCreationTimeseries
 from nti.analytics_pandas.analysis.topics import TopicViewsTimeseries
-from nti.analytics_pandas.analysis.plots.topics import TopicsCreationTimeseriesPlot
+from nti.analytics_pandas.analysis.topics import TopicsCreationTimeseries
 from nti.analytics_pandas.analysis.plots.topics import TopicViewsTimeseriesPlot
+from nti.analytics_pandas.analysis.plots.topics import TopicsCreationTimeseriesPlot
+
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
 class TestTopicsCreationPlot(AnalyticsPandasTestBase):
@@ -25,7 +26,6 @@ class TestTopicsCreationPlot(AnalyticsPandasTestBase):
 		tct = TopicsCreationTimeseries(self.session, start_date, end_date, course_id)
 		tctp = TopicsCreationTimeseriesPlot(tct)
 		_ = tctp.explore_events(period_breaks='1 week', minor_period_breaks='1 day')
-
 
 class TestTopicViewsPlot(AnalyticsPandasTestBase):
 
