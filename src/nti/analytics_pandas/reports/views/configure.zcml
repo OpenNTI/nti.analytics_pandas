@@ -17,7 +17,7 @@
 	<!-- Resource views report -->
 	<z3c:template
 		template="../templates/resource_views.rml"
-		for=".resource_views.ResourceViewsTimeseriesReport"
+		for=".resource_views.ResourceViewsTimeseriesReportView"
 		layer="*" />
 
 </configure>

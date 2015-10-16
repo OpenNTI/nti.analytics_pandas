@@ -9,6 +9,8 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
+from .. import MessageFactory as _
+
 import pytz
 import textwrap
 from datetime import datetime
@@ -19,22 +21,22 @@ from z3c.pagelet.browser import BrowserPagelet
 
 from ..interfaces import IPDFReportView
 
-def adjust_date( date ):
+def adjust_date(date):
 	"""
 	Takes a date and returns a timezoned datetime
 	"""
-	utc_date = pytz.utc.localize( date )
+	utc_date = pytz.utc.localize(date)
 	cst_tz = pytz.timezone('US/Central')
-	return utc_date.astimezone( cst_tz )
+	return utc_date.astimezone(cst_tz)
 
-def adjust_timestamp( timestamp ):
+def adjust_timestamp(timestamp):
 	"""
 	Takes a timestamp and returns a timezoned datetime
 	"""
-	date = datetime.utcfromtimestamp( timestamp )
-	return adjust_date( date )
+	date = datetime.utcfromtimestamp(timestamp)
+	return adjust_date(date)
 
-def format_datetime( local_date ):
+def format_datetime(local_date):
 	"""
 	Returns a string formatted datetime object
 	"""
@@ -47,13 +49,19 @@ class AbstractReportView(BrowserPagelet):
 		self.options = {}
 		BrowserPagelet.__init__(self, context, request)
 
+	@property
+	def filename(self):
+		return 'report.pdf'
+
+	@property
+	def report_title(self):
+		return _('Report')
+
 	def generate_footer(self):
 		date = adjust_date(datetime.utcnow())
 		date = date.strftime('%b %d, %Y %I:%M %p')
 		title = self.report_title
-		course = self.course_name()
-		student = getattr(self, 'student_user', '')
-		return "%s %s %s %s" % (title, course, student, date)
+		return "%s %s" % (title, date)
 
 	def wrap_text(self, text, size):
 		return textwrap.fill(text, size)
