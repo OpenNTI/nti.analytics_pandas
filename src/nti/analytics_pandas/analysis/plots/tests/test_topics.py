@@ -39,3 +39,11 @@ class TestTopicViewsPlot(AnalyticsPandasTestBase):
 		tvt = TopicViewsTimeseries(self.session, start_date, end_date, course_id)
 		tvtp = TopicViewsTimeseriesPlot(tvt)
 		_ = tvtp.explore_events(period_breaks='1 week', minor_period_breaks='1 day')
+
+	def test_analyze_device_type(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		tvt = TopicViewsTimeseries(self.session, start_date, end_date, course_id)
+		tvtp = TopicViewsTimeseriesPlot(tvt)
+		_ = tvtp.analyze_device_types(period_breaks='1 week', minor_period_breaks='1 day')

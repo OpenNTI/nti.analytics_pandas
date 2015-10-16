@@ -9,12 +9,15 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
+import pandas as pd
+
 from ..queries import QueryTopicLikes
 from ..queries import QueryTopicsViewed
 from ..queries import QueryTopicsCreated
 from ..queries import QueryTopicFavorites
 
 from .common import add_timestamp_period_
+from .common import analyze_types_
 from .common import explore_unique_users_based_timestamp_date_
 from .common import explore_number_of_events_based_timestamp_date_
 from .common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
@@ -141,6 +144,18 @@ class TopicViewsTimeseries(object):
 		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
 											events_df, 'total_topics_viewed', unique_users_df)
 		return merge_df
+
+
+	def analyze_device_types(self):
+		group_by_items = ['timestamp_period', 'device_type']
+		agg_columns = {	'user_id'	: pd.Series.nunique,
+						'topic_id' 	: pd.Series.count}
+		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
+		df.rename(columns={	'user_id'	:'number_of_unique_users',
+						  	'topic_id'	:'number_of_topics_viewed'},
+					inplace=True)
+		df['ratio'] = df['number_of_topics_viewed'] / df['number_of_unique_users']
+		return df
 
 class TopicFavoritesTimeseries(object):
 	"""

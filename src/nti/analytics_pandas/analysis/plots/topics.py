@@ -11,10 +11,7 @@ logger = __import__('logging').getLogger(__name__)
 
 import pandas as pd
 
-from .commons import facet_line_plot_x_axis_date
 from .commons import group_line_plot_x_axis_date
-from .commons import histogram_plot
-from .commons import histogram_plot_x_axis_discrete
 from .commons import line_plot_x_axis_date
 
 class TopicsCreationTimeseriesPlot(object):
@@ -121,3 +118,53 @@ class TopicViewsTimeseriesPlot(object):
 				minor_breaks=minor_period_breaks)
 
 		return (plot_topics_viewed, plot_unique_users, plot_ratio)
+
+	def analyze_device_types(self, period_breaks='1 day', minor_period_breaks=None):
+		"""
+		return plots of topics viewed grouped by device type during period of time
+		it consists of :
+			- number of topics viewed
+			- number of unique users
+			- ratio of topics viewed over unique users
+		"""
+		tvt = self.tvt
+		df = tvt.analyze_device_types()
+		if df is None:
+			return ()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		plot_topics_viewed = group_line_plot_x_axis_date(df=df, 
+				x_axis_field='timestamp_period', 
+				y_axis_field='number_of_topics_viewed',
+				x_axis_label='Date', 
+				y_axis_label='Number of topics viewed', 
+				title='Number of bookmarks created grouped by device type during period of time', 
+				period_breaks=period_breaks,
+				group_by='device_type',
+				minor_breaks=minor_period_breaks)
+
+
+		plot_unique_users = group_line_plot_x_axis_date(df=df, 
+				x_axis_field='timestamp_period', 
+				y_axis_field='number_of_unique_users',
+				x_axis_label='Date', 
+				y_axis_label='Number of unique users', 
+				title='Number of unique users viewing topics during period of time', 
+				period_breaks=period_breaks,
+				group_by='device_type',
+				minor_breaks=minor_period_breaks)
+
+		plot_ratio = group_line_plot_x_axis_date(df=df, 
+				x_axis_field='timestamp_period', 
+				y_axis_field='ratio',
+				x_axis_label='Date', 
+				y_axis_label='Ratio', 
+				title='Ratio of topics viewed over unique user on each available date', 
+				period_breaks=period_breaks,
+				group_by='device_type',
+				minor_breaks=minor_period_breaks)
+
+		return (plot_topics_viewed, plot_unique_users, plot_ratio)
+
+
