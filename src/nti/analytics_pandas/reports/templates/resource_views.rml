@@ -3,8 +3,9 @@
 	xmlns:metal="http://xml.zope.org/namespaces/metal"
 	tal:define="options view/options">
 
-	<h1 style="h1" fontSize="18" spaceAfter=".2in" >
-		Breakdown
+	<h1 style="h1" fontSize="18" spaceAfter=".2in"
+		tal:content="options/title">
+		Title
 	</h1>
 
 </metal:block>
