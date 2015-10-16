@@ -31,6 +31,13 @@
 	-->
 	<z3c:macro
 		template="templates/std_report_macros.pt"
+		name="header_graphic"
+		for="zope.interface.Interface"
+		view=".interfaces.IPDFReportView"
+		layer="*" />
+
+	<z3c:macro
+		template="templates/std_report_macros.pt"
 		name="stylesheet"
 		for="zope.interface.Interface"
 		view=".interfaces.IPDFReportView"
