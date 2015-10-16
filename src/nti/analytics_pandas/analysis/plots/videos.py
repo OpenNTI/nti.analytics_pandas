@@ -89,6 +89,7 @@ class VideoEventsTimeseriesPlot(object):
 			return self.generate_plots_grouped_by_video_event_types(df, period_breaks, minor_period_breaks)
 
 	def generate_plots_grouped_by_video_event_types(self, df, period_breaks, minor_period_breaks):
+
 		plot_video_events = group_line_plot_x_axis_date(df=df,
 				x_axis_field=_('timestamp_period'),
 				y_axis_field=_('number_of_video_events'),
@@ -98,7 +99,6 @@ class VideoEventsTimeseriesPlot(object):
 				period_breaks=period_breaks,
 				group_by=_('video_event_type'),
 				minor_breaks=minor_period_breaks)
-
 
 		plot_unique_users = group_line_plot_x_axis_date(df=df,
 				x_axis_field=_('timestamp_period'),
