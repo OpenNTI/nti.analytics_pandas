@@ -43,7 +43,7 @@ class NotesCreationTimeseries(object):
 		else:
 			self.dataframe = qnc.filter_by_period_of_time(start_date, end_date)
 
-		if len(self.dataframe) <=0 :
+		if len(self.dataframe) <= 0 :
 			return
 
 		if with_device_type:
@@ -56,7 +56,7 @@ class NotesCreationTimeseries(object):
 			if new_df is not None:
 				self.dataframe = new_df
 
-		if time_period_date :
+		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
 
 		categorical_columns = ['note_id', 'resource_type', 'device_type', 'user_id', 'sharing']
@@ -134,8 +134,8 @@ class NotesViewTimeseries(object):
 	"""
 
 	def __init__(self, session, start_date, end_date, course_id=None,
-				 with_resource_type=True, with_device_type=True, 
-				 time_period_date=True, with_sharing_type = True):
+				 with_resource_type=True, with_device_type=True,
+				 time_period_date=True, with_sharing_type=True):
 		self.session = session
 		qnv = self.query_notes_viewed = QueryNotesViewed(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -155,7 +155,7 @@ class NotesViewTimeseries(object):
 			if new_df is not None:
 				self.dataframe = new_df
 
-		if time_period_date :
+		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
 
 		if with_sharing_type:
@@ -282,7 +282,7 @@ class NotesViewTimeseries(object):
 		df.rename(columns={	'note_id'	:'total_notes_viewed',
 							'user_id'	:'total_unique_users'},
 					inplace=True)
-		
+
 		df['ratio'] = df['total_notes_viewed'] / df['total_unique_users']
 		return df
 
@@ -340,7 +340,7 @@ class NoteLikesTimeseries(object):
 			if new_df is not None:
 				self.dataframe = new_df
 
-		if time_period_date :
+		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
 
 	def explore_number_of_events_based_timestamp_date(self):
@@ -386,7 +386,7 @@ class NoteFavoritesTimeseries(object):
 			if new_df is not None:
 				self.dataframe = new_df
 
-		if time_period_date :
+		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
 
 	def explore_number_of_events_based_timestamp_date(self):

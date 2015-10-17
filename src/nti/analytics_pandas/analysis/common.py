@@ -31,7 +31,7 @@ def explore_unique_users_based_timestamp_date_(df):
 	if len(df.index) > 0 :
 		grouped = df.groupby('timestamp_period')
 		unique_users_per_period_df = grouped.aggregate({'user_id' : pd.Series.nunique})
-		unique_users_per_period_df.rename(columns={'user_id' : 'total_unique_users'}, 
+		unique_users_per_period_df.rename(columns={'user_id' : 'total_unique_users'},
 										  inplace=True)
 		return unique_users_per_period_df
 
@@ -68,8 +68,8 @@ def get_most_active_users_(df, session, max_rank_number=10):
 	return most_active_user_df
 
 def generate_pivot_table(df, index_columns, values_columns, agg_funcs):
-	table = pd.pivot_table(	df,
-							index=index_columns,
-							values=values_columns,
-							aggfunc=agg_funcs,fill_value=0)
+	table = pd.pivot_table(df,
+						   index=index_columns,
+						   values=values_columns,
+						   aggfunc=agg_funcs, fill_value=0)
 	return table

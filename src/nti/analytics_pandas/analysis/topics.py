@@ -16,8 +16,8 @@ from ..queries import QueryTopicsViewed
 from ..queries import QueryTopicsCreated
 from ..queries import QueryTopicFavorites
 
-from .common import add_timestamp_period_
 from .common import analyze_types_
+from .common import add_timestamp_period_
 from .common import explore_unique_users_based_timestamp_date_
 from .common import explore_number_of_events_based_timestamp_date_
 from .common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
@@ -35,7 +35,7 @@ class TopicsCreationTimeseries(object):
 			self.dataframe = qtc.filter_by_period_of_time_and_course_id(start_date,
 																		end_date,
 																		course_id)
-		else :
+		else:
 			self.dataframe = qtc.filter_by_period_of_time(start_date, end_date)
 
 		if with_device_type:
@@ -43,7 +43,7 @@ class TopicsCreationTimeseries(object):
 			if new_df is not None:
 				self.dataframe = new_df
 
-		if time_period_date :
+		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
 
 	def explore_number_of_events_based_timestamp_date(self):
@@ -76,7 +76,7 @@ class TopicLikesTimeseries(object):
 			self.dataframe = qtl.filter_by_period_of_time_and_course_id(start_date,
 																		end_date,
 																		course_id)
-		else :
+		else:
 			self.dataframe = qtl.filter_by_period_of_time(start_date, end_date)
 
 		if with_device_type:
@@ -84,7 +84,7 @@ class TopicLikesTimeseries(object):
 			if new_df is not None:
 				self.dataframe = new_df
 
-		if time_period_date :
+		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
 
 	def explore_number_of_events_based_timestamp_date(self):
@@ -117,7 +117,7 @@ class TopicViewsTimeseries(object):
 			self.dataframe = qtv.filter_by_period_of_time_and_course_id(start_date,
 																		end_date,
 																		course_id)
-		else :
+		else:
 			self.dataframe = qtv.filter_by_period_of_time(start_date, end_date)
 
 		if with_device_type:
@@ -125,7 +125,7 @@ class TopicViewsTimeseries(object):
 			if new_df is not None:
 				self.dataframe = new_df
 
-		if time_period_date :
+		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
 
 	def explore_number_of_events_based_timestamp_date(self):
@@ -144,7 +144,6 @@ class TopicViewsTimeseries(object):
 		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
 											events_df, 'total_topics_viewed', unique_users_df)
 		return merge_df
-
 
 	def analyze_device_types(self):
 		group_by_items = ['timestamp_period', 'device_type']
@@ -170,7 +169,7 @@ class TopicFavoritesTimeseries(object):
 			self.dataframe = qtf.filter_by_period_of_time_and_course_id(start_date,
 																		end_date,
 																		course_id)
-		else :
+		else:
 			self.dataframe = qtf.filter_by_period_of_time(start_date, end_date)
 
 		if with_device_type:
@@ -178,7 +177,7 @@ class TopicFavoritesTimeseries(object):
 			if new_df is not None:
 				self.dataframe = new_df
 
-		if time_period_date :
+		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
 
 	def explore_number_of_events_based_timestamp_date(self):
