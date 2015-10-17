@@ -27,6 +27,68 @@ from .common import explore_unique_users_based_timestamp_date_
 from .common import explore_number_of_events_based_timestamp_date_
 from .common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
 
+class NotesEventsTimeseries(object):
+	"""
+	combine and analyze notes created, viewed, likes and favorites
+	"""
+	def __init__(self, nct, nvt, nlt, nft):
+		"""
+		nct = NotesCreationTimeseries
+		nvt = NotesViewTimeseries
+		nlt = NoteLikesTimeseries
+		nft = NoteFavoritesTimeseries
+		"""
+		self.nct = nct
+		self.nvt = nvt
+		self.nlt = nlt
+		self.nft = nft
+
+	def combine_all_events(self):
+		"""
+		put all notes related events (create, view, like and favorite) into one dataframe
+		"""
+		nct = self.nct
+		nvt = self.nvt
+		nlt = self.nlt 
+		nft = self.nft
+
+		notes_created_df = nct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		notes_viewed_df = nvt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		note_likes_df = nlt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		note_favorites_df = nft.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+
+		df = pd.DataFrame(columns=['timestamp_period', 'total_events', 'total_unique_users', 'ratio', 'event_type'])
+
+		if notes_created_df is not None:
+			notes_created_df =self.update_events_dataframe(notes_created_df, 
+				column_to_rename='total_notes_created', event_type='CREATE')
+			df = df.append(notes_created_df)
+
+		if notes_viewed_df is not None:
+			notes_viewed_df = self.update_events_dataframe(notes_viewed_df, 
+				column_to_rename='total_note_views', event_type='VIEW')
+			df = df.append(notes_viewed_df)
+
+		if note_likes_df is not None:
+			note_likes_df = self.update_events_dataframe(note_likes_df,
+				column_to_rename='total_note_likes', event_type='LIKE')
+			df = df.append(note_likes_df)
+
+		if note_favorites_df is not None:
+			note_favorites_df =self.update_events_dataframe(note_favorites_df, 
+				column_to_rename='total_note_favorites', event_type='FAVORITE')
+			df = df.append(note_favorites_df)
+
+		df.reset_index(inplace=True, drop=True)
+		return df
+
+	def update_events_dataframe(self, df, column_to_rename, event_type):
+		df.rename(columns={column_to_rename:'total_events'}, inplace=True)
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		df['event_type'] = event_type
+		return df
+
 class NotesCreationTimeseries(object):
 	"""
 	analyze the number of notes created given time period and list of course id
@@ -407,3 +469,4 @@ class NoteFavoritesTimeseries(object):
 		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
 											events_df, 'total_note_favorites', unique_users_df)
 		return merge_df
+

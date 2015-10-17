@@ -47,7 +47,7 @@ class NotesCreationTimeseriesPlot(object):
 			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
-
+		print(df.dtypes)
 		y_max = pd.Series.max(df['total_notes_created']) + 1
 		plot_notes_creation = \
 				ggplot(df, aes(x='timestamp_period', y='total_notes_created')) + \
@@ -563,6 +563,7 @@ class NoteFavoritesTimeseriesPlot(object):
 				minor_breaks=minor_period_breaks)
 
 		return (plot_note_likes, plot_unique_users, plot_ratio)
+
 		
 
 
