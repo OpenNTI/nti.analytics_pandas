@@ -32,6 +32,11 @@ class TestResourceViews(AnalyticsPandasTestBase):
 		super(TestResourceViews, self).setUp()
 	
 	@Lazy
+	def std_report_layout_rml(self):
+		path = os.path.join(os.path.dirname(__file__), '../../templates/std_report_layout.rml')
+		return path
+
+	@Lazy
 	def resource_views_rml(self):
 		path = os.path.join(os.path.dirname(__file__), '../../templates/resource_views.rml')
 		return path
@@ -42,13 +47,32 @@ class TestResourceViews(AnalyticsPandasTestBase):
 									  debug=False)
 		return result
 	
-	def test_generic_rml(self):
+	def test_resource_views_rml(self):
+		# make sure  emplate exists
 		path = self.resource_views_rml
 		assert_that(os.path.exists(path), is_(True))
-		view = View(Context())
+		
+		# prepare view and context
+		context = Context()
+		view = View(context)
 		view._build_data('Bleach')
+		
 		rml = self.template(path).bind(view)()
 		assert_that(rml, contains_string('Bleach'))
+
+	def test_std_report_layout_rml(self):
+		# make sure  emplate exists
+		path = self.std_report_layout_rml
+		assert_that(os.path.exists(path), is_(True))
+		
+		# prepare view and context
+		context = Context()
+		view = View(context)
+		view._build_data('Bleach')
+		system = {'view':view, 'context':context}
+		rml = self.template(path).bind(view)(**system)
+		assert_that(rml, contains_string('Bleach'))
+		
 		pdf_stream = rml2pdf.parseString( rml )
 		result = pdf_stream.read()
 		assert_that(result, has_length(greater_than(1)))

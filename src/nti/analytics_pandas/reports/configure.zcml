@@ -21,9 +21,14 @@
 	<!-- z3c:template/layout -->
 	<include package="z3c.template" file="meta.zcml" />
 
-	<!-- It has no standard configure.zcml -->
-	<include package="z3c.pagelet" /> <!-- pagelet contentprovider -->
-	
+	<!-- Pagelet renderer is used for calling the pagelets render method. -->
+ 	<adapter name="pagelet"
+      		 for="zope.interface.Interface
+           		  *
+           		  z3c.pagelet.interfaces.IPagelet"
+      		 provides="zope.contentprovider.interfaces.IContentProvider"
+      		 factory="z3c.pagelet.provider.PageletRenderer" />
+      
 	<!-- Default macros for the reports -->
 	<z3c:macro
 		template="templates/std_report_macros.pt"
@@ -39,13 +44,14 @@
 		view=".interfaces.IPDFReportView"
 		layer="*" />
 
-	<z3c:macro
-		template="templates/std_report_macros.pt"
-		name="section_page_templates"
-		for="zope.interface.Interface"
-		view="zope.interface.Interface"
-		layer="*" />
-
 	<include package=".views" file="configure.zcml" />
+
+	<!-- A default header_table that does nothing -->
+	<adapter name="header_table"
+			 for="zope.interface.Interface
+				  *
+				  zope.interface.Interface"
+			 provides="zope.contentprovider.interfaces.IContentProvider"
+			 factory=".contentproviders.DummyContentProvider" />
 
 </configure>
