@@ -9,9 +9,11 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
-from z3c.pt.pagetemplate import ViewPageTemplateFile
+import z3c.pt.pagetemplate
 
-class _ViewPageTemplateFileWithLoad(ViewPageTemplateFile):
+from chameleon.zpt.template import PageTemplateFile
+
+class _ViewPageTemplateFileWithLoad(z3c.pt.pagetemplate.ViewPageTemplateFile):
 	"""
 	Enables the load: expression type for convenience.
 	"""
@@ -38,6 +40,8 @@ class _ViewPageTemplateFileWithLoad(ViewPageTemplateFile):
 
 # Re-export our version
 ViewPageTemplateFile = _ViewPageTemplateFileWithLoad
+
+z3c.pt.pagetemplate.BaseTemplate.expression_types['load'] = PageTemplateFile.expression_types['load']
 
 # monkey patch
 
