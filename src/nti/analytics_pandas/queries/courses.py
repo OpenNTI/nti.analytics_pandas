@@ -21,7 +21,7 @@ class QueryCourses(TableQueryMixin):
 
 	def filter_by_context_name(self, context_name):
 		c = self.table
-		query = self.session.query( c.context_id,
+		query = self.session.query(	c.context_id,
 									c.context_ds_id,
 									c.context_name,
 									c.context_long_name,
@@ -35,7 +35,7 @@ class QueryCourses(TableQueryMixin):
 
 	def filter_by_context_ids(self, context_ids):
 		c = self.table
-		query = self.session.query( c.context_id,
+		query = self.session.query(	c.context_id,
 									c.context_ds_id,
 									c.context_name,
 									c.context_long_name,
