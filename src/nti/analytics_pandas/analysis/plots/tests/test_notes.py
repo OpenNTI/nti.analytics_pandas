@@ -11,10 +11,12 @@ from nti.analytics_pandas.analysis.notes import NotesViewTimeseries
 from nti.analytics_pandas.analysis.notes import NotesCreationTimeseries
 from nti.analytics_pandas.analysis.notes import NoteLikesTimeseries
 from nti.analytics_pandas.analysis.notes import NoteFavoritesTimeseries
+from nti.analytics_pandas.analysis.notes import NotesEventsTimeseries
 from nti.analytics_pandas.analysis.plots.notes import NotesViewTimeseriesPlot
 from nti.analytics_pandas.analysis.plots.notes import NotesCreationTimeseriesPlot
 from nti.analytics_pandas.analysis.plots.notes import NoteLikesTimeseriesPlot
 from nti.analytics_pandas.analysis.plots.notes import NoteFavoritesTimeseriesPlot
+from nti.analytics_pandas.analysis.plots.notes import NotesEventsTimeseriesPlot
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
@@ -141,5 +143,23 @@ class TestNoteFavoritesPlot(AnalyticsPandasTestBase):
 		nft = NoteFavoritesTimeseries(self.session, start_date, end_date, course_id)
 		nftp = NoteFavoritesTimeseriesPlot(nft)
 		_ = nftp.explore_events(period_breaks='1 day', minor_period_breaks=None)
+
+class TestNotesEventsPlot(AnalyticsPandasTestBase):
+	def setUp(self):
+		super(TestNotesEventsPlot, self).setUp()
+
+	def test_notes_events(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		nct = NotesCreationTimeseries(self.session, start_date, end_date, course_id)
+		nvt = NotesViewTimeseries(self.session, start_date, end_date, course_id)
+		nlt = NoteLikesTimeseries(self.session, start_date, end_date, course_id)
+		nft = NoteFavoritesTimeseries(self.session, start_date, end_date, course_id)
+
+		net = NotesEventsTimeseries(nct, nvt, nlt, nft)
+		netp = NotesEventsTimeseriesPlot(net)
+		_ = netp.explore_all_events()
+		
 
 

@@ -32,6 +32,52 @@ from ggplot import scale_x_discrete
 from .commons import line_plot_x_axis_date
 from .commons import group_line_plot_x_axis_date
 
+class NotesEventsTimeseriesPlot(object):
+	def __init__(self, net):
+		"""
+		net = NotesEventsTimeseries
+		"""
+		self.net = net
+
+	def explore_all_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
+		net = self.net
+		df = net.combine_all_events()
+		if len(df.index) <= 0 :
+			return ()
+
+		plot_notes_events = group_line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='total_events',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of notes events'),
+				title=_('Number of notes events grouped by event type during period of time'),
+				period_breaks=period_breaks,
+				group_by='event_type',
+				minor_breaks=minor_period_breaks)
+
+		plot_unique_users = group_line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='total_unique_users',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of unique users'),
+				title=_('Number of unique users creating notes events during period of time'),
+				period_breaks=period_breaks,
+				group_by='event_type',
+				minor_breaks=minor_period_breaks)
+
+		plot_ratio = group_line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='ratio',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Ratio'),
+				title=_('Ratio of notes events over unique user on each available date'),
+				period_breaks=period_breaks,
+				group_by='event_type',
+				minor_breaks=minor_period_breaks)
+
+		print (plot_notes_events, plot_unique_users, plot_ratio)
+
+
 class NotesCreationTimeseriesPlot(object):
 
 	def __init__(self, nct):
@@ -40,14 +86,13 @@ class NotesCreationTimeseriesPlot(object):
 		"""
 		self.nct = nct
 
-	def explore_events(self, period_breaks='1 day', minor_period_breaks='1 day'):
+	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		nct = self.nct
 		df = nct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
 		if df is None :
 			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
-		print(df.dtypes)
 		y_max = pd.Series.max(df['total_notes_created']) + 1
 		plot_notes_creation = \
 				ggplot(df, aes(x='timestamp_period', y='total_notes_created')) + \
@@ -86,7 +131,7 @@ class NotesCreationTimeseriesPlot(object):
 
 		return (plot_notes_creation, plot_unique_users, plot_ratio)
 
-	def analyze_device_types(self, period_breaks='1 day', minor_period_breaks='1 day'):
+	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		nct = self.nct
 		df = nct.analyze_device_types()
 		if df is None:
@@ -133,7 +178,7 @@ class NotesCreationTimeseriesPlot(object):
 
 		return(plot_notes_creation, plot_unique_users, plot_ratio)
 
-	def analyze_resource_types(self, period_breaks='1 day', minor_period_breaks='1 day'):
+	def analyze_resource_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		nct = self.nct
 		df = nct.analyze_resource_types()
 		if df is None:
@@ -197,7 +242,7 @@ class NotesCreationTimeseriesPlot(object):
 
 		return (plot_users)
 
-	def analyze_sharing_types(self, period_breaks='1 day', minor_period_breaks='1 day'):
+	def analyze_sharing_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		nct = self.nct
 		df = nct.analyze_sharing_types()
 		if df is None:
@@ -251,7 +296,7 @@ class NotesViewTimeseriesPlot(object):
 		"""
 		self.nvt = nvt
 
-	def explore_events(self, period_breaks='1 day', minor_period_breaks='1 day'):
+	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		nvt = self.nvt
 		df = nvt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
 		if df is None:
@@ -298,7 +343,7 @@ class NotesViewTimeseriesPlot(object):
 
 		return(plot_notes_viewed, plot_unique_users, plot_ratio)
 
-	def analyze_total_events_based_on_sharing_type(self, period_breaks='1 day', minor_period_breaks='1 day'):
+	def analyze_total_events_based_on_sharing_type(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		nvt = self.nvt
 		df = nvt.analyze_total_events_based_on_sharing_type()
 		if df is None:
@@ -361,7 +406,7 @@ class NotesViewTimeseriesPlot(object):
 
 		return (plot_users)
 
-	def analyze_total_events_based_on_device_type(self, period_breaks='1 day', minor_period_breaks='1 day'):
+	def analyze_total_events_based_on_device_type(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		nvt = self.nvt
 		df = nvt.analyze_total_events_based_on_device_type()
 		if df is None:
@@ -407,7 +452,7 @@ class NotesViewTimeseriesPlot(object):
 
 		return (plot_notes_viewed, plot_unique_users, plot_ratio)
 
-	def analyze_total_events_based_on_resource_type(self, period_breaks='1 day', minor_period_breaks='1 day'):
+	def analyze_total_events_based_on_resource_type(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		nvt = self.nvt
 		df = nvt.analyze_total_events_based_on_resource_type()
 		if df is None:
@@ -453,7 +498,7 @@ class NotesViewTimeseriesPlot(object):
 
 		return (plot_notes_viewed, plot_unique_users, plot_ratio)
 
-	def analyze_unique_events_based_on_sharing_type(self, period_breaks='1 day', minor_period_breaks='1 day'):
+	def analyze_unique_events_based_on_sharing_type(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		nvt = self.nvt
 		df = nvt.analyze_unique_events_based_on_sharing_type()
 		if df is None:
