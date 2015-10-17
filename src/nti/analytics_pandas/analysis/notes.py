@@ -394,6 +394,7 @@ class NoteFavoritesTimeseries(object):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
 		if events_df is not None :
 			events_df.rename(columns={'index':'total_note_favorites'}, inplace=True)
+			events_df = events_df[['total_note_favorites']]
 		return events_df
 
 	def explore_unique_users_based_timestamp_date(self):

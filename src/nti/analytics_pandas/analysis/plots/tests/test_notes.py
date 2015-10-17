@@ -10,10 +10,11 @@ __docformat__ = "restructuredtext en"
 from nti.analytics_pandas.analysis.notes import NotesViewTimeseries
 from nti.analytics_pandas.analysis.notes import NotesCreationTimeseries
 from nti.analytics_pandas.analysis.notes import NoteLikesTimeseries
-
+from nti.analytics_pandas.analysis.notes import NoteFavoritesTimeseries
 from nti.analytics_pandas.analysis.plots.notes import NotesViewTimeseriesPlot
 from nti.analytics_pandas.analysis.plots.notes import NotesCreationTimeseriesPlot
 from nti.analytics_pandas.analysis.plots.notes import NoteLikesTimeseriesPlot
+from nti.analytics_pandas.analysis.plots.notes import NoteFavoritesTimeseriesPlot
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
@@ -126,7 +127,19 @@ class TestNoteLikesPlot(AnalyticsPandasTestBase):
 		course_id = ['1068', '1096', '1097', '1098', '1099']
 		nlt = NoteLikesTimeseries(self.session, start_date, end_date, course_id)
 		nltp = NoteLikesTimeseriesPlot(nlt)
-		_ = nltp.explore_events()
+		_ = nltp.explore_events(period_breaks='1 day', minor_period_breaks=None)
 
+class TestNoteFavoritesPlot(AnalyticsPandasTestBase):
+
+	def setUp(self):
+		super(TestNoteFavoritesPlot, self).setUp()
+
+	def test_explore_events(self):
+		start_date = '2015-10-05'
+		end_date = '2015-12-04'
+		course_id = ['1068', '1096', '1097', '1098', '1099']
+		nft = NoteFavoritesTimeseries(self.session, start_date, end_date, course_id)
+		nftp = NoteFavoritesTimeseriesPlot(nft)
+		_ = nftp.explore_events(period_breaks='1 day', minor_period_breaks=None)
 
 
