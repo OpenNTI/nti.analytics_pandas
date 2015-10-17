@@ -11,11 +11,14 @@ logger = __import__('logging').getLogger(__name__)
 
 from . import MessageFactory as _
 
+from zope import interface
+
 from ...analysis import ResourceViewsTimeseries
 from ...analysis import ResourceViewsTimeseriesPlot
 
 from .mixins import AbstractReportView
 
+@interface.implementer(interface.Interface)
 class ResourceViewsTimeseriesContext(object):
 
 	def __init__(self, session=None, start_date=None, end_date=None, courses=None):
@@ -27,9 +30,6 @@ class ResourceViewsTimeseriesContext(object):
 Context = ResourceViewsTimeseriesContext
 
 class ResourceViewsTimeseriesReportView(AbstractReportView):
-
-	def __init__(self, context):
-		AbstractReportView.__init__(self, context=context)
 
 	@property
 	def report_title(self):
