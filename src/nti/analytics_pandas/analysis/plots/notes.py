@@ -29,6 +29,9 @@ from ggplot import scale_x_date
 from ggplot import geom_histogram
 from ggplot import scale_x_discrete
 
+from .commons import line_plot_x_axis_date
+from .commons import group_line_plot_x_axis_date
+
 class NotesCreationTimeseriesPlot(object):
 
 	def __init__(self, nct):
@@ -471,4 +474,51 @@ class NotesViewTimeseriesPlot(object):
 				ylim(0, y_max)
 
 		return (plot_unique_notes_viewed)
+
+
+class NoteLikesTimeseriesPlot(object):
+	def __init__(self, nlt):
+		"""
+		nlt = NoteLikesTimeseries
+		"""
+		self.nlt = nlt
+
+	def explore_events(self, period_breaks='1 day', minor_period_breaks='1 day'):
+		nlt = self.nlt
+		df = nlt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		if df is None:
+			return ()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		plot_note_likes = line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='total_note_likes',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of note likes'),
+				title=_('Number of note likes during period of time'),
+				period_breaks=period_breaks,
+				minor_breaks=minor_period_breaks)
+
+		plot_unique_users = line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='total_unique_users',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of unique users'),
+				title=_('Number of unique users liking notes during period of time'),
+				period_breaks=period_breaks,
+				minor_breaks=minor_period_breaks)
+
+		plot_ratio = line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='ratio',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Ratio'),
+				title=_('Ratio of note likes over unique user on each available date'),
+				period_breaks=period_breaks,
+				minor_breaks=minor_period_breaks)
+
+		return (plot_note_likes, plot_unique_users, plot_ratio)
+		
+
 

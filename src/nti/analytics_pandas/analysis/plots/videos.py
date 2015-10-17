@@ -40,8 +40,8 @@ class VideoEventsTimeseriesPlot(object):
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
 		plot_video_events = line_plot_x_axis_date(df=df,
-				x_axis_field=_('timestamp_period'),
-				y_axis_field=_('total_video_events'),
+				x_axis_field='timestamp_period',
+				y_axis_field='total_video_events',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Number of videos watched and skipped'),
 				title=_('Number of videos watched and skipped during period of time'),
@@ -49,8 +49,8 @@ class VideoEventsTimeseriesPlot(object):
 				minor_breaks=minor_period_breaks)
 
 		plot_unique_users = line_plot_x_axis_date(df=df,
-				x_axis_field=_('timestamp_period'),
-				y_axis_field=_('total_unique_users'),
+				x_axis_field='timestamp_period',
+				y_axis_field='total_unique_users',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Number of unique users'),
 				title=_('Number of unique users watching or skipping videos during period of time'),
@@ -58,8 +58,8 @@ class VideoEventsTimeseriesPlot(object):
 				minor_breaks=minor_period_breaks)
 
 		plot_ratio = line_plot_x_axis_date(df=df,
-				x_axis_field=_('timestamp_period'),
-				y_axis_field=_('ratio'),
+				x_axis_field='timestamp_period',
+				y_axis_field='ratio',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Ratio'),
 				title=_('Ratio of videos watched and skipped over unique user on each available date'),
@@ -91,8 +91,8 @@ class VideoEventsTimeseriesPlot(object):
 	def generate_plots_grouped_by_video_event_types(self, df, period_breaks, minor_period_breaks):
 
 		plot_video_events = group_line_plot_x_axis_date(df=df,
-				x_axis_field=_('timestamp_period'),
-				y_axis_field=_('number_of_video_events'),
+				x_axis_field='timestamp_period',
+				y_axis_field='number_of_video_events',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Number of video events'),
 				title=_('Number of video events grouped by resource type during period of time'),
@@ -101,8 +101,8 @@ class VideoEventsTimeseriesPlot(object):
 				minor_breaks=minor_period_breaks)
 
 		plot_unique_users = group_line_plot_x_axis_date(df=df,
-				x_axis_field=_('timestamp_period'),
-				y_axis_field=_('number_of_unique_users'),
+				x_axis_field='timestamp_period',
+				y_axis_field='number_of_unique_users',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Number of unique users'),
 				title=_('Number of unique users creating video events during period of time'),
@@ -111,8 +111,8 @@ class VideoEventsTimeseriesPlot(object):
 				minor_breaks=minor_period_breaks)
 
 		plot_ratio = group_line_plot_x_axis_date(df=df,
-				x_axis_field=_('timestamp_period'),
-				y_axis_field=_('ratio'),
+				x_axis_field='timestamp_period',
+				y_axis_field='ratio',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Ratio'),
 				title=_('Ratio of video events over unique user on each available date'),
@@ -126,8 +126,8 @@ class VideoEventsTimeseriesPlot(object):
 		title =_("Number of video ${event_type} during period of time",
 				 mapping={'event_type' : event_type })
 		plot_video_events = line_plot_x_axis_date(df=df,
-				x_axis_field=_('timestamp_period'),
-				y_axis_field=_('number_of_video_events'),
+				x_axis_field='timestamp_period',
+				y_axis_field='number_of_video_events',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Number of video events'),
 				title=title,
@@ -137,8 +137,8 @@ class VideoEventsTimeseriesPlot(object):
 		title =_("Number of unique users who ${event_type} video during period of time",
 				 mapping={'event_type' : event_type })
 		plot_unique_users = line_plot_x_axis_date(df=df,
-				x_axis_field=_('timestamp_period'),
-				y_axis_field=_('number_of_unique_users'),
+				x_axis_field='timestamp_period',
+				y_axis_field='number_of_unique_users',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Number of unique users'),
 				title=title,
@@ -148,8 +148,8 @@ class VideoEventsTimeseriesPlot(object):
 		title =_("Ratio of video ${event_type} over unique user on each available date",
 				 mapping={'event_type' : event_type })
 		plot_ratio = line_plot_x_axis_date(df=df,
-				x_axis_field=_('timestamp_period'),
-				y_axis_field=_('ratio'),
+				x_axis_field='timestamp_period',
+				y_axis_field='ratio',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Ratio'),
 				title=title,
