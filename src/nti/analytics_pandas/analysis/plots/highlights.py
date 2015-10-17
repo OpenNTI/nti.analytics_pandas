@@ -126,6 +126,7 @@ class HighlightsCreationTimeseriesPlot(object):
 				ylab(_('Ratio')) + \
 				xlab(_('Date')) + \
 				ylim(0, y_max)
+
 		return (plot_highlights_creation, plot_unique_users, plot_ratio)
 
 	def analyze_resource_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
@@ -190,4 +191,4 @@ class HighlightsCreationTimeseriesPlot(object):
 				ylab(_('Number of highlights created')) + \
 				xlab(_('Username'))
 
-		return (plot_users)
+		return (plot_users,)

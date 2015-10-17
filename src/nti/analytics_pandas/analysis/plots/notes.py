@@ -33,6 +33,7 @@ from .commons import line_plot_x_axis_date
 from .commons import group_line_plot_x_axis_date
 
 class NotesEventsTimeseriesPlot(object):
+
 	def __init__(self, net):
 		"""
 		net = NotesEventsTimeseries
@@ -75,8 +76,7 @@ class NotesEventsTimeseriesPlot(object):
 				group_by='event_type',
 				minor_breaks=minor_period_breaks)
 
-		print (plot_notes_events, plot_unique_users, plot_ratio)
-
+		return (plot_notes_events, plot_unique_users, plot_ratio)
 
 class NotesCreationTimeseriesPlot(object):
 
@@ -176,7 +176,7 @@ class NotesCreationTimeseriesPlot(object):
 				xlab(_('Date')) + \
 				ylim(0, y_max)
 
-		return(plot_notes_creation, plot_unique_users, plot_ratio)
+		return (plot_notes_creation, plot_unique_users, plot_ratio)
 
 	def analyze_resource_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		nct = self.nct
@@ -240,7 +240,7 @@ class NotesCreationTimeseriesPlot(object):
 				ylab(_('Number of notes created')) + \
 				xlab(_('Username'))
 
-		return (plot_users)
+		return (plot_users,)
 
 	def analyze_sharing_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		nct = self.nct
@@ -286,7 +286,7 @@ class NotesCreationTimeseriesPlot(object):
 				xlab(_('Date')) + \
 				ylim(0, y_max)
 
-		return(plot_notes_creation, plot_unique_users, plot_ratio)
+		return (plot_notes_creation, plot_unique_users, plot_ratio)
 
 class NotesViewTimeseriesPlot(object):
 
@@ -341,7 +341,7 @@ class NotesViewTimeseriesPlot(object):
 				xlab(_('Date')) + \
 				ylim(0, y_max)
 
-		return(plot_notes_viewed, plot_unique_users, plot_ratio)
+		return (plot_notes_viewed, plot_unique_users, plot_ratio)
 
 	def analyze_total_events_based_on_sharing_type(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		nvt = self.nvt
@@ -387,7 +387,7 @@ class NotesViewTimeseriesPlot(object):
 				xlab(_('Date')) + \
 				ylim(0, y_max)
 
-		return(plot_notes_viewed, plot_unique_users, plot_ratio)
+		return (plot_notes_viewed, plot_unique_users, plot_ratio)
 
 	def plot_the_most_active_users(self, max_rank_number=10):
 		nvt = self.nvt
@@ -404,7 +404,7 @@ class NotesViewTimeseriesPlot(object):
 				ylab(_('Number of notes viewed')) + \
 				xlab(_('Username'))
 
-		return (plot_users)
+		return (plot_users,)
 
 	def analyze_total_events_based_on_device_type(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		nvt = self.nvt
@@ -518,10 +518,10 @@ class NotesViewTimeseriesPlot(object):
 				xlab(_('Date')) + \
 				ylim(0, y_max)
 
-		return (plot_unique_notes_viewed)
-
+		return (plot_unique_notes_viewed,)
 
 class NoteLikesTimeseriesPlot(object):
+
 	def __init__(self, nlt):
 		"""
 		nlt = NoteLikesTimeseries
@@ -566,6 +566,7 @@ class NoteLikesTimeseriesPlot(object):
 		return (plot_note_likes, plot_unique_users, plot_ratio)
 
 class NoteFavoritesTimeseriesPlot(object):
+
 	def __init__(self, nft):
 		"""
 		nft = NoteFavoritesTimeseries
@@ -608,7 +609,3 @@ class NoteFavoritesTimeseriesPlot(object):
 				minor_breaks=minor_period_breaks)
 
 		return (plot_note_likes, plot_unique_users, plot_ratio)
-
-		
-
-

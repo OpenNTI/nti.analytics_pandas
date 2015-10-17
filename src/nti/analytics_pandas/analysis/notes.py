@@ -49,7 +49,7 @@ class NotesEventsTimeseries(object):
 		"""
 		nct = self.nct
 		nvt = self.nvt
-		nlt = self.nlt 
+		nlt = self.nlt
 		nft = self.nft
 
 		notes_created_df = nct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
@@ -57,15 +57,16 @@ class NotesEventsTimeseries(object):
 		note_likes_df = nlt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
 		note_favorites_df = nft.explore_ratio_of_events_over_unique_users_based_timestamp_date()
 
-		df = pd.DataFrame(columns=['timestamp_period', 'total_events', 'total_unique_users', 'ratio', 'event_type'])
+		df = pd.DataFrame(columns=[	'timestamp_period', 'total_events', 
+									'total_unique_users', 'ratio', 'event_type'])
 
 		if notes_created_df is not None:
-			notes_created_df =self.update_events_dataframe(notes_created_df, 
+			notes_created_df = self.update_events_dataframe(notes_created_df,
 				column_to_rename='total_notes_created', event_type='CREATE')
 			df = df.append(notes_created_df)
 
 		if notes_viewed_df is not None:
-			notes_viewed_df = self.update_events_dataframe(notes_viewed_df, 
+			notes_viewed_df = self.update_events_dataframe(notes_viewed_df,
 				column_to_rename='total_note_views', event_type='VIEW')
 			df = df.append(notes_viewed_df)
 
@@ -75,7 +76,7 @@ class NotesEventsTimeseries(object):
 			df = df.append(note_likes_df)
 
 		if note_favorites_df is not None:
-			note_favorites_df =self.update_events_dataframe(note_favorites_df, 
+			note_favorites_df = self.update_events_dataframe(note_favorites_df,
 				column_to_rename='total_note_favorites', event_type='FAVORITE')
 			df = df.append(note_favorites_df)
 
@@ -94,8 +95,8 @@ class NotesCreationTimeseries(object):
 	analyze the number of notes created given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date, course_id=None, with_resource_type=True,
-				 with_device_type=True, time_period_date=True):
+	def __init__(self, session, start_date, end_date, course_id=None, 
+				 with_resource_type=True, with_device_type=True, time_period_date=True):
 		self.session = session
 		qnc = self.query_notes_created = QueryNotesCreated(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -121,7 +122,8 @@ class NotesCreationTimeseries(object):
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
 
-		categorical_columns = ['note_id', 'resource_type', 'device_type', 'user_id', 'sharing']
+		categorical_columns = [	'note_id', 'resource_type', 'device_type', 
+								'user_id', 'sharing']
 		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def explore_number_of_events_based_timestamp_date(self):
@@ -225,7 +227,8 @@ class NotesViewTimeseries(object):
 			if new_df is not None:
 				self.dataframe = new_df
 
-		categorical_columns = ['note_id', 'resource_type', 'device_type', 'user_id', 'sharing']
+		categorical_columns = ['note_id', 'resource_type', 'device_type',
+							   'user_id', 'sharing']
 		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def explore_number_of_events_based_timestamp_date(self):
@@ -334,7 +337,8 @@ class NotesViewTimeseries(object):
 	def analyze_total_events_based_on_sharing_type(self):
 		"""
 		group notes viewed dataframe by timestamp_period and sharing type
-		count the total number of notes views, unique users and ratio of number of notes viewed over unique users
+		count the total number of notes views, unique users and ratio of number of 
+		notes viewed over unique users
 		"""
 		group_by_items = ['timestamp_period', 'sharing']
 		agg_columns = {	'note_id' 	: pd.Series.count,
@@ -469,4 +473,3 @@ class NoteFavoritesTimeseries(object):
 		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
 											events_df, 'total_note_favorites', unique_users_df)
 		return merge_df
-

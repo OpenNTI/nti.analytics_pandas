@@ -9,6 +9,8 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
+from . import MessageFactory as _
+
 import pandas as pd
 
 from .commons import histogram_plot
@@ -232,4 +234,4 @@ class BookmarksTimeseriesPlot(object):
 			y_axis_label=_('Number of bookmarks created'),
 			title=_('The most active users creating bookmarks'),
 			stat='identity')
-		return (plot_users)
+		return (plot_users,)

@@ -45,7 +45,7 @@ class ForumsCreatedTimeseriesPlot(object):
 		"""
 		fct = self.fct
 		df = fct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
-		if df is None: 
+		if df is None:
 			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
@@ -149,7 +149,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 		"""
 		fcct = self.fcct
 		df = fcct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
-		if df is None: 
+		if df is None:
 			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
@@ -197,7 +197,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 		"""
 		fcct = self.fcct
 		df = fcct.analyze_device_types()
-		if df is None: 
+		if df is None:
 			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
@@ -276,7 +276,7 @@ class ForumCommentLikesTimeseriesPlot(object):
 		"""
 		fclt = self.fclt
 		df = fclt.analyze_device_types()
-		if df is None: 
+		if df is None:
 			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
@@ -318,7 +318,7 @@ class ForumCommentFavoritesTimeseriesPlot(object):
 		"""
 		fcft = self.fcft
 		df = fcft.analyze_device_types()
-		if df is None: 
+		if df is None:
 			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])

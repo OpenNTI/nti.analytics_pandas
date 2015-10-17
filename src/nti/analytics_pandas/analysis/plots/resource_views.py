@@ -411,4 +411,4 @@ class  ResourceViewsTimeseriesPlot(object):
 				ylab(_('Number of resource viewed')) + \
 				xlab(_('Username'))
 
-		return (plot_users)
+		return (plot_users,)
