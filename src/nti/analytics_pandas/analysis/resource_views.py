@@ -54,7 +54,7 @@ class ResourceViewsTimeseries(object):
 			if new_df is not None:
 				self.dataframe = new_df
 
-		if time_period_date :
+		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
 
 		categorical_columns = ['resource_id', 'resource_type', 'device_type', 'user_id']
