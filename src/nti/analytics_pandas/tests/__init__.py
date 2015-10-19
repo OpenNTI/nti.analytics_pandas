@@ -76,7 +76,7 @@ class AnalyticsPandasTestBase(unittest.TestCase):
     
     def setUp(self):
         # TODO: Fix URI
-        dburi="mysql+pymysql://ntiuser:temp001@localhost:3306/Analytics"
+        dburi="mysql+pymysql://root@localhost:3306/Analytics"
         self.engine = create_engine(dburi)
         self.metadata = getattr(Base, 'metadata').create_all(self.engine)
         self.sessionmaker = create_sessionmaker(self.engine)
