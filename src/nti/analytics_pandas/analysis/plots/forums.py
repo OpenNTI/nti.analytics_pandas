@@ -259,7 +259,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 				ylab(_('Number of comments')) + \
 				xlab('Username')
 
-		return plot_users
+		return (plot_users,)
 
 class ForumCommentLikesTimeseriesPlot(object):
 

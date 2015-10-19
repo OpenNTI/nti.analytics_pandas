@@ -155,7 +155,7 @@ class CourseEnrollmentsTimeseriesPlot(object):
 				ylab(_('Number of enrollments')) + \
 				xlab(_('Date'))
 
-		return (plot_course_enrollments)
+		return (plot_course_enrollments,)
 
 	def analyze_device_enrollment_types(self, period_breaks='1 month', minor_period_breaks='1 week'):
 		"""
@@ -220,7 +220,7 @@ class CourseDropsTimeseriesPlot(object):
 				ylab(_('Number of drops')) + \
 				xlab(_('Date'))
 
-		return (plot_course_drops)
+		return (plot_course_drops,)
 
 	def analyze_device_enrollment_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
