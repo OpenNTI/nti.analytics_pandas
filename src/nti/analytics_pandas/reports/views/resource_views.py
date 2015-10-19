@@ -40,10 +40,10 @@ class ResourceViewsTimeseriesReportView(AbstractReportView):
 		return self.options
 
 	def __call__(self):
-		self.rvt = ResourceViewsTimeseries(self.session,
-										   self.start_date,
-										   self.end_date,
-										   self.courses)
+		self.rvt = ResourceViewsTimeseries(self.context.session,
+										   self.context.start_date,
+										   self.context.end_date,
+										   self.context.courses)
 		self.rvtp = ResourceViewsTimeseriesPlot(self.rvt)
 		self._build_data()
 		return self.options
