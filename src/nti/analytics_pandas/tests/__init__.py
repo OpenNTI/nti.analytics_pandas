@@ -9,8 +9,6 @@ __docformat__ = "restructuredtext en"
 
 import unittest
 
-from zope import component
-
 from zope.testing import cleanup as testing_cleanup
 
 from nti.testing.layers import GCLayerMixin
@@ -78,7 +76,7 @@ class AnalyticsPandasTestBase(unittest.TestCase):
     
     def setUp(self):
         # TODO: Fix URI
-        dburi="mysql+pymysql://root@localhost:3306/Analytics"
+        dburi="mysql+pymysql://ntiuser:temp001@localhost:3306/Analytics"
         self.engine = create_engine(dburi)
         self.metadata = getattr(Base, 'metadata').create_all(self.engine)
         self.sessionmaker = create_sessionmaker(self.engine)

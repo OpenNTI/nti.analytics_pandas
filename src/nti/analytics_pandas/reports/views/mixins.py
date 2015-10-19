@@ -46,9 +46,9 @@ def format_datetime(local_date):
 class AbstractReportView(BrowserPagelet):
 
 	def __init__(self, context=None, request=None):
-		self.options = {}
 		BrowserPagelet.__init__(self, context, request)
-
+		self.options = {}
+			
 	@property
 	def filename(self):
 		return 'report.pdf'
