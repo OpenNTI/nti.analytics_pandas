@@ -178,3 +178,52 @@ class SelfAssessmentViewsTimeseries(object):
 					inplace=True)
 		df['ratio'] = df['number_self_assessments_viewed'] / df['number_of_unique_users']
 		return df
+
+class SelfAssessmentsTakenTimeseries(object):
+	"""
+	analyze the number of self assessments taken given time period and list of course id
+	"""
+
+	def __init__(self, session, start_date, end_date, course_id=None,
+				 with_resource_type=True, with_device_type=True, time_period_date=True):
+
+		self.session = session
+		qsat = self.query_self_assessments_taken = QuerySelfAssessmentsTaken(self.session)
+		if isinstance (course_id, (tuple, list)):
+			self.dataframe = qsat.filter_by_course_id_and_period_of_time(start_date,
+																		end_date,
+																		course_id)
+		else :
+			self.dataframe = qsat.filter_by_period_of_time(start_date, end_date)
+
+		categorical_columns = ['self_assessment_id', 'user_id']
+
+		if with_device_type:
+			new_df = qsat.add_device_type(self.dataframe)
+			if new_df is not None:
+				self.dataframe = new_df
+				categorical_columns.append('device_type')
+
+		if time_period_date :
+			self.dataframe = add_timestamp_period_(self.dataframe)
+
+		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
+
+	def analyze_events(self):
+		"""
+		return a dataframe contains :
+		 - the number of self assessments taken
+		 - the number of unique user taking self assessments
+		 - ratio of self assessments taken over unique users 
+		on each available date
+		"""
+		group_by_columns = ['timestamp_period']
+		agg_columns = {	'self_assessment_id'	: pd.Series.count,
+						'user_id'				: pd.Series.nunique }
+		df = analyze_types_(self.dataframe, group_by_columns, agg_columns)
+		df.rename(columns={	'self_assessment_id'	:'number_self_assessments_taken',
+							'user_id'				:'number_of_unique_users'},
+					inplace=True)
+		df['ratio'] = df['number_self_assessments_taken'] / df['number_of_unique_users']
+		return df
+

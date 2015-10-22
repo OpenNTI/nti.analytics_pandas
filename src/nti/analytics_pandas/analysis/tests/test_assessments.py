@@ -16,6 +16,7 @@ import numpy as np
 from nti.analytics_pandas.analysis.assessments import AssignmentViewsTimeseries
 from nti.analytics_pandas.analysis.assessments import AssignmentsTakenTimeseries
 from nti.analytics_pandas.analysis.assessments import SelfAssessmentViewsTimeseries
+from nti.analytics_pandas.analysis.assessments import SelfAssessmentsTakenTimeseries
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
@@ -87,5 +88,28 @@ class TestSelfAssessmentViewsTimeseries(AnalyticsPandasTestBase):
 		df = savt.analyze_events()
 		assert_that(len(df.index), equal_to(3))
 		assert_that(df.columns, has_item('number_self_assessments_viewed'))
+		assert_that(df.columns, has_item('number_of_unique_users'))
+		assert_that(df.columns, has_item('ratio'))
+
+class TestSelfAssessmentsTakenTimeseries(AnalyticsPandasTestBase):
+
+	def setUp(self):
+		super(TestSelfAssessmentsTakenTimeseries, self).setUp()
+
+	def test_analyze_events(self):
+		"""
+		compare result with query (running manually): 
+		select count(self_assessment_id), date(timestamp) 
+		from SelfAssessmentsTaken where timestamp between '2015-01-01' and '2015-05-31' 
+		and course_id in (1024, 1025, 1026, 1027, 1028) 
+		group by date(timestamp);
+		"""
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		courses_id = ['1024', '1025', '1026', '1027', '1028']
+		satt = SelfAssessmentsTakenTimeseries(self.session, start_date=start_date, end_date=end_date, course_id=courses_id)
+		df = satt.analyze_events()
+		assert_that(len(df.index), equal_to(85))
+		assert_that(df.columns, has_item('number_self_assessments_taken'))
 		assert_that(df.columns, has_item('number_of_unique_users'))
 		assert_that(df.columns, has_item('ratio'))

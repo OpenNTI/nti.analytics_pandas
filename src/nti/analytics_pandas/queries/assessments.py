@@ -142,6 +142,19 @@ class QuerySelfAssessmentsTaken(TableQueryMixin):
 
 	table = SelfAssessmentsTaken
 
+	def filter_by_period_of_time(self, start_date=None, end_date=None):
+		sat = self.table
+		query = self.session.query(	sat.timestamp,
+									sat.time_length,
+									sat.course_id,
+									sat.submission_id,
+									sat.self_assessment_id,
+									sat.assignment_id,
+									sat.session_id,
+									sat.user_id).filter(sat.timestamp.between(start_date, end_date))
+		dataframe = orm_dataframe(query, self.columns)
+		return dataframe
+
 	def filter_by_course_id_and_period_of_time(self, start_date=None, end_date=None, course_id=()):
 		sat = self.table
 		query = self.session.query(	sat.timestamp,
