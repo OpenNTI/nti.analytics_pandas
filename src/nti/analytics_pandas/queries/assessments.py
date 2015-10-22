@@ -12,6 +12,7 @@ logger = __import__('logging').getLogger(__name__)
 from nti.analytics_database.assessments import AssignmentViews
 from nti.analytics_database.assessments import AssignmentsTaken
 from nti.analytics_database.assessments import SelfAssessmentViews
+from nti.analytics_database.assessments import SelfAssessmentsTaken 
 
 from .mixins import TableQueryMixin
 
@@ -91,4 +92,23 @@ class QuerySelfAssessmentViews(TableQueryMixin):
 
 	def add_resource_type(self, dataframe):
 		new_df = add_resource_type_(self.session, dataframe)
+
+class QuerySelfAssessmentsTaken(TableQueryMixin):
+
+	table = SelfAssessmentsTaken
+
+	def filter_by_course_id_and_period_of_time(self, start_date=None, end_date=None, course_id=()):
+		sat = self.table
+		query = self.session.query(	sat.timestamp,
+									sat.time_length,
+									sat.submission_id,
+									sat.self_assessment_id,
+									sat.assignment_id,
+									sat.session_id,
+									sat.user_id).filter(sat.timestamp.between(start_date, end_date)).filter(sat.course_id.in_(course_id))
+		dataframe = orm_dataframe(query, self.columns)
+		return dataframe
+
+	def add_device_type(self, dataframe):
+		new_df = add_device_type_(self.session, dataframe)
 		return new_df

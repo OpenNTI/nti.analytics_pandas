@@ -14,6 +14,7 @@ from hamcrest import has_item
 from nti.analytics_pandas.queries.assessments import QueryAssignmentViews
 from nti.analytics_pandas.queries.assessments import QueryAssignmentsTaken
 from nti.analytics_pandas.queries.assessments import QuerySelfAssessmentViews
+from nti.analytics_pandas.queries.assessments import QuerySelfAssessmentsTaken
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
@@ -45,3 +46,11 @@ class TestAssessments(AnalyticsPandasTestBase):
 		qsav = QuerySelfAssessmentViews(self.session)
 		dataframe = qsav.filter_by_course_id_and_period_of_time(start_date, end_date, course_id)
 		assert_that(len(dataframe.index), equal_to(17))
+
+	def test_query_self_assessments_taken_by_time_period_course_id(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		course_id = ['1024', '1025', '1026', '1027', '1028']
+		qsat = QuerySelfAssessmentsTaken(self.session)
+		dataframe = qsat.filter_by_course_id_and_period_of_time(start_date, end_date, course_id)
+		assert_that(len(dataframe.index), equal_to(5612))
