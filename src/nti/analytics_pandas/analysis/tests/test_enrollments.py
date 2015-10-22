@@ -16,6 +16,7 @@ import numpy as np
 from nti.analytics_pandas.analysis.enrollments import CourseDropsTimeseries
 from nti.analytics_pandas.analysis.enrollments import CourseEnrollmentsTimeseries
 from nti.analytics_pandas.analysis.enrollments import CourseCatalogViewsTimeseries
+from nti.analytics_pandas.analysis.enrollments import CourseEnrollmentsEventsTimeseries
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
@@ -89,3 +90,13 @@ class TestCourseCatalogViewsEDA(AnalyticsPandasTestBase):
 		# the length of df.sum(level = 'timestamp_period') should be equal to the length of ratio_df,
 		# yet some session_id values are null
 		assert_that(len(df.sum(level='timestamp_period')), equal_to(18))
+
+	def test_enrollments_events(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		cet = CourseEnrollmentsTimeseries(self.session, start_date, end_date, course_id)
+		cdt = CourseDropsTimeseries(self.session, start_date, end_date, course_id)
+		ceet = CourseEnrollmentsEventsTimeseries(cet, cdt)
+		df = ceet.combine_events_per_date()
+		assert_that(len(df.index), equal_to(119))

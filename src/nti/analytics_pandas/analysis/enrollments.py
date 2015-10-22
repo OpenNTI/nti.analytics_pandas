@@ -195,3 +195,42 @@ class CourseDropsTimeseries(object):
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
 		df.rename(columns={'user_id':'number_of_course_drops'}, inplace=True)
 		return df
+
+class CourseEnrollmentsEventsTimeseries(object):
+
+	def __init__(self, cet, cdt):
+		"""
+		cet = CourseEnrollmentsTimeseries
+		cdt = CourseDropsTimeseries
+		"""
+		self.cet = cet
+		self.cdt = cdt
+
+	def combine_events_per_date(self):
+		cet = self.cet
+		cdt = self.cdt
+
+		enrollments_df = cet.explore_number_of_events_based_timestamp_date()
+		drops_df = cdt.explore_number_of_events_based_timestamp_date()
+
+		df = pd.DataFrame(columns=[	'timestamp_period', 'total_events', 'event_type'])
+
+		if enrollments_df is not None:
+			enrollments_df = self.update_events_dataframe(enrollments_df,
+				column_to_rename='total_enrollments', event_type='ENROLLMENT')
+			df = df.append(enrollments_df)
+
+		if drops_df is not None:
+			drops_df = self.update_events_dataframe(drops_df,
+				column_to_rename='total_drops', event_type='DROP')
+			df = df.append(drops_df)
+
+		df.reset_index(inplace=True, drop=True)
+		return df
+
+	def update_events_dataframe(self, df, column_to_rename, event_type):
+		df.rename(columns={column_to_rename:'total_events'}, inplace=True)
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		df['event_type'] = event_type
+		return df
