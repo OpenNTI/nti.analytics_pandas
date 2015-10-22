@@ -11,6 +11,11 @@ logger = __import__('logging').getLogger(__name__)
 
 from ..utils import orm_dataframe
 
+from .assessments import QueryAssignmentViews
+from .assessments import QueryAssignmentsTaken
+from .assessments import QuerySelfAssessmentViews
+from .assessments import QuerySelfAssessmentsTaken
+
 from .bookmarks import QueryBookmarksCreated
 
 from .enrollments import QueryCourseDrops

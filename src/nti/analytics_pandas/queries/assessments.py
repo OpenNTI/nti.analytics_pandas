@@ -25,6 +25,21 @@ class QueryAssignmentViews(TableQueryMixin):
 
 	table = AssignmentViews
 
+	def filter_by_period_of_time(self, start_date=None, end_date=None):
+		av = self.table
+		query = self.session.query(	av.timestamp,
+									av.context_path,
+									av.course_id,
+									av.time_length,
+									av.assignment_view_id,
+									av.resource_id,
+									av.session_id,
+									av.user_id,
+									av.assignment_id,
+									av.entity_root_context_id).filter(av.timestamp.between(start_date, end_date))
+		dataframe = orm_dataframe(query, self.columns)
+		return dataframe
+
 	def filter_by_course_id_and_period_of_time(self, start_date=None, end_date=None, course_id=()):
 		av = self.table
 		query = self.session.query(	av.timestamp,
