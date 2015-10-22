@@ -21,17 +21,17 @@ def add_timestamp_period_(df, period_format=u'%Y-%m-%d'):
 	return df
 
 def explore_number_of_events_based_timestamp_date_(df):
-	if len(df.index) > 0 :
+	if len(df.index) > 0:
 		grouped = df.groupby('timestamp_period')
 		df.reset_index(inplace=True)
 		events_df = grouped.aggregate(pd.Series.nunique)
 		return events_df
 
 def explore_unique_users_based_timestamp_date_(df):
-	if len(df.index) > 0 :
+	if len(df.index) > 0:
 		grouped = df.groupby('timestamp_period')
-		unique_users_per_period_df = grouped.aggregate({'user_id' : pd.Series.nunique})
-		unique_users_per_period_df.rename(columns={'user_id' : 'total_unique_users'},
+		unique_users_per_period_df = grouped.aggregate({'user_id': pd.Series.nunique})
+		unique_users_per_period_df.rename(columns={'user_id': 'total_unique_users'},
 										  inplace=True)
 		return unique_users_per_period_df
 
@@ -48,7 +48,7 @@ def analyze_types_(df, group_by_items, agg_columns=None):
 		grouped = df.groupby(group_by_items)
 		if agg_columns is not None:
 			events_df = grouped.aggregate(agg_columns)
-		else :
+		else:
 			events_df = grouped.aggregate(pd.Series.nunique)
 		return events_df
 

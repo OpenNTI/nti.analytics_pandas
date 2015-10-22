@@ -30,7 +30,7 @@ class BookmarksTimeseriesPlot(object):
 	def explore_events(self, period_breaks='1 day', minor_period_breaks=None):
 		"""
 		return scatter plots of bookmarks creation during period of time
-		it consists of :
+		it consists of:
 			- number of bookmarks creation
 			- number of unique users
 			- ratio of bookmark creation over unique users
@@ -224,7 +224,7 @@ class BookmarksTimeseriesPlot(object):
 	def plot_the_most_active_users(self, max_rank_number=10):
 		bct = self.bct
 		users_df = bct.get_the_most_active_users(max_rank_number)
-		if users_df is None :
+		if users_df is None:
 			return ()
 
 		plot_users = histogram_plot_x_axis_discrete(df=users_df,

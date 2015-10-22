@@ -38,7 +38,7 @@ class BookmarkCreationTimeseries(object):
 			self.dataframe = qbc.filter_by_course_id_and_period_of_time(start_date,
 																		end_date,
 																		course_id)
-		else :
+		else:
 			self.dataframe = qbc.filter_by_period_of_time(start_date, end_date)
 
 		if with_resource_type:
@@ -51,7 +51,7 @@ class BookmarkCreationTimeseries(object):
 			if new_df is not None:
 				self.dataframe = new_df
 
-		if time_period_date :
+		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
 
 		categorical_columns = ['bookmark_id', 'user_id', 'device_type', 'resource_type']
@@ -59,7 +59,7 @@ class BookmarkCreationTimeseries(object):
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
-		if events_df is not None :
+		if events_df is not None:
 			events_df.rename(columns={'index':'total_bookmarks_created'}, inplace=True)
 		events_df = events_df[['total_bookmarks_created']]
 		return events_df
@@ -81,7 +81,7 @@ class BookmarkCreationTimeseries(object):
 		resource_df = df[['number_of_bookmark_creation']]
 		resource_df.reset_index(inplace=True)
 		grouped = resource_df.groupby(['resource_type'])
-		resource_df = grouped.aggregate({'number_of_bookmark_creation' : np.sum})
+		resource_df = grouped.aggregate({'number_of_bookmark_creation': np.sum})
 		return (df, resource_df)
 
 	def analyze_device_types(self):
@@ -106,7 +106,7 @@ class BookmarkCreationTimeseries(object):
 
 	def get_the_most_active_users(self, max_rank_number=10):
 		users_df = get_most_active_users_(self.dataframe, self.session, max_rank_number)
-		if users_df is not None :
-			users_df.rename(columns={'number_of_activities' : 'number_of_bookmarks_created'},
+		if users_df is not None:
+			users_df.rename(columns={'number_of_activities': 'number_of_bookmarks_created'},
 							inplace=True)
 		return users_df

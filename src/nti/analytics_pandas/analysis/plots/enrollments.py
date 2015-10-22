@@ -38,7 +38,7 @@ class CourseCatalogViewsTimeseriesPlot(object):
 	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
 		return scatter plots of course catalog views during period of time
-		it consists of :
+		it consists of:
 			- number of course catalog views
 			- number of unique users
 			- ratio of course catalog views over unique users
@@ -85,7 +85,7 @@ class CourseCatalogViewsTimeseriesPlot(object):
 	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
 		plot course catalog views based on user agent (device type)
-		the plots consists of :
+		the plots consists of:
 		- average time length users spent on viewing course catalog during time period
 		- number of unique users during time period for each type of user agent
 		"""
@@ -244,7 +244,7 @@ class CourseDropsTimeseriesPlot(object):
 				ylab(_('Number of course drops')) + \
 				xlab(_('Date'))
 
-		return (plot_course_drops_by_device)
+		return (plot_course_drops_by_device,)
 
 	def analyze_enrollment_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
@@ -268,7 +268,7 @@ class CourseDropsTimeseriesPlot(object):
 				ylab(_('Number of course drops')) + \
 				xlab(_('Date'))
 
-		return (plot_course_drops_by_enrollment_type)
+		return (plot_course_drops_by_enrollment_type,)
 
 class CourseEnrollmentsEventsTimeseriesPlot(object):
 
@@ -281,7 +281,7 @@ class CourseEnrollmentsEventsTimeseriesPlot(object):
 	def explore_course_enrollments_vs_drops(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		ceet = self.ceet
 		df = ceet.explore_course_enrollments_vs_drops()
-		if len(df.index) <= 0 :
+		if len(df.index) <= 0:
 			return ()
 
 		plot_enrollments_events = group_line_plot_x_axis_date(df=df,
@@ -299,7 +299,7 @@ class CourseEnrollmentsEventsTimeseriesPlot(object):
 	def explore_course_catalog_views_vs_enrollments(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		ceet = self.ceet
 		df = ceet.explore_course_catalog_views_vs_enrollments()
-		if len(df.index) <= 0 :
+		if len(df.index) <= 0:
 			return ()
 
 		plot_enrollments_events = group_line_plot_x_axis_date(df=df,
@@ -312,5 +312,4 @@ class CourseEnrollmentsEventsTimeseriesPlot(object):
 				group_by='event_type',
 				minor_breaks=minor_period_breaks)
 
-		return (plot_enrollments_events)
-
+		return (plot_enrollments_events,)

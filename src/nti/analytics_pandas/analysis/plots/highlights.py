@@ -39,7 +39,7 @@ class HighlightsCreationTimeseriesPlot(object):
 	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		hct = self.hct
 		df = hct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
-		if df is None :
+		if df is None:
 			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
@@ -179,7 +179,7 @@ class HighlightsCreationTimeseriesPlot(object):
 	def plot_the_most_active_users(self, max_rank_number=10):
 		hct = self.hct
 		users_df = hct.get_the_most_active_users(max_rank_number)
-		if users_df is None :
+		if users_df is None:
 			return ()
 
 		plot_users = \

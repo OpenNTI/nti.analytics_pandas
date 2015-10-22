@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-.. $Id: assessments.py 73525 2015-09-23 19:15:51Z carlos.sanchez $
+.. $Id$
 """
 
 from __future__ import print_function, unicode_literals, absolute_import, division
@@ -12,7 +12,7 @@ logger = __import__('logging').getLogger(__name__)
 from nti.analytics_database.assessments import AssignmentViews
 from nti.analytics_database.assessments import AssignmentsTaken
 from nti.analytics_database.assessments import SelfAssessmentViews
-from nti.analytics_database.assessments import SelfAssessmentsTaken 
+from nti.analytics_database.assessments import SelfAssessmentsTaken
 
 from .mixins import TableQueryMixin
 
@@ -103,7 +103,7 @@ class QuerySelfAssessmentViews(TableQueryMixin):
 
 	def filter_by_period_of_time(self, start_date=None, end_date=None):
 		sav = self.table
-		query = self.session.query(	sav.timestamp,
+		query = self.session.query(sav.timestamp,
 									sav.context_path,
 									sav.course_id,
 									sav.time_length,
@@ -136,7 +136,7 @@ class QuerySelfAssessmentViews(TableQueryMixin):
 		return new_df
 
 	def add_resource_type(self, dataframe):
-		new_df = add_resource_type_(self.session, dataframe)
+		add_resource_type_(self.session, dataframe)
 
 class QuerySelfAssessmentsTaken(TableQueryMixin):
 

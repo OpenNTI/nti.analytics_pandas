@@ -9,7 +9,6 @@ __docformat__ = "restructuredtext en"
 
 from hamcrest import equal_to
 from hamcrest import assert_that
-from hamcrest import has_item
 
 from nti.analytics_pandas.queries.assessments import QueryAssignmentViews
 from nti.analytics_pandas.queries.assessments import QueryAssignmentsTaken

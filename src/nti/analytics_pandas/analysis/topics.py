@@ -26,6 +26,7 @@ class TopicsEventsTimeseries(object):
 	"""
 	combine and analyze topics created, viewed, likes and favorites
 	"""
+
 	def __init__(self, tct, tvt, tlt, tft):
 		"""
 		tct = TopicsCreationTimeseries
@@ -52,7 +53,7 @@ class TopicsEventsTimeseries(object):
 		topic_likes_df = tlt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
 		topic_favorites_df = tft.explore_ratio_of_events_over_unique_users_based_timestamp_date()
 
-		df = pd.DataFrame(columns=[	'timestamp_period', 'total_events', 
+		df = pd.DataFrame(columns=[	'timestamp_period', 'total_events',
 									'total_unique_users', 'ratio', 'event_type'])
 
 		if topics_created_df is not None:
@@ -153,7 +154,7 @@ class TopicLikesTimeseries(object):
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
-		if events_df is not None :
+		if events_df is not None:
 			events_df.rename(columns={'index':'total_topic_likes'}, inplace=True)
 		return events_df
 
@@ -194,7 +195,7 @@ class TopicViewsTimeseries(object):
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
-		if events_df is not None :
+		if events_df is not None:
 			events_df.rename(columns={'index':'total_topics_viewed'}, inplace=True)
 		return events_df
 
@@ -246,7 +247,7 @@ class TopicFavoritesTimeseries(object):
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
-		if events_df is not None :
+		if events_df is not None:
 			events_df.rename(columns={'index':'total_topic_favorites'}, inplace=True)
 		return events_df
 

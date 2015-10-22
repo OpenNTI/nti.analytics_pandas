@@ -11,8 +11,6 @@ from hamcrest import equal_to
 from hamcrest import has_item
 from hamcrest import assert_that
 
-import numpy as np
-
 from nti.analytics_pandas.analysis.assessments import AssignmentViewsTimeseries
 from nti.analytics_pandas.analysis.assessments import AssignmentsTakenTimeseries
 from nti.analytics_pandas.analysis.assessments import SelfAssessmentViewsTimeseries
@@ -27,11 +25,11 @@ class TestAssignmentViewsTimeseries(AnalyticsPandasTestBase):
 
 	def test_analyze_events(self):
 		"""
-		compare result with query : 
-		select count(assignment_view_id), date(timestamp) 
-		from AssignmentViews 
-		where timestamp between '2015-01-01' and '2015-05-31' 
-		and course_id in (1024, 1025, 1026, 1027, 1028) 
+		compare result with query :
+		select count(assignment_view_id), date(timestamp)
+		from AssignmentViews
+		where timestamp between '2015-01-01' and '2015-05-31'
+		and course_id in (1024, 1025, 1026, 1027, 1028)
 		group by date(timestamp)
 		"""
 		start_date = u'2015-01-01'
@@ -51,11 +49,11 @@ class TestAssignmentsTakenTimeseries(AnalyticsPandasTestBase):
 
 	def test_analyze_events(self):
 		"""
-		compare result with query (running manually): 
-		select count(assignment_taken_id), date(timestamp) 
+		compare result with query (running manually):
+		select count(assignment_taken_id), date(timestamp)
 		from AssignmentsTaken
-		where timestamp between '2015-01-01' and '2015-05-31' 
-		and course_id in (1024, 1025, 1026, 1027, 1028) 
+		where timestamp between '2015-01-01' and '2015-05-31'
+		and course_id in (1024, 1025, 1026, 1027, 1028)
 		group by date(timestamp)
 		"""
 		start_date = u'2015-01-01'
@@ -75,10 +73,10 @@ class TestSelfAssessmentViewsTimeseries(AnalyticsPandasTestBase):
 
 	def test_analyze_events(self):
 		"""
-		compare result with query (running manually): 
-		select count(self_assessment_view_id), date(timestamp) 
-		from SelfAssessmentViews where timestamp between '2015-01-01' and '2015-05-31' 
-		and course_id in (1024, 1025, 1026, 1027, 1028) 
+		compare result with query (running manually):
+		select count(self_assessment_view_id), date(timestamp)
+		from SelfAssessmentViews where timestamp between '2015-01-01' and '2015-05-31'
+		and course_id in (1024, 1025, 1026, 1027, 1028)
 		group by date(timestamp);
 		"""
 		start_date = u'2015-01-01'
@@ -98,10 +96,10 @@ class TestSelfAssessmentsTakenTimeseries(AnalyticsPandasTestBase):
 
 	def test_analyze_events(self):
 		"""
-		compare result with query (running manually): 
-		select count(self_assessment_id), date(timestamp) 
-		from SelfAssessmentsTaken where timestamp between '2015-01-01' and '2015-05-31' 
-		and course_id in (1024, 1025, 1026, 1027, 1028) 
+		compare result with query (running manually):
+		select count(self_assessment_id), date(timestamp)
+		from SelfAssessmentsTaken where timestamp between '2015-01-01' and '2015-05-31'
+		and course_id in (1024, 1025, 1026, 1027, 1028)
 		group by date(timestamp);
 		"""
 		start_date = u'2015-01-01'

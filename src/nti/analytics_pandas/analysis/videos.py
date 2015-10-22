@@ -45,7 +45,7 @@ class VideoEventsTimeseries(object):
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
-		if events_df is not None :
+		if events_df is not None:
 			events_df.rename(columns={'index':'total_video_events'}, inplace=True)
 		events_df = events_df[['total_video_events']]
 		return events_df
@@ -63,8 +63,8 @@ class VideoEventsTimeseries(object):
 
 	def analyze_video_events_types(self):
 		group_by_items = ['timestamp_period', 'video_event_type']
-		agg_columns = {	'user_id'		: pd.Series.nunique,
-						'video_view_id' : pd.Series.count}
+		agg_columns = {	'user_id': pd.Series.nunique,
+						'video_view_id': pd.Series.count}
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
 		df.rename(columns={	'user_id'		:'number_of_unique_users',
 							'video_view_id'	:'number_of_video_events'},

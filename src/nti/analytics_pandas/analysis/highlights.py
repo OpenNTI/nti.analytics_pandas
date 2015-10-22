@@ -35,7 +35,7 @@ class HighlightsCreationTimeseries(object):
 			self.dataframe = qhc.filter_by_period_of_time_and_course_id(start_date,
 																		end_date,
 																		course_id)
-		else :
+		else:
 			self.dataframe = qhc.filter_by_period_of_time(start_date, end_date)
 
 		if with_device_type:
@@ -48,7 +48,7 @@ class HighlightsCreationTimeseries(object):
 			if new_df is not None:
 				self.dataframe = new_df
 
-		if time_period_date :
+		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
 
 		categorical_columns = ['user_id', 'device_type', 'resource_type']
@@ -56,7 +56,7 @@ class HighlightsCreationTimeseries(object):
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
-		if events_df is not None :
+		if events_df is not None:
 			events_df.rename(columns={'index':'total_highlights_created'}, inplace=True)
 			events_df = events_df[['total_highlights_created']]
 		return events_df
@@ -104,7 +104,7 @@ class HighlightsCreationTimeseries(object):
 
 	def get_the_most_active_users(self, max_rank_number=10):
 		users_df = get_most_active_users_(self.dataframe, self.session, max_rank_number)
-		if users_df is not None :
-			users_df.rename(columns={'number_of_activities' : 'number_of_highlights_created'},
+		if users_df is not None:
+			users_df.rename(columns={'number_of_activities': 'number_of_highlights_created'},
 							inplace=True)
 		return users_df

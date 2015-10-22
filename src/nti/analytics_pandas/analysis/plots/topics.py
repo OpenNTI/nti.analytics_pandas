@@ -27,7 +27,7 @@ class TopicsEventsTimeseriesPlot(object):
 	def explore_all_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		tet = self.tet
 		df = tet.combine_all_events_per_date()
-		if len(df.index) <= 0 :
+		if len(df.index) <= 0:
 			return ()
 
 		plot_topics_events = group_line_plot_x_axis_date(df=df,
@@ -73,7 +73,7 @@ class TopicsCreationTimeseriesPlot(object):
 	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
 		return plots of topics created during period of time
-		it consists of :
+		it consists of:
 			- number of topics created
 			- number of unique users
 			- ratio of topics created over unique users
@@ -125,7 +125,7 @@ class TopicViewsTimeseriesPlot(object):
 	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
 		return plots of topics viewed during period of time
-		it consists of :
+		it consists of:
 			- number of topics viewed
 			- number of unique users
 			- ratio of topics viewed over unique users
@@ -169,7 +169,7 @@ class TopicViewsTimeseriesPlot(object):
 	def analyze_device_types(self, period_breaks='1 day', minor_period_breaks=None):
 		"""
 		return plots of topics viewed grouped by device type during period of time
-		it consists of :
+		it consists of:
 			- number of topics viewed
 			- number of unique users
 			- ratio of topics viewed over unique users
@@ -225,7 +225,7 @@ class TopicLikesTimeseriesPlot(object):
 	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
 		return plots of topic likes during period of time
-		it consists of :
+		it consists of:
 			- number of topic likes
 			- number of unique users
 			- ratio of topic likes over unique users
@@ -277,7 +277,7 @@ class TopicFavoritesTimeseriesPlot(object):
 	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
 		return plots of topic favorites during period of time
-		it consists of :
+		it consists of:
 			- number of topic favorites
 			- number of unique users
 			- ratio of topic favorites over unique users

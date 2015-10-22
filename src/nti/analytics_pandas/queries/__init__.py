@@ -35,8 +35,6 @@ from .notes import QueryNotesViewed
 from .notes import QueryNotesCreated
 from .notes import QueryNoteFavorites
 
-from .resource_views import QueryCourseResourceViews
-
 from .topics import QueryTopicLikes
 from .topics import QueryTopicsViewed
 from .topics import QueryTopicsCreated
@@ -47,3 +45,5 @@ from .videos import QueryVideoEvents
 from .resources import QueryResources
 
 from .users import QueryUsers
+
+from .resource_views import QueryCourseResourceViews

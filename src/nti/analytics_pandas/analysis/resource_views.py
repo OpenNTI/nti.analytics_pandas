@@ -41,7 +41,7 @@ class ResourceViewsTimeseries(object):
 			self.dataframe = qrv.filter_by_period_of_time_and_course_id(start_date,
 																		end_date,
 																		course_id)
-		else :
+		else:
 			self.dataframe = qrv.filter_by_period_of_time(start_date, end_date)
 
 		if with_device_type:
@@ -62,7 +62,7 @@ class ResourceViewsTimeseries(object):
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
-		if events_df is not None :
+		if events_df is not None:
 			events_df.rename(columns={'index':'total_resource_views'}, inplace=True)
 		events_df = events_df[['total_resource_views']]
 		return events_df
@@ -118,7 +118,7 @@ class ResourceViewsTimeseries(object):
 		df = analyze_types_(self.dataframe, group_by_columns, agg_columns)
 		df.rename(columns={	'user_id'	:'number_of_unique_users',
 							'resource_view_id'	:'number_of_resource_views',
-							'resource_id' : 'number_of_unique_resource'},
+							'resource_id': 'number_of_unique_resource'},
 					inplace=True)
 		# need to reset index to avoid
 		# TODO: check if we can do it without reset_index after updating to pandas 0.17.0
@@ -134,7 +134,7 @@ class ResourceViewsTimeseries(object):
 	def get_the_most_viewed_resources(self, max_rank_number=10):
 		"""
 		find the top n most viewed resources
-		return a dataframe with columns :
+		return a dataframe with columns:
 			resource_id, resource_display_name, resource_type, and number_of_views
 		"""
 		temp_df = self.dataframe
@@ -161,9 +161,9 @@ class ResourceViewsTimeseries(object):
 		"""
 		df = self.dataframe
 		group_by_columns = ['timestamp_period', 'user_id', 'resource_type', 'device_type']
-		agg_columns = { 'time_length' : [np.mean, np.sum],
-						'resource_id' : pd.Series.nunique,
-						'resource_view_id' : pd.Series.count }
+		agg_columns = { 'time_length': [np.mean, np.sum],
+						'resource_id': pd.Series.nunique,
+						'resource_view_id': pd.Series.count }
 		result = df.groupby(group_by_columns).aggregate(agg_columns)
 		result.reset_index(inplace=True)
 		result.rename(columns={	'resource_id' 		: 'number_of_unique_resource',

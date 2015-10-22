@@ -31,6 +31,7 @@ class ForumsEventsTimeseries(object):
 	"""
 	combine and analyze forums created and comments created, likes, favorites
 	"""
+
 	def __init__(self, fct, fcct, fclt, fcft):
 		"""
 		fct = ForumsCreatedTimeseries
@@ -57,7 +58,7 @@ class ForumsEventsTimeseries(object):
 		forum_comment_likes_df = fclt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
 		forum_comment_favorites_df = fcft.explore_ratio_of_events_over_unique_users_based_timestamp_date()
 
-		df = pd.DataFrame(columns=[	'timestamp_period', 'total_events', 
+		df = pd.DataFrame(columns=[	'timestamp_period', 'total_events',
 									'total_unique_users', 'ratio', 'event_type'])
 
 		if forums_created_df is not None:
@@ -112,12 +113,12 @@ class ForumsCreatedTimeseries(object):
 			if new_df is not None:
 				self.dataframe = new_df
 
-		if time_period_date :
+		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
-		if events_df is not None :
+		if events_df is not None:
 			events_df.rename(columns={'index':'total_forums_created'}, inplace=True)
 			events_df = events_df[['total_forums_created']]
 		return events_df
@@ -166,7 +167,7 @@ class ForumsCommentsCreatedTimeseries(object):
 			if new_df is not None:
 				self.dataframe = new_df
 
-		if time_period_date :
+		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
 
 		categorical_columns = ['forum_id', 'parent_user_id', 'device_type', 'user_id']
@@ -174,7 +175,7 @@ class ForumsCommentsCreatedTimeseries(object):
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
-		if events_df is not None :
+		if events_df is not None:
 			events_df.rename(columns={'index':'total_forums_comments_created'}, inplace=True)
 			events_df = events_df[['total_forums_comments_created']]
 		return events_df
@@ -202,12 +203,12 @@ class ForumsCommentsCreatedTimeseries(object):
 			df.rename(columns={	'comment_id'	 :'number_of_comment_created',
 								'user_id'		 :'number_of_unique_users',
 								'comment_length' :'average_comment_length'},
-						inplace=True)
+					  inplace=True)
 			return df
 
 	def get_the_most_active_users(self, max_rank_number=10):
 		users_df = get_most_active_users_(self.dataframe, self.session, max_rank_number)
-		if users_df is not None :
+		if users_df is not None:
 			users_df.rename(columns={'number_of_activities' : 'number_of_comments_created'},
 							inplace=True)
 		return users_df
@@ -234,12 +235,12 @@ class ForumCommentLikesTimeseries(object):
 			if new_df is not None:
 				self.dataframe = new_df
 
-		if time_period_date :
+		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
-		if events_df is not None :
+		if events_df is not None:
 			events_df.rename(columns={'index':'total_forum_comment_likes'}, inplace=True)
 			events_df = events_df[['total_forum_comment_likes']]
 		return events_df
@@ -263,7 +264,7 @@ class ForumCommentLikesTimeseries(object):
 			df = analyze_types_(self.dataframe, group_by_items, agg_columns)
 			df.rename(columns={	'comment_id'	 :'number_of_likes',
 								'user_id'		 :'number_of_unique_users'},
-						inplace=True)
+					  inplace=True)
 			return df
 
 class ForumCommentFavoritesTimeseries(object):
@@ -287,12 +288,12 @@ class ForumCommentFavoritesTimeseries(object):
 			if new_df is not None:
 				self.dataframe = new_df
 
-		if time_period_date :
+		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
-		if events_df is not None :
+		if events_df is not None:
 			events_df.rename(columns={'index':'total_forum_comment_favorites'}, inplace=True)
 			events_df = events_df[['total_forum_comment_favorites']]
 		return events_df

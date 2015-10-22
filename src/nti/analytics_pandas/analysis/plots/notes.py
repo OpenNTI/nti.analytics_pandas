@@ -43,7 +43,7 @@ class NotesEventsTimeseriesPlot(object):
 	def explore_all_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		net = self.net
 		df = net.combine_all_events()
-		if len(df.index) <= 0 :
+		if len(df.index) <= 0:
 			return ()
 
 		plot_notes_events = group_line_plot_x_axis_date(df=df,
@@ -89,7 +89,7 @@ class NotesCreationTimeseriesPlot(object):
 	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		nct = self.nct
 		df = nct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
-		if df is None :
+		if df is None:
 			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
@@ -228,7 +228,7 @@ class NotesCreationTimeseriesPlot(object):
 	def plot_the_most_active_users(self, max_rank_number=10):
 		nct = self.nct
 		users_df = nct.get_the_most_active_users(max_rank_number)
-		if users_df is None :
+		if users_df is None:
 			return ()
 
 		plot_users = \
@@ -392,7 +392,7 @@ class NotesViewTimeseriesPlot(object):
 	def plot_the_most_active_users(self, max_rank_number=10):
 		nvt = self.nvt
 		users_df = nvt.get_the_most_active_users(max_rank_number)
-		if users_df is None :
+		if users_df is None:
 			return ()
 
 		plot_users = \

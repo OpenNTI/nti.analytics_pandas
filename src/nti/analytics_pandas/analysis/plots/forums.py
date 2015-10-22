@@ -40,7 +40,7 @@ class ForumsEventsTimeseriesPlot(object):
 	def explore_all_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		fet = self.fet
 		df = fet.combine_all_events_per_date()
-		if len(df.index) <= 0 :
+		if len(df.index) <= 0:
 			return ()
 
 		plot_forums_events = group_line_plot_x_axis_date(df=df,
@@ -86,7 +86,7 @@ class ForumsCreatedTimeseriesPlot(object):
 	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
 		return scatter plots of forums creation during period of time
-		it consists of :
+		it consists of:
 			- number of forums creation
 			- number of unique users
 			- ratio of forums creation over unique users
@@ -133,7 +133,7 @@ class ForumsCreatedTimeseriesPlot(object):
 	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
 		return scatter plots of forums creation grouped by device type during period of time
-		it consists of :
+		it consists of:
 			- number of forums creation
 			- number of unique users
 			- ratio of forums creation over unique users
@@ -190,7 +190,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
 		return scatter plots of forum comments creation during period of time
-		it consists of :
+		it consists of:
 			- number of forums comment creation
 			- number of unique users
 			- ratio of forum comment creation over unique users
@@ -237,7 +237,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
 		return scatter plots of forum comments creation grouped by device_type during period of time
-		it consists of :
+		it consists of:
 			- number of forums comment creation
 			- number of unique users
 			- ratio of forum comment creation over unique users
@@ -296,7 +296,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 	def plot_the_most_active_users(self, max_rank_number=10):
 		fcct = self.fcct
 		users_df = fcct.get_the_most_active_users(max_rank_number)
-		if users_df is None : return
+		if users_df is None: return
 
 		plot_users = \
 				ggplot(users_df, aes(x='username', y='number_of_comments_created')) + \

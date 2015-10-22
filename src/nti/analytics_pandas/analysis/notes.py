@@ -106,7 +106,7 @@ class NotesCreationTimeseries(object):
 		else:
 			self.dataframe = qnc.filter_by_period_of_time(start_date, end_date)
 
-		if len(self.dataframe) <= 0 :
+		if len(self.dataframe) <= 0:
 			return
 
 		if with_device_type:
@@ -128,7 +128,7 @@ class NotesCreationTimeseries(object):
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
-		if events_df is not None :
+		if events_df is not None:
 			events_df.rename(columns={'index':'total_notes_created'}, inplace=True)
 			events_df = events_df[['total_notes_created']]
 		return events_df
@@ -176,8 +176,8 @@ class NotesCreationTimeseries(object):
 
 	def get_the_most_active_users(self, max_rank_number=10):
 		users_df = get_most_active_users_(self.dataframe, self.session, max_rank_number)
-		if users_df is not None :
-			users_df.rename(columns={'number_of_activities' : 'number_of_notes_created'},
+		if users_df is not None:
+			users_df.rename(columns={'number_of_activities': 'number_of_notes_created'},
 							inplace=True)
 		return users_df
 
@@ -233,7 +233,7 @@ class NotesViewTimeseries(object):
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
-		if events_df is not None :
+		if events_df is not None:
 			events_df.rename(columns={'index':'total_note_views'}, inplace=True)
 			events_df = events_df[['total_note_views']]
 		return events_df
@@ -372,7 +372,7 @@ class NotesViewTimeseries(object):
 		author_name_df = QueryUsers(self.session).get_username_filter_by_user_id(authors_id)
 
 		df = df.merge(note_author_df).merge(author_name_df)
-		df.rename(columns={'user_id':'author_id', 'username' : 'author_name'}, inplace=True)
+		df.rename(columns={'user_id':'author_id', 'username': 'author_name'}, inplace=True)
 		return df
 
 	def get_the_most_active_users(self, max_rank_number=10):
@@ -411,7 +411,7 @@ class NoteLikesTimeseries(object):
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
-		if events_df is not None :
+		if events_df is not None:
 			events_df.rename(columns={'index':'total_note_likes'}, inplace=True)
 			events_df = events_df[['total_note_likes']]
 		return events_df
@@ -458,7 +458,7 @@ class NoteFavoritesTimeseries(object):
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
-		if events_df is not None :
+		if events_df is not None:
 			events_df.rename(columns={'index':'total_note_favorites'}, inplace=True)
 			events_df = events_df[['total_note_favorites']]
 		return events_df

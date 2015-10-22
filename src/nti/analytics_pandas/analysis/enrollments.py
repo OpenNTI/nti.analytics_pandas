@@ -45,12 +45,12 @@ class CourseCatalogViewsTimeseries(object):
 			if new_df is not None:
 				self.dataframe = new_df
 
-		if time_period_date :
+		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
-		if events_df is not None :
+		if events_df is not None:
 			events_df.rename(columns={'index':'total_course_catalog_views'}, inplace=True)
 		events_df = events_df[['total_course_catalog_views']]
 		return events_df
@@ -99,17 +99,17 @@ class CourseEnrollmentsTimeseries(object):
 			if new_df is not None:
 				self.dataframe = new_df
 
-		if time_period_date :
+		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
 
-		if enrollment_type :
+		if enrollment_type:
 			qet = QueryEnrollmentTypes(session)
 			enrollment_type_df = qet.get_enrollment_types()
 			self.dataframe = self.dataframe.merge(enrollment_type_df, how='left')
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
-		if events_df is not None :
+		if events_df is not None:
 			events_df.rename(columns={'index':'total_enrollments'}, inplace=True)
 		events_df = events_df[['total_enrollments']]
 		return events_df
@@ -154,10 +154,11 @@ class CourseDropsTimeseries(object):
 			new_df = qcd.add_device_type(self.dataframe)
 			if new_df is not None:
 				self.dataframe = new_df
-		if time_period_date :
+
+		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
 
-		if enrollment_type :
+		if enrollment_type:
 			qet = QueryEnrollmentTypes(session)
 			cet = QueryCourseEnrollments(session)
 			enrollment_type_df = qet.get_enrollment_types()
@@ -206,13 +207,13 @@ class CourseEnrollmentsEventsTimeseries(object):
 		"""
 		self.cet = cet
 		self.cdt = cdt
-		self.ccvt  = ccvt
+		self.ccvt = ccvt
 
 	def explore_course_enrollments_vs_drops(self):
 		df = pd.DataFrame(columns=[	'timestamp_period', 'total_events', 'event_type'])
-		if self.cdt is None : 
+		if self.cdt is None :
 			return df
-			
+
 		cet = self.cet
 		cdt = self.cdt
 
@@ -238,7 +239,7 @@ class CourseEnrollmentsEventsTimeseries(object):
 			return df
 		cet = self.cet
 		ccvt = self.ccvt
-		
+
 		enrollments_df = cet.explore_number_of_events_based_timestamp_date()
 		catalog_views_df = ccvt.explore_number_of_events_based_timestamp_date()
 

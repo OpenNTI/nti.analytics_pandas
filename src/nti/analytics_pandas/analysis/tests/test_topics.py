@@ -15,9 +15,9 @@ import numpy as np
 
 from nti.analytics_pandas.analysis.topics import TopicViewsTimeseries
 from nti.analytics_pandas.analysis.topics import TopicLikesTimeseries
+from nti.analytics_pandas.analysis.topics import TopicsEventsTimeseries
 from nti.analytics_pandas.analysis.topics import TopicsCreationTimeseries
 from nti.analytics_pandas.analysis.topics import TopicFavoritesTimeseries
-from nti.analytics_pandas.analysis.topics import TopicsEventsTimeseries
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
@@ -100,7 +100,7 @@ class TestTopicsEDA(AnalyticsPandasTestBase):
 		assert_that(len(unique_users_by_date.index), equal_to(4))
 
 		ratio_df = tft.explore_ratio_of_events_over_unique_users_based_timestamp_date()
-		assert_that(len(ratio_df.index), equal_to(4))	
+		assert_that(len(ratio_df.index), equal_to(4))
 
 	def test_topics_events(self):
 		start_date = '2015-01-01'
@@ -113,4 +113,3 @@ class TestTopicsEDA(AnalyticsPandasTestBase):
 		tet = TopicsEventsTimeseries(tct, tvt, tlt, tft)
 		df = tet.combine_all_events_per_date()
 		assert_that(len(df.index), equal_to(115))
-		

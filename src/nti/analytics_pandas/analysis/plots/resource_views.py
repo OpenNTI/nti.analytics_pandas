@@ -40,7 +40,7 @@ class  ResourceViewsTimeseriesPlot(object):
 	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
 		return scatter plots of resource views during period of time
-		it consists of :
+		it consists of:
 			- number of resource views
 			- number of unique users
 			- ratio of resource views over unique users
@@ -338,7 +338,7 @@ class  ResourceViewsTimeseriesPlot(object):
 		"""
 		plot course resource views based on resource_type type (user agent).
 		Group the graphics into different types of user agent (device type)
-		TODO : fix legend and x axis label for faceting
+		TODO: fix legend and x axis label for faceting
 		"""
 
 		rvt = self.rvt
@@ -397,9 +397,9 @@ class  ResourceViewsTimeseriesPlot(object):
 	def plot_most_active_users(self, max_rank_number=10):
 		rvt = self.rvt
 		users_df = rvt.get_the_most_active_users(max_rank_number)
-		if users_df is None :
+		if users_df is None:
 			return
-		users_df.rename(columns={'number_of_activities' : 'number_of_resource_views'},
+		users_df.rename(columns={'number_of_activities': 'number_of_resource_views'},
 						inplace=True)
 
 		plot_users = \

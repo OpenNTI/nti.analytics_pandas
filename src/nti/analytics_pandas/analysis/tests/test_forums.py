@@ -8,16 +8,16 @@ __docformat__ = "restructuredtext en"
 # pylint: disable=W0212,R0904
 
 from hamcrest import equal_to
-from hamcrest import assert_that
 from hamcrest import has_item
+from hamcrest import assert_that
 
 import numpy as np
 
+from nti.analytics_pandas.analysis.forums import ForumsEventsTimeseries
 from nti.analytics_pandas.analysis.forums import ForumsCreatedTimeseries
 from nti.analytics_pandas.analysis.forums import ForumCommentLikesTimeseries
 from nti.analytics_pandas.analysis.forums import ForumsCommentsCreatedTimeseries
 from nti.analytics_pandas.analysis.forums import ForumCommentFavoritesTimeseries
-from nti.analytics_pandas.analysis.forums import ForumsEventsTimeseries
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
@@ -42,7 +42,7 @@ class TestForumsCreatedEDA(AnalyticsPandasTestBase):
 		ratio_df = fct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
 		assert_that(len(ratio_df.index), equal_to(1))
 
-		#df is None since the session_id in forumscreated of given course and time period is NULL
+		# df is None since the session_id in forumscreated of given course and time period is NULL
 		df = fct.analyze_device_types()
 		assert_that(df, equal_to(None))
 
@@ -121,4 +121,3 @@ class TestForumsCreatedEDA(AnalyticsPandasTestBase):
 
 		df = fet.combine_all_events_per_date()
 		assert_that(len(df.index), equal_to(71))
-
