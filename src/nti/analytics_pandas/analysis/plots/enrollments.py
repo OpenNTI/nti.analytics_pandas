@@ -222,9 +222,9 @@ class CourseDropsTimeseriesPlot(object):
 
 		return (plot_course_drops,)
 
-	def analyze_device_enrollment_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
+	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
-		return plots of the course drops grouped by user agent (device_type) and enrollment type
+		return plots of the course drops grouped by user agent (device_type)
 		"""
 		cdt = self.cdt
 		df = cdt.analyze_device_types()
@@ -232,8 +232,6 @@ class CourseDropsTimeseriesPlot(object):
 			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
-
-		df.rename(columns={	'type_name':'enrollment_type'}, inplace=True)
 
 		plot_course_drops_by_device = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_course_drops', color='device_type')) + \
@@ -244,6 +242,21 @@ class CourseDropsTimeseriesPlot(object):
 				ylab(_('Number of course drops')) + \
 				xlab(_('Date'))
 
+		return (plot_course_drops_by_device)
+
+	def analyze_enrollment_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
+		"""
+		return plots of the course drops grouped by enrollment types
+		"""
+		cdt = self.cdt
+		df = cdt.analyze_enrollment_types()
+		if df is None:
+			return ()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		df.rename(columns={	'type_name':'enrollment_type'}, inplace=True)
+
 		plot_course_drops_by_enrollment_type = \
 				ggplot(df, aes(x='timestamp_period', y='number_of_course_drops', color='enrollment_type')) + \
 				geom_point() + \
@@ -253,4 +266,4 @@ class CourseDropsTimeseriesPlot(object):
 				ylab(_('Number of course drops')) + \
 				xlab(_('Date'))
 
-		return (plot_course_drops_by_device, plot_course_drops_by_enrollment_type)
+		return (plot_course_drops_by_enrollment_type)

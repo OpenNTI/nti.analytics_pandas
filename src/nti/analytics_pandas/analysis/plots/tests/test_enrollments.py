@@ -78,4 +78,12 @@ class TestCourseDropsPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		cdt = CourseDropsTimeseries(self.session, start_date, end_date, course_id)
 		cdtp = CourseDropsTimeseriesPlot(cdt)
-		_ = cdtp.analyze_device_enrollment_types()
+		_ = cdtp.analyze_device_types()
+
+	def test_analyze_enrollment_types(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		cdt = CourseDropsTimeseries(self.session, start_date, end_date, course_id)
+		cdtp = CourseDropsTimeseriesPlot(cdt)
+		_ = cdtp.analyze_enrollment_types()

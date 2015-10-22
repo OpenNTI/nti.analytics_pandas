@@ -55,7 +55,7 @@ class TestCourseCatalogViewsEDA(AnalyticsPandasTestBase):
 		events_df = cet.explore_number_of_events_based_timestamp_date()
 		assert_that(len(events_df.index), equal_to(100))
 		total_events = np.sum(events_df['total_enrollments'])
-		assert_that(total_events, equal_to(571))
+		assert_that(total_events, equal_to(570))
 
 		unique_users_df = cet.explore_unique_users_based_timestamp_date()
 		assert_that(len(unique_users_df.index), equal_to(100))

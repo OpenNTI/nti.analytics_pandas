@@ -183,7 +183,14 @@ class CourseDropsTimeseries(object):
 		return merge_df
 
 	def analyze_device_types(self):
-		group_by_items = ['timestamp_period', 'device_type', 'type_name']
+		group_by_items = ['timestamp_period', 'device_type']
+		agg_columns = {	'user_id'	: pd.Series.nunique}
+		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
+		df.rename(columns={'user_id':'number_of_course_drops'}, inplace=True)
+		return df
+
+	def analyze_enrollment_types(self):
+		group_by_items = ['timestamp_period', 'type_name']
 		agg_columns = {	'user_id'	: pd.Series.nunique}
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
 		df.rename(columns={'user_id':'number_of_course_drops'}, inplace=True)
