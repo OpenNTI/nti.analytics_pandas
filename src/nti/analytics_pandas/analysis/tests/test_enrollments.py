@@ -98,5 +98,5 @@ class TestCourseCatalogViewsEDA(AnalyticsPandasTestBase):
 		cet = CourseEnrollmentsTimeseries(self.session, start_date, end_date, course_id)
 		cdt = CourseDropsTimeseries(self.session, start_date, end_date, course_id)
 		ceet = CourseEnrollmentsEventsTimeseries(cet, cdt)
-		df = ceet.combine_events_per_date()
+		df = ceet.explore_course_enrollments_vs_drops()
 		assert_that(len(df.index), equal_to(119))

@@ -280,7 +280,7 @@ class CourseEnrollmentsEventsTimeseriesPlot(object):
 
 	def explore_course_enrollments_vs_drops(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		ceet = self.ceet
-		df = ceet.combine_events_per_date()
+		df = ceet.explore_course_enrollments_vs_drops()
 		if len(df.index) <= 0 :
 			return ()
 

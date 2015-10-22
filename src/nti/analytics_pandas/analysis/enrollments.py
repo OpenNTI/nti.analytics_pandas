@@ -206,7 +206,7 @@ class CourseEnrollmentsEventsTimeseries(object):
 		self.cet = cet
 		self.cdt = cdt
 
-	def combine_events_per_date(self):
+	def explore_course_enrollments_vs_drops(self):
 		cet = self.cet
 		cdt = self.cdt
 
