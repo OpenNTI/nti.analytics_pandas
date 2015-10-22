@@ -11,11 +11,12 @@ from nti.analytics_pandas.analysis.forums import ForumsCreatedTimeseries
 from nti.analytics_pandas.analysis.forums import ForumCommentLikesTimeseries
 from nti.analytics_pandas.analysis.forums import ForumsCommentsCreatedTimeseries
 from nti.analytics_pandas.analysis.forums import ForumCommentFavoritesTimeseries
-
+from nti.analytics_pandas.analysis.forums import ForumsEventsTimeseries
 from nti.analytics_pandas.analysis.plots.forums import ForumsCreatedTimeseriesPlot
 from nti.analytics_pandas.analysis.plots.forums import ForumCommentLikesTimeseriesPlot
 from nti.analytics_pandas.analysis.plots.forums import ForumsCommentsCreatedTimeseriesPlot
 from nti.analytics_pandas.analysis.plots.forums import ForumCommentFavoritesTimeseriesPlot
+from nti.analytics_pandas.analysis.plots.forums import ForumsEventsTimeseriesPlot
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
@@ -94,3 +95,20 @@ class TestForumCommentFavoritesPlot(AnalyticsPandasTestBase):
 		fcft = ForumCommentFavoritesTimeseries(self.session, start_date, end_date, course_id)
 		fcftp = ForumCommentFavoritesTimeseriesPlot(fcft)
 		_ = fcftp.analyze_device_types()
+
+class TestForumEventsPlot(AnalyticsPandasTestBase):
+
+	def setUp(self):
+		super(TestForumEventsPlot, self).setUp()
+
+	def test_explore_all_events(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		fct = ForumsCreatedTimeseries(self.session, start_date, end_date, course_id)
+		fcct = ForumsCommentsCreatedTimeseries(self.session, start_date, end_date, course_id)
+		fclt = ForumCommentLikesTimeseries(self.session, start_date, end_date, course_id)
+		fcft = ForumCommentFavoritesTimeseries(self.session, start_date, end_date, course_id)
+		fet = ForumsEventsTimeseries(fct, fcct, fclt, fcft)
+		fetp = ForumsEventsTimeseriesPlot(fet)
+		_ = fetp.explore_all_events()

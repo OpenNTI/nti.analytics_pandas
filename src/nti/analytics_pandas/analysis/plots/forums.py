@@ -27,6 +27,54 @@ from ggplot import scale_x_date
 from ggplot import geom_histogram
 from ggplot import scale_x_discrete
 
+from .commons import group_line_plot_x_axis_date
+
+class ForumsEventsTimeseriesPlot(object):
+	
+	def __init__(self, fet):
+		"""
+		fet = ForumsEventsTimeseries
+		"""
+		self.fet = fet
+
+	def explore_all_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
+		fet = self.fet
+		df = fet.combine_all_events_per_date()
+		if len(df.index) <= 0 :
+			return ()
+
+		plot_forums_events = group_line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='total_events',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of forums events'),
+				title=_('Number of forums events grouped by event type during period of time'),
+				period_breaks=period_breaks,
+				group_by='event_type',
+				minor_breaks=minor_period_breaks)
+
+		plot_unique_users = group_line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='total_unique_users',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of unique users'),
+				title=_('Number of unique users creating forums events during period of time'),
+				period_breaks=period_breaks,
+				group_by='event_type',
+				minor_breaks=minor_period_breaks)
+
+		plot_ratio = group_line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='ratio',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Ratio'),
+				title=_('Ratio of forums events over unique user on each available date'),
+				period_breaks=period_breaks,
+				group_by='event_type',
+				minor_breaks=minor_period_breaks)
+
+		return (plot_forums_events, plot_unique_users, plot_ratio)
+
 class ForumsCreatedTimeseriesPlot(object):
 
 	def __init__(self, fct):
