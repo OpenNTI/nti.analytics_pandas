@@ -102,5 +102,4 @@ class TestEnrollmentsEventsPlot(AnalyticsPandasTestBase):
 		cdt = CourseDropsTimeseries(self.session, start_date, end_date, course_id)
 		ceet = CourseEnrollmentsEventsTimeseries(cet, cdt)
 		ceetp = CourseEnrollmentsEventsTimeseriesPlot(ceet)
-		_ = ceetp.explore_all_events()
-		print(_)
+		_ = ceetp.explore_course_enrollments_vs_drops()
