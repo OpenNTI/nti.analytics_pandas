@@ -101,6 +101,22 @@ class QuerySelfAssessmentViews(TableQueryMixin):
 
 	table = SelfAssessmentViews
 
+	def filter_by_period_of_time(self, start_date=None, end_date=None):
+		sav = self.table
+		query = self.session.query(	sav.timestamp,
+									sav.context_path,
+									sav.course_id,
+									sav.time_length,
+									sav.self_assessment_view_id,
+									sav.resource_id,
+									sav.session_id,
+									sav.user_id,
+									sav.assignment_id,
+									sav.entity_root_context_id).filter(sav.timestamp.between(start_date, end_date))
+		dataframe = orm_dataframe(query, self.columns)
+		return dataframe
+
+
 	def filter_by_course_id_and_period_of_time(self, start_date=None, end_date=None, course_id=()):
 		sav = self.table
 		query = self.session.query(	sav.timestamp,
