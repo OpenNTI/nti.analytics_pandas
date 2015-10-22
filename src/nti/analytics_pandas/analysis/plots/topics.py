@@ -24,7 +24,7 @@ class TopicsCreationTimeseriesPlot(object):
 		"""
 		self.tct = tct
 
-	def explore_events(self, period_breaks='1 day', minor_period_breaks=None):
+	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
 		return plots of topics created during period of time
 		it consists of :
@@ -76,7 +76,7 @@ class TopicViewsTimeseriesPlot(object):
 		"""
 		self.tvt = tvt
 
-	def explore_events(self, period_breaks='1 day', minor_period_breaks=None):
+	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
 		return plots of topics viewed during period of time
 		it consists of :
@@ -176,7 +176,7 @@ class TopicLikesTimeseriesPlot(object):
 		"""
 		self.tlt = tlt
 
-	def explore_events(self, period_breaks='1 day', minor_period_breaks=None):
+	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
 		return plots of topic likes during period of time
 		it consists of :
@@ -219,5 +219,57 @@ class TopicLikesTimeseriesPlot(object):
 				minor_breaks=minor_period_breaks)
 
 		return (plot_topic_likes, plot_unique_users, plot_ratio)
+
+class TopicFavoritesTimeseriesPlot(object):
+
+	def __init__(self, tft):
+		"""
+		tft = TopicFavoritesTimeseries
+		"""
+		self.tft = tft
+
+	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
+		"""
+		return plots of topic favorites during period of time
+		it consists of :
+			- number of topic favorites
+			- number of unique users
+			- ratio of topic favorites over unique users
+		"""
+		tft = self.tft
+		df = tft.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		if df is None:
+			return ()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		plot_topic_favorites = line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='total_topic_favorites',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of topic favorites'),
+				title=_('Number of topic favorites during period of time'),
+				period_breaks=period_breaks,
+				minor_breaks=minor_period_breaks)
+
+		plot_unique_users = line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='total_unique_users',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of unique users'),
+				title=_('Number of unique users choosing topics as favorites during period of time'),
+				period_breaks=period_breaks,
+				minor_breaks=minor_period_breaks)
+
+		plot_ratio = line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='ratio',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Ratio'),
+				title=_('Ratio of topic favorites over unique user on each available date'),
+				period_breaks=period_breaks,
+				minor_breaks=minor_period_breaks)
+
+		return (plot_topic_favorites, plot_unique_users, plot_ratio)
 
 

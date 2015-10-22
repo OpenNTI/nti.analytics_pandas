@@ -10,9 +10,11 @@ __docformat__ = "restructuredtext en"
 from nti.analytics_pandas.analysis.topics import TopicViewsTimeseries
 from nti.analytics_pandas.analysis.topics import TopicsCreationTimeseries
 from nti.analytics_pandas.analysis.topics import TopicLikesTimeseries
+from nti.analytics_pandas.analysis.topics import TopicFavoritesTimeseries
 from nti.analytics_pandas.analysis.plots.topics import TopicViewsTimeseriesPlot
 from nti.analytics_pandas.analysis.plots.topics import TopicsCreationTimeseriesPlot
 from nti.analytics_pandas.analysis.plots.topics import TopicLikesTimeseriesPlot
+from nti.analytics_pandas.analysis.plots.topics import TopicFavoritesTimeseriesPlot
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
@@ -62,4 +64,16 @@ class TestTopicLikesPlot(AnalyticsPandasTestBase):
 		tlt = TopicLikesTimeseries(self.session, start_date, end_date, course_id)
 		tltp = TopicLikesTimeseriesPlot(tlt)
 		_ = tltp.explore_events(period_breaks='1 day', minor_period_breaks=None)
-		
+
+class TestTopicFavoritesPlot(AnalyticsPandasTestBase):
+
+	def setUp(self):
+		super(TestTopicFavoritesPlot, self).setUp()
+
+	def test_explore_events_topics_viewed(self):
+		start_date = '2015-10-05'
+		end_date = '2015-10-27'
+		course_id = ['1068', '1096', '1097', '1098', '1099']
+		tft = TopicFavoritesTimeseries(self.session, start_date, end_date, course_id)
+		tftp = TopicFavoritesTimeseriesPlot(tft)
+		_ = tftp.explore_events(period_breaks='1 day', minor_period_breaks=None)
