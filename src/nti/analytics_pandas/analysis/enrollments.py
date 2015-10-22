@@ -198,15 +198,20 @@ class CourseDropsTimeseries(object):
 
 class CourseEnrollmentsEventsTimeseries(object):
 
-	def __init__(self, cet, cdt):
+	def __init__(self, cet, cdt=None, ccvt=None):
 		"""
 		cet = CourseEnrollmentsTimeseries
 		cdt = CourseDropsTimeseries
+		ccvt = CourseCatalogViewsTimeseries
 		"""
 		self.cet = cet
 		self.cdt = cdt
+		self.ccvt  = ccvt
 
 	def explore_course_enrollments_vs_drops(self):
+		if self.cdt is None : 
+			return
+
 		cet = self.cet
 		cdt = self.cdt
 
@@ -224,6 +229,30 @@ class CourseEnrollmentsEventsTimeseries(object):
 			drops_df = self.update_events_dataframe(drops_df,
 				column_to_rename='total_drops', event_type='DROP')
 			df = df.append(drops_df)
+
+		df.reset_index(inplace=True, drop=True)
+		return df
+
+	def explore_course_catalog_views_vs_enrollments(self):
+		if self.ccvt is None:
+			return
+		cet = self.cet
+		ccvt = self.ccvt
+		
+		enrollments_df = cet.explore_number_of_events_based_timestamp_date()
+		catalog_views_df = ccvt.explore_number_of_events_based_timestamp_date()
+
+		df = pd.DataFrame(columns=[	'timestamp_period', 'total_events', 'event_type'])
+
+		if enrollments_df is not None:
+			enrollments_df = self.update_events_dataframe(enrollments_df,
+				column_to_rename='total_enrollments', event_type='ENROLLMENT')
+			df = df.append(enrollments_df)
+
+		if catalog_views_df is not None:
+			catalog_views_df = self.update_events_dataframe(catalog_views_df,
+				column_to_rename='total_course_catalog_views', event_type='CATALOG VIEWS')
+			df = df.append(catalog_views_df)
 
 		df.reset_index(inplace=True, drop=True)
 		return df
