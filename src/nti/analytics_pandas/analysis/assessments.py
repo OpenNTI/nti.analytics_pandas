@@ -71,10 +71,10 @@ class AssignmentViewsTimeseries(object):
 		agg_columns = {	'assignment_view_id': pd.Series.count,
 						'user_id'			: pd.Series.nunique }
 		df = analyze_types_(self.dataframe, group_by_columns, agg_columns)
-		df.rename(columns={	'assignment_view_id':'number_assignment_viewed',
+		df.rename(columns={	'assignment_view_id':'number_assignments_viewed',
 							'user_id'			:'number_of_unique_users'},
 					inplace=True)
-		df['ratio'] = df['number_assignment_viewed'] / df['number_of_unique_users']
+		df['ratio'] = df['number_assignments_viewed'] / df['number_of_unique_users']
 		return df
 
 class AssignmentsTakenTimeseries(object):
@@ -117,8 +117,8 @@ class AssignmentsTakenTimeseries(object):
 		agg_columns = {	'assignment_taken_id'	: pd.Series.count,
 						'user_id'				: pd.Series.nunique }
 		df = analyze_types_(self.dataframe, group_by_columns, agg_columns)
-		df.rename(columns={	'assignment_taken_id'	:'number_assignment_taken',
+		df.rename(columns={	'assignment_taken_id'	:'number_assignments_taken',
 							'user_id'				:'number_of_unique_users'},
 					inplace=True)
-		df['ratio'] = df['number_assignment_taken'] / df['number_of_unique_users']
+		df['ratio'] = df['number_assignments_taken'] / df['number_of_unique_users']
 		return df

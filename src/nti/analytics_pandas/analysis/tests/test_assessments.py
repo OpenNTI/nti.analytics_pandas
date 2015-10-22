@@ -38,6 +38,9 @@ class TestAssignmentViewsTimeseries(AnalyticsPandasTestBase):
 		avt = AssignmentViewsTimeseries(self.session, start_date=start_date, end_date=end_date, course_id=courses_id)
 		df = avt.analyze_events()
 		assert_that(len(df.index), equal_to(6))
+		assert_that(df.columns, has_item('number_assignments_viewed'))
+		assert_that(df.columns, has_item('number_of_unique_users'))
+		assert_that(df.columns, has_item('ratio'))
 
 class TestAssignmentsTakenTimeseries(AnalyticsPandasTestBase):
 
@@ -59,3 +62,6 @@ class TestAssignmentsTakenTimeseries(AnalyticsPandasTestBase):
 		att = AssignmentsTakenTimeseries(self.session, start_date=start_date, end_date=end_date, course_id=courses_id)
 		df = att.analyze_events()
 		assert_that(len(df.index), equal_to(129))
+		assert_that(df.columns, has_item('number_assignments_taken'))
+		assert_that(df.columns, has_item('number_of_unique_users'))
+		assert_that(df.columns, has_item('ratio'))
