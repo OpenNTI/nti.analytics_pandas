@@ -94,12 +94,22 @@ class TestEnrollmentsEventsPlot(AnalyticsPandasTestBase):
 	def setUp(self):
 		super(TestEnrollmentsEventsPlot, self).setUp()
 
-	def test_enrollments_events(self):
+	def test_explore_course_enrollments_vs_drops(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
 		course_id = ['388']
 		cet = CourseEnrollmentsTimeseries(self.session, start_date, end_date, course_id)
 		cdt = CourseDropsTimeseries(self.session, start_date, end_date, course_id)
-		ceet = CourseEnrollmentsEventsTimeseries(cet, cdt)
+		ceet = CourseEnrollmentsEventsTimeseries(cet, cdt=cdt)
 		ceetp = CourseEnrollmentsEventsTimeseriesPlot(ceet)
 		_ = ceetp.explore_course_enrollments_vs_drops()
+
+	def test_explore_course_catalog_views_vs_enrollments(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		cet = CourseEnrollmentsTimeseries(self.session, start_date, end_date, course_id)
+		ccvt = CourseCatalogViewsTimeseries(self.session, start_date, end_date, course_id)
+		ceet = CourseEnrollmentsEventsTimeseries(cet, ccvt=ccvt)
+		ceetp = CourseEnrollmentsEventsTimeseriesPlot(ceet)
+		_ = ceetp.explore_course_catalog_views_vs_enrollments()

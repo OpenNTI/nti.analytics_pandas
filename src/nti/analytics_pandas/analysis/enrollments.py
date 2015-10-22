@@ -209,16 +209,15 @@ class CourseEnrollmentsEventsTimeseries(object):
 		self.ccvt  = ccvt
 
 	def explore_course_enrollments_vs_drops(self):
+		df = pd.DataFrame(columns=[	'timestamp_period', 'total_events', 'event_type'])
 		if self.cdt is None : 
-			return
-
+			return df
+			
 		cet = self.cet
 		cdt = self.cdt
 
 		enrollments_df = cet.explore_number_of_events_based_timestamp_date()
 		drops_df = cdt.explore_number_of_events_based_timestamp_date()
-
-		df = pd.DataFrame(columns=[	'timestamp_period', 'total_events', 'event_type'])
 
 		if enrollments_df is not None:
 			enrollments_df = self.update_events_dataframe(enrollments_df,
@@ -234,15 +233,14 @@ class CourseEnrollmentsEventsTimeseries(object):
 		return df
 
 	def explore_course_catalog_views_vs_enrollments(self):
+		df = pd.DataFrame(columns=[	'timestamp_period', 'total_events', 'event_type'])
 		if self.ccvt is None:
-			return
+			return df
 		cet = self.cet
 		ccvt = self.ccvt
 		
 		enrollments_df = cet.explore_number_of_events_based_timestamp_date()
 		catalog_views_df = ccvt.explore_number_of_events_based_timestamp_date()
-
-		df = pd.DataFrame(columns=[	'timestamp_period', 'total_events', 'event_type'])
 
 		if enrollments_df is not None:
 			enrollments_df = self.update_events_dataframe(enrollments_df,

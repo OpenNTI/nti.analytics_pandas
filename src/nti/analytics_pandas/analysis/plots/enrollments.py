@@ -288,8 +288,26 @@ class CourseEnrollmentsEventsTimeseriesPlot(object):
 				x_axis_field='timestamp_period',
 				y_axis_field='total_events',
 				x_axis_label=_('Date'),
-				y_axis_label=_('Number of enrollment events'),
-				title=_('Number of enrollment events grouped by event type during period of time'),
+				y_axis_label=_('Number of events'),
+				title=_('Number of course enrollments vs drops during period of time'),
+				period_breaks=period_breaks,
+				group_by='event_type',
+				minor_breaks=minor_period_breaks)
+
+		return (plot_enrollments_events)
+
+	def explore_course_catalog_views_vs_enrollments(self, period_breaks='1 week', minor_period_breaks='1 day'):
+		ceet = self.ceet
+		df = ceet.explore_course_catalog_views_vs_enrollments()
+		if len(df.index) <= 0 :
+			return ()
+
+		plot_enrollments_events = group_line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='total_events',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of events'),
+				title=_('Number of course catalog views vs enrollments during period of time'),
 				period_breaks=period_breaks,
 				group_by='event_type',
 				minor_breaks=minor_period_breaks)
