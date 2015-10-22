@@ -10,10 +10,11 @@ __docformat__ = "restructuredtext en"
 from nti.analytics_pandas.analysis.enrollments import CourseDropsTimeseries
 from nti.analytics_pandas.analysis.enrollments import CourseEnrollmentsTimeseries
 from nti.analytics_pandas.analysis.enrollments import CourseCatalogViewsTimeseries
-
+from nti.analytics_pandas.analysis.enrollments import CourseEnrollmentsEventsTimeseries
 from nti.analytics_pandas.analysis.plots.enrollments import CourseDropsTimeseriesPlot
 from nti.analytics_pandas.analysis.plots.enrollments import CourseEnrollmentsTimeseriesPlot
 from nti.analytics_pandas.analysis.plots.enrollments import CourseCatalogViewsTimeseriesPlot
+from nti.analytics_pandas.analysis.plots.enrollments import CourseEnrollmentsEventsTimeseriesPlot
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
@@ -87,3 +88,19 @@ class TestCourseDropsPlot(AnalyticsPandasTestBase):
 		cdt = CourseDropsTimeseries(self.session, start_date, end_date, course_id)
 		cdtp = CourseDropsTimeseriesPlot(cdt)
 		_ = cdtp.analyze_enrollment_types()
+
+class TestEnrollmentsEventsPlot(AnalyticsPandasTestBase):
+
+	def setUp(self):
+		super(TestEnrollmentsEventsPlot, self).setUp()
+
+	def test_enrollments_events(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		cet = CourseEnrollmentsTimeseries(self.session, start_date, end_date, course_id)
+		cdt = CourseDropsTimeseries(self.session, start_date, end_date, course_id)
+		ceet = CourseEnrollmentsEventsTimeseries(cet, cdt)
+		ceetp = CourseEnrollmentsEventsTimeseriesPlot(ceet)
+		_ = ceetp.explore_all_events()
+		print(_)

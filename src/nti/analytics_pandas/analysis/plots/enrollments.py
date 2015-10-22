@@ -25,6 +25,8 @@ from ggplot import date_format
 from ggplot import element_text
 from ggplot import scale_x_date
 
+from .commons import group_line_plot_x_axis_date
+
 class CourseCatalogViewsTimeseriesPlot(object):
 
 	def __init__(self, ccvt):
@@ -267,3 +269,29 @@ class CourseDropsTimeseriesPlot(object):
 				xlab(_('Date'))
 
 		return (plot_course_drops_by_enrollment_type)
+
+class CourseEnrollmentsEventsTimeseriesPlot(object):
+
+	def __init__(self, ceet):
+		"""
+		ceet = CourseEnrollmentsEventsTimeseries
+		"""
+		self.ceet = ceet
+
+	def explore_all_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
+		ceet = self.ceet
+		df = ceet.combine_events_per_date()
+		if len(df.index) <= 0 :
+			return ()
+
+		plot_enrollments_events = group_line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='total_events',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of enrollment events'),
+				title=_('Number of enrollment events grouped by event type during period of time'),
+				period_breaks=period_breaks,
+				group_by='event_type',
+				minor_breaks=minor_period_breaks)
+
+		return (plot_enrollments_events)
