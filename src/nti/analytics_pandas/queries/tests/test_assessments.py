@@ -12,6 +12,7 @@ from hamcrest import assert_that
 from hamcrest import has_item
 
 from nti.analytics_pandas.queries.assessments import QueryAssignmentViews
+from nti.analytics_pandas.queries.assessments import QueryAssignmentsTaken
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
@@ -27,3 +28,11 @@ class TestAssessments(AnalyticsPandasTestBase):
 		qav = QueryAssignmentViews(self.session)
 		dataframe = qav.filter_by_course_id_and_period_of_time(start_date, end_date, course_id)
 		assert_that(len(dataframe.index), equal_to(43))
+
+	def test_query_assignment_taken_by_time_period_course_id(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		course_id = ['1024', '1025', '1026', '1027', '1028']
+		qat = QueryAssignmentsTaken(self.session)
+		dataframe = qat.filter_by_course_id_and_period_of_time(start_date, end_date, course_id)
+		assert_that(len(dataframe.index), equal_to(4433))

@@ -10,6 +10,7 @@ __docformat__ = "restructuredtext en"
 logger = __import__('logging').getLogger(__name__)
 
 from nti.analytics_database.assessments import AssignmentViews
+from nti.analytics_database.assessments import AssignmentsTaken
 
 from .mixins import TableQueryMixin
 
@@ -42,4 +43,25 @@ class QueryAssignmentViews(TableQueryMixin):
 
 	def add_resource_type(self, dataframe):
 		new_df = add_resource_type_(self.session, dataframe)
+		return new_df
+
+class QueryAssignmentsTaken(TableQueryMixin):
+
+	table = AssignmentsTaken
+
+	def filter_by_course_id_and_period_of_time(self, start_date=None, end_date=None, course_id=()):
+		at = self.table
+		query = self.session.query(	at.timestamp,
+									at.time_length,
+									at.submission_id,
+									at.assignment_taken_id,
+									at.assignment_id,
+									at.session_id,
+									at.user_id,
+									at.is_late).filter(at.timestamp.between(start_date, end_date)).filter(at.course_id.in_(course_id))
+		dataframe = orm_dataframe(query, self.columns)
+		return dataframe
+
+	def add_device_type(self, dataframe):
+		new_df = add_device_type_(self.session, dataframe)
 		return new_df
