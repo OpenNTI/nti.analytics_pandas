@@ -76,3 +76,49 @@ class AssignmentViewsTimeseries(object):
 					inplace=True)
 		df['ratio'] = df['number_assignment_viewed'] / df['number_of_unique_users']
 		return df
+
+class AssignmentsTakenTimeseries(object):
+	"""
+	analyze the number of assignments taken given time period and list of course id
+	"""
+
+	def __init__(self, session, start_date, end_date, course_id=None,
+				 with_resource_type=True, with_device_type=True, time_period_date=True):
+
+		self.session = session
+		qat = self.query_assignments_taken = QueryAssignmentsTaken(self.session)
+		if isinstance (course_id, (tuple, list)):
+			self.dataframe = qat.filter_by_course_id_and_period_of_time(start_date,
+																		end_date,
+																		course_id)
+		else :
+			self.dataframe = qat.filter_by_period_of_time(start_date, end_date)
+
+		if with_device_type:
+			new_df = qat.add_device_type(self.dataframe)
+			if new_df is not None:
+				self.dataframe = new_df
+
+		if time_period_date :
+			self.dataframe = add_timestamp_period_(self.dataframe)
+
+		categorical_columns = ['assignment_taken_id', 'user_id', 'device_type']
+		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
+
+	def analyze_events(self):
+		"""
+		return a dataframe contains :
+		 - the number of assignments taken
+		 - the number of unique user taking assignments
+		 - ratio of assignments taken over unique users 
+		on each available date
+		"""
+		group_by_columns = ['timestamp_period']
+		agg_columns = {	'assignment_taken_id'	: pd.Series.count,
+						'user_id'				: pd.Series.nunique }
+		df = analyze_types_(self.dataframe, group_by_columns, agg_columns)
+		df.rename(columns={	'assignment_taken_id'	:'number_assignment_taken',
+							'user_id'				:'number_of_unique_users'},
+					inplace=True)
+		df['ratio'] = df['number_assignment_taken'] / df['number_of_unique_users']
+		return df

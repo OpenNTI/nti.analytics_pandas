@@ -66,6 +66,20 @@ class QueryAssignmentsTaken(TableQueryMixin):
 
 	table = AssignmentsTaken
 
+	def filter_by_period_of_time(self, start_date=None, end_date=None):
+		at = self.table
+		query = self.session.query(	at.timestamp,
+									at.course_id,
+									at.time_length,
+									at.submission_id,
+									at.assignment_taken_id,
+									at.assignment_id,
+									at.session_id,
+									at.user_id,
+									at.is_late).filter(at.timestamp.between(start_date, end_date))
+		dataframe = orm_dataframe(query, self.columns)
+		return dataframe
+
 	def filter_by_course_id_and_period_of_time(self, start_date=None, end_date=None, course_id=()):
 		at = self.table
 		query = self.session.query(	at.timestamp,
