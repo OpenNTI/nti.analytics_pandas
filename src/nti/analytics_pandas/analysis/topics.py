@@ -22,6 +22,70 @@ from .common import explore_unique_users_based_timestamp_date_
 from .common import explore_number_of_events_based_timestamp_date_
 from .common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
 
+class TopicsEventsTimeseries(object):
+	"""
+	combine and analyze topics created, viewed, likes and favorites
+	"""
+	def __init__(self, tct, tvt, tlt, tft):
+		"""
+		tct = TopicsCreationTimeseries
+		tvt = TopicViewsTimeseries
+		tlt = TopicLikesTimeseries
+		tft = TopicFavoritesTimeseries
+		"""
+		self.tct = tct
+		self.tvt = tvt
+		self.tlt = tlt
+		self.tft = tft
+
+	def combine_all_events_per_date(self):
+		"""
+		put all topics related events (create, view, like and favorite) into one dataframe
+		"""
+		tct = self.tct
+		tvt = self.tvt
+		tlt = self.tlt
+		tft = self.tft
+
+		topics_created_df = tct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		topics_viewed_df = tvt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		topic_likes_df = tlt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		topic_favorites_df = tft.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+
+		df = pd.DataFrame(columns=[	'timestamp_period', 'total_events', 
+									'total_unique_users', 'ratio', 'event_type'])
+
+		if topics_created_df is not None:
+			topics_created_df = self.update_events_dataframe(topics_created_df,
+				column_to_rename='total_topics_created', event_type='CREATE')
+			df = df.append(topics_created_df)
+
+		if topics_viewed_df is not None:
+			topics_viewed_df = self.update_events_dataframe(topics_viewed_df,
+				column_to_rename='total_topics_viewed', event_type='VIEW')
+			df = df.append(topics_viewed_df)
+
+		if topic_likes_df is not None:
+			topic_likes_df = self.update_events_dataframe(topic_likes_df,
+				column_to_rename='total_topic_likes', event_type='LIKE')
+			df = df.append(topic_likes_df)
+
+		if topic_favorites_df is not None:
+			topic_favorites_df = self.update_events_dataframe(topic_favorites_df,
+				column_to_rename='total_topic_favorites', event_type='FAVORITE')
+			df = df.append(topic_favorites_df)
+
+		df.reset_index(inplace=True, drop=True)
+		return df
+
+	def update_events_dataframe(self, df, column_to_rename, event_type):
+		df.rename(columns={column_to_rename:'total_events'}, inplace=True)
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		df['event_type'] = event_type
+		return df
+
+
 class TopicsCreationTimeseries(object):
 	"""
 	analyze the number of topics created given time period and list of course id
