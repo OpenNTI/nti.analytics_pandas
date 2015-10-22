@@ -17,6 +17,7 @@ from nti.analytics_pandas.analysis.forums import ForumsCreatedTimeseries
 from nti.analytics_pandas.analysis.forums import ForumCommentLikesTimeseries
 from nti.analytics_pandas.analysis.forums import ForumsCommentsCreatedTimeseries
 from nti.analytics_pandas.analysis.forums import ForumCommentFavoritesTimeseries
+from nti.analytics_pandas.analysis.forums import ForumsEventsTimeseries
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
@@ -107,3 +108,17 @@ class TestForumsCreatedEDA(AnalyticsPandasTestBase):
 
 		df = fcft.analyze_device_types()
 		assert_that(df, equal_to(None))
+
+	def test_forums_events(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		fct = ForumsCreatedTimeseries(self.session, start_date, end_date, course_id)
+		fcct = ForumsCommentsCreatedTimeseries(self.session, start_date, end_date, course_id)
+		fclt = ForumCommentLikesTimeseries(self.session, start_date, end_date, course_id)
+		fcft = ForumCommentFavoritesTimeseries(self.session, start_date, end_date, course_id)
+		fet = ForumsEventsTimeseries(fct, fcct, fclt, fcft)
+
+		df = fet.combine_all_events_per_date()
+		assert_that(len(df.index), equal_to(71))
+

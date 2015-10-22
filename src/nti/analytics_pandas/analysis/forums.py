@@ -27,6 +27,69 @@ from .common import explore_ratio_of_events_over_unique_users_based_timestamp_da
 
 from ..utils import cast_columns_as_category_
 
+class ForumsEventsTimeseries(object):
+	"""
+	combine and analyze forums created and comments created, likes, favorites
+	"""
+	def __init__(self, fct, fcct, fclt, fcft):
+		"""
+		fct = ForumsCreatedTimeseries
+		fcct = ForumsCommentsCreatedTimeseries
+		fclt = ForumCommentLikesTimeseries
+		fcft = ForumCommentFavoritesTimeseries
+		"""
+		self.fct = fct
+		self.fcct = fcct
+		self.fclt = fclt
+		self.fcft = fcft
+
+	def combine_all_events_per_date(self):
+		"""
+		put all topics related events (create, view, like and favorite) into one dataframe
+		"""
+		fct = self.fct
+		fcct = self.fcct
+		fclt = self.fclt
+		fcft = self.fcft
+
+		forums_created_df = fct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		forum_comments_created_df = fcct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		forum_comment_likes_df = fclt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		forum_comment_favorites_df = fcft.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+
+		df = pd.DataFrame(columns=[	'timestamp_period', 'total_events', 
+									'total_unique_users', 'ratio', 'event_type'])
+
+		if forums_created_df is not None:
+			forums_created_df = self.update_events_dataframe(forums_created_df,
+				column_to_rename='total_forums_created', event_type='FORUM CREATED')
+			df = df.append(forums_created_df)
+
+		if forum_comments_created_df is not None:
+			forum_comments_created_df = self.update_events_dataframe(forum_comments_created_df,
+				column_to_rename='total_forums_comments_created', event_type='COMMENTS CREATED')
+			df = df.append(forum_comments_created_df)
+
+		if forum_comment_likes_df is not None:
+			forum_comment_likes_df = self.update_events_dataframe(forum_comment_likes_df,
+				column_to_rename='total_forum_comment_likes', event_type='COMMENT LIKES')
+			df = df.append(forum_comment_likes_df)
+
+		if forum_comment_favorites_df is not None:
+			forum_comment_favorites_df = self.update_events_dataframe(forum_comment_favorites_df,
+				column_to_rename='total_forum_comment_favorites', event_type='COMMENT FAVORITES')
+			df = df.append(forum_comment_favorites_df)
+
+		df.reset_index(inplace=True, drop=True)
+		return df
+
+	def update_events_dataframe(self, df, column_to_rename, event_type):
+		df.rename(columns={column_to_rename:'total_events'}, inplace=True)
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		df['event_type'] = event_type
+		return df
+
 class ForumsCreatedTimeseries(object):
 	"""
 	analyze the number of forums created given time period and list of course id
