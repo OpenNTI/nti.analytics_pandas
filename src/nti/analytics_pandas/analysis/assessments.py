@@ -40,20 +40,23 @@ class AssignmentViewsTimeseries(object):
 		else :
 			self.dataframe = qav.filter_by_period_of_time(start_date, end_date)
 
+		categorical_columns = ['assignment_view_id', 'user_id']
+
 		if with_resource_type:
 			new_df = qav.add_resource_type(self.dataframe)
 			if new_df is not None:
 				self.dataframe = new_df
+				categorical_columns.append('resource_type')
 
 		if with_device_type:
 			new_df = qav.add_device_type(self.dataframe)
 			if new_df is not None:
 				self.dataframe = new_df
+				categorical_columns.append('device_type')
 
 		if time_period_date :
 			self.dataframe = add_timestamp_period_(self.dataframe)
 
-		categorical_columns = ['assignment_view_id', 'user_id', 'device_type', 'resource_type']
 		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def analyze_events(self):
@@ -91,15 +94,17 @@ class AssignmentsTakenTimeseries(object):
 		else :
 			self.dataframe = qat.filter_by_period_of_time(start_date, end_date)
 
+		categorical_columns = ['assignment_taken_id', 'user_id']
+
 		if with_device_type:
 			new_df = qat.add_device_type(self.dataframe)
 			if new_df is not None:
 				self.dataframe = new_df
+				categorical_columns.append('device_type')
 
 		if time_period_date :
 			self.dataframe = add_timestamp_period_(self.dataframe)
 
-		categorical_columns = ['assignment_taken_id', 'user_id', 'device_type']
 		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def analyze_events(self):
