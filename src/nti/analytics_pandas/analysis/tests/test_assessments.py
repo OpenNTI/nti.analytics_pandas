@@ -35,7 +35,10 @@ class TestAssignmentViewsTimeseries(AnalyticsPandasTestBase):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
 		courses_id = ['1024', '1025', '1026', '1027', '1028']
-		avt = AssignmentViewsTimeseries(self.session, start_date=start_date, end_date=end_date, course_id=courses_id)
+		avt = AssignmentViewsTimeseries(self.session, 
+										start_date=start_date, 
+										end_date=end_date, 
+										course_id=courses_id)
 		df = avt.analyze_events()
 		assert_that(len(df.index), equal_to(6))
 		assert_that(df.columns, has_item('number_assignments_viewed'))
@@ -46,12 +49,15 @@ class TestAssignmentViewsTimeseries(AnalyticsPandasTestBase):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
 		courses_id = ['1024', '1025', '1026', '1027', '1028']
-		avt = AssignmentViewsTimeseries(self.session, start_date=start_date, end_date=end_date, course_id=courses_id)
+		avt = AssignmentViewsTimeseries(self.session, 
+										start_date=start_date, 
+										end_date=end_date, 
+										course_id=courses_id)
 		df = avt.analyze_events_group_by_device_type()
 		assert_that(df.columns, has_item('number_assignments_viewed'))
 		assert_that(df.columns, has_item('number_of_unique_users'))
 		assert_that(df.columns, has_item('ratio'))
-		
+
 		df2 = avt.analyze_events()
 		assert_that(len(df.sum(level='timestamp_period')), equal_to(len(df2.index)))
 
@@ -59,12 +65,15 @@ class TestAssignmentViewsTimeseries(AnalyticsPandasTestBase):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
 		courses_id = ['1024', '1025', '1026', '1027', '1028']
-		avt = AssignmentViewsTimeseries(self.session, start_date=start_date, end_date=end_date, course_id=courses_id)
+		avt = AssignmentViewsTimeseries(self.session, 
+										start_date=start_date, 
+										end_date=end_date, 
+										course_id=courses_id)
 		df = avt.analyze_events_group_by_resource_type()
 		assert_that(df.columns, has_item('number_assignments_viewed'))
 		assert_that(df.columns, has_item('number_of_unique_users'))
 		assert_that(df.columns, has_item('ratio'))
-		
+
 		df2 = avt.analyze_events()
 		assert_that(len(df.sum(level='timestamp_period')), equal_to(len(df2.index)))
 
@@ -85,7 +94,10 @@ class TestAssignmentsTakenTimeseries(AnalyticsPandasTestBase):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
 		courses_id = ['1024', '1025', '1026', '1027', '1028']
-		att = AssignmentsTakenTimeseries(self.session, start_date=start_date, end_date=end_date, course_id=courses_id)
+		att = AssignmentsTakenTimeseries(self.session, 
+										 start_date=start_date, 
+										 end_date=end_date, 
+										 course_id=courses_id)
 		df = att.analyze_events()
 		assert_that(len(df.index), equal_to(129))
 		assert_that(df.columns, has_item('number_assignments_taken'))
@@ -96,7 +108,10 @@ class TestAssignmentsTakenTimeseries(AnalyticsPandasTestBase):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
 		courses_id = ['1024', '1025', '1026', '1027', '1028']
-		att = AssignmentsTakenTimeseries(self.session, start_date=start_date, end_date=end_date, course_id=courses_id)
+		att = AssignmentsTakenTimeseries(self.session, 
+										 start_date=start_date, 
+										 end_date=end_date,
+										 course_id=courses_id)
 		df = att.analyze_events_group_by_device_type()
 		assert_that(df.columns, has_item('number_assignments_taken'))
 		assert_that(df.columns, has_item('number_of_unique_users'))
@@ -121,7 +136,10 @@ class TestSelfAssessmentViewsTimeseries(AnalyticsPandasTestBase):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
 		courses_id = ['1024', '1025', '1026', '1027', '1028']
-		savt = SelfAssessmentViewsTimeseries(self.session, start_date=start_date, end_date=end_date, course_id=courses_id)
+		savt = SelfAssessmentViewsTimeseries(self.session, 
+											 start_date=start_date, 
+											 end_date=end_date,
+											 course_id=courses_id)
 		df = savt.analyze_events()
 		assert_that(len(df.index), equal_to(3))
 		assert_that(df.columns, has_item('number_self_assessments_viewed'))
@@ -132,7 +150,10 @@ class TestSelfAssessmentViewsTimeseries(AnalyticsPandasTestBase):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
 		courses_id = ['1024', '1025', '1026', '1027', '1028']
-		savt = SelfAssessmentViewsTimeseries(self.session, start_date=start_date, end_date=end_date, course_id=courses_id)
+		savt = SelfAssessmentViewsTimeseries(self.session,
+											 start_date=start_date,
+											 end_date=end_date, 
+											 course_id=courses_id)
 		df = savt.analyze_events_group_by_device_type()
 		assert_that(df.columns, has_item('number_self_assessments_viewed'))
 		assert_that(df.columns, has_item('number_of_unique_users'))
@@ -145,7 +166,10 @@ class TestSelfAssessmentViewsTimeseries(AnalyticsPandasTestBase):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
 		courses_id = ['1024', '1025', '1026', '1027', '1028']
-		savt = SelfAssessmentViewsTimeseries(self.session, start_date=start_date, end_date=end_date, course_id=courses_id)
+		savt = SelfAssessmentViewsTimeseries(self.session, 
+											 start_date=start_date,
+											 end_date=end_date, 
+											 course_id=courses_id)
 		df = savt.analyze_events_group_by_resource_type()
 		assert_that(df.columns, has_item('number_self_assessments_viewed'))
 		assert_that(df.columns, has_item('number_of_unique_users'))
@@ -170,7 +194,10 @@ class TestSelfAssessmentsTakenTimeseries(AnalyticsPandasTestBase):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
 		courses_id = ['1024', '1025', '1026', '1027', '1028']
-		satt = SelfAssessmentsTakenTimeseries(self.session, start_date=start_date, end_date=end_date, course_id=courses_id)
+		satt = SelfAssessmentsTakenTimeseries(self.session, 
+											  start_date=start_date, 
+											  end_date=end_date,
+											  course_id=courses_id)
 		df = satt.analyze_events()
 		assert_that(len(df.index), equal_to(85))
 		assert_that(df.columns, has_item('number_self_assessments_taken'))
@@ -181,7 +208,10 @@ class TestSelfAssessmentsTakenTimeseries(AnalyticsPandasTestBase):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
 		courses_id = ['1024', '1025', '1026', '1027', '1028']
-		satt = SelfAssessmentsTakenTimeseries(self.session, start_date=start_date, end_date=end_date, course_id=courses_id)
+		satt = SelfAssessmentsTakenTimeseries(self.session, 
+											  start_date=start_date, 
+											  end_date=end_date, 
+											  course_id=courses_id)
 		df = satt.analyze_events_group_by_device_type()
 		assert_that(df.columns, has_item('number_self_assessments_taken'))
 		assert_that(df.columns, has_item('number_of_unique_users'))

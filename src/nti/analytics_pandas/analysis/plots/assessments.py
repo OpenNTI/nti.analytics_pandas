@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-.. $Id: assessments.py 75270 2015-10-22 16:20:26Z carlos.sanchez $
+.. $Id$
 """
 
 from __future__ import print_function, unicode_literals, absolute_import, division
@@ -13,11 +13,8 @@ from . import MessageFactory as _
 
 import pandas as pd
 
-from .commons import histogram_plot
 from .commons import line_plot_x_axis_date
 from .commons import group_line_plot_x_axis_date
-from .commons import facet_line_plot_x_axis_date
-from .commons import histogram_plot_x_axis_discrete
 
 class AssignmentViewsTimeseriesPlot(object):
 
@@ -184,7 +181,7 @@ class AssignmentsTakenTimeseriesPlot(object):
 				y_axis_label=_('Ratio'),
 				title=_('Ratio of assignments taken over unique user by device types on each available date'),
 				period_breaks=period_breaks,
-				group_by='device_type', 
+				group_by='device_type',
 				minor_breaks=minor_period_breaks)
 
 		return (plot_assignment_views, plot_unique_users, plot_ratio)
