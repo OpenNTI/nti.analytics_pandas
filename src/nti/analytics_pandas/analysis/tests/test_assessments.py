@@ -150,7 +150,7 @@ class TestSelfAssessmentViewsTimeseries(AnalyticsPandasTestBase):
 		assert_that(df.columns, has_item('number_self_assessments_viewed'))
 		assert_that(df.columns, has_item('number_of_unique_users'))
 		assert_that(df.columns, has_item('ratio'))
-		
+
 		df2 = savt.analyze_events()
 		assert_that(len(df.sum(level='timestamp_period')), equal_to(len(df2.index)))
 
@@ -176,3 +176,16 @@ class TestSelfAssessmentsTakenTimeseries(AnalyticsPandasTestBase):
 		assert_that(df.columns, has_item('number_self_assessments_taken'))
 		assert_that(df.columns, has_item('number_of_unique_users'))
 		assert_that(df.columns, has_item('ratio'))
+
+	def test_analyze_eventsgroup_by_device_type(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		courses_id = ['1024', '1025', '1026', '1027', '1028']
+		satt = SelfAssessmentsTakenTimeseries(self.session, start_date=start_date, end_date=end_date, course_id=courses_id)
+		df = satt.analyze_events_group_by_device_type()
+		assert_that(df.columns, has_item('number_self_assessments_taken'))
+		assert_that(df.columns, has_item('number_of_unique_users'))
+		assert_that(df.columns, has_item('ratio'))
+
+		df2 = satt.analyze_events()
+		assert_that(len(df.sum(level='timestamp_period')), equal_to(len(df2.index)))
