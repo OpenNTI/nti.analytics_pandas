@@ -42,6 +42,32 @@ class TestAssignmentViewsTimeseries(AnalyticsPandasTestBase):
 		assert_that(df.columns, has_item('number_of_unique_users'))
 		assert_that(df.columns, has_item('ratio'))
 
+	def test_analyze_events_group_by_device_type(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		courses_id = ['1024', '1025', '1026', '1027', '1028']
+		avt = AssignmentViewsTimeseries(self.session, start_date=start_date, end_date=end_date, course_id=courses_id)
+		df = avt.analyze_events_group_by_device_type()
+		assert_that(df.columns, has_item('number_assignments_viewed'))
+		assert_that(df.columns, has_item('number_of_unique_users'))
+		assert_that(df.columns, has_item('ratio'))
+		
+		df2 = avt.analyze_events()
+		assert_that(len(df.sum(level='timestamp_period')), equal_to(len(df2.index)))
+
+	def test_analyze_events_group_by_resource_type(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		courses_id = ['1024', '1025', '1026', '1027', '1028']
+		avt = AssignmentViewsTimeseries(self.session, start_date=start_date, end_date=end_date, course_id=courses_id)
+		df = avt.analyze_events_group_by_resource_type()
+		assert_that(df.columns, has_item('number_assignments_viewed'))
+		assert_that(df.columns, has_item('number_of_unique_users'))
+		assert_that(df.columns, has_item('ratio'))
+		
+		df2 = avt.analyze_events()
+		assert_that(len(df.sum(level='timestamp_period')), equal_to(len(df2.index)))
+
 class TestAssignmentsTakenTimeseries(AnalyticsPandasTestBase):
 
 	def setUp(self):

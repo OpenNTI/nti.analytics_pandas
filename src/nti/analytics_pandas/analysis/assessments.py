@@ -66,6 +66,34 @@ class AssignmentViewsTimeseries(object):
 		on each available date
 		"""
 		group_by_columns = ['timestamp_period']
+		df = self.build_dataframe(group_by_columns)
+		return df
+
+	def analyze_events_group_by_device_type(self):
+		"""
+		return a dataframe contains :
+		 - the number of assignment views,
+		 - the number of unique user viewing assignment
+		 - ratio of assignment views over unique users
+		grouped by device type on each available date 
+		"""
+		group_by_columns = ['timestamp_period', 'device_type']
+		df = self.build_dataframe(group_by_columns)
+		return df
+
+	def analyze_events_group_by_resource_type(self):
+		"""
+		return a dataframe contains :
+		 - the number of assignment views,
+		 - the number of unique user viewing assignment
+		 - ratio of assignment views over unique users
+		grouped by device type on each available date 
+		"""
+		group_by_columns = ['timestamp_period', 'resource_type']
+		df = self.build_dataframe(group_by_columns)
+		return df
+
+	def build_dataframe(self, group_by_columns):
 		agg_columns = {	'assignment_view_id': pd.Series.count,
 						'user_id'			: pd.Series.nunique }
 		df = analyze_types_(self.dataframe, group_by_columns, agg_columns)
@@ -74,6 +102,7 @@ class AssignmentViewsTimeseries(object):
 				  inplace=True)
 		df['ratio'] = df['number_assignments_viewed'] / df['number_of_unique_users']
 		return df
+
 
 class AssignmentsTakenTimeseries(object):
 	"""
