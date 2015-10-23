@@ -136,7 +136,8 @@ class QuerySelfAssessmentViews(TableQueryMixin):
 		return new_df
 
 	def add_resource_type(self, dataframe):
-		add_resource_type_(self.session, dataframe)
+		new_df = add_resource_type_(self.session, dataframe)
+		return new_df
 
 class QuerySelfAssessmentsTaken(TableQueryMixin):
 

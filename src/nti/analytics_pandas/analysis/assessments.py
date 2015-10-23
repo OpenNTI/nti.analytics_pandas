@@ -213,6 +213,36 @@ class SelfAssessmentViewsTimeseries(object):
 		on each available date
 		"""
 		group_by_columns = ['timestamp_period']
+		df = self.build_dataframe(group_by_columns)
+		return df
+
+	def analyze_events_group_by_device_type(self):
+		"""
+		return a dataframe contains :
+		 - the number of self assessments views,
+		 - the number of unique user viewing self assessments
+		 - ratio of self assessments views over unique users
+		grouped by device type on each available date
+		"""
+		if 'device_type' in self.dataframe.columns:
+			group_by_columns = ['timestamp_period', 'device_type']
+			df = self.build_dataframe(group_by_columns)
+			return df
+
+	def analyze_events_group_by_resource_type(self):
+		"""
+		return a dataframe contains :
+		 - the number of self assessments views,
+		 - the number of unique user viewing self assessments
+		 - ratio of self assessments views over unique users
+		grouped by device type on each available date
+		"""
+		if 'resource_type' in self.dataframe.columns: 
+			group_by_columns = ['timestamp_period', 'resource_type']
+			df = self.build_dataframe(group_by_columns)
+			return df
+
+	def build_dataframe(self, group_by_columns):
 		agg_columns = {	'self_assessment_view_id'	: pd.Series.count,
 						'user_id'					: pd.Series.nunique }
 		df = analyze_types_(self.dataframe, group_by_columns, agg_columns)
