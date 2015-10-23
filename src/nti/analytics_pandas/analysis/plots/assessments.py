@@ -273,3 +273,88 @@ class SelfAssessmentViewsTimeseriesPlot(object):
 				minor_breaks=minor_period_breaks)
 
 		return (plot_self_assessments_views, plot_unique_users, plot_ratio)
+
+class SelfAssessmentsTakenTimeseriesPlot(object):
+
+	def __init__(self, satt):
+		"""
+		satt =SelfAssessmentsTakenTimeseries
+		"""
+		self.satt = satt
+
+	def analyze_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
+		satt = self.satt
+		df = satt.analyze_events()
+		if df is None :
+			return ()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		plot_self_assessments_taken = line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='number_self_assessments_taken',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of self assessments taken'),
+				title=_('Number of self assessments taken during period of time'),
+				period_breaks=period_breaks,
+				minor_breaks=minor_period_breaks)
+
+		plot_unique_users = line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='number_of_unique_users',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of unique users'),
+				title=_('Number of unique users taking self assessments during period of time'),
+				period_breaks=period_breaks,
+				minor_breaks=minor_period_breaks)
+
+		plot_ratio = line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='ratio',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Ratio'),
+				title=_('Ratio of self assessments taken over unique user on each available date'),
+				period_breaks=period_breaks,
+				minor_breaks=minor_period_breaks)
+
+		return (plot_self_assessments_taken, plot_unique_users, plot_ratio)
+
+	def analyze_events_group_by_device_type(self, period_breaks='1 week', minor_period_breaks='1 day'):
+		satt = self.satt
+		df = satt.analyze_events_group_by_device_type()
+		if df is None :
+			return ()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		plot_self_assessments_taken = group_line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='number_self_assessments_taken',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of self assessments taken'),
+				title=_('Number of self assessments taken during period of time'),
+				period_breaks=period_breaks,
+				group_by='device_type',
+				minor_breaks=minor_period_breaks)
+
+		plot_unique_users = group_line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='number_of_unique_users',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of unique users'),
+				title=_('Number of unique users taking self assessments during period of time'),
+				period_breaks=period_breaks,
+				group_by='device_type',
+				minor_breaks=minor_period_breaks)
+
+		plot_ratio = group_line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='ratio',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Ratio'),
+				title=_('Ratio of self assessments taken over unique user on each available date'),
+				period_breaks=period_breaks,
+				group_by='device_type',
+				minor_breaks=minor_period_breaks)
+
+		return (plot_self_assessments_taken, plot_unique_users, plot_ratio)
