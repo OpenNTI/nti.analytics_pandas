@@ -33,7 +33,7 @@ class VideoEventsTimeseriesPlot(object):
 			- ratio of video events over unique users
 		"""
 		vet = self.vet
-		df = vet.analyze_video_events()
+		df = vet.analyze_video_events(video_event_type=None)
 		if df is None:
 			return ()
 		df.reset_index(inplace=True)
@@ -68,9 +68,58 @@ class VideoEventsTimeseriesPlot(object):
 
 		return (plot_video_events, plot_unique_users, plot_ratio)
 
+	def analyze_video_events_device_types(self, period_breaks='1 week', minor_period_breaks='1 day', video_event_type='WATCH'):
+		"""
+		return plots of video events during period of time
+		it consists of:
+			- number of video events
+			- number of unique users
+			- ratio of video events over unique users
+		grouped by device types
+		"""
+		vet = self.vet
+		df = vet.analyze_video_events_device_types(video_event_type)
+		if df is None:
+			return ()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		plot_video_events = group_line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='number_of_video_events',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of video events'),
+				title=_('Number of video events grouped by device types during period of time'),
+				period_breaks=period_breaks,
+				group_by='device_type',
+				minor_breaks=minor_period_breaks)
+
+		plot_unique_users = group_line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='number_of_unique_users',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of unique users'),
+				title=_('Number of unique users creating video events grouped by device types during period of time'),
+				period_breaks=period_breaks,
+				group_by='device_type',
+				minor_breaks=minor_period_breaks)
+
+		plot_ratio = group_line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='ratio',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Ratio'),
+				title=_('Ratio of video events over unique user on each available date'),
+				period_breaks=period_breaks,
+				group_by='device_type',
+				minor_breaks=minor_period_breaks)
+
+		return (plot_video_events, plot_unique_users, plot_ratio)
+
+
 	def analyze_video_events_types(self, period_breaks='1 week', minor_period_breaks='1 day', separate_plot_by_type=True):
 		"""
-		plot video events  by video_event_type
+		plot video events by video_event_type
 		"""
 		vet = self.vet
 		df = vet.analyze_video_events_types()
@@ -95,7 +144,7 @@ class VideoEventsTimeseriesPlot(object):
 				y_axis_field='number_of_video_events',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Number of video events'),
-				title=_('Number of video events grouped by resource type during period of time'),
+				title=_('Number of video events grouped by event types during period of time'),
 				period_breaks=period_breaks,
 				group_by='video_event_type',
 				minor_breaks=minor_period_breaks)
