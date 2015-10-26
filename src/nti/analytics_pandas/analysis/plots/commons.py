@@ -29,7 +29,7 @@ from ggplot import scale_x_date
 from ggplot import geom_histogram
 from ggplot import scale_x_discrete
 
-DATE_FORMAT = "%y-%m-%d"
+DATE_FORMAT = "%Y-%m-%d"
 
 def line_plot_x_axis_date(df,
 						  x_axis_field,

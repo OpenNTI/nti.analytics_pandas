@@ -22,7 +22,7 @@ class TestVideosEDA(AnalyticsPandasTestBase):
 	def setUp(self):
 		super(TestVideosEDA, self).setUp()
 
-	def test_highlights_creation_based_on_timestamp_date(self):
+	def test_video_events_based_on_timestamp_date(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
 		course_id = ['388']
@@ -30,14 +30,16 @@ class TestVideosEDA(AnalyticsPandasTestBase):
 		assert_that(len(vet.dataframe.index), equal_to(1480))
 		assert_that(vet.dataframe.columns, has_item('device_type'))
 
-		event_by_date_df = vet.explore_number_of_events_based_timestamp_date()
+		event_by_date_df = vet.analyze_video_events()
 		assert_that(len(event_by_date_df.index), equal_to(95))
 
-		total_events = np.sum(event_by_date_df['total_video_events'])
+		total_events = np.sum(event_by_date_df['number_of_video_events'])
 		assert_that(total_events, equal_to(len(vet.dataframe.index)))
 
-		unique_users_by_date = vet.explore_unique_users_based_timestamp_date()
-		assert_that(len(unique_users_by_date.index), equal_to(95))
 
-		ratio_df = vet.explore_ratio_of_events_over_unique_users_based_timestamp_date()
-		assert_that(len(ratio_df.index), equal_to(95))
+	def test_analyze_video_events_types(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		vet = VideoEventsTimeseries(self.session, start_date, end_date, course_id)
+		df = vet.analyze_video_events_types()

@@ -33,7 +33,7 @@ class VideoEventsTimeseriesPlot(object):
 			- ratio of video events over unique users
 		"""
 		vet = self.vet
-		df = vet.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		df = vet.analyze_video_events()
 		if df is None:
 			return ()
 		df.reset_index(inplace=True)
@@ -41,7 +41,7 @@ class VideoEventsTimeseriesPlot(object):
 
 		plot_video_events = line_plot_x_axis_date(df=df,
 				x_axis_field='timestamp_period',
-				y_axis_field='total_video_events',
+				y_axis_field='number_of_video_events',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Number of videos watched and skipped'),
 				title=_('Number of videos watched and skipped during period of time'),
@@ -50,7 +50,7 @@ class VideoEventsTimeseriesPlot(object):
 
 		plot_unique_users = line_plot_x_axis_date(df=df,
 				x_axis_field='timestamp_period',
-				y_axis_field='total_unique_users',
+				y_axis_field='number_of_unique_users',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Number of unique users'),
 				title=_('Number of unique users watching or skipping videos during period of time'),

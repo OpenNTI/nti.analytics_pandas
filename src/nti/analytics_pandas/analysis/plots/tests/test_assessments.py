@@ -136,4 +136,4 @@ class TestAssessmentEventsPlot(AnalyticsPandasTestBase):
 		aet = AssessmentEventsTimeseries(avt=avt, att=att, savt=savt, satt=satt)
 		aetp = AssessmentEventsTimeseriesPlot(aet)
 		_ = aetp.combine_events()
-		
+		print(_)

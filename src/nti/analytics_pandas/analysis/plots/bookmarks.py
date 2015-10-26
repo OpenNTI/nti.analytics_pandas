@@ -119,7 +119,7 @@ class BookmarksTimeseriesPlot(object):
 			y_axis_field='number_of_bookmark_creation',
 			x_axis_label=_('Resource Type'),
 			y_axis_label=_('Number of bookmarks created'),
-			title=_('Number of bookmark creation in each resource type'),
+			title=_('Number of bookmarks created in each resource type'),
 			stat='bar')
 
 		return (plot_bookmarks_creation, plot_unique_users, plot_ratio, plot_total_bookmark_on_each_type)

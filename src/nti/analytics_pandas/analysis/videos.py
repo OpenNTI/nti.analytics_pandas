@@ -13,11 +13,10 @@ import pandas as pd
 
 from ..queries import QueryVideoEvents
 
+from ..utils import cast_columns_as_category_
+
 from .common import analyze_types_
 from .common import add_timestamp_period_
-from .common import explore_unique_users_based_timestamp_date_
-from .common import explore_number_of_events_based_timestamp_date_
-from .common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
 
 class VideoEventsTimeseries(object):
 	"""
@@ -34,35 +33,32 @@ class VideoEventsTimeseries(object):
 																		course_id)
 		else:
 			self.dataframe = qve.filter_by_period_of_time(start_date, end_date)
-
+		
+		categorical_columns = ['video_event_type', 'with_transcript']
+		
+		self.with_device_type = with_device_type
 		if with_device_type:
 			new_df = qve.add_device_type(self.dataframe)
 			if new_df is not None:
 				self.dataframe = new_df
+				categorical_columns.append('device_type')
 
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
 
-	def explore_number_of_events_based_timestamp_date(self):
-		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
-		if events_df is not None:
-			events_df.rename(columns={'index':'total_video_events'}, inplace=True)
-		events_df = events_df[['total_video_events']]
-		return events_df
+		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
-	def explore_unique_users_based_timestamp_date(self):
-		unique_users_per_period_df = explore_unique_users_based_timestamp_date_(self.dataframe)
-		return unique_users_per_period_df
-
-	def explore_ratio_of_events_over_unique_users_based_timestamp_date(self):
-		events_df = self.explore_number_of_events_based_timestamp_date()
-		unique_users_df = self.explore_unique_users_based_timestamp_date()
-		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
-										events_df, 'total_video_events', unique_users_df)
-		return merge_df
+	def analyze_video_events(self):
+		group_by_items=['timestamp_period']
+		df = self.build_dataframe(group_by_items)
+		return df
 
 	def analyze_video_events_types(self):
 		group_by_items = ['timestamp_period', 'video_event_type']
+		df = self.build_dataframe(group_by_items)
+		return df
+
+	def build_dataframe(self, group_by_items):
 		agg_columns = {	'user_id': pd.Series.nunique,
 						'video_view_id': pd.Series.count}
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
