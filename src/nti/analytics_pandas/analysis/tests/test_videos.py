@@ -50,5 +50,14 @@ class TestVideosEDA(AnalyticsPandasTestBase):
 		course_id = ['388']
 		vet = VideoEventsTimeseries(self.session, start_date, end_date, course_id)
 		df = vet.analyze_video_events_device_types(video_event_type='WATCH')
-		df2 = vet.analyze_video_events()
+		df2 = vet.analyze_video_events(video_event_type='WATCH')
+		assert_that(len(df.sum(level='timestamp_period')), equal_to(len(df2.index)))
+
+	def test_analyze_video_events_transcript(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		vet = VideoEventsTimeseries(self.session, start_date, end_date, course_id)
+		df = vet.analyze_video_events_transcript(video_event_type='WATCH')
+		df2 = vet.analyze_video_events(video_event_type='WATCH')
 		assert_that(len(df.sum(level='timestamp_period')), equal_to(len(df2.index)))

@@ -48,8 +48,20 @@ class VideoEventsTimeseries(object):
 
 		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
-	def analyze_video_events(self):
+	def analyze_video_events(self, video_event_type=None):
+		"""
+		Generate a dataframe based on given video_event_type
+		The dataframe consists of :
+		- number of video events
+		- number of unique users 
+		- ratio of video events over unique users 
+		"""
 		group_by_items=['timestamp_period']
+		if video_event_type is None:
+			dataframe = self.dataframe
+		else:
+			dataframe = self.dataframe[['timestamp_period', 'video_view_id', 'user_id', 'video_event_type']]
+			dataframe = dataframe.loc[dataframe['video_event_type'] == video_event_type]
 		df = self.build_dataframe(self.dataframe, group_by_items)
 		return df
 
@@ -60,7 +72,7 @@ class VideoEventsTimeseries(object):
 
 	def analyze_video_events_device_types(self, video_event_type):
 		"""
-		Generate a dataframe based on given video_event_type (WATCH/SKIPPED)
+		Generate a dataframe based on given video_event_type value (WATCH/SKIP)
 		The dataframe consists of :
 		- number of video events
 		- number of unique users 
@@ -70,6 +82,21 @@ class VideoEventsTimeseries(object):
 		dataframe = self.dataframe[['timestamp_period', 'video_view_id', 'user_id', 'device_type', 'video_event_type']]
 		dataframe = dataframe.loc[dataframe['video_event_type'] == video_event_type]
 		group_by_items = ['timestamp_period', 'device_type']
+		df = self.build_dataframe(dataframe, group_by_items)
+		return df
+
+	def analyze_video_events_transcript(self, video_event_type):
+		"""
+		Generate a dataframe based on given video_event_type value (WATCH/SKIP)
+		The dataframe consists of :
+		- number of video events
+		- number of unique users 
+		- ratio of video events over unique users 
+		grouped by with_transcript values
+		"""
+		dataframe = self.dataframe[['timestamp_period', 'video_view_id', 'user_id', 'with_transcript', 'video_event_type']]
+		dataframe = dataframe.loc[dataframe['video_event_type'] == video_event_type]
+		group_by_items = ['timestamp_period', 'with_transcript']
 		df = self.build_dataframe(dataframe, group_by_items)
 		return df
 
