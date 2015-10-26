@@ -11,6 +11,7 @@ from hamcrest import equal_to
 from hamcrest import has_item
 from hamcrest import assert_that
 
+from nti.analytics_pandas.analysis.assessments import AssessmentEventsTimeseries
 from nti.analytics_pandas.analysis.assessments import AssignmentViewsTimeseries
 from nti.analytics_pandas.analysis.assessments import AssignmentsTakenTimeseries
 from nti.analytics_pandas.analysis.assessments import SelfAssessmentViewsTimeseries
@@ -219,3 +220,36 @@ class TestSelfAssessmentsTakenTimeseries(AnalyticsPandasTestBase):
 
 		df2 = satt.analyze_events()
 		assert_that(len(df.sum(level='timestamp_period')), equal_to(len(df2.index)))
+
+class TestAssessmentEventsTimeseries(AnalyticsPandasTestBase):
+
+	def setUp(self):
+		super(TestAssessmentEventsTimeseries, self).setUp()
+
+
+	def test_combine_events(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		courses_id = ['1024', '1025', '1026', '1027', '1028']
+		avt = AssignmentViewsTimeseries(self.session, 
+										start_date=start_date, 
+										end_date=end_date, 
+										course_id=courses_id)
+		att = AssignmentsTakenTimeseries(self.session, 
+										 start_date=start_date, 
+										 end_date=end_date, 
+										 course_id=courses_id)
+		savt = SelfAssessmentViewsTimeseries(self.session, 
+											 start_date=start_date, 
+											 end_date=end_date,
+											 course_id=courses_id)
+		satt = SelfAssessmentsTakenTimeseries(self.session, 
+											  start_date=start_date, 
+											  end_date=end_date, 
+											  course_id=courses_id)
+		aet = AssessmentEventsTimeseries(avt=avt, att=att, savt=savt, satt=satt)
+		df = aet.combine_events()
+		assert_that(len(df.index), equal_to(223))
+
+
+

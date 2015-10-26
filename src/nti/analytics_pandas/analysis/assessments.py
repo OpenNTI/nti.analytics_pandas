@@ -21,6 +21,64 @@ from ..utils import cast_columns_as_category_
 from .common import analyze_types_
 from .common import add_timestamp_period_
 
+
+class AssessmentEventsTimeseries(object):
+
+	def __init__(self, avt=None, att=None, savt=None, satt=None):
+		"""
+		avt = AssignmentViewsTimeseries
+		att = AssignmentsTakenTimeseries
+		savt = SelfAssessmentViewsTimeseries
+		satt = SelfAssessmentsTakenTimeseries
+		"""
+		self.avt = avt
+		self.att = att
+		self.savt = savt
+		self.satt = satt
+
+	def combine_events(self):
+		df = pd.DataFrame(columns=[	'timestamp_period', 'total_events', 'event_type'])
+		if self.avt is not None:
+			avt = self.avt
+			assignment_views_df = avt.analyze_events()
+			assignment_views_df = self.update_events_dataframe(assignment_views_df, 
+				column_to_rename= 'number_assignments_viewed', 
+				event_type='Assignment View')
+			df = df.append(assignment_views_df)
+
+		if self.att is not None:
+			att = self.att
+			assignments_taken_df = att.analyze_events()
+			assignments_taken_df = self.update_events_dataframe(assignments_taken_df,
+				column_to_rename='number_assignments_taken',
+				event_type='Assignment Taken')
+			df = df.append(assignments_taken_df)
+
+		if self.savt is not None:
+			savt = self.savt
+			self_assessment_views_df = savt.analyze_events()
+			self_assessment_views_df = self.update_events_dataframe(self_assessment_views_df,
+				column_to_rename='number_self_assessments_viewed',
+				event_type='Self Assessments View')
+			df = df.append(self_assessment_views_df)
+
+		if self.satt is not None:
+			satt = self.satt
+			self_assessments_taken_df = satt.analyze_events()
+			self_assessments_taken_df = self.update_events_dataframe(self_assessments_taken_df,
+				column_to_rename='number_self_assessments_taken',
+				event_type='Self Assessments Taken')
+			df = df.append(self_assessments_taken_df)
+
+		return df
+
+	def update_events_dataframe(self, df, column_to_rename, event_type):
+		df.rename(columns={column_to_rename:'total_events'}, inplace=True)
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		df['event_type'] = event_type
+		return df
+
 class AssignmentViewsTimeseries(object):
 	"""
 	analyze the number of assignment views given time period and list of course id
