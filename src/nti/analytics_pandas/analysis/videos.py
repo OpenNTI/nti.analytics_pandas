@@ -62,7 +62,7 @@ class VideoEventsTimeseries(object):
 		else:
 			dataframe = self.dataframe[['timestamp_period', 'video_view_id', 'user_id', 'video_event_type']]
 			dataframe = dataframe.loc[dataframe['video_event_type'] == video_event_type]
-		df = self.build_dataframe(self.dataframe, group_by_items)
+		df = self.build_dataframe(dataframe, group_by_items)
 		return df
 
 	def analyze_video_events_types(self):
