@@ -124,7 +124,7 @@ def facet_line_plot_x_axis_date(df,
 def histogram_plot(df,
 				   x_axis_field,
 				   y_axis_field,
-				   x_axis_label, 
+				   x_axis_label,
 				   y_axis_label,
 				   title,
 				   stat):
@@ -136,12 +136,12 @@ def histogram_plot(df,
 				xlab(_(x_axis_label))
 	return hist_plot
 
-def histogram_plot_x_axis_discrete(df, 
+def histogram_plot_x_axis_discrete(df,
 								   x_axis_field,
 								   y_axis_field,
 								   x_axis_label,
 								   y_axis_label,
-								   title, 
+								   title,
 								   stat):
 	hist_plot = ggplot(df, aes(x=x_axis_field, y=y_axis_field)) + \
 				geom_histogram(stat=stat) + \

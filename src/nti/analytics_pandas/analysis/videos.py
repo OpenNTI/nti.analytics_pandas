@@ -33,9 +33,9 @@ class VideoEventsTimeseries(object):
 																		course_id)
 		else:
 			self.dataframe = qve.filter_by_period_of_time(start_date, end_date)
-		
+
 		categorical_columns = ['video_event_type', 'with_transcript']
-		
+
 		self.with_device_type = with_device_type
 		if with_device_type:
 			new_df = qve.add_device_type(self.dataframe)
@@ -53,14 +53,15 @@ class VideoEventsTimeseries(object):
 		Generate a dataframe based on given video_event_type
 		The dataframe consists of :
 		- number of video events
-		- number of unique users 
-		- ratio of video events over unique users 
+		- number of unique users
+		- ratio of video events over unique users
 		"""
-		group_by_items=['timestamp_period']
+		group_by_items = ['timestamp_period']
 		if video_event_type is None:
 			dataframe = self.dataframe
 		else:
-			dataframe = self.dataframe[['timestamp_period', 'video_view_id', 'user_id', 'video_event_type']]
+			dataframe = self.dataframe[['timestamp_period', 'video_view_id', 'user_id',
+										'video_event_type']]
 			dataframe = dataframe.loc[dataframe['video_event_type'] == video_event_type]
 		df = self.build_dataframe(dataframe, group_by_items)
 		return df
@@ -69,8 +70,8 @@ class VideoEventsTimeseries(object):
 		"""
 		Generate dataframe based that consists of :
 		- number of video events
-		- number of unique users 
-		- ratio of video events over unique users 
+		- number of unique users
+		- ratio of video events over unique users
 		"""
 		group_by_items = ['timestamp_period', 'video_event_type']
 		df = self.build_dataframe(self.dataframe, group_by_items)
@@ -81,11 +82,12 @@ class VideoEventsTimeseries(object):
 		Generate a dataframe based on given video_event_type value (WATCH/SKIP)
 		The dataframe consists of :
 		- number of video events
-		- number of unique users 
-		- ratio of video events over unique users 
+		- number of unique users
+		- ratio of video events over unique users
 		grouped by device_type
 		"""
-		dataframe = self.dataframe[['timestamp_period', 'video_view_id', 'user_id', 'device_type', 'video_event_type']]
+		dataframe = self.dataframe[['timestamp_period', 'video_view_id', 'user_id', 
+									'device_type', 'video_event_type']]
 		dataframe = dataframe.loc[dataframe['video_event_type'] == video_event_type]
 		group_by_items = ['timestamp_period', 'device_type']
 		df = self.build_dataframe(dataframe, group_by_items)
@@ -96,11 +98,12 @@ class VideoEventsTimeseries(object):
 		Generate a dataframe based on given video_event_type value (WATCH/SKIP)
 		The dataframe consists of :
 		- number of video events
-		- number of unique users 
-		- ratio of video events over unique users 
+		- number of unique users
+		- ratio of video events over unique users
 		grouped by with_transcript values
 		"""
-		dataframe = self.dataframe[['timestamp_period', 'video_view_id', 'user_id', 'with_transcript', 'video_event_type']]
+		dataframe = self.dataframe[['timestamp_period', 'video_view_id', 'user_id',
+									'with_transcript', 'video_event_type']]
 		dataframe = dataframe.loc[dataframe['video_event_type'] == video_event_type]
 		group_by_items = ['timestamp_period', 'with_transcript']
 		df = self.build_dataframe(dataframe, group_by_items)

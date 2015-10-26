@@ -68,7 +68,9 @@ class VideoEventsTimeseriesPlot(object):
 
 		return (plot_video_events, plot_unique_users, plot_ratio)
 
-	def analyze_video_events_device_types(self, period_breaks='1 week', minor_period_breaks='1 day', video_event_type='WATCH'):
+	def analyze_video_events_device_types(self, period_breaks='1 week', 
+										  minor_period_breaks='1 day',
+										  video_event_type='WATCH'):
 		"""
 		return plots of video events during period of time
 		it consists of:
@@ -117,7 +119,9 @@ class VideoEventsTimeseriesPlot(object):
 		return (plot_video_events, plot_unique_users, plot_ratio)
 
 
-	def analyze_video_events_types(self, period_breaks='1 week', minor_period_breaks='1 day', separate_plot_by_type=True):
+	def analyze_video_events_types(self, period_breaks='1 week', 
+								   minor_period_breaks='1 day', 
+								   separate_plot_by_type=True):
 		"""
 		plot video events by video_event_type
 		"""
@@ -130,12 +134,21 @@ class VideoEventsTimeseriesPlot(object):
 
 		if separate_plot_by_type:
 			watch_df = df.loc[df['video_event_type'] == 'WATCH']
-			watch_plots = self.generate_plots_video_events(watch_df, period_breaks, minor_period_breaks, 'watched')
+			watch_plots = self.generate_plots_video_events(watch_df, 
+														   period_breaks, 
+														   minor_period_breaks, 
+														   'watched')
 			skip_df = df.loc[df['video_event_type'] == 'SKIP']
-			skip_plots = self.generate_plots_video_events(skip_df, period_breaks, minor_period_breaks, 'skipped')
-			return (watch_plots, skip_plots)
+			skip_plots = self.generate_plots_video_events(skip_df, 
+														  period_breaks,
+														  minor_period_breaks, 
+														  'skipped')
+			result = (watch_plots, skip_plots)
 		else:
-			return self.generate_plots_grouped_by_video_event_types(df, period_breaks, minor_period_breaks)
+			result = self.generate_plots_grouped_by_video_event_types(df,
+																	  period_breaks,
+																	  minor_period_breaks)
+		return result
 
 	def generate_plots_grouped_by_video_event_types(self, df, period_breaks, minor_period_breaks):
 

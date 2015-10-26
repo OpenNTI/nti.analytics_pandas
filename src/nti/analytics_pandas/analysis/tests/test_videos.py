@@ -36,7 +36,6 @@ class TestVideosEDA(AnalyticsPandasTestBase):
 		total_events = np.sum(event_by_date_df['number_of_video_events'])
 		assert_that(total_events, equal_to(len(vet.dataframe.index)))
 
-
 	def test_analyze_video_events_types(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'

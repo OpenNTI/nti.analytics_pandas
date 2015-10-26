@@ -76,7 +76,7 @@ class AssignmentViewsTimeseriesPlot(object):
 			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
-	
+
 		plot_assignment_views = line_plot_x_axis_date(df=df,
 				x_axis_field='timestamp_period',
 				y_axis_field='number_assignments_viewed',

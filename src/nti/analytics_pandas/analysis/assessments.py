@@ -21,7 +21,6 @@ from ..utils import cast_columns_as_category_
 from .common import analyze_types_
 from .common import add_timestamp_period_
 
-
 class AssessmentEventsTimeseries(object):
 
 	def __init__(self, avt=None, att=None, savt=None, satt=None):
@@ -41,8 +40,8 @@ class AssessmentEventsTimeseries(object):
 		if self.avt is not None:
 			avt = self.avt
 			assignment_views_df = avt.analyze_events()
-			assignment_views_df = self.update_events_dataframe(assignment_views_df, 
-				column_to_rename= 'number_assignments_viewed', 
+			assignment_views_df = self.update_events_dataframe(assignment_views_df,
+				column_to_rename='number_assignments_viewed',
 				event_type='Assignment View')
 			df = df.append(assignment_views_df)
 

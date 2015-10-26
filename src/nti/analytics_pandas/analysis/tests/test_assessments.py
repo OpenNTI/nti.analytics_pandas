@@ -11,8 +11,8 @@ from hamcrest import equal_to
 from hamcrest import has_item
 from hamcrest import assert_that
 
-from nti.analytics_pandas.analysis.assessments import AssessmentEventsTimeseries
 from nti.analytics_pandas.analysis.assessments import AssignmentViewsTimeseries
+from nti.analytics_pandas.analysis.assessments import AssessmentEventsTimeseries
 from nti.analytics_pandas.analysis.assessments import AssignmentsTakenTimeseries
 from nti.analytics_pandas.analysis.assessments import SelfAssessmentViewsTimeseries
 from nti.analytics_pandas.analysis.assessments import SelfAssessmentsTakenTimeseries
@@ -36,9 +36,9 @@ class TestAssignmentViewsTimeseries(AnalyticsPandasTestBase):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
 		courses_id = ['1024', '1025', '1026', '1027', '1028']
-		avt = AssignmentViewsTimeseries(self.session, 
-										start_date=start_date, 
-										end_date=end_date, 
+		avt = AssignmentViewsTimeseries(self.session,
+										start_date=start_date,
+										end_date=end_date,
 										course_id=courses_id)
 		df = avt.analyze_events()
 		assert_that(len(df.index), equal_to(6))
@@ -50,9 +50,9 @@ class TestAssignmentViewsTimeseries(AnalyticsPandasTestBase):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
 		courses_id = ['1024', '1025', '1026', '1027', '1028']
-		avt = AssignmentViewsTimeseries(self.session, 
-										start_date=start_date, 
-										end_date=end_date, 
+		avt = AssignmentViewsTimeseries(self.session,
+										start_date=start_date,
+										end_date=end_date,
 										course_id=courses_id)
 		df = avt.analyze_events_group_by_device_type()
 		assert_that(df.columns, has_item('number_assignments_viewed'))
@@ -66,9 +66,9 @@ class TestAssignmentViewsTimeseries(AnalyticsPandasTestBase):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
 		courses_id = ['1024', '1025', '1026', '1027', '1028']
-		avt = AssignmentViewsTimeseries(self.session, 
-										start_date=start_date, 
-										end_date=end_date, 
+		avt = AssignmentViewsTimeseries(self.session,
+										start_date=start_date,
+										end_date=end_date,
 										course_id=courses_id)
 		df = avt.analyze_events_group_by_resource_type()
 		assert_that(df.columns, has_item('number_assignments_viewed'))
@@ -95,9 +95,9 @@ class TestAssignmentsTakenTimeseries(AnalyticsPandasTestBase):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
 		courses_id = ['1024', '1025', '1026', '1027', '1028']
-		att = AssignmentsTakenTimeseries(self.session, 
-										 start_date=start_date, 
-										 end_date=end_date, 
+		att = AssignmentsTakenTimeseries(self.session,
+										 start_date=start_date,
+										 end_date=end_date,
 										 course_id=courses_id)
 		df = att.analyze_events()
 		assert_that(len(df.index), equal_to(129))
@@ -109,8 +109,8 @@ class TestAssignmentsTakenTimeseries(AnalyticsPandasTestBase):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
 		courses_id = ['1024', '1025', '1026', '1027', '1028']
-		att = AssignmentsTakenTimeseries(self.session, 
-										 start_date=start_date, 
+		att = AssignmentsTakenTimeseries(self.session,
+										 start_date=start_date,
 										 end_date=end_date,
 										 course_id=courses_id)
 		df = att.analyze_events_group_by_device_type()
@@ -137,8 +137,8 @@ class TestSelfAssessmentViewsTimeseries(AnalyticsPandasTestBase):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
 		courses_id = ['1024', '1025', '1026', '1027', '1028']
-		savt = SelfAssessmentViewsTimeseries(self.session, 
-											 start_date=start_date, 
+		savt = SelfAssessmentViewsTimeseries(self.session,
+											 start_date=start_date,
 											 end_date=end_date,
 											 course_id=courses_id)
 		df = savt.analyze_events()
@@ -153,7 +153,7 @@ class TestSelfAssessmentViewsTimeseries(AnalyticsPandasTestBase):
 		courses_id = ['1024', '1025', '1026', '1027', '1028']
 		savt = SelfAssessmentViewsTimeseries(self.session,
 											 start_date=start_date,
-											 end_date=end_date, 
+											 end_date=end_date,
 											 course_id=courses_id)
 		df = savt.analyze_events_group_by_device_type()
 		assert_that(df.columns, has_item('number_self_assessments_viewed'))
@@ -167,9 +167,9 @@ class TestSelfAssessmentViewsTimeseries(AnalyticsPandasTestBase):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
 		courses_id = ['1024', '1025', '1026', '1027', '1028']
-		savt = SelfAssessmentViewsTimeseries(self.session, 
+		savt = SelfAssessmentViewsTimeseries(self.session,
 											 start_date=start_date,
-											 end_date=end_date, 
+											 end_date=end_date,
 											 course_id=courses_id)
 		df = savt.analyze_events_group_by_resource_type()
 		assert_that(df.columns, has_item('number_self_assessments_viewed'))
@@ -195,8 +195,8 @@ class TestSelfAssessmentsTakenTimeseries(AnalyticsPandasTestBase):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
 		courses_id = ['1024', '1025', '1026', '1027', '1028']
-		satt = SelfAssessmentsTakenTimeseries(self.session, 
-											  start_date=start_date, 
+		satt = SelfAssessmentsTakenTimeseries(self.session,
+											  start_date=start_date,
 											  end_date=end_date,
 											  course_id=courses_id)
 		df = satt.analyze_events()
@@ -209,9 +209,9 @@ class TestSelfAssessmentsTakenTimeseries(AnalyticsPandasTestBase):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
 		courses_id = ['1024', '1025', '1026', '1027', '1028']
-		satt = SelfAssessmentsTakenTimeseries(self.session, 
-											  start_date=start_date, 
-											  end_date=end_date, 
+		satt = SelfAssessmentsTakenTimeseries(self.session,
+											  start_date=start_date,
+											  end_date=end_date,
 											  course_id=courses_id)
 		df = satt.analyze_events_group_by_device_type()
 		assert_that(df.columns, has_item('number_self_assessments_taken'))
@@ -231,25 +231,22 @@ class TestAssessmentEventsTimeseries(AnalyticsPandasTestBase):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
 		courses_id = ['1024', '1025', '1026', '1027', '1028']
-		avt = AssignmentViewsTimeseries(self.session, 
-										start_date=start_date, 
-										end_date=end_date, 
+		avt = AssignmentViewsTimeseries(self.session,
+										start_date=start_date,
+										end_date=end_date,
 										course_id=courses_id)
-		att = AssignmentsTakenTimeseries(self.session, 
-										 start_date=start_date, 
-										 end_date=end_date, 
+		att = AssignmentsTakenTimeseries(self.session,
+										 start_date=start_date,
+										 end_date=end_date,
 										 course_id=courses_id)
-		savt = SelfAssessmentViewsTimeseries(self.session, 
-											 start_date=start_date, 
+		savt = SelfAssessmentViewsTimeseries(self.session,
+											 start_date=start_date,
 											 end_date=end_date,
 											 course_id=courses_id)
-		satt = SelfAssessmentsTakenTimeseries(self.session, 
-											  start_date=start_date, 
-											  end_date=end_date, 
+		satt = SelfAssessmentsTakenTimeseries(self.session,
+											  start_date=start_date,
+											  end_date=end_date,
 											  course_id=courses_id)
 		aet = AssessmentEventsTimeseries(avt=avt, att=att, savt=savt, satt=satt)
 		df = aet.combine_events()
 		assert_that(len(df.index), equal_to(223))
-
-
-
