@@ -50,18 +50,33 @@ class VideoEventsTimeseries(object):
 
 	def analyze_video_events(self):
 		group_by_items=['timestamp_period']
-		df = self.build_dataframe(group_by_items)
+		df = self.build_dataframe(self.dataframe, group_by_items)
 		return df
 
 	def analyze_video_events_types(self):
 		group_by_items = ['timestamp_period', 'video_event_type']
-		df = self.build_dataframe(group_by_items)
+		df = self.build_dataframe(self.dataframe, group_by_items)
 		return df
 
-	def build_dataframe(self, group_by_items):
+	def analyze_video_events_device_types(self, video_event_type):
+		"""
+		Generate a dataframe based on given video_event_type (WATCH/SKIPPED)
+		The dataframe consists of :
+		- number of video events
+		- number of unique users 
+		- ratio of video events over unique users 
+		grouped by device_type
+		"""
+		dataframe = self.dataframe[['timestamp_period', 'video_view_id', 'user_id', 'device_type', 'video_event_type']]
+		dataframe = dataframe.loc[dataframe['video_event_type'] == video_event_type]
+		group_by_items = ['timestamp_period', 'device_type']
+		df = self.build_dataframe(dataframe, group_by_items)
+		return df
+
+	def build_dataframe(self, dataframe, group_by_items):
 		agg_columns = {	'user_id': pd.Series.nunique,
 						'video_view_id': pd.Series.count}
-		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
+		df = analyze_types_(dataframe, group_by_items, agg_columns)
 		df.rename(columns={	'user_id'		:'number_of_unique_users',
 							'video_view_id'	:'number_of_video_events'},
 					inplace=True)
