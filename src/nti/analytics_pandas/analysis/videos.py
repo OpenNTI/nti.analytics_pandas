@@ -66,6 +66,12 @@ class VideoEventsTimeseries(object):
 		return df
 
 	def analyze_video_events_types(self):
+		"""
+		Generate dataframe based that consists of :
+		- number of video events
+		- number of unique users 
+		- ratio of video events over unique users 
+		"""
 		group_by_items = ['timestamp_period', 'video_event_type']
 		df = self.build_dataframe(self.dataframe, group_by_items)
 		return df
