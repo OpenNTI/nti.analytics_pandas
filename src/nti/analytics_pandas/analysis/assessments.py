@@ -59,7 +59,7 @@ class AssessmentEventsTimeseries(object):
 			self_assessment_views_df = savt.analyze_events()
 			self_assessment_views_df = self.update_events_dataframe(self_assessment_views_df,
 				column_to_rename='number_self_assessments_viewed',
-				event_type='Self Assessments View')
+				event_type='Self Asst. View')
 			df = df.append(self_assessment_views_df)
 
 		if self.satt is not None:
@@ -67,9 +67,10 @@ class AssessmentEventsTimeseries(object):
 			self_assessments_taken_df = satt.analyze_events()
 			self_assessments_taken_df = self.update_events_dataframe(self_assessments_taken_df,
 				column_to_rename='number_self_assessments_taken',
-				event_type='Self Assessments Taken')
+				event_type='Self Asst. Taken')
 			df = df.append(self_assessments_taken_df)
 
+		df.reset_index(inplace=True, drop=True)
 		return df
 
 	def update_events_dataframe(self, df, column_to_rename, event_type):
