@@ -230,8 +230,9 @@ class BookmarksTimeseriesPlot(object):
 		plot_users = histogram_plot_x_axis_discrete(df=users_df,
 			x_axis_field='username' ,
 			y_axis_field='number_of_bookmarks_created',
-			x_axis_label=_('Resource Type'),
+			x_axis_label=_('Username'),
 			y_axis_label=_('Number of bookmarks created'),
 			title=_('The most active users creating bookmarks'),
 			stat='identity')
+		
 		return (plot_users,)
