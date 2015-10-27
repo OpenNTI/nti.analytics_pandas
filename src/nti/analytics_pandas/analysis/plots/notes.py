@@ -112,82 +112,26 @@ class NotesCreationTimeseriesPlot(object):
 		nct = self.nct
 		dataframe = nct.dataframe
 		df = nct.analyze_device_types(dataframe)
-		if df is None:
-			return ()
-		df.reset_index(inplace=True)
-		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		
-		plot_notes_created = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_of_notes_created',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of notes created'),
-				title=_('Number of notes created grouped by device types during period of time'),
-				period_breaks=period_breaks,
-				group_by='device_type',
-				minor_breaks=minor_period_breaks)
-
-		plot_unique_users = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_of_unique_users',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of unique users'),
-				title=_('Number of unique users creating notes during period of time'),
-				period_breaks=period_breaks,
-				group_by='device_type',
-				minor_breaks=minor_period_breaks)
-
-		plot_ratio = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='ratio',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Ratio'),
-				title=_('Ratio of notes created grouped by device types over unique user on each available date'),
-				period_breaks=period_breaks,
-				group_by='device_type',
-				minor_breaks=minor_period_breaks)
-
-		return (plot_notes_created, plot_unique_users, plot_ratio)
+		event_title =_('Number of notes created grouped by device types')
+		user_title =_('Number of unique users creating notes grouped by device types')
+		ratio_title =_('Ratio of notes created grouped by device types over unique user')
+		group_by = 'device_type'
+		device_plots = self.generate_group_by_plot(df, group_by, event_title, user_title, ratio_title, period_breaks, minor_period_breaks)
+		
+		return (device_plots,)
 
 	def analyze_resource_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		nct = self.nct
 		df = nct.analyze_resource_types()
-		if df is None:
-			return ()
-		df.reset_index(inplace=True)
-		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
-
-		plot_notes_created = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_of_notes_created',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of notes created'),
-				title=_('Number of notes created grouped by resource types during period of time'),
-				period_breaks=period_breaks,
-				group_by='resource_type',
-				minor_breaks=minor_period_breaks)
-
-		plot_unique_users = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_of_unique_users',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of unique users'),
-				title=_('Number of unique users creating notes grouped by resource types during period of time'),
-				period_breaks=period_breaks,
-				group_by='resource_type',
-				minor_breaks=minor_period_breaks)
-
-		plot_ratio = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='ratio',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Ratio'),
-				title=_('Ratio of notes created grouped by resource types over unique user on each available date'),
-				period_breaks=period_breaks,
-				group_by='resource_type',
-				minor_breaks=minor_period_breaks)
-
-		return (plot_notes_created, plot_unique_users, plot_ratio)
+		
+		event_title =_('Number of notes created grouped by resource types')
+		user_title =_('Number of unique users creating notes grouped by resource types')
+		ratio_title =_('Ratio of notes created grouped by resource types over unique user')
+		group_by = 'resource_type'
+		resource_plots = self.generate_group_by_plot(df, group_by, event_title, user_title, ratio_title, period_breaks, minor_period_breaks)
+		
+		return (resource_plots,)
 
 	def plot_the_most_active_users(self, max_rank_number=10):
 		nct = self.nct
@@ -209,42 +153,14 @@ class NotesCreationTimeseriesPlot(object):
 		nct = self.nct
 		dataframe = nct.dataframe
 		df = nct.analyze_sharing_types(dataframe)
-		if df is None:
-			return ()
-		df.reset_index(inplace=True)
-		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		
+		event_title =_('Number of notes created grouped by sharing types')
+		user_title =_('Number of unique users creating notes grouped by sharing types')
+		ratio_title =_('Ratio of notes created grouped by sharing types over unique user')
+		group_by = 'sharing'
+		sharing_plots = self.generate_group_by_plot(df, group_by, event_title, user_title, ratio_title, period_breaks, minor_period_breaks)
 
-		plot_notes_created = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_of_notes_created',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of notes created'),
-				title=_('Number of notes created grouped by sharing types during period of time'),
-				period_breaks=period_breaks,
-				group_by='sharing',
-				minor_breaks=minor_period_breaks)
-
-		plot_unique_users = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_of_unique_users',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of unique users'),
-				title=_('Number of unique users creating notes grouped by sharing types during period of time'),
-				period_breaks=period_breaks,
-				group_by='sharing',
-				minor_breaks=minor_period_breaks)
-
-		plot_ratio = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='ratio',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Ratio'),
-				title=_('Ratio of notes created grouped by sharing types over unique user on each available date'),
-				period_breaks=period_breaks,
-				group_by='sharing',
-				minor_breaks=minor_period_breaks)
-
-		return (plot_notes_created, plot_unique_users, plot_ratio)
+		return (sharing_plots,)
 
 	def generate_group_by_plot(self, df, group_by, event_title, user_title, ratio_title, period_breaks='1 week', minor_period_breaks='1 day'):
 		if df is None:
