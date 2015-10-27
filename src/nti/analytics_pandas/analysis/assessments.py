@@ -15,6 +15,7 @@ from ..queries import QueryAssignmentViews
 from ..queries import QueryAssignmentsTaken
 from ..queries import QuerySelfAssessmentViews
 from ..queries import QuerySelfAssessmentsTaken
+from ..queries import QueryCourseEnrollments
 
 from ..utils import cast_columns_as_category_
 
@@ -171,6 +172,7 @@ class AssignmentsTakenTimeseries(object):
 				 time_period_date=True, with_assignment_title=True):
 
 		self.session = session
+		self.course_id = course_id
 		qat = self.query_assignments_taken = QueryAssignmentsTaken(self.session)
 		if isinstance (course_id, (tuple, list)):
 			self.dataframe = qat.filter_by_course_id_and_period_of_time(start_date,
@@ -231,6 +233,22 @@ class AssignmentsTakenTimeseries(object):
 				  inplace=True)
 		df['ratio'] = df['number_assignments_taken'] / df['number_of_unique_users']
 		return df
+
+	def analyze_assignment_taken_over_total_enrollments(self):
+		dataframe = self.dataframe[['assignment_title', 'assignment_taken_id']]
+		group_by_columns = ['assignment_title']
+		agg_columns = {'assignment_taken_id' : pd.Series.count}
+		
+		df = analyze_types_(dataframe, group_by_columns, agg_columns)
+		df.rename(columns={'assignment_taken_id' :'number_assignments_taken'}, inplace=True)
+
+		qce = QueryCourseEnrollments(self.session)
+		total_enrollments = qce.count_enrollments(self.course_id)
+		
+		df['ratio'] = df['number_assignments_taken'] / total_enrollments
+
+		return df
+
 
 class SelfAssessmentViewsTimeseries(object):
 	"""
