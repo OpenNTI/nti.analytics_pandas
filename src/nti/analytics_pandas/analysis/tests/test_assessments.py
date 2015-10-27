@@ -132,6 +132,10 @@ class TestAssignmentsTakenTimeseries(AnalyticsPandasTestBase):
 		assert_that(len(df.sum(level='timestamp_period')), equal_to(len(df2.index)))
 
 	def test_analyze_assignment_taken_over_total_enrollments(self):
+		"""
+		we may compare result with the manual sql:
+		select count(*), assignment_id from AssignmentsTaken where course_id in ('1024', '1025', '1026', '1027', '1028') group by assignment_id
+		"""
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
 		courses_id = ['1024', '1025', '1026', '1027', '1028']
