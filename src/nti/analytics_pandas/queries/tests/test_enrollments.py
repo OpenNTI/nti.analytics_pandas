@@ -28,7 +28,7 @@ class TestEnrollments(AnalyticsPandasTestBase):
 		end_date = u'2015-05-31'
 		qccv = QueryCourseCatalogViews(self.session)
 		dataframe = qccv.filter_by_period_of_time(start_date, end_date)
-		assert_that(len(dataframe.index), equal_to(4880))
+		assert_that(len(dataframe.index), equal_to(4886))
 
 	def test_query_course_catalog_views_by_period_of_time_and_course_id(self):
 		start_date = u'2015-01-01'
@@ -54,7 +54,7 @@ class TestEnrollments(AnalyticsPandasTestBase):
 		end_date = u'2015-05-31'
 		qce = QueryCourseEnrollments(self.session)
 		dataframe = qce.filter_by_period_of_time(start_date, end_date)
-		assert_that(len(dataframe.index), equal_to(2718))
+		assert_that(len(dataframe.index), equal_to(2696))
 
 	def test_query_course_enrollments_by_period_of_time_and_course_id(self):
 		start_date = u'2015-01-01'
@@ -62,7 +62,7 @@ class TestEnrollments(AnalyticsPandasTestBase):
 		course_id = ['388']
 		qce = QueryCourseEnrollments(self.session)
 		dataframe = qce.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
-		assert_that(len(dataframe.index), equal_to(571))
+		assert_that(len(dataframe.index), equal_to(570))
 
 	def test_query_course_enrollments_add_device_type(self):
 		start_date = u'2015-01-01'
@@ -70,7 +70,7 @@ class TestEnrollments(AnalyticsPandasTestBase):
 		course_id = ['388']
 		qce = QueryCourseEnrollments(self.session)
 		dataframe = qce.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
-		assert_that(len(dataframe.index), equal_to(571))
+		assert_that(len(dataframe.index), equal_to(570))
 		new_df = qce.add_device_type(dataframe)
 		assert_that(len(dataframe.index), equal_to(len(new_df.index)))
 		assert_that(new_df.columns, has_item('device_type'))
@@ -105,3 +105,9 @@ class TestEnrollments(AnalyticsPandasTestBase):
 		qet = QueryEnrollmentTypes(self.session)
 		dataframe = qet.get_enrollment_types()
 		assert_that(len(dataframe.index), equal_to(5))
+
+	def test_count_enrollments(self):
+		course_id = ['388']
+		qce = QueryCourseEnrollments(self.session)
+		enrollments_number = qce.count_enrollments(course_id)
+		assert_that(enrollments_number, equal_to(723))

@@ -82,6 +82,16 @@ class QueryCourseEnrollments(TableQueryMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
+	def count_enrollments(self, courses_id):
+		"""
+		given course_id, return the number of users enrolled on those courses
+		"""
+		ce = self.table
+		query = self.session.query(ce.user_id).filter(ce.course_id.in_(courses_id))
+		dataframe = orm_dataframe(query, self.columns)
+		enrollments_number = dataframe['user_id'].count()
+		return enrollments_number
+
 class QueryEnrollmentTypes(TableQueryMixin):
 
 	table = EnrollmentTypes
