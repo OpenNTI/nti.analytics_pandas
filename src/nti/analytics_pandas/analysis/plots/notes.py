@@ -13,22 +13,6 @@ from . import MessageFactory as _
 
 import pandas as pd
 
-from ggplot import aes
-from ggplot import xlab
-from ggplot import ylab
-from ggplot import ylim
-from ggplot import theme
-from ggplot import ggplot
-from ggplot import ggtitle
-from ggplot import geom_line
-from ggplot import geom_point
-from ggplot import date_breaks
-from ggplot import date_format
-from ggplot import element_text
-from ggplot import scale_x_date
-from ggplot import geom_histogram
-from ggplot import scale_x_discrete
-
 from .commons import line_plot_x_axis_date
 from .commons import group_line_plot_x_axis_date
 from .commons import histogram_plot_x_axis_discrete
@@ -279,41 +263,32 @@ class NotesViewTimeseriesPlot(object):
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
-		y_max = pd.Series.max(df['total_note_views']) + 1
-		plot_notes_viewed = \
-				ggplot(df, aes(x='timestamp_period', y='total_note_views')) + \
-				geom_line() + \
-				geom_point() + \
-				ggtitle(_('Number of notes viewed during period of time')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_date(breaks=date_breaks(period_breaks), labels=date_format("%y-%m-%d")) + \
-				ylab(_('Number of notes viewed')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
+		plot_notes_viewed = line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='total_note_views',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of notes created'),
+				title=_('Number of notes created during period of time'),
+				period_breaks=period_breaks,
+				minor_breaks=minor_period_breaks)
 
-		y_max = pd.Series.max(df['total_unique_users']) + 1
-		plot_unique_users = \
-				ggplot(df, aes(x='timestamp_period', y='total_unique_users')) + \
-				geom_line() + \
-				geom_point() + \
-				ggtitle(_('Number of unique users viewing notes during period of time')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_date(breaks=date_breaks(period_breaks), labels=date_format("%y-%m-%d")) + \
-				ylab(_('Number of unique users')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
+		plot_unique_users = line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='total_unique_users',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of unique users'),
+				title=_('Number of unique users viewing notes during period of time'),
+				period_breaks=period_breaks,
+				minor_breaks=minor_period_breaks)
 
-		y_max = pd.Series.max(df['ratio']) + 1
-		plot_ratio = \
-				ggplot(df, aes(x='timestamp_period', y='ratio')) + \
-				geom_line() + \
-				geom_point() + \
-				ggtitle(_('Ratio of notes viewed over unique users during time period')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_date(breaks=date_breaks(period_breaks), labels=date_format("%y-%m-%d")) + \
-				ylab(_('Ratio')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
+		plot_ratio = line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='ratio',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Ratio'),
+				title=_('Ratio of notes viewed over unique user on each available date'),
+				period_breaks=period_breaks,
+				minor_breaks=minor_period_breaks)
 
 		return (plot_notes_viewed, plot_unique_users, plot_ratio)
 
@@ -325,41 +300,35 @@ class NotesViewTimeseriesPlot(object):
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
-		y_max = pd.Series.max(df['total_notes_viewed']) + 1
-		plot_notes_viewed = \
-				ggplot(df, aes(x='timestamp_period', y='total_notes_viewed', colour='sharing')) + \
-				geom_line() + \
-				geom_point() + \
-				ggtitle(_('Number of notes viewed grouped by sharing type during period of time')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_date(breaks=date_breaks(period_breaks), labels=date_format("%y-%m-%d")) + \
-				ylab(_('Number of notes viewed')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
+		plot_notes_viewed = group_line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='total_notes_viewed',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of notes viewed'),
+				title=_('Number of notes viewed grouped by sharing types during period of time'),
+				period_breaks=period_breaks,
+				group_by='sharing',
+				minor_breaks=minor_period_breaks)
 
-		y_max = pd.Series.max(df['total_unique_users']) + 1
-		plot_unique_users = \
-				ggplot(df, aes(x='timestamp_period', y='total_unique_users', colour='sharing')) + \
-				geom_line() + \
-				geom_point() + \
-				ggtitle(_('Number of unique users viewing notes grouped by sharing type during period of time')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_date(breaks=date_breaks(period_breaks), labels=date_format("%y-%m-%d")) + \
-				ylab(_('Number of unique users')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
+		plot_unique_users = group_line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='total_unique_users',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of unique users'),
+				title=_('Number of unique users viewing notes grouped by sharing types during period of time'),
+				period_breaks=period_breaks,
+				group_by='sharing',
+				minor_breaks=minor_period_breaks)
 
-		y_max = pd.Series.max(df['ratio']) + 1
-		plot_ratio = \
-				ggplot(df, aes(x='timestamp_period', y='ratio', colour='sharing')) + \
-				geom_line() + \
-				geom_point() + \
-				ggtitle(_('Ratio of notes viewed over unique user grouped by sharing type during time period')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_date(breaks=date_breaks(period_breaks), labels=date_format("%y-%m-%d")) + \
-				ylab(_('Ratio')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
+		plot_ratio = group_line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='ratio',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Ratio'),
+				title=_('Ratio of notes viewed grouped by sharing types over unique user on each available date'),
+				period_breaks=period_breaks,
+				group_by='sharing',
+				minor_breaks=minor_period_breaks)
 
 		return (plot_notes_viewed, plot_unique_users, plot_ratio)
 
@@ -369,14 +338,13 @@ class NotesViewTimeseriesPlot(object):
 		if users_df is None:
 			return ()
 
-		plot_users = \
-				ggplot(users_df, aes(x='username', y='number_of_notes_viewed')) + \
-				geom_histogram(stat="identity") + \
-				ggtitle(_('The most active users viewing notes')) + \
-				theme(title=element_text(size=10, face="bold"), axis_text_x=element_text(angle=15, hjust=1)) + \
-				scale_x_discrete('username') + \
-				ylab(_('Number of notes viewed')) + \
-				xlab(_('Username'))
+		plot_users = histogram_plot_x_axis_discrete(df=users_df,
+			x_axis_field='username' ,
+			y_axis_field='number_of_notes_viewed',
+			x_axis_label=_('Username'),
+			y_axis_label=_('Number of notes viewed'),
+			title=_('The most active users viewing notes'),
+			stat='identity')
 
 		return (plot_users,)
 
@@ -388,41 +356,35 @@ class NotesViewTimeseriesPlot(object):
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
-		y_max = pd.Series.max(df['total_notes_viewed']) + 1
-		plot_notes_viewed = \
-				ggplot(df, aes(x='timestamp_period', y='total_notes_viewed', colour='device_type')) + \
-				geom_line() + \
-				geom_point() + \
-				ggtitle(_('Number of notes viewed grouped by device type during period of time')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_date(breaks=date_breaks(period_breaks), labels=date_format("%y-%m-%d")) + \
-				ylab(_('Number of notes viewed')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
+		plot_notes_viewed = group_line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='total_notes_viewed',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of notes viewed'),
+				title=_('Number of notes viewed grouped by device types during period of time'),
+				period_breaks=period_breaks,
+				group_by='device_type',
+				minor_breaks=minor_period_breaks)
 
-		y_max = pd.Series.max(df['total_unique_users']) + 1
-		plot_unique_users = \
-				ggplot(df, aes(x='timestamp_period', y='total_unique_users', colour='device_type')) + \
-				geom_line() + \
-				geom_point() + \
-				ggtitle(_('Number of unique users viewing notes grouped by device type during period of time')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_date(breaks=date_breaks(period_breaks), labels=date_format("%y-%m-%d")) + \
-				ylab(_('Number of unique users')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
+		plot_unique_users = group_line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='total_unique_users',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of unique users'),
+				title=_('Number of unique users viewing notes grouped by device types during period of time'),
+				period_breaks=period_breaks,
+				group_by='device_type',
+				minor_breaks=minor_period_breaks)
 
-		y_max = pd.Series.max(df['ratio']) + 1
-		plot_ratio = \
-				ggplot(df, aes(x='timestamp_period', y='ratio', colour='device_type')) + \
-				geom_line() + \
-				geom_point() + \
-				ggtitle(_('Ratio of notes viewed over unique user grouped by device type during time period')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_date(breaks=date_breaks(period_breaks), labels=date_format("%y-%m-%d")) + \
-				ylab(_('Ratio')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
+		plot_ratio = group_line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='ratio',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Ratio'),
+				title=_('Ratio of notes viewed grouped by device types over unique user on each available date'),
+				period_breaks=period_breaks,
+				group_by='device_type',
+				minor_breaks=minor_period_breaks)
 
 		return (plot_notes_viewed, plot_unique_users, plot_ratio)
 
@@ -434,41 +396,35 @@ class NotesViewTimeseriesPlot(object):
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
-		y_max = pd.Series.max(df['total_notes_viewed']) + 1
-		plot_notes_viewed = \
-				ggplot(df, aes(x='timestamp_period', y='total_notes_viewed', colour='resource_type')) + \
-				geom_line() + \
-				geom_point() + \
-				ggtitle(_('Number of notes viewed grouped by resource type during period of time')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_date(breaks=date_breaks(period_breaks), labels=date_format("%y-%m-%d")) + \
-				ylab(_('Number of notes viewed')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
+		plot_notes_viewed = group_line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='total_notes_viewed',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of notes viewed'),
+				title=_('Number of notes viewed grouped by resource types during period of time'),
+				period_breaks=period_breaks,
+				group_by='resource_type',
+				minor_breaks=minor_period_breaks)
 
-		y_max = pd.Series.max(df['total_unique_users']) + 1
-		plot_unique_users = \
-				ggplot(df, aes(x='timestamp_period', y='total_unique_users', colour='resource_type')) + \
-				geom_line() + \
-				geom_point() + \
-				ggtitle(_('Number of unique users viewing notes grouped by resource type during period of time')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_date(breaks=date_breaks(period_breaks), labels=date_format("%y-%m-%d")) + \
-				ylab(_('Number of unique users')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
+		plot_unique_users = group_line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='total_unique_users',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of unique users'),
+				title=_('Number of unique users viewing notes grouped by resource types during period of time'),
+				period_breaks=period_breaks,
+				group_by='resource_type',
+				minor_breaks=minor_period_breaks)
 
-		y_max = pd.Series.max(df['ratio']) + 1
-		plot_ratio = \
-				ggplot(df, aes(x='timestamp_period', y='ratio', colour='resource_type')) + \
-				geom_line() + \
-				geom_point() + \
-				ggtitle(_('Ratio of notes viewed over unique user grouped by resource type during time period')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_date(breaks=date_breaks(period_breaks), labels=date_format("%y-%m-%d")) + \
-				ylab(_('Ratio')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
+		plot_ratio = group_line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='ratio',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Ratio'),
+				title=_('Ratio of notes viewed grouped by resource types over unique user on each available date'),
+				period_breaks=period_breaks,
+				group_by='resource_type',
+				minor_breaks=minor_period_breaks)
 
 		return (plot_notes_viewed, plot_unique_users, plot_ratio)
 
@@ -480,17 +436,15 @@ class NotesViewTimeseriesPlot(object):
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
-		y_max = pd.Series.max(df['number_of_unique_notes_viewed']) + 1
-		plot_unique_notes_viewed = \
-				ggplot(df, aes(x='timestamp_period', y='number_of_unique_notes_viewed', colour='sharing')) + \
-				geom_line() + \
-				geom_point() + \
-				ggtitle(_('Number of unique notes viewed grouped by sharing type during period of time')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_date(breaks=date_breaks(period_breaks), labels=date_format("%y-%m-%d")) + \
-				ylab(_('Number of notes viewed')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
+		plot_unique_notes_viewed = group_line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='number_of_unique_notes_viewed',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of notes viewed'),
+				title=_('Number of notes viewed grouped by sharing types during period of time'),
+				period_breaks=period_breaks,
+				group_by='sharing',
+				minor_breaks=minor_period_breaks)
 
 		return (plot_unique_notes_viewed,)
 
