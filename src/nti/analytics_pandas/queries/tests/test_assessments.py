@@ -53,5 +53,3 @@ class TestAssessments(AnalyticsPandasTestBase):
 		qsat = QuerySelfAssessmentsTaken(self.session)
 		dataframe = qsat.filter_by_course_id_and_period_of_time(start_date, end_date, course_id)
 		assert_that(len(dataframe.index), equal_to(5612))
-
-

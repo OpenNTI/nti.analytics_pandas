@@ -15,9 +15,9 @@ import numpy as np
 
 from nti.analytics_pandas.analysis.notes import NoteLikesTimeseries
 from nti.analytics_pandas.analysis.notes import NotesViewTimeseries
+from nti.analytics_pandas.analysis.notes import NotesEventsTimeseries
 from nti.analytics_pandas.analysis.notes import NotesCreationTimeseries
 from nti.analytics_pandas.analysis.notes import NoteFavoritesTimeseries
-from nti.analytics_pandas.analysis.notes import NotesEventsTimeseries
 
 from nti.analytics_pandas.utils import get_values_of_series_categorical_index_
 
@@ -181,4 +181,3 @@ class TestNotesEDA(AnalyticsPandasTestBase):
 		df = net.combine_all_events()
 		assert_that(len(df.columns), equal_to(5))
 		assert_that(len(df.index), equal_to(62))
-

@@ -112,25 +112,25 @@ class NotesCreationTimeseriesPlot(object):
 		nct = self.nct
 		dataframe = nct.dataframe
 		df = nct.analyze_device_types(dataframe)
-		
-		event_title =_('Number of notes created grouped by device types')
-		user_title =_('Number of unique users creating notes grouped by device types')
-		ratio_title =_('Ratio of notes created grouped by device types over unique user')
+
+		event_title = _('Number of notes created grouped by device types')
+		user_title = _('Number of unique users creating notes grouped by device types')
+		ratio_title = _('Ratio of notes created grouped by device types over unique user')
 		group_by = 'device_type'
 		device_plots = self.generate_group_by_plot(df, group_by, event_title, user_title, ratio_title, period_breaks, minor_period_breaks)
-		
+
 		return (device_plots,)
 
 	def analyze_resource_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		nct = self.nct
 		df = nct.analyze_resource_types()
-		
-		event_title =_('Number of notes created grouped by resource types')
-		user_title =_('Number of unique users creating notes grouped by resource types')
-		ratio_title =_('Ratio of notes created grouped by resource types over unique user')
+
+		event_title = _('Number of notes created grouped by resource types')
+		user_title = _('Number of unique users creating notes grouped by resource types')
+		ratio_title = _('Ratio of notes created grouped by resource types over unique user')
 		group_by = 'resource_type'
 		resource_plots = self.generate_group_by_plot(df, group_by, event_title, user_title, ratio_title, period_breaks, minor_period_breaks)
-		
+
 		return (resource_plots,)
 
 	def plot_the_most_active_users(self, max_rank_number=10):
@@ -153,10 +153,10 @@ class NotesCreationTimeseriesPlot(object):
 		nct = self.nct
 		dataframe = nct.dataframe
 		df = nct.analyze_sharing_types(dataframe)
-		
-		event_title =_('Number of notes created grouped by sharing types')
-		user_title =_('Number of unique users creating notes grouped by sharing types')
-		ratio_title =_('Ratio of notes created grouped by sharing types over unique user')
+
+		event_title = _('Number of notes created grouped by sharing types')
+		user_title = _('Number of unique users creating notes grouped by sharing types')
+		ratio_title = _('Ratio of notes created grouped by sharing types over unique user')
 		group_by = 'sharing'
 		sharing_plots = self.generate_group_by_plot(df, group_by, event_title, user_title, ratio_title, period_breaks, minor_period_breaks)
 
@@ -204,17 +204,17 @@ class NotesCreationTimeseriesPlot(object):
 		nct = self.nct
 		(sharing_df, device_df) = nct.analyze_notes_created_on_videos()
 
-		#generate sharing types plots
-		event_title =_('Number of notes created on videos grouped by sharing types')
-		user_title =_('Number of unique users creating notes on videos grouped by sharing types')
-		ratio_title =_('Ratio of notes created on videos grouped by sharing types over unique user')
+		# generate sharing types plots
+		event_title = _('Number of notes created on videos grouped by sharing types')
+		user_title = _('Number of unique users creating notes on videos grouped by sharing types')
+		ratio_title = _('Ratio of notes created on videos grouped by sharing types over unique user')
 		group_by = 'sharing'
 		sharing_plots = self.generate_group_by_plot(sharing_df, group_by, event_title, user_title, ratio_title, period_breaks, minor_period_breaks)
 
-		#generate device types plots
-		event_title =_('Number of notes created on videos grouped by device types')
-		user_title =_('Number of unique users creating notes on videos grouped by device types')
-		ratio_title =_('Ratio of notes created on videos grouped by device types over unique user')
+		# generate device types plots
+		event_title = _('Number of notes created on videos grouped by device types')
+		user_title = _('Number of unique users creating notes on videos grouped by device types')
+		ratio_title = _('Ratio of notes created on videos grouped by device types over unique user')
 		group_by = 'device_type'
 		device_plots = self.generate_group_by_plot(device_df, group_by, event_title, user_title, ratio_title, period_breaks, minor_period_breaks)
 

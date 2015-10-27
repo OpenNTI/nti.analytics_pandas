@@ -13,9 +13,9 @@ import pandas as pd
 
 from ..queries import QueryAssignmentViews
 from ..queries import QueryAssignmentsTaken
+from ..queries import QueryCourseEnrollments
 from ..queries import QuerySelfAssessmentViews
 from ..queries import QuerySelfAssessmentsTaken
-from ..queries import QueryCourseEnrollments
 
 from ..utils import cast_columns_as_category_
 
@@ -168,7 +168,7 @@ class AssignmentsTakenTimeseries(object):
 	"""
 
 	def __init__(self, session, start_date, end_date, course_id=None,
-				 with_resource_type=True, with_device_type=True, 
+				 with_resource_type=True, with_device_type=True,
 				 time_period_date=True, with_assignment_title=True):
 
 		self.session = session
@@ -238,17 +238,16 @@ class AssignmentsTakenTimeseries(object):
 		dataframe = self.dataframe[['assignment_title', 'assignment_taken_id']]
 		group_by_columns = ['assignment_title']
 		agg_columns = {'assignment_taken_id' : pd.Series.count}
-		
+
 		df = analyze_types_(dataframe, group_by_columns, agg_columns)
 		df.rename(columns={'assignment_taken_id' :'number_assignments_taken'}, inplace=True)
 
 		qce = QueryCourseEnrollments(self.session)
 		total_enrollments = qce.count_enrollments(self.course_id)
-		
+
 		df['ratio'] = df['number_assignments_taken'] / total_enrollments
 
 		return df
-
 
 class SelfAssessmentViewsTimeseries(object):
 	"""

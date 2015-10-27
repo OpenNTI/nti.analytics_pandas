@@ -240,13 +240,13 @@ class AssignmentsTakenTimeseriesPlot(object):
 		df = att.analyze_assignment_taken_over_total_enrollments()
 		df.reset_index(inplace=True)
 		plot = histogram_plot_x_axis_discrete(df=df,
-			x_axis_field='assignment_title' ,
-			y_axis_field='ratio',
-			x_axis_label=_('Assignments'),
-			y_axis_label=_('Ratio'),
-			title=_('Ratio of assignments taken over total enrollments'),
-			stat='bar')
-		return plot
+					x_axis_field='assignment_title' ,
+					y_axis_field='ratio',
+					x_axis_label=_('Assignments'),
+					y_axis_label=_('Ratio'),
+					title=_('Ratio of assignments taken over total enrollments'),
+					stat='bar')
+		return (plot,)
 
 class SelfAssessmentViewsTimeseriesPlot(object):
 

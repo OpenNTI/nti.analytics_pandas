@@ -234,5 +234,5 @@ class BookmarksTimeseriesPlot(object):
 			y_axis_label=_('Number of bookmarks created'),
 			title=_('The most active users creating bookmarks'),
 			stat='identity')
-		
+
 		return (plot_users,)

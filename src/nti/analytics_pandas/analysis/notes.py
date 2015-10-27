@@ -57,7 +57,7 @@ class NotesEventsTimeseries(object):
 		note_likes_df = nlt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
 		note_favorites_df = nft.explore_ratio_of_events_over_unique_users_based_timestamp_date()
 
-		df = pd.DataFrame(columns=[	'timestamp_period', 'total_events', 
+		df = pd.DataFrame(columns=[	'timestamp_period', 'total_events',
 									'total_unique_users', 'ratio', 'event_type'])
 
 		if notes_created_df is not None:
@@ -95,7 +95,7 @@ class NotesCreationTimeseries(object):
 	analyze the number of notes created given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date, course_id=None, 
+	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_resource_type=True, with_device_type=True, time_period_date=True):
 		self.session = session
 		qnc = self.query_notes_created = QueryNotesCreated(self.session)
@@ -122,7 +122,7 @@ class NotesCreationTimeseries(object):
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
 
-		categorical_columns = [	'note_id', 'resource_type', 'device_type', 
+		categorical_columns = [	'note_id', 'resource_type', 'device_type',
 								'user_id', 'sharing']
 		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
@@ -156,7 +156,7 @@ class NotesCreationTimeseries(object):
 
 	def analyze_resource_types(self):
 		"""
-		group notes created dataframe by timestamp_period and resource types 
+		group notes created dataframe by timestamp_period and resource types
 		count the number of notes created, unique users and ratio in each group
 		return the result as dataframe
 		"""
@@ -180,7 +180,7 @@ class NotesCreationTimeseries(object):
 		df = analyze_types_(dataframe, group_by_items, agg_columns)
 		df.rename(columns={'user_id'	:'number_of_unique_users',
 							'note_id'	:'number_of_notes_created'},
-					inplace=True)
+				  inplace=True)
 		df['ratio'] = df['number_of_notes_created'] / df['number_of_unique_users']
 		return df
 
@@ -193,7 +193,7 @@ class NotesCreationTimeseries(object):
 
 	def analyze_sharing_types(self, dataframe):
 		"""
-		group notes created dataframe by timestamp_period and sharing types 
+		group notes created dataframe by timestamp_period and sharing types
 		count the number of notes created, unique users and ratio in each group
 		return the result as dataframe
 		"""
@@ -214,7 +214,6 @@ class NotesCreationTimeseries(object):
 		sharing_df = self.analyze_sharing_types(dataframe)
 		device_df = self.analyze_device_types(dataframe)
 		return (sharing_df, device_df)
-
 
 class NotesViewTimeseries(object):
 	"""
@@ -287,8 +286,7 @@ class NotesViewTimeseries(object):
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
 		df.rename(columns={'user_id'	:'number_of_unique_users',
 							 'note_id'	:'number_of_unique_notes_viewed'},
-					inplace=True)
-
+				  inplace=True)
 		return df
 
 	def analyze_unique_events_based_on_resource_type(self):
@@ -305,7 +303,7 @@ class NotesViewTimeseries(object):
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
 		df.rename(columns={'user_id'	:'number_of_unique_users',
 							 'note_id'	:'number_of_unique_notes_viewed'},
-					inplace=True)
+				  inplace=True)
 		return df
 
 	def analyze_unique_events_based_on_sharing_type(self):
@@ -322,8 +320,7 @@ class NotesViewTimeseries(object):
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
 		df.rename(columns={'user_id'	:'number_of_unique_users',
 							 'note_id'	:'number_of_unique_notes_viewed'},
-					inplace=True)
-
+				  inplace=True)
 		return df
 
 	def analyze_total_events_based_on_device_type(self):
@@ -338,7 +335,7 @@ class NotesViewTimeseries(object):
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
 		df.rename(columns={ 'note_id'	:'total_notes_viewed',
 							'user_id'	:'total_unique_users'},
-					inplace=True)
+				  inplace=True)
 		df['ratio'] = df['total_notes_viewed'] / df['total_unique_users']
 		return df
 
@@ -354,14 +351,14 @@ class NotesViewTimeseries(object):
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
 		df.rename(columns={ 'note_id'	:'total_notes_viewed',
 							'user_id'	:'total_unique_users'},
-					inplace=True)
+				  inplace=True)
 		df['ratio'] = df['total_notes_viewed'] / df['total_unique_users']
 		return df
 
 	def analyze_total_events_based_on_sharing_type(self):
 		"""
 		group notes viewed dataframe by timestamp_period and sharing type
-		count the total number of notes views, unique users and ratio of number of 
+		count the total number of notes views, unique users and ratio of number of
 		notes viewed over unique users
 		"""
 		group_by_items = ['timestamp_period', 'sharing']
@@ -371,7 +368,7 @@ class NotesViewTimeseries(object):
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
 		df.rename(columns={	'note_id'	:'total_notes_viewed',
 							'user_id'	:'total_unique_users'},
-					inplace=True)
+				  inplace=True)
 
 		df['ratio'] = df['total_notes_viewed'] / df['total_unique_users']
 		return df
