@@ -145,16 +145,31 @@ class NotesCreationTimeseries(object):
 		return merge_df
 
 	def analyze_device_types(self, dataframe):
+		"""
+		group notes created dataframe by timestamp_period and device_type
+		count the number of notes created, unique users and ratio in each group
+		return the result as dataframe
+		"""
 		group_by_items = ['timestamp_period', 'device_type']
 		df = self.build_dataframe(dataframe, group_by_items)
 		return df
 
 	def analyze_resource_types(self):
+		"""
+		group notes created dataframe by timestamp_period and resource types 
+		count the number of notes created, unique users and ratio in each group
+		return the result as dataframe
+		"""
 		group_by_items = ['timestamp_period', 'resource_type']
 		df = self.build_dataframe(self.dataframe, group_by_items)
 		return df
 
 	def analyze_resource_device_types(self):
+		"""
+		group notes created dataframe by timestamp_period, resource and device types
+		count the number of notes created, unique users and ratio in each group
+		return the result as dataframe
+		"""
 		group_by_items = ['timestamp_period', 'resource_type', 'device_type']
 		df = self.build_dataframe(self.dataframe, group_by_items)
 		return df
@@ -177,6 +192,11 @@ class NotesCreationTimeseries(object):
 		return users_df
 
 	def analyze_sharing_types(self, dataframe):
+		"""
+		group notes created dataframe by timestamp_period and sharing types 
+		count the number of notes created, unique users and ratio in each group
+		return the result as dataframe
+		"""
 		group_by_items = ['timestamp_period', 'sharing']
 		df = self.build_dataframe(dataframe, group_by_items)
 		return df
