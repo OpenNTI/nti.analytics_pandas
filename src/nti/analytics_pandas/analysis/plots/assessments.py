@@ -15,6 +15,7 @@ import pandas as pd
 
 from .commons import line_plot_x_axis_date
 from .commons import group_line_plot_x_axis_date
+from .commons import histogram_plot_x_axis_discrete
 
 class AssessmentEventsTimeseriesPlot(object):
 
@@ -230,6 +231,22 @@ class AssignmentsTakenTimeseriesPlot(object):
 				minor_breaks=minor_period_breaks)
 
 		return (plot_assignment_views, plot_unique_users, plot_ratio)
+
+	def analyze_assignment_taken_over_total_enrollments(self):
+		"""
+		TODO : fix plot when there are more than 30 unique values mapped to x
+		"""
+		att = self.att
+		df = att.analyze_assignment_taken_over_total_enrollments()
+		df.reset_index(inplace=True)
+		plot = histogram_plot_x_axis_discrete(df=df,
+			x_axis_field='assignment_title' ,
+			y_axis_field='ratio',
+			x_axis_label=_('Assignments'),
+			y_axis_label=_('Ratio'),
+			title=_('Ratio of assignments taken over total enrollments'),
+			stat='bar')
+		return plot
 
 class SelfAssessmentViewsTimeseriesPlot(object):
 
