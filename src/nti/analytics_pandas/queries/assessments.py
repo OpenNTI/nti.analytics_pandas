@@ -97,6 +97,17 @@ class QueryAssignmentsTaken(TableQueryMixin):
 		new_df = add_device_type_(self.session, dataframe)
 		return new_df
 
+	def add_assignment_title(self, dataframe):
+		index = dataframe['assignment_id']
+		dataframe['assignment_title'] = index.apply(lambda x: self._label_assignment_title(x))
+		return dataframe
+
+	@classmethod
+	def _label_assignment_title(cls, assignment_id):
+		idx = assignment_id.rfind(':') + 1
+		title = assignment_id[idx:]
+		return title
+
 class QuerySelfAssessmentViews(TableQueryMixin):
 
 	table = SelfAssessmentViews
