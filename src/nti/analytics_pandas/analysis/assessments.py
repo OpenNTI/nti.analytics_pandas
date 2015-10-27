@@ -167,7 +167,8 @@ class AssignmentsTakenTimeseries(object):
 	"""
 
 	def __init__(self, session, start_date, end_date, course_id=None,
-				 with_resource_type=True, with_device_type=True, time_period_date=True):
+				 with_resource_type=True, with_device_type=True, 
+				 time_period_date=True, with_assignment_title=True):
 
 		self.session = session
 		qat = self.query_assignments_taken = QueryAssignmentsTaken(self.session)
@@ -188,6 +189,12 @@ class AssignmentsTakenTimeseries(object):
 
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
+
+		if with_assignment_title:
+			new_df = qat.add_assignment_title(self.dataframe)
+			if new_df is not None:
+				self.dataframe = new_df
+				categorical_columns.append('assignment_title')
 
 		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
