@@ -144,34 +144,29 @@ class NotesCreationTimeseries(object):
 										events_df, 'total_notes_created', unique_users_df)
 		return merge_df
 
-	def analyze_device_types(self):
+	def analyze_device_types(self, dataframe):
 		group_by_items = ['timestamp_period', 'device_type']
-		agg_columns = {	'user_id'	: pd.Series.nunique,
-						'note_id' 	: pd.Series.nunique}
-		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
-		df.rename(columns={'user_id'	:'number_of_unique_users',
-							 'note_id'	:'number_of_note_created'},
-					inplace=True)
+		df = self.build_dataframe(dataframe, group_by_items)
 		return df
 
 	def analyze_resource_types(self):
 		group_by_items = ['timestamp_period', 'resource_type']
-		agg_columns = {	'user_id'	: pd.Series.nunique,
-						'note_id' 	: pd.Series.nunique}
-		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
-		df.rename(columns={'user_id'	:'number_of_unique_users',
-							 'note_id'	:'number_of_note_created'},
-					inplace=True)
+		df = self.build_dataframe(self.dataframe, group_by_items)
 		return df
 
 	def analyze_resource_device_types(self):
 		group_by_items = ['timestamp_period', 'resource_type', 'device_type']
+		df = self.build_dataframe(self.dataframe, group_by_items)
+		return df
+
+	def build_dataframe(self, dataframe, group_by_items):
 		agg_columns = {	'user_id'	: pd.Series.nunique,
-						'note_id' 	: pd.Series.nunique}
-		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
+						'note_id' 	: pd.Series.count}
+		df = analyze_types_(dataframe, group_by_items, agg_columns)
 		df.rename(columns={'user_id'	:'number_of_unique_users',
-							 'note_id'	:'number_of_note_created'},
+							'note_id'	:'number_of_notes_created'},
 					inplace=True)
+		df['ratio'] = df['number_of_notes_created'] / df['number_of_unique_users']
 		return df
 
 	def get_the_most_active_users(self, max_rank_number=10):
@@ -181,16 +176,25 @@ class NotesCreationTimeseries(object):
 							inplace=True)
 		return users_df
 
-	def analyze_sharing_types(self):
+	def analyze_sharing_types(self, dataframe):
 		group_by_items = ['timestamp_period', 'sharing']
-		agg_columns = {	'user_id'	: pd.Series.nunique,
-						'note_id' 	: pd.Series.nunique}
-		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
-		df.rename(columns={'user_id'	:'number_of_unique_users',
-							 'note_id'	:'number_of_note_created'},
-					inplace=True)
-		df['ratio'] = df['number_of_note_created'] / df['number_of_unique_users']
+		df = self.build_dataframe(dataframe, group_by_items)
 		return df
+
+	def analyze_notes_created_on_videos(self):
+		"""
+		select only notes created on videos and return dataframes grouped by sharing and device types
+		Each dataframe has columns:
+		- number_of_notes_created
+		- number_of_unique_users
+		- ratio
+		"""
+		dataframe = self.dataframe[['timestamp_period', 'resource_type', 'device_type', 'note_id', 'user_id', 'sharing']]
+		dataframe = dataframe.loc[((dataframe['resource_type'] == 'video') | (dataframe['resource_type'] == 'slide video'))]
+		sharing_df = self.analyze_sharing_types(dataframe)
+		device_df = self.analyze_device_types(dataframe)
+		return (sharing_df, device_df)
+
 
 class NotesViewTimeseries(object):
 	"""

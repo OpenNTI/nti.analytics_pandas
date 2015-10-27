@@ -49,27 +49,38 @@ class TestNotesEDA(AnalyticsPandasTestBase):
 		ratio_df = nct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
 		assert_that(len(ratio_df.index), equal_to(20))
 
-		df = nct.analyze_device_types()
+		dataframe = nct.dataframe
+		df = nct.analyze_device_types(dataframe)
 		assert_that(df.columns, has_item('number_of_unique_users'))
-		assert_that(df.columns, has_item('number_of_note_created'))
-
+		assert_that(df.columns, has_item('number_of_notes_created'))
+		assert_that(df.columns, has_item('ratio'))
 
 		df = nct.analyze_resource_types()
 		assert_that(df.columns, has_item('number_of_unique_users'))
-		assert_that(df.columns, has_item('number_of_note_created'))
-
+		assert_that(df.columns, has_item('number_of_notes_created'))
+		assert_that(df.columns, has_item('ratio'))
 
 		df = nct.analyze_resource_device_types()
 		assert_that(df.columns, has_item('number_of_unique_users'))
-		assert_that(df.columns, has_item('number_of_note_created'))
+		assert_that(df.columns, has_item('number_of_notes_created'))
+		assert_that(df.columns, has_item('ratio'))
 
 		df = nct.get_the_most_active_users()
 		assert_that(len(df.index), equal_to(10))
 
-		df = nct.analyze_sharing_types()
+		df = nct.analyze_sharing_types(dataframe)
 		assert_that(df.columns, has_item('number_of_unique_users'))
-		assert_that(df.columns, has_item('number_of_note_created'))
+		assert_that(df.columns, has_item('number_of_notes_created'))
 		assert_that(df.columns, has_item('ratio'))
+
+		sharing_df, device_df = nct.analyze_notes_created_on_videos()
+		assert_that(sharing_df.columns, has_item('number_of_unique_users'))
+		assert_that(sharing_df.columns, has_item('number_of_notes_created'))
+		assert_that(sharing_df.columns, has_item('ratio'))
+
+		assert_that(device_df.columns, has_item('number_of_unique_users'))
+		assert_that(device_df.columns, has_item('number_of_notes_created'))
+		assert_that(device_df.columns, has_item('ratio'))
 
 	def test_notes_view_based_on_timestamp_date(self):
 		start_date = '2015-01-01'
