@@ -300,6 +300,50 @@ class ForumCommentLikesTimeseriesPlot(object):
 		"""
 		self.fclt = fclt
 
+	def analyze_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
+		"""
+		return plots of forum comment likes during period of time
+		it consists of:
+			- number of forums comment likes
+			- number of unique users
+			- ratio of forum comment likes over unique users
+		"""
+		fclt = self.fclt
+		df = fclt.analyze_events()
+		if df is None:
+			return ()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		plot_comment_likes = line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='number_of_likes',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of forum comment likes'),
+				title=_('Number of forums comment likes during period of time'),
+				period_breaks=period_breaks,
+				minor_breaks=minor_period_breaks)
+
+		plot_unique_users = line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='number_of_unique_users',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of unique users'),
+				title=_('Number of unique users liking forum comments during period of time'),
+				period_breaks=period_breaks,
+				minor_breaks=minor_period_breaks)
+
+		plot_ratio = line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='ratio',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Ratio'),
+				title=_('Ratio of forum comments liked over unique user on each available date'),
+				period_breaks=period_breaks,
+				minor_breaks=minor_period_breaks)
+
+		return (plot_comment_likes, plot_unique_users, plot_ratio)
+
 	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
 		plot the number of comments liked on each available date during time period.
@@ -327,12 +371,22 @@ class ForumCommentLikesTimeseriesPlot(object):
 				y_axis_field='number_of_unique_users',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Number of unique users'),
-				title=_('Number of unique users liking forum comments during period of time'),
+				title=_('Number of unique users liking forum comments grouped by device types'),
 				period_breaks=period_breaks,
 				group_by='device_type',
 				minor_breaks=minor_period_breaks)
 
-		return (plot_comment_likes, plot_unique_users)
+		plot_ratio = group_line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='ratio',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Ratio'),
+				title=_('Ratio of forum comments liked over unique user grouped by device types'),
+				period_breaks=period_breaks,
+				group_by='device_type',
+				minor_breaks=minor_period_breaks)
+
+		return (plot_comment_likes, plot_unique_users, plot_ratio)
 
 class ForumCommentFavoritesTimeseriesPlot(object):
 
@@ -341,6 +395,50 @@ class ForumCommentFavoritesTimeseriesPlot(object):
 		fcft = ForumCommentFavoritesTimeseries
 		"""
 		self.fcft = fcft
+
+	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
+		"""
+		return plots of forum comment favorites during period of time
+		it consists of:
+			- number of forums comment favorites
+			- number of unique users
+			- ratio of forum comment favorites over unique users
+		"""
+		fcft = self.fcft
+		df = fcft.analyze_events()
+		if df is None:
+			return ()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		plot_comment_favorites = line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='number_of_favorites',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of forum comment favorites'),
+				title=_('Number of forums comment favorites during period of time'),
+				period_breaks=period_breaks,
+				minor_breaks=minor_period_breaks)
+
+		plot_unique_users = line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='number_of_unique_users',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of unique users'),
+				title=_('Number of unique users voting forum comments as favorites during period of time'),
+				period_breaks=period_breaks,
+				minor_breaks=minor_period_breaks)
+
+		plot_ratio = line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='ratio',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Ratio'),
+				title=_('Ratio of forum comment favorites over unique user on each available date'),
+				period_breaks=period_breaks,
+				minor_breaks=minor_period_breaks)
+
+		return (plot_comment_favorites, plot_unique_users, plot_ratio)
 
 	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
