@@ -113,12 +113,17 @@ class NotesCreationTimeseriesPlot(object):
 		dataframe = nct.dataframe
 		df = nct.analyze_device_types(dataframe)
 
+		group_by = 'device_type'
 		event_title = _('Number of notes created grouped by device types')
 		user_title = _('Number of unique users creating notes grouped by device types')
 		ratio_title = _('Ratio of notes created grouped by device types over unique user')
-		group_by = 'device_type'
-		device_plots = self.generate_group_by_plot(df, group_by, event_title, user_title, ratio_title, period_breaks, minor_period_breaks)
-
+		device_plots = self.generate_group_by_plot(df,
+												   group_by,
+												   event_title,
+												   user_title,
+												   ratio_title,
+												   period_breaks,
+												   minor_period_breaks)
 		return (device_plots,)
 
 	def analyze_resource_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
@@ -129,7 +134,13 @@ class NotesCreationTimeseriesPlot(object):
 		user_title = _('Number of unique users creating notes grouped by resource types')
 		ratio_title = _('Ratio of notes created grouped by resource types over unique user')
 		group_by = 'resource_type'
-		resource_plots = self.generate_group_by_plot(df, group_by, event_title, user_title, ratio_title, period_breaks, minor_period_breaks)
+		resource_plots = self.generate_group_by_plot(df,
+													 group_by,
+													 event_title,
+													 user_title,
+													 ratio_title,
+													 period_breaks,
+													 minor_period_breaks)
 
 		return (resource_plots,)
 
@@ -158,11 +169,18 @@ class NotesCreationTimeseriesPlot(object):
 		user_title = _('Number of unique users creating notes grouped by sharing types')
 		ratio_title = _('Ratio of notes created grouped by sharing types over unique user')
 		group_by = 'sharing'
-		sharing_plots = self.generate_group_by_plot(df, group_by, event_title, user_title, ratio_title, period_breaks, minor_period_breaks)
+		sharing_plots = self.generate_group_by_plot(df,
+													group_by,
+													event_title,
+													user_title,
+													ratio_title,
+													period_breaks,
+													minor_period_breaks)
 
 		return (sharing_plots,)
 
-	def generate_group_by_plot(self, df, group_by, event_title, user_title, ratio_title, period_breaks='1 week', minor_period_breaks='1 day'):
+	def generate_group_by_plot(self, df, group_by, event_title, user_title, ratio_title,
+							   period_breaks='1 week', minor_period_breaks='1 day'):
 		if df is None:
 			return ()
 		df.reset_index(inplace=True)
@@ -205,19 +223,30 @@ class NotesCreationTimeseriesPlot(object):
 		(sharing_df, device_df) = nct.analyze_notes_created_on_videos()
 
 		# generate sharing types plots
+		group_by = 'sharing'
 		event_title = _('Number of notes created on videos grouped by sharing types')
 		user_title = _('Number of unique users creating notes on videos grouped by sharing types')
 		ratio_title = _('Ratio of notes created on videos grouped by sharing types over unique user')
-		group_by = 'sharing'
-		sharing_plots = self.generate_group_by_plot(sharing_df, group_by, event_title, user_title, ratio_title, period_breaks, minor_period_breaks)
+		sharing_plots = self.generate_group_by_plot(sharing_df,
+													group_by,
+													event_title,
+													user_title,
+													ratio_title,
+													period_breaks,
+													minor_period_breaks)
 
 		# generate device types plots
+		group_by = 'device_type'
 		event_title = _('Number of notes created on videos grouped by device types')
 		user_title = _('Number of unique users creating notes on videos grouped by device types')
 		ratio_title = _('Ratio of notes created on videos grouped by device types over unique user')
-		group_by = 'device_type'
-		device_plots = self.generate_group_by_plot(device_df, group_by, event_title, user_title, ratio_title, period_breaks, minor_period_breaks)
-
+		device_plots = self.generate_group_by_plot(device_df,
+												   group_by,
+												   event_title,
+												   user_title,
+												   ratio_title,
+												   period_breaks,
+												   minor_period_breaks)
 		return (sharing_plots, device_plots)
 
 class NotesViewTimeseriesPlot(object):

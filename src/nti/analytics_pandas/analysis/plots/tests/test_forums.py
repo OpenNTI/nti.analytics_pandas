@@ -7,16 +7,17 @@ __docformat__ = "restructuredtext en"
 # disable: accessing protected members, too many methods
 # pylint: disable=W0212,R0904
 
+from nti.analytics_pandas.analysis.forums import ForumsEventsTimeseries
 from nti.analytics_pandas.analysis.forums import ForumsCreatedTimeseries
 from nti.analytics_pandas.analysis.forums import ForumCommentLikesTimeseries
 from nti.analytics_pandas.analysis.forums import ForumsCommentsCreatedTimeseries
 from nti.analytics_pandas.analysis.forums import ForumCommentFavoritesTimeseries
-from nti.analytics_pandas.analysis.forums import ForumsEventsTimeseries
+
+from nti.analytics_pandas.analysis.plots.forums import ForumsEventsTimeseriesPlot
 from nti.analytics_pandas.analysis.plots.forums import ForumsCreatedTimeseriesPlot
 from nti.analytics_pandas.analysis.plots.forums import ForumCommentLikesTimeseriesPlot
 from nti.analytics_pandas.analysis.plots.forums import ForumsCommentsCreatedTimeseriesPlot
 from nti.analytics_pandas.analysis.plots.forums import ForumCommentFavoritesTimeseriesPlot
-from nti.analytics_pandas.analysis.plots.forums import ForumsEventsTimeseriesPlot
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 

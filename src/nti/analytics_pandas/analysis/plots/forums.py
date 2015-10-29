@@ -17,9 +17,8 @@ from .commons import line_plot_x_axis_date
 from .commons import group_line_plot_x_axis_date
 from .commons import histogram_plot_x_axis_discrete
 
-
 class ForumsEventsTimeseriesPlot(object):
-	
+
 	def __init__(self, fet):
 		"""
 		fet = ForumsEventsTimeseries

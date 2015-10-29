@@ -7,16 +7,17 @@ __docformat__ = "restructuredtext en"
 # disable: accessing protected members, too many methods
 # pylint: disable=W0212,R0904
 
-from nti.analytics_pandas.analysis.topics import TopicViewsTimeseries
-from nti.analytics_pandas.analysis.topics import TopicsCreationTimeseries
 from nti.analytics_pandas.analysis.topics import TopicLikesTimeseries
-from nti.analytics_pandas.analysis.topics import TopicFavoritesTimeseries
+from nti.analytics_pandas.analysis.topics import TopicViewsTimeseries
 from nti.analytics_pandas.analysis.topics import TopicsEventsTimeseries
-from nti.analytics_pandas.analysis.plots.topics import TopicViewsTimeseriesPlot
-from nti.analytics_pandas.analysis.plots.topics import TopicsCreationTimeseriesPlot
+from nti.analytics_pandas.analysis.topics import TopicsCreationTimeseries
+from nti.analytics_pandas.analysis.topics import TopicFavoritesTimeseries
+
 from nti.analytics_pandas.analysis.plots.topics import TopicLikesTimeseriesPlot
-from nti.analytics_pandas.analysis.plots.topics import TopicFavoritesTimeseriesPlot
+from nti.analytics_pandas.analysis.plots.topics import TopicViewsTimeseriesPlot
 from nti.analytics_pandas.analysis.plots.topics import TopicsEventsTimeseriesPlot
+from nti.analytics_pandas.analysis.plots.topics import TopicsCreationTimeseriesPlot
+from nti.analytics_pandas.analysis.plots.topics import TopicFavoritesTimeseriesPlot
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
@@ -61,7 +62,6 @@ class TestTopicViewsPlot(AnalyticsPandasTestBase):
 		tvt = TopicViewsTimeseries(self.session, start_date, end_date, course_id)
 		tvtp = TopicViewsTimeseriesPlot(tvt)
 		_ = tvtp.plot_the_most_active_users()
-		print(_)
 
 class TestTopicLikesPlot(AnalyticsPandasTestBase):
 

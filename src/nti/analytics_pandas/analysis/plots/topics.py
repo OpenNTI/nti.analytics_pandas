@@ -230,7 +230,6 @@ class TopicViewsTimeseriesPlot(object):
 
 		return (plot_users,)
 
-
 class TopicLikesTimeseriesPlot(object):
 
 	def __init__(self, tlt):
@@ -334,5 +333,3 @@ class TopicFavoritesTimeseriesPlot(object):
 				minor_breaks=minor_period_breaks)
 
 		return (plot_topic_favorites, plot_unique_users, plot_ratio)
-
-

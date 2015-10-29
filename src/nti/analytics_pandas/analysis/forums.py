@@ -271,7 +271,7 @@ class ForumCommentLikesTimeseries(object):
 		agg_columns = {	'comment_id'	: pd.Series.count,
 						'user_id'		: pd.Series.nunique}
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
-		if df is not None : 
+		if df is not None :
 			df.rename(columns={	'comment_id'	 :'number_of_likes',
 								'user_id'		 :'number_of_unique_users'},
 					  inplace=True)
