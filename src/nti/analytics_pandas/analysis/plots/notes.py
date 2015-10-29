@@ -241,8 +241,8 @@ class NotesViewTimeseriesPlot(object):
 				x_axis_field='timestamp_period',
 				y_axis_field='total_note_views',
 				x_axis_label=_('Date'),
-				y_axis_label=_('Number of notes created'),
-				title=_('Number of notes created during period of time'),
+				y_axis_label=_('Number of notes viewed'),
+				title=_('Number of notes viewed during period of time'),
 				period_breaks=period_breaks,
 				minor_breaks=minor_period_breaks)
 
