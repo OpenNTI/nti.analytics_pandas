@@ -256,16 +256,27 @@ class ForumCommentLikesTimeseries(object):
 										events_df, 'total_forum_comment_likes', unique_users_df)
 		return merge_df
 
+	def analyze_events(self):
+		group_by_items = ['timestamp_period']
+		df = self.build_dataframe(group_by_items)
+		return df
+
 	def analyze_device_types(self):
 		if 'device_type' in self.dataframe.columns:
 			group_by_items = ['timestamp_period', 'device_type']
-			agg_columns = {	'comment_id'	: pd.Series.count,
-							'user_id'		: pd.Series.nunique}
-			df = analyze_types_(self.dataframe, group_by_items, agg_columns)
+			df = self.build_dataframe(group_by_items)
+			return df
+
+	def build_dataframe(self, group_by_items):
+		agg_columns = {	'comment_id'	: pd.Series.count,
+						'user_id'		: pd.Series.nunique}
+		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
+		if df is not None : 
 			df.rename(columns={	'comment_id'	 :'number_of_likes',
 								'user_id'		 :'number_of_unique_users'},
 					  inplace=True)
-			return df
+			df['ratio'] = df['number_of_likes'] / df['number_of_unique_users']
+		return df
 
 class ForumCommentFavoritesTimeseries(object):
 	"""
@@ -309,13 +320,23 @@ class ForumCommentFavoritesTimeseries(object):
 									events_df, 'total_forum_comment_favorites', unique_users_df)
 		return merge_df
 
+	def analyze_events(self):
+		group_by_items = ['timestamp_period']
+		df = self.build_dataframe(group_by_items)
+		return df
+
 	def analyze_device_types(self):
 		if 'device_type' in self.dataframe.columns:
 			group_by_items = ['timestamp_period', 'device_type']
-			agg_columns = {	'comment_id'	: pd.Series.count,
-							'user_id'		: pd.Series.nunique }
-			df = analyze_types_(self.dataframe, group_by_items, agg_columns)
-			df.rename(columns={	'comment_id'	 :'number_of_favorites',
-								'user_id'		 :'number_of_unique_users'},
-					  inplace=True)
+			df = self.build_dataframe(group_by_items)
 			return df
+
+	def build_dataframe(self, group_by_items):
+		agg_columns = {	'comment_id'	: pd.Series.count,
+						'user_id'		: pd.Series.nunique}
+		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
+		df.rename(columns={	'comment_id'	 :'number_of_favorites',
+							'user_id'		 :'number_of_unique_users'},
+				  inplace=True)
+		df['ratio'] = df['number_of_favorites'] / df['number_of_unique_users']
+		return df
