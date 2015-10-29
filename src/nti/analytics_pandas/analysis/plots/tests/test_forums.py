@@ -75,6 +75,14 @@ class TestForumCommentLikesPlot(AnalyticsPandasTestBase):
 	def setUp(self):
 		super(TestForumCommentLikesPlot, self).setUp()
 
+	def test_analyze_forum_comment_likes(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		fclt = ForumCommentLikesTimeseries(self.session, start_date, end_date, course_id)
+		fcltp = ForumCommentLikesTimeseriesPlot(fclt)
+		_ = fcltp.analyze_events()
+
 	def test_analyze_device_types_forum_comment_likes(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'

@@ -203,3 +203,24 @@ class TestForumCommentsCreatedPlot(AnalyticsPandasTestBase):
 		fcct = ForumsCommentsCreatedTimeseries(self.session, start_date, end_date, course_id)
 		fcctp = ForumsCommentsCreatedTimeseriesPlot(fcct)
 		_ = fcctp.plot_the_most_active_users()
+
+class TestForumCommentLikesPlot(AnalyticsPandasTestBase):
+
+	def setUp(self):
+		super(TestForumCommentLikesPlot, self).setUp()
+
+	def test_analyze_forum_comment_likes(self):
+		start_date = '2015-10-05'
+		end_date = '2015-12-04'
+		course_id = ['1068', '1096', '1097', '1098', '1099']
+		fclt = ForumCommentLikesTimeseries(self.session, start_date, end_date, course_id)
+		fcltp = ForumCommentLikesTimeseriesPlot(fclt)
+		_ = fcltp.analyze_events(period_breaks='1 day', minor_period_breaks=None)
+
+	def test_analyze_device_types_forum_comment_likes(self):
+		start_date = '2015-10-05'
+		end_date = '2015-12-04'
+		course_id = ['1068', '1096', '1097', '1098', '1099']
+		fclt = ForumCommentLikesTimeseries(self.session, start_date, end_date, course_id)
+		fcltp = ForumCommentLikesTimeseriesPlot(fclt)
+		_ = fcltp.analyze_device_types(period_breaks='1 day', minor_period_breaks=None)
