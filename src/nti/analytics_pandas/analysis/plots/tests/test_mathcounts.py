@@ -272,3 +272,17 @@ class TestTopicsEventsPlot(AnalyticsPandasTestBase):
 		tet = TopicsEventsTimeseries(tct, tvt, tlt, tft)
 		tetp = TopicsEventsTimeseriesPlot(tet)
 		_ = tetp.explore_all_events(period_breaks='1 day', minor_period_breaks=None)
+
+class TestTopicsCreationPlot(AnalyticsPandasTestBase):
+
+	def setUp(self):
+		super(TestTopicsCreationPlot, self).setUp()
+
+	def test_explore_events_topics_created(self):
+		start_date = '2015-10-05'
+		end_date = '2015-12-04'
+		course_id = ['1068', '1096', '1097', '1098', '1099']
+		tct = TopicsCreationTimeseries(self.session, start_date, end_date, course_id)
+		tctp = TopicsCreationTimeseriesPlot(tct)
+		_ = tctp.explore_events(period_breaks='1 day', minor_period_breaks=None)
+		print(_)
