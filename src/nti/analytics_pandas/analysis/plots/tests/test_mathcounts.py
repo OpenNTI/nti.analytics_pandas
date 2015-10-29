@@ -12,7 +12,6 @@ from nti.analytics_pandas.analysis.notes import NotesViewTimeseries
 from nti.analytics_pandas.analysis.notes import NotesEventsTimeseries
 from nti.analytics_pandas.analysis.notes import NotesCreationTimeseries
 from nti.analytics_pandas.analysis.notes import NoteFavoritesTimeseries
-
 from nti.analytics_pandas.analysis.plots.notes import NotesViewTimeseriesPlot
 from nti.analytics_pandas.analysis.plots.notes import NotesEventsTimeseriesPlot
 from nti.analytics_pandas.analysis.plots.notes import NotesCreationTimeseriesPlot
@@ -23,11 +22,21 @@ from nti.analytics_pandas.analysis.forums import ForumsCommentsCreatedTimeseries
 from nti.analytics_pandas.analysis.forums import ForumCommentFavoritesTimeseries
 from nti.analytics_pandas.analysis.forums import ForumsEventsTimeseries
 from nti.analytics_pandas.analysis.plots.forums import ForumsCreatedTimeseriesPlot
-
 from nti.analytics_pandas.analysis.plots.forums import ForumCommentLikesTimeseriesPlot
 from nti.analytics_pandas.analysis.plots.forums import ForumsCommentsCreatedTimeseriesPlot
 from nti.analytics_pandas.analysis.plots.forums import ForumCommentFavoritesTimeseriesPlot
 from nti.analytics_pandas.analysis.plots.forums import ForumsEventsTimeseriesPlot
+
+from nti.analytics_pandas.analysis.topics import TopicViewsTimeseries
+from nti.analytics_pandas.analysis.topics import TopicsCreationTimeseries
+from nti.analytics_pandas.analysis.topics import TopicLikesTimeseries
+from nti.analytics_pandas.analysis.topics import TopicFavoritesTimeseries
+from nti.analytics_pandas.analysis.topics import TopicsEventsTimeseries
+from nti.analytics_pandas.analysis.plots.topics import TopicViewsTimeseriesPlot
+from nti.analytics_pandas.analysis.plots.topics import TopicsCreationTimeseriesPlot
+from nti.analytics_pandas.analysis.plots.topics import TopicLikesTimeseriesPlot
+from nti.analytics_pandas.analysis.plots.topics import TopicFavoritesTimeseriesPlot
+from nti.analytics_pandas.analysis.plots.topics import TopicsEventsTimeseriesPlot
 
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
@@ -246,3 +255,20 @@ class TestForumsCreatedPlot(AnalyticsPandasTestBase):
 		fct = ForumsCreatedTimeseries(self.session, start_date, end_date, course_id)
 		fctp = ForumsCreatedTimeseriesPlot(fct)
 		_ = fctp.analyze_device_types(period_breaks='1 day', minor_period_breaks=None)
+
+class TestTopicsEventsPlot(AnalyticsPandasTestBase):
+
+	def setUp(self):
+		super(TestTopicsEventsPlot, self).setUp()
+
+	def test_topics_events(self):
+		start_date = '2015-10-05'
+		end_date = '2015-12-04'
+		course_id = ['1068', '1096', '1097', '1098', '1099']
+		tct = TopicsCreationTimeseries(self.session, start_date, end_date, course_id)
+		tvt = TopicViewsTimeseries(self.session, start_date, end_date, course_id)
+		tlt = TopicLikesTimeseries(self.session, start_date, end_date, course_id)
+		tft = TopicFavoritesTimeseries(self.session, start_date, end_date, course_id)
+		tet = TopicsEventsTimeseries(tct, tvt, tlt, tft)
+		tetp = TopicsEventsTimeseriesPlot(tet)
+		_ = tetp.explore_all_events(period_breaks='1 day', minor_period_breaks=None)
