@@ -54,6 +54,15 @@ class TestTopicViewsPlot(AnalyticsPandasTestBase):
 		tvtp = TopicViewsTimeseriesPlot(tvt)
 		_ = tvtp.analyze_device_types(period_breaks='1 week', minor_period_breaks='1 day')
 
+	def test_plot_the_most_active_users(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		tvt = TopicViewsTimeseries(self.session, start_date, end_date, course_id)
+		tvtp = TopicViewsTimeseriesPlot(tvt)
+		_ = tvtp.plot_the_most_active_users()
+		print(_)
+
 class TestTopicLikesPlot(AnalyticsPandasTestBase):
 
 	def setUp(self):

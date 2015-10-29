@@ -332,6 +332,3 @@ class TestTopicFavoritesPlot(AnalyticsPandasTestBase):
 		tft = TopicFavoritesTimeseries(self.session, start_date, end_date, course_id)
 		tftp = TopicFavoritesTimeseriesPlot(tft)
 		_ = tftp.explore_events(period_breaks='1 day', minor_period_breaks=None)
-		print(_)
-
-

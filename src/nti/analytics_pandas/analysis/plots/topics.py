@@ -15,6 +15,7 @@ import pandas as pd
 
 from .commons import line_plot_x_axis_date
 from .commons import group_line_plot_x_axis_date
+from .commons import histogram_plot_x_axis_discrete
 
 class TopicsEventsTimeseriesPlot(object):
 
@@ -212,6 +213,22 @@ class TopicViewsTimeseriesPlot(object):
 				minor_breaks=minor_period_breaks)
 
 		return (plot_topics_viewed, plot_unique_users, plot_ratio)
+
+	def plot_the_most_active_users(self, max_rank_number=10):
+		tvt = self.tvt
+		users_df = tvt.get_the_most_active_users(max_rank_number)
+		if users_df is None:
+			return ()
+
+		plot_users = histogram_plot_x_axis_discrete(df=users_df,
+			x_axis_field='username' ,
+			y_axis_field='number_of_topics_viewed',
+			x_axis_label=_('Username'),
+			y_axis_label=_('Number of topics viewed'),
+			title=_('The most active users viewing topics'),
+			stat='identity')
+
+		return (plot_users,)
 
 
 class TopicLikesTimeseriesPlot(object):

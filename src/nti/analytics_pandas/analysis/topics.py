@@ -21,6 +21,10 @@ from .common import add_timestamp_period_
 from .common import explore_unique_users_based_timestamp_date_
 from .common import explore_number_of_events_based_timestamp_date_
 from .common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
+from .common import get_most_active_users_
+
+from ..utils import cast_columns_as_category_
+from ..utils import get_values_of_series_categorical_index_
 
 class TopicsEventsTimeseries(object):
 	"""
@@ -185,13 +189,18 @@ class TopicViewsTimeseries(object):
 		else:
 			self.dataframe = qtv.filter_by_period_of_time(start_date, end_date)
 
+		categorical_columns = [	'user_id', 'topic_id']
+
 		if with_device_type:
 			new_df = qtv.add_device_type(self.dataframe)
 			if new_df is not None:
 				self.dataframe = new_df
+				categorical_columns.append('device_type')
 
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
+
+		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
@@ -220,6 +229,13 @@ class TopicViewsTimeseries(object):
 					inplace=True)
 		df['ratio'] = df['number_of_topics_viewed'] / df['number_of_unique_users']
 		return df
+
+	def get_the_most_active_users(self, max_rank_number=10):
+		users_df = get_most_active_users_(self.dataframe, self.session, max_rank_number)
+		if users_df is not None:
+			users_df.rename(columns={'number_of_activities': 'number_of_topics_viewed'},
+							inplace=True)
+		return users_df
 
 class TopicFavoritesTimeseries(object):
 	"""
