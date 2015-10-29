@@ -174,6 +174,32 @@ class TestForumsEventsTimeseriesPlot(AnalyticsPandasTestBase):
 		fetp = ForumsEventsTimeseriesPlot(fet)
 		_ = fetp.explore_all_events(period_breaks='1 day', minor_period_breaks=None)
 
+class TestForumCommentsCreatedPlot(AnalyticsPandasTestBase):
 
+	def setUp(self):
+		super(TestForumCommentsCreatedPlot, self).setUp()
 
+	def test_explore_events_forums_comments_created(self):
+		start_date = '2015-10-05'
+		end_date = '2015-12-04'
+		course_id = ['1068', '1096', '1097', '1098', '1099']
+		fcct = ForumsCommentsCreatedTimeseries(self.session, start_date, end_date, course_id)
+		fcctp = ForumsCommentsCreatedTimeseriesPlot(fcct)
+		_ = fcctp.explore_events(period_breaks='1 day', minor_period_breaks=None)
+		
 
+	def test_analyze_device_types_forums_comments_created(self):
+		start_date = '2015-10-05'
+		end_date = '2015-12-04'
+		course_id = ['1068', '1096', '1097', '1098', '1099']
+		fcct = ForumsCommentsCreatedTimeseries(self.session, start_date, end_date, course_id)
+		fcctp = ForumsCommentsCreatedTimeseriesPlot(fcct)
+		_ = fcctp.analyze_device_types(period_breaks='1 day', minor_period_breaks=None)
+
+	def test_the_most_active_users(self):
+		start_date = '2015-10-05'
+		end_date = '2015-12-04'
+		course_id = ['1068', '1096', '1097', '1098', '1099']
+		fcct = ForumsCommentsCreatedTimeseries(self.session, start_date, end_date, course_id)
+		fcctp = ForumsCommentsCreatedTimeseriesPlot(fcct)
+		_ = fcctp.plot_the_most_active_users()
