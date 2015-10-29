@@ -186,7 +186,7 @@ class TopicViewsTimeseriesPlot(object):
 				y_axis_field='number_of_topics_viewed',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Number of topics viewed'),
-				title=_('Number of bookmarks created grouped by device type during period of time'),
+				title=_('Number of topics viewed grouped by device type during period of time'),
 				period_breaks=period_breaks,
 				group_by='device_type',
 				minor_breaks=minor_period_breaks)
