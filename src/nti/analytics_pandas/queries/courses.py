@@ -9,6 +9,8 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
+from sqlalchemy import and_
+
 from nti.analytics_database.root_context import Courses
 
 from .mixins import TableQueryMixin
@@ -50,5 +52,13 @@ class QueryCourses(TableQueryMixin):
 	def get_context_name(self, context_ids):
 		c = self.table
 		query = self.session.query(c.context_id, c.context_name).filter(c.context_id.in_(context_ids))
+		dataframe = orm_dataframe(query, self.columns)
+		return dataframe
+
+	def get_course_id(self, context_name, start_date=None, end_date=None):
+		c = self.table
+		query = self.session.query(c.context_id).filter(c.context_name.like(context_name))
+		if start_date is not None and end_date is not None:
+			query = query.filter(and_(c.start_date >= start_date, c.end_date <= end_date))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
