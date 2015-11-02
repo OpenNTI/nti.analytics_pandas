@@ -78,6 +78,7 @@ class TestForumCommentsCreatedPlot(AnalyticsPandasTestBase):
 		fcct = ForumsCommentsCreatedTimeseries(self.session, start_date, end_date, course_id)
 		fcctp = ForumsCommentsCreatedTimeseriesPlot(fcct)
 		_ = fcctp.analyze_comments_per_section()
+		print(_)
 
 class TestForumCommentLikesPlot(AnalyticsPandasTestBase):
 

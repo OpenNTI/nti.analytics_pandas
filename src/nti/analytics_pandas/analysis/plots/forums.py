@@ -240,8 +240,11 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 			title_event = 'Number of forum comments created in %s' %(context_name)
 			title_users = 'Number of unique users creating forum comments in %s' %(context_name)
 			title_ratio = 'Ratio of forums comments created over unique user in %s' %(context_name) 
-			section_plots = self.generate_plots(new_df, period_breaks, minor_period_breaks, 
-												title_event, title_users, title_ratio)
+			title_avg_length = 'Average forums comments length on each available date in %s' %(context_name)
+			section_plots = self.generate_plots(new_df, 
+												period_breaks, minor_period_breaks, 
+												title_event, title_users, 
+												title_ratio, title_avg_length)
 			plots.append(section_plots)
 		return (plots)
 
@@ -250,7 +253,8 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 							minor_period_breaks, 
 							title_event, 
 							title_users,
-							title_ratio):
+							title_ratio,
+							title_avg_length):
 		plot_forum_comments_created = line_plot_x_axis_date(df=df,
 				x_axis_field='timestamp_period',
 				y_axis_field='number_of_comment_created',
@@ -275,6 +279,15 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 				x_axis_label=_('Date'),
 				y_axis_label=_('Ratio'),
 				title=title_ratio,
+				period_breaks=period_breaks,
+				minor_breaks=minor_period_breaks)
+
+		plot_average_comment_length = line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='average_comment_length',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Ratio'),
+				title=title_avg_length,
 				period_breaks=period_breaks,
 				minor_breaks=minor_period_breaks)
 
