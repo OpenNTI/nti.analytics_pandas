@@ -182,40 +182,21 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 			- ratio of forum comment creation over unique users
 		"""
 		fcct = self.fcct
-		df = fcct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		df = fcct.analyze_events()
 		if df is None:
 			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
-		plot_forum_comments_created = line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='total_forums_comments_created',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of forum comments created'),
-				title=_('Number of forums created during period of time'),
-				period_breaks=period_breaks,
-				minor_breaks=minor_period_breaks)
+		title_event = _('Number of forums comments created during period of time')
+		title_users = _('Number of unique users creating forum comments during period of time')
+		title_ratio = _('Ratio of forums comments created over unique user on each available date')
+		title_avg_length = _('Average forums comments length on each available date')
 
-		plot_unique_users = line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='total_unique_users',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of unique users'),
-				title=_('Number of unique users creating forum comments during period of time'),
-				period_breaks=period_breaks,
-				minor_breaks=minor_period_breaks)
-
-		plot_ratio = line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='ratio',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Ratio'),
-				title=_('Ratio of forums comments created over unique user on each available date'),
-				period_breaks=period_breaks,
-				minor_breaks=minor_period_breaks)
-
-		return (plot_forum_comments_created, plot_unique_users, plot_ratio)
+		plots = self.generate_plots(df, period_breaks, minor_period_breaks,
+									title_event, title_users,
+									title_ratio, title_avg_length)
+		return (plots)
 
 	def analyze_comments_per_section(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
@@ -291,7 +272,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 				period_breaks=period_breaks,
 				minor_breaks=minor_period_breaks)
 
-		return (plot_forum_comments_created, plot_unique_users, plot_ratio)
+		return (plot_forum_comments_created, plot_unique_users, plot_ratio, plot_average_comment_length)
 
 	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
