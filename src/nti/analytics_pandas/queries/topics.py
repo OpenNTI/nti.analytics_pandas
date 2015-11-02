@@ -17,6 +17,7 @@ from nti.analytics_database.boards import TopicFavorites
 from .mixins import TableQueryMixin
 
 from .common import add_device_type_
+from .common import add_context_name_
 
 from . import orm_dataframe
 
@@ -39,12 +40,17 @@ class QueryTopicsCreated(TableQueryMixin):
 		query = self.session.query(tc.timestamp,
 								   tc.user_id,
 								   tc.session_id,
-								   tc.topic_ds_id).filter(tc.timestamp.between(start_date, end_date)).filter(tc.course_id.in_(course_id))
+								   tc.topic_ds_id,
+								   tc.course_id).filter(tc.timestamp.between(start_date, end_date)).filter(tc.course_id.in_(course_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
 	def add_device_type(self, dataframe):
 		new_df = add_device_type_(self.session, dataframe)
+		return new_df
+
+	def add_context_name(self, dataframe, course_id):
+		new_df = add_context_name_(self.session, dataframe, course_id)
 		return new_df
 
 

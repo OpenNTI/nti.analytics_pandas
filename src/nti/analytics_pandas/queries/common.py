@@ -11,6 +11,7 @@ logger = __import__('logging').getLogger(__name__)
 
 import numpy as np
 
+from .courses import QueryCourses
 from .resources import QueryResources
 
 from .sessions import QuerySessions
@@ -50,3 +51,10 @@ def add_device_type_(session, dataframe):
 
 		new_df = dataframe.merge(session_df, how='left').merge(user_agent_df, how='left')
 		return new_df
+
+def add_context_name_(session, dataframe, course_ids):
+	qc = QueryCourses(session)
+	context_df = qc.get_context_name(course_ids)
+	context_df.rename(columns={'context_id':'course_id'}, inplace=True)
+	new_df = dataframe.merge(context_df, how='left')
+	return new_df

@@ -51,6 +51,7 @@ class TestForumsCreatedEDA(AnalyticsPandasTestBase):
 		end_date = '2015-05-31'
 		course_id = ['388']
 		fcct = ForumsCommentsCreatedTimeseries(self.session, start_date, end_date, course_id)
+		assert_that(fcct.dataframe.columns, has_item('context_name'))
 
 		events_df = fcct.explore_number_of_events_based_timestamp_date()
 		assert_that(len(events_df.index), equal_to(70))

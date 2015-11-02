@@ -15,6 +15,7 @@ from nti.analytics_database.boards import ForumCommentsCreated
 from nti.analytics_database.boards import ForumCommentFavorites
 
 from .common import add_device_type_
+from .common import add_context_name_
 
 from .mixins import TableQueryMixin
 
@@ -84,12 +85,17 @@ class QueryForumsCommentsCreated(TableQueryMixin):
 								   fcc.parent_id,
 								   fcc.parent_user_id,
 								   fcc.is_flagged,
-								   fcc.deleted).filter(fcc.timestamp.between(start_date, end_date)).filter(fcc.course_id.in_(course_id))
+								   fcc.deleted,
+								   fcc.course_id).filter(fcc.timestamp.between(start_date, end_date)).filter(fcc.course_id.in_(course_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
 	def add_device_type(self, dataframe):
 		new_df = add_device_type_(self.session, dataframe)
+		return new_df
+
+	def add_context_name(self, dataframe, course_id):
+		new_df = add_context_name_(self.session, dataframe, course_id)
 		return new_df
 
 class QueryForumCommentFavorites(TableQueryMixin):

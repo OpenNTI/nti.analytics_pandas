@@ -18,6 +18,8 @@ from .assessments import QuerySelfAssessmentsTaken
 
 from .bookmarks import QueryBookmarksCreated
 
+from .courses import QueryCourses
+
 from .enrollments import QueryCourseDrops
 from .enrollments import QueryEnrollmentTypes
 from .enrollments import QueryCourseEnrollments
