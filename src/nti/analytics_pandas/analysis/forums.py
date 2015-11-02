@@ -197,6 +197,11 @@ class ForumsCommentsCreatedTimeseries(object):
 									events_df, 'total_forums_comments_created', unique_users_df)
 		return merge_df
 
+	def analyze_events(self):
+		group_by_items = ['timestamp_period']
+		df = self.build_dataframe(group_by_items)
+		return df
+
 	def analyze_device_types(self):
 		if 'device_type' in self.dataframe.columns:
 			group_by_items = ['timestamp_period', 'device_type']
