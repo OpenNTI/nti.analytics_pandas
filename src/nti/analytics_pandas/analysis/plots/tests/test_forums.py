@@ -79,6 +79,14 @@ class TestForumCommentsCreatedPlot(AnalyticsPandasTestBase):
 		fcctp = ForumsCommentsCreatedTimeseriesPlot(fcct)
 		_ = fcctp.analyze_comments_per_section()
 
+	def test_analyze_comments_per_section_2(self):
+		start_date = '2015-10-05'
+		end_date = '2015-12-04'
+		course_id = ['1068', '1096', '1097', '1098', '1099']
+		fcct = ForumsCommentsCreatedTimeseries(self.session, start_date, end_date, course_id)
+		fcctp = ForumsCommentsCreatedTimeseriesPlot(fcct)
+		_ = fcctp.analyze_comments_per_section(period_breaks='1 day', minor_period_breaks=None)
+
 class TestForumCommentLikesPlot(AnalyticsPandasTestBase):
 
 	def setUp(self):

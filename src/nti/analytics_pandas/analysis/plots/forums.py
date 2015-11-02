@@ -215,6 +215,19 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		course_ids = np.unique(df['course_id'].values.ravel())
 		plots = []
+
+		if len(course_ids) > 1:
+			title_event = _('Number of forum comments created')
+			title_users = _('Number of unique users creating forum comments')
+			title_ratio = _('Ratio of forums comments created over unique user')
+			title_avg_length = _('Average forums comments length on each available date')
+			group_by ='context_name'
+			all_section_plots = self.generate_group_by_plots(df, group_by,
+															period_breaks, minor_period_breaks,
+															title_event, title_users,
+															title_ratio, title_avg_length)
+			plots.append(all_section_plots)
+
 		for course_id in course_ids:
 			new_df = df[df['course_id'] == course_id]
 			context_name = new_df.iloc[0]['context_name']
