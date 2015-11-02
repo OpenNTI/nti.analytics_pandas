@@ -176,7 +176,7 @@ class ForumsCommentsCreatedTimeseries(object):
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
 
-		categorical_columns = ['forum_id', 'parent_user_id', 'device_type', 'user_id', 'context_name']
+		categorical_columns = ['forum_id', 'parent_user_id', 'device_type', 'user_id', 'course_id','context_name']
 		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def explore_number_of_events_based_timestamp_date(self):
@@ -200,17 +200,28 @@ class ForumsCommentsCreatedTimeseries(object):
 	def analyze_device_types(self):
 		if 'device_type' in self.dataframe.columns:
 			group_by_items = ['timestamp_period', 'device_type']
-			agg_columns = {	'comment_id'	: pd.Series.nunique,
-							'user_id'		: pd.Series.nunique,
-							'comment_length': np.mean,
-							'like_count'	: np.sum,
-							'favorite_count': np.sum}
-			df = analyze_types_(self.dataframe, group_by_items, agg_columns)
-			df.rename(columns={	'comment_id'	 :'number_of_comment_created',
-								'user_id'		 :'number_of_unique_users',
-								'comment_length' :'average_comment_length'},
-					  inplace=True)
+			df = self.build_dataframe(group_by_items)
 			return df
+
+	def analyze_comments_per_section(self):
+		if 'course_id' in self.dataframe.columns:
+			group_by_items = ['timestamp_period', 'course_id', 'context_name']
+			df = self.build_dataframe(group_by_items)
+			return df
+
+	def build_dataframe(self, group_by_items):
+		agg_columns = {	'comment_id'	: pd.Series.count,
+						'user_id'		: pd.Series.nunique,
+						'comment_length': np.mean,
+						'like_count'	: np.sum,
+						'favorite_count': np.sum}
+		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
+		df.rename(columns={	'comment_id'	 :'number_of_comment_created',
+							'user_id'		 :'number_of_unique_users',
+							'comment_length' :'average_comment_length'},
+				  inplace=True)
+		df['ratio'] = df['number_of_comment_created'] / df['number_of_unique_users']
+		return df
 
 	def get_the_most_active_users(self, max_rank_number=10):
 		users_df = get_most_active_users_(self.dataframe, self.session, max_rank_number)

@@ -74,6 +74,11 @@ class TestForumsCreatedEDA(AnalyticsPandasTestBase):
 		most_active_users_df = fcct.get_the_most_active_users(max_rank_number=10)
 		assert_that(len(most_active_users_df.index), equal_to(10))
 
+		df = fcct.analyze_comments_per_section()
+		assert_that(df.columns, has_item('number_of_comment_created'))
+		assert_that(df.columns, has_item('number_of_unique_users'))
+		assert_that(df.columns, has_item('ratio'))
+
 	def test_forum_comment_likes_based_on_timestamp_date(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
