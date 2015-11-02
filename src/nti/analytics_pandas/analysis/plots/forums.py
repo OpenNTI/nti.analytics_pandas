@@ -12,6 +12,7 @@ logger = __import__('logging').getLogger(__name__)
 from .. import MessageFactory as _
 
 import pandas as pd
+
 import numpy as np
 
 from .commons import line_plot_x_axis_date
@@ -221,31 +222,31 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 			title_users = _('Number of unique users creating forum comments')
 			title_ratio = _('Ratio of forums comments created over unique user')
 			title_avg_length = _('Average forums comments length on each available date')
-			group_by ='context_name'
+			group_by = 'context_name'
 			all_section_plots = self.generate_group_by_plots(df, group_by,
-															period_breaks, minor_period_breaks,
-															title_event, title_users,
-															title_ratio, title_avg_length)
+															 period_breaks, minor_period_breaks,
+															 title_event, title_users,
+															 title_ratio, title_avg_length)
 			plots.append(all_section_plots)
 
 		for course_id in course_ids:
 			new_df = df[df['course_id'] == course_id]
 			context_name = new_df.iloc[0]['context_name']
-			title_event = 'Number of forum comments created in %s' %(context_name)
-			title_users = 'Number of unique users creating forum comments in %s' %(context_name)
-			title_ratio = 'Ratio of forums comments created over unique user in %s' %(context_name) 
-			title_avg_length = 'Average forums comments length on each available date in %s' %(context_name)
-			section_plots = self.generate_plots(new_df, 
-												period_breaks, minor_period_breaks, 
-												title_event, title_users, 
+			title_event = 'Number of forum comments created in %s' % (context_name)
+			title_users = 'Number of unique users creating forum comments in %s' % (context_name)
+			title_ratio = 'Ratio of forums comments created over unique user in %s' % (context_name)
+			title_avg_length = 'Average forums comments length on each available date in %s' % (context_name)
+			section_plots = self.generate_plots(new_df,
+												period_breaks, minor_period_breaks,
+												title_event, title_users,
 												title_ratio, title_avg_length)
 			plots.append(section_plots)
 		return (plots)
 
-	def generate_plots(self,df, 
-							period_breaks, 
-							minor_period_breaks, 
-							title_event, 
+	def generate_plots(self, df,
+							period_breaks,
+							minor_period_breaks,
+							title_event,
 							title_users,
 							title_ratio,
 							title_avg_length):
@@ -254,7 +255,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 				y_axis_field='number_of_comment_created',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Number of forum comments created'),
-				title = title_event,
+				title=title_event,
 				period_breaks=period_breaks,
 				minor_breaks=minor_period_breaks)
 
@@ -263,7 +264,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 				y_axis_field='number_of_unique_users',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Number of unique users'),
-				title=title_users, 
+				title=title_users,
 				period_breaks=period_breaks,
 				minor_breaks=minor_period_breaks)
 
@@ -287,11 +288,11 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 
 		return (plot_forum_comments_created, plot_unique_users, plot_ratio, plot_average_comment_length)
 
-	def generate_group_by_plots(self,df, 
+	def generate_group_by_plots(self, df,
 								group_by,
-								period_breaks, 
-								minor_period_breaks, 
-								title_event, 
+								period_breaks,
+								minor_period_breaks,
+								title_event,
 								title_users,
 								title_ratio,
 								title_avg_length):
@@ -303,7 +304,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 				y_axis_label=_('Number of forum comments created'),
 				title=title_event,
 				period_breaks=period_breaks,
-				group_by= group_by,
+				group_by=group_by,
 				minor_breaks=minor_period_breaks)
 
 		plot_unique_users = group_line_plot_x_axis_date(df=df,
@@ -313,7 +314,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 				y_axis_label=_('Number of unique users'),
 				title=title_users,
 				period_breaks=period_breaks,
-				group_by= group_by,
+				group_by=group_by,
 				minor_breaks=minor_period_breaks)
 
 		plot_ratio = group_line_plot_x_axis_date(df=df,
@@ -359,10 +360,10 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 		title_ratio = _('Ratio of forums comments created over unique user on each available date')
 		title_avg_length = _('Average forums comments length on each available date')
 		group_by = 'device_type'
-		plots = self.generate_group_by_plots(df,group_by, 
-											period_breaks, minor_period_breaks,
-											title_event, title_users,
-											title_ratio, title_avg_length)
+		plots = self.generate_group_by_plots(df, group_by,
+											 period_breaks, minor_period_breaks,
+											 title_event, title_users,
+											 title_ratio, title_avg_length)
 		return (plots)
 
 	def plot_the_most_active_users(self, max_rank_number=10):
