@@ -12,6 +12,7 @@ logger = __import__('logging').getLogger(__name__)
 from .. import MessageFactory as _
 
 import pandas as pd
+import numpy as np
 
 from .commons import line_plot_x_axis_date
 from .commons import group_line_plot_x_axis_date
@@ -218,7 +219,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 
 	def analyze_comments_per_section(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
-		return scatter plots of forum comments creation grouped by device_type during period of time
+		return scatter plots of forum comments creation grouped by course section during period of time
 		it consists of:
 			- number of forums comment creation
 			- number of unique users
@@ -229,8 +230,55 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 		df = fcct.analyze_comments_per_section()
 		if df is None:
 			return()
-		# TODO: complete
-		return ()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		course_ids = np.unique(df['course_id'].values.ravel())
+		plots = []
+		for course_id in course_ids:
+			new_df = df[df['course_id'] == course_id]
+			context_name = new_df.iloc[0]['context_name']
+			title_event = 'Number of forum comments created in %s' %(context_name)
+			title_users = 'Number of unique users creating forum comments in %s' %(context_name)
+			title_ratio = 'Ratio of forums comments created over unique user in %s' %(context_name) 
+			section_plots = self.generate_plots(new_df, period_breaks, minor_period_breaks, 
+												title_event, title_users, title_ratio)
+			plots.append(section_plots)
+		return (plots)
+
+	def generate_plots(self,df, 
+							period_breaks, 
+							minor_period_breaks, 
+							title_event, 
+							title_users,
+							title_ratio):
+		plot_forum_comments_created = line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='number_of_comment_created',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of forum comments created'),
+				title = title_event,
+				period_breaks=period_breaks,
+				minor_breaks=minor_period_breaks)
+
+		plot_unique_users = line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='number_of_unique_users',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of unique users'),
+				title=title_users, 
+				period_breaks=period_breaks,
+				minor_breaks=minor_period_breaks)
+
+		plot_ratio = line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='ratio',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Ratio'),
+				title=title_ratio,
+				period_breaks=period_breaks,
+				minor_breaks=minor_period_breaks)
+
+		return (plot_forum_comments_created, plot_unique_users, plot_ratio)
 
 	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
@@ -247,7 +295,6 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
-		df['ratio'] = df['number_of_comment_created'] / df['number_of_unique_users']
 
 		plot_forum_comments_created = group_line_plot_x_axis_date(df=df,
 				x_axis_field='timestamp_period',
