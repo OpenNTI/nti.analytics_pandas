@@ -216,6 +216,21 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 
 		return (plot_forum_comments_created, plot_unique_users, plot_ratio)
 
+	def analyze_comments_per_section(self, period_breaks='1 week', minor_period_breaks='1 day'):
+		"""
+		return scatter plots of forum comments creation grouped by device_type during period of time
+		it consists of:
+			- number of forums comment creation
+			- number of unique users
+			- ratio of forum comment creation over unique users
+			- average comment length
+		"""
+		fcct = self.fcct
+		df = fcct.analyze_comments_per_section()
+		if df is None:
+			return()
+		
+
 	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
 		return scatter plots of forum comments creation grouped by device_type during period of time
