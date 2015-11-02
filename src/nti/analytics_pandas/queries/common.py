@@ -12,6 +12,7 @@ logger = __import__('logging').getLogger(__name__)
 import numpy as np
 
 from .courses import QueryCourses
+
 from .resources import QueryResources
 
 from .sessions import QuerySessions

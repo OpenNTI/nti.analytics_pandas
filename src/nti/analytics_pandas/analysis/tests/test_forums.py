@@ -23,9 +23,6 @@ from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
 class TestForumsCreatedEDA(AnalyticsPandasTestBase):
 
-	def setUp(self):
-		super(TestForumsCreatedEDA, self).setUp()
-
 	def test_forums_created_based_on_timestamp_date(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'

@@ -152,7 +152,7 @@ class ForumsCommentsCreatedTimeseries(object):
 
 	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_device_type=True, time_period_date=True,
-				 with_context_name = True):
+				 with_context_name=True):
 
 		self.session = session
 		qfcc = self.query_forums_comments_created = QueryForumsCommentsCreated(self.session)
@@ -176,7 +176,7 @@ class ForumsCommentsCreatedTimeseries(object):
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
 
-		categorical_columns = ['forum_id', 'parent_user_id', 'device_type', 'user_id', 'course_id','context_name']
+		categorical_columns = ['forum_id', 'parent_user_id', 'device_type', 'user_id', 'course_id', 'context_name']
 		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def explore_number_of_events_based_timestamp_date(self):

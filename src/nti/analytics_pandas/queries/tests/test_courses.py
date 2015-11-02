@@ -8,17 +8,14 @@ __docformat__ = "restructuredtext en"
 # pylint: disable=W0212,R0904
 
 from hamcrest import equal_to
-from hamcrest import assert_that
 from hamcrest import has_item
+from hamcrest import assert_that
 
 from nti.analytics_pandas.queries.courses import QueryCourses
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
 class TestCourses(AnalyticsPandasTestBase):
-
-	def setUp(self):
-		super(TestCourses, self).setUp()
 
 	def test_filter_by_context_name(self):
 		qc = QueryCourses(self.session)
@@ -61,4 +58,3 @@ class TestCourses(AnalyticsPandasTestBase):
 		assert_that(course_ids, has_item(1097))
 		assert_that(course_ids, has_item(1098))
 		assert_that(course_ids, has_item(1099))
-

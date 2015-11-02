@@ -53,7 +53,6 @@ class QueryTopicsCreated(TableQueryMixin):
 		new_df = add_context_name_(self.session, dataframe, course_id)
 		return new_df
 
-
 class QueryTopicsViewed(TableQueryMixin):
 
 	table = TopicsViewed

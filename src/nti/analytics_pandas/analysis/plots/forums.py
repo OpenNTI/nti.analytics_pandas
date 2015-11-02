@@ -229,7 +229,8 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 		df = fcct.analyze_comments_per_section()
 		if df is None:
 			return()
-		
+		# TODO: complete
+		return ()
 
 	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
@@ -247,7 +248,6 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		df['ratio'] = df['number_of_comment_created'] / df['number_of_unique_users']
-
 
 		plot_forum_comments_created = group_line_plot_x_axis_date(df=df,
 				x_axis_field='timestamp_period',
