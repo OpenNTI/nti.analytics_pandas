@@ -197,7 +197,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 		plots = self.generate_plots(df, period_breaks, minor_period_breaks,
 									title_event, title_users,
 									title_ratio, title_avg_length)
-		return (plots)
+		return plots
 
 	def analyze_comments_per_section(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
@@ -241,7 +241,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 												title_event, title_users,
 												title_ratio, title_avg_length)
 			plots.append(section_plots)
-		return (plots)
+		return plots
 
 	def generate_plots(self, df,
 							period_breaks,
@@ -364,7 +364,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 											 period_breaks, minor_period_breaks,
 											 title_event, title_users,
 											 title_ratio, title_avg_length)
-		return (plots)
+		return plots
 
 	def plot_the_most_active_users(self, max_rank_number=10):
 		fcct = self.fcct
