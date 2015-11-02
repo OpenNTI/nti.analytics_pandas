@@ -274,6 +274,57 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 
 		return (plot_forum_comments_created, plot_unique_users, plot_ratio, plot_average_comment_length)
 
+	def generate_group_by_plots(self,df, 
+								group_by,
+								period_breaks, 
+								minor_period_breaks, 
+								title_event, 
+								title_users,
+								title_ratio,
+								title_avg_length):
+
+		plot_forum_comments_created = group_line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='number_of_comment_created',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of forum comments created'),
+				title=title_event,
+				period_breaks=period_breaks,
+				group_by= group_by,
+				minor_breaks=minor_period_breaks)
+
+		plot_unique_users = group_line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='number_of_unique_users',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of unique users'),
+				title=title_users,
+				period_breaks=period_breaks,
+				group_by= group_by,
+				minor_breaks=minor_period_breaks)
+
+		plot_ratio = group_line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='ratio',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Ratio'),
+				title=title_ratio,
+				period_breaks=period_breaks,
+				group_by=group_by,
+				minor_breaks=minor_period_breaks)
+
+		plot_average_comment_length = group_line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='average_comment_length',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Ratio'),
+				title=title_avg_length,
+				period_breaks=period_breaks,
+				group_by=group_by,
+				minor_breaks=minor_period_breaks)
+
+		return (plot_forum_comments_created, plot_unique_users, plot_ratio, plot_average_comment_length)
+
 	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
 		return scatter plots of forum comments creation grouped by device_type during period of time
@@ -290,47 +341,16 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
-		plot_forum_comments_created = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_of_comment_created',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of forum comments created'),
-				title=_('Number of forum comments created grouped by device types'),
-				period_breaks=period_breaks,
-				group_by='device_type',
-				minor_breaks=minor_period_breaks)
-
-		plot_unique_users = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_of_unique_users',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of unique users'),
-				title=_('Number of unique users creating forum comments grouped by device types'),
-				period_breaks=period_breaks,
-				group_by='device_type',
-				minor_breaks=minor_period_breaks)
-
-		plot_ratio = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='ratio',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Ratio'),
-				title=_('Ratio of forums comments created over unique user on each available date'),
-				period_breaks=period_breaks,
-				group_by='device_type',
-				minor_breaks=minor_period_breaks)
-
-		plot_average_comment_length = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='average_comment_length',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Ratio'),
-				title=_('Average forums comments length on each available date'),
-				period_breaks=period_breaks,
-				group_by='device_type',
-				minor_breaks=minor_period_breaks)
-
-		return (plot_forum_comments_created, plot_unique_users, plot_ratio, plot_average_comment_length)
+		title_event = _('Number of forum comments created grouped by device types')
+		title_users = _('Number of unique users creating forum comments grouped by device types')
+		title_ratio = _('Ratio of forums comments created over unique user on each available date')
+		title_avg_length = _('Average forums comments length on each available date')
+		group_by = 'device_type'
+		plots = self.generate_group_by_plots(df,group_by, 
+											period_breaks, minor_period_breaks,
+											title_event, title_users,
+											title_ratio, title_avg_length)
+		return (plots)
 
 	def plot_the_most_active_users(self, max_rank_number=10):
 		fcct = self.fcct
