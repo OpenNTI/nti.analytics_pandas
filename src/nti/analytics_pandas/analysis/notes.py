@@ -319,13 +319,7 @@ class NotesViewTimeseries(object):
 
 		"""
 		group_by_items = ['timestamp_period', 'device_type']
-		agg_columns = {	'user_id'	: pd.Series.nunique,
-						'note_id' 	: pd.Series.nunique}
-
-		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
-		df.rename(columns={'user_id'	:'number_of_unique_users',
-							 'note_id'	:'number_of_unique_notes_viewed'},
-				  inplace=True)
+		df = self.build_dataframe_unique_events(group_by_items)
 		return df
 
 	def analyze_unique_events_based_on_resource_type(self):
@@ -336,13 +330,7 @@ class NotesViewTimeseries(object):
 
 		"""
 		group_by_items = ['timestamp_period', 'resource_type']
-		agg_columns = {	'user_id'	: pd.Series.nunique,
-						'note_id' 	: pd.Series.nunique}
-
-		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
-		df.rename(columns={'user_id'	:'number_of_unique_users',
-							'note_id'	:'number_of_unique_notes_viewed'},
-				  inplace=True)
+		df = self.build_dataframe_unique_events(group_by_items)
 		return df
 
 	def analyze_unique_events_based_on_sharing_type(self):
@@ -353,6 +341,10 @@ class NotesViewTimeseries(object):
 
 		"""
 		group_by_items = ['timestamp_period', 'sharing']
+		df = self.build_dataframe_unique_events(group_by_items)
+		return df
+
+	def build_dataframe_unique_events(self, group_by_items):
 		agg_columns = {	'user_id'	: pd.Series.nunique,
 						'note_id' 	: pd.Series.nunique}
 
@@ -362,10 +354,21 @@ class NotesViewTimeseries(object):
 				  inplace=True)
 		return df
 
+	def analyze_total_events(self):
+		"""
+		group notes viewed dataframe by timestamp_period
+		count the total number of notes views, unique users and ratio of number of
+		notes viewed over unique users
+		"""
+		group_by_items = ['timestamp_period']
+		df = self.build_dataframe(group_by_items)
+		return df
+
 	def analyze_total_events_based_on_device_type(self):
 		"""
 		group notes viewed dataframe by timestamp_period and device_type
-		count the total number of notes views
+		count the total number of notes views, unique users and ratio of number of
+		notes viewed over unique users
 		"""
 		group_by_items = ['timestamp_period', 'device_type']
 		df = self.build_dataframe(group_by_items)
@@ -374,7 +377,8 @@ class NotesViewTimeseries(object):
 	def analyze_total_events_based_on_resource_type(self):
 		"""
 		group notes viewed dataframe by timestamp_period and resource_type
-		count the total number of notes views
+		count the total number of notes views, unique users and ratio of number of
+		notes viewed over unique users
 		"""
 		group_by_items = ['timestamp_period', 'resource_type']
 		df = self.build_dataframe(group_by_items)
