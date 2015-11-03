@@ -19,8 +19,8 @@ from nti.analytics_database.resource_tags import NoteFavorites
 from .mixins import TableQueryMixin
 
 from .common import add_device_type_
-from .common import add_resource_type_
 from .common import add_context_name_
+from .common import add_resource_type_
 
 from . import orm_dataframe
 

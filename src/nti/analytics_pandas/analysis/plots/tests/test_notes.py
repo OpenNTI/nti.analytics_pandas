@@ -23,9 +23,6 @@ from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
 class TestNotesCreationPlot(AnalyticsPandasTestBase):
 
-	def setUp(self):
-		super(TestNotesCreationPlot, self).setUp()
-
 	def test_explore_events_notes_creation(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'

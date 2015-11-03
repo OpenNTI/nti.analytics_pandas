@@ -96,7 +96,7 @@ class NotesCreationTimeseries(object):
 	"""
 
 	def __init__(self, session, start_date, end_date, course_id=None,
-				 with_resource_type=True, with_device_type=True, 
+				 with_resource_type=True, with_device_type=True,
 				 time_period_date=True, with_context_name=True):
 		self.session = session
 		qnc = self.query_notes_created = QueryNotesCreated(self.session)
@@ -132,7 +132,7 @@ class NotesCreationTimeseries(object):
 
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
-	
+
 		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def explore_number_of_events_based_timestamp_date(self):
@@ -207,8 +207,9 @@ class NotesCreationTimeseries(object):
 		agg_columns = {	'user_id'	: pd.Series.nunique,
 						'note_id' 	: pd.Series.count}
 		df = analyze_types_(dataframe, group_by_items, agg_columns)
-		df.rename(columns={'user_id'	:'number_of_unique_users',
-							'note_id'	:'number_of_notes_created'},
+		df.rename(columns={	
+						'user_id'	:'number_of_unique_users',
+						'note_id'	:'number_of_notes_created'},
 				  inplace=True)
 		df['ratio'] = df['number_of_notes_created'] / df['number_of_unique_users']
 		return df
@@ -238,7 +239,8 @@ class NotesCreationTimeseries(object):
 		- number_of_unique_users
 		- ratio
 		"""
-		dataframe = self.dataframe[['timestamp_period', 'resource_type', 'device_type', 'note_id', 'user_id', 'sharing']]
+		dataframe = self.dataframe[['timestamp_period', 'resource_type', 
+									'device_type', 'note_id', 'user_id', 'sharing']]
 		dataframe = dataframe.loc[((dataframe['resource_type'] == 'video') | (dataframe['resource_type'] == 'slide video'))]
 		sharing_df = self.analyze_sharing_types(dataframe)
 		device_df = self.analyze_device_types(dataframe)
@@ -349,8 +351,8 @@ class NotesViewTimeseries(object):
 						'note_id' 	: pd.Series.nunique}
 
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
-		df.rename(columns={'user_id'	:'number_of_unique_users',
-							 'note_id'	:'number_of_unique_notes_viewed'},
+		df.rename(columns={	'user_id'	:'number_of_unique_users',
+							'note_id'	:'number_of_unique_notes_viewed'},
 				  inplace=True)
 		return df
 
