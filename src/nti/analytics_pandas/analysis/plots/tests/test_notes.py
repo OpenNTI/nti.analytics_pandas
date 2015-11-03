@@ -81,9 +81,6 @@ class TestNotesCreationPlot(AnalyticsPandasTestBase):
 
 class TestNoteViewsPlot(AnalyticsPandasTestBase):
 
-	def setUp(self):
-		super(TestNoteViewsPlot, self).setUp()
-
 	def test_analyze_total_events_based_on_sharing_type(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
@@ -142,9 +139,6 @@ class TestNoteViewsPlot(AnalyticsPandasTestBase):
 
 class TestNoteLikesPlot(AnalyticsPandasTestBase):
 
-	def setUp(self):
-		super(TestNoteLikesPlot, self).setUp()
-
 	def test_explore_events(self):
 		start_date = '2015-10-05'
 		end_date = '2015-12-04'
@@ -167,8 +161,6 @@ class TestNoteFavoritesPlot(AnalyticsPandasTestBase):
 		_ = nftp.explore_events(period_breaks='1 day', minor_period_breaks=None)
 
 class TestNotesEventsPlot(AnalyticsPandasTestBase):
-	def setUp(self):
-		super(TestNotesEventsPlot, self).setUp()
 
 	def test_notes_events(self):
 		start_date = '2015-01-01'
