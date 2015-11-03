@@ -132,6 +132,14 @@ class TestNoteViewsPlot(AnalyticsPandasTestBase):
 		nvtp = NotesViewTimeseriesPlot(nvt)
 		_ = nvtp.analyze_unique_events_based_on_sharing_type(period_breaks='1 week')
 
+	def test_analyze_total_events_per_course_sections(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		nvt = NotesViewTimeseries(self.session, start_date, end_date, course_id)
+		nvtp = NotesViewTimeseriesPlot(nvt)
+		_ = nvtp.analyze_total_events_per_course_sections()
+
 class TestNoteLikesPlot(AnalyticsPandasTestBase):
 
 	def setUp(self):

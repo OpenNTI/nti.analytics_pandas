@@ -100,7 +100,7 @@ class NotesCreationTimeseriesPlot(object):
 		course_ids = np.unique(df['course_id'].values.ravel())
 		plots = []
 		if len(course_ids) > 1:
-			group_by = 'device_type'
+			group_by = 'context_name'
 			event_title = _('Number of notes created per course sections')
 			user_title = _('Number of unique users creating notes per course sections')
 			ratio_title = _('Ratio of notes created over unique user per course sections')
@@ -308,19 +308,66 @@ class NotesViewTimeseriesPlot(object):
 
 	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		nvt = self.nvt
-		df = nvt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		df = nvt.analyze_total_events()
 		if df is None:
 			return ()
 
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
+		event_title = _('Number of notes viewed during period of time')
+		user_title = _('Number of unique users viewing notes during period of time')
+		ratio_title = _('Ratio of notes viewed over unique user on each available date')
+
+		plots = self.generate_plots( df, event_title, user_title, ratio_title, 
+								period_breaks, minor_period_breaks)
+		return (plots)
+
+	def analyze_total_events_per_course_sections(self, period_breaks='1 week', minor_period_breaks='1 day'):
+		nvt = self.nvt
+		dataframe = nvt.dataframe
+		df = nvt.analyze_total_events_per_course_sections()
+		if df is None:
+			return()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		course_ids = np.unique(df['course_id'].values.ravel())
+		plots = []
+		if len(course_ids) > 1:
+			group_by = 'context_name'
+			event_title = _('Number of notes viewed per course sections')
+			user_title = _('Number of unique users viewing notes per course sections')
+			ratio_title = _('Ratio of notes viewed over unique user per course sections')
+			all_section_plots = self.generate_group_by_plots(df,
+														group_by,
+														event_title,
+														user_title,
+														ratio_title,
+														period_breaks,
+														minor_period_breaks)
+			plots.append(all_section_plots)
+
+		for course_id in course_ids:
+			new_df = df[df['course_id'] == course_id]
+			context_name = new_df.iloc[0]['context_name']
+			event_title = 'Number of notes viewed in %s' % (context_name)
+			user_title = 'Number of unique users viewing notes in %s' % (context_name)
+			ratio_title = 'Ratio of notes viewed over unique user in %s' % (context_name)
+			section_plots = self.generate_plots(new_df, event_title, user_title,
+												ratio_title, period_breaks, minor_period_breaks)
+			plots.append(section_plots)
+
+		return (plots)
+
+	def generate_plots(self, df, event_title, user_title, 
+						ratio_title, period_breaks, minor_period_breaks):
+
 		plot_notes_viewed = line_plot_x_axis_date(df=df,
 				x_axis_field='timestamp_period',
-				y_axis_field='total_note_views',
+				y_axis_field='total_notes_viewed',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Number of notes viewed'),
-				title=_('Number of notes viewed during period of time'),
+				title=event_title,
 				period_breaks=period_breaks,
 				minor_breaks=minor_period_breaks)
 
@@ -329,7 +376,7 @@ class NotesViewTimeseriesPlot(object):
 				y_axis_field='total_unique_users',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Number of unique users'),
-				title=_('Number of unique users viewing notes during period of time'),
+				title=user_title,
 				period_breaks=period_breaks,
 				minor_breaks=minor_period_breaks)
 
@@ -338,7 +385,7 @@ class NotesViewTimeseriesPlot(object):
 				y_axis_field='ratio',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Ratio'),
-				title=_('Ratio of notes viewed over unique user on each available date'),
+				title=ratio_title,
 				period_breaks=period_breaks,
 				minor_breaks=minor_period_breaks)
 
