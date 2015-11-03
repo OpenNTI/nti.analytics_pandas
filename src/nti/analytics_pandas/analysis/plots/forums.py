@@ -281,7 +281,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 				x_axis_field='timestamp_period',
 				y_axis_field='average_comment_length',
 				x_axis_label=_('Date'),
-				y_axis_label=_('Ratio'),
+				y_axis_label=_('Average comments length'),
 				title=title_avg_length,
 				period_breaks=period_breaks,
 				minor_breaks=minor_period_breaks)
@@ -331,7 +331,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 				x_axis_field='timestamp_period',
 				y_axis_field='average_comment_length',
 				x_axis_label=_('Date'),
-				y_axis_label=_('Ratio'),
+				y_axis_label=_('Average comments length'),
 				title=title_avg_length,
 				period_breaks=period_breaks,
 				group_by=group_by,
