@@ -50,6 +50,8 @@ class TestNotesEDA(AnalyticsPandasTestBase):
 		assert_that(len(ratio_df.index), equal_to(20))
 
 		dataframe = nct.dataframe
+		assert_that(dataframe.columns, has_item('context_name'))
+		
 		df = nct.analyze_device_types(dataframe)
 		assert_that(df.columns, has_item('number_of_unique_users'))
 		assert_that(df.columns, has_item('number_of_notes_created'))
@@ -81,6 +83,11 @@ class TestNotesEDA(AnalyticsPandasTestBase):
 		assert_that(device_df.columns, has_item('number_of_unique_users'))
 		assert_that(device_df.columns, has_item('number_of_notes_created'))
 		assert_that(device_df.columns, has_item('ratio'))
+
+		df = nct.analyze_events_per_course_sections()
+		assert_that(sharing_df.columns, has_item('number_of_unique_users'))
+		assert_that(sharing_df.columns, has_item('number_of_notes_created'))
+		assert_that(sharing_df.columns, has_item('ratio'))
 
 	def test_notes_view_based_on_timestamp_date(self):
 		start_date = '2015-01-01'

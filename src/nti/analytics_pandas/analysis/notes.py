@@ -96,7 +96,8 @@ class NotesCreationTimeseries(object):
 	"""
 
 	def __init__(self, session, start_date, end_date, course_id=None,
-				 with_resource_type=True, with_device_type=True, time_period_date=True):
+				 with_resource_type=True, with_device_type=True, 
+				 time_period_date=True, with_context_name=True):
 		self.session = session
 		qnc = self.query_notes_created = QueryNotesCreated(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -109,21 +110,31 @@ class NotesCreationTimeseries(object):
 		if len(self.dataframe) <= 0:
 			return
 
+		categorical_columns = [	'note_id', 'user_id', 'sharing']
+
 		if with_device_type:
 			new_df = qnc.add_device_type(self.dataframe)
 			if new_df is not None:
 				self.dataframe = new_df
+				categorical_columns.append('device_type')
 
 		if with_resource_type:
 			new_df = qnc.add_resource_type(self.dataframe)
 			if new_df is not None:
 				self.dataframe = new_df
+				categorical_columns.append('resource_type')
+
+		if with_context_name:
+			new_df = qnc.add_context_name(self.dataframe, course_id)
+			if new_df is not None:
+				self.dataframe = new_df
+				categorical_columns.append('context_name')
+
 
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
 
-		categorical_columns = [	'note_id', 'resource_type', 'device_type',
-								'user_id', 'sharing']
+		
 		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def explore_number_of_events_based_timestamp_date(self):
@@ -143,6 +154,26 @@ class NotesCreationTimeseries(object):
 		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
 										events_df, 'total_notes_created', unique_users_df)
 		return merge_df
+
+	def analyze_events(self):
+		"""
+		group notes created dataframe by timestamp_period
+		count the number of notes created, unique users and ratio in each group
+		return the result as dataframe
+		"""
+		group_by_items = ['timestamp_period']
+		df = self.build_dataframe(self.dataframe, group_by_items)
+		return df
+
+	def analyze_events_per_course_sections(self):
+		"""
+		group notes created dataframe by timestamp_period, course_id and context_name
+		count the number of notes created, unique users and ratio in each group
+		return the result as dataframe
+		"""
+		group_by_items = ['timestamp_period', 'course_id', 'context_name']
+		df = self.build_dataframe(self.dataframe, group_by_items)
+		return df
 
 	def analyze_device_types(self, dataframe):
 		"""
