@@ -20,6 +20,7 @@ from .mixins import TableQueryMixin
 
 from .common import add_device_type_
 from .common import add_resource_type_
+from .common import add_context_name_
 
 from . import orm_dataframe
 
@@ -60,7 +61,8 @@ class QueryNotesCreated(TableQueryMixin):
 								   nc.like_count,
 								   nc.note_length,
 								   nc.is_flagged,
-								   nc.deleted).filter(nc.timestamp.between(start_date, end_date)).filter(nc.course_id.in_(course_id))
+								   nc.deleted,
+								   nc.course_id).filter(nc.timestamp.between(start_date, end_date)).filter(nc.course_id.in_(course_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
@@ -70,6 +72,10 @@ class QueryNotesCreated(TableQueryMixin):
 
 	def add_device_type(self, dataframe):
 		new_df = add_device_type_(self.session, dataframe)
+		return new_df
+
+	def add_context_name(self, dataframe, course_id):
+		new_df = add_context_name_(self.session, dataframe, course_id)
 		return new_df
 
 	def get_author_id_filter_by_note_id(self, notes_id):
@@ -108,7 +114,8 @@ class QueryNotesViewed(TableQueryMixin):
 								   nv.user_id,
 								   nv.session_id,
 								   nv.resource_id,
-								   nv.context_path).filter(nv.timestamp.between(start_date, end_date)).filter(nv.course_id.in_(course_id))
+								   nv.context_path,
+								   nv.course_id).filter(nv.timestamp.between(start_date, end_date)).filter(nv.course_id.in_(course_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
@@ -122,6 +129,10 @@ class QueryNotesViewed(TableQueryMixin):
 
 	def add_sharing_type(self, dataframe):
 		new_df = add_sharing_type_(self.session, dataframe)
+		return new_df
+
+	def add_context_name(self, dataframe, course_id):
+		new_df = add_context_name_(self.session, dataframe, course_id)
 		return new_df
 
 class QueryNoteFavorites(TableQueryMixin):
@@ -145,7 +156,8 @@ class QueryNoteFavorites(TableQueryMixin):
 								   nf.timestamp,
 								   nf.user_id,
 								   nf.session_id,
-								   nf.creator_id).filter(nf.timestamp.between(start_date, end_date)).filter(nf.course_id.in_(course_id))
+								   nf.creator_id,
+								   nf.course_id).filter(nf.timestamp.between(start_date, end_date)).filter(nf.course_id.in_(course_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
@@ -155,6 +167,10 @@ class QueryNoteFavorites(TableQueryMixin):
 
 	def add_device_type(self, dataframe):
 		new_df = add_device_type_(self.session, dataframe)
+		return new_df
+
+	def add_context_name(self, dataframe, course_id):
+		new_df = add_context_name_(self.session, dataframe, course_id)
 		return new_df
 
 class QueryNoteLikes(TableQueryMixin):
@@ -178,7 +194,8 @@ class QueryNoteLikes(TableQueryMixin):
 								   nl.timestamp,
 								   nl.user_id,
 								   nl.session_id,
-								   nl.creator_id).filter(nl.timestamp.between(start_date, end_date)).filter(nl.course_id.in_(course_id))
+								   nl.creator_id,
+								   nl.course_id).filter(nl.timestamp.between(start_date, end_date)).filter(nl.course_id.in_(course_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
@@ -188,6 +205,10 @@ class QueryNoteLikes(TableQueryMixin):
 
 	def add_device_type(self, dataframe):
 		new_df = add_device_type_(self.session, dataframe)
+		return new_df
+
+	def add_context_name(self, dataframe, course_id):
+		new_df = add_context_name_(self.session, dataframe, course_id)
 		return new_df
 
 def add_sharing_type_(session, dataframe):
