@@ -54,8 +54,9 @@ def add_device_type_(session, dataframe):
 		return new_df
 
 def add_context_name_(session, dataframe, course_ids):
-	qc = QueryCourses(session)
-	context_df = qc.get_context_name(course_ids)
-	context_df.rename(columns={'context_id':'course_id'}, inplace=True)
-	new_df = dataframe.merge(context_df, how='left')
-	return new_df
+	if 'course_id' in dataframe.columns:
+		qc = QueryCourses(session)
+		context_df = qc.get_context_name(course_ids)
+		context_df.rename(columns={'context_id':'course_id'}, inplace=True)
+		new_df = dataframe.merge(context_df, how='left')
+		return new_df
