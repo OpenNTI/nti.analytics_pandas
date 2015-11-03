@@ -85,6 +85,14 @@ class TestNotesCreationPlot(AnalyticsPandasTestBase):
 		nctp = NotesCreationTimeseriesPlot(nct)
 		_ = nctp.analyze_sharing_types(period_breaks='1 day', minor_period_breaks=None)
 
+	def test_analyze_events_per_course_sections(self):
+		start_date = '2015-10-05'
+		end_date = '2015-12-04'
+		course_id = ['1068', '1096', '1097', '1098', '1099']
+		nct = NotesCreationTimeseries(self.session, start_date, end_date, course_id)
+		nctp = NotesCreationTimeseriesPlot(nct)
+		_ = nctp.analyze_events_per_course_sections(period_breaks='1 day', minor_period_breaks=None)
+
 class TestNoteViewsPlot(AnalyticsPandasTestBase):
 
 	def setUp(self):
@@ -139,6 +147,14 @@ class TestNoteViewsPlot(AnalyticsPandasTestBase):
 		nvt = NotesViewTimeseries(self.session, start_date, end_date, course_id)
 		nvtp = NotesViewTimeseriesPlot(nvt)
 		_ = nvtp.analyze_unique_events_based_on_sharing_type(period_breaks='1 day', minor_period_breaks=None)
+
+	def test_analyze_total_events_per_course_sections(self):
+		start_date = '2015-10-05'
+		end_date = '2015-12-04'
+		course_id = ['1068', '1096', '1097', '1098', '1099']
+		nvt = NotesViewTimeseries(self.session, start_date, end_date, course_id)
+		nvtp = NotesViewTimeseriesPlot(nvt)
+		_ = nvtp.analyze_total_events_per_course_sections(period_breaks='1 day', minor_period_breaks=None)
 
 class TestNotesEventsPlot(AnalyticsPandasTestBase):
 
