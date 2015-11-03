@@ -74,40 +74,20 @@ class NotesCreationTimeseriesPlot(object):
 
 	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		nct = self.nct
-		df = nct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		df = nct.analyze_events()
 		if df is None:
 			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
-		plot_notes_created = line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='total_notes_created',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of notes created'),
-				title=_('Number of notes created during period of time'),
-				period_breaks=period_breaks,
-				minor_breaks=minor_period_breaks)
+		event_title = _('Number of notes created')
+		user_title = _('Number of unique users creating notes')
+		ratio_title = _('Ratio of notes created over unique user')
 
-		plot_unique_users = line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='total_unique_users',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of unique users'),
-				title=_('Number of unique users creating notes during period of time'),
-				period_breaks=period_breaks,
-				minor_breaks=minor_period_breaks)
+		plots = self.generate_plots(df, event_title, user_title,
+									ratio_title, period_breaks, minor_period_breaks)
 
-		plot_ratio = line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='ratio',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Ratio'),
-				title=_('Ratio of notes created over unique user on each available date'),
-				period_breaks=period_breaks,
-				minor_breaks=minor_period_breaks)
-
-		return (plot_notes_created, plot_unique_users, plot_ratio)
+		return (plots)
 
 	def analyze_events_per_course_sections(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		nct = self.nct
