@@ -452,7 +452,8 @@ class NoteLikesTimeseries(object):
 	"""
 
 	def __init__(self, session, start_date, end_date, course_id=None,
-				 with_resource_type=True, with_device_type=True, time_period_date=True):
+				 with_resource_type=True, with_device_type=True, 
+				 time_period_date=True, with_context_name=True):
 		self.session = session
 		qnl = self.query_notes_viewed = QueryNoteLikes(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -474,6 +475,11 @@ class NoteLikesTimeseries(object):
 
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
+
+		if with_context_name:
+			new_df = qnl.add_context_name(self.dataframe, course_id)
+			if new_df is not None:
+				self.dataframe = new_df
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
@@ -499,7 +505,8 @@ class NoteFavoritesTimeseries(object):
 	"""
 
 	def __init__(self, session, start_date, end_date, course_id=None,
-				 with_resource_type=True, with_device_type=True, time_period_date=True):
+				 with_resource_type=True, with_device_type=True, 
+				 time_period_date=True, with_context_name=True):
 		self.session = session
 		qnf = self.query_notes_viewed = QueryNoteFavorites(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -521,6 +528,11 @@ class NoteFavoritesTimeseries(object):
 
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
+
+		if with_context_name:
+			new_df = qnf.add_context_name(self.dataframe, course_id)
+			if new_df is not None:
+				self.dataframe = new_df
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
