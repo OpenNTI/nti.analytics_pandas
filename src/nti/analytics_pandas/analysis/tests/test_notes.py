@@ -51,7 +51,7 @@ class TestNotesEDA(AnalyticsPandasTestBase):
 
 		dataframe = nct.dataframe
 		assert_that(dataframe.columns, has_item('context_name'))
-		
+
 		df = nct.analyze_device_types(dataframe)
 		assert_that(df.columns, has_item('number_of_unique_users'))
 		assert_that(df.columns, has_item('number_of_notes_created'))
@@ -97,6 +97,7 @@ class TestNotesEDA(AnalyticsPandasTestBase):
 		assert_that(len(nvt.dataframe.index), equal_to(157))
 		assert_that(nvt.dataframe.columns, has_item('device_type'))
 		assert_that(nvt.dataframe.columns, has_item('resource_type'))
+		assert_that(nvt.dataframe.columns, has_item('context_name'))
 
 		event_by_date_df = nvt.explore_number_of_events_based_timestamp_date()
 		assert_that(len(event_by_date_df.index), equal_to(42))
@@ -138,6 +139,12 @@ class TestNotesEDA(AnalyticsPandasTestBase):
 		assert_that(len(ratio_df.index), equal_to(len(df.sum(level='timestamp_period'))))
 
 		df = nvt.analyze_total_events_based_on_sharing_type()
+		assert_that(df.columns, has_item('total_notes_viewed'))
+		assert_that(df.columns, has_item('total_unique_users'))
+		assert_that(df.columns, has_item('ratio'))
+		assert_that(len(ratio_df.index), equal_to(len(df.sum(level='timestamp_period'))))
+
+		df = nvt.analyze_total_events_per_course_sections()
 		assert_that(df.columns, has_item('total_notes_viewed'))
 		assert_that(df.columns, has_item('total_unique_users'))
 		assert_that(df.columns, has_item('ratio'))

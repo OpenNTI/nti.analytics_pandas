@@ -130,11 +130,9 @@ class NotesCreationTimeseries(object):
 				self.dataframe = new_df
 				categorical_columns.append('context_name')
 
-
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
-
-		
+	
 		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def explore_number_of_events_based_timestamp_date(self):
@@ -253,7 +251,8 @@ class NotesViewTimeseries(object):
 
 	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_resource_type=True, with_device_type=True,
-				 time_period_date=True, with_sharing_type=True):
+				 time_period_date=True, with_sharing_type=True,
+				 with_context_name=True):
 		self.session = session
 		qnv = self.query_notes_viewed = QueryNotesViewed(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -263,15 +262,19 @@ class NotesViewTimeseries(object):
 		else:
 			self.dataframe = qnv.filter_by_period_of_time(start_date, end_date)
 
+		categorical_columns = ['note_id', 'user_id']
+
 		if with_device_type:
 			new_df = qnv.add_device_type(self.dataframe)
 			if new_df is not None:
 				self.dataframe = new_df
+				categorical_columns.append('device_type')
 
 		if with_resource_type:
 			new_df = qnv.add_resource_type(self.dataframe)
 			if new_df is not None:
 				self.dataframe = new_df
+				categorical_columns.append('resource_type')
 
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
@@ -280,9 +283,14 @@ class NotesViewTimeseries(object):
 			new_df = qnv.add_sharing_type(self.dataframe)
 			if new_df is not None:
 				self.dataframe = new_df
+				categorical_columns.append('sharing')
 
-		categorical_columns = ['note_id', 'resource_type', 'device_type',
-							   'user_id', 'sharing']
+		if with_context_name:
+			new_df = qnv.add_context_name(self.dataframe, course_id)
+			if new_df is not None:
+				self.dataframe = new_df
+				categorical_columns.append('context_name')
+
 		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def explore_number_of_events_based_timestamp_date(self):
@@ -333,7 +341,7 @@ class NotesViewTimeseries(object):
 
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
 		df.rename(columns={'user_id'	:'number_of_unique_users',
-							 'note_id'	:'number_of_unique_notes_viewed'},
+							'note_id'	:'number_of_unique_notes_viewed'},
 				  inplace=True)
 		return df
 
@@ -360,14 +368,7 @@ class NotesViewTimeseries(object):
 		count the total number of notes views
 		"""
 		group_by_items = ['timestamp_period', 'device_type']
-		agg_columns = {	'user_id'	: pd.Series.nunique,
-						'note_id' 	: pd.Series.count}
-
-		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
-		df.rename(columns={ 'note_id'	:'total_notes_viewed',
-							'user_id'	:'total_unique_users'},
-				  inplace=True)
-		df['ratio'] = df['total_notes_viewed'] / df['total_unique_users']
+		df = self.build_dataframe(group_by_items)
 		return df
 
 	def analyze_total_events_based_on_resource_type(self):
@@ -376,14 +377,7 @@ class NotesViewTimeseries(object):
 		count the total number of notes views
 		"""
 		group_by_items = ['timestamp_period', 'resource_type']
-		agg_columns = {	'user_id'	: pd.Series.nunique,
-						'note_id' 	: pd.Series.count}
-
-		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
-		df.rename(columns={ 'note_id'	:'total_notes_viewed',
-							'user_id'	:'total_unique_users'},
-				  inplace=True)
-		df['ratio'] = df['total_notes_viewed'] / df['total_unique_users']
+		df = self.build_dataframe(group_by_items)
 		return df
 
 	def analyze_total_events_based_on_sharing_type(self):
@@ -393,6 +387,20 @@ class NotesViewTimeseries(object):
 		notes viewed over unique users
 		"""
 		group_by_items = ['timestamp_period', 'sharing']
+		df = self.build_dataframe(group_by_items)
+		return df
+
+	def analyze_total_events_per_course_sections(self):
+		"""
+		group notes viewed dataframe by timestamp_period, course_id, and context_name
+		count the total number of notes views, unique users and ratio of number of
+		notes viewed over unique users
+		"""
+		group_by_items = ['timestamp_period', 'course_id', 'context_name']
+		df = self.build_dataframe(group_by_items)
+		return df
+
+	def build_dataframe(self, group_by_items):
 		agg_columns = {	'note_id' 	: pd.Series.count,
 						'user_id'	: pd.Series.nunique}
 
