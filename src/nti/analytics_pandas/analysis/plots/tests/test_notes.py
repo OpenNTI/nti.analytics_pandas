@@ -71,6 +71,14 @@ class TestNotesCreationPlot(AnalyticsPandasTestBase):
 		nctp = NotesCreationTimeseriesPlot(nct)
 		_ = nctp.analyze_notes_created_on_videos(period_breaks='1 day', minor_period_breaks='None')
 
+	def test_analyze_events_per_course_sections(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		nct = NotesCreationTimeseries(self.session, start_date, end_date, course_id)
+		nctp = NotesCreationTimeseriesPlot(nct)
+		_ = nctp.analyze_events_per_course_sections()
+
 class TestNoteViewsPlot(AnalyticsPandasTestBase):
 
 	def setUp(self):
