@@ -135,6 +135,18 @@ class AssignmentViewsTimeseries(object):
 		df = self.build_dataframe(group_by_columns)
 		return df
 
+	def analyze_events_per_course_sections(self):
+		"""
+		return a dataframe contains:
+		 - the number of assignment views,
+		 - the number of unique user viewing assignment
+		 - ratio of assignment views over unique users
+		on each available date
+		"""
+		group_by_columns = ['timestamp_period', 'course_id', 'context_name']
+		df = self.build_dataframe(group_by_columns)
+		return df
+
 	def analyze_events_group_by_device_type(self):
 		"""
 		return a dataframe contains:
@@ -223,6 +235,18 @@ class AssignmentsTakenTimeseries(object):
 		on each available date
 		"""
 		group_by_columns = ['timestamp_period']
+		df = self.build_dataframe(group_by_columns)
+		return df
+
+	def analyze_events_per_course_sections(self):
+		"""
+		return a dataframe contains:
+		 - the number of assignments taken
+		 - the number of unique user taking assignments
+		 - ratio of assignments taken over unique users
+		on each available date
+		"""
+		group_by_columns = ['timestamp_period', 'course_id', 'context_name']
 		df = self.build_dataframe(group_by_columns)
 		return df
 
@@ -317,6 +341,18 @@ class SelfAssessmentViewsTimeseries(object):
 		df = self.build_dataframe(group_by_columns)
 		return df
 
+	def analyze_events_per_course_sections(self):
+		"""
+		return a dataframe contains:
+		 - the number of self assessments views,
+		 - the number of unique user viewing self assessments
+		 - ratio of self assessments views over unique users
+		on each available date
+		"""
+		group_by_columns = ['timestamp_period', 'course_id', 'context_name']
+		df = self.build_dataframe(group_by_columns)
+		return df
+
 	def analyze_events_group_by_device_type(self):
 		"""
 		return a dataframe contains:
@@ -399,6 +435,18 @@ class SelfAssessmentsTakenTimeseries(object):
 		on each available date
 		"""
 		group_by_columns = ['timestamp_period']
+		df = self.build_dataframe(group_by_columns)
+		return df
+
+	def analyze_events_per_course_sections(self):
+		"""
+		return a dataframe contains:
+		 - the number of self assessments taken
+		 - the number of unique user taking self assessments
+		 - ratio of self assessments taken over unique users
+		on each available date
+		"""
+		group_by_columns = ['timestamp_period', 'course_id', 'context_name']
 		df = self.build_dataframe(group_by_columns)
 		return df
 
