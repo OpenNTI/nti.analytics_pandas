@@ -30,7 +30,8 @@ class BookmarkCreationTimeseries(object):
 	"""
 
 	def __init__(self, session, start_date, end_date, course_id=None,
-				 with_resource_type=True, with_device_type=True, time_period_date=True):
+				 with_resource_type=True, with_device_type=True, 
+				 time_period_date=True, with_context_name=True):
 
 		self.session = session
 		qbc = self.query_bookmarks_created = QueryBookmarksCreated(self.session)
@@ -41,20 +42,29 @@ class BookmarkCreationTimeseries(object):
 		else:
 			self.dataframe = qbc.filter_by_period_of_time(start_date, end_date)
 
+		categorical_columns = ['bookmark_id', 'user_id']
+
 		if with_resource_type:
 			new_df = qbc.add_resource_type(self.dataframe)
 			if new_df is not None:
 				self.dataframe = new_df
+				categorical_columns.append('resource_type')
 
 		if with_device_type:
 			new_df = qbc.add_device_type(self.dataframe)
 			if new_df is not None:
 				self.dataframe = new_df
+				categorical_columns.append('device_type')
+
+		if with_context_name:
+			new_df = qbc.add_context_name(self.dataframe, course_id)
+			if new_df is not None:
+				self.dataframe = new_df
+				categorical_columns.append('context_name')
 
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
-
-		categorical_columns = ['bookmark_id', 'user_id', 'device_type', 'resource_type']
+		
 		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def explore_number_of_events_based_timestamp_date(self):
@@ -75,9 +85,19 @@ class BookmarkCreationTimeseries(object):
 										events_df, 'total_bookmarks_created', unique_users_df)
 		return merge_df
 
+	def analyze_events(self):
+		group_by_items = ['timestamp_period']
+		df = self.build_dataframe(group_by_items)
+		return df
+
+	def analyze_events_per_course_sections(self):
+		group_by_items = ['timestamp_period', 'course_id', 'context_name']
+		df = self.build_dataframe(group_by_items)
+		return df
+
 	def analyze_resource_types(self):
 		group_by_items = ['timestamp_period', 'resource_type']
-		df = self.process_analysis_by_type(group_by_items)
+		df = self.build_dataframe(group_by_items)
 		resource_df = df[['number_of_bookmark_creation']]
 		resource_df.reset_index(inplace=True)
 		grouped = resource_df.groupby(['resource_type'])
@@ -86,10 +106,10 @@ class BookmarkCreationTimeseries(object):
 
 	def analyze_device_types(self):
 		group_by_items = ['timestamp_period', 'device_type']
-		df = self.process_analysis_by_type(group_by_items)
+		df = self.build_dataframe(group_by_items)
 		return df
 
-	def process_analysis_by_type(self, group_by_columns):
+	def build_dataframe(self, group_by_columns):
 		agg_columns = {	'bookmark_id' 	: pd.Series.nunique,
 						'user_id'		: pd.Series.nunique }
 		df = analyze_types_(self.dataframe, group_by_columns, agg_columns)
@@ -101,7 +121,7 @@ class BookmarkCreationTimeseries(object):
 
 	def analyze_resource_device_types(self):
 		group_by_items = ['timestamp_period', 'resource_type', 'device_type']
-		df = self.process_analysis_by_type(group_by_items)
+		df = self.build_dataframe(group_by_items)
 		return df
 
 	def get_the_most_active_users(self, max_rank_number=10):

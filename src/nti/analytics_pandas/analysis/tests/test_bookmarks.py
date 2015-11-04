@@ -31,17 +31,8 @@ class TestBookmarksEDA(AnalyticsPandasTestBase):
 		assert_that(bct.dataframe.columns, has_item('resource_type'))
 		assert_that(bct.dataframe.columns, has_item('device_type'))
 
-		event_by_date_df = bct.explore_number_of_events_based_timestamp_date()
-		assert_that(len(event_by_date_df.index), equal_to(20))
-
-		total_events = np.sum(event_by_date_df['total_bookmarks_created'])
-		assert_that(total_events, equal_to(54))
-
-		unique_users_by_date = bct.explore_unique_users_based_timestamp_date()
-		assert_that(len(unique_users_by_date.index), equal_to(20))
-
-		ratio_df = bct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
-		assert_that(len(ratio_df.index), equal_to(20))
+		df = bct.analyze_events()
+		assert_that(len(df.index), equal_to(20))
 
 		df, resource_df = bct.analyze_resource_types()
 		assert_that(len(df), equal_to(22))
@@ -57,3 +48,6 @@ class TestBookmarksEDA(AnalyticsPandasTestBase):
 		users_df = bct.get_the_most_active_users(max_rank_number = 10)
 		##there is only one users creating 54 bookmarks within the time period (user_id = 56606)
 		assert_that(len(users_df.index), equal_to(1))
+
+		df = bct.analyze_events_per_course_sections()
+		assert_that(len(df.sum(level='timestamp_period')), equal_to(20))

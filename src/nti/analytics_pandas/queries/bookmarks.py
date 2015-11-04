@@ -13,6 +13,7 @@ from nti.analytics_database.resource_tags import BookmarksCreated
 
 from .mixins import TableQueryMixin
 
+from .common import add_context_name_
 from .common import add_device_type_
 from .common import add_resource_type_
 
@@ -41,7 +42,8 @@ class QueryBookmarksCreated(TableQueryMixin):
 								   bc.deleted,
 								   bc.resource_id,
 								   bc.session_id,
-								   bc.user_id).filter(bc.timestamp.between(start_date, end_date)).filter(bc.course_id.in_(course_id))
+								   bc.user_id,
+								   bc.course_id).filter(bc.timestamp.between(start_date, end_date)).filter(bc.course_id.in_(course_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
@@ -51,4 +53,8 @@ class QueryBookmarksCreated(TableQueryMixin):
 
 	def add_resource_type(self, dataframe):
 		new_df = add_resource_type_(self.session, dataframe)
+		return new_df
+
+	def add_context_name(self, dataframe, course_id):
+		new_df = add_context_name_(self.session, dataframe, course_id)
 		return new_df
