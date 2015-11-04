@@ -12,6 +12,7 @@ logger = __import__('logging').getLogger(__name__)
 from . import MessageFactory as _
 
 import pandas as pd
+
 import numpy as np
 
 from .commons import line_plot_x_axis_date
@@ -31,35 +32,38 @@ class AssessmentEventsTimeseriesPlot(object):
 		df = aet.combine_events()
 		if len(df.index) <= 0:
 			return ()
-		plot_assessment_events = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='total_events',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of assessments events'),
-				title=_('Number of assessments events grouped by event type during period of time'),
-				period_breaks=period_breaks,
-				group_by='event_type',
-				minor_breaks=minor_period_breaks)
+		plot_assessment_events = group_line_plot_x_axis_date(
+									df=df,
+									x_axis_field='timestamp_period',
+									y_axis_field='total_events',
+									x_axis_label=_('Date'),
+									y_axis_label=_('Number of assessments events'),
+									title=_('Number of assessments events grouped by event type during period of time'),
+									period_breaks=period_breaks,
+									group_by='event_type',
+									minor_breaks=minor_period_breaks)
 
-		plot_unique_users = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_of_unique_users',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of unique users'),
-				title=_('Number of unique users creating assessments events during period of time'),
-				period_breaks=period_breaks,
-				group_by='event_type',
-				minor_breaks=minor_period_breaks)
+		plot_unique_users = group_line_plot_x_axis_date(
+									df=df,
+									x_axis_field='timestamp_period',
+									y_axis_field='number_of_unique_users',
+									x_axis_label=_('Date'),
+									y_axis_label=_('Number of unique users'),
+									title=_('Number of unique users creating assessments events during period of time'),
+									period_breaks=period_breaks,
+									group_by='event_type',
+									minor_breaks=minor_period_breaks)
 
-		plot_ratio = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='ratio',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Ratio'),
-				title=_('Ratio of assessments events over unique user on each available date'),
-				period_breaks=period_breaks,
-				group_by='event_type',
-				minor_breaks=minor_period_breaks)
+		plot_ratio = group_line_plot_x_axis_date(
+									df=df,
+									x_axis_field='timestamp_period',
+									y_axis_field='ratio',
+									x_axis_label=_('Date'),
+									y_axis_label=_('Ratio'),
+									title=_('Ratio of assessments events over unique user on each available date'),
+									period_breaks=period_breaks,
+									group_by='event_type',
+									minor_breaks=minor_period_breaks)
 
 		return (plot_assessment_events, plot_unique_users, plot_ratio)
 
@@ -142,66 +146,72 @@ class AssignmentViewsTimeseriesPlot(object):
 
 	def generate_plots(self, df, event_title, user_title, ratio_title, 
 						period_breaks, minor_period_breaks):
-		plot_assignment_views = line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_assignments_viewed',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of assignments viewed'),
-				title=event_title,
-				period_breaks=period_breaks,
-				minor_breaks=minor_period_breaks)
+		plot_assignment_views = line_plot_x_axis_date(
+									df=df,
+									x_axis_field='timestamp_period',
+									y_axis_field='number_assignments_viewed',
+									x_axis_label=_('Date'),
+									y_axis_label=_('Number of assignments viewed'),
+									title=event_title,
+									period_breaks=period_breaks,
+									minor_breaks=minor_period_breaks)
 
-		plot_unique_users = line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_of_unique_users',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of unique users'),
-				title=user_title,
-				period_breaks=period_breaks,
-				minor_breaks=minor_period_breaks)
+		plot_unique_users = line_plot_x_axis_date(
+									df=df,
+									x_axis_field='timestamp_period',
+									y_axis_field='number_of_unique_users',
+									x_axis_label=_('Date'),
+									y_axis_label=_('Number of unique users'),
+									title=user_title,
+									period_breaks=period_breaks,
+									minor_breaks=minor_period_breaks)
 
-		plot_ratio = line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='ratio',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Ratio'),
-				title=ratio_title,
-				period_breaks=period_breaks,
-				minor_breaks=minor_period_breaks)
+		plot_ratio = line_plot_x_axis_date(
+									df=df,
+									x_axis_field='timestamp_period',
+									y_axis_field='ratio',
+									x_axis_label=_('Date'),
+									y_axis_label=_('Ratio'),
+									title=ratio_title,
+									period_breaks=period_breaks,
+									minor_breaks=minor_period_breaks)
 		
 		return (plot_assignment_views, plot_unique_users, plot_ratio)
 
 	def generate_group_by_plots(self, df, group_by, event_title, user_title, ratio_title, 
 								period_breaks, minor_period_breaks):
-		plot_assignment_views = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_assignments_viewed',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of assignments viewed'),
-				title=event_title, 
-				period_breaks=period_breaks,
-				group_by=group_by,
-				minor_breaks=minor_period_breaks)
+		plot_assignment_views = group_line_plot_x_axis_date(
+									df=df,
+									x_axis_field='timestamp_period',
+									y_axis_field='number_assignments_viewed',
+									x_axis_label=_('Date'),
+									y_axis_label=_('Number of assignments viewed'),
+									title=event_title, 
+									period_breaks=period_breaks,
+									group_by=group_by,
+									minor_breaks=minor_period_breaks)
 
-		plot_unique_users = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_of_unique_users',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of unique users'),
-				title=user_title,
-				period_breaks=period_breaks,
-				group_by=group_by,
-				minor_breaks=minor_period_breaks)
+		plot_unique_users = group_line_plot_x_axis_date(
+									df=df,
+									x_axis_field='timestamp_period',
+									y_axis_field='number_of_unique_users',
+									x_axis_label=_('Date'),
+									y_axis_label=_('Number of unique users'),
+									title=user_title,
+									period_breaks=period_breaks,
+									group_by=group_by,
+									minor_breaks=minor_period_breaks)
 
-		plot_ratio = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='ratio',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Ratio'),
-				title=ratio_title,
-				period_breaks=period_breaks,
-				group_by=group_by,
-				minor_breaks=minor_period_breaks)
+		plot_ratio = group_line_plot_x_axis_date(
+									df=df,
+									x_axis_field='timestamp_period',
+									y_axis_field='ratio',
+									x_axis_label=_('Date'),
+									y_axis_label=_('Ratio'),
+									title=ratio_title,
+									period_breaks=period_breaks,
+									group_by=group_by,
+									minor_breaks=minor_period_breaks)
 
 		return (plot_assignment_views, plot_unique_users, plot_ratio)
 
@@ -245,12 +255,12 @@ class AssignmentsTakenTimeseriesPlot(object):
 			user_title = _('Number of unique users taking assignments per course sections')
 			ratio_title = _('Ratio of assignments taken over unique user per course sections')
 			all_section_plots = self.generate_group_by_plots(df,
-															group_by,
-															event_title,
-															user_title,
-															ratio_title,
-															period_breaks,
-															minor_period_breaks)
+															 group_by,
+															 event_title,
+															 user_title,
+															 ratio_title,
+															 period_breaks,
+															 minor_period_breaks)
 			plots.append(all_section_plots)
 
 		for course_id in course_ids:
@@ -282,36 +292,38 @@ class AssignmentsTakenTimeseriesPlot(object):
 											period_breaks, minor_period_breaks)
 		return plots
 
-	def generate_plots(self, df,
-								event_title, user_title, ratio_title,
-								period_breaks, minor_period_breaks):
+	def generate_plots(self, df, event_title, user_title, ratio_title,
+					   period_breaks, minor_period_breaks):
 		
-		plot_assignment_taken = line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_assignments_taken',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of assignments taken'),
-				title=event_title,
-				period_breaks=period_breaks,
-				minor_breaks=minor_period_breaks)
+		plot_assignment_taken = line_plot_x_axis_date(
+									df=df,
+									x_axis_field='timestamp_period',
+									y_axis_field='number_assignments_taken',
+									x_axis_label=_('Date'),
+									y_axis_label=_('Number of assignments taken'),
+									title=event_title,
+									period_breaks=period_breaks,
+									minor_breaks=minor_period_breaks)
 
-		plot_unique_users = line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_of_unique_users',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of unique users'),
-				title=user_title,
-				period_breaks=period_breaks,
-				minor_breaks=minor_period_breaks)
+		plot_unique_users = line_plot_x_axis_date(
+									df=df,
+									x_axis_field='timestamp_period',
+									y_axis_field='number_of_unique_users',
+									x_axis_label=_('Date'),
+									y_axis_label=_('Number of unique users'),
+									title=user_title,
+									period_breaks=period_breaks,
+									minor_breaks=minor_period_breaks)
 
-		plot_ratio = line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='ratio',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Ratio'),
-				title=ratio_title,
-				period_breaks=period_breaks,
-				minor_breaks=minor_period_breaks)
+		plot_ratio = line_plot_x_axis_date(
+									df=df,
+									x_axis_field='timestamp_period',
+									y_axis_field='ratio',
+									x_axis_label=_('Date'),
+									y_axis_label=_('Ratio'),
+									title=ratio_title,
+									period_breaks=period_breaks,
+									minor_breaks=minor_period_breaks)
 
 		return(plot_assignment_taken, plot_unique_users, plot_ratio)
 
@@ -319,35 +331,38 @@ class AssignmentsTakenTimeseriesPlot(object):
 								event_title, user_title, ratio_title,
 								period_breaks, minor_period_breaks):
 		
-		plot_assignment_views = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_assignments_taken',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of assignments taken'),
-				title=event_title,
-				period_breaks=period_breaks,
-				group_by=group_by,
-				minor_breaks=minor_period_breaks)
+		plot_assignment_views = group_line_plot_x_axis_date(
+										df=df,
+										x_axis_field='timestamp_period',
+										y_axis_field='number_assignments_taken',
+										x_axis_label=_('Date'),
+										y_axis_label=_('Number of assignments taken'),
+										title=event_title,
+										period_breaks=period_breaks,
+										group_by=group_by,
+										minor_breaks=minor_period_breaks)
 
-		plot_unique_users = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_of_unique_users',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of unique users'),
-				title=user_title,
-				period_breaks=period_breaks,
-				group_by=group_by,
-				minor_breaks=minor_period_breaks)
+		plot_unique_users = group_line_plot_x_axis_date(
+										df=df,
+										x_axis_field='timestamp_period',
+										y_axis_field='number_of_unique_users',
+										x_axis_label=_('Date'),
+										y_axis_label=_('Number of unique users'),
+										title=user_title,
+										period_breaks=period_breaks,
+										group_by=group_by,
+										minor_breaks=minor_period_breaks)
 
-		plot_ratio = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='ratio',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Ratio'),
-				title=ratio_title,
-				period_breaks=period_breaks,
-				group_by=group_by,
-				minor_breaks=minor_period_breaks)
+		plot_ratio = group_line_plot_x_axis_date(
+										df=df,
+										x_axis_field='timestamp_period',
+										y_axis_field='ratio',
+										x_axis_label=_('Date'),
+										y_axis_label=_('Ratio'),
+										title=ratio_title,
+										period_breaks=period_breaks,
+										group_by=group_by,
+										minor_breaks=minor_period_breaks)
 
 		return (plot_assignment_views, plot_unique_users, plot_ratio)
 
@@ -358,13 +373,14 @@ class AssignmentsTakenTimeseriesPlot(object):
 		att = self.att
 		df = att.analyze_assignment_taken_over_total_enrollments()
 		df.reset_index(inplace=True)
-		plot = histogram_plot_x_axis_discrete(df=df,
-					x_axis_field='assignment_title' ,
-					y_axis_field='ratio',
-					x_axis_label=_('Assignments'),
-					y_axis_label=_('Ratio'),
-					title=_('Ratio of assignments taken over total enrollments'),
-					stat='bar')
+		plot = histogram_plot_x_axis_discrete(
+									df=df,
+									x_axis_field='assignment_title' ,
+									y_axis_field='ratio',
+									x_axis_label=_('Assignments'),
+									y_axis_label=_('Ratio'),
+									title=_('Ratio of assignments taken over total enrollments'),
+									stat='bar')
 		return (plot,)
 
 class SelfAssessmentViewsTimeseriesPlot(object):
@@ -407,12 +423,12 @@ class SelfAssessmentViewsTimeseriesPlot(object):
 			user_title = _('Number of unique users viewing self assessments per course sections')
 			ratio_title = _('Ratio of self assessments viewed over unique user per course sections')
 			all_section_plots = self.generate_group_by_plots(df,
-															group_by,
-															event_title,
-															user_title,
-															ratio_title,
-															period_breaks,
-															minor_period_breaks)
+															 group_by,
+															 event_title,
+															 user_title,
+															 ratio_title,
+															 period_breaks,
+															 minor_period_breaks)
 			plots.append(all_section_plots)
 
 		for course_id in course_ids:
@@ -446,36 +462,38 @@ class SelfAssessmentViewsTimeseriesPlot(object):
 										period_breaks, minor_period_breaks)
 		return plots
 
-	def generate_plots(self, df,
-						event_title, user_title, ratio_title, 
-						period_breaks, minor_period_breaks):
+	def generate_plots(self, df, event_title, user_title, ratio_title, 
+					   period_breaks, minor_period_breaks):
 		
-		plot_self_assessments_views = line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_self_assessments_viewed',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of self assessments viewed'),
-				title=event_title,
-				period_breaks=period_breaks,
-				minor_breaks=minor_period_breaks)
+		plot_self_assessments_views = line_plot_x_axis_date(
+										df=df,
+										x_axis_field='timestamp_period',
+										y_axis_field='number_self_assessments_viewed',
+										x_axis_label=_('Date'),
+										y_axis_label=_('Number of self assessments viewed'),
+										title=event_title,
+										period_breaks=period_breaks,
+										minor_breaks=minor_period_breaks)
 
-		plot_unique_users = line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_of_unique_users',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of unique users'),
-				title=user_title,
-				period_breaks=period_breaks,
-				minor_breaks=minor_period_breaks)
+		plot_unique_users = line_plot_x_axis_date(
+										df=df,
+										x_axis_field='timestamp_period',
+										y_axis_field='number_of_unique_users',
+										x_axis_label=_('Date'),
+										y_axis_label=_('Number of unique users'),
+										title=user_title,
+										period_breaks=period_breaks,
+										minor_breaks=minor_period_breaks)
 
-		plot_ratio = line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='ratio',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Ratio'),
-				title=ratio_title,
-				period_breaks=period_breaks,
-				minor_breaks=minor_period_breaks)
+		plot_ratio = line_plot_x_axis_date(
+										df=df,
+										x_axis_field='timestamp_period',
+										y_axis_field='ratio',
+										x_axis_label=_('Date'),
+										y_axis_label=_('Ratio'),
+										title=ratio_title,
+										period_breaks=period_breaks,
+										minor_breaks=minor_period_breaks)
 
 		return (plot_self_assessments_views, plot_unique_users, plot_ratio)
 
@@ -483,35 +501,38 @@ class SelfAssessmentViewsTimeseriesPlot(object):
 								event_title, user_title, ratio_title, 
 								period_breaks, minor_period_breaks):
 		
-		plot_self_assessments_views = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_self_assessments_viewed',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of self assessments viewed'),
-				title=event_title,
-				period_breaks=period_breaks,
-				group_by=group_by,
-				minor_breaks=minor_period_breaks)
+		plot_self_assessments_views = group_line_plot_x_axis_date(
+											df=df,
+											x_axis_field='timestamp_period',
+											y_axis_field='number_self_assessments_viewed',
+											x_axis_label=_('Date'),
+											y_axis_label=_('Number of self assessments viewed'),
+											title=event_title,
+											period_breaks=period_breaks,
+											group_by=group_by,
+											minor_breaks=minor_period_breaks)
 
-		plot_unique_users = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_of_unique_users',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of unique users'),
-				title=user_title,
-				period_breaks=period_breaks,
-				group_by=group_by,
-				minor_breaks=minor_period_breaks)
+		plot_unique_users = group_line_plot_x_axis_date(
+											df=df,
+											x_axis_field='timestamp_period',
+											y_axis_field='number_of_unique_users',
+											x_axis_label=_('Date'),
+											y_axis_label=_('Number of unique users'),
+											title=user_title,
+											period_breaks=period_breaks,
+											group_by=group_by,
+											minor_breaks=minor_period_breaks)
 
-		plot_ratio = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='ratio',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Ratio'),
-				title=ratio_title,
-				period_breaks=period_breaks,
-				group_by=group_by,
-				minor_breaks=minor_period_breaks)
+		plot_ratio = group_line_plot_x_axis_date(
+											df=df,
+											x_axis_field='timestamp_period',
+											y_axis_field='ratio',
+											x_axis_label=_('Date'),
+											y_axis_label=_('Ratio'),
+											title=ratio_title,
+											period_breaks=period_breaks,
+											group_by=group_by,
+											minor_breaks=minor_period_breaks)
 
 		return (plot_self_assessments_views, plot_unique_users, plot_ratio)
 
@@ -556,12 +577,12 @@ class SelfAssessmentsTakenTimeseriesPlot(object):
 			user_title = _('Number of unique users taking self assessments per course sections')
 			ratio_title = _('Ratio of self assessments taken over unique user per course sections')
 			all_section_plots = self.generate_group_by_plots(df,
-															group_by,
-															event_title,
-															user_title,
-															ratio_title,
-															period_breaks,
-															minor_period_breaks)
+															 group_by,
+															 event_title,
+															 user_title,
+															 ratio_title,
+															 period_breaks,
+															 minor_period_breaks)
 			plots.append(all_section_plots)
 
 		for course_id in course_ids:
@@ -596,65 +617,71 @@ class SelfAssessmentsTakenTimeseriesPlot(object):
 	def generate_plots(self, df, event_title, user_title, ratio_title,
 						period_breaks, minor_period_breaks):
 
-		plot_self_assessments_taken = line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_self_assessments_taken',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of self assessments taken'),
-				title=event_title,
-				period_breaks=period_breaks,
-				minor_breaks=minor_period_breaks)
+		plot_self_assessments_taken = line_plot_x_axis_date(
+										df=df,
+										x_axis_field='timestamp_period',
+										y_axis_field='number_self_assessments_taken',
+										x_axis_label=_('Date'),
+										y_axis_label=_('Number of self assessments taken'),
+										title=event_title,
+										period_breaks=period_breaks,
+										minor_breaks=minor_period_breaks)
 
-		plot_unique_users = line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_of_unique_users',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of unique users'),
-				title=user_title,
-				period_breaks=period_breaks,
-				minor_breaks=minor_period_breaks)
+		plot_unique_users = line_plot_x_axis_date(
+								df=df,
+								x_axis_field='timestamp_period',
+								y_axis_field='number_of_unique_users',
+								x_axis_label=_('Date'),
+								y_axis_label=_('Number of unique users'),
+								title=user_title,
+								period_breaks=period_breaks,
+								minor_breaks=minor_period_breaks)
 
-		plot_ratio = line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='ratio',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Ratio'),
-				title=ratio_title,
-				period_breaks=period_breaks,
-				minor_breaks=minor_period_breaks)
+		plot_ratio = line_plot_x_axis_date(
+								df=df,
+								x_axis_field='timestamp_period',
+								y_axis_field='ratio',
+								x_axis_label=_('Date'),
+								y_axis_label=_('Ratio'),
+								title=ratio_title,
+								period_breaks=period_breaks,
+								minor_breaks=minor_period_breaks)
 
 		return (plot_self_assessments_taken, plot_unique_users, plot_ratio)
 
 	def generate_group_by_plots(self, df, group_by, event_title, user_title, ratio_title,
 								period_breaks, minor_period_breaks):
-		plot_self_assessments_taken = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_self_assessments_taken',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of self assessments taken'),
-				title=event_title,
-				period_breaks=period_breaks,
-				group_by=group_by,
-				minor_breaks=minor_period_breaks)
+		plot_self_assessments_taken = group_line_plot_x_axis_date(
+												df=df,
+												x_axis_field='timestamp_period',
+												y_axis_field='number_self_assessments_taken',
+												x_axis_label=_('Date'),
+												y_axis_label=_('Number of self assessments taken'),
+												title=event_title,
+												period_breaks=period_breaks,
+												group_by=group_by,
+												minor_breaks=minor_period_breaks)
 
-		plot_unique_users = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_of_unique_users',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of unique users'),
-				title=user_title,
-				period_breaks=period_breaks,
-				group_by=group_by,
-				minor_breaks=minor_period_breaks)
+		plot_unique_users = group_line_plot_x_axis_date(
+												df=df,
+												x_axis_field='timestamp_period',
+												y_axis_field='number_of_unique_users',
+												x_axis_label=_('Date'),
+												y_axis_label=_('Number of unique users'),
+												title=user_title,
+												period_breaks=period_breaks,
+												group_by=group_by,
+												minor_breaks=minor_period_breaks)
 
-		plot_ratio = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='ratio',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Ratio'),
-				title=ratio_title,
-				period_breaks=period_breaks,
-				group_by=group_by,
-				minor_breaks=minor_period_breaks)
+		plot_ratio = group_line_plot_x_axis_date(
+										df=df,
+										x_axis_field='timestamp_period',
+										y_axis_field='ratio',
+										x_axis_label=_('Date'),
+										y_axis_label=_('Ratio'),
+										title=ratio_title,
+										period_breaks=period_breaks,
+										group_by=group_by,
+										minor_breaks=minor_period_breaks)
 
 		return (plot_self_assessments_taken, plot_unique_users, plot_ratio)

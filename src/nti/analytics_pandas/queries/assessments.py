@@ -16,8 +16,8 @@ from nti.analytics_database.assessments import SelfAssessmentsTaken
 
 from .mixins import TableQueryMixin
 
-from .common import add_context_name_
 from .common import add_device_type_
+from .common import add_context_name_
 from .common import add_resource_type_
 
 from . import orm_dataframe
@@ -28,7 +28,7 @@ class QueryAssignmentViews(TableQueryMixin):
 
 	def filter_by_period_of_time(self, start_date=None, end_date=None):
 		av = self.table
-		query = self.session.query( av.timestamp,
+		query = self.session.query(	av.timestamp,
 									av.context_path,
 									av.course_id,
 									av.time_length,
@@ -43,7 +43,7 @@ class QueryAssignmentViews(TableQueryMixin):
 
 	def filter_by_course_id_and_period_of_time(self, start_date=None, end_date=None, course_id=()):
 		av = self.table
-		query = self.session.query( av.timestamp,
+		query = self.session.query(	av.timestamp,
 									av.context_path,
 									av.time_length,
 									av.assignment_view_id,
@@ -74,7 +74,7 @@ class QueryAssignmentsTaken(TableQueryMixin):
 
 	def filter_by_period_of_time(self, start_date=None, end_date=None):
 		at = self.table
-		query = self.session.query( at.timestamp,
+		query = self.session.query(	at.timestamp,
 									at.course_id,
 									at.time_length,
 									at.submission_id,
@@ -88,7 +88,7 @@ class QueryAssignmentsTaken(TableQueryMixin):
 
 	def filter_by_course_id_and_period_of_time(self, start_date=None, end_date=None, course_id=()):
 		at = self.table
-		query = self.session.query( at.timestamp,
+		query = self.session.query(	at.timestamp,
 									at.time_length,
 									at.submission_id,
 									at.assignment_taken_id,
@@ -125,7 +125,7 @@ class QuerySelfAssessmentViews(TableQueryMixin):
 
 	def filter_by_period_of_time(self, start_date=None, end_date=None):
 		sav = self.table
-		query = self.session.query( sav.timestamp,
+		query = self.session.query(	sav.timestamp,
 									sav.context_path,
 									sav.course_id,
 									sav.time_length,
@@ -140,7 +140,7 @@ class QuerySelfAssessmentViews(TableQueryMixin):
 
 	def filter_by_course_id_and_period_of_time(self, start_date=None, end_date=None, course_id=()):
 		sav = self.table
-		query = self.session.query( sav.timestamp,
+		query = self.session.query(	sav.timestamp,
 									sav.context_path,
 									sav.time_length,
 									sav.self_assessment_view_id,
@@ -171,7 +171,7 @@ class QuerySelfAssessmentsTaken(TableQueryMixin):
 
 	def filter_by_period_of_time(self, start_date=None, end_date=None):
 		sat = self.table
-		query = self.session.query( sat.timestamp,
+		query = self.session.query(	sat.timestamp,
 									sat.time_length,
 									sat.course_id,
 									sat.submission_id,
@@ -184,7 +184,7 @@ class QuerySelfAssessmentsTaken(TableQueryMixin):
 
 	def filter_by_course_id_and_period_of_time(self, start_date=None, end_date=None, course_id=()):
 		sat = self.table
-		query = self.session.query( sat.timestamp,
+		query = self.session.query(	sat.timestamp,
 									sat.time_length,
 									sat.submission_id,
 									sat.self_assessment_id,

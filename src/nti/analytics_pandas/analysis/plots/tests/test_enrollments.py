@@ -11,6 +11,7 @@ from nti.analytics_pandas.analysis.enrollments import CourseDropsTimeseries
 from nti.analytics_pandas.analysis.enrollments import CourseEnrollmentsTimeseries
 from nti.analytics_pandas.analysis.enrollments import CourseCatalogViewsTimeseries
 from nti.analytics_pandas.analysis.enrollments import CourseEnrollmentsEventsTimeseries
+
 from nti.analytics_pandas.analysis.plots.enrollments import CourseDropsTimeseriesPlot
 from nti.analytics_pandas.analysis.plots.enrollments import CourseEnrollmentsTimeseriesPlot
 from nti.analytics_pandas.analysis.plots.enrollments import CourseCatalogViewsTimeseriesPlot
@@ -19,9 +20,6 @@ from nti.analytics_pandas.analysis.plots.enrollments import CourseEnrollmentsEve
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
 class TestCourseCatalogViewsPlot(AnalyticsPandasTestBase):
-
-	def setUp(self):
-		super(TestCourseCatalogViewsPlot, self).setUp()
 
 	def test_explore_events_course_catalog_views(self):
 		start_date = '2015-01-01'
@@ -41,9 +39,6 @@ class TestCourseCatalogViewsPlot(AnalyticsPandasTestBase):
 
 class TestCourseEnrollmentsPlot(AnalyticsPandasTestBase):
 
-	def setUp(self):
-		super(TestCourseEnrollmentsPlot, self).setUp()
-
 	def test_explore_events_course_enrollments(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
@@ -61,9 +56,6 @@ class TestCourseEnrollmentsPlot(AnalyticsPandasTestBase):
 		_ = cetp.analyze_device_enrollment_types()
 
 class TestCourseDropsPlot(AnalyticsPandasTestBase):
-
-	def setUp(self):
-		super(TestCourseDropsPlot, self).setUp()
 
 	def test_explore_events_course_drops(self):
 		start_date = '2015-01-01'
@@ -90,9 +82,6 @@ class TestCourseDropsPlot(AnalyticsPandasTestBase):
 		_ = cdtp.analyze_enrollment_types()
 
 class TestEnrollmentsEventsPlot(AnalyticsPandasTestBase):
-
-	def setUp(self):
-		super(TestEnrollmentsEventsPlot, self).setUp()
 
 	def test_explore_course_enrollments_vs_drops(self):
 		start_date = '2015-01-01'

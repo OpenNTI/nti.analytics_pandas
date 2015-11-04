@@ -12,6 +12,7 @@ logger = __import__('logging').getLogger(__name__)
 from . import MessageFactory as _
 
 import pandas as pd
+
 import numpy as np
 
 from .commons import histogram_plot
@@ -47,39 +48,42 @@ class BookmarksTimeseriesPlot(object):
 		user_title = _('Number of unique users creating bookmarks during period of time')
 		ratio_title = _('Ratio of bookmarks created over unique user on each available date')
 
-		plots = self.generate_plots(df, event_title, user_title, ratio_title, 
+		plots = self.generate_plots(df, event_title, user_title, ratio_title,
 									period_breaks, minor_period_breaks)
 		return plots
 
-	def generate_plots(self, df, event_title, user_title, ratio_title, 
+	def generate_plots(self, df, event_title, user_title, ratio_title,
 						period_breaks, minor_period_breaks):
 
-		plot_bookmarks_creation = line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_of_bookmarks_created',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of bookmarks created'),
-				title=event_title,
-				period_breaks=period_breaks,
-				minor_breaks=minor_period_breaks)
+		plot_bookmarks_creation = line_plot_x_axis_date(
+										df=df,
+										x_axis_field='timestamp_period',
+										y_axis_field='number_of_bookmarks_created',
+										x_axis_label=_('Date'),
+										y_axis_label=_('Number of bookmarks created'),
+										title=event_title,
+										period_breaks=period_breaks,
+										minor_breaks=minor_period_breaks)
 
-		plot_unique_users = line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_of_unique_users',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of unique users'),
-				title=user_title,
-				period_breaks=period_breaks,
-				minor_breaks=minor_period_breaks)
+		plot_unique_users = line_plot_x_axis_date(
+										df=df,
+										x_axis_field='timestamp_period',
+										y_axis_field='number_of_unique_users',
+										x_axis_label=_('Date'),
+										y_axis_label=_('Number of unique users'),
+										title=user_title,
+										period_breaks=period_breaks,
+										minor_breaks=minor_period_breaks)
 
-		plot_ratio = line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='ratio',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Ratio'),
-				title=ratio_title,
-				period_breaks=period_breaks,
-				minor_breaks=minor_period_breaks)
+		plot_ratio = line_plot_x_axis_date(
+										df=df,
+										x_axis_field='timestamp_period',
+										y_axis_field='ratio',
+										x_axis_label=_('Date'),
+										y_axis_label=_('Ratio'),
+										title=ratio_title,
+										period_breaks=period_breaks,
+										minor_breaks=minor_period_breaks)
 
 		return (plot_bookmarks_creation, plot_unique_users, plot_ratio)
 
@@ -100,12 +104,12 @@ class BookmarksTimeseriesPlot(object):
 			user_title = _('Number of unique users creating bookmarks per course sections')
 			ratio_title = _('Ratio of bookmarks created over unique user per course sections')
 			all_section_plots = self.generate_group_by_plots(df,
-															group_by,
-															event_title,
-															user_title,
-															ratio_title,
-															period_breaks,
-															minor_period_breaks)
+															 group_by,
+															 event_title,
+															 user_title,
+															 ratio_title,
+															 period_breaks,
+															 minor_period_breaks)
 			plots.append(all_section_plots)
 
 		for course_id in course_ids:
@@ -133,23 +137,24 @@ class BookmarksTimeseriesPlot(object):
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
 		group_by = 'resource_type'
-		event_title =_('Number of bookmarks created grouped by resource types')
+		event_title = _('Number of bookmarks created grouped by resource types')
 		user_title = _('Number of unique users creating bookmarks  grouped by resource types')
 		ratio_title = _('Ratio of bookmarks created over unique user grouped by resource types')
 
-		plots = self.generate_group_by_plots(df, group_by, 
-										event_title, user_title, ratio_title, 
-										period_breaks, minor_period_breaks)
+		plots = self.generate_group_by_plots(df, group_by,
+											 event_title, user_title, ratio_title,
+											 period_breaks, minor_period_breaks)
 
 		resource_df.reset_index(inplace=True)
 
-		plot_total_bookmark_on_each_type = histogram_plot(df=resource_df,
-			x_axis_field='resource_type' ,
-			y_axis_field='number_of_bookmarks_created',
-			x_axis_label=_('Resource Type'),
-			y_axis_label=_('Number of bookmarks created'),
-			title=_('Number of bookmarks created in each resource type'),
-			stat='bar')
+		plot_total_bookmark_on_each_type = histogram_plot(
+												df=resource_df,
+												x_axis_field='resource_type' ,
+												y_axis_field='number_of_bookmarks_created',
+												x_axis_label=_('Resource Type'),
+												y_axis_label=_('Number of bookmarks created'),
+												title=_('Number of bookmarks created in each resource type'),
+												stat='bar')
 
 		return (plots, plot_total_bookmark_on_each_type)
 
@@ -165,48 +170,50 @@ class BookmarksTimeseriesPlot(object):
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
 		group_by = 'device_type'
-		event_title =_('Number of bookmarks created grouped by device types')
+		event_title = _('Number of bookmarks created grouped by device types')
 		user_title = _('Number of unique users creating bookmarks  grouped by device types')
 		ratio_title = _('Ratio of bookmarks created over unique user grouped by device types')
 
-		plots = self.generate_group_by_plots(df, group_by, 
-										event_title, user_title, ratio_title, 
+		plots = self.generate_group_by_plots(df, group_by,
+										event_title, user_title, ratio_title,
 										period_breaks, minor_period_breaks)
 		return plots
 
-	def generate_group_by_plots(self, df, group_by,
-								event_title, user_title, ratio_title,
-								period_breaks,minor_period_breaks):
+	def generate_group_by_plots(self, df, group_by, event_title, user_title, ratio_title,
+								period_breaks, minor_period_breaks):
 
-		plot_bookmarks_creation = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_of_bookmarks_created',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of bookmarks created'),
-				title=event_title,
-				period_breaks=period_breaks,
-				group_by=group_by,
-				minor_breaks=minor_period_breaks)
+		plot_bookmarks_creation = group_line_plot_x_axis_date(
+											df=df,
+											x_axis_field='timestamp_period',
+											y_axis_field='number_of_bookmarks_created',
+											x_axis_label=_('Date'),
+											y_axis_label=_('Number of bookmarks created'),
+											title=event_title,
+											period_breaks=period_breaks,
+											group_by=group_by,
+											minor_breaks=minor_period_breaks)
 
-		plot_unique_users = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_of_unique_users',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of unique users'),
-				title=user_title,
-				period_breaks=period_breaks,
-				group_by=group_by,
-				minor_breaks=minor_period_breaks)
+		plot_unique_users = group_line_plot_x_axis_date(
+											df=df,
+											x_axis_field='timestamp_period',
+											y_axis_field='number_of_unique_users',
+											x_axis_label=_('Date'),
+											y_axis_label=_('Number of unique users'),
+											title=user_title,
+											period_breaks=period_breaks,
+											group_by=group_by,
+											minor_breaks=minor_period_breaks)
 
-		plot_ratio = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='ratio',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Ratio'),
-				title=ratio_title,
-				period_breaks=period_breaks,
-				group_by=group_by,
-				minor_breaks=minor_period_breaks)
+		plot_ratio = group_line_plot_x_axis_date(
+											df=df,
+											x_axis_field='timestamp_period',
+											y_axis_field='ratio',
+											x_axis_label=_('Date'),
+											y_axis_label=_('Ratio'),
+											title=ratio_title,
+											period_breaks=period_breaks,
+											group_by=group_by,
+											minor_breaks=minor_period_breaks)
 
 		return (plot_bookmarks_creation, plot_unique_users, plot_ratio)
 
@@ -223,44 +230,47 @@ class BookmarksTimeseriesPlot(object):
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
-		plot_bookmarks_creation = facet_line_plot_x_axis_date(df=df,
-			x_axis_field='timestamp_period',
-			y_axis_field='number_of_bookmarks_created',
-			x_axis_label=_('Date'),
-			y_axis_label=_('Number of resource views'),
-			title=_('Number of bookmarks created using each device type grouped by resource types'),
-			period_breaks=period_breaks,
-			group_by='resource_type',
-			facet='device_type',
-			minor_breaks=minor_period_breaks,
-			scales='free',
-			text_size=8)
+		plot_bookmarks_creation = facet_line_plot_x_axis_date(
+											df=df,
+											x_axis_field='timestamp_period',
+											y_axis_field='number_of_bookmarks_created',
+											x_axis_label=_('Date'),
+											y_axis_label=_('Number of resource views'),
+											title=_('Number of bookmarks created using each device type grouped by resource types'),
+											period_breaks=period_breaks,
+											group_by='resource_type',
+											facet='device_type',
+											minor_breaks=minor_period_breaks,
+											scales='free',
+											text_size=8)
 
-		plot_unique_users = facet_line_plot_x_axis_date(df=df,
-			x_axis_field='timestamp_period',
-			y_axis_field='number_of_unique_users',
-			x_axis_label=_('Date'),
-			y_axis_label=_('Number of unique users'),
-			title=_('Number of unique users creating bookmarks grouped by resource types during time period'),
-			period_breaks=period_breaks,
-			group_by='resource_type',
-			facet='device_type',
-			minor_breaks=minor_period_breaks,
-			scales='free',
-			text_size=8)
+		plot_unique_users = facet_line_plot_x_axis_date(
+											df=df,
+											x_axis_field='timestamp_period',
+											y_axis_field='number_of_unique_users',
+											x_axis_label=_('Date'),
+											y_axis_label=_('Number of unique users'),
+											title=_('Number of unique users creating bookmarks grouped by resource types during time period'),
+											period_breaks=period_breaks,
+											group_by='resource_type',
+											facet='device_type',
+											minor_breaks=minor_period_breaks,
+											scales='free',
+											text_size=8)
 
-		plot_ratio = facet_line_plot_x_axis_date(df=df,
-			x_axis_field='timestamp_period',
-			y_axis_field='ratio',
-			x_axis_label=_('Date'),
-			y_axis_label=_('Ratio'),
-			title=_('Ratio of bookmark creation over unique user on each available date'),
-			period_breaks=period_breaks,
-			group_by='resource_type',
-			facet='device_type',
-			minor_breaks=minor_period_breaks,
-			scales='free',
-			text_size=8)
+		plot_ratio = facet_line_plot_x_axis_date(
+											df=df,
+											x_axis_field='timestamp_period',
+											y_axis_field='ratio',
+											x_axis_label=_('Date'),
+											y_axis_label=_('Ratio'),
+											title=_('Ratio of bookmark creation over unique user on each available date'),
+											period_breaks=period_breaks,
+											group_by='resource_type',
+											facet='device_type',
+											minor_breaks=minor_period_breaks,
+											scales='free',
+											text_size=8)
 
 		return (plot_bookmarks_creation, plot_unique_users, plot_ratio)
 
@@ -270,12 +280,13 @@ class BookmarksTimeseriesPlot(object):
 		if users_df is None:
 			return ()
 
-		plot_users = histogram_plot_x_axis_discrete(df=users_df,
-			x_axis_field='username' ,
-			y_axis_field='number_of_bookmarks_created',
-			x_axis_label=_('Username'),
-			y_axis_label=_('Number of bookmarks created'),
-			title=_('The most active users creating bookmarks'),
-			stat='identity')
+		plot_users = histogram_plot_x_axis_discrete(
+											df=users_df,
+											x_axis_field='username' ,
+											y_axis_field='number_of_bookmarks_created',
+											x_axis_label=_('Username'),
+											y_axis_label=_('Number of bookmarks created'),
+											title=_('The most active users creating bookmarks'),
+											stat='identity')
 
 		return (plot_users,)

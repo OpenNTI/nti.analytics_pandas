@@ -57,18 +57,6 @@ class TestAssignmentViewsPlot(AnalyticsPandasTestBase):
 
 class TestAssignmentsTakenPlot(AnalyticsPandasTestBase):
 
-	def setUp(self):
-		super(TestAssignmentsTakenPlot, self).setUp()
-
-	def test_analyze_events(self):
-		start_date = u'2015-01-01'
-		end_date = u'2015-05-31'
-		courses_id = ['1024', '1025', '1026', '1027', '1028']
-		att = AssignmentsTakenTimeseries(self.session, start_date=start_date,
-										 end_date=end_date, course_id=courses_id)
-		attp = AssignmentsTakenTimeseriesPlot(att)
-		_ = attp.analyze_events(period_breaks='1 week', minor_period_breaks='1 day')
-
 	def test_analyze_events(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
@@ -98,9 +86,6 @@ class TestAssignmentsTakenPlot(AnalyticsPandasTestBase):
 		_ = attp.analyze_assignment_taken_over_total_enrollments()
 
 class TestSelfAssessmentViewsPlot(AnalyticsPandasTestBase):
-
-	def setUp(self):
-		super(TestSelfAssessmentViewsPlot, self).setUp()
 
 	def test_analyze_events(self):
 		start_date = u'2015-01-01'
@@ -132,9 +117,6 @@ class TestSelfAssessmentViewsPlot(AnalyticsPandasTestBase):
 
 class TestSelfAssessmentsTakenPlot(AnalyticsPandasTestBase):
 
-	def setUp(self):
-		super(TestSelfAssessmentsTakenPlot, self).setUp()
-
 	def test_analyze_events(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
@@ -164,9 +146,6 @@ class TestSelfAssessmentsTakenPlot(AnalyticsPandasTestBase):
 													  minor_period_breaks='1 day')
 
 class TestAssessmentEventsPlot(AnalyticsPandasTestBase):
-
-	def setUp(self):
-		super(TestAssessmentEventsPlot, self).setUp()
 
 	def test_combine_events(self):
 		start_date = u'2015-01-01'

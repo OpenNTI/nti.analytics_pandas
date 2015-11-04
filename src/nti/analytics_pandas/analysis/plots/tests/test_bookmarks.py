@@ -14,9 +14,6 @@ from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
 class TestBookmarksPlot(AnalyticsPandasTestBase):
 
-	def setUp(self):
-		super(TestBookmarksPlot, self).setUp()
-
 	def test_explore_events_bookmark_creation(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
