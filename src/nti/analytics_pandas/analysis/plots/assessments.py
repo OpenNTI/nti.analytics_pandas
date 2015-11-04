@@ -221,34 +221,50 @@ class AssignmentsTakenTimeseriesPlot(object):
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
-		plot_assignment_views = line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_assignments_taken',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of assignments viewed'),
-				title=_('Number of assignments taken during period of time'),
-				period_breaks=period_breaks,
-				minor_breaks=minor_period_breaks)
+		event_title = _('Number of assignments taken during period of time')
+		user_title = _('Number of unique users taking assignments during period of time')
+		ratio_title = _('Ratio of assignments taken over unique user on each available date')
+		plots = self.generate_plots(df, event_title, user_title, ratio_title,
+									period_breaks, minor_period_breaks)
+		return plots
 
-		plot_unique_users = line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_of_unique_users',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of unique users'),
-				title=_('Number of unique users taking assignments during period of time'),
-				period_breaks=period_breaks,
-				minor_breaks=minor_period_breaks)
+	def analyze_events_per_course_sections(self, period_breaks='1 week', minor_period_breaks='1 day'):
+		att = self.att
+		df = att.analyze_events_per_course_sections()
+		if df is None:
+			return()
 
-		plot_ratio = line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='ratio',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Ratio'),
-				title=_('Ratio of assignments taken over unique user on each available date'),
-				period_breaks=period_breaks,
-				minor_breaks=minor_period_breaks)
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		course_ids = np.unique(df['course_id'].values.ravel())
 
-		return (plot_assignment_views, plot_unique_users, plot_ratio)
+		plots = []
+		if len(course_ids) > 1:
+			group_by = 'context_name'
+			event_title = _('Number of assignments taken per course sections')
+			user_title = _('Number of unique users taking assignments per course sections')
+			ratio_title = _('Ratio of assignments taken over unique user per course sections')
+			all_section_plots = self.generate_group_by_plots(df,
+															group_by,
+															event_title,
+															user_title,
+															ratio_title,
+															period_breaks,
+															minor_period_breaks)
+			plots.append(all_section_plots)
+
+		for course_id in course_ids:
+			new_df = df[df['course_id'] == course_id]
+			context_name = new_df.iloc[0]['context_name']
+			event_title = 'Number of assignments taken in %s' % (context_name)
+			user_title = 'Number of unique users taking assignments in %s' % (context_name)
+			ratio_title = 'Ratio of assignments taken over unique user in %s' % (context_name)
+			section_plots = self.generate_plots(new_df, event_title, user_title,
+												ratio_title, period_breaks,
+												minor_period_breaks)
+			plots.append(section_plots)
+
+		return plots
 
 	def analyze_events_group_by_device_type(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		att = self.att
@@ -258,14 +274,59 @@ class AssignmentsTakenTimeseriesPlot(object):
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
+		group_by = 'device_type'
+		event_title = _('Number of assignments taken during period of time')
+		user_title = _('Number of unique users taking assignments during period of time')
+		ratio_title = _('Ratio of assignments taken over unique user on each available date')
+		plots = self.generate_group_by_plots(df, group_by, event_title, user_title, ratio_title,
+											period_breaks, minor_period_breaks)
+		return plots
+
+	def generate_plots(self, df,
+								event_title, user_title, ratio_title,
+								period_breaks, minor_period_breaks):
+		
+		plot_assignment_taken = line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='number_assignments_taken',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of assignments taken'),
+				title=event_title,
+				period_breaks=period_breaks,
+				minor_breaks=minor_period_breaks)
+
+		plot_unique_users = line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='number_of_unique_users',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of unique users'),
+				title=user_title,
+				period_breaks=period_breaks,
+				minor_breaks=minor_period_breaks)
+
+		plot_ratio = line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='ratio',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Ratio'),
+				title=ratio_title,
+				period_breaks=period_breaks,
+				minor_breaks=minor_period_breaks)
+
+		return(plot_assignment_taken, plot_unique_users, plot_ratio)
+
+	def generate_group_by_plots(self, df, group_by,
+								event_title, user_title, ratio_title,
+								period_breaks, minor_period_breaks):
+		
 		plot_assignment_views = group_line_plot_x_axis_date(df=df,
 				x_axis_field='timestamp_period',
 				y_axis_field='number_assignments_taken',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Number of assignments taken'),
-				title=_('Number of assignments taken grouped by device types during period of time'),
+				title=event_title,
 				period_breaks=period_breaks,
-				group_by='device_type',
+				group_by=group_by,
 				minor_breaks=minor_period_breaks)
 
 		plot_unique_users = group_line_plot_x_axis_date(df=df,
@@ -273,9 +334,9 @@ class AssignmentsTakenTimeseriesPlot(object):
 				y_axis_field='number_of_unique_users',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Number of unique users'),
-				title=_('Number of unique users taking assignments by device types during period of time'),
+				title=user_title,
 				period_breaks=period_breaks,
-				group_by='device_type',
+				group_by=group_by,
 				minor_breaks=minor_period_breaks)
 
 		plot_ratio = group_line_plot_x_axis_date(df=df,
@@ -283,9 +344,9 @@ class AssignmentsTakenTimeseriesPlot(object):
 				y_axis_field='ratio',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Ratio'),
-				title=_('Ratio of assignments taken over unique user by device types on each available date'),
+				title=ratio_title,
 				period_breaks=period_breaks,
-				group_by='device_type',
+				group_by=group_by,
 				minor_breaks=minor_period_breaks)
 
 		return (plot_assignment_views, plot_unique_users, plot_ratio)

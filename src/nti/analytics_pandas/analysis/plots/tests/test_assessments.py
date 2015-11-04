@@ -69,14 +69,23 @@ class TestAssignmentsTakenPlot(AnalyticsPandasTestBase):
 		attp = AssignmentsTakenTimeseriesPlot(att)
 		_ = attp.analyze_events(period_breaks='1 week', minor_period_breaks='1 day')
 
-	def test_analyze_events_group_by_device_type(self):
+	def test_analyze_events(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
 		courses_id = ['1024', '1025', '1026', '1027', '1028']
 		att = AssignmentsTakenTimeseries(self.session, start_date=start_date,
 										 end_date=end_date, course_id=courses_id)
 		attp = AssignmentsTakenTimeseriesPlot(att)
-		_ = attp.analyze_events_group_by_device_type(period_breaks='1 week',
+		_ = attp.analyze_events(period_breaks='1 week', minor_period_breaks='1 day')
+
+	def test_analyze_events_per_course_sections(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		courses_id = ['1024', '1025', '1026', '1027', '1028']
+		att = AssignmentsTakenTimeseries(self.session, start_date=start_date,
+										 end_date=end_date, course_id=courses_id)
+		attp = AssignmentsTakenTimeseriesPlot(att)
+		_ = attp.analyze_events_per_course_sections(period_breaks='1 week',
 													 minor_period_breaks='1 day')
 
 	def test_analyze_assignment_taken_over_total_enrollments(self):
