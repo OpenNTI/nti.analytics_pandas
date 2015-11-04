@@ -20,9 +20,6 @@ from ..utils import cast_columns_as_category_
 from .common import analyze_types_
 from .common import add_timestamp_period_
 from .common import get_most_active_users_
-from .common import explore_unique_users_based_timestamp_date_
-from .common import explore_number_of_events_based_timestamp_date_
-from .common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
 
 class BookmarkCreationTimeseries(object):
 	"""
