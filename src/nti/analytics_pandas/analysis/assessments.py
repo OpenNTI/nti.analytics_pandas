@@ -86,7 +86,8 @@ class AssignmentViewsTimeseries(object):
 	"""
 
 	def __init__(self, session, start_date, end_date, course_id=None,
-				 with_resource_type=True, with_device_type=True, time_period_date=True):
+				 with_resource_type=True, with_device_type=True, 
+				 time_period_date=True, with_context_name=True):
 
 		self.session = session
 		qav = self.query_assignment_view = QueryAssignmentViews(self.session)
@@ -113,6 +114,12 @@ class AssignmentViewsTimeseries(object):
 
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
+
+		if with_context_name:
+			new_df = qav.add_context_name(self.dataframe, course_id)
+			if new_df is not None:
+				self.dataframe = new_df
+				categorical_columns.append('context_name')
 
 		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
@@ -169,7 +176,8 @@ class AssignmentsTakenTimeseries(object):
 
 	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_resource_type=True, with_device_type=True,
-				 time_period_date=True, with_assignment_title=True):
+				 time_period_date=True, with_assignment_title=True,
+				 with_context_name=True):
 
 		self.session = session
 		self.course_id = course_id
@@ -197,6 +205,12 @@ class AssignmentsTakenTimeseries(object):
 			if new_df is not None:
 				self.dataframe = new_df
 				categorical_columns.append('assignment_title')
+
+		if with_context_name:
+			new_df = qat.add_context_name(self.dataframe, course_id)
+			if new_df is not None:
+				self.dataframe = new_df
+				categorical_columns.append('context_name')
 
 		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
@@ -255,7 +269,8 @@ class SelfAssessmentViewsTimeseries(object):
 	"""
 
 	def __init__(self, session, start_date, end_date, course_id=None,
-				 with_resource_type=True, with_device_type=True, time_period_date=True):
+				 with_resource_type=True, with_device_type=True, 
+				 time_period_date=True, with_context_name=True):
 
 		self.session = session
 		qsav = self.query_self_assessment_view = QuerySelfAssessmentViews(self.session)
@@ -282,7 +297,12 @@ class SelfAssessmentViewsTimeseries(object):
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
 
-		categorical_columns = ['self_assessment_view_id', 'user_id', 'device_type']
+		if with_context_name:
+			new_df = qsav.add_context_name(self.dataframe, course_id)
+			if new_df is not None:
+				self.dataframe = new_df
+				categorical_columns.append('context_name')
+
 		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def analyze_events(self):
@@ -339,7 +359,8 @@ class SelfAssessmentsTakenTimeseries(object):
 	"""
 
 	def __init__(self, session, start_date, end_date, course_id=None,
-				 with_resource_type=True, with_device_type=True, time_period_date=True):
+				 with_resource_type=True, with_device_type=True, 
+				 time_period_date=True, with_context_name=True):
 
 		self.session = session
 		qsat = self.query_self_assessments_taken = QuerySelfAssessmentsTaken(self.session)
@@ -357,6 +378,12 @@ class SelfAssessmentsTakenTimeseries(object):
 			if new_df is not None:
 				self.dataframe = new_df
 				categorical_columns.append('device_type')
+
+		if with_context_name:
+			new_df = qsat.add_context_name(self.dataframe, course_id)
+			if new_df is not None:
+				self.dataframe = new_df
+				categorical_columns.append('context_name')
 
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
