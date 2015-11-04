@@ -98,10 +98,10 @@ class BookmarkCreationTimeseries(object):
 	def analyze_resource_types(self):
 		group_by_items = ['timestamp_period', 'resource_type']
 		df = self.build_dataframe(group_by_items)
-		resource_df = df[['number_of_bookmark_creation']]
+		resource_df = df[['number_of_bookmarks_created']]
 		resource_df.reset_index(inplace=True)
 		grouped = resource_df.groupby(['resource_type'])
-		resource_df = grouped.aggregate({'number_of_bookmark_creation': np.sum})
+		resource_df = grouped.aggregate({'number_of_bookmarks_created': np.sum})
 		return (df, resource_df)
 
 	def analyze_device_types(self):
@@ -113,10 +113,10 @@ class BookmarkCreationTimeseries(object):
 		agg_columns = {	'bookmark_id' 	: pd.Series.nunique,
 						'user_id'		: pd.Series.nunique }
 		df = analyze_types_(self.dataframe, group_by_columns, agg_columns)
-		df.rename(columns={	'bookmark_id'	:'number_of_bookmark_creation',
+		df.rename(columns={	'bookmark_id'	:'number_of_bookmarks_created',
 							'user_id'		:'number_of_unique_users'},
 					inplace=True)
-		df['ratio'] = df['number_of_bookmark_creation'] / df['number_of_unique_users']
+		df['ratio'] = df['number_of_bookmarks_created'] / df['number_of_unique_users']
 		return df
 
 	def analyze_resource_device_types(self):

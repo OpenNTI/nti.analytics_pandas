@@ -56,3 +56,11 @@ class TestBookmarksPlot(AnalyticsPandasTestBase):
 		bct = BookmarkCreationTimeseries(self.session, start_date, end_date, course_id)
 		bctp = BookmarksTimeseriesPlot(bct)
 		_ = bctp.plot_the_most_active_users(max_rank_number=10)
+
+	def test_analyze_events_per_course_sections(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		bct = BookmarkCreationTimeseries(self.session, start_date, end_date, course_id)
+		bctp = BookmarksTimeseriesPlot(bct)
+		_ = bctp.analyze_events_per_course_sections()
