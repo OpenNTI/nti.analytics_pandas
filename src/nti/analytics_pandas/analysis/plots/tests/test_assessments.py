@@ -23,9 +23,6 @@ from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
 class TestAssignmentViewsPlot(AnalyticsPandasTestBase):
 
-	def setUp(self):
-		super(TestAssignmentViewsPlot, self).setUp()
-
 	def test_analyze_events(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
