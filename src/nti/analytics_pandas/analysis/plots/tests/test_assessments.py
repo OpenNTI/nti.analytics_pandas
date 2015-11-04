@@ -111,6 +111,15 @@ class TestSelfAssessmentViewsPlot(AnalyticsPandasTestBase):
 		savtp = SelfAssessmentViewsTimeseriesPlot(savt)
 		_ = savtp.analyze_events(period_breaks='1 day', minor_period_breaks=None)
 
+	def test_analyze_events_per_course_sections(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		courses_id = ['1024', '1025', '1026', '1027', '1028']
+		savt = SelfAssessmentViewsTimeseries(self.session, start_date=start_date,
+											 end_date=end_date, course_id=courses_id)
+		savtp = SelfAssessmentViewsTimeseriesPlot(savt)
+		_ = savtp.analyze_events_per_course_sections(period_breaks='1 day', minor_period_breaks=None)
+
 	def test_analyze_events_group_by_device_type(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
