@@ -32,7 +32,8 @@ class ResourceViewsTimeseries(object):
 	"""
 
 	def __init__(self, session, start_date, end_date, course_id=None,
-				 with_resource_type=True, with_device_type=True, time_period_date=True):
+				 with_resource_type=True, with_device_type=True, 
+				 time_period_date=True, with_context_name=True):
 		self.session = session
 		self.start_date = start_date
 		self.end_date = end_date
@@ -44,20 +45,29 @@ class ResourceViewsTimeseries(object):
 		else:
 			self.dataframe = qrv.filter_by_period_of_time(start_date, end_date)
 
+		categorical_columns = ['resource_id','user_id']
+		
 		if with_device_type:
 			new_df = qrv.add_device_type(self.dataframe)
 			if new_df is not None:
 				self.dataframe = new_df
+				categorical_columns.append('device_type')
 
 		if with_resource_type:
 			new_df = qrv.add_resource_type(self.dataframe)
 			if new_df is not None:
 				self.dataframe = new_df
+				categorical_columns.append('resource_type')
+
+		if with_context_name:
+			new_df = qrv.add_context_name(self.dataframe, course_id)
+			if new_df is not None:
+				self.dataframe = new_df
+				categorical_columns.append('context_name')
 
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
-
-		categorical_columns = ['resource_id', 'resource_type', 'device_type', 'user_id']
+		
 		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def explore_number_of_events_based_timestamp_date(self):
@@ -77,6 +87,28 @@ class ResourceViewsTimeseries(object):
 		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
 											events_df, 'total_resource_views', unique_users_df)
 		return merge_df
+
+	def analyze_events(self):
+		"""
+		Group course resource views dataframe by timestamp_period
+		Count the number of unique users, number of resource views 
+		and number of unique resources in each group return the result as dataframe
+		"""
+		group_by_columns = ['timestamp_period']
+		df = self.process_analysis_by_type(group_by_columns)
+		return df
+
+	def analyze_events_per_course_sections(self):
+		"""
+		Analyze course resource views per course sections
+		Return a dataframe consisting of:
+		- number of unique users,
+		- number of resource views 
+		- number of unique resources
+		"""
+		group_by_columns = ['timestamp_period', 'course_id', 'context_name']
+		df = self.process_analysis_by_type(group_by_columns)
+		return df
 
 	def analyze_events_based_on_resource_type(self):
 		"""
@@ -120,9 +152,7 @@ class ResourceViewsTimeseries(object):
 							'resource_view_id'	:'number_of_resource_views',
 							'resource_id': 'number_of_unique_resource'},
 					inplace=True)
-		# need to reset index to avoid
-		# TODO: check if we can do it without reset_index after updating to pandas 0.17.0
-		df.reset_index(inplace=True)
+		df['ratio'] = df['number_of_resource_views'] / df['number_of_unique_users']
 		return df
 
 	def get_the_most_active_users(self, max_rank_number=10):

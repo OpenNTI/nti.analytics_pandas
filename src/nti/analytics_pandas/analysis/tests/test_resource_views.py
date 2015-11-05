@@ -22,7 +22,7 @@ class TestResourceViewsEDA(AnalyticsPandasTestBase):
 	def setUp(self):
 		super(TestResourceViewsEDA, self).setUp()
 
-	def test_highlights_creation_based_on_timestamp_date(self):
+	def test_resource_views_based_on_timestamp_date(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
 		course_id = ['388']
@@ -31,17 +31,8 @@ class TestResourceViewsEDA(AnalyticsPandasTestBase):
 		assert_that(rvt.dataframe.columns, has_item('device_type'))
 		assert_that(rvt.dataframe.columns, has_item('resource_type'))
 
-		event_by_date_df = rvt.explore_number_of_events_based_timestamp_date()
-		assert_that(len(event_by_date_df.index), equal_to(129))
-
-		total_events = np.sum(event_by_date_df['total_resource_views'])
-		assert_that(total_events, equal_to(len(rvt.dataframe.index)))
-
-		unique_users_by_date = rvt.explore_unique_users_based_timestamp_date()
-		assert_that(len(unique_users_by_date.index), equal_to(129))
-
-		ratio_df = rvt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
-		assert_that(len(ratio_df.index), equal_to(129))
+		event_df = rvt.analyze_events()
+		assert_that(len(event_df.index), equal_to(129))
 
 		df = rvt.analyze_events_based_on_resource_type()
 		assert_that(df.columns, has_item('number_of_unique_users'))
@@ -50,7 +41,6 @@ class TestResourceViewsEDA(AnalyticsPandasTestBase):
 		df = rvt.analyze_events_based_on_device_type()
 		assert_that(df.columns, has_item('number_of_unique_users'))
 		assert_that(df.columns, has_item('number_of_resource_views'))
-
 
 		df = rvt.analyze_events_based_on_resource_device_type()
 		assert_that(df.columns, has_item('number_of_unique_users'))
@@ -68,4 +58,7 @@ class TestResourceViewsEDA(AnalyticsPandasTestBase):
 		assert_that(df.columns, has_item('number_of_views'))
 		assert_that(len(df.index), equal_to(10))
 
-		rvt.analyze_user_activities_on_resource_views()
+		df = rvt.analyze_events_per_course_sections()
+		assert_that(df.columns, has_item('number_of_unique_users'))
+		assert_that(df.columns, has_item('number_of_resource_views'))
+		assert_that(len(df.sum(level='timestamp_period')), equal_to(len(event_df.index)))

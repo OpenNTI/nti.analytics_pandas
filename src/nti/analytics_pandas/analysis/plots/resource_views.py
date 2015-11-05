@@ -101,7 +101,7 @@ class  ResourceViewsTimeseriesPlot(object):
 		df = rvt.analyze_events_based_on_resource_type()
 		if df is None:
 			return ()
-		df.reset_index(inplace=True, drop=True)
+		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		df['ratio'] = df['number_of_resource_views'] / df['number_of_unique_users']
 
@@ -163,7 +163,7 @@ class  ResourceViewsTimeseriesPlot(object):
 		df = rvt.analyze_events_based_on_resource_type()
 		if df is None:
 			return ()
-		df.reset_index(inplace=True, drop=True)
+		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		df['ratio'] = df['number_of_resource_views'] / df['number_of_unique_users']
 
@@ -222,7 +222,7 @@ class  ResourceViewsTimeseriesPlot(object):
 		df = rvt.analyze_events_based_on_device_type()
 		if df is None:
 			return ()
-		df.reset_index(inplace=True, drop=True)
+		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		df['ratio'] = df['number_of_resource_views'] / df['number_of_unique_users']
 
@@ -345,6 +345,7 @@ class  ResourceViewsTimeseriesPlot(object):
 		df = rvt.analyze_events_based_on_resource_device_type()
 		if df is None:
 			return ()
+		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		df['ratio'] = df['number_of_resource_views'] / df['number_of_unique_users']
 
