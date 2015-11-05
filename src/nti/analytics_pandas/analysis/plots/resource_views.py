@@ -12,22 +12,11 @@ logger = __import__('logging').getLogger(__name__)
 from . import MessageFactory as _
 
 import pandas as pd
+import numpy as np
 
-from ggplot import aes
-from ggplot import xlab
-from ggplot import ylim
-from ggplot import ylab
-from ggplot import theme
-from ggplot import ggplot
-from ggplot import ggtitle
-from ggplot import geom_line
-from ggplot import facet_wrap
-from ggplot import geom_point
-from ggplot import date_format
-from ggplot import element_text
-from ggplot import scale_x_date
-from ggplot import geom_histogram
-from ggplot import scale_x_discrete
+from .commons import line_plot_x_axis_date
+from .commons import group_line_plot_x_axis_date
+from .commons import histogram_plot_x_axis_discrete
 
 class  ResourceViewsTimeseriesPlot(object):
 
@@ -46,52 +35,166 @@ class  ResourceViewsTimeseriesPlot(object):
 			- ratio of resource views over unique users
 		"""
 		rvt = self.rvt
-		df = rvt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		df = rvt.analyze_events()
 		if df is None:
 			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
-		# datetime.strptime(rvt.start_date, '%Y-%m-%d')
-		# datetime.strptime(rvt.end_date, '%Y-%m-%d')
+		event_title = _('Number of resource views during time period')
+		user_title = _('Number of unique users viewing resources during time period')
+		ratio_title = _('Ratio of resource views over unique users during time period')
+		unique_resource_title = _('Number of unique resources viewed during time period')
 
-		y_max = pd.Series.max(df['total_resource_views']) + 1
-		plot_resource_views = \
-				ggplot(df, aes(x='timestamp_period', y='total_resource_views')) + \
-				geom_line() + \
-				geom_point() + \
-				ggtitle(_('Number of resource views during period of time')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_discrete(labels='timestamp_period') + \
-				ylab(_('Number of resource views')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
+		plots = self.generate_plots(df, event_title, user_title, ratio_title,
+									unique_resource_title, period_breaks, minor_period_breaks)
+		return plots
 
-		y_max = pd.Series.max(df['total_unique_users']) + 1
-		plot_unique_users = \
-				ggplot(df, aes(x='timestamp_period', y='total_unique_users')) + \
-				geom_line() + \
-				geom_point() + \
-				ggtitle(_('Number of unique users viewing resource during period of time')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_discrete(labels='timestamp_period') + \
-				ylab(_('Number of unique users')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
+	def generate_plots(self, df, 
+						event_title, user_title, ratio_title, unique_resource_title,
+						period_breaks, minor_period_breaks):
 
-		y_max = pd.Series.max(df['ratio']) + 1
-		plot_ratio = \
-				ggplot(df, aes(x='timestamp_period', y='ratio')) + \
-				geom_line() + \
-				geom_point() + \
-				ggtitle(_('Ratio of resource views over unique user on each available date')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_discrete(labels='timestamp_period') + \
-				ylab(_('Ratio')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
+		plot_resource_views = line_plot_x_axis_date(
+											df=df,
+											x_axis_field='timestamp_period',
+											y_axis_field='number_of_resource_views',
+											x_axis_label=_('Date'),
+											y_axis_label=_('Number of resource views'),
+											title=event_title,
+											period_breaks=period_breaks,
+											minor_breaks=minor_period_breaks)
 
-		return (plot_resource_views, plot_unique_users, plot_ratio)
+		plot_unique_users = line_plot_x_axis_date(
+											df=df,
+											x_axis_field='timestamp_period',
+											y_axis_field='number_of_unique_users',
+											x_axis_label=_('Date'),
+											y_axis_label=_('Number of unique users'),
+											title=user_title,
+											period_breaks=period_breaks,
+											minor_breaks=minor_period_breaks)
+
+		plot_ratio = line_plot_x_axis_date(
+											df=df,
+											x_axis_field='timestamp_period',
+											y_axis_field='ratio',
+											x_axis_label=_('Date'),
+											y_axis_label=_('Ratio'),
+											title=ratio_title,
+											period_breaks=period_breaks,
+											minor_breaks=minor_period_breaks)
+
+		plot_unique_resources = line_plot_x_axis_date(
+											df=df,
+											x_axis_field='timestamp_period',
+											y_axis_field='number_of_unique_resource',
+											x_axis_label=_('Date'),
+											y_axis_label=_('Number of unique resources viewed'),
+											title=unique_resource_title,
+											period_breaks=period_breaks,
+											minor_breaks=minor_period_breaks)
+
+		return (plot_resource_views, plot_unique_users, plot_ratio, plot_unique_resources)
+
+	def generate_group_by_plots(self, df, group_by,
+								event_title, user_title, ratio_title, unique_resource_title,
+								period_breaks, minor_period_breaks):
+
+		plot_resource_views = group_line_plot_x_axis_date(
+											df=df,
+											x_axis_field='timestamp_period',
+											y_axis_field='number_of_resource_views',
+											x_axis_label=_('Date'),
+											y_axis_label=_('Number of resource views'),
+											title=event_title,
+											period_breaks=period_breaks,
+											group_by=group_by,
+											minor_breaks=minor_period_breaks)
+
+		plot_unique_users = group_line_plot_x_axis_date(
+											df=df,
+											x_axis_field='timestamp_period',
+											y_axis_field='number_of_unique_users',
+											x_axis_label=_('Date'),
+											y_axis_label=_('Number of unique users'),
+											title=user_title,
+											period_breaks=period_breaks,
+											group_by=group_by,
+											minor_breaks=minor_period_breaks)
+
+		plot_ratio = group_line_plot_x_axis_date(
+											df=df,
+											x_axis_field='timestamp_period',
+											y_axis_field='ratio',
+											x_axis_label=_('Date'),
+											y_axis_label=_('Ratio'),
+											title=ratio_title,
+											period_breaks=period_breaks,
+											group_by=group_by,
+											minor_breaks=minor_period_breaks)
+
+		plot_unique_resources = group_line_plot_x_axis_date(
+											df=df,
+											x_axis_field='timestamp_period',
+											y_axis_field='number_of_unique_resource',
+											x_axis_label=_('Date'),
+											y_axis_label=_('Number of unique resources viewed'),
+											title=unique_resource_title,
+											period_breaks=period_breaks,
+											group_by=group_by,
+											minor_breaks=minor_period_breaks)
+
+		return (plot_resource_views, plot_unique_users, plot_ratio, plot_unique_resources)
+
+	def generate_group_by_scatter_plots(self, df, group_by,
+								event_title, user_title, ratio_title, unique_resource_title,
+								period_breaks, minor_period_breaks):
+
+		plot_resource_views = group_scatter_plot_x_axis_date(
+											df=df,
+											x_axis_field='timestamp_period',
+											y_axis_field='number_of_resource_views',
+											x_axis_label=_('Date'),
+											y_axis_label=_('Number of resource views'),
+											title=event_title,
+											period_breaks=period_breaks,
+											group_by=group_by,
+											minor_breaks=minor_period_breaks)
+
+		plot_unique_users = group_scatter_plot_x_axis_date(
+											df=df,
+											x_axis_field='timestamp_period',
+											y_axis_field='number_of_unique_users',
+											x_axis_label=_('Date'),
+											y_axis_label=_('Number of unique users'),
+											title=user_title,
+											period_breaks=period_breaks,
+											group_by=group_by,
+											minor_breaks=minor_period_breaks)
+
+		plot_ratio = group_scatter_plot_x_axis_date(
+											df=df,
+											x_axis_field='timestamp_period',
+											y_axis_field='ratio',
+											x_axis_label=_('Date'),
+											y_axis_label=_('Ratio'),
+											title=ratio_title,
+											period_breaks=period_breaks,
+											group_by=group_by,
+											minor_breaks=minor_period_breaks)
+
+		plot_unique_resources = group_scatter_plot_x_axis_date(
+											df=df,
+											x_axis_field='timestamp_period',
+											y_axis_field='number_of_unique_resource',
+											x_axis_label=_('Date'),
+											y_axis_label=_('Number of unique resources viewed'),
+											title=unique_resource_title,
+											period_breaks=period_breaks,
+											group_by=group_by,
+											minor_breaks=minor_period_breaks)
+
+		return (plot_resource_views, plot_unique_users, plot_ratio, plot_unique_resources)
 
 	def analyze_resource_type(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
@@ -103,57 +206,16 @@ class  ResourceViewsTimeseriesPlot(object):
 			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
-		df['ratio'] = df['number_of_resource_views'] / df['number_of_unique_users']
 
-		y_max = pd.Series.max(df['number_of_resource_views']) + 1
-		plot_resource_views = \
-				ggplot(df, aes(x='timestamp_period', y='number_of_resource_views', color='resource_type')) + \
-				geom_line() + \
-				geom_point() + \
-				ggtitle(_('Number of resource views on each resource type')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_discrete(labels='timestamp_period') + \
-				ylab(_('Number of resource views')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
-
-		y_max = pd.Series.max(df['number_of_unique_users']) + 1
-		plot_unique_users = \
-				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users', color='resource_type')) + \
-				geom_line() + \
-				geom_point() + \
-				ggtitle(_('Number of unique users viewing each resource type at given time period')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_discrete(labels='timestamp_period') + \
-				ylab(_('Number of unique users')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
-
-		y_max = pd.Series.max(df['number_of_unique_resource']) + 1
-		plot_unique_resources = \
-				ggplot(df, aes(x='timestamp_period', y='number_of_unique_resource', color='resource_type')) + \
-				geom_line() + \
-				geom_point() + \
-				ggtitle(_('Number of unique course resource viewed during time period')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_discrete(labels='timestamp_period') + \
-				ylab(_('Number of unique course resource')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
-
-		y_max = pd.Series.max(df['ratio']) + 1
-		plot_ratio = \
-				ggplot(df, aes(x='timestamp_period', y='ratio', color='resource_type')) + \
-				geom_line() + \
-				geom_point() + \
-				ggtitle(_('Ratio of resource views over unique users grouped by resource type')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_discrete(labels='timestamp_period') + \
-				ylab(_('Ratio')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
-
-		return (plot_resource_views, plot_unique_users, plot_unique_resources, plot_ratio)
+		group_by = 'resource_type'
+		event_title = _('Number of resource views on each resource type')
+		user_title = _('Number of unique users viewing each resource type at given time period')
+		ratio_title = _('Ratio of resource views over unique users grouped by resource type')
+		unique_resource_title = _('Number of unique course resource viewed during time period')
+		plots = self.generate_group_by_plots(df, group_by, 
+											event_title, user_title, ratio_title, unique_resource_title,
+											period_breaks, minor_period_breaks)
+		return plots
 
 	def analyze_resource_type_scatter_plot(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
@@ -167,52 +229,15 @@ class  ResourceViewsTimeseriesPlot(object):
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		df['ratio'] = df['number_of_resource_views'] / df['number_of_unique_users']
 
-		y_max = pd.Series.max(df['number_of_resource_views']) + 1
-		plot_resource_views = \
-				ggplot(df, aes(x='timestamp_period', y='number_of_resource_views', color='resource_type')) + \
-				geom_point() + \
-				ggtitle(_('Number of resource views on each resource type')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks,
-					labels=date_format("%y-%m-%d")) + \
-				ylab(_('Number of resource views')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
-
-		y_max = pd.Series.max(df['number_of_unique_users']) + 1
-		plot_unique_users = \
-				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users', color='resource_type')) + \
-				geom_point() + \
-				ggtitle(_('Number of unique users viewing each resource type at given time period')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
-				ylab(_('Number of unique users')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
-
-		y_max = pd.Series.max(df['number_of_unique_resource']) + 1
-		plot_unique_resources = \
-				ggplot(df, aes(x='timestamp_period', y='number_of_unique_resource', color='resource_type')) + \
-				geom_point() + \
-				ggtitle(_('Number of unique course resource viewed during time period')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
-				ylab(_('Number of unique course resource')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
-
-		y_max = pd.Series.max(df['ratio']) + 1
-		plot_ratio = \
-				ggplot(df, aes(x='timestamp_period', y='ratio', color='resource_type')) + \
-				geom_point() + \
-				ggtitle(_('Ratio of resource views over unique users grouped by resource type')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
-				ylab(_('Ratio')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
-
-		return (plot_resource_views, plot_unique_users, plot_unique_resources, plot_ratio)
+		group_by = 'resource_type'
+		event_title = _('Number of resource views on each resource type')
+		user_title = _('Number of unique users viewing each resource type at given time period')
+		ratio_title = _('Ratio of resource views over unique users grouped by resource type')
+		unique_resource_title = _('Number of unique course resource viewed during time period')
+		plots = self.generate_group_by_scatter_plots(df, group_by, 
+											event_title, user_title, ratio_title, unique_resource_title,
+											period_breaks, minor_period_breaks)
+		return plots
 
 	def analyze_device_type(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
@@ -224,57 +249,15 @@ class  ResourceViewsTimeseriesPlot(object):
 			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
-		df['ratio'] = df['number_of_resource_views'] / df['number_of_unique_users']
-
-		y_max = pd.Series.max(df['number_of_resource_views']) + 1
-		plot_resource_views = \
-				ggplot(df, aes(x='timestamp_period', y='number_of_resource_views', color='device_type')) + \
-				geom_line() + \
-				geom_point() + \
-				ggtitle(_('Number of resource views grouped by device type')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_discrete(labels='timestamp_period') + \
-				ylab(_('Number of resource views')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
-
-		y_max = pd.Series.max(df['number_of_unique_users']) + 1
-		plot_unique_users = \
-				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users', color='device_type')) + \
-				geom_line() + \
-				geom_point() + \
-				ggtitle(_('Number of unique users viewing course resource grouped by device type during time period')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_discrete(labels='timestamp_period') + \
-				ylab(_('Number of unique users')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
-
-		y_max = pd.Series.max(df['number_of_unique_resource']) + 1
-		plot_unique_resources = \
-				ggplot(df, aes(x='timestamp_period', y='number_of_unique_resource', color='device_type')) + \
-				geom_line() + \
-				geom_point() + \
-				ggtitle(_('Number of unique course resource viewed on each device type during time period')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_discrete(labels='timestamp_period') + \
-				ylab(_('Number of unique course resource')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
-
-		y_max = pd.Series.max(df['ratio']) + 1
-		plot_ratio = \
-				ggplot(df, aes(x='timestamp_period', y='ratio', color='device_type')) + \
-				geom_line() + \
-				geom_point() + \
-				ggtitle(_('Ratio of resource views over unique users grouped by device type')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_discrete(labels='timestamp_period') + \
-				ylab(_('Ratio')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
-
-		return (plot_resource_views, plot_unique_users, plot_unique_resources, plot_ratio)
+		group_by = 'device_type'
+		event_title = _('Number of resource views on each device type')
+		user_title = _('Number of unique users viewing each device type at given time period')
+		ratio_title = _('Ratio of resource views over unique users grouped by device type')
+		unique_resource_title = _('Number of unique course resource viewed during time period')
+		plots = self.generate_group_by_plots(df, group_by, 
+											event_title, user_title, ratio_title, unique_resource_title,
+											period_breaks, minor_period_breaks)
+		return plots
 
 	def analyze_device_type_scatter_plot(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
@@ -286,114 +269,16 @@ class  ResourceViewsTimeseriesPlot(object):
 			return ()
 		df.reset_index(inplace=True, drop=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
-		df['ratio'] = df['number_of_resource_views'] / df['number_of_unique_users']
+		group_by = 'device_type'
+		event_title = _('Number of resource views on each device type')
+		user_title = _('Number of unique users viewing each device type at given time period')
+		ratio_title = _('Ratio of resource views over unique users grouped by device type')
+		unique_resource_title = _('Number of unique course resource viewed during time period')
+		plots = self.generate_group_by_scatter_plots(df, group_by, 
+											event_title, user_title, ratio_title, unique_resource_title,
+											period_breaks, minor_period_breaks)
+		return plots
 
-		y_max = pd.Series.max(df['number_of_resource_views']) + 1
-		plot_resource_views = \
-				ggplot(df, aes(x='timestamp_period', y='number_of_resource_views', color='device_type')) + \
-				geom_point() + \
-				ggtitle(_('Number of resource views grouped by device type')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_discrete(labels='timestamp_period') + \
-				ylab(_('Number of resource views')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
-
-		y_max = pd.Series.max(df['number_of_unique_users']) + 1
-		plot_unique_users = \
-				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users', color='device_type')) + \
-				geom_point() + \
-				ggtitle(_('Number of unique users viewing course resource grouped by device type during time period')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_discrete(labels='timestamp_period') + \
-				ylab(_('Number of unique users')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
-
-		y_max = pd.Series.max(df['number_of_unique_resource']) + 1
-		plot_unique_resources = \
-				ggplot(df, aes(x='timestamp_period', y='number_of_unique_resource', color='device_type')) + \
-				geom_point() + \
-				ggtitle(_('Number of unique course resource viewed on each device type during time period')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_discrete(labels='timestamp_period') + \
-				ylab(_('Number of unique course resource')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
-
-		y_max = pd.Series.max(df['ratio']) + 1
-		plot_ratio = \
-				ggplot(df, aes(x='timestamp_period', y='ratio', color='device_type')) + \
-				geom_point() + \
-				ggtitle(_('Ratio of resource views over unique users grouped by device type')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_discrete(labels='timestamp_period') + \
-				ylab(_('Ratio')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
-
-		return (plot_resource_views, plot_unique_users, plot_unique_resources, plot_ratio)
-
-	def analyze_events_based_on_resource_device_type(self, period_breaks='1 month', minor_period_breaks='1 week'):
-		"""
-		plot course resource views based on resource_type type (user agent).
-		Group the graphics into different types of user agent (device type)
-		TODO: fix legend and x axis label for faceting
-		"""
-
-		rvt = self.rvt
-		df = rvt.analyze_events_based_on_resource_device_type()
-		if df is None:
-			return ()
-		df.reset_index(inplace=True)
-		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
-		df['ratio'] = df['number_of_resource_views'] / df['number_of_unique_users']
-
-		pd.Series.max(df['number_of_resource_views']) + 1
-		plot_resource_views = \
-				ggplot(df, aes(x='timestamp_period', y='number_of_resource_views', colour='resource_type')) + \
-				geom_point() + \
-				ggtitle(_('Number of resource views using each device type')) + \
-				theme(title=element_text(size=8, face="bold")) + \
-				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
-				ylab(_('Number of resource views')) + \
-				xlab(_('Date')) + \
-				facet_wrap('device_type', scales="free")
-
-		pd.Series.max(df['number_of_unique_users']) + 1
-		plot_unique_users = \
-				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users', colour='resource_type')) + \
-				geom_point() + \
-				ggtitle(_('Number of unique users viewing course resource given time period group by device type')) + \
-				theme(title=element_text(size=8, face="bold")) + \
-				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
-				ylab(_('Number of unique users')) + \
-				xlab(_('Date')) + \
-				facet_wrap('device_type', scales="free")
-
-		pd.Series.max(df['number_of_unique_resource']) + 1
-		plot_unique_resources = \
-				ggplot(df, aes(x='timestamp_period', y='number_of_unique_resource', colour='resource_type')) + \
-				geom_point() + \
-				ggtitle(_('Number of unique course resource viewed on each device type at given time period')) + \
-				theme(title=element_text(size=8, face="bold")) + \
-				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
-				ylab(_('Number of unique course resource')) + \
-				xlab(_('Date')) + \
-				facet_wrap('device_type', scales="free")
-
-		pd.Series.max(df['ratio']) + 1
-		plot_ratio = \
-				ggplot(df, aes(x='timestamp_period', y='ratio', colour='resource_type')) + \
-				geom_point() + \
-				ggtitle(_('Ratio of resource views over unique users during time period')) + \
-				theme(title=element_text(size=8, face="bold")) + \
-				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
-				ylab(_('Ratio')) + \
-				xlab(_('Date')) + \
-				facet_wrap('device_type', scales="free")
-
-		return (plot_resource_views, plot_unique_users, plot_unique_resources, plot_ratio)
 
 	def plot_most_active_users(self, max_rank_number=10):
 		rvt = self.rvt
@@ -403,13 +288,12 @@ class  ResourceViewsTimeseriesPlot(object):
 		users_df.rename(columns={'number_of_activities': 'number_of_resource_views'},
 						inplace=True)
 
-		plot_users = \
-				ggplot(users_df, aes(x='username', y='number_of_resource_views')) + \
-				geom_histogram(stat="identity") + \
-				ggtitle(_('The most active users viewing resource')) + \
-				theme(title=element_text(size=10, face="bold"), axis_text_x=element_text(angle=90, hjust=1)) + \
-				scale_x_discrete('username') + \
-				ylab(_('Number of resource viewed')) + \
-				xlab(_('Username'))
-
+		plot_users = histogram_plot_x_axis_discrete(
+											df=users_df,
+											x_axis_field='username' ,
+											y_axis_field='number_of_resource_views',
+											x_axis_label=_('Username'),
+											y_axis_label=_('Number of resource views'),
+											title=_('The most active users viewing resource'),
+											stat='identity')
 		return (plot_users,)

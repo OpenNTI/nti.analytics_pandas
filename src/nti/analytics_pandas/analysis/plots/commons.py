@@ -60,6 +60,34 @@ def line_plot_x_axis_date(df,
 											 labels=date_format(DATE_FORMAT))
 	return line_plot
 
+def scatter_plot_x_axis_date(df,
+						  x_axis_field,
+						  y_axis_field,
+						  x_axis_label,
+						  y_axis_label,
+						  title,
+						  period_breaks,
+						  minor_breaks=None):
+
+	y_max = pd.Series.max(df[y_axis_field]) + 1
+	scatter_plot = \
+		ggplot(df, aes(x=x_axis_field, y=y_axis_field)) + \
+		geom_point() + \
+		ggtitle(_(title)) + \
+		theme(title=element_text(size=10, face="bold")) + \
+		ylab(_(y_axis_label)) + \
+		xlab(_(x_axis_label)) + \
+		ylim(0, y_max)
+
+	if minor_breaks is not None:
+		scatter_plot = scatter_plot + scale_x_date(breaks=period_breaks,
+											 minor_breaks=minor_breaks,
+											 labels=date_format(DATE_FORMAT))
+	else:
+		scatter_plot = scatter_plot + scale_x_date(breaks=period_breaks,
+											 labels=date_format(DATE_FORMAT))
+	return scatter_plot
+
 def group_line_plot_x_axis_date(df,
 								x_axis_field,
 								y_axis_field,
@@ -89,6 +117,35 @@ def group_line_plot_x_axis_date(df,
 											 labels=date_format(DATE_FORMAT))
 
 	return line_plot
+
+def group_scatter_plot_x_axis_date(df,
+								x_axis_field,
+								y_axis_field,
+								x_axis_label,
+								y_axis_label,
+								title,
+								period_breaks, group_by,
+								minor_breaks=None):
+
+	y_max = pd.Series.max(df[y_axis_field]) + 1
+	scatter_plot = \
+		ggplot(df, aes(x=x_axis_field, y=y_axis_field, color=group_by)) + \
+		geom_point() + \
+		ggtitle(_(title)) + \
+		theme(title=element_text(size=10, face="bold")) + \
+		ylab(_(y_axis_label)) + \
+		xlab(_(x_axis_label)) + \
+		ylim(0, y_max)
+
+	if minor_breaks is not None:
+		scatter_plot = scatter_plot + scale_x_date(breaks=period_breaks,
+											 minor_breaks=minor_breaks,
+											 labels=date_format(DATE_FORMAT))
+	else:
+		scatter_plot = scatter_plot + scale_x_date(breaks=period_breaks,
+											 labels=date_format(DATE_FORMAT))
+
+	return scatter_plot
 
 def facet_line_plot_x_axis_date(df,
 								x_axis_field,
