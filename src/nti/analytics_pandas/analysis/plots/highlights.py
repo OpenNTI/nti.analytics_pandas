@@ -12,6 +12,7 @@ logger = __import__('logging').getLogger(__name__)
 from .. import MessageFactory as _
 
 import pandas as pd
+import numpy as np
 
 from ggplot import aes
 from ggplot import xlab
@@ -28,6 +29,12 @@ from ggplot import scale_x_date
 from ggplot import geom_histogram
 from ggplot import scale_x_discrete
 
+from .commons import histogram_plot
+from .commons import line_plot_x_axis_date
+from .commons import group_line_plot_x_axis_date
+from .commons import facet_line_plot_x_axis_date
+from .commons import histogram_plot_x_axis_discrete
+
 class HighlightsCreationTimeseriesPlot(object):
 
 	def __init__(self, hct):
@@ -38,49 +45,57 @@ class HighlightsCreationTimeseriesPlot(object):
 
 	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		hct = self.hct
-		df = hct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		df = hct.analyze_events()
 		if df is None:
 			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
-		y_max = pd.Series.max(df['total_highlights_created']) + 1
-		plot_highlights_creation = \
-				ggplot(df, aes(x='timestamp_period', y='total_highlights_created')) + \
-				geom_line() + \
-				geom_point() + \
-				ggtitle(_('Number of highlights created during period of time')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
-				ylab(_('Number of highlights created')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
+		event_title = _('Number of highlights created during period of time')
+		user_title = _('Number of unique users created highlights during period of time')
+		ratio_title = _('Ratio of highlights created over unique users during period of time')
+		plots = self.generate_plots(df,event_title, user_title, ratio_title,
+									period_breaks, minor_period_breaks)
+		return plots
 
-		y_max = pd.Series.max(df['total_unique_users']) + 1
-		plot_unique_users = \
-				ggplot(df, aes(x='timestamp_period', y='total_unique_users')) + \
-				geom_line() + \
-				geom_point() + \
-				ggtitle(_('Number of unique users creating highlights during period of time')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
-				ylab(_('Number of unique users')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
+	def analyze_events_per_course_sections(self, period_breaks='1 week', minor_period_breaks='1 day'):
+		hct = self.hct
+		df = hct.analyze_events_per_course_sections()
+		if df is None:
+			return()
 
-		y_max = pd.Series.max(df['ratio']) + 1
-		plot_ratio = \
-				ggplot(df, aes(x='timestamp_period', y='ratio')) + \
-				geom_line() + \
-				geom_point() + \
-				ggtitle(_('Ratio of highlights created over unique user on each available date')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
-				ylab(_('Ratio')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		course_ids = np.unique(df['course_id'].values.ravel())
 
-		return (plot_highlights_creation, plot_unique_users, plot_ratio)
+		plots = []
+		if len(course_ids) > 1:
+			group_by = 'context_name'
+			event_title = _('Number of highlights created per course sections')
+			user_title = _('Number of unique users creating highlights per course sections')
+			ratio_title = _('Ratio of highlights created over unique user per course sections')
+			all_section_plots = self.generate_group_by_plots(df,
+															 group_by,
+															 event_title,
+															 user_title,
+															 ratio_title,
+															 period_breaks,
+															 minor_period_breaks)
+			plots.append(all_section_plots)
+
+		for course_id in course_ids:
+			new_df = df[df['course_id'] == course_id]
+			context_name = new_df.iloc[0]['context_name']
+			event_title = 'Number of highlights created in %s' % (context_name)
+			user_title = 'Number of unique users creating highlights in %s' % (context_name)
+			ratio_title = 'Ratio of highlights created over unique user in %s' % (context_name)
+			section_plots = self.generate_plots(new_df, event_title, user_title,
+												ratio_title, period_breaks,
+												minor_period_breaks)
+			plots.append(section_plots)
+
+		return plots
+
 
 	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		hct = self.hct
@@ -89,45 +104,88 @@ class HighlightsCreationTimeseriesPlot(object):
 			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
-		df['ratio'] = df['number_of_highlight_created'] / df['number_of_unique_users']
 
-		y_max = pd.Series.max(df['number_of_highlight_created']) + 1
-		plot_highlights_creation = \
-				ggplot(df, aes(x='timestamp_period', y='number_of_highlight_created', color='device_type')) + \
-				geom_line() + \
-				geom_point() + \
-				ggtitle(_('Number of highlights created  using each device type')) + \
-				theme(title=element_text(size=10, face="bold"), axis_text_x=element_text(angle=45, hjust=1)) + \
-				scale_x_date(labels=date_format("%y-%m-%d")) + \
-				ylab(_('Number of highlights created')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
+		group_by = 'device_type'
+		event_title = _('Number of highlights created grouped by device types')
+		user_title = _('Number of unique users created highlights grouped by device types')
+		ratio_title = _('Ratio of highlights created over unique users grouped by device types')
+		plots = self.generate_group_by_plots(df, group_by,
+											event_title, user_title, ratio_title,
+											period_breaks, minor_period_breaks)
+		return plots
 
-		y_max = pd.Series.max(df['number_of_unique_users']) + 1
-		plot_unique_users = \
-				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users', color='device_type')) + \
-				geom_line() + \
-				geom_point() + \
-				ggtitle(_('Number of unique users creating highlights using each device types during time period')) + \
-				theme(title=element_text(size=10, face="bold"), axis_text_x=element_text(angle=45, hjust=1)) + \
-				scale_x_date(labels=date_format("%y-%m-%d")) + \
-				ylab(_('Number of unique users')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
+	def generate_plots(self, df, event_title, user_title, ratio_title,
+						period_breaks, minor_period_breaks):
 
-		y_max = pd.Series.max(df['ratio']) + 1
-		plot_ratio = \
-				ggplot(df, aes(x='timestamp_period', y='ratio', color='device_type')) + \
-				geom_line() + \
-				geom_point() + \
-				ggtitle(_('Ratio of highlights created over unique users grouped by device type')) + \
-				theme(title=element_text(size=10, face="bold"), axis_text_x=element_text(angle=45, hjust=1)) + \
-				scale_x_date(labels=date_format("%y-%m-%d")) + \
-				ylab(_('Ratio')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
+		plot_highlights_created = line_plot_x_axis_date(
+											df=df,
+											x_axis_field='timestamp_period',
+											y_axis_field='number_of_highlights_created',
+											x_axis_label=_('Date'),
+											y_axis_label=_('Number of highlights created'),
+											title=event_title,
+											period_breaks=period_breaks,
+											minor_breaks=minor_period_breaks)
 
-		return (plot_highlights_creation, plot_unique_users, plot_ratio)
+		plot_unique_users = line_plot_x_axis_date(
+											df=df,
+											x_axis_field='timestamp_period',
+											y_axis_field='number_of_unique_users',
+											x_axis_label=_('Date'),
+											y_axis_label=_('Number of unique users'),
+											title=user_title,
+											period_breaks=period_breaks,
+											minor_breaks=minor_period_breaks)
+
+		plot_ratio = line_plot_x_axis_date(
+											df=df,
+											x_axis_field='timestamp_period',
+											y_axis_field='ratio',
+											x_axis_label=_('Date'),
+											y_axis_label=_('Ratio'),
+											title=ratio_title,
+											period_breaks=period_breaks,
+											minor_breaks=minor_period_breaks)
+
+		return (plot_highlights_created, plot_unique_users, plot_ratio)
+
+	def generate_group_by_plots(self, df, group_by, event_title, user_title, ratio_title,
+								period_breaks, minor_period_breaks):
+
+		plot_highlights_created = group_line_plot_x_axis_date(
+											df=df,
+											x_axis_field='timestamp_period',
+											y_axis_field='number_of_highlights_created',
+											x_axis_label=_('Date'),
+											y_axis_label=_('Number of highlights created'),
+											title=event_title,
+											period_breaks=period_breaks,
+											group_by=group_by,
+											minor_breaks=minor_period_breaks)
+
+		plot_unique_users = group_line_plot_x_axis_date(
+											df=df,
+											x_axis_field='timestamp_period',
+											y_axis_field='number_of_unique_users',
+											x_axis_label=_('Date'),
+											y_axis_label=_('Number of unique users'),
+											title=user_title,
+											period_breaks=period_breaks,
+											group_by=group_by,
+											minor_breaks=minor_period_breaks)
+
+		plot_ratio = group_line_plot_x_axis_date(
+											df=df,
+											x_axis_field='timestamp_period',
+											y_axis_field='ratio',
+											x_axis_label=_('Date'),
+											y_axis_label=_('Ratio'),
+											title=ratio_title,
+											period_breaks=period_breaks,
+											group_by=group_by,
+											minor_breaks=minor_period_breaks)
+
+		return (plot_highlights_created, plot_unique_users, plot_ratio)
 
 	def analyze_resource_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		hct = self.hct
@@ -136,45 +194,16 @@ class HighlightsCreationTimeseriesPlot(object):
 			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
-		df['ratio'] = df['number_of_highlight_created'] / df['number_of_unique_users']
 
-		y_max = pd.Series.max(df['number_of_highlight_created']) + 1
-		plot_highlights_creation = \
-				ggplot(df, aes(x='timestamp_period', y='number_of_highlight_created', color='resource_type')) + \
-				geom_line() + \
-				geom_point() + \
-				ggtitle(_('Number of highlights created grouped by resource type')) + \
-				theme(title=element_text(size=10, face="bold"), axis_text_x=element_text(angle=45, hjust=1)) + \
-				scale_x_date(labels=date_format("%y-%m-%d")) + \
-				ylab(_('Number of highlights created')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
+		group_by = 'resource_type'
+		event_title = _('Number of highlights created grouped by resource types')
+		user_title = _('Number of unique users created highlights grouped by resource types')
+		ratio_title = _('Ratio of highlights created over unique users grouped by resource types')
+		plots = self.generate_group_by_plots(df, group_by,
+											event_title, user_title, ratio_title,
+											period_breaks, minor_period_breaks)
 
-		y_max = pd.Series.max(df['number_of_unique_users']) + 1
-		plot_unique_users = \
-				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users', color='resource_type')) + \
-				geom_line() + \
-				geom_point() + \
-				ggtitle(_('Number of unique users creating highlights grouped by resource type during time period')) + \
-				theme(title=element_text(size=10, face="bold"), axis_text_x=element_text(angle=45, hjust=1)) + \
-				scale_x_date(labels=date_format("%y-%m-%d")) + \
-				ylab(_('Number of unique users')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
-
-		y_max = pd.Series.max(df['ratio']) + 1
-		plot_ratio = \
-				ggplot(df, aes(x='timestamp_period', y='ratio', color='resource_type')) + \
-				geom_line() + \
-				geom_point() + \
-				ggtitle(_('Ratio of highlights created over unique users grouped by resource type')) + \
-				theme(title=element_text(size=10, face="bold"), axis_text_x=element_text(angle=45, hjust=1)) + \
-				scale_x_date(labels=date_format("%y-%m-%d")) + \
-				ylab(_('Ratio')) + \
-				xlab(_('Date')) + \
-				ylim(0, y_max)
-
-		return (plot_highlights_creation, plot_unique_users, plot_ratio)
+		return plots
 
 	def plot_the_most_active_users(self, max_rank_number=10):
 		hct = self.hct

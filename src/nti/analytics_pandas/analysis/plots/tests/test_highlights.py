@@ -41,6 +41,14 @@ class TestHighlightsCreationPlot(AnalyticsPandasTestBase):
 		hctp = HighlightsCreationTimeseriesPlot(hct)
 		_ = hctp.analyze_resource_types()
 
+	def test_analyze_events_per_course_sections(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		hct = HighlightsCreationTimeseries(self.session, start_date, end_date, course_id)
+		hctp = HighlightsCreationTimeseriesPlot(hct)
+		_ = hctp.analyze_events_per_course_sections()
+
 	def test_plot_most_active_users(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'

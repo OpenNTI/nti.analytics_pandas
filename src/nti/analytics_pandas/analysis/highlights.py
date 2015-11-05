@@ -113,6 +113,7 @@ class HighlightsCreationTimeseries(object):
 		df.rename(columns={'user_id'		:'number_of_unique_users',
 							 'highlight_id'	:'number_of_highlights_created'},
 				  inplace=True)
+		df['ratio'] = df['number_of_highlights_created'] / df['number_of_unique_users']
 		return df
 
 	def get_the_most_active_users(self, max_rank_number=10):
