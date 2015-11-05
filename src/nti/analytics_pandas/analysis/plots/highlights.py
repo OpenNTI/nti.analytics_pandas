@@ -14,25 +14,8 @@ from .. import MessageFactory as _
 import pandas as pd
 import numpy as np
 
-from ggplot import aes
-from ggplot import xlab
-from ggplot import ylab
-from ggplot import ylim
-from ggplot import theme
-from ggplot import ggplot
-from ggplot import ggtitle
-from ggplot import geom_line
-from ggplot import geom_point
-from ggplot import date_format
-from ggplot import element_text
-from ggplot import scale_x_date
-from ggplot import geom_histogram
-from ggplot import scale_x_discrete
-
-from .commons import histogram_plot
 from .commons import line_plot_x_axis_date
 from .commons import group_line_plot_x_axis_date
-from .commons import facet_line_plot_x_axis_date
 from .commons import histogram_plot_x_axis_discrete
 
 class HighlightsCreationTimeseriesPlot(object):
@@ -93,7 +76,6 @@ class HighlightsCreationTimeseriesPlot(object):
 												ratio_title, period_breaks,
 												minor_period_breaks)
 			plots.append(section_plots)
-
 		return plots
 
 
@@ -211,13 +193,12 @@ class HighlightsCreationTimeseriesPlot(object):
 		if users_df is None:
 			return ()
 
-		plot_users = \
-				ggplot(users_df, aes(x='username', y='number_of_highlights_created')) + \
-				geom_histogram(stat="identity") + \
-				ggtitle(_('The most active users creating highlights')) + \
-				theme(title=element_text(size=10, face="bold"), axis_text_x=element_text(angle=15, hjust=1)) + \
-				scale_x_discrete('username') + \
-				ylab(_('Number of highlights created')) + \
-				xlab(_('Username'))
-
+		plot_users = histogram_plot_x_axis_discrete(
+											df=users_df,
+											x_axis_field='username' ,
+											y_axis_field='number_of_highlights_created',
+											x_axis_label=_('Username'),
+											y_axis_label=_('Number of highlights created'),
+											title=_('The most active users creating highlights'),
+											stat='identity')
 		return (plot_users,)

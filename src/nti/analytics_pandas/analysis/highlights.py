@@ -18,9 +18,6 @@ from ..utils import cast_columns_as_category_
 from .common import analyze_types_
 from .common import add_timestamp_period_
 from .common import get_most_active_users_
-from .common import explore_unique_users_based_timestamp_date_
-from .common import explore_number_of_events_based_timestamp_date_
-from .common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
 
 class HighlightsCreationTimeseries(object):
 	"""
@@ -62,24 +59,6 @@ class HighlightsCreationTimeseries(object):
 			self.dataframe = add_timestamp_period_(self.dataframe)
 		
 		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
-
-	def explore_number_of_events_based_timestamp_date(self):
-		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
-		if events_df is not None:
-			events_df.rename(columns={'index':'total_highlights_created'}, inplace=True)
-			events_df = events_df[['total_highlights_created']]
-		return events_df
-
-	def explore_unique_users_based_timestamp_date(self):
-		unique_users_per_period_df = explore_unique_users_based_timestamp_date_(self.dataframe)
-		return unique_users_per_period_df
-
-	def explore_ratio_of_events_over_unique_users_based_timestamp_date(self):
-		events_df = self.explore_number_of_events_based_timestamp_date()
-		unique_users_df = self.explore_unique_users_based_timestamp_date()
-		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
-										events_df, 'total_highlights_created', unique_users_df)
-		return merge_df
 
 	def analyze_events(self):
 		group_by_items = ['timestamp_period']
