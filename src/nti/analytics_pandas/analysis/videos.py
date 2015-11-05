@@ -23,8 +23,8 @@ class VideoEventsTimeseries(object):
 	analyze the number of video events given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date, course_id=None,
-				 with_device_type=True, time_period_date=True):
+	def __init__(self, session, start_date, end_date,course_id=None,
+				 with_device_type=True, time_period_date=True, with_context_name=True):
 		self.session = session
 		qve = self.query_videos_event = QueryVideoEvents(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -42,6 +42,12 @@ class VideoEventsTimeseries(object):
 			if new_df is not None:
 				self.dataframe = new_df
 				categorical_columns.append('device_type')
+
+		if with_context_name:
+			new_df = qve.add_context_name(self.dataframe, course_id)
+			if new_df is not None:
+				self.dataframe = new_df
+				categorical_columns.append('context_name')
 
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
@@ -75,6 +81,21 @@ class VideoEventsTimeseries(object):
 		"""
 		group_by_items = ['timestamp_period', 'video_event_type']
 		df = self.build_dataframe(self.dataframe, group_by_items)
+		return df
+
+	def analyze_video_events_per_course_sections(self, video_event_type):
+		"""
+		Generate a dataframe based on given video_event_type value (WATCH/SKIP) per course section
+		The dataframe consists of :
+		- number of video events
+		- number of unique users
+		- ratio of video events over unique users
+		"""
+		dataframe = self.dataframe[['timestamp_period', 'video_view_id', 'user_id', 
+									'course_id', 'context_name', 'video_event_type']]
+		dataframe = dataframe.loc[dataframe['video_event_type'] == video_event_type]
+		group_by_items = ['timestamp_period', 'course_id', 'context_name']
+		df = self.build_dataframe(dataframe, group_by_items)
 		return df
 
 	def analyze_video_events_device_types(self, video_event_type):
