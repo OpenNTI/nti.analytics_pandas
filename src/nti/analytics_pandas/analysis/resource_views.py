@@ -95,7 +95,7 @@ class ResourceViewsTimeseries(object):
 		and number of unique resources in each group return the result as dataframe
 		"""
 		group_by_columns = ['timestamp_period']
-		df = self.process_analysis_by_type(group_by_columns)
+		df = self.build_dataframe(group_by_columns)
 		return df
 
 	def analyze_events_per_course_sections(self):
@@ -107,7 +107,7 @@ class ResourceViewsTimeseries(object):
 		- number of unique resources
 		"""
 		group_by_columns = ['timestamp_period', 'course_id', 'context_name']
-		df = self.process_analysis_by_type(group_by_columns)
+		df = self.build_dataframe(group_by_columns)
 		return df
 
 	def analyze_events_based_on_resource_type(self):
@@ -118,7 +118,7 @@ class ResourceViewsTimeseries(object):
 
 		"""
 		group_by_columns = ['timestamp_period', 'resource_type']
-		df = self.process_analysis_by_type(group_by_columns)
+		df = self.build_dataframe(group_by_columns)
 		return df
 
 	def analyze_events_based_on_device_type(self):
@@ -129,7 +129,7 @@ class ResourceViewsTimeseries(object):
 
 		"""
 		group_by_columns = ['timestamp_period', 'device_type']
-		df = self.process_analysis_by_type(group_by_columns)
+		df = self.build_dataframe(group_by_columns)
 		return df
 
 	def analyze_events_based_on_resource_device_type(self):
@@ -140,10 +140,10 @@ class ResourceViewsTimeseries(object):
 
 		"""
 		group_by_columns = ['timestamp_period', 'resource_type', 'device_type']
-		df = self.process_analysis_by_type(group_by_columns)
+		df = self.build_dataframe(group_by_columns)
 		return df
 
-	def process_analysis_by_type(self, group_by_columns):
+	def build_dataframe(self, group_by_columns):
 		agg_columns = {	'user_id'			: pd.Series.nunique,
 						'resource_view_id' 	: pd.Series.count,
 						'resource_id'		: pd.Series.nunique}
