@@ -25,7 +25,7 @@ class HighlightsCreationTimeseries(object):
 	"""
 
 	def __init__(self, session, start_date, end_date, course_id=None,
-				 with_resource_type=True, with_device_type=True, 
+				 with_resource_type=True, with_device_type=True,
 				 time_period_date=True, with_context_name=True):
 		self.session = session
 		qhc = self.query_highlights_created = QueryHighlightsCreated(self.session)
@@ -57,7 +57,7 @@ class HighlightsCreationTimeseries(object):
 
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
-		
+
 		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def analyze_events(self):

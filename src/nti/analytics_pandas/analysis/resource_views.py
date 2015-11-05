@@ -29,7 +29,7 @@ class ResourceViewsTimeseries(object):
 	"""
 
 	def __init__(self, session, start_date, end_date, course_id=None,
-				 with_resource_type=True, with_device_type=True, 
+				 with_resource_type=True, with_device_type=True,
 				 time_period_date=True, with_context_name=True):
 		self.session = session
 		self.start_date = start_date
@@ -42,8 +42,8 @@ class ResourceViewsTimeseries(object):
 		else:
 			self.dataframe = qrv.filter_by_period_of_time(start_date, end_date)
 
-		categorical_columns = ['resource_id','user_id']
-		
+		categorical_columns = ['resource_id', 'user_id']
+
 		if with_device_type:
 			new_df = qrv.add_device_type(self.dataframe)
 			if new_df is not None:
@@ -64,13 +64,13 @@ class ResourceViewsTimeseries(object):
 
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
-		
+
 		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def analyze_events(self):
 		"""
 		Group course resource views dataframe by timestamp_period
-		Count the number of unique users, number of resource views 
+		Count the number of unique users, number of resource views
 		and number of unique resources in each group return the result as dataframe
 		"""
 		group_by_columns = ['timestamp_period']
@@ -82,7 +82,7 @@ class ResourceViewsTimeseries(object):
 		Analyze course resource views per course sections
 		Return a dataframe consisting of:
 		- number of unique users,
-		- number of resource views 
+		- number of resource views
 		- number of unique resources
 		"""
 		group_by_columns = ['timestamp_period', 'course_id', 'context_name']

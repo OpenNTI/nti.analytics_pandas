@@ -12,6 +12,7 @@ logger = __import__('logging').getLogger(__name__)
 from .. import MessageFactory as _
 
 import pandas as pd
+
 import numpy as np
 
 from .commons import line_plot_x_axis_date

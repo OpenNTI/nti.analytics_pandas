@@ -14,9 +14,6 @@ from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
 class TestVideoEventsPlot(AnalyticsPandasTestBase):
 
-	def setUp(self):
-		super(TestVideoEventsPlot, self).setUp()
-
 	def test_explore_events_topics_created(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
@@ -48,6 +45,7 @@ class TestVideoEventsPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		vet = VideoEventsTimeseries(self.session, start_date, end_date, course_id)
 		vetp = VideoEventsTimeseriesPlot(vet)
-		_ = vetp.analyze_video_events_per_course_sections(period_breaks='1 week',
-												   minor_period_breaks='1 day',
-												   video_event_type='WATCH')
+		_ = vetp.analyze_video_events_per_course_sections(
+												period_breaks='1 week',
+												minor_period_breaks='1 day',
+												video_event_type='WATCH')

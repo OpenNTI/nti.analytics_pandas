@@ -23,7 +23,7 @@ class VideoEventsTimeseries(object):
 	analyze the number of video events given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date,course_id=None,
+	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_device_type=True, time_period_date=True, with_context_name=True):
 		self.session = session
 		qve = self.query_videos_event = QueryVideoEvents(self.session)
@@ -91,7 +91,7 @@ class VideoEventsTimeseries(object):
 		- number of unique users
 		- ratio of video events over unique users
 		"""
-		dataframe = self.dataframe[['timestamp_period', 'video_view_id', 'user_id', 
+		dataframe = self.dataframe[['timestamp_period', 'video_view_id', 'user_id',
 									'course_id', 'context_name', 'video_event_type']]
 		dataframe = dataframe.loc[dataframe['video_event_type'] == video_event_type]
 		group_by_items = ['timestamp_period', 'course_id', 'context_name']
@@ -107,7 +107,7 @@ class VideoEventsTimeseries(object):
 		- ratio of video events over unique users
 		grouped by device_type
 		"""
-		dataframe = self.dataframe[['timestamp_period', 'video_view_id', 'user_id', 
+		dataframe = self.dataframe[['timestamp_period', 'video_view_id', 'user_id',
 									'device_type', 'video_event_type']]
 		dataframe = dataframe.loc[dataframe['video_event_type'] == video_event_type]
 		group_by_items = ['timestamp_period', 'device_type']

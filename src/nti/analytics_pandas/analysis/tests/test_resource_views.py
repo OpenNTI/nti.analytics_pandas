@@ -11,16 +11,11 @@ from hamcrest import equal_to
 from hamcrest import has_item
 from hamcrest import assert_that
 
-import numpy as np
-
 from nti.analytics_pandas.analysis.resource_views import ResourceViewsTimeseries
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
 class TestResourceViewsEDA(AnalyticsPandasTestBase):
-
-	def setUp(self):
-		super(TestResourceViewsEDA, self).setUp()
 
 	def test_resource_views_based_on_timestamp_date(self):
 		start_date = '2015-01-01'

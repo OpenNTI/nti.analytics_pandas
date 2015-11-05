@@ -12,10 +12,12 @@ logger = __import__('logging').getLogger(__name__)
 from . import MessageFactory as _
 
 import pandas as pd
+
 import numpy as np
 
 from .commons import line_plot_x_axis_date
 from .commons import group_line_plot_x_axis_date
+from .commons import group_scatter_plot_x_axis_date
 from .commons import histogram_plot_x_axis_discrete
 
 class  ResourceViewsTimeseriesPlot(object):
@@ -83,18 +85,18 @@ class  ResourceViewsTimeseriesPlot(object):
 			event_title = 'Number of resource views in %s' % (context_name)
 			user_title = 'Number of unique users viewing resources in %s' % (context_name)
 			ratio_title = 'Ratio of resource views over unique user in %s' % (context_name)
-			unique_resource_title = _('Number of unique resources viewed in %s') %(context_name)
-			section_plots = self.generate_plots(new_df, 
-												event_title, 
+			unique_resource_title = _('Number of unique resources viewed in %s') % (context_name)
+			section_plots = self.generate_plots(new_df,
+												event_title,
 												user_title,
-												ratio_title, 
+												ratio_title,
 												unique_resource_title,
-												period_breaks, 
+												period_breaks,
 												minor_period_breaks)
 			plots.append(section_plots)
 		return plots
 
-	def generate_plots(self, df, 
+	def generate_plots(self, df,
 						event_title, user_title, ratio_title, unique_resource_title,
 						period_breaks, minor_period_breaks):
 
@@ -256,9 +258,15 @@ class  ResourceViewsTimeseriesPlot(object):
 		user_title = _('Number of unique users viewing each resource type at given time period')
 		ratio_title = _('Ratio of resource views over unique users grouped by resource type')
 		unique_resource_title = _('Number of unique course resource viewed during time period')
-		plots = self.generate_group_by_plots(df, group_by, 
-											event_title, user_title, ratio_title, unique_resource_title,
-											period_breaks, minor_period_breaks)
+		plots = self.generate_group_by_plots(
+										df, 
+										group_by,
+										event_title,
+										user_title,
+										ratio_title, 
+										unique_resource_title,
+										period_breaks,
+										minor_period_breaks)
 		return plots
 
 	def analyze_resource_type_scatter_plot(self, period_breaks='1 week', minor_period_breaks='1 day'):
@@ -278,9 +286,15 @@ class  ResourceViewsTimeseriesPlot(object):
 		user_title = _('Number of unique users viewing each resource type at given time period')
 		ratio_title = _('Ratio of resource views over unique users grouped by resource type')
 		unique_resource_title = _('Number of unique course resource viewed during time period')
-		plots = self.generate_group_by_scatter_plots(df, group_by, 
-											event_title, user_title, ratio_title, unique_resource_title,
-											period_breaks, minor_period_breaks)
+		plots = self.generate_group_by_scatter_plots(
+											df, 
+											group_by,
+											event_title, 
+											user_title, 
+											ratio_title, 
+											unique_resource_title,
+											period_breaks, 
+											minor_period_breaks)
 		return plots
 
 	def analyze_device_type(self, period_breaks='1 week', minor_period_breaks='1 day'):
@@ -298,9 +312,15 @@ class  ResourceViewsTimeseriesPlot(object):
 		user_title = _('Number of unique users viewing each device type at given time period')
 		ratio_title = _('Ratio of resource views over unique users grouped by device type')
 		unique_resource_title = _('Number of unique course resource viewed during time period')
-		plots = self.generate_group_by_plots(df, group_by, 
-											event_title, user_title, ratio_title, unique_resource_title,
-											period_breaks, minor_period_breaks)
+		plots = self.generate_group_by_plots(
+										df, 
+										group_by,
+										event_title, 
+										user_title, 
+										ratio_title, 
+										unique_resource_title,
+										period_breaks,
+										minor_period_breaks)
 		return plots
 
 	def analyze_device_type_scatter_plot(self, period_breaks='1 week', minor_period_breaks='1 day'):
@@ -318,9 +338,15 @@ class  ResourceViewsTimeseriesPlot(object):
 		user_title = _('Number of unique users viewing each device type at given time period')
 		ratio_title = _('Ratio of resource views over unique users grouped by device type')
 		unique_resource_title = _('Number of unique course resource viewed during time period')
-		plots = self.generate_group_by_scatter_plots(df, group_by, 
-											event_title, user_title, ratio_title, unique_resource_title,
-											period_breaks, minor_period_breaks)
+		plots = self.generate_group_by_scatter_plots(
+											df, 
+											group_by,
+											event_title, 
+											user_title, 
+											ratio_title, 
+											unique_resource_title,
+											period_breaks,
+											minor_period_breaks)
 		return plots
 
 

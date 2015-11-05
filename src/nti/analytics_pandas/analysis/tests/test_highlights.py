@@ -11,16 +11,11 @@ from hamcrest import equal_to
 from hamcrest import has_item
 from hamcrest import assert_that
 
-import numpy as np
-
 from nti.analytics_pandas.analysis.highlights import HighlightsCreationTimeseries
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
 class TestHighlightsEDA(AnalyticsPandasTestBase):
-
-	def setUp(self):
-		super(TestHighlightsEDA, self).setUp()
 
 	def test_highlights_creation_based_on_timestamp_date(self):
 		start_date = '2015-01-01'
@@ -52,4 +47,3 @@ class TestHighlightsEDA(AnalyticsPandasTestBase):
 		df = hct.analyze_events_per_course_sections()
 		assert_that(df.columns, has_item('number_of_unique_users'))
 		assert_that(df.columns, has_item('number_of_highlights_created'))
-

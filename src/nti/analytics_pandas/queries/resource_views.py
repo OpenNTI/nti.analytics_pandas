@@ -11,8 +11,8 @@ logger = __import__('logging').getLogger(__name__)
 
 from nti.analytics_database.resource_views import CourseResourceViews
 
-from .common import add_context_name_
 from .common import add_device_type_
+from .common import add_context_name_
 from .common import add_resource_type_
 
 from .mixins import TableQueryMixin

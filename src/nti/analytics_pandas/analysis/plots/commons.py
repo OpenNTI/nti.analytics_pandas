@@ -203,7 +203,8 @@ def histogram_plot_x_axis_discrete(df,
 	hist_plot = ggplot(df, aes(x=x_axis_field, y=y_axis_field)) + \
 				geom_histogram(stat=stat) + \
 				ggtitle(_(title)) + \
-				theme(title=element_text(size=10, face="bold"), axis_text_x=element_text(angle=15, hjust=1)) + \
+				theme(	title=element_text(size=10, face="bold"), 
+						axis_text_x=element_text(angle=15, hjust=1)) + \
 				ylab(_(y_axis_label)) + \
 				xlab(_(x_axis_label)) + \
 				scale_x_discrete(x_axis_field)

@@ -14,9 +14,6 @@ from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
 class TestResourceViewsPlot(AnalyticsPandasTestBase):
 
-	def setUp(self):
-		super(TestResourceViewsPlot, self).setUp()
-
 	def test_explore_events(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
