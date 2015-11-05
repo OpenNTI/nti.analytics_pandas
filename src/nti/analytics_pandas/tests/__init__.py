@@ -9,6 +9,15 @@ __docformat__ = "restructuredtext en"
 
 import unittest
 
+# there is a bug in matplotlib 1.5.0 that is requiring a back end in OSX
+# https://github.com/pypa/virtualenv/issues/54
+# https://github.com/pypa/virtualenv/issues/609
+# (reported in http://matplotlib.org/faq/virtualenv_faq.html#osx)
+# as work around include the last two lines below execute
+# echo "backend: TXAgg" > ~/.matplotlib/matplotlibrc
+# import matplotlib
+# matplotlib.use('PS')
+
 from zope.testing import cleanup as testing_cleanup
 
 from nti.testing.layers import GCLayerMixin
