@@ -32,7 +32,6 @@ class TestResourceViewsPlot(AnalyticsPandasTestBase):
 		rvt = ResourceViewsTimeseries(self.session, start_date, end_date, course_id)
 		rvtp = ResourceViewsTimeseriesPlot(rvt)
 		_ = rvtp.analyze_events_per_course_sections()
-		print(_)
 
 	def test_resource_and_device_type_analysis(self):
 		start_date = '2015-01-01'
