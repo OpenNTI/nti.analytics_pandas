@@ -28,7 +28,8 @@ class HighlightsCreationTimeseries(object):
 	"""
 
 	def __init__(self, session, start_date, end_date, course_id=None,
-				 with_resource_type=True, with_device_type=True, time_period_date=True):
+				 with_resource_type=True, with_device_type=True, 
+				 time_period_date=True, with_context_name=True):
 		self.session = session
 		qhc = self.query_highlights_created = QueryHighlightsCreated(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -38,20 +39,28 @@ class HighlightsCreationTimeseries(object):
 		else:
 			self.dataframe = qhc.filter_by_period_of_time(start_date, end_date)
 
+		categorical_columns = ['user_id']
 		if with_device_type:
 			new_df = qhc.add_device_type(self.dataframe)
 			if new_df is not None:
 				self.dataframe = new_df
+				categorical_columns.append('device_type')
 
 		if with_resource_type:
 			new_df = qhc.add_resource_type(self.dataframe)
 			if new_df is not None:
 				self.dataframe = new_df
+				categorical_columns.append('resource_type')
+
+		if with_context_name:
+			new_df = qhc.add_context_name(self.dataframe, course_id)
+			if new_df is not None:
+				self.dataframe = new_df
+				categorical_columns.append('context_name')
 
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
-
-		categorical_columns = ['user_id', 'device_type', 'resource_type']
+		
 		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def explore_number_of_events_based_timestamp_date(self):
@@ -72,30 +81,29 @@ class HighlightsCreationTimeseries(object):
 										events_df, 'total_highlights_created', unique_users_df)
 		return merge_df
 
+	def analyze_events(self):
+		group_by_items = ['timestamp_period']
+		df = self.build_dataframe(group_by_items)
+		return df
+
 	def analyze_device_types(self):
 		group_by_items = ['timestamp_period', 'device_type']
-		agg_columns = {	'user_id'	  	: pd.Series.nunique,
-						'highlight_id' 	: pd.Series.nunique}
-		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
-		df.rename(columns={'user_id'		:'number_of_unique_users',
-							 'highlight_id'	:'number_of_highlight_created'},
-				  inplace=True)
+		df = self.build_dataframe(group_by_items)
 		return df
 
 	def analyze_resource_types(self):
 		group_by_items = ['timestamp_period', 'resource_type']
-		agg_columns = {	'user_id'	  	: pd.Series.nunique,
-						'highlight_id' 	: pd.Series.nunique}
-		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
-		df.rename(columns={'user_id'		:'number_of_unique_users',
-							 'highlight_id'	:'number_of_highlight_created'},
-				  inplace=True)
+		df = self.build_dataframe(group_by_items)
 		return df
 
 	def analyze_resource_device_types(self):
 		group_by_items = ['timestamp_period', 'resource_type', 'device_type']
+		df = self.build_dataframe(group_by_items)
+		return df
+
+	def build_dataframe(self, group_by_items):
 		agg_columns = {	'user_id'	  	: pd.Series.nunique,
-						'highlight_id' 	: pd.Series.nunique}
+						'highlight_id' 	: pd.Series.count}
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
 		df.rename(columns={'user_id'		:'number_of_unique_users',
 							 'highlight_id'	:'number_of_highlight_created'},
