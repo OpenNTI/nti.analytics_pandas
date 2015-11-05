@@ -86,6 +86,11 @@ class HighlightsCreationTimeseries(object):
 		df = self.build_dataframe(group_by_items)
 		return df
 
+	def analyze_events_per_course_sections(self):
+		group_by_items = ['timestamp_period', 'course_id', 'context_name']
+		df = self.build_dataframe(group_by_items)
+		return df
+
 	def analyze_device_types(self):
 		group_by_items = ['timestamp_period', 'device_type']
 		df = self.build_dataframe(group_by_items)
@@ -106,7 +111,7 @@ class HighlightsCreationTimeseries(object):
 						'highlight_id' 	: pd.Series.count}
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
 		df.rename(columns={'user_id'		:'number_of_unique_users',
-							 'highlight_id'	:'number_of_highlight_created'},
+							 'highlight_id'	:'number_of_highlights_created'},
 				  inplace=True)
 		return df
 

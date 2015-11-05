@@ -31,29 +31,25 @@ class TestHighlightsEDA(AnalyticsPandasTestBase):
 		assert_that(hct.dataframe.columns, has_item('device_type'))
 		assert_that(hct.dataframe.columns, has_item('resource_type'))
 
-		event_by_date_df = hct.explore_number_of_events_based_timestamp_date()
-		assert_that(len(event_by_date_df.index), equal_to(36))
-
-		total_events = np.sum(event_by_date_df['total_highlights_created'])
-		assert_that(total_events, equal_to(len(hct.dataframe.index)))
-
-		unique_users_by_date = hct.explore_unique_users_based_timestamp_date()
-		assert_that(len(unique_users_by_date.index), equal_to(36))
-
-		ratio_df = hct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
-		assert_that(len(ratio_df.index), equal_to(36))
+		df = hct.analyze_events()
+		assert_that(len(df.index), equal_to(36))
 
 		df = hct.analyze_device_types()
 		assert_that(df.columns, has_item('number_of_unique_users'))
-		assert_that(df.columns, has_item('number_of_highlight_created'))
+		assert_that(df.columns, has_item('number_of_highlights_created'))
 
 		df = hct.analyze_resource_types()
 		assert_that(df.columns, has_item('number_of_unique_users'))
-		assert_that(df.columns, has_item('number_of_highlight_created'))
+		assert_that(df.columns, has_item('number_of_highlights_created'))
 
 		df = hct.analyze_resource_device_types()
 		assert_that(df.columns, has_item('number_of_unique_users'))
-		assert_that(df.columns, has_item('number_of_highlight_created'))
+		assert_that(df.columns, has_item('number_of_highlights_created'))
 
 		users_df = hct.get_the_most_active_users(max_rank_number = 10)
 		assert_that(len(users_df.index), equal_to(10))
+
+		df = hct.analyze_events_per_course_sections()
+		assert_that(df.columns, has_item('number_of_unique_users'))
+		assert_that(df.columns, has_item('number_of_highlights_created'))
+
