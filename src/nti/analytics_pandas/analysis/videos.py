@@ -83,7 +83,7 @@ class VideoEventsTimeseries(object):
 		df = self.build_dataframe(self.dataframe, group_by_items)
 		return df
 
-	def analyze_video_events_per_course_sections(self, video_event_type):
+	def analyze_video_events_per_course_sections(self, video_event_type='WATCH'):
 		"""
 		Generate a dataframe based on given video_event_type value (WATCH/SKIP) per course section
 		The dataframe consists of :

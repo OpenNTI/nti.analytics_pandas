@@ -122,7 +122,7 @@ class VideoEventsTimeseriesPlot(object):
 										  minor_period_breaks='1 day',
 										  video_event_type='WATCH'):
 		"""
-		return plots of video events during period of time
+		given a video event type (WATCH or SKIP) return plots of video events during period of time
 		it consists of:
 			- number of video events
 			- number of unique users
@@ -186,4 +186,44 @@ class VideoEventsTimeseriesPlot(object):
 														period_breaks,
 														minor_period_breaks)
 				plots.append(video_event_plots)
+		return plots
+
+	def analyze_video_events_per_course_sections(self, 
+												video_event_type='WATCH', 
+												period_breaks='1 week', 
+												minor_period_breaks='1 day'):
+		vet = self.vet
+		df = vet.analyze_video_events_per_course_sections(video_event_type)
+		if df is None:
+			return()
+
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		course_ids = np.unique(df['course_id'].values.ravel())
+
+		plots = []
+		if len(course_ids) > 1:
+			group_by = 'context_name'
+			event_title = 'Number of  video events (%s) per course sections' % video_event_type
+			user_title = 'Number of unique users per course sections (VIDEO %s)' %video_event_type
+			ratio_title = 'Ratio of video events over unique user per course sections (VIDEO %s)' %video_event_type
+			all_section_plots = self.generate_group_by_plots(df,
+															 group_by,
+															 event_title,
+															 user_title,
+															 ratio_title,
+															 period_breaks,
+															 minor_period_breaks)
+			plots.append(all_section_plots)
+
+		for course_id in course_ids:
+			new_df = df[df['course_id'] == course_id]
+			context_name = new_df.iloc[0]['context_name']
+			event_title = 'Number of video events (%s) in %s' % (video_event_type, context_name)
+			user_title = 'Number of unique users on video events (%s) in %s' % (video_event_type, context_name)
+			ratio_title = 'Ratio of video events (%s) over unique user in %s' % (video_event_type, context_name)
+			section_plots = self.generate_plots(new_df, event_title, user_title,
+												ratio_title, period_breaks,
+												minor_period_breaks)
+			plots.append(section_plots)
 		return plots
