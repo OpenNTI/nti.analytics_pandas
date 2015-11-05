@@ -13,6 +13,7 @@ from nti.analytics_database.resource_views import VideoEvents
 
 from .mixins import TableQueryMixin
 
+from .common import add_context_name_
 from .common import add_device_type_
 from .common import add_resource_type_
 
@@ -53,7 +54,8 @@ class QueryVideoEvents(TableQueryMixin):
 								   ve.with_transcript,
 								   ve.session_id,
 								   ve.user_id,
-								   ve.play_speed).filter(ve.timestamp.between(start_date, end_date)).filter(ve.course_id.in_(course_id))
+								   ve.play_speed,
+								   ve.course_id).filter(ve.timestamp.between(start_date, end_date)).filter(ve.course_id.in_(course_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
@@ -63,4 +65,8 @@ class QueryVideoEvents(TableQueryMixin):
 
 	def add_resource_type(self, dataframe):
 		new_df = add_resource_type_(self.session, dataframe)
+		return new_df
+
+	def add_context_name(self, dataframe, course_id):
+		new_df = add_context_name_(self.session, dataframe, course_id)
 		return new_df
