@@ -12,6 +12,7 @@ logger = __import__('logging').getLogger(__name__)
 from .. import MessageFactory as _
 
 import pandas as pd
+import numpy as np
 
 from .commons import line_plot_x_axis_date
 from .commons import group_line_plot_x_axis_date
@@ -39,12 +40,25 @@ class VideoEventsTimeseriesPlot(object):
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
+		event_title = _('Number of videos watched and skipped during period of time')
+		user_title = _('Number of unique users watching or skipping videos during period of time')
+		ratio_title = _('Ratio of videos watched and skipped over unique user on each available date')
+		plots = self.generate_plots(df, 
+								event_title, 
+								user_title, 
+								ratio_title, 
+								period_breaks, 
+								minor_period_breaks)
+		return plots
+
+	def generate_plots(self, df, event_title, user_title, ratio_title, 
+						period_breaks, minor_period_breaks):
 		plot_video_events = line_plot_x_axis_date(df=df,
 				x_axis_field='timestamp_period',
 				y_axis_field='number_of_video_events',
 				x_axis_label=_('Date'),
-				y_axis_label=_('Number of videos watched and skipped'),
-				title=_('Number of videos watched and skipped during period of time'),
+				y_axis_label=_('Number of videos events'),
+				title=event_title,
 				period_breaks=period_breaks,
 				minor_breaks=minor_period_breaks)
 
@@ -53,7 +67,7 @@ class VideoEventsTimeseriesPlot(object):
 				y_axis_field='number_of_unique_users',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Number of unique users'),
-				title=_('Number of unique users watching or skipping videos during period of time'),
+				title=user_title,
 				period_breaks=period_breaks,
 				minor_breaks=minor_period_breaks)
 
@@ -62,8 +76,44 @@ class VideoEventsTimeseriesPlot(object):
 				y_axis_field='ratio',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Ratio'),
-				title=_('Ratio of videos watched and skipped over unique user on each available date'),
+				title=ratio_title,
 				period_breaks=period_breaks,
+				minor_breaks=minor_period_breaks)
+
+		return (plot_video_events, plot_unique_users, plot_ratio)
+	
+	def generate_group_by_plots(self, df, group_by,
+						event_title, user_title, ratio_title, 
+						period_breaks, minor_period_breaks):
+
+		plot_video_events = group_line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='number_of_video_events',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of videos events'),
+				title=event_title,
+				period_breaks=period_breaks,
+				group_by=group_by,
+				minor_breaks=minor_period_breaks)
+
+		plot_unique_users = group_line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='number_of_unique_users',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of unique users'),
+				title=user_title,
+				period_breaks=period_breaks,
+				group_by=group_by,
+				minor_breaks=minor_period_breaks)
+
+		plot_ratio = group_line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='ratio',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Ratio'),
+				title=ratio_title,
+				period_breaks=period_breaks,
+				group_by=group_by,
 				minor_breaks=minor_period_breaks)
 
 		return (plot_video_events, plot_unique_users, plot_ratio)
@@ -86,38 +136,14 @@ class VideoEventsTimeseriesPlot(object):
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
-		plot_video_events = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_of_video_events',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of video events'),
-				title=_('Number of video events grouped by device types during period of time'),
-				period_breaks=period_breaks,
-				group_by='device_type',
-				minor_breaks=minor_period_breaks)
-
-		plot_unique_users = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_of_unique_users',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of unique users'),
-				title=_('Number of unique users creating video events grouped by device types during period of time'),
-				period_breaks=period_breaks,
-				group_by='device_type',
-				minor_breaks=minor_period_breaks)
-
-		plot_ratio = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='ratio',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Ratio'),
-				title=_('Ratio of video events over unique user on each available date'),
-				period_breaks=period_breaks,
-				group_by='device_type',
-				minor_breaks=minor_period_breaks)
-
-		return (plot_video_events, plot_unique_users, plot_ratio)
-
+		group_by = 'device_type'
+		event_title = _('Number of video events grouped by device types')
+		user_title = _('Number of unique users creating video events grouped by device types')
+		ratio_title = _('Ratio of video events over unique users grouped by device types')
+		plots = self.generate_group_by_plots(df, group_by,
+											event_title, user_title, ratio_title,
+											period_breaks, minor_period_breaks)
+		return plots
 
 	def analyze_video_events_types(self, period_breaks='1 week', 
 								   minor_period_breaks='1 day', 
@@ -132,90 +158,32 @@ class VideoEventsTimeseriesPlot(object):
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
+		plots = []
+		group_by = 'video_event_type'
+		event_title = _('Number of video events grouped by event types')
+		user_title = _('Number of unique users creating video events grouped by event types')
+		ratio_title = _('Ratio of video events over unique users grouped by event types')	
+		all_video_events_plots = self.generate_group_by_plots(df,
+																group_by,
+																event_title,
+																user_title,
+																ratio_title,
+																period_breaks,
+																minor_period_breaks)
+		plots.append(all_video_events_plots)															
+
 		if separate_plot_by_type:
-			watch_df = df.loc[df['video_event_type'] == 'WATCH']
-			watch_plots = self.generate_plots_video_events(watch_df, 
-														   period_breaks, 
-														   minor_period_breaks, 
-														   'watched')
-			skip_df = df.loc[df['video_event_type'] == 'SKIP']
-			skip_plots = self.generate_plots_video_events(skip_df, 
-														  period_breaks,
-														  minor_period_breaks, 
-														  'skipped')
-			result = (watch_plots, skip_plots)
-		else:
-			result = self.generate_plots_grouped_by_video_event_types(df,
-																	  period_breaks,
-																	  minor_period_breaks)
-		return result
-
-	def generate_plots_grouped_by_video_event_types(self, df, period_breaks, minor_period_breaks):
-
-		plot_video_events = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_of_video_events',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of video events'),
-				title=_('Number of video events grouped by event types during period of time'),
-				period_breaks=period_breaks,
-				group_by='video_event_type',
-				minor_breaks=minor_period_breaks)
-
-		plot_unique_users = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_of_unique_users',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of unique users'),
-				title=_('Number of unique users creating video events during period of time'),
-				period_breaks=period_breaks,
-				group_by='video_event_type',
-				minor_breaks=minor_period_breaks)
-
-		plot_ratio = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='ratio',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Ratio'),
-				title=_('Ratio of video events over unique user on each available date'),
-				period_breaks=period_breaks,
-				group_by='video_event_type',
-				minor_breaks=minor_period_breaks)
-
-		return (plot_video_events, plot_unique_users, plot_ratio)
-
-	def generate_plots_video_events(self, df, period_breaks, minor_period_breaks, event_type):
-		title = _("Number of video ${event_type} during period of time",
-				 mapping={'event_type': event_type })
-		plot_video_events = line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_of_video_events',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of video events'),
-				title=title,
-				period_breaks=period_breaks,
-				minor_breaks=minor_period_breaks)
-
-		title = _("Number of unique users who ${event_type} video during period of time",
-				 mapping={'event_type': event_type })
-		plot_unique_users = line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_of_unique_users',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of unique users'),
-				title=title,
-				period_breaks=period_breaks,
-				minor_breaks=minor_period_breaks)
-
-		title = _("Ratio of video ${event_type} over unique user on each available date",
-				 mapping={'event_type': event_type })
-		plot_ratio = line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='ratio',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Ratio'),
-				title=title,
-				period_breaks=period_breaks,
-				minor_breaks=minor_period_breaks)
-
-		return (plot_video_events, plot_unique_users, plot_ratio)
+			video_event_types = np.unique(df['video_event_type'].values.ravel())
+			for video_event_type in video_event_types:
+				new_df = df[df['video_event_type'] == video_event_type]
+				event_title = 'Number of video events (%s)' % (video_event_type)
+				user_title = 'Number of unique users  (VIDEO %s)' % (video_event_type)
+				ratio_title = 'Ratio of video events over unique user (VIDEO %s)' % (video_event_type)
+				video_event_plots = self.generate_plots(new_df, 
+														event_title, 
+														user_title, 
+														ratio_title,
+														period_breaks,
+														minor_period_breaks)
+				plots.append(video_event_plots)
+		return plots
