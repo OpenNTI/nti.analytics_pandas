@@ -441,6 +441,34 @@ class TopicLikesTimeseriesPlot(object):
 									minor_period_breaks)
 		return plots
 
+	def analyze_events_per_device_types(self, period_breaks='1 day', minor_period_breaks=None):
+		"""
+		return plots of topic likes grouped by device  types
+		it consists of:
+			- number of topic likes
+			- number of unique users
+			- ratio of topic likes over unique users
+		"""
+		tlt = self.tlt
+		df = tlt.analyze_events_per_device_types(tlt.dataframe)
+		if df is None:
+			return ()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		group_by = 'device_type'
+		event_title = _('Number of topics likes grouped by device types')
+		user_title = _('Number of unique users liking topics grouped by device types')
+		ratio_title = _('Ratio of topic likes over unique user grouped by device types')
+		plots = self.generate_group_by_plots(df,
+											group_by,
+											event_title,
+											user_title,
+											ratio_title,
+											period_breaks,
+											minor_period_breaks)
+		return plots
+
 	def generate_plots(self, df, event_title, user_title, ratio_title, 
 						period_breaks, minor_period_breaks):
 		plot_topic_likes = line_plot_x_axis_date(df=df,

@@ -78,7 +78,7 @@ class TestTopicViewsPlot(AnalyticsPandasTestBase):
 		tvt = TopicViewsTimeseries(self.session, start_date, end_date, course_id)
 		tvtp = TopicViewsTimeseriesPlot(tvt)
 		_ = tvtp.analyze_events_per_course_sections(period_breaks='1 day', minor_period_breaks='None')
-		
+
 	def test_plot_the_most_active_users(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
@@ -99,6 +99,15 @@ class TestTopicLikesPlot(AnalyticsPandasTestBase):
 		tlt = TopicLikesTimeseries(self.session, start_date, end_date, course_id)
 		tltp = TopicLikesTimeseriesPlot(tlt)
 		_ = tltp.explore_events(period_breaks='1 day', minor_period_breaks=None)
+
+	def test_analyze_events_per_device_types(self):
+		start_date = '2015-10-05'
+		end_date = '2015-10-27'
+		course_id = ['1068', '1096', '1097', '1098', '1099']
+		tlt = TopicLikesTimeseries(self.session, start_date, end_date, course_id)
+		tltp = TopicLikesTimeseriesPlot(tlt)
+		_ = tltp.analyze_events_per_device_types(period_breaks='1 day', minor_period_breaks=None)
+	
 
 class TestTopicFavoritesPlot(AnalyticsPandasTestBase):
 
