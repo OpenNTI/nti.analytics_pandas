@@ -253,7 +253,7 @@ class TopicViewsTimeseries(object):
 		return df
 
 	def analyze_events_per_course_sections(self):
-		group_by_items = ['timestamp_period', 'context_name']
+		group_by_items = ['timestamp_period', 'course_id', 'context_name']
 		df = self.build_dataframe(group_by_items)
 		return df	
 
