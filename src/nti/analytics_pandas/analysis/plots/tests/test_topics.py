@@ -32,7 +32,7 @@ class TestTopicsCreationPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		tct = TopicsCreationTimeseries(self.session, start_date, end_date, course_id)
 		tctp = TopicsCreationTimeseriesPlot(tct)
-		_ = tctp.explore_events(period_breaks='1 week', minor_period_breaks='1 day')
+		_ = tctp.explore_events(period_breaks='1 day', minor_period_breaks='None')
 
 class TestTopicViewsPlot(AnalyticsPandasTestBase):
 

@@ -80,27 +80,40 @@ class TopicsCreationTimeseriesPlot(object):
 			- ratio of topics created over unique users
 		"""
 		tct = self.tct
-		df = tct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		df = tct.analyze_events()
 		if df is None:
 			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
+		event_title = _('Number of topics created during period of time')
+		user_title = _('Number of unique users creating topics during period of time')
+		ratio_title = _('Ratio of topics created over unique user on each available date')
+		plots = self.generate_plots(df, 
+									event_title, 
+									user_title, 
+									ratio_title,
+									period_breaks, 
+									minor_period_breaks)
+		return plots
+
+	def generate_plots(self, df, event_title, user_title, ratio_title, 
+						period_breaks, minor_period_breaks):
 		plot_topics_created = line_plot_x_axis_date(df=df,
 				x_axis_field='timestamp_period',
-				y_axis_field='total_topics_created',
+				y_axis_field='number_of_topics_created',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Number of topics created'),
-				title=_('Number of topics created during period of time'),
+				title=event_title,
 				period_breaks=period_breaks,
 				minor_breaks=minor_period_breaks)
 
 		plot_unique_users = line_plot_x_axis_date(df=df,
 				x_axis_field='timestamp_period',
-				y_axis_field='total_unique_users',
+				y_axis_field='number_of_unique_users',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Number of unique users'),
-				title=_('Number of unique users creating topics during period of time'),
+				title=user_title,
 				period_breaks=period_breaks,
 				minor_breaks=minor_period_breaks)
 
@@ -109,11 +122,12 @@ class TopicsCreationTimeseriesPlot(object):
 				y_axis_field='ratio',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Ratio'),
-				title=_('Ratio of topics created over unique user on each available date'),
+				title=ratio_title,
 				period_breaks=period_breaks,
 				minor_breaks=minor_period_breaks)
 
 		return (plot_topics_created, plot_unique_users, plot_ratio)
+
 
 class TopicViewsTimeseriesPlot(object):
 
@@ -132,7 +146,7 @@ class TopicViewsTimeseriesPlot(object):
 			- ratio of topics viewed over unique users
 		"""
 		tvt = self.tvt
-		df = tvt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		df = tvt.analyze_events()
 		if df is None:
 			return ()
 		df.reset_index(inplace=True)
@@ -140,7 +154,7 @@ class TopicViewsTimeseriesPlot(object):
 
 		plot_topics_viewed = line_plot_x_axis_date(df=df,
 				x_axis_field='timestamp_period',
-				y_axis_field='total_topics_viewed',
+				y_axis_field='number_of_topics_viewed',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Number of topics viewed'),
 				title=_('Number of topics viewed during period of time'),
@@ -149,7 +163,7 @@ class TopicViewsTimeseriesPlot(object):
 
 		plot_unique_users = line_plot_x_axis_date(df=df,
 				x_axis_field='timestamp_period',
-				y_axis_field='total_unique_users',
+				y_axis_field='number_of_unique_users',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Number of unique users'),
 				title=_('Number of unique users viewing topics during period of time'),
@@ -247,7 +261,7 @@ class TopicLikesTimeseriesPlot(object):
 			- ratio of topic likes over unique users
 		"""
 		tlt = self.tlt
-		df = tlt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		df = tlt.analyze_events()
 		if df is None:
 			return ()
 		df.reset_index(inplace=True)
@@ -255,7 +269,7 @@ class TopicLikesTimeseriesPlot(object):
 
 		plot_topic_likes = line_plot_x_axis_date(df=df,
 				x_axis_field='timestamp_period',
-				y_axis_field='total_topic_likes',
+				y_axis_field='number_of_topic_likes',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Number of topic likes'),
 				title=_('Number of topic likes during period of time'),
@@ -264,7 +278,7 @@ class TopicLikesTimeseriesPlot(object):
 
 		plot_unique_users = line_plot_x_axis_date(df=df,
 				x_axis_field='timestamp_period',
-				y_axis_field='total_unique_users',
+				y_axis_field='number_of_unique_users',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Number of unique users'),
 				title=_('Number of unique users liking topics during period of time'),
@@ -299,7 +313,7 @@ class TopicFavoritesTimeseriesPlot(object):
 			- ratio of topic favorites over unique users
 		"""
 		tft = self.tft
-		df = tft.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		df = tft.analyze_events()
 		if df is None:
 			return ()
 		df.reset_index(inplace=True)
@@ -307,7 +321,7 @@ class TopicFavoritesTimeseriesPlot(object):
 
 		plot_topic_favorites = line_plot_x_axis_date(df=df,
 				x_axis_field='timestamp_period',
-				y_axis_field='total_topic_favorites',
+				y_axis_field='number_of_topic_favorites',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Number of topic favorites'),
 				title=_('Number of topic favorites during period of time'),
@@ -316,7 +330,7 @@ class TopicFavoritesTimeseriesPlot(object):
 
 		plot_unique_users = line_plot_x_axis_date(df=df,
 				x_axis_field='timestamp_period',
-				y_axis_field='total_unique_users',
+				y_axis_field='number_of_unique_users',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Number of unique users'),
 				title=_('Number of unique users choosing topics as favorites during period of time'),
