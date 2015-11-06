@@ -207,11 +207,12 @@ class NotesCreationTimeseries(object):
 		agg_columns = {	'user_id'	: pd.Series.nunique,
 						'note_id' 	: pd.Series.count}
 		df = analyze_types_(dataframe, group_by_items, agg_columns)
-		df.rename(columns={	
-						'user_id'	:'number_of_unique_users',
-						'note_id'	:'number_of_notes_created'},
-				  inplace=True)
-		df['ratio'] = df['number_of_notes_created'] / df['number_of_unique_users']
+		if df is not None:
+			df.rename(columns={	
+							'user_id'	:'number_of_unique_users',
+							'note_id'	:'number_of_notes_created'},
+					  inplace=True)
+			df['ratio'] = df['number_of_notes_created'] / df['number_of_unique_users']
 		return df
 
 	def get_the_most_active_users(self, max_rank_number=10):
@@ -351,9 +352,10 @@ class NotesViewTimeseries(object):
 						'note_id' 	: pd.Series.nunique}
 
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
-		df.rename(columns={	'user_id'	:'number_of_unique_users',
-							'note_id'	:'number_of_unique_notes_viewed'},
-				  inplace=True)
+		if df is not None:
+			df.rename(columns={	'user_id'	:'number_of_unique_users',
+								'note_id'	:'number_of_unique_notes_viewed'},
+					  inplace=True)
 		return df
 
 	def analyze_total_events(self):
@@ -411,11 +413,12 @@ class NotesViewTimeseries(object):
 						'user_id'	: pd.Series.nunique}
 
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
-		df.rename(columns={	'note_id'	:'total_notes_viewed',
-							'user_id'	:'total_unique_users'},
-				  inplace=True)
+		if df is not None:
+			df.rename(columns={	'note_id'	:'total_notes_viewed',
+								'user_id'	:'total_unique_users'},
+					  inplace=True)
 
-		df['ratio'] = df['total_notes_viewed'] / df['total_unique_users']
+			df['ratio'] = df['total_notes_viewed'] / df['total_unique_users']
 		return df
 
 	def get_the_most_viewed_notes(self, max_rank_number=10):
