@@ -10,7 +10,6 @@ __docformat__ = "restructuredtext en"
 logger = __import__('logging').getLogger(__name__)
 
 import pandas as pd
-import numpy as np 
 
 from ..queries import QueryTopicLikes
 from ..queries import QueryTopicsViewed
@@ -132,7 +131,7 @@ class TopicsCreationTimeseries(object):
 		group_by_items = ['timestamp_period', 'course_id', 'context_name']
 		df = self.build_dataframe(group_by_items, self.dataframe)
 		return df
-	
+
 	def analyze_events_per_device_types(self):
 		group_by_items = ['timestamp_period', 'device_type']
 		df = self.build_dataframe(group_by_items, self.dataframe)
@@ -255,7 +254,7 @@ class TopicViewsTimeseries(object):
 	def analyze_events_per_course_sections(self):
 		group_by_items = ['timestamp_period', 'course_id', 'context_name']
 		df = self.build_dataframe(group_by_items)
-		return df	
+		return df
 
 	def analyze_device_types(self):
 		group_by_items = ['timestamp_period', 'device_type']

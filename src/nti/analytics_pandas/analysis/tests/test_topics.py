@@ -23,9 +23,6 @@ from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
 class TestTopicsEDA(AnalyticsPandasTestBase):
 
-	def setUp(self):
-		super(TestTopicsEDA, self).setUp()
-
 	def test_topics_creation_based_on_timestamp_date(self):
 		start_date = '2015-10-05'
 		end_date = '2015-10-20'
@@ -38,9 +35,9 @@ class TestTopicsEDA(AnalyticsPandasTestBase):
 		total_topics_created = np.sum(event_df['number_of_topics_created'])
 
 		device_type_df = tct.analyze_events_per_device_types()
-		total_events = np.sum(device_type_df['number_of_topics_created'])
-		#this test will fail since there are some user_agent_id column values in topicscreated table are NULL
-		#assert_that(total_events, equal_to(total_topics_created))
+		_ = np.sum(device_type_df['number_of_topics_created'])
+		# this test will fail since there are some user_agent_id column values in topicscreated table are NULL
+		# assert_that(total_events, equal_to(total_topics_created))
 
 		context_df = tct.analyze_events_per_course_sections()
 		total_events = np.sum(context_df['number_of_topics_created'])
@@ -69,7 +66,7 @@ class TestTopicsEDA(AnalyticsPandasTestBase):
 		course_id = ['1068', '1096', '1097', '1098', '1099']
 		tlt = TopicLikesTimeseries(self.session, start_date, end_date, course_id)
 		assert_that(tlt.dataframe.columns, has_item('device_type'))
-		
+
 		event_df = tlt.analyze_events()
 		total_events = np.sum(event_df['number_of_topic_likes'])
 		assert_that(total_events, equal_to(len(tlt.dataframe.index)))
@@ -89,7 +86,7 @@ class TestTopicsEDA(AnalyticsPandasTestBase):
 		course_id = ['1068', '1096', '1097', '1098', '1099']
 		tft = TopicFavoritesTimeseries(self.session, start_date, end_date, course_id)
 		assert_that(tft.dataframe.columns, has_item('device_type'))
-		
+
 		event_df = tft.analyze_events()
 		total_events = np.sum(event_df['number_of_topic_favorites'])
 		assert_that(total_events, equal_to(len(tft.dataframe.index)))

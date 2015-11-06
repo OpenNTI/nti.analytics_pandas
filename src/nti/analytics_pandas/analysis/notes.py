@@ -208,7 +208,7 @@ class NotesCreationTimeseries(object):
 						'note_id' 	: pd.Series.count}
 		df = analyze_types_(dataframe, group_by_items, agg_columns)
 		if df is not None:
-			df.rename(columns={	
+			df.rename(columns={
 							'user_id'	:'number_of_unique_users',
 							'note_id'	:'number_of_notes_created'},
 					  inplace=True)
@@ -240,7 +240,7 @@ class NotesCreationTimeseries(object):
 		- number_of_unique_users
 		- ratio
 		"""
-		dataframe = self.dataframe[['timestamp_period', 'resource_type', 
+		dataframe = self.dataframe[['timestamp_period', 'resource_type',
 									'device_type', 'note_id', 'user_id', 'sharing']]
 		dataframe = dataframe.loc[((dataframe['resource_type'] == 'video') | (dataframe['resource_type'] == 'slide video'))]
 		sharing_df = self.analyze_sharing_types(dataframe)
@@ -455,7 +455,7 @@ class NoteLikesTimeseries(object):
 	"""
 
 	def __init__(self, session, start_date, end_date, course_id=None,
-				 with_resource_type=True, with_device_type=True, 
+				 with_resource_type=True, with_device_type=True,
 				 time_period_date=True, with_context_name=True):
 		self.session = session
 		qnl = self.query_notes_viewed = QueryNoteLikes(self.session)
@@ -508,7 +508,7 @@ class NoteFavoritesTimeseries(object):
 	"""
 
 	def __init__(self, session, start_date, end_date, course_id=None,
-				 with_resource_type=True, with_device_type=True, 
+				 with_resource_type=True, with_device_type=True,
 				 time_period_date=True, with_context_name=True):
 		self.session = session
 		qnf = self.query_notes_viewed = QueryNoteFavorites(self.session)

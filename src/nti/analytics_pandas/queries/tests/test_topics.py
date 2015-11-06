@@ -20,9 +20,6 @@ from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
 class TestTopics(AnalyticsPandasTestBase):
 
-	def setUp(self):
-		super(TestTopics, self).setUp()
-
 	def test_query_topics_created_by_period_of_time(self):
 		start_date = u'2015-03-01'
 		end_date = u'2015-05-31'

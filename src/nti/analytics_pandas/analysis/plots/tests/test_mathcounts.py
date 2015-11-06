@@ -59,7 +59,6 @@ class TestNotesCreationPlot(AnalyticsPandasTestBase):
 		nctp = NotesCreationTimeseriesPlot(nct)
 		_ = nctp.analyze_device_types(period_breaks='1 day', minor_period_breaks=None)
 
-
 	def test_analyze_resource_types(self):
 		start_date = '2015-10-05'
 		end_date = '2015-12-04'
@@ -67,7 +66,6 @@ class TestNotesCreationPlot(AnalyticsPandasTestBase):
 		nct = NotesCreationTimeseries(self.session, start_date, end_date, course_id)
 		nctp = NotesCreationTimeseriesPlot(nct)
 		_ = nctp.analyze_resource_types(period_breaks='1 day', minor_period_breaks=None)
-
 
 	def test_plot_most_active_users(self):
 		start_date = '2015-10-05'
@@ -95,9 +93,6 @@ class TestNotesCreationPlot(AnalyticsPandasTestBase):
 
 class TestNoteViewsPlot(AnalyticsPandasTestBase):
 
-	def setUp(self):
-		super(TestNoteViewsPlot, self).setUp()
-
 	def test_analyze_total_events_based_on_sharing_type(self):
 		start_date = '2015-10-05'
 		end_date = '2015-12-04'
@@ -105,7 +100,6 @@ class TestNoteViewsPlot(AnalyticsPandasTestBase):
 		nvt = NotesViewTimeseries(self.session, start_date, end_date, course_id)
 		nvtp = NotesViewTimeseriesPlot(nvt)
 		_ = nvtp.analyze_total_events_based_on_sharing_type(period_breaks='1 day', minor_period_breaks=None)
-
 
 	def test_analyze_total_events_based_on_device_type(self):
 		start_date = '2015-10-05'
@@ -158,9 +152,6 @@ class TestNoteViewsPlot(AnalyticsPandasTestBase):
 
 class TestNotesEventsPlot(AnalyticsPandasTestBase):
 
-	def setUp(self):
-		super(TestNotesEventsPlot, self).setUp()
-
 	def test_notes_events(self):
 		start_date = '2015-10-05'
 		end_date = '2015-12-04'
@@ -176,9 +167,6 @@ class TestNotesEventsPlot(AnalyticsPandasTestBase):
 
 class TestForumsEventsTimeseriesPlot(AnalyticsPandasTestBase):
 
-	def setUp(self):
-		super(TestForumsEventsTimeseriesPlot, self).setUp()
-
 	def test_explore_all_events(self):
 		start_date = '2015-10-05'
 		end_date = '2015-12-04'
@@ -192,9 +180,6 @@ class TestForumsEventsTimeseriesPlot(AnalyticsPandasTestBase):
 		_ = fetp.explore_all_events(period_breaks='1 day', minor_period_breaks=None)
 
 class TestForumCommentsCreatedPlot(AnalyticsPandasTestBase):
-
-	def setUp(self):
-		super(TestForumCommentsCreatedPlot, self).setUp()
 
 	def test_explore_events_forums_comments_created(self):
 		start_date = '2015-10-05'
@@ -230,9 +215,6 @@ class TestForumCommentsCreatedPlot(AnalyticsPandasTestBase):
 
 class TestForumCommentLikesPlot(AnalyticsPandasTestBase):
 
-	def setUp(self):
-		super(TestForumCommentLikesPlot, self).setUp()
-
 	def test_analyze_forum_comment_likes(self):
 		start_date = '2015-10-05'
 		end_date = '2015-12-04'
@@ -250,9 +232,6 @@ class TestForumCommentLikesPlot(AnalyticsPandasTestBase):
 		_ = fcltp.analyze_device_types(period_breaks='1 day', minor_period_breaks=None)
 
 class TestForumsCreatedPlot(AnalyticsPandasTestBase):
-
-	def setUp(self):
-		super(TestForumsCreatedPlot, self).setUp()
 
 	def test_explore_events_forums_created(self):
 		start_date = '2015-10-05'
@@ -272,9 +251,6 @@ class TestForumsCreatedPlot(AnalyticsPandasTestBase):
 
 class TestTopicsEventsPlot(AnalyticsPandasTestBase):
 
-	def setUp(self):
-		super(TestTopicsEventsPlot, self).setUp()
-
 	def test_topics_events(self):
 		start_date = '2015-10-05'
 		end_date = '2015-12-04'
@@ -286,12 +262,8 @@ class TestTopicsEventsPlot(AnalyticsPandasTestBase):
 		tet = TopicsEventsTimeseries(tct, tvt, tlt, tft)
 		tetp = TopicsEventsTimeseriesPlot(tet)
 		_ = tetp.explore_all_events(period_breaks='1 day', minor_period_breaks=None)
-		print(_)
 
 class TestTopicsCreationPlot(AnalyticsPandasTestBase):
-
-	def setUp(self):
-		super(TestTopicsCreationPlot, self).setUp()
 
 	def test_explore_events_topics_created(self):
 		start_date = '2015-10-05'
@@ -302,9 +274,6 @@ class TestTopicsCreationPlot(AnalyticsPandasTestBase):
 		_ = tctp.explore_events(period_breaks='1 day', minor_period_breaks=None)
 
 class TestTopicViewsPlot(AnalyticsPandasTestBase):
-
-	def setUp(self):
-		super(TestTopicViewsPlot, self).setUp()
 
 	def test_explore_events_topics_viewed(self):
 		start_date = '2015-10-05'
@@ -332,9 +301,6 @@ class TestTopicViewsPlot(AnalyticsPandasTestBase):
 
 class TestTopicLikesPlot(AnalyticsPandasTestBase):
 
-	def setUp(self):
-		super(TestTopicLikesPlot, self).setUp()
-
 	def test_explore_events_topics_viewed(self):
 		start_date = '2015-10-05'
 		end_date = '2015-10-27'
@@ -344,9 +310,6 @@ class TestTopicLikesPlot(AnalyticsPandasTestBase):
 		_ = tltp.explore_events(period_breaks='1 day', minor_period_breaks=None)
 
 class TestTopicFavoritesPlot(AnalyticsPandasTestBase):
-
-	def setUp(self):
-		super(TestTopicFavoritesPlot, self).setUp()
 
 	def test_explore_events_topics_viewed(self):
 		start_date = '2015-10-05'

@@ -23,9 +23,6 @@ from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
 class TestForumsCreatedPlot(AnalyticsPandasTestBase):
 
-	def setUp(self):
-		super(TestForumsCreatedPlot, self).setUp()
-
 	def test_explore_events_forums_created(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
@@ -43,9 +40,6 @@ class TestForumsCreatedPlot(AnalyticsPandasTestBase):
 		_ = fctp.analyze_device_types()
 
 class TestForumCommentsCreatedPlot(AnalyticsPandasTestBase):
-
-	def setUp(self):
-		super(TestForumCommentsCreatedPlot, self).setUp()
 
 	def test_explore_events_forums_comments_created(self):
 		start_date = '2015-01-01'
@@ -74,7 +68,7 @@ class TestForumCommentsCreatedPlot(AnalyticsPandasTestBase):
 	def test_analyze_comments_per_section(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
-		course_id = ['388']	
+		course_id = ['388']
 		fcct = ForumsCommentsCreatedTimeseries(self.session, start_date, end_date, course_id)
 		fcctp = ForumsCommentsCreatedTimeseriesPlot(fcct)
 		_ = fcctp.analyze_comments_per_section()
@@ -88,9 +82,6 @@ class TestForumCommentsCreatedPlot(AnalyticsPandasTestBase):
 		_ = fcctp.analyze_comments_per_section(period_breaks='1 day', minor_period_breaks=None)
 
 class TestForumCommentLikesPlot(AnalyticsPandasTestBase):
-
-	def setUp(self):
-		super(TestForumCommentLikesPlot, self).setUp()
 
 	def test_analyze_forum_comment_likes(self):
 		start_date = '2015-01-01'
@@ -110,9 +101,6 @@ class TestForumCommentLikesPlot(AnalyticsPandasTestBase):
 
 class TestForumCommentFavoritesPlot(AnalyticsPandasTestBase):
 
-	def setUp(self):
-		super(TestForumCommentFavoritesPlot, self).setUp()
-
 	def test_analyze_device_types_forum_comment_favorites(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
@@ -122,9 +110,6 @@ class TestForumCommentFavoritesPlot(AnalyticsPandasTestBase):
 		_ = fcftp.analyze_device_types()
 
 class TestForumEventsPlot(AnalyticsPandasTestBase):
-
-	def setUp(self):
-		super(TestForumEventsPlot, self).setUp()
 
 	def test_explore_all_events(self):
 		start_date = '2015-01-01'

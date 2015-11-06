@@ -23,9 +23,6 @@ from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
 class TestTopicsCreationPlot(AnalyticsPandasTestBase):
 
-	def setUp(self):
-		super(TestTopicsCreationPlot, self).setUp()
-
 	def test_explore_events_topics_created(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
@@ -51,9 +48,6 @@ class TestTopicsCreationPlot(AnalyticsPandasTestBase):
 		_ = tctp.analyze_events_per_device_types(period_breaks='1 day', minor_period_breaks='None')
 
 class TestTopicViewsPlot(AnalyticsPandasTestBase):
-
-	def setUp(self):
-		super(TestTopicViewsPlot, self).setUp()
 
 	def test_explore_events_topics_viewed(self):
 		start_date = '2015-01-01'
@@ -89,9 +83,6 @@ class TestTopicViewsPlot(AnalyticsPandasTestBase):
 
 class TestTopicLikesPlot(AnalyticsPandasTestBase):
 
-	def setUp(self):
-		super(TestTopicLikesPlot, self).setUp()
-
 	def test_explore_events_topics_viewed(self):
 		start_date = '2015-10-05'
 		end_date = '2015-10-27'
@@ -118,9 +109,6 @@ class TestTopicLikesPlot(AnalyticsPandasTestBase):
 
 class TestTopicFavoritesPlot(AnalyticsPandasTestBase):
 
-	def setUp(self):
-		super(TestTopicFavoritesPlot, self).setUp()
-
 	def test_explore_events_topics_viewed(self):
 		start_date = '2015-10-05'
 		end_date = '2015-10-27'
@@ -146,9 +134,6 @@ class TestTopicFavoritesPlot(AnalyticsPandasTestBase):
 		_ = tftp.analyze_events_per_course_sections(period_breaks='1 day', minor_period_breaks=None)
 
 class TestTopicsEventsPlot(AnalyticsPandasTestBase):
-
-	def setUp(self):
-		super(TestTopicsEventsPlot, self).setUp()
 
 	def test_topics_events(self):
 		start_date = '2015-01-01'
