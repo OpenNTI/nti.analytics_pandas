@@ -45,6 +45,7 @@ class TestTopicsEDA(AnalyticsPandasTestBase):
 		context_df = tct.analyze_events_per_course_sections()
 		total_events = np.sum(context_df['number_of_topics_created'])
 		assert_that(total_events, equal_to(total_topics_created))
+		assert_that(total_events, equal_to(len(tct.dataframe.index)))
 
 	def test_topic_views_based_on_timestamp_date(self):
 		start_date = '2015-01-01'
@@ -54,18 +55,6 @@ class TestTopicsEDA(AnalyticsPandasTestBase):
 		assert_that(len(tvt.dataframe.index), equal_to(1610))
 		assert_that(tvt.dataframe.columns, has_item('device_type'))
 		assert_that(tvt.dataframe.columns, has_item('context_name'))
-
-		event_by_date_df = tvt.explore_number_of_events_based_timestamp_date()
-		assert_that(len(event_by_date_df.index), equal_to(109))
-
-		total_events = np.sum(event_by_date_df['total_topics_viewed'])
-		assert_that(total_events, equal_to(len(tvt.dataframe.index)))
-
-		unique_users_by_date = tvt.explore_unique_users_based_timestamp_date()
-		assert_that(len(unique_users_by_date.index), equal_to(109))
-
-		ratio_df = tvt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
-		assert_that(len(ratio_df.index), equal_to(109))
 
 		event_df = tvt.analyze_events()
 		df = tvt.analyze_events_per_course_sections()

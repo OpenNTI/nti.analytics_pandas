@@ -52,32 +52,32 @@ class TopicsEventsTimeseries(object):
 		tlt = self.tlt
 		tft = self.tft
 
-		topics_created_df = tct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
-		topics_viewed_df = tvt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
-		topic_likes_df = tlt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
-		topic_favorites_df = tft.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		topics_created_df = tct.analyze_events()
+		topics_viewed_df = tvt.analyze_events()
+		topic_likes_df = tlt.analyze_events()
+		topic_favorites_df = tft.analyze_events()
 
 		df = pd.DataFrame(columns=[	'timestamp_period', 'total_events',
 									'total_unique_users', 'ratio', 'event_type'])
 
 		if topics_created_df is not None:
 			topics_created_df = self.update_events_dataframe(topics_created_df,
-				column_to_rename='total_topics_created', event_type='CREATE')
+				column_to_rename='number_of_topics_created', event_type='CREATE')
 			df = df.append(topics_created_df)
 
 		if topics_viewed_df is not None:
 			topics_viewed_df = self.update_events_dataframe(topics_viewed_df,
-				column_to_rename='total_topics_viewed', event_type='VIEW')
+				column_to_rename='number_of_topics_viewed', event_type='VIEW')
 			df = df.append(topics_viewed_df)
 
 		if topic_likes_df is not None:
 			topic_likes_df = self.update_events_dataframe(topic_likes_df,
-				column_to_rename='total_topic_likes', event_type='LIKE')
+				column_to_rename='number_of_topic_likes', event_type='LIKE')
 			df = df.append(topic_likes_df)
 
 		if topic_favorites_df is not None:
 			topic_favorites_df = self.update_events_dataframe(topic_favorites_df,
-				column_to_rename='total_topic_favorites', event_type='FAVORITE')
+				column_to_rename='number_of_topic_favorites', event_type='FAVORITE')
 			df = df.append(topic_favorites_df)
 
 		df.reset_index(inplace=True, drop=True)
@@ -162,10 +162,11 @@ class TopicsCreationTimeseries(object):
 		agg_columns = {	'user_id'	: pd.Series.nunique,
 						'topic_id' 	: pd.Series.count}
 		df = analyze_types_(dataframe, group_by_items, agg_columns)
-		df.rename(columns={	'user_id'	:'number_of_unique_users',
-						  	'topic_id'	:'number_of_topics_created'},
-					inplace=True)
-		df['ratio'] = df['number_of_topics_created'] / df['number_of_unique_users']
+		if df is not None:
+			df.rename(columns={	'user_id'	:'number_of_unique_users',
+							  	'topic_id'	:'number_of_topics_created'},
+						inplace=True)
+			df['ratio'] = df['number_of_topics_created'] / df['number_of_unique_users']
 		return df
 
 
@@ -241,10 +242,11 @@ class TopicLikesTimeseries(object):
 		agg_columns = {	'user_id'	: pd.Series.nunique,
 						'topic_id' 	: pd.Series.count}
 		df = analyze_types_(dataframe, group_by_items, agg_columns)
-		df.rename(columns={	'user_id'	:'number_of_unique_users',
-						  	'topic_id'	:'number_of_topic_likes'},
-					inplace=True)
-		df['ratio'] = df['number_of_topic_likes'] / df['number_of_unique_users']
+		if df is not None:
+			df.rename(columns={	'user_id'	:'number_of_unique_users',
+							  	'topic_id'	:'number_of_topic_likes'},
+						inplace=True)
+			df['ratio'] = df['number_of_topic_likes'] / df['number_of_unique_users']
 		return df
 
 class TopicViewsTimeseries(object):
@@ -318,10 +320,11 @@ class TopicViewsTimeseries(object):
 		agg_columns = {	'user_id'	: pd.Series.nunique,
 						'topic_id' 	: pd.Series.count}
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
-		df.rename(columns={	'user_id'	:'number_of_unique_users',
-						  	'topic_id'	:'number_of_topics_viewed'},
-					inplace=True)
-		df['ratio'] = df['number_of_topics_viewed'] / df['number_of_unique_users']
+		if df is not None:
+			df.rename(columns={	'user_id'	:'number_of_unique_users',
+							  	'topic_id'	:'number_of_topics_viewed'},
+						inplace=True)
+			df['ratio'] = df['number_of_topics_viewed'] / df['number_of_unique_users']
 		return df
 
 	def get_the_most_active_users(self, max_rank_number=10):
@@ -403,8 +406,9 @@ class TopicFavoritesTimeseries(object):
 		agg_columns = {	'user_id'	: pd.Series.nunique,
 						'topic_id' 	: pd.Series.count}
 		df = analyze_types_(dataframe, group_by_items, agg_columns)
-		df.rename(columns={	'user_id'	:'number_of_unique_users',
-						  	'topic_id'	:'number_of_topic_favorites'},
-					inplace=True)
-		df['ratio'] = df['number_of_topic_favorites'] / df['number_of_unique_users']
+		if df is not None:
+			df.rename(columns={	'user_id'	:'number_of_unique_users',
+							  	'topic_id'	:'number_of_topic_favorites'},
+						inplace=True)
+			df['ratio'] = df['number_of_topic_favorites'] / df['number_of_unique_users']
 		return df
