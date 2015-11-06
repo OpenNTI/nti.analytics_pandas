@@ -597,12 +597,25 @@ class TopicFavoritesTimeseriesPlot(object):
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
+		event_title = _('Number of topic favorites during period of time')
+		user_title = _('Number of unique users choosing topics as favorites during period of time')
+		ratio_title = _('Ratio of topic favorites over unique user on each available date')
+		plots = self.generate_plots(df,
+									event_title,
+									user_title,
+									ratio_title,
+									period_breaks,
+									minor_period_breaks)
+		return plots
+
+	def generate_plots(self, df, event_title, user_title, ratio_title, 
+						period_breaks, minor_period_breaks):
 		plot_topic_favorites = line_plot_x_axis_date(df=df,
 				x_axis_field='timestamp_period',
 				y_axis_field='number_of_topic_favorites',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Number of topic favorites'),
-				title=_('Number of topic favorites during period of time'),
+				title=event_title,
 				period_breaks=period_breaks,
 				minor_breaks=minor_period_breaks)
 
@@ -611,7 +624,7 @@ class TopicFavoritesTimeseriesPlot(object):
 				y_axis_field='number_of_unique_users',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Number of unique users'),
-				title=_('Number of unique users choosing topics as favorites during period of time'),
+				title=user_title,
 				period_breaks=period_breaks,
 				minor_breaks=minor_period_breaks)
 
@@ -620,8 +633,44 @@ class TopicFavoritesTimeseriesPlot(object):
 				y_axis_field='ratio',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Ratio'),
-				title=_('Ratio of topic favorites over unique user on each available date'),
+				title=ratio_title,
 				period_breaks=period_breaks,
+				minor_breaks=minor_period_breaks)
+
+		return (plot_topic_favorites, plot_unique_users, plot_ratio)
+
+	def generate_group_by_plots(self, df, group_by,
+								event_title, user_title, ratio_title, 
+								period_breaks, minor_period_breaks):
+		
+		plot_topic_favorites = group_line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='number_of_topic_favorites',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of topic favorites'),
+				title=event_title,
+				period_breaks=period_breaks,
+				group_by=group_by,
+				minor_breaks=minor_period_breaks)
+
+		plot_unique_users = group_line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='number_of_unique_users',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Number of unique users'),
+				title=user_title,
+				period_breaks=period_breaks,
+				group_by=group_by,
+				minor_breaks=minor_period_breaks)
+
+		plot_ratio = group_line_plot_x_axis_date(df=df,
+				x_axis_field='timestamp_period',
+				y_axis_field='ratio',
+				x_axis_label=_('Date'),
+				y_axis_label=_('Ratio'),
+				title=ratio_title,
+				period_breaks=period_breaks,
+				group_by=group_by,
 				minor_breaks=minor_period_breaks)
 
 		return (plot_topic_favorites, plot_unique_users, plot_ratio)
