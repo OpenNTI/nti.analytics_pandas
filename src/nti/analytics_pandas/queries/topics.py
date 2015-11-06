@@ -28,19 +28,33 @@ class QueryTopicsCreated(TableQueryMixin):
 	def filter_by_period_of_time(self, start_date, end_date):
 		tc = self.table
 		query = self.session.query(tc.timestamp,
+								   tc.deleted,
+								   tc.favorite_count,
+								   tc.is_flagged,
+								   tc.like_count,
+								   tc.topic_id,	
 								   tc.user_id,
 								   tc.session_id,
-								   tc.course_id,
-								   tc.topic_ds_id).filter(tc.timestamp.between(start_date, end_date))
+								   tc.topic_ds_id,
+								   tc.forum_id,
+								   tc.entity_root_context_id,
+								   tc.course_id).filter(tc.timestamp.between(start_date, end_date))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
 	def filter_by_period_of_time_and_course_id(self, start_date, end_date, course_id=()):
 		tc = self.table
 		query = self.session.query(tc.timestamp,
+								   tc.deleted,
+								   tc.favorite_count,
+								   tc.is_flagged,
+								   tc.like_count,
+								   tc.topic_id,	
 								   tc.user_id,
 								   tc.session_id,
 								   tc.topic_ds_id,
+								   tc.forum_id,
+								   tc.entity_root_context_id,
 								   tc.course_id).filter(tc.timestamp.between(start_date, end_date)).filter(tc.course_id.in_(course_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe

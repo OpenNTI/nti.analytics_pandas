@@ -10,6 +10,7 @@ __docformat__ = "restructuredtext en"
 logger = __import__('logging').getLogger(__name__)
 
 import pandas as pd
+import numpy as np 
 
 from ..queries import QueryTopicLikes
 from ..queries import QueryTopicsViewed
@@ -95,7 +96,8 @@ class TopicsCreationTimeseries(object):
 	"""
 
 	def __init__(self, session, start_date, end_date, course_id=None,
-				 with_device_type=True, time_period_date=True):
+				 with_device_type=True, time_period_date=True,
+				 with_context_name=True):
 		self.session = session
 		qtc = self.query_topics_created = QueryTopicsCreated(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -105,13 +107,24 @@ class TopicsCreationTimeseries(object):
 		else:
 			self.dataframe = qtc.filter_by_period_of_time(start_date, end_date)
 
+		categorical_columns = ['user_id']
+
 		if with_device_type:
 			new_df = qtc.add_device_type(self.dataframe)
 			if new_df is not None:
 				self.dataframe = new_df
+				categorical_columns.append('device_type')
+
+		if with_context_name:
+			new_df = qtc.add_context_name(self.dataframe, course_id)
+			if new_df is not None:
+				self.dataframe = new_df
+				categorical_columns.append('context_name')
 
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
+
+		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
@@ -129,6 +142,32 @@ class TopicsCreationTimeseries(object):
 		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
 											events_df, 'total_topics_created', unique_users_df)
 		return merge_df
+
+	def analyze_events(self):
+		group_by_items = ['timestamp_period']
+		df = self.build_dataframe(group_by_items, self.dataframe)
+		return df
+
+	def analyze_events_per_course_sections(self):
+		group_by_items = ['timestamp_period', 'course_id', 'context_name']
+		df = self.build_dataframe(group_by_items, self.dataframe)
+		return df
+	
+	def analyze_events_per_device_types(self):
+		group_by_items = ['timestamp_period', 'device_type']
+		df = self.build_dataframe(group_by_items, self.dataframe)
+		return df
+
+	def build_dataframe(self, group_by_items, dataframe):
+		agg_columns = {	'user_id'	: pd.Series.nunique,
+						'topic_id' 	: pd.Series.count}
+		df = analyze_types_(dataframe, group_by_items, agg_columns)
+		df.rename(columns={	'user_id'	:'number_of_unique_users',
+						  	'topic_id'	:'number_of_topics_created'},
+					inplace=True)
+		df['ratio'] = df['number_of_topics_created'] / df['number_of_unique_users']
+		return df
+
 
 class TopicLikesTimeseries(object):
 	"""
