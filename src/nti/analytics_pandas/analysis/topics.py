@@ -177,7 +177,7 @@ class TopicViewsTimeseries(object):
 	"""
 
 	def __init__(self, session, start_date, end_date, course_id=None,
-				 with_device_type=True, time_period_date=True):
+				 with_device_type=True, time_period_date=True, with_context_name=True):
 		self.session = session
 		qtv = self.query_topics_viewed = QueryTopicsViewed(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -194,6 +194,12 @@ class TopicViewsTimeseries(object):
 			if new_df is not None:
 				self.dataframe = new_df
 				categorical_columns.append('device_type')
+
+		if with_context_name:
+			new_df = qtv.add_context_name(self.dataframe, course_id)
+			if new_df is not None:
+				self.dataframe = new_df
+				categorical_columns.append('context_name')
 
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
@@ -217,8 +223,22 @@ class TopicViewsTimeseries(object):
 											events_df, 'total_topics_viewed', unique_users_df)
 		return merge_df
 
+	def analyze_events(self):
+		group_by_items = ['timestamp_period']
+		df = self.build_dataframe(group_by_items)
+		return df
+
+	def analyze_events_per_course_sections(self):
+		group_by_items = ['timestamp_period', 'context_name']
+		df = self.build_dataframe(group_by_items)
+		return df	
+
 	def analyze_device_types(self):
 		group_by_items = ['timestamp_period', 'device_type']
+		df = self.build_dataframe(group_by_items)
+		return df
+
+	def build_dataframe(self, group_by_items):
 		agg_columns = {	'user_id'	: pd.Series.nunique,
 						'topic_id' 	: pd.Series.count}
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)

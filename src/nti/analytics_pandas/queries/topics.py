@@ -78,12 +78,17 @@ class QueryTopicsViewed(TableQueryMixin):
 								   tv.forum_id,
 								   tv.topic_id,
 								   tv.time_length,
-								   tv.context_path).filter(tv.timestamp.between(start_date, end_date)).filter(tv.course_id.in_(course_id))
+								   tv.context_path,
+								   tv.course_id).filter(tv.timestamp.between(start_date, end_date)).filter(tv.course_id.in_(course_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
 	def add_device_type(self, dataframe):
 		new_df = add_device_type_(self.session, dataframe)
+		return new_df
+
+	def add_context_name(self, dataframe, course_id):
+		new_df = add_context_name_(self.session, dataframe, course_id)
 		return new_df
 
 class QueryTopicFavorites(TableQueryMixin):

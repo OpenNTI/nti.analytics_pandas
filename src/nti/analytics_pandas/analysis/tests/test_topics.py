@@ -53,6 +53,7 @@ class TestTopicsEDA(AnalyticsPandasTestBase):
 		tvt = TopicViewsTimeseries(self.session, start_date, end_date, course_id)
 		assert_that(len(tvt.dataframe.index), equal_to(1610))
 		assert_that(tvt.dataframe.columns, has_item('device_type'))
+		assert_that(tvt.dataframe.columns, has_item('context_name'))
 
 		event_by_date_df = tvt.explore_number_of_events_based_timestamp_date()
 		assert_that(len(event_by_date_df.index), equal_to(109))
@@ -65,6 +66,13 @@ class TestTopicsEDA(AnalyticsPandasTestBase):
 
 		ratio_df = tvt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
 		assert_that(len(ratio_df.index), equal_to(109))
+
+		event_df = tvt.analyze_events()
+		df = tvt.analyze_events_per_course_sections()
+		assert_that(df.columns, has_item('number_of_unique_users'))
+		assert_that(df.columns, has_item('number_of_topics_viewed'))
+		assert_that(df.columns, has_item('ratio'))
+		assert_that(len(df.sum(level='timestamp_period')), equal_to(len(event_df.index)))
 
 	def test_topic_likes_based_on_timestamp_date(self):
 		start_date = '2015-01-01'
