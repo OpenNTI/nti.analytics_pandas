@@ -91,24 +91,21 @@ class TestTopicsEDA(AnalyticsPandasTestBase):
 		assert_that(total_events, equal_to(len(tlt.dataframe.index)))
 
 	def test_topic_favorites_based_on_timestamp_date(self):
-		start_date = '2015-01-01'
-		end_date = '2015-05-31'
-		course_id = ['388']
+		start_date = '2015-10-05'
+		end_date = '2015-10-20'
+		course_id = ['1068', '1096', '1097', '1098', '1099']
 		tft = TopicFavoritesTimeseries(self.session, start_date, end_date, course_id)
-		assert_that(len(tft.dataframe.index), equal_to(6))
 		assert_that(tft.dataframe.columns, has_item('device_type'))
-
-		event_by_date_df = tft.explore_number_of_events_based_timestamp_date()
-		assert_that(len(event_by_date_df.index), equal_to(4))
-
-		total_events = np.sum(event_by_date_df['total_topic_favorites'])
+		
+		event_df = tft.analyze_events()
+		total_events = np.sum(event_df['number_of_topic_favorites'])
 		assert_that(total_events, equal_to(len(tft.dataframe.index)))
 
-		unique_users_by_date = tft.explore_unique_users_based_timestamp_date()
-		assert_that(len(unique_users_by_date.index), equal_to(4))
+		df = tft.dataframe
+		device_type_df = tft.analyze_events_per_device_types(df)
+		total_events = np.sum(device_type_df['number_of_topic_favorites'])
+		assert_that(total_events, equal_to(len(tft.dataframe.index)))
 
-		ratio_df = tft.explore_ratio_of_events_over_unique_users_based_timestamp_date()
-		assert_that(len(ratio_df.index), equal_to(4))
 
 	def test_topics_events(self):
 		start_date = '2015-01-01'
