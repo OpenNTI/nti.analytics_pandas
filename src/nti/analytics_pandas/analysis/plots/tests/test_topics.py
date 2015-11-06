@@ -42,6 +42,14 @@ class TestTopicsCreationPlot(AnalyticsPandasTestBase):
 		tctp = TopicsCreationTimeseriesPlot(tct)
 		_ = tctp.analyze_events_per_course_sections(period_breaks='1 day', minor_period_breaks='None')
 
+	def test_analyze_events_per_device_types(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		tct = TopicsCreationTimeseries(self.session, start_date, end_date, course_id)
+		tctp = TopicsCreationTimeseriesPlot(tct)
+		_ = tctp.analyze_events_per_device_types(period_breaks='1 day', minor_period_breaks='None')
+		
 class TestTopicViewsPlot(AnalyticsPandasTestBase):
 
 	def setUp(self):
