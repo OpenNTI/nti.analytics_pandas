@@ -90,6 +90,10 @@ class TestTopicsEDA(AnalyticsPandasTestBase):
 		total_events = np.sum(device_type_df['number_of_topic_likes'])
 		assert_that(total_events, equal_to(len(tlt.dataframe.index)))
 
+		context_df = tlt.analyze_events_per_course_sections()
+		total_events = np.sum(device_type_df['number_of_topic_likes'])
+		assert_that(total_events, equal_to(len(tlt.dataframe.index)))
+
 	def test_topic_favorites_based_on_timestamp_date(self):
 		start_date = '2015-10-05'
 		end_date = '2015-10-20'
@@ -106,6 +110,9 @@ class TestTopicsEDA(AnalyticsPandasTestBase):
 		total_events = np.sum(device_type_df['number_of_topic_favorites'])
 		assert_that(total_events, equal_to(len(tft.dataframe.index)))
 
+		context_df = tft.analyze_events_per_course_sections()
+		total_events = np.sum(device_type_df['number_of_topic_favorites'])
+		assert_that(total_events, equal_to(len(tft.dataframe.index)))
 
 	def test_topics_events(self):
 		start_date = '2015-01-01'

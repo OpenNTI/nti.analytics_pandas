@@ -136,7 +136,8 @@ class TopicLikesTimeseries(object):
 	"""
 
 	def __init__(self, session, start_date, end_date, course_id=None,
-				 with_device_type=True, time_period_date=True):
+				 with_device_type=True, time_period_date=True,
+				 with_context_name=True):
 		self.session = session
 		qtl = self.query_topic_likes = QueryTopicLikes(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -146,13 +147,24 @@ class TopicLikesTimeseries(object):
 		else:
 			self.dataframe = qtl.filter_by_period_of_time(start_date, end_date)
 
+		categorical_columns = [	'user_id', 'topic_id']
+
 		if with_device_type:
 			new_df = qtl.add_device_type(self.dataframe)
 			if new_df is not None:
 				self.dataframe = new_df
+				categorical_columns.append('device_type')
+
+		if with_context_name:
+			new_df = qtl.add_context_name(self.dataframe, course_id)
+			if new_df is not None:
+				self.dataframe = new_df
+				categorical_columns.append('context_name')
 
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
+
+		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
@@ -173,6 +185,11 @@ class TopicLikesTimeseries(object):
 
 	def analyze_events(self):
 		group_by_items = ['timestamp_period']
+		df = self.build_dataframe(group_by_items, self.dataframe)
+		return df
+
+	def analyze_events_per_course_sections(self):
+		group_by_items = ['timestamp_period', 'course_id', 'context_name']
 		df = self.build_dataframe(group_by_items, self.dataframe)
 		return df
 
@@ -281,7 +298,8 @@ class TopicFavoritesTimeseries(object):
 	"""
 
 	def __init__(self, session, start_date, end_date, course_id=None,
-				 with_device_type=True, time_period_date=True):
+				 with_device_type=True, time_period_date=True,
+				 with_context_name=True):
 		self.session = session
 		qtf = self.query_topic_favorites = QueryTopicFavorites(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -291,13 +309,24 @@ class TopicFavoritesTimeseries(object):
 		else:
 			self.dataframe = qtf.filter_by_period_of_time(start_date, end_date)
 
+		categorical_columns = ['topic_id', 'user_id']
+
 		if with_device_type:
 			new_df = qtf.add_device_type(self.dataframe)
 			if new_df is not None:
 				self.dataframe = new_df
+				categorical_columns.append('device_type')
+
+		if with_context_name:
+			new_df = qtf.add_context_name(self.dataframe, course_id)
+			if new_df is not None:
+				self.dataframe = new_df
+				categorical_columns.append('context_name')
 
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
+
+		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def explore_number_of_events_based_timestamp_date(self):
 		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
@@ -318,6 +347,11 @@ class TopicFavoritesTimeseries(object):
 
 	def analyze_events(self):
 		group_by_items = ['timestamp_period']
+		df = self.build_dataframe(group_by_items, self.dataframe)
+		return df
+
+	def analyze_events_per_course_sections(self):
+		group_by_items = ['timestamp_period', 'course_id', 'context_name']
 		df = self.build_dataframe(group_by_items, self.dataframe)
 		return df
 
