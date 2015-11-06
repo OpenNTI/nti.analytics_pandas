@@ -171,6 +171,26 @@ class TopicLikesTimeseries(object):
 												events_df, 'total_topic_likes', unique_users_df)
 		return merge_df
 
+	def analyze_events(self):
+		group_by_items = ['timestamp_period']
+		df = self.build_dataframe(group_by_items, self.dataframe)
+		return df
+
+	def analyze_events_per_device_types(self, dataframe):
+		group_by_items = ['timestamp_period', 'device_type']
+		df = self.build_dataframe(group_by_items, dataframe)
+		return df
+
+	def build_dataframe(self, group_by_items, dataframe):
+		agg_columns = {	'user_id'	: pd.Series.nunique,
+						'topic_id' 	: pd.Series.count}
+		df = analyze_types_(dataframe, group_by_items, agg_columns)
+		df.rename(columns={	'user_id'	:'number_of_unique_users',
+						  	'topic_id'	:'number_of_topic_likes'},
+					inplace=True)
+		df['ratio'] = df['number_of_topic_likes'] / df['number_of_unique_users']
+		return df
+
 class TopicViewsTimeseries(object):
 	"""
 	analyze the number of topics viewed given time period and list of course id
@@ -295,3 +315,18 @@ class TopicFavoritesTimeseries(object):
 		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
 										events_df, 'total_topic_favorites', unique_users_df)
 		return merge_df
+
+	def analyze_events(self):
+		group_by_items = ['timestamp_period']
+		df = self.build_dataframe(group_by_items)
+		return df
+
+	def build_dataframe(self, group_by_items):
+		agg_columns = {	'user_id'	: pd.Series.nunique,
+						'topic_id' 	: pd.Series.count}
+		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
+		df.rename(columns={	'user_id'	:'number_of_unique_users',
+						  	'topic_id'	:'number_of_topic_likes'},
+					inplace=True)
+		df['ratio'] = df['number_of_topic_likes'] / df['number_of_unique_users']
+		return df

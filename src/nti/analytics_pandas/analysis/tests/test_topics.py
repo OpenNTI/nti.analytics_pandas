@@ -75,20 +75,20 @@ class TestTopicsEDA(AnalyticsPandasTestBase):
 		assert_that(len(df.sum(level='timestamp_period')), equal_to(len(event_df.index)))
 
 	def test_topic_likes_based_on_timestamp_date(self):
-		start_date = '2015-01-01'
-		end_date = '2015-05-31'
-		course_id = ['388']
+		start_date = '2015-10-05'
+		end_date = '2015-10-20'
+		course_id = ['1068', '1096', '1097', '1098', '1099']
 		tlt = TopicLikesTimeseries(self.session, start_date, end_date, course_id)
-		assert_that(len(tlt.dataframe.index), equal_to(0))
+		assert_that(tlt.dataframe.columns, has_item('device_type'))
+		
+		event_df = tlt.analyze_events()
+		total_events = np.sum(event_df['number_of_topic_likes'])
+		assert_that(total_events, equal_to(len(tlt.dataframe.index)))
 
-		event_by_date_df = tlt.explore_number_of_events_based_timestamp_date()
-		assert_that(event_by_date_df, equal_to(None))
-
-		unique_users_by_date = tlt.explore_unique_users_based_timestamp_date()
-		assert_that(unique_users_by_date, equal_to(None))
-
-		ratio_df = tlt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
-		assert_that(ratio_df, equal_to(None))
+		df = tlt.dataframe
+		device_type_df = tlt.analyze_events_per_device_types(df)
+		total_events = np.sum(device_type_df['number_of_topic_likes'])
+		assert_that(total_events, equal_to(len(tlt.dataframe.index)))
 
 	def test_topic_favorites_based_on_timestamp_date(self):
 		start_date = '2015-01-01'

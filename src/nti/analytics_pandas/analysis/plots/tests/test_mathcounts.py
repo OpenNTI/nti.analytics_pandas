@@ -286,6 +286,7 @@ class TestTopicsEventsPlot(AnalyticsPandasTestBase):
 		tet = TopicsEventsTimeseries(tct, tvt, tlt, tft)
 		tetp = TopicsEventsTimeseriesPlot(tet)
 		_ = tetp.explore_all_events(period_breaks='1 day', minor_period_breaks=None)
+		print(_)
 
 class TestTopicsCreationPlot(AnalyticsPandasTestBase):
 
