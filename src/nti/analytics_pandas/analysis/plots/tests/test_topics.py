@@ -129,6 +129,15 @@ class TestTopicFavoritesPlot(AnalyticsPandasTestBase):
 		tftp = TopicFavoritesTimeseriesPlot(tft)
 		_ = tftp.explore_events(period_breaks='1 day', minor_period_breaks=None)
 
+	def test_analyze_events_per_device_types(self):
+		start_date = '2015-10-05'
+		end_date = '2015-10-27'
+		course_id = ['1068', '1096', '1097', '1098', '1099']
+		tft = TopicFavoritesTimeseries(self.session, start_date, end_date, course_id)
+		tftp = TopicFavoritesTimeseriesPlot(tft)
+		_ = tftp.analyze_events_per_device_types(period_breaks='1 day', minor_period_breaks=None)
+		print(_)
+
 class TestTopicsEventsPlot(AnalyticsPandasTestBase):
 
 	def setUp(self):
