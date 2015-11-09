@@ -450,6 +450,11 @@ class NoteLikesTimeseries(object):
 		df = self.build_dataframe(group_by_items, self.dataframe)
 		return df
 
+	def analyze_events_per_course_sections(self):
+		group_by_items = ['timestamp_period', 'course_id', 'context_name']
+		df = self.build_dataframe(group_by_items, self.dataframe)
+		return df
+
 	def analyze_events_per_device_types(self):
 		group_by_items = ['timestamp_period', 'device_type']
 		df = self.build_dataframe(group_by_items, self.dataframe)
@@ -509,6 +514,11 @@ class NoteFavoritesTimeseries(object):
 
 	def analyze_events(self):
 		group_by_items = ['timestamp_period']
+		df = self.build_dataframe(group_by_items, self.dataframe)
+		return df
+
+	def analyze_events_per_course_sections(self):
+		group_by_items = ['timestamp_period', 'course_id', 'context_name']
 		df = self.build_dataframe(group_by_items, self.dataframe)
 		return df
 
