@@ -128,9 +128,11 @@ class ForumsCreatedTimeseries(object):
 		agg_columns = {	'forum_id'	: pd.Series.count,
 						'user_id'		: pd.Series.nunique }
 		df = analyze_types_(dataframe, group_by_items, agg_columns)
-		df.rename(columns={	'forum_id'		:'number_of_forums_created',
-							'user_id'		:'number_of_unique_users'},
-					inplace=True)
+		if df is not None:
+			df.rename(columns={	'forum_id'		:'number_of_forums_created',
+								'user_id'		:'number_of_unique_users'},
+						inplace=True)
+			df['ratio'] = df['number_of_forums_created'] / df['number_of_unique_users']
 		return df
 
 class ForumsCommentsCreatedTimeseries(object):
