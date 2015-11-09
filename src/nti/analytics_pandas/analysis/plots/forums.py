@@ -451,6 +451,45 @@ class ForumCommentLikesTimeseriesPlot(object):
 									minor_period_breaks)
 		return plots
 
+
+	def analyze_events_per_course_sections(self, period_breaks='1 week', minor_period_breaks='1 day'):
+		fclt = self.fclt
+		df = fclt.analyze_events_per_course_sections()
+		if df is None:
+			return()
+
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		course_ids = np.unique(df['course_id'].values.ravel())
+
+		plots = []
+		if len(course_ids) > 1:
+			group_by = 'context_name'
+			event_title = _('Number of forum comment likes per course sections')
+			user_title = _('Number of unique users liking forum comments per course sections')
+			ratio_title = _('Ratio of forum comment likes over unique user per course sections')
+			all_section_plots = self.generate_group_by_plots(df,
+															group_by,
+															event_title,
+															user_title,
+															ratio_title,
+															period_breaks,
+															minor_period_breaks)
+			plots.append(all_section_plots)
+
+		for course_id in course_ids:
+			new_df = df[df['course_id'] == course_id]
+			context_name = new_df.iloc[0]['context_name']
+			event_title = 'Number of forum comment likes in %s' % (context_name)
+			user_title = 'Number of unique users liking forum comments in %s' % (context_name)
+			ratio_title = 'Ratio of forum comments likes over unique user in %s' % (context_name)
+			section_plots = self.generate_plots(new_df, event_title, user_title,
+												ratio_title, period_breaks,
+												minor_period_breaks)
+			plots.append(section_plots)
+
+		return plots
+
 	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		"""
 		plot the number of comments liked on each available date during time period.
@@ -550,7 +589,7 @@ class ForumCommentLikesTimeseriesPlot(object):
 									y_axis_label=_('Ratio'),
 									title=_('Ratio of forum comments liked over unique user grouped by device types'),
 									period_breaks=period_breaks,
-									group_by='device_type',
+									group_by=group_by,
 									minor_breaks=minor_period_breaks)
 
 		return (plot_comment_likes, plot_unique_users, plot_ratio)

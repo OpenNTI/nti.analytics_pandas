@@ -213,7 +213,8 @@ class ForumCommentLikesTimeseries(object):
 	"""
 
 	def __init__(self, session, start_date, end_date, course_id=None,
-				 with_device_type=True, time_period_date=True):
+				 with_device_type=True, time_period_date=True,
+				 with_context_name=True):
 
 		self.session = session
 		qfcl = self.query_forum_comment_likes = QueryForumCommentLikes(self.session)
@@ -229,11 +230,21 @@ class ForumCommentLikesTimeseries(object):
 			if new_df is not None:
 				self.dataframe = new_df
 
+		if with_context_name:
+			new_df = qfcl.add_context_name(self.dataframe, course_id)
+			if new_df is not None:
+				self.dataframe = new_df
+
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
 
 	def analyze_events(self):
 		group_by_items = ['timestamp_period']
+		df = self.build_dataframe(group_by_items)
+		return df
+
+	def analyze_events_per_course_sections(self):
+		group_by_items = ['timestamp_period', 'course_id', 'context_name']
 		df = self.build_dataframe(group_by_items)
 		return df
 
