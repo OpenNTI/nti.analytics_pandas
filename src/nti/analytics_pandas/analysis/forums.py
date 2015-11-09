@@ -134,16 +134,25 @@ class ForumsCreatedTimeseries(object):
 											events_df, 'total_forums_created', unique_users_df)
 		return merge_df
 
-	def analyze_device_types(self):
+	def analyze_events(self):
+		group_by_items = ['timestamp_period']
+		df = self.build_dataframe(group_by_items, self.dataframe)
+		return df
+
+	def analyze_events_per_device_types(self):
 		if 'device_type' in self.dataframe.columns:
 			group_by_items = ['timestamp_period', 'device_type']
-			agg_columns = {	'forum_id'	: pd.Series.nunique,
-							'user_id'		: pd.Series.nunique }
-			df = analyze_types_(self.dataframe, group_by_items, agg_columns)
-			df.rename(columns={	'forum_id'		:'number_of_forums_created',
-								'user_id'		:'number_of_unique_users'},
-						inplace=True)
+			df = self.build_dataframe(group_by_items, self.dataframe)
 			return df
+
+	def build_dataframe(self, group_by_items, dataframe):
+		agg_columns = {	'forum_id'	: pd.Series.count,
+						'user_id'		: pd.Series.nunique }
+		df = analyze_types_(dataframe, group_by_items, agg_columns)
+		df.rename(columns={	'forum_id'		:'number_of_forums_created',
+							'user_id'		:'number_of_unique_users'},
+					inplace=True)
+		return df
 
 class ForumsCommentsCreatedTimeseries(object):
 	"""

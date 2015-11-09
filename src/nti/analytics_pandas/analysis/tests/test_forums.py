@@ -28,19 +28,14 @@ class TestForumsCreatedEDA(AnalyticsPandasTestBase):
 		end_date = '2015-05-31'
 		course_id = ['388']
 		fct = ForumsCreatedTimeseries(self.session, start_date, end_date, course_id)
-		events_df = fct.explore_number_of_events_based_timestamp_date()
+		
+		events_df = fct.analyze_events()
 		assert_that(len(events_df.index), equal_to(1))
-		total_events = np.sum(events_df['total_forums_created'])
-		assert_that(total_events, equal_to(4))
-
-		unique_users_df = fct.explore_unique_users_based_timestamp_date()
-		assert_that(len(unique_users_df.index), equal_to(1))
-
-		ratio_df = fct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
-		assert_that(len(ratio_df.index), equal_to(1))
+		total_events = np.sum(events_df['number_of_forums_created'])
+		assert_that(total_events, equal_to(len(fct.dataframe.index)))
 
 		# df is None since the session_id in forumscreated of given course and time period is NULL
-		df = fct.analyze_device_types()
+		df = fct.analyze_events_per_device_types()
 		assert_that(df, equal_to(None))
 
 	def test_forums_comments_created_based_on_timestamp_date(self):

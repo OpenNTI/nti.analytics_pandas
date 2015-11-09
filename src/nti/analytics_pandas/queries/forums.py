@@ -31,16 +31,23 @@ class QueryForumsCreated(TableQueryMixin):
 								   tc.course_id,
 								   tc.forum_ds_id,
 								   tc.user_id,
-								   tc.session_id).filter(tc.timestamp.between(start_date, end_date))
+								   tc.session_id,
+								   tc.forum_id,
+								   tc.deleted,
+								   tc.entity_root_context_id).filter(tc.timestamp.between(start_date, end_date))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
 	def filter_by_period_of_time_and_course_id(self, start_date=None, end_date=None, course_id=()):
 		tc = self.table
 		query = self.session.query(tc.timestamp,
+								   tc.course_id,
 								   tc.forum_ds_id,
 								   tc.user_id,
-								   tc.session_id).filter(tc.timestamp.between(start_date, end_date)).filter(tc.course_id.in_(course_id))
+								   tc.session_id,
+								   tc.forum_id,
+								   tc.deleted,
+								   tc.entity_root_context_id).filter(tc.timestamp.between(start_date, end_date)).filter(tc.course_id.in_(course_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
