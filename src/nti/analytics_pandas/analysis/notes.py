@@ -502,6 +502,23 @@ class NoteLikesTimeseries(object):
 												events_df, 'total_note_likes', unique_users_df)
 		return merge_df
 
+	def analyze_events(self):
+		group_by_items = ['timestamp_period']
+		df = self.build_dataframe(group_by_items, self.dataframe)
+		return df
+
+	def build_dataframe(self, group_by_items, dataframe):
+		agg_columns = {	'user_id'	: pd.Series.nunique,
+						'note_id' 	: pd.Series.count}
+		df = analyze_types_(dataframe, group_by_items, agg_columns)
+		if df is not None:
+			df.rename(columns={	'user_id'	:'number_of_unique_users',
+							  	'note_id'	:'number_of_note_likes'},
+						inplace=True)
+			df['ratio'] = df['number_of_note_likes'] / df['number_of_unique_users']
+		return df
+
+
 class NoteFavoritesTimeseries(object):
 	"""
 	analyze the number of note favorites given time period and list of course id
