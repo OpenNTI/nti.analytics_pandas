@@ -264,13 +264,15 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 
 		return plots
 
-	def generate_plots(self, df,
-							period_breaks,
-							minor_period_breaks,
-							title_event,
-							title_users,
-							title_ratio,
-							title_avg_length):
+	def generate_plots(self,
+					   df,
+					   period_breaks,
+					   minor_period_breaks,
+					   title_event,
+					   title_users,
+					   title_ratio,
+					   title_avg_length):
+
 		plot_forum_comments_created = line_plot_x_axis_date(
 				df=df,
 				x_axis_field='timestamp_period',
@@ -469,12 +471,12 @@ class ForumCommentLikesTimeseriesPlot(object):
 			user_title = _('Number of unique users liking forum comments per course sections')
 			ratio_title = _('Ratio of forum comment likes over unique user per course sections')
 			all_section_plots = self.generate_group_by_plots(df,
-															group_by,
-															event_title,
-															user_title,
-															ratio_title,
-															period_breaks,
-															minor_period_breaks)
+															 group_by,
+															 event_title,
+															 user_title,
+															 ratio_title,
+															 period_breaks,
+															 minor_period_breaks)
 			plots.append(all_section_plots)
 
 		for course_id in course_ids:
@@ -483,8 +485,11 @@ class ForumCommentLikesTimeseriesPlot(object):
 			event_title = 'Number of forum comment likes in %s' % (context_name)
 			user_title = 'Number of unique users liking forum comments in %s' % (context_name)
 			ratio_title = 'Ratio of forum comments likes over unique user in %s' % (context_name)
-			section_plots = self.generate_plots(new_df, event_title, user_title,
-												ratio_title, period_breaks,
+			section_plots = self.generate_plots(new_df,
+												event_title,
+												user_title,
+												ratio_title,
+												period_breaks,
 												minor_period_breaks)
 			plots.append(section_plots)
 
@@ -645,12 +650,12 @@ class ForumCommentFavoritesTimeseriesPlot(object):
 			user_title = _('Number of unique users voting forum comments as favorites per course sections')
 			ratio_title = _('Ratio of forum comment favorites over unique user per course sections')
 			all_section_plots = self.generate_group_by_plots(df,
-															group_by,
-															event_title,
-															user_title,
-															ratio_title,
-															period_breaks,
-															minor_period_breaks)
+															 group_by,
+															 event_title,
+															 user_title,
+															 ratio_title,
+															 period_breaks,
+															 minor_period_breaks)
 			plots.append(all_section_plots)
 
 		for course_id in course_ids:
@@ -659,8 +664,11 @@ class ForumCommentFavoritesTimeseriesPlot(object):
 			event_title = 'Number of forum comment favorites in %s' % (context_name)
 			user_title = 'Number of unique users voting forum comments as favorites in %s' % (context_name)
 			ratio_title = 'Ratio of forum comments favorites over unique user in %s' % (context_name)
-			section_plots = self.generate_plots(new_df, event_title, user_title,
-												ratio_title, period_breaks,
+			section_plots = self.generate_plots(new_df,
+												event_title,
+												user_title,
+												ratio_title,
+												period_breaks,
 												minor_period_breaks)
 			plots.append(section_plots)
 
