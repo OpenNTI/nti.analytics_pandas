@@ -566,6 +566,48 @@ class NoteLikesTimeseriesPlot(object):
 									)
 		return plots
 
+	def analyze_events_per_device_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
+		nlt = self.nlt
+		df = nlt.analyze_events_per_device_types()
+		if df is None:
+			return ()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		group_by = 'device_type'
+		event_title = _('Number of note likes grouped by device types')
+		user_title = _('Number of unique users liking notes grouped by device types')
+		ratio_title = _('Ratio of note likes over unique user grouped by device types')
+		plots = self.generate_group_by_plots(df, 
+									group_by,
+									event_title, 
+									user_title, 
+									ratio_title,
+									period_breaks,
+									minor_period_breaks
+									)
+		return plots
+
+	def analyze_events_per_resource_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
+		nlt = self.nlt
+		df = nlt.analyze_events_per_resource_types()
+		if df is None:
+			return ()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		group_by = 'resource_type'
+		event_title = _('Number of note likes grouped by resource types')
+		user_title = _('Number of unique users liking notes grouped by resource types')
+		ratio_title = _('Ratio of note likes over unique user grouped by resource types')
+		plots = self.generate_group_by_plots(df, 
+									group_by,
+									event_title, 
+									user_title, 
+									ratio_title,
+									period_breaks,
+									minor_period_breaks
+									)
+		return plots
+
 	def generate_plots(self, df, event_title, user_title, 
 						ratio_title, period_breaks, minor_period_breaks):
 		plot_note_likes = line_plot_x_axis_date(
@@ -596,6 +638,44 @@ class NoteLikesTimeseriesPlot(object):
 							y_axis_label=_('Ratio'),
 							title=ratio_title,
 							period_breaks=period_breaks,
+							minor_breaks=minor_period_breaks)
+		return (plot_note_likes, plot_unique_users, plot_ratio)
+
+
+	def generate_group_by_plots(self, df, group_by,
+						event_title, user_title, ratio_title,
+						period_breaks, minor_period_breaks):
+		plot_note_likes = group_line_plot_x_axis_date(
+							df=df,
+							x_axis_field='timestamp_period',
+							y_axis_field='number_of_note_likes',
+							x_axis_label=_('Date'),
+							y_axis_label=_('Number of note likes'),
+							title=event_title,
+							period_breaks=period_breaks,
+							group_by=group_by,
+							minor_breaks=minor_period_breaks)
+
+		plot_unique_users = group_line_plot_x_axis_date(
+							df=df,
+							x_axis_field='timestamp_period',
+							y_axis_field='number_of_unique_users',
+							x_axis_label=_('Date'),
+							y_axis_label=_('Number of unique users'),
+							title=user_title,
+							period_breaks=period_breaks,
+							group_by=group_by,
+							minor_breaks=minor_period_breaks)
+
+		plot_ratio = group_line_plot_x_axis_date(
+							df=df,
+							x_axis_field='timestamp_period',
+							y_axis_field='ratio',
+							x_axis_label=_('Date'),
+							y_axis_label=_('Ratio'),
+							title=ratio_title,
+							period_breaks=period_breaks,
+							group_by=group_by,
 							minor_breaks=minor_period_breaks)
 		return (plot_note_likes, plot_unique_users, plot_ratio)
 
@@ -657,6 +737,44 @@ class NoteFavoritesTimeseriesPlot(object):
 							y_axis_label=_('Ratio'),
 							title=ratio_title,
 							period_breaks=period_breaks,
+							minor_breaks=minor_period_breaks)
+
+		return (plot_note_favorites, plot_unique_users, plot_ratio)
+
+	def generate_group_by_plots(self, df, group_by,
+						event_title, user_title, ratio_title, 
+						period_breaks, minor_period_breaks):
+		plot_note_favorites = group_line_plot_x_axis_date(
+							df=df,
+							x_axis_field='timestamp_period',
+							y_axis_field='number_of_note_favorites',
+							x_axis_label=_('Date'),
+							y_axis_label=_('Number of note favorites'),
+							title=event_title,
+							period_breaks=period_breaks,
+							group_by=group_by,
+							minor_breaks=minor_period_breaks)
+
+		plot_unique_users = group_line_plot_x_axis_date(
+							df=df,
+							x_axis_field='timestamp_period',
+							y_axis_field='number_of_unique_users',
+							x_axis_label=_('Date'),
+							y_axis_label=_('Number of unique users'),
+							title=user_title,
+							period_breaks=period_breaks,
+							group_by=group_by,
+							minor_breaks=minor_period_breaks)
+
+		plot_ratio = group_line_plot_x_axis_date(
+							df=df,
+							x_axis_field='timestamp_period',
+							y_axis_field='ratio',
+							x_axis_label=_('Date'),
+							y_axis_label=_('Ratio'),
+							title=ratio_title,
+							period_breaks=period_breaks,
+							group_by=group_by,
 							minor_breaks=minor_period_breaks)
 
 		return (plot_note_favorites, plot_unique_users, plot_ratio)

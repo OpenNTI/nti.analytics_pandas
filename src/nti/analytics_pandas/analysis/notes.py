@@ -436,6 +436,7 @@ class NoteLikesTimeseries(object):
 			new_df = qnl.add_resource_type(self.dataframe)
 			if new_df is not None:
 				self.dataframe = new_df
+				print('HERE')
 
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
@@ -447,6 +448,16 @@ class NoteLikesTimeseries(object):
 
 	def analyze_events(self):
 		group_by_items = ['timestamp_period']
+		df = self.build_dataframe(group_by_items, self.dataframe)
+		return df
+
+	def analyze_events_per_device_types(self):
+		group_by_items = ['timestamp_period', 'device_type']
+		df = self.build_dataframe(group_by_items, self.dataframe)
+		return df
+
+	def analyze_events_per_resource_types(self):
+		group_by_items = ['timestamp_period', 'resource_type']
 		df = self.build_dataframe(group_by_items, self.dataframe)
 		return df
 
@@ -499,6 +510,16 @@ class NoteFavoritesTimeseries(object):
 
 	def analyze_events(self):
 		group_by_items = ['timestamp_period']
+		df = self.build_dataframe(group_by_items, self.dataframe)
+		return df
+
+	def analyze_events_per_device_types(self):
+		group_by_items = ['timestamp_period', 'device_type']
+		df = self.build_dataframe(group_by_items, self.dataframe)
+		return df
+
+	def analyze_events_per_resource_types(self):
+		group_by_items = ['timestamp_period', 'resource_type']
 		df = self.build_dataframe(group_by_items, self.dataframe)
 		return df
 
