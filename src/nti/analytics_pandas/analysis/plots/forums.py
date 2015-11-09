@@ -45,7 +45,7 @@ class ForumsEventsTimeseriesPlot(object):
 
 		plot_unique_users = group_line_plot_x_axis_date(df=df,
 				x_axis_field='timestamp_period',
-				y_axis_field='total_unique_users',
+				y_axis_field='number_of_unique_users',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Number of unique users'),
 				title=_('Number of unique users creating forums events during period of time'),
@@ -82,7 +82,7 @@ class ForumsCreatedTimeseriesPlot(object):
 			- ratio of forums creation over unique users
 		"""
 		fct = self.fct
-		df = fct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		df = fct.analyze_events()
 		if df is None:
 			return ()
 		df.reset_index(inplace=True)
@@ -90,7 +90,7 @@ class ForumsCreatedTimeseriesPlot(object):
 
 		plot_forums_created = line_plot_x_axis_date(df=df,
 				x_axis_field='timestamp_period',
-				y_axis_field='total_forums_created',
+				y_axis_field='number_of_forums_created',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Number of forums created'),
 				title=_('Number of forums created during period of time'),
@@ -99,7 +99,7 @@ class ForumsCreatedTimeseriesPlot(object):
 
 		plot_unique_users = line_plot_x_axis_date(df=df,
 				x_axis_field='timestamp_period',
-				y_axis_field='total_unique_users',
+				y_axis_field='number_of_unique_users',
 				x_axis_label=_('Date'),
 				y_axis_label=_('Number of unique users'),
 				title=_('Number of unique users creating forums during period of time'),
@@ -127,7 +127,7 @@ class ForumsCreatedTimeseriesPlot(object):
 		"""
 
 		fct = self.fct
-		df = fct.analyze_device_types()
+		df = fct.analyze_events_per_device_types()
 		if df is None:
 			return ()
 		df.reset_index(inplace=True)
