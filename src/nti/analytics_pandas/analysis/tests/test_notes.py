@@ -143,20 +143,17 @@ class TestNotesEDA(AnalyticsPandasTestBase):
 
 
 	def test_note_favorites_based_on_timestamp_date(self):
-		start_date = '2015-01-01'
-		end_date = '2015-05-31'
-		course_id = ['388']
+		start_date = '2015-10-05'
+		end_date = '2015-10-20'
+		course_id = ['1068', '1096', '1097', '1098', '1099']
 		nft = NoteFavoritesTimeseries(self.session, start_date, end_date, course_id)
-		assert_that(len(nft.dataframe.index), equal_to(0))
+		assert_that(len(nft.dataframe.index), equal_to(2))
 
-		event_by_date_df = nft.explore_number_of_events_based_timestamp_date()
-		assert_that(event_by_date_df, equal_to(None))
-
-		unique_users_by_date = nft.explore_unique_users_based_timestamp_date()
-		assert_that(unique_users_by_date, equal_to(None))
-
-		ratio_df = nft.explore_ratio_of_events_over_unique_users_based_timestamp_date()
-		assert_that(ratio_df, equal_to(None))
+		events_df = nft.analyze_events()
+		assert_that(len(events_df.index), equal_to(1))
+		assert_that(events_df.columns, has_item('number_of_note_favorites'))
+		assert_that(events_df.columns, has_item('number_of_unique_users'))
+		assert_that(events_df.columns, has_item('ratio'))
 
 	def test_notes_events(self):
 		start_date = '2015-01-01'

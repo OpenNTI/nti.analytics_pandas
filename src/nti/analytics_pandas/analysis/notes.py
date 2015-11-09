@@ -571,3 +571,20 @@ class NoteFavoritesTimeseries(object):
 		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
 											events_df, 'total_note_favorites', unique_users_df)
 		return merge_df
+
+	def analyze_events(self):
+		group_by_items = ['timestamp_period']
+		df = self.build_dataframe(group_by_items, self.dataframe)
+		return df
+
+	def build_dataframe(self, group_by_items, dataframe):
+		agg_columns = {	'user_id'	: pd.Series.nunique,
+						'note_id' 	: pd.Series.count}
+		df = analyze_types_(dataframe, group_by_items, agg_columns)
+		if df is not None:
+			df.rename(columns={	'user_id'	:'number_of_unique_users',
+							  	'note_id'	:'number_of_note_favorites'},
+						inplace=True)
+			df['ratio'] = df['number_of_note_favorites'] / df['number_of_unique_users']
+		return df
+
