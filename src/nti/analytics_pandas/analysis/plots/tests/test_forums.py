@@ -102,12 +102,20 @@ class TestForumCommentLikesPlot(AnalyticsPandasTestBase):
 class TestForumCommentFavoritesPlot(AnalyticsPandasTestBase):
 
 	def test_analyze_device_types_forum_comment_favorites(self):
-		start_date = '2015-01-01'
-		end_date = '2015-05-31'
-		course_id = ['388']
+		start_date = '2015-10-05'
+		end_date = '2015-10-20'
+		course_id = ['1068', '1096', '1097', '1098', '1099']
 		fcft = ForumCommentFavoritesTimeseries(self.session, start_date, end_date, course_id)
 		fcftp = ForumCommentFavoritesTimeseriesPlot(fcft)
 		_ = fcftp.analyze_device_types()
+
+	def test_analyze_events(self):
+		start_date = '2015-10-05'
+		end_date = '2015-10-20'
+		course_id = ['1068', '1096', '1097', '1098', '1099']
+		fcft = ForumCommentFavoritesTimeseries(self.session, start_date, end_date, course_id)
+		fcftp = ForumCommentFavoritesTimeseriesPlot(fcft)
+		_ = fcftp.explore_events()
 
 class TestForumEventsPlot(AnalyticsPandasTestBase):
 
