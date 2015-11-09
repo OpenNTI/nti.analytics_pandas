@@ -47,7 +47,7 @@ class NotesEventsTimeseriesPlot(object):
 		plot_unique_users = group_line_plot_x_axis_date(
 								df=df,
 								x_axis_field='timestamp_period',
-								y_axis_field='total_unique_users',
+								y_axis_field='number_of_unique_users',
 								x_axis_label=_('Date'),
 								y_axis_label=_('Number of unique users'),
 								title=_('Number of unique users creating notes events during period of time'),
@@ -380,9 +380,9 @@ class NotesViewTimeseriesPlot(object):
 		plot_notes_viewed = line_plot_x_axis_date(
 								df=df,
 								x_axis_field='timestamp_period',
-								y_axis_field='total_notes_viewed',
+								y_axis_field='number_of_note_views',
 								x_axis_label=_('Date'),
-								y_axis_label=_('Number of notes viewed'),
+								y_axis_label=_('Number of note views'),
 								title=event_title,
 								period_breaks=period_breaks,
 								minor_breaks=minor_period_breaks)
@@ -390,7 +390,7 @@ class NotesViewTimeseriesPlot(object):
 		plot_unique_users = line_plot_x_axis_date(
 								df=df,
 								x_axis_field='timestamp_period',
-								y_axis_field='total_unique_users',
+								y_axis_field='number_of_unique_users',
 								x_axis_label=_('Date'),
 								y_axis_label=_('Number of unique users'),
 								title=user_title,
@@ -415,9 +415,9 @@ class NotesViewTimeseriesPlot(object):
 		plot_notes_viewed = group_line_plot_x_axis_date(
 								df=df,
 								x_axis_field='timestamp_period',
-								y_axis_field='total_notes_viewed',
+								y_axis_field='number_of_note_views',
 								x_axis_label=_('Date'),
-								y_axis_label=_('Number of notes viewed'),
+								y_axis_label=_('Number of note views'),
 								title=event_title,
 								period_breaks=period_breaks,
 								group_by=group_by,
@@ -426,7 +426,7 @@ class NotesViewTimeseriesPlot(object):
 		plot_unique_users = group_line_plot_x_axis_date(
 								df=df,
 								x_axis_field='timestamp_period',
-								y_axis_field='total_unique_users',
+								y_axis_field='number_of_unique_users',
 								x_axis_label=_('Date'),
 								y_axis_label=_('Number of unique users'),
 								title=user_title,
@@ -473,12 +473,11 @@ class NotesViewTimeseriesPlot(object):
 
 		plot_users = histogram_plot_x_axis_discrete(df=users_df,
 													x_axis_field='username' ,
-													y_axis_field='number_of_notes_viewed',
+													y_axis_field='number_of_note_views',
 													x_axis_label=_('Username'),
 													y_axis_label=_('Number of notes viewed'),
 													title=_('The most active users viewing notes'),
 													stat='identity')
-
 		return (plot_users,)
 
 	def analyze_total_events_based_on_device_type(self, period_breaks='1 week', minor_period_breaks='1 day'):
@@ -549,7 +548,7 @@ class NoteLikesTimeseriesPlot(object):
 
 	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		nlt = self.nlt
-		df = nlt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		df = nlt.analyze_events()
 		if df is None:
 			return ()
 		df.reset_index(inplace=True)
@@ -558,7 +557,7 @@ class NoteLikesTimeseriesPlot(object):
 		plot_note_likes = line_plot_x_axis_date(
 							df=df,
 							x_axis_field='timestamp_period',
-							y_axis_field='total_note_likes',
+							y_axis_field='number_of_note_likes',
 							x_axis_label=_('Date'),
 							y_axis_label=_('Number of note likes'),
 							title=_('Number of note likes during period of time'),
@@ -568,7 +567,7 @@ class NoteLikesTimeseriesPlot(object):
 		plot_unique_users = line_plot_x_axis_date(
 							df=df,
 							x_axis_field='timestamp_period',
-							y_axis_field='total_unique_users',
+							y_axis_field='number_of_unique_users',
 							x_axis_label=_('Date'),
 							y_axis_label=_('Number of unique users'),
 							title=_('Number of unique users liking notes during period of time'),
@@ -597,7 +596,7 @@ class NoteFavoritesTimeseriesPlot(object):
 
 	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
 		nft = self.nft
-		df = nft.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		df = nft.analyze_events()
 		if df is None:
 			return ()
 		df.reset_index(inplace=True)
@@ -606,7 +605,7 @@ class NoteFavoritesTimeseriesPlot(object):
 		plot_note_likes = line_plot_x_axis_date(
 							df=df,
 							x_axis_field='timestamp_period',
-							y_axis_field='total_note_favorites',
+							y_axis_field='number_of_note_favorites',
 							x_axis_label=_('Date'),
 							y_axis_label=_('Number of note favorites'),
 							title=_('Number of note favorites during period of time'),
@@ -616,7 +615,7 @@ class NoteFavoritesTimeseriesPlot(object):
 		plot_unique_users = line_plot_x_axis_date(
 							df=df,
 							x_axis_field='timestamp_period',
-							y_axis_field='total_unique_users',
+							y_axis_field='number_of_unique_users',
 							x_axis_label=_('Date'),
 							y_axis_label=_('Number of unique users'),
 							title=_('Number of unique users voting notes as favorite during period of time'),

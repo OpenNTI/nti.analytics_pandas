@@ -407,7 +407,7 @@ class NotesViewTimeseries(object):
 
 	def get_the_most_active_users(self, max_rank_number=10):
 		user_df = get_most_active_users_(self.dataframe, self.session, max_rank_number)
-		user_df.rename(columns={'number_of_activities':'number_of_notes_viewed'}, inplace=True)
+		user_df.rename(columns={'number_of_activities':'number_of_note_views'}, inplace=True)
 		return user_df
 
 class NoteLikesTimeseries(object):
