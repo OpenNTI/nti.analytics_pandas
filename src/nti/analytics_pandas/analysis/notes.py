@@ -436,7 +436,6 @@ class NoteLikesTimeseries(object):
 			new_df = qnl.add_resource_type(self.dataframe)
 			if new_df is not None:
 				self.dataframe = new_df
-				print('HERE')
 
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
