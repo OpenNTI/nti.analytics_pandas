@@ -554,13 +554,27 @@ class NoteLikesTimeseriesPlot(object):
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
+		event_title = _('Number of note likes during period of time')
+		user_title = _('Number of unique users liking notes during period of time')
+		ratio_title = _('Ratio of note likes over unique user on each available date')
+		plots = self.generate_plots(df, 
+									event_title, 
+									user_title, 
+									ratio_title,
+									period_breaks,
+									minor_period_breaks
+									)
+		return plots
+
+	def generate_plots(self, df, event_title, user_title, 
+						ratio_title, period_breaks, minor_period_breaks):
 		plot_note_likes = line_plot_x_axis_date(
 							df=df,
 							x_axis_field='timestamp_period',
 							y_axis_field='number_of_note_likes',
 							x_axis_label=_('Date'),
 							y_axis_label=_('Number of note likes'),
-							title=_('Number of note likes during period of time'),
+							title=event_title,
 							period_breaks=period_breaks,
 							minor_breaks=minor_period_breaks)
 
@@ -570,7 +584,7 @@ class NoteLikesTimeseriesPlot(object):
 							y_axis_field='number_of_unique_users',
 							x_axis_label=_('Date'),
 							y_axis_label=_('Number of unique users'),
-							title=_('Number of unique users liking notes during period of time'),
+							title=user_title,
 							period_breaks=period_breaks,
 							minor_breaks=minor_period_breaks)
 
@@ -580,10 +594,9 @@ class NoteLikesTimeseriesPlot(object):
 							y_axis_field='ratio',
 							x_axis_label=_('Date'),
 							y_axis_label=_('Ratio'),
-							title=_('Ratio of note likes over unique user on each available date'),
+							title=ratio_title,
 							period_breaks=period_breaks,
 							minor_breaks=minor_period_breaks)
-
 		return (plot_note_likes, plot_unique_users, plot_ratio)
 
 class NoteFavoritesTimeseriesPlot(object):
@@ -602,13 +615,27 @@ class NoteFavoritesTimeseriesPlot(object):
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
-		plot_note_likes = line_plot_x_axis_date(
+		event_title = _('Number of note favorites during period of time')
+		user_title = _('Number of unique users voting notes as favorite during period of time')
+		ratio_title = _('Ratio of note favorites over unique user on each available date')
+		plots = self.generate_plots(df, 
+									event_title, 
+									user_title, 
+									ratio_title,
+									period_breaks,
+									minor_period_breaks
+									)
+		return plots
+
+	def generate_plots(self, df, event_title, user_title, 
+						ratio_title, period_breaks, minor_period_breaks):
+		plot_note_favorites = line_plot_x_axis_date(
 							df=df,
 							x_axis_field='timestamp_period',
 							y_axis_field='number_of_note_favorites',
 							x_axis_label=_('Date'),
 							y_axis_label=_('Number of note favorites'),
-							title=_('Number of note favorites during period of time'),
+							title=event_title,
 							period_breaks=period_breaks,
 							minor_breaks=minor_period_breaks)
 
@@ -618,7 +645,7 @@ class NoteFavoritesTimeseriesPlot(object):
 							y_axis_field='number_of_unique_users',
 							x_axis_label=_('Date'),
 							y_axis_label=_('Number of unique users'),
-							title=_('Number of unique users voting notes as favorite during period of time'),
+							title=user_title,
 							period_breaks=period_breaks,
 							minor_breaks=minor_period_breaks)
 
@@ -628,8 +655,8 @@ class NoteFavoritesTimeseriesPlot(object):
 							y_axis_field='ratio',
 							x_axis_label=_('Date'),
 							y_axis_label=_('Ratio'),
-							title=_('Ratio of note favorites over unique user on each available date'),
+							title=ratio_title,
 							period_breaks=period_breaks,
 							minor_breaks=minor_period_breaks)
 
-		return (plot_note_likes, plot_unique_users, plot_ratio)
+		return (plot_note_favorites, plot_unique_users, plot_ratio)
