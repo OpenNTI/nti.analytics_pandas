@@ -168,8 +168,16 @@ class QueryNoteFavorites(TableQueryMixin):
 		return dataframe
 
 	def add_resource_type(self, dataframe):
-		new_df = add_resource_type_(self.session, dataframe)
-		return new_df
+		if 'note_id' in dataframe:
+			notes_id = np.unique(dataframe['note_id'].values.ravel())
+			if len(notes_id) == 1 and notes_id[0] is None:
+				return
+			notes_id = notes_id[~np.isnan(notes_id)].tolist()
+			qnc = QueryNotesCreated(self.session)
+			resource_df = qnc.get_resource_id_filter_by_note_id(notes_id)
+			dataframe = dataframe.merge(resource_df, how='left')
+			new_df = add_resource_type_(self.session, dataframe)
+			return new_df
 
 	def add_device_type(self, dataframe):
 		new_df = add_device_type_(self.session, dataframe)
