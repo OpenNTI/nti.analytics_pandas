@@ -94,7 +94,7 @@ class TestNotesEDA(AnalyticsPandasTestBase):
 		assert_that(df.columns, has_item('number_of_unique_notes_viewed'))
 
 		df = nvt.analyze_total_events_based_on_device_type()
-		assert_that(df.columns, has_item('total_notes_viewed'))
+		assert_that(df.columns, has_item('number_of_note_views'))
 		assert_that(len(events_df.index), equal_to(len(df.sum(level='timestamp_period'))))
 
 		most_viewed_notes = nvt.get_the_most_viewed_notes()
@@ -113,18 +113,18 @@ class TestNotesEDA(AnalyticsPandasTestBase):
 		assert_that(df.columns, has_item('number_of_unique_notes_viewed'))
 
 		df = nvt.analyze_total_events_based_on_resource_type()
-		assert_that(df.columns, has_item('total_notes_viewed'))
+		assert_that(df.columns, has_item('number_of_note_views'))
 		assert_that(len(events_df.index), equal_to(len(df.sum(level='timestamp_period'))))
 
 		df = nvt.analyze_total_events_based_on_sharing_type()
-		assert_that(df.columns, has_item('total_notes_viewed'))
-		assert_that(df.columns, has_item('total_unique_users'))
+		assert_that(df.columns, has_item('number_of_note_views'))
+		assert_that(df.columns, has_item('number_of_unique_users'))
 		assert_that(df.columns, has_item('ratio'))
 		assert_that(len(events_df.index), equal_to(len(df.sum(level='timestamp_period'))))
 
 		df = nvt.analyze_total_events_per_course_sections()
-		assert_that(df.columns, has_item('total_notes_viewed'))
-		assert_that(df.columns, has_item('total_unique_users'))
+		assert_that(df.columns, has_item('number_of_note_views'))
+		assert_that(df.columns, has_item('number_of_unique_users'))
 		assert_that(df.columns, has_item('ratio'))
 		assert_that(len(events_df.index), equal_to(len(df.sum(level='timestamp_period'))))
 

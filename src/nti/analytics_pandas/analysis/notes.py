@@ -52,32 +52,32 @@ class NotesEventsTimeseries(object):
 		nlt = self.nlt
 		nft = self.nft
 
-		notes_created_df = nct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
-		notes_viewed_df = nvt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
-		note_likes_df = nlt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
-		note_favorites_df = nft.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		notes_created_df = nct.analyze_events()
+		notes_viewed_df = nvt.analyze_total_events()
+		note_likes_df = nlt.analyze_events()
+		note_favorites_df = nft.analyze_events()
 
 		df = pd.DataFrame(columns=[	'timestamp_period', 'total_events',
-									'total_unique_users', 'ratio', 'event_type'])
+									'number_of_unique_users', 'ratio', 'event_type'])
 
 		if notes_created_df is not None:
 			notes_created_df = self.update_events_dataframe(notes_created_df,
-				column_to_rename='total_notes_created', event_type='CREATE')
+				column_to_rename='number_of_notes_created', event_type='CREATE')
 			df = df.append(notes_created_df)
 
 		if notes_viewed_df is not None:
 			notes_viewed_df = self.update_events_dataframe(notes_viewed_df,
-				column_to_rename='total_note_views', event_type='VIEW')
+				column_to_rename='number_of_note_views', event_type='VIEW')
 			df = df.append(notes_viewed_df)
 
 		if note_likes_df is not None:
 			note_likes_df = self.update_events_dataframe(note_likes_df,
-				column_to_rename='total_note_likes', event_type='LIKE')
+				column_to_rename='number_of_note_likes', event_type='LIKE')
 			df = df.append(note_likes_df)
 
 		if note_favorites_df is not None:
 			note_favorites_df = self.update_events_dataframe(note_favorites_df,
-				column_to_rename='total_note_favorites', event_type='FAVORITE')
+				column_to_rename='number_of_note_favorites', event_type='FAVORITE')
 			df = df.append(note_favorites_df)
 
 		df.reset_index(inplace=True, drop=True)
@@ -414,11 +414,11 @@ class NotesViewTimeseries(object):
 
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
 		if df is not None:
-			df.rename(columns={	'note_id'	:'total_notes_viewed',
-								'user_id'	:'total_unique_users'},
+			df.rename(columns={	'note_id'	:'number_of_note_views',
+								'user_id'	:'number_of_unique_users'},
 					  inplace=True)
 
-			df['ratio'] = df['total_notes_viewed'] / df['total_unique_users']
+			df['ratio'] = df['number_of_note_views'] / df['number_of_unique_users']
 		return df
 
 	def get_the_most_viewed_notes(self, max_rank_number=10):
