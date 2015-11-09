@@ -707,6 +707,27 @@ class NoteFavoritesTimeseriesPlot(object):
 									)
 		return plots
 
+	def analyze_events_per_device_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
+		nft = self.nft
+		df = nft.analyze_events_per_device_types()
+		if df is None:
+			return ()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		group_by = 'device_type'
+		event_title = _('Number of note favorites grouped by device types')
+		user_title = _('Number of unique users voting notes as favorite grouped by device types')
+		ratio_title = _('Ratio of note favorites over unique user grouped by device types')
+		plots = self.generate_group_by_plots(df, 
+									group_by,
+									event_title, 
+									user_title, 
+									ratio_title,
+									period_breaks,
+									minor_period_breaks
+									)
+		return plots
+
 	def generate_plots(self, df, event_title, user_title, 
 						ratio_title, period_breaks, minor_period_breaks):
 		plot_note_favorites = line_plot_x_axis_date(
