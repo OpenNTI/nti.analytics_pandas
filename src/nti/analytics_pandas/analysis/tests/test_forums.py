@@ -45,16 +45,10 @@ class TestForumsCreatedEDA(AnalyticsPandasTestBase):
 		fcct = ForumsCommentsCreatedTimeseries(self.session, start_date, end_date, course_id)
 		assert_that(fcct.dataframe.columns, has_item('context_name'))
 
-		events_df = fcct.explore_number_of_events_based_timestamp_date()
+		events_df = fcct.analyze_events()
 		assert_that(len(events_df.index), equal_to(70))
-		total_events = np.sum(events_df['total_forums_comments_created'])
-		assert_that(total_events, equal_to(205))
-
-		unique_users_df = fcct.explore_unique_users_based_timestamp_date()
-		assert_that(len(unique_users_df.index), equal_to(70))
-
-		ratio_df = fcct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
-		assert_that(len(ratio_df.index), equal_to(70))
+		total_events = np.sum(events_df['number_of_comment_created'])
+		assert_that(total_events, equal_to(len(fcct.dataframe.index)))
 
 		df = fcct.analyze_device_types()
 		assert_that(df.columns, has_item('number_of_comment_created'))
@@ -62,6 +56,9 @@ class TestForumsCreatedEDA(AnalyticsPandasTestBase):
 		assert_that(df.columns, has_item('average_comment_length'))
 		assert_that(df.columns, has_item('favorite_count'))
 		assert_that(df.columns, has_item('like_count'))
+		total_events = np.sum(df['number_of_comment_created'])
+		#this test will fail since there are 6 comments having session_id NULL
+		#assert_that(total_events, equal_to(len(fcct.dataframe.index)))
 
 		most_active_users_df = fcct.get_the_most_active_users(max_rank_number=10)
 		assert_that(len(most_active_users_df.index), equal_to(10))
@@ -77,14 +74,8 @@ class TestForumsCreatedEDA(AnalyticsPandasTestBase):
 		course_id = ['388']
 		fclt = ForumCommentLikesTimeseries(self.session, start_date, end_date, course_id)
 
-		events_df = fclt.explore_number_of_events_based_timestamp_date()
+		events_df = fclt.analyze_events()
 		assert_that(events_df, equal_to(None))
-
-		_ = fclt.explore_unique_users_based_timestamp_date()
-		assert_that(events_df, equal_to(None))
-
-		ratio_df = fclt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
-		assert_that(ratio_df, equal_to(None))
 
 		df = fclt.analyze_device_types()
 		assert_that(df, equal_to(None))
@@ -95,14 +86,8 @@ class TestForumsCreatedEDA(AnalyticsPandasTestBase):
 		course_id = ['388']
 		fcft = ForumCommentFavoritesTimeseries(self.session, start_date, end_date, course_id)
 
-		events_df = fcft.explore_number_of_events_based_timestamp_date()
+		events_df = fcft.analyze_events()
 		assert_that(events_df, equal_to(None))
-
-		unique_users_df = fcft.explore_unique_users_based_timestamp_date()
-		assert_that(unique_users_df, equal_to(None))
-
-		ratio_df = fcft.explore_ratio_of_events_over_unique_users_based_timestamp_date()
-		assert_that(ratio_df, equal_to(None))
 
 		df = fcft.analyze_device_types()
 		assert_that(df, equal_to(None))

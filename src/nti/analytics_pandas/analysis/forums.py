@@ -21,10 +21,6 @@ from ..queries import QueryForumCommentFavorites
 from .common import analyze_types_
 from .common import add_timestamp_period_
 from .common import get_most_active_users_
-from .common import explore_unique_users_based_timestamp_date_
-from .common import explore_number_of_events_based_timestamp_date_
-from .common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
-
 from ..utils import cast_columns_as_category_
 
 class ForumsEventsTimeseries(object):
@@ -117,24 +113,6 @@ class ForumsCreatedTimeseries(object):
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
 
-	def explore_number_of_events_based_timestamp_date(self):
-		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
-		if events_df is not None:
-			events_df.rename(columns={'index':'total_forums_created'}, inplace=True)
-			events_df = events_df[['total_forums_created']]
-		return events_df
-
-	def explore_unique_users_based_timestamp_date(self):
-		unique_users_per_period_df = explore_unique_users_based_timestamp_date_(self.dataframe)
-		return unique_users_per_period_df
-
-	def explore_ratio_of_events_over_unique_users_based_timestamp_date(self):
-		events_df = self.explore_number_of_events_based_timestamp_date()
-		unique_users_df = self.explore_unique_users_based_timestamp_date()
-		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
-											events_df, 'total_forums_created', unique_users_df)
-		return merge_df
-
 	def analyze_events(self):
 		group_by_items = ['timestamp_period']
 		df = self.build_dataframe(group_by_items, self.dataframe)
@@ -188,24 +166,6 @@ class ForumsCommentsCreatedTimeseries(object):
 
 		categorical_columns = ['forum_id', 'parent_user_id', 'device_type', 'user_id', 'course_id', 'context_name']
 		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
-
-	def explore_number_of_events_based_timestamp_date(self):
-		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
-		if events_df is not None:
-			events_df.rename(columns={'index':'total_forums_comments_created'}, inplace=True)
-			events_df = events_df[['total_forums_comments_created']]
-		return events_df
-
-	def explore_unique_users_based_timestamp_date(self):
-		unique_users_per_period_df = explore_unique_users_based_timestamp_date_(self.dataframe)
-		return unique_users_per_period_df
-
-	def explore_ratio_of_events_over_unique_users_based_timestamp_date(self):
-		events_df = self.explore_number_of_events_based_timestamp_date()
-		unique_users_df = self.explore_unique_users_based_timestamp_date()
-		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
-									events_df, 'total_forums_comments_created', unique_users_df)
-		return merge_df
 
 	def analyze_events(self):
 		group_by_items = ['timestamp_period']
@@ -270,24 +230,6 @@ class ForumCommentLikesTimeseries(object):
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
 
-	def explore_number_of_events_based_timestamp_date(self):
-		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
-		if events_df is not None:
-			events_df.rename(columns={'index':'total_forum_comment_likes'}, inplace=True)
-			events_df = events_df[['total_forum_comment_likes']]
-		return events_df
-
-	def explore_unique_users_based_timestamp_date(self):
-		unique_users_per_period_df = explore_unique_users_based_timestamp_date_(self.dataframe)
-		return unique_users_per_period_df
-
-	def explore_ratio_of_events_over_unique_users_based_timestamp_date(self):
-		events_df = self.explore_number_of_events_based_timestamp_date()
-		unique_users_df = self.explore_unique_users_based_timestamp_date()
-		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
-										events_df, 'total_forum_comment_likes', unique_users_df)
-		return merge_df
-
 	def analyze_events(self):
 		group_by_items = ['timestamp_period']
 		df = self.build_dataframe(group_by_items)
@@ -333,24 +275,6 @@ class ForumCommentFavoritesTimeseries(object):
 
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
-
-	def explore_number_of_events_based_timestamp_date(self):
-		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
-		if events_df is not None:
-			events_df.rename(columns={'index':'total_forum_comment_favorites'}, inplace=True)
-			events_df = events_df[['total_forum_comment_favorites']]
-		return events_df
-
-	def explore_unique_users_based_timestamp_date(self):
-		unique_users_per_period_df = explore_unique_users_based_timestamp_date_(self.dataframe)
-		return unique_users_per_period_df
-
-	def explore_ratio_of_events_over_unique_users_based_timestamp_date(self):
-		events_df = self.explore_number_of_events_based_timestamp_date()
-		unique_users_df = self.explore_unique_users_based_timestamp_date()
-		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
-									events_df, 'total_forum_comment_favorites', unique_users_df)
-		return merge_df
 
 	def analyze_events(self):
 		group_by_items = ['timestamp_period']
