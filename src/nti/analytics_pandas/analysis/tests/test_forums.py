@@ -119,3 +119,4 @@ class TestForumsCreatedEDA(AnalyticsPandasTestBase):
 
 		df = fet.combine_all_events_per_date()
 		assert_that(len(df.index), equal_to(71))
+		assert_that(len(df.columns), equal_to(5))

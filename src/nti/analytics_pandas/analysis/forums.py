@@ -53,32 +53,33 @@ class ForumsEventsTimeseries(object):
 		fclt = self.fclt
 		fcft = self.fcft
 
-		forums_created_df = fct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
-		forum_comments_created_df = fcct.explore_ratio_of_events_over_unique_users_based_timestamp_date()
-		forum_comment_likes_df = fclt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
-		forum_comment_favorites_df = fcft.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		forums_created_df = fct.analyze_events()
+		forum_comments_created_df = fcct.analyze_events()
+		forum_comment_likes_df = fclt.analyze_events()
+		forum_comment_favorites_df = fcft.analyze_events()
 
 		df = pd.DataFrame(columns=[	'timestamp_period', 'total_events',
-									'total_unique_users', 'ratio', 'event_type'])
+									'number_of_unique_users', 'ratio', 'event_type'])
 
 		if forums_created_df is not None:
 			forums_created_df = self.update_events_dataframe(forums_created_df,
-				column_to_rename='total_forums_created', event_type='FORUM CREATED')
+				column_to_rename='number_of_forums_created', event_type='FORUM CREATED')
 			df = df.append(forums_created_df)
 
 		if forum_comments_created_df is not None:
+			forum_comments_created_df = forum_comments_created_df[['number_of_comment_created', 'number_of_unique_users', 'ratio']]
 			forum_comments_created_df = self.update_events_dataframe(forum_comments_created_df,
-				column_to_rename='total_forums_comments_created', event_type='COMMENTS CREATED')
+				column_to_rename='number_of_comment_created', event_type='COMMENTS CREATED')
 			df = df.append(forum_comments_created_df)
 
 		if forum_comment_likes_df is not None:
 			forum_comment_likes_df = self.update_events_dataframe(forum_comment_likes_df,
-				column_to_rename='total_forum_comment_likes', event_type='COMMENT LIKES')
+				column_to_rename='number_of_likes', event_type='COMMENT LIKES')
 			df = df.append(forum_comment_likes_df)
 
 		if forum_comment_favorites_df is not None:
 			forum_comment_favorites_df = self.update_events_dataframe(forum_comment_favorites_df,
-				column_to_rename='total_forum_comment_favorites', event_type='COMMENT FAVORITES')
+				column_to_rename='number_of_favorites', event_type='COMMENT FAVORITES')
 			df = df.append(forum_comment_favorites_df)
 
 		df.reset_index(inplace=True, drop=True)
@@ -366,8 +367,9 @@ class ForumCommentFavoritesTimeseries(object):
 		agg_columns = {	'comment_id'	: pd.Series.count,
 						'user_id'		: pd.Series.nunique}
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
-		df.rename(columns={	'comment_id'	 :'number_of_favorites',
-							'user_id'		 :'number_of_unique_users'},
-				  inplace=True)
-		df['ratio'] = df['number_of_favorites'] / df['number_of_unique_users']
+		if df is not None:
+			df.rename(columns={	'comment_id'	 :'number_of_favorites',
+								'user_id'		 :'number_of_unique_users'},
+					  inplace=True)
+			df['ratio'] = df['number_of_favorites'] / df['number_of_unique_users']
 		return df
