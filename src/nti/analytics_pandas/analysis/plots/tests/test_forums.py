@@ -106,7 +106,7 @@ class TestForumCommentLikesPlot(AnalyticsPandasTestBase):
 		fclt = ForumCommentLikesTimeseries(self.session, start_date, end_date, course_id)
 		fcltp = ForumCommentLikesTimeseriesPlot(fclt)
 		_ = fcltp.analyze_events_per_course_sections(period_breaks='1 day', minor_period_breaks=None)
-		
+
 class TestForumCommentFavoritesPlot(AnalyticsPandasTestBase):
 
 	def test_analyze_device_types_forum_comment_favorites(self):
@@ -124,6 +124,14 @@ class TestForumCommentFavoritesPlot(AnalyticsPandasTestBase):
 		fcft = ForumCommentFavoritesTimeseries(self.session, start_date, end_date, course_id)
 		fcftp = ForumCommentFavoritesTimeseriesPlot(fcft)
 		_ = fcftp.explore_events()
+
+	def test_analyze_events_per_course_sections(self):
+		start_date = '2015-10-05'
+		end_date = '2015-10-20'
+		course_id = ['1068', '1096', '1097', '1098', '1099']
+		fcft = ForumCommentFavoritesTimeseries(self.session, start_date, end_date, course_id)
+		fcftp = ForumCommentFavoritesTimeseriesPlot(fcft)
+		_ = fcftp.analyze_events_per_course_sections()
 
 class TestForumEventsPlot(AnalyticsPandasTestBase):
 
