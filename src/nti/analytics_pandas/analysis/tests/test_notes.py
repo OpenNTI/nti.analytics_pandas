@@ -25,9 +25,6 @@ from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
 class TestNotesEDA(AnalyticsPandasTestBase):
 
-	def setUp(self):
-		super(TestNotesEDA, self).setUp()
-
 	def test_notes_creation_based_on_timestamp_date(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
@@ -140,7 +137,6 @@ class TestNotesEDA(AnalyticsPandasTestBase):
 		assert_that(events_df.columns, has_item('number_of_note_likes'))
 		assert_that(events_df.columns, has_item('number_of_unique_users'))
 		assert_that(events_df.columns, has_item('ratio'))
-
 
 	def test_note_favorites_based_on_timestamp_date(self):
 		start_date = '2015-10-05'

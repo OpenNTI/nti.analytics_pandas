@@ -90,7 +90,7 @@ class TestForumCommentLikesPlot(AnalyticsPandasTestBase):
 		fclt = ForumCommentLikesTimeseries(self.session, start_date, end_date, course_id)
 		fcltp = ForumCommentLikesTimeseriesPlot(fclt)
 		_ = fcltp.analyze_events(period_breaks='1 day', minor_period_breaks=None)
-		
+
 	def test_analyze_device_types_forum_comment_likes(self):
 		start_date = '2015-10-05'
 		end_date = '2015-10-20'

@@ -472,10 +472,9 @@ class NoteLikesTimeseries(object):
 		if df is not None:
 			df.rename(columns={	'user_id'	:'number_of_unique_users',
 							  	'note_id'	:'number_of_note_likes'},
-						inplace=True)
+					  inplace=True)
 			df['ratio'] = df['number_of_note_likes'] / df['number_of_unique_users']
 		return df
-
 
 class NoteFavoritesTimeseries(object):
 	"""
@@ -539,7 +538,6 @@ class NoteFavoritesTimeseries(object):
 		if df is not None:
 			df.rename(columns={	'user_id'	:'number_of_unique_users',
 							  	'note_id'	:'number_of_note_favorites'},
-						inplace=True)
+					  inplace=True)
 			df['ratio'] = df['number_of_note_favorites'] / df['number_of_unique_users']
 		return df
-

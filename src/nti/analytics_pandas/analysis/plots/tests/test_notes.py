@@ -170,7 +170,6 @@ class TestNoteLikesPlot(AnalyticsPandasTestBase):
 		nlt = NoteLikesTimeseries(self.session, start_date, end_date, course_id)
 		nltp = NoteLikesTimeseriesPlot(nlt)
 		_ = nltp.analyze_events_per_course_sections(period_breaks='1 day', minor_period_breaks=None)
-		
 
 class TestNoteFavoritesPlot(AnalyticsPandasTestBase):
 
@@ -208,7 +207,7 @@ class TestNoteFavoritesPlot(AnalyticsPandasTestBase):
 		nft = NoteFavoritesTimeseries(self.session, start_date, end_date, course_id)
 		nftp = NoteFavoritesTimeseriesPlot(nft)
 		_ = nftp.analyze_events_per_course_sections(period_breaks='1 day', minor_period_breaks=None)
-		
+
 class TestNotesEventsPlot(AnalyticsPandasTestBase):
 
 	def test_notes_events(self):

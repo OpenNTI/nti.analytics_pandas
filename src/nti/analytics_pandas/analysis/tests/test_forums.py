@@ -28,7 +28,7 @@ class TestForumsCreatedEDA(AnalyticsPandasTestBase):
 		end_date = '2015-05-31'
 		course_id = ['388']
 		fct = ForumsCreatedTimeseries(self.session, start_date, end_date, course_id)
-		
+
 		events_df = fct.analyze_events()
 		assert_that(len(events_df.index), equal_to(1))
 		total_events = np.sum(events_df['number_of_forums_created'])
@@ -57,8 +57,9 @@ class TestForumsCreatedEDA(AnalyticsPandasTestBase):
 		assert_that(df.columns, has_item('favorite_count'))
 		assert_that(df.columns, has_item('like_count'))
 		total_events = np.sum(df['number_of_comment_created'])
-		#this test will fail since there are 6 comments having session_id NULL
-		#assert_that(total_events, equal_to(len(fcct.dataframe.index)))
+
+		# this test will fail since there are 6 comments having session_id NULL
+		# assert_that(total_events, equal_to(len(fcct.dataframe.index)))
 
 		most_active_users_df = fcct.get_the_most_active_users(max_rank_number=10)
 		assert_that(len(most_active_users_df.index), equal_to(10))
