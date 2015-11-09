@@ -426,7 +426,7 @@ class NotesViewTimeseries(object):
 		find the top n most viewed notes and return as pandas.Series
 		"""
 		df = self.dataframe
-		most_viewed = df.groupby('note_id').size().order(ascending=False)[:max_rank_number]
+		most_viewed = df.groupby('note_id').size().sort_values(ascending=False)[:max_rank_number]
 		return most_viewed
 
 	def get_the_most_viewed_notes_and_its_author(self, max_rank_number=10):
