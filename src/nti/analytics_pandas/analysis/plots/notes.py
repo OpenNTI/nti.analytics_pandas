@@ -20,8 +20,6 @@ from .commons import group_line_plot_x_axis_date
 from .commons import histogram_plot_x_axis_discrete
 from .commons import bar_plot_with_fill
 
-from ...utils import cast_columns_as_category_
-
 class NotesEventsTimeseriesPlot(object):
 
 	def __init__(self, net):
@@ -547,8 +545,7 @@ class NotesViewTimeseriesPlot(object):
 		df = nvt.get_the_most_viewed_notes_and_its_author()
 		if df is None:
 			return ()
-		categorical_columns=['note_id']
-		df = cast_columns_as_category_(df, categorical_columns)
+		df['note_id'] = df['note_id'].astype('category')
 		plot_authors = bar_plot_with_fill(df=df,
 											x_axis_field='author_name' ,
 											y_axis_field='number_of_views',
