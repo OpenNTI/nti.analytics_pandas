@@ -18,6 +18,9 @@ import numpy as np
 from .commons import line_plot_x_axis_date
 from .commons import group_line_plot_x_axis_date
 from .commons import histogram_plot_x_axis_discrete
+from .commons import bar_plot_with_fill
+
+from ...utils import cast_columns_as_category_
 
 class NotesEventsTimeseriesPlot(object):
 
@@ -544,14 +547,16 @@ class NotesViewTimeseriesPlot(object):
 		df = nvt.get_the_most_viewed_notes_and_its_author()
 		if df is None:
 			return ()
-		print(df.dtypes)
-		plot_authors = histogram_plot_x_axis_discrete(df=df,
-													x_axis_field='author_name' ,
-													y_axis_field='number_of_views',
-													x_axis_label=_("Author's name"),
-													y_axis_label=_('Number of notes viewed'),
-													title=_('The authors of most viewed notes'),
-													stat='identity')
+		categorical_columns=['note_id']
+		df = cast_columns_as_category_(df, categorical_columns)
+		plot_authors = bar_plot_with_fill(df=df,
+											x_axis_field='author_name' ,
+											y_axis_field='number_of_views',
+											x_axis_label=_("Author's name"),
+											y_axis_label=_('Number of notes viewed'),
+											title=_('The authors of most viewed notes'),
+											stat='bar',
+											fill='note_id')
 		return (plot_authors,)
 
 class NoteLikesTimeseriesPlot(object):
