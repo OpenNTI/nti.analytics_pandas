@@ -539,6 +539,21 @@ class NotesViewTimeseriesPlot(object):
 
 		return (plot_unique_notes_viewed,)
 
+	def plot_the_most_viewed_notes_and_its_author(self):
+		nvt = self.nvt
+		df = nvt.get_the_most_viewed_notes_and_its_author()
+		if df is None:
+			return ()
+		print(df.dtypes)
+		plot_authors = histogram_plot_x_axis_discrete(df=df,
+													x_axis_field='author_name' ,
+													y_axis_field='number_of_views',
+													x_axis_label=_("Author's name"),
+													y_axis_label=_('Number of notes viewed'),
+													title=_('The authors of most viewed notes'),
+													stat='identity')
+		return (plot_authors,)
+
 class NoteLikesTimeseriesPlot(object):
 
 	def __init__(self, nlt):

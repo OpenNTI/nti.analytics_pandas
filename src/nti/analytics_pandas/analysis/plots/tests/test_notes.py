@@ -137,6 +137,14 @@ class TestNoteViewsPlot(AnalyticsPandasTestBase):
 		nvtp = NotesViewTimeseriesPlot(nvt)
 		_ = nvtp.analyze_total_events_per_course_sections()
 
+	def test_plot_the_most_viewed_notes_and_its_author(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		nvt = NotesViewTimeseries(self.session, start_date, end_date, course_id)
+		nvtp = NotesViewTimeseriesPlot(nvt)
+		_ = nvtp.plot_the_most_viewed_notes_and_its_author()
+
 class TestNoteLikesPlot(AnalyticsPandasTestBase):
 
 	def test_explore_events(self):
