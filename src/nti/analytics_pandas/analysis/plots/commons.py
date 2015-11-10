@@ -220,7 +220,7 @@ def bar_plot_with_fill(df,
 					   stat,
 					   fill):
 	bar_plot = ggplot(df, aes(x=x_axis_field, y=y_axis_field, fill=fill)) + \
-				geom_histogram(stat=stat) + \
+				geom_bar(stat=stat) + \
 				ggtitle(_(title)) + \
 				theme(	title=element_text(size=10, face="bold"), 
 						axis_text_x=element_text(angle=15, hjust=1)) + \
