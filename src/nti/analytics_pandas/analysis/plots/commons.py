@@ -20,6 +20,7 @@ from ggplot import ylim
 from ggplot import theme
 from ggplot import ggplot
 from ggplot import ggtitle
+from ggplot import geom_bar
 from ggplot import geom_line
 from ggplot import geom_point
 from ggplot import facet_wrap
@@ -209,3 +210,20 @@ def histogram_plot_x_axis_discrete(df,
 				xlab(_(x_axis_label)) + \
 				scale_x_discrete(x_axis_field)
 	return hist_plot
+
+def bar_plot_with_fill(df,
+					   x_axis_field,
+					   y_axis_field,
+					   x_axis_label,
+					   y_axis_label,
+					   title,
+					   stat,
+					   fill):
+	bar_plot = ggplot(df, aes(x=x_axis_field, y=y_axis_field, fill=fill)) + \
+				geom_histogram(stat=stat) + \
+				ggtitle(_(title)) + \
+				theme(	title=element_text(size=10, face="bold"), 
+						axis_text_x=element_text(angle=15, hjust=1)) + \
+				ylab(_(y_axis_label)) + \
+				xlab(_(x_axis_label))
+	return bar_plot
