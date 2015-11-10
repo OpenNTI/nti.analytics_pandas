@@ -44,14 +44,14 @@ class CourseCatalogViewsTimeseriesPlot(object):
 			- ratio of course catalog views over unique users
 		"""
 		ccvt = self.ccvt
-		df = ccvt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
+		df = ccvt.analyze_events()
 		if df is None:
 			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
 		plot_catalog_views = \
-				ggplot(df, aes(x='timestamp_period', y='total_course_catalog_views')) + \
+				ggplot(df, aes(x='timestamp_period', y='number_of_course_catalog_views')) + \
 				geom_line() + \
 				geom_point(color='orange') + \
 				ggtitle(_('Number of course catalog views during period of time')) + \
@@ -61,7 +61,7 @@ class CourseCatalogViewsTimeseriesPlot(object):
 				xlab(_('Date'))
 
 		plot_unique_users = \
-				ggplot(df, aes(x='timestamp_period', y='total_unique_users')) + \
+				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users')) + \
 				geom_line() + \
 				geom_point(color='blue') + \
 				ggtitle(_('Number of unique users viewing course catalog during period of time')) + \
@@ -141,14 +141,14 @@ class CourseEnrollmentsTimeseriesPlot(object):
 		return scatter plots of course enrollments during period of time
 		"""
 		cet = self.cet
-		df = cet.explore_number_of_events_based_timestamp_date()
+		df = cet.analyze_events()
 		if df is None:
 			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
 		plot_course_enrollments = \
-				ggplot(df, aes(x='timestamp_period', y='total_enrollments')) + \
+				ggplot(df, aes(x='timestamp_period', y='number_of_enrollments')) + \
 				geom_line() + \
 				geom_point() + \
 				ggtitle(('Number of enrollments during period of time')) + \
@@ -206,14 +206,14 @@ class CourseDropsTimeseriesPlot(object):
 		return scatter plots of course enrollments during period of time
 		"""
 		cdt = self.cdt
-		df = cdt.explore_number_of_events_based_timestamp_date()
+		df = cdt.analyze_events()
 		if df is None:
 			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
 		plot_course_drops = \
-				ggplot(df, aes(x='timestamp_period', y='total_drops')) + \
+				ggplot(df, aes(x='timestamp_period', y='number_of_course_drops')) + \
 				geom_line() + \
 				geom_point() + \
 				ggtitle(_('Number of course drops during period of time')) + \
