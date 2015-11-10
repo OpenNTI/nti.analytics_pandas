@@ -20,9 +20,6 @@ from ..queries import QueryCourseCatalogViews
 
 from .common import analyze_types_
 from .common import add_timestamp_period_
-from .common import explore_unique_users_based_timestamp_date_
-from .common import explore_number_of_events_based_timestamp_date_
-from .common import explore_ratio_of_events_over_unique_users_based_timestamp_date_
 
 class CourseCatalogViewsTimeseries(object):
 	"""
@@ -47,24 +44,6 @@ class CourseCatalogViewsTimeseries(object):
 
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
-
-	def explore_number_of_events_based_timestamp_date(self):
-		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
-		if events_df is not None:
-			events_df.rename(columns={'index':'total_course_catalog_views'}, inplace=True)
-		events_df = events_df[['total_course_catalog_views']]
-		return events_df
-
-	def explore_unique_users_based_timestamp_date(self):
-		unique_users_per_period_df = explore_unique_users_based_timestamp_date_(self.dataframe)
-		return unique_users_per_period_df
-
-	def explore_ratio_of_events_over_unique_users_based_timestamp_date(self):
-		events_df = self.explore_number_of_events_based_timestamp_date()
-		unique_users_df = self.explore_unique_users_based_timestamp_date()
-		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
-										events_df, 'total_course_catalog_views', unique_users_df)
-		return merge_df
 
 	def analyze_events(self):
 		group_by_items = ['timestamp_period']
@@ -117,24 +96,6 @@ class CourseEnrollmentsTimeseries(object):
 			enrollment_type_df = qet.get_enrollment_types()
 			self.dataframe = self.dataframe.merge(enrollment_type_df, how='left')
 
-	def explore_number_of_events_based_timestamp_date(self):
-		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
-		if events_df is not None:
-			events_df.rename(columns={'index':'total_enrollments'}, inplace=True)
-		events_df = events_df[['total_enrollments']]
-		return events_df
-
-	def explore_unique_users_based_timestamp_date(self):
-		unique_users_per_period_df = explore_unique_users_based_timestamp_date_(self.dataframe)
-		return unique_users_per_period_df
-
-	def explore_ratio_of_events_over_unique_users_based_timestamp_date(self):
-		events_df = self.explore_number_of_events_based_timestamp_date()
-		unique_users_df = self.explore_unique_users_based_timestamp_date()
-		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
-												events_df, 'total_enrollments', unique_users_df)
-		return merge_df
-
 	def analyze_events(self):
 		group_by_items = ['timestamp_period']
 		df = self.build_dataframe(group_by_items, self.dataframe)
@@ -185,23 +146,6 @@ class CourseDropsTimeseries(object):
 			user_enrollment_type_df = cet.filter_by_user_id(course_id)
 			user_enrollment_type_df = user_enrollment_type_df.merge(enrollment_type_df)
 			self.dataframe = self.dataframe.merge(user_enrollment_type_df, how='left')
-
-	def explore_number_of_events_based_timestamp_date(self):
-		events_df = explore_number_of_events_based_timestamp_date_(self.dataframe)
-		if events_df is not None :
-			events_df.rename(columns={'index':'total_drops'}, inplace=True)
-		return events_df
-
-	def explore_unique_users_based_timestamp_date(self):
-		unique_users_per_period_df = explore_unique_users_based_timestamp_date_(self.dataframe)
-		return unique_users_per_period_df
-
-	def explore_ratio_of_events_over_unique_users_based_timestamp_date(self):
-		events_df = self.explore_number_of_events_based_timestamp_date()
-		unique_users_df = self.explore_unique_users_based_timestamp_date()
-		merge_df = explore_ratio_of_events_over_unique_users_based_timestamp_date_(
-												events_df, 'total_drops', unique_users_df)
-		return merge_df
 
 	def analyze_events(self):
 		group_by_items = ['timestamp_period']
