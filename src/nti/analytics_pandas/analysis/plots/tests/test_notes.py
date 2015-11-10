@@ -181,9 +181,6 @@ class TestNoteLikesPlot(AnalyticsPandasTestBase):
 
 class TestNoteFavoritesPlot(AnalyticsPandasTestBase):
 
-	def setUp(self):
-		super(TestNoteFavoritesPlot, self).setUp()
-
 	def test_explore_events(self):
 		start_date = '2015-10-05'
 		end_date = '2015-12-04'

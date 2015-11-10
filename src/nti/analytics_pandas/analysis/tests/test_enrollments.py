@@ -22,9 +22,6 @@ from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
 class TestCourseCatalogViewsEDA(AnalyticsPandasTestBase):
 
-	def setUp(self):
-		super(TestCourseCatalogViewsEDA, self).setUp()
-
 	def test_course_catalog_views_based_on_timestamp_date(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
@@ -49,7 +46,7 @@ class TestCourseCatalogViewsEDA(AnalyticsPandasTestBase):
 		course_id = ['388']
 		cet = CourseEnrollmentsTimeseries(self.session, start_date, end_date, course_id)
 		assert_that(cet.dataframe.columns, has_item('device_type'))
-		
+
 		events_df = cet.analyze_events()
 		assert_that(len(events_df.index), equal_to(100))
 		total_events = np.sum(events_df['number_of_enrollments'])

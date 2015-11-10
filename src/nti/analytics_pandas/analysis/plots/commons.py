@@ -27,9 +27,9 @@ from ggplot import facet_wrap
 from ggplot import date_format
 from ggplot import element_text
 from ggplot import scale_x_date
+from ggplot import theme_seaborn
 from ggplot import geom_histogram
 from ggplot import scale_x_discrete
-from ggplot import theme_seaborn
 
 DATE_FORMAT = "%Y-%m-%d"
 
@@ -67,14 +67,14 @@ def line_plot_x_axis_date(df,
 	return line_plot
 
 def scatter_plot_x_axis_date(df,
-						  x_axis_field,
-						  y_axis_field,
-						  x_axis_label,
-						  y_axis_label,
-						  title,
-						  period_breaks,
-						  minor_breaks=None,
-						  theme_seaborn_=True):
+						 	 x_axis_field,
+						  	 y_axis_field,
+						  	 x_axis_label,
+						  	 y_axis_label,
+						  	 title,
+						  	 period_breaks,
+						  	 minor_breaks=None,
+						  	 theme_seaborn_=True):
 
 	y_max = pd.Series.max(df[y_axis_field]) + 1
 	scatter_plot = \
@@ -88,11 +88,11 @@ def scatter_plot_x_axis_date(df,
 
 	if minor_breaks is not None:
 		scatter_plot = scatter_plot + scale_x_date(breaks=period_breaks,
-											 minor_breaks=minor_breaks,
-											 labels=date_format(DATE_FORMAT))
+											 	   minor_breaks=minor_breaks,
+											 	   labels=date_format(DATE_FORMAT))
 	else:
 		scatter_plot = scatter_plot + scale_x_date(breaks=period_breaks,
-											 labels=date_format(DATE_FORMAT))
+											 	   labels=date_format(DATE_FORMAT))
 
 	if theme_seaborn_:
 		scatter_plot = scatter_plot + theme_seaborn()
@@ -104,7 +104,7 @@ def group_line_plot_x_axis_date(df,
 								x_axis_label,
 								y_axis_label,
 								title,
-								period_breaks, 
+								period_breaks,
 								group_by,
 								minor_breaks=None,
 								theme_seaborn_=True):
@@ -133,15 +133,15 @@ def group_line_plot_x_axis_date(df,
 	return line_plot
 
 def group_scatter_plot_x_axis_date(df,
-								x_axis_field,
-								y_axis_field,
-								x_axis_label,
-								y_axis_label,
-								title,
-								period_breaks, 
-								group_by,
-								minor_breaks=None,
-								theme_seaborn_=True):
+								   x_axis_field,
+								   y_axis_field,
+								   x_axis_label,
+								   y_axis_label,
+								   title,
+								   period_breaks,
+								   group_by,
+								   minor_breaks=None,
+								   theme_seaborn_=True):
 
 	y_max = pd.Series.max(df[y_axis_field]) + 1
 	scatter_plot = \
@@ -155,11 +155,11 @@ def group_scatter_plot_x_axis_date(df,
 
 	if minor_breaks is not None:
 		scatter_plot = scatter_plot + scale_x_date(breaks=period_breaks,
-											 minor_breaks=minor_breaks,
-											 labels=date_format(DATE_FORMAT))
+											 	   minor_breaks=minor_breaks,
+											 	   labels=date_format(DATE_FORMAT))
 	else:
 		scatter_plot = scatter_plot + scale_x_date(breaks=period_breaks,
-											 labels=date_format(DATE_FORMAT))
+											 	   labels=date_format(DATE_FORMAT))
 	if theme_seaborn_:
 		scatter_plot = scatter_plot + theme_seaborn()
 
@@ -222,8 +222,8 @@ def histogram_plot_x_axis_discrete(df,
 	hist_plot = ggplot(df, aes(x=x_axis_field, y=y_axis_field)) + \
 				geom_histogram(stat=stat) + \
 				ggtitle(_(title)) + \
-				theme(	title=element_text(size=10, face="bold"), 
-						axis_text_x=element_text(angle=15, hjust=1)) + \
+				theme(title=element_text(size=10, face="bold"),
+					  axis_text_x=element_text(angle=15, hjust=1)) + \
 				ylab(_(y_axis_label)) + \
 				xlab(_(x_axis_label)) + \
 				scale_x_discrete(x_axis_field)
@@ -239,12 +239,12 @@ def bar_plot_with_fill(df,
 					   stat,
 					   fill,
 					   theme_seaborn_=True):
-	bar_plot =  ggplot(df, aes(x=x_axis_field, y=y_axis_field, fill=fill)) + \
+	bar_plot = ggplot(df, aes(x=x_axis_field, y=y_axis_field, fill=fill)) + \
 				geom_bar(stat=stat) + \
 				ggtitle(_(title)) + \
-				theme(	title=element_text(size=10, face="bold"), 
-						axis_text_x=element_text(angle=15, hjust=1)) + \
+				theme(title=element_text(size=10, face="bold"),
+					  axis_text_x=element_text(angle=15, hjust=1)) + \
 				ylab(_(y_axis_label)) + \
 				xlab(_(x_axis_label))
-				
+
 	return bar_plot

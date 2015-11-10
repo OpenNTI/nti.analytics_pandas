@@ -284,15 +284,16 @@ class CourseEnrollmentsEventsTimeseriesPlot(object):
 		if len(df.index) <= 0:
 			return ()
 
-		plot_enrollments_events = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='total_events',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of events'),
-				title=_('Number of course enrollments vs drops during period of time'),
-				period_breaks=period_breaks,
-				group_by='event_type',
-				minor_breaks=minor_period_breaks)
+		plot_enrollments_events = group_line_plot_x_axis_date(
+										df=df,
+										x_axis_field='timestamp_period',
+										y_axis_field='total_events',
+										x_axis_label=_('Date'),
+										y_axis_label=_('Number of events'),
+										title=_('Number of course enrollments vs drops during period of time'),
+										period_breaks=period_breaks,
+										group_by='event_type',
+										minor_breaks=minor_period_breaks)
 
 		return (plot_enrollments_events)
 
@@ -302,14 +303,15 @@ class CourseEnrollmentsEventsTimeseriesPlot(object):
 		if len(df.index) <= 0:
 			return ()
 
-		plot_enrollments_events = group_line_plot_x_axis_date(df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='total_events',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of events'),
-				title=_('Number of course catalog views vs enrollments during period of time'),
-				period_breaks=period_breaks,
-				group_by='event_type',
-				minor_breaks=minor_period_breaks)
+		plot_enrollments_events = group_line_plot_x_axis_date(
+									df=df,
+									x_axis_field='timestamp_period',
+									y_axis_field='total_events',
+									x_axis_label=_('Date'),
+									y_axis_label=_('Number of events'),
+									title=_('Number of course catalog views vs enrollments during period of time'),
+									period_breaks=period_breaks,
+									group_by='event_type',
+									minor_breaks=minor_period_breaks)
 
 		return (plot_enrollments_events,)

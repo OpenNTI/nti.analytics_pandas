@@ -109,7 +109,7 @@ class CourseEnrollmentsTimeseries(object):
 
 	def build_dataframe(self, group_by_items, base_dataframe):
 		agg_columns = {	'user_id'	: pd.Series.nunique,
-						'session_id' : pd.Series.nunique}
+						'session_id': pd.Series.nunique}
 		df = analyze_types_(base_dataframe, group_by_items, agg_columns)
 		if df is not None:
 			df.rename(columns={	'user_id':'number_of_enrollments'}, inplace=True)
@@ -184,7 +184,7 @@ class CourseEnrollmentsEventsTimeseries(object):
 
 	def explore_course_enrollments_vs_drops(self):
 		df = pd.DataFrame(columns=[	'timestamp_period', 'total_events', 'event_type'])
-		if self.cdt is None :
+		if self.cdt is None:
 			return df
 
 		cet = self.cet
