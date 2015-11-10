@@ -31,15 +31,11 @@ class TestCourseCatalogViewsEDA(AnalyticsPandasTestBase):
 		course_id = ['388']
 		ccvt = CourseCatalogViewsTimeseries(self.session, start_date, end_date, course_id)
 		assert_that(ccvt.dataframe.columns, has_item('device_type'))
-		events_df = ccvt.explore_number_of_events_based_timestamp_date()
+		
+		events_df = ccvt.analyze_events()
 		assert_that(len(events_df.index), equal_to(109))
-		total_events = np.sum(events_df['total_course_catalog_views'])
-		assert_that(total_events, equal_to(409))
-
-		unique_users_df = ccvt.explore_unique_users_based_timestamp_date()
-		assert_that(len(unique_users_df.index), equal_to(109))
-		ratio_df = ccvt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
-		assert_that(len(ratio_df.index), equal_to(109))
+		total_events = np.sum(events_df['number_of_course_catalog_views'])
+		assert_that(total_events, equal_to(len(ccvt.dataframe.index)))
 
 		df = ccvt.analyze_device_types()
 		assert_that(len(df.index), equal_to(133))

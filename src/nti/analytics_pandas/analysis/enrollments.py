@@ -66,8 +66,17 @@ class CourseCatalogViewsTimeseries(object):
 										events_df, 'total_course_catalog_views', unique_users_df)
 		return merge_df
 
+	def analyze_events(self):
+		group_by_items = ['timestamp_period']
+		df = self.build_dataframe(group_by_items, self.dataframe)
+		return df
+
 	def analyze_device_types(self):
 		group_by_items = ['timestamp_period', 'device_type']
+		df = self.build_dataframe(group_by_items, self.dataframe)
+		return df
+
+	def build_dataframe(self, group_by_items, base_dataframe):
 		agg_columns = {	'time_length'	: np.mean,
 						'user_id'		: pd.Series.nunique,
 						'session_id'	: pd.Series.count}
