@@ -31,7 +31,7 @@ class TestCourseCatalogViewsEDA(AnalyticsPandasTestBase):
 		course_id = ['388']
 		ccvt = CourseCatalogViewsTimeseries(self.session, start_date, end_date, course_id)
 		assert_that(ccvt.dataframe.columns, has_item('device_type'))
-		
+
 		events_df = ccvt.analyze_events()
 		assert_that(len(events_df.index), equal_to(109))
 		total_events = np.sum(events_df['number_of_course_catalog_views'])
@@ -49,16 +49,11 @@ class TestCourseCatalogViewsEDA(AnalyticsPandasTestBase):
 		course_id = ['388']
 		cet = CourseEnrollmentsTimeseries(self.session, start_date, end_date, course_id)
 		assert_that(cet.dataframe.columns, has_item('device_type'))
-		events_df = cet.explore_number_of_events_based_timestamp_date()
+		
+		events_df = cet.analyze_events()
 		assert_that(len(events_df.index), equal_to(100))
-		total_events = np.sum(events_df['total_enrollments'])
-		assert_that(total_events, equal_to(570))
-
-		unique_users_df = cet.explore_unique_users_based_timestamp_date()
-		assert_that(len(unique_users_df.index), equal_to(100))
-
-		ratio_df = cet.explore_ratio_of_events_over_unique_users_based_timestamp_date()
-		assert_that(len(ratio_df.index), equal_to(100))
+		total_events = np.sum(events_df['number_of_enrollments'])
+		assert_that(total_events, equal_to(len(cet.dataframe.index)))
 
 		df = cet.analyze_device_enrollment_types()
 		# the length of df.sum(level = 'timestamp_period') should be equal to the length of ratio_df,

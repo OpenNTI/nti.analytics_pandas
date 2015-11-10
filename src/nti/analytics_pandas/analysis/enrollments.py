@@ -80,11 +80,12 @@ class CourseCatalogViewsTimeseries(object):
 		agg_columns = {	'time_length'	: np.mean,
 						'user_id'		: pd.Series.nunique,
 						'session_id'	: pd.Series.count}
-		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
-		df.rename(columns={	'user_id'		:'number_of_unique_users',
-							'time_length'	:'average_time_length',
-							'session_id'	:'number_of_course_catalog_views'},
-							inplace=True)
+		df = analyze_types_(base_dataframe, group_by_items, agg_columns)
+		if df is not None:
+			df.rename(columns={	'user_id'		:'number_of_unique_users',
+								'time_length'	:'average_time_length',
+								'session_id'	:'number_of_course_catalog_views'},
+								inplace=True)
 		return df
 
 class CourseEnrollmentsTimeseries(object):
@@ -134,13 +135,23 @@ class CourseEnrollmentsTimeseries(object):
 												events_df, 'total_enrollments', unique_users_df)
 		return merge_df
 
+	def analyze_events(self):
+		group_by_items = ['timestamp_period']
+		df = self.build_dataframe(group_by_items, self.dataframe)
+		return df
+
 	def analyze_device_enrollment_types(self):
 		group_by_items = ['timestamp_period', 'device_type', 'type_name']
+		df = self.build_dataframe(group_by_items, self.dataframe)
+		return df
+
+	def build_dataframe(self, group_by_items, base_dataframe):
 		agg_columns = {	'user_id'	: pd.Series.nunique,
 						'session_id' : pd.Series.nunique}
-		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
-		df.rename(columns={	'user_id':'number_of_enrollments'}, inplace=True)
-		return df
+		df = analyze_types_(base_dataframe, group_by_items, agg_columns)
+		if df is not None:
+			df.rename(columns={	'user_id':'number_of_enrollments'}, inplace=True)
+		return df 
 
 class CourseDropsTimeseries(object):
 	"""
