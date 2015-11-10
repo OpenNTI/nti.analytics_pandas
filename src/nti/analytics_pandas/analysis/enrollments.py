@@ -65,6 +65,7 @@ class CourseCatalogViewsTimeseries(object):
 								'time_length'	:'average_time_length',
 								'session_id'	:'number_of_course_catalog_views'},
 								inplace=True)
+			df['ratio'] = df['number_of_course_catalog_views'] / df['number_of_unique_users']
 		return df
 
 class CourseEnrollmentsTimeseries(object):
