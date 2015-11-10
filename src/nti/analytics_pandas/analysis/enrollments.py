@@ -245,17 +245,17 @@ class CourseEnrollmentsEventsTimeseries(object):
 		cet = self.cet
 		cdt = self.cdt
 
-		enrollments_df = cet.explore_number_of_events_based_timestamp_date()
-		drops_df = cdt.explore_number_of_events_based_timestamp_date()
+		enrollments_df = cet.analyze_events()
+		drops_df = cdt.analyze_events()
 
 		if enrollments_df is not None:
 			enrollments_df = self.update_events_dataframe(enrollments_df,
-				column_to_rename='total_enrollments', event_type='ENROLLMENT')
+				column_to_rename='number_of_enrollments', event_type='ENROLLMENT')
 			df = df.append(enrollments_df)
 
 		if drops_df is not None:
 			drops_df = self.update_events_dataframe(drops_df,
-				column_to_rename='total_drops', event_type='DROP')
+				column_to_rename='number_of_course_drops', event_type='DROP')
 			df = df.append(drops_df)
 
 		df.reset_index(inplace=True, drop=True)
@@ -268,17 +268,17 @@ class CourseEnrollmentsEventsTimeseries(object):
 		cet = self.cet
 		ccvt = self.ccvt
 
-		enrollments_df = cet.explore_number_of_events_based_timestamp_date()
-		catalog_views_df = ccvt.explore_number_of_events_based_timestamp_date()
+		enrollments_df = cet.analyze_events()
+		catalog_views_df = ccvt.analyze_events()
 
 		if enrollments_df is not None:
 			enrollments_df = self.update_events_dataframe(enrollments_df,
-				column_to_rename='total_enrollments', event_type='ENROLLMENT')
+				column_to_rename='number_of_enrollments', event_type='ENROLLMENT')
 			df = df.append(enrollments_df)
 
 		if catalog_views_df is not None:
 			catalog_views_df = self.update_events_dataframe(catalog_views_df,
-				column_to_rename='total_course_catalog_views', event_type='CATALOG VIEWS')
+				column_to_rename='number_of_course_catalog_views', event_type='CATALOG VIEWS')
 			df = df.append(catalog_views_df)
 
 		df.reset_index(inplace=True, drop=True)
