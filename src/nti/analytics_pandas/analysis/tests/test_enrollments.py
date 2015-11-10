@@ -66,16 +66,10 @@ class TestCourseCatalogViewsEDA(AnalyticsPandasTestBase):
 		course_id = ['388']
 		cdt = CourseDropsTimeseries(self.session, start_date, end_date, course_id)
 		assert_that(cdt.dataframe.columns, has_item('device_type'))
-		events_df = cdt.explore_number_of_events_based_timestamp_date()
+		events_df = cdt.analyze_events()
 		assert_that(len(events_df.index), equal_to(19))
-		total_events = np.sum(events_df['total_drops'])
-		assert_that(total_events, equal_to(23))
-
-		unique_users_df = cdt.explore_unique_users_based_timestamp_date()
-		assert_that(len(unique_users_df.index), equal_to(19))
-
-		ratio_df = cdt.explore_ratio_of_events_over_unique_users_based_timestamp_date()
-		assert_that(len(ratio_df.index), equal_to(19))
+		total_events = np.sum(events_df['number_of_course_drops'])
+		assert_that(total_events, equal_to(len(cdt.dataframe.index)))
 
 		df = cdt.analyze_device_types()
 		# the length of df.sum(level = 'timestamp_period') should be equal to the length of ratio_df,

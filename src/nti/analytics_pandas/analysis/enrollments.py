@@ -203,18 +203,26 @@ class CourseDropsTimeseries(object):
 												events_df, 'total_drops', unique_users_df)
 		return merge_df
 
+	def analyze_events(self):
+		group_by_items = ['timestamp_period']
+		df = self.build_dataframe(group_by_items, self.dataframe)
+		return df
+
 	def analyze_device_types(self):
 		group_by_items = ['timestamp_period', 'device_type']
-		agg_columns = {	'user_id'	: pd.Series.nunique}
-		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
-		df.rename(columns={'user_id':'number_of_course_drops'}, inplace=True)
+		df = self.build_dataframe(group_by_items, self.dataframe)
 		return df
 
 	def analyze_enrollment_types(self):
 		group_by_items = ['timestamp_period', 'type_name']
+		df = self.build_dataframe(group_by_items, self.dataframe)
+		return df
+
+	def build_dataframe(self, group_by_items, base_dataframe):
 		agg_columns = {	'user_id'	: pd.Series.nunique}
-		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
-		df.rename(columns={'user_id':'number_of_course_drops'}, inplace=True)
+		df = analyze_types_(base_dataframe, group_by_items, agg_columns)
+		if df is not None:
+			df.rename(columns={'user_id':'number_of_course_drops'}, inplace=True)
 		return df
 
 class CourseEnrollmentsEventsTimeseries(object):
