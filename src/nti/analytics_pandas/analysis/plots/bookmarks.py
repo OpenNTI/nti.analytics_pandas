@@ -29,7 +29,8 @@ class BookmarksTimeseriesPlot(object):
 		"""
 		self.bct = bct
 
-	def explore_events(self, period_breaks='1 day', minor_period_breaks=None, theme_seaborn_=True):
+	def explore_events(self, period_breaks='1 day', minor_period_breaks=None,
+					   theme_seaborn_=True):
 		"""
 		return scatter plots of bookmarks creation during period of time
 		it consists of:
@@ -48,12 +49,17 @@ class BookmarksTimeseriesPlot(object):
 		user_title = _('Number of unique users creating bookmarks during period of time')
 		ratio_title = _('Ratio of bookmarks created over unique user on each available date')
 
-		plots = self.generate_plots(df, event_title, user_title, ratio_title,
-									period_breaks, minor_period_breaks, theme_seaborn_)
+		plots = self.generate_plots(df,
+									event_title,
+									user_title,
+									ratio_title,
+									period_breaks,
+									minor_period_breaks,
+									theme_seaborn_)
 		return plots
 
 	def generate_plots(self, df, event_title, user_title, ratio_title,
-						period_breaks, minor_period_breaks, theme_seaborn_):
+					   period_breaks, minor_period_breaks, theme_seaborn_):
 
 		plot_bookmarks_creation = line_plot_x_axis_date(
 										df=df,
@@ -90,8 +96,9 @@ class BookmarksTimeseriesPlot(object):
 
 		return (plot_bookmarks_creation, plot_unique_users, plot_ratio)
 
-	def analyze_events_per_course_sections(self, period_breaks='1 week', minor_period_breaks='1 day',
-											theme_seaborn_=True):
+	def analyze_events_per_course_sections(self, period_breaks='1 week',
+										   minor_period_breaks='1 day',
+										   theme_seaborn_=True):
 		bct = self.bct
 		df = bct.analyze_events_per_course_sections()
 		if df is None:
@@ -123,15 +130,20 @@ class BookmarksTimeseriesPlot(object):
 			event_title = 'Number of bookmarks created in %s' % (context_name)
 			user_title = 'Number of unique users creating bookmarks in %s' % (context_name)
 			ratio_title = 'Ratio of bookmarks created over unique user in %s' % (context_name)
-			section_plots = self.generate_plots(new_df, event_title, user_title,
-												ratio_title, period_breaks,
-												minor_period_breaks, theme_seaborn_)
+			section_plots = self.generate_plots(new_df,
+												event_title,
+												user_title,
+												ratio_title,
+												period_breaks,
+												minor_period_breaks,
+												theme_seaborn_)
 			plots.append(section_plots)
 
 		return plots
 
-	def analyze_resource_types(self, period_breaks='1 week', minor_period_breaks='1 day', 
-								theme_seaborn_=True):
+	def analyze_resource_types(self, period_breaks='1 week',
+							   minor_period_breaks='1 day',
+							   theme_seaborn_=True):
 		"""
 		plot bookmark creation based on resource type
 		"""
@@ -147,9 +159,13 @@ class BookmarksTimeseriesPlot(object):
 		user_title = _('Number of unique users creating bookmarks  grouped by resource types')
 		ratio_title = _('Ratio of bookmarks created over unique user grouped by resource types')
 
-		plots = self.generate_group_by_plots(df, group_by,
-											 event_title, user_title, ratio_title,
-											 period_breaks, minor_period_breaks,
+		plots = self.generate_group_by_plots(df,
+											 group_by,
+											 event_title,
+											 user_title,
+											 ratio_title,
+											 period_breaks,
+											 minor_period_breaks,
 											 theme_seaborn_)
 
 		resource_df.reset_index(inplace=True)
@@ -182,10 +198,14 @@ class BookmarksTimeseriesPlot(object):
 		user_title = _('Number of unique users creating bookmarks  grouped by device types')
 		ratio_title = _('Ratio of bookmarks created over unique user grouped by device types')
 
-		plots = self.generate_group_by_plots(df, group_by,
-										event_title, user_title, ratio_title,
-										period_breaks, minor_period_breaks,
-										theme_seaborn_)
+		plots = self.generate_group_by_plots(df,
+											 group_by,
+											 event_title,
+											 user_title,
+											 ratio_title,
+											 period_breaks,
+											 minor_period_breaks,
+											 theme_seaborn_)
 		return plots
 
 	def generate_group_by_plots(self, df, group_by, event_title, user_title, ratio_title,

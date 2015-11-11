@@ -27,7 +27,8 @@ class HighlightsCreationTimeseriesPlot(object):
 		"""
 		self.hct = hct
 
-	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day', theme_seaborn_=True):
+	def explore_events(self, period_breaks='1 week',
+					   minor_period_breaks='1 day', theme_seaborn_=True):
 		hct = self.hct
 		df = hct.analyze_events()
 		if df is None:
@@ -38,13 +39,18 @@ class HighlightsCreationTimeseriesPlot(object):
 		event_title = _('Number of highlights created during period of time')
 		user_title = _('Number of unique users created highlights during period of time')
 		ratio_title = _('Ratio of highlights created over unique users during period of time')
-		plots = self.generate_plots(df,event_title, user_title, ratio_title,
-									period_breaks, minor_period_breaks,
+		plots = self.generate_plots(df,
+									event_title,
+									user_title,
+									ratio_title,
+									period_breaks,
+									minor_period_breaks,
 									theme_seaborn_)
 		return plots
 
-	def analyze_events_per_course_sections(self, period_breaks='1 week', minor_period_breaks='1 day',
-											theme_seaborn_=True):
+	def analyze_events_per_course_sections(self, period_breaks='1 week',
+										   minor_period_breaks='1 day',
+										   theme_seaborn_=True):
 		hct = self.hct
 		df = hct.analyze_events_per_course_sections()
 		if df is None:
@@ -76,8 +82,11 @@ class HighlightsCreationTimeseriesPlot(object):
 			event_title = 'Number of highlights created in %s' % (context_name)
 			user_title = 'Number of unique users creating highlights in %s' % (context_name)
 			ratio_title = 'Ratio of highlights created over unique user in %s' % (context_name)
-			section_plots = self.generate_plots(new_df, event_title, user_title,
-												ratio_title, period_breaks,
+			section_plots = self.generate_plots(new_df,
+												event_title,
+												user_title,
+												ratio_title,
+												period_breaks,
 												minor_period_breaks,
 												theme_seaborn_)
 			plots.append(section_plots)
@@ -96,10 +105,14 @@ class HighlightsCreationTimeseriesPlot(object):
 		event_title = _('Number of highlights created grouped by device types')
 		user_title = _('Number of unique users created highlights grouped by device types')
 		ratio_title = _('Ratio of highlights created over unique users grouped by device types')
-		plots = self.generate_group_by_plots(df, group_by,
-											event_title, user_title, ratio_title,
-											period_breaks, minor_period_breaks,
-											theme_seaborn_)
+		plots = self.generate_group_by_plots(df,
+											 group_by,
+											 event_title,
+											 user_title,
+											 ratio_title,
+											 period_breaks,
+											 minor_period_breaks,
+											 theme_seaborn_)
 		return plots
 
 	def generate_plots(self, df, event_title, user_title, ratio_title,
@@ -117,26 +130,26 @@ class HighlightsCreationTimeseriesPlot(object):
 											theme_seaborn_=theme_seaborn_)
 
 		plot_unique_users = line_plot_x_axis_date(
-											df=df,
-											x_axis_field='timestamp_period',
-											y_axis_field='number_of_unique_users',
-											x_axis_label=_('Date'),
-											y_axis_label=_('Number of unique users'),
-											title=user_title,
-											period_breaks=period_breaks,
-											minor_breaks=minor_period_breaks,
-											theme_seaborn_=theme_seaborn_)
+										df=df,
+										x_axis_field='timestamp_period',
+										y_axis_field='number_of_unique_users',
+										x_axis_label=_('Date'),
+										y_axis_label=_('Number of unique users'),
+										title=user_title,
+										period_breaks=period_breaks,
+										minor_breaks=minor_period_breaks,
+										theme_seaborn_=theme_seaborn_)
 
 		plot_ratio = line_plot_x_axis_date(
-											df=df,
-											x_axis_field='timestamp_period',
-											y_axis_field='ratio',
-											x_axis_label=_('Date'),
-											y_axis_label=_('Ratio'),
-											title=ratio_title,
-											period_breaks=period_breaks,
-											minor_breaks=minor_period_breaks,
-											theme_seaborn_=theme_seaborn_)
+									df=df,
+									x_axis_field='timestamp_period',
+									y_axis_field='ratio',
+									x_axis_label=_('Date'),
+									y_axis_label=_('Ratio'),
+									title=ratio_title,
+									period_breaks=period_breaks,
+									minor_breaks=minor_period_breaks,
+									theme_seaborn_=theme_seaborn_)
 
 		return (plot_highlights_created, plot_unique_users, plot_ratio)
 

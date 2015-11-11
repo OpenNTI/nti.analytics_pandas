@@ -27,7 +27,7 @@ class BookmarkCreationTimeseries(object):
 	"""
 
 	def __init__(self, session, start_date, end_date, course_id=None,
-				 with_resource_type=True, with_device_type=True, 
+				 with_resource_type=True, with_device_type=True,
 				 time_period_date=True, with_context_name=True):
 
 		self.session = session
@@ -61,7 +61,7 @@ class BookmarkCreationTimeseries(object):
 
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
-		
+
 		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def analyze_events(self):

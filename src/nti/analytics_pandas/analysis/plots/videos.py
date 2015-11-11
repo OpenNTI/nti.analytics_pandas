@@ -26,7 +26,7 @@ class VideoEventsTimeseriesPlot(object):
 		"""
 		self.vet = vet
 
-	def explore_events(self, period_breaks='1 day', minor_period_breaks=None, 
+	def explore_events(self, period_breaks='1 day', minor_period_breaks=None,
 						theme_seaborn_=True):
 		"""
 		return plots of video events during period of time
@@ -56,7 +56,8 @@ class VideoEventsTimeseriesPlot(object):
 		return plots
 
 	def generate_plots(self, df, event_title, user_title, ratio_title,
-						period_breaks, minor_period_breaks, theme_seaborn_):
+					   period_breaks, minor_period_breaks, theme_seaborn_):
+
 		plot_video_events = line_plot_x_axis_date(
 								df=df,
 								x_axis_field='timestamp_period',
@@ -92,10 +93,8 @@ class VideoEventsTimeseriesPlot(object):
 
 		return (plot_video_events, plot_unique_users, plot_ratio)
 
-	def generate_group_by_plots(self, df, group_by,
-						event_title, user_title, ratio_title,
-						period_breaks, minor_period_breaks,
-						theme_seaborn_):
+	def generate_group_by_plots(self, df, group_by, event_title, user_title, ratio_title,
+								period_breaks, minor_period_breaks, theme_seaborn_):
 
 		plot_video_events = group_line_plot_x_axis_date(
 									df=df,
@@ -159,12 +158,12 @@ class VideoEventsTimeseriesPlot(object):
 		user_title = _('Number of unique users creating video events grouped by device types')
 		ratio_title = _('Ratio of video events over unique users grouped by device types')
 		plots = self.generate_group_by_plots(
-									df, 
+									df,
 									group_by,
-									event_title, 
-									user_title, 
+									event_title,
+									user_title,
 									ratio_title,
-									period_breaks, 
+									period_breaks,
 									minor_period_breaks,
 									theme_seaborn_)
 		return plots
@@ -253,10 +252,10 @@ class VideoEventsTimeseriesPlot(object):
 			user_title = 'Number of unique users on video events (%s) in %s' % (video_event_type, context_name)
 			ratio_title = 'Ratio of video events (%s) over unique user in %s' % (video_event_type, context_name)
 			section_plots = self.generate_plots(
-											new_df, 
-											event_title, 
+											new_df,
+											event_title,
 											user_title,
-											ratio_title, 
+											ratio_title,
 											period_breaks,
 											minor_period_breaks,
 											theme_seaborn_)

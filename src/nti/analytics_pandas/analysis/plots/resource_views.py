@@ -205,9 +205,9 @@ class  ResourceViewsTimeseriesPlot(object):
 
 		return (plot_resource_views, plot_unique_users, plot_ratio, plot_unique_resources)
 
-	def generate_group_by_scatter_plots(self, df, group_by,
-								event_title, user_title, ratio_title, unique_resource_title,
-								period_breaks, minor_period_breaks, theme_seaborn_):
+	def generate_group_by_scatter_plots(self, df, group_by, event_title, user_title,
+										ratio_title, unique_resource_title,
+										period_breaks, minor_period_breaks, theme_seaborn_):
 
 		plot_resource_views = group_scatter_plot_x_axis_date(
 											df=df,
@@ -259,8 +259,9 @@ class  ResourceViewsTimeseriesPlot(object):
 
 		return (plot_resource_views, plot_unique_users, plot_ratio, plot_unique_resources)
 
-	def analyze_resource_type(self, period_breaks='1 week', minor_period_breaks='1 day',
-								theme_seaborn_=True):
+	def analyze_resource_type(self, period_breaks='1 week', 
+							  minor_period_breaks='1 day',
+							  theme_seaborn_=True):
 		"""
 		plot resource views based on resource type
 		"""
@@ -277,19 +278,20 @@ class  ResourceViewsTimeseriesPlot(object):
 		ratio_title = _('Ratio of resource views over unique users grouped by resource type')
 		unique_resource_title = _('Number of unique course resource viewed during time period')
 		plots = self.generate_group_by_plots(
-										df, 
-										group_by,
-										event_title,
-										user_title,
-										ratio_title, 
-										unique_resource_title,
-										period_breaks,
-										minor_period_breaks,
-										theme_seaborn_)
+									df, 
+									group_by,
+									event_title,
+									user_title,
+									ratio_title, 
+									unique_resource_title,
+									period_breaks,
+									minor_period_breaks,
+									theme_seaborn_)
 		return plots
 
-	def analyze_resource_type_scatter_plot(self, period_breaks='1 week', minor_period_breaks='1 day',
-											theme_seaborn_=True):
+	def analyze_resource_type_scatter_plot(self, period_breaks='1 week', 
+										   minor_period_breaks='1 day',
+										   theme_seaborn_=True):
 		"""
 		plot resource views based on resource type
 		"""
@@ -335,15 +337,15 @@ class  ResourceViewsTimeseriesPlot(object):
 		ratio_title = _('Ratio of resource views over unique users grouped by device type')
 		unique_resource_title = _('Number of unique course resource viewed during time period')
 		plots = self.generate_group_by_plots(
-										df, 
-										group_by,
-										event_title, 
-										user_title, 
-										ratio_title, 
-										unique_resource_title,
-										period_breaks,
-										minor_period_breaks, 
-										theme_seaborn_)
+									df, 
+									group_by,
+									event_title, 
+									user_title, 
+									ratio_title, 
+									unique_resource_title,
+									period_breaks,
+									minor_period_breaks, 
+									theme_seaborn_)
 		return plots
 
 	def analyze_device_type_scatter_plot(self, period_breaks='1 week', minor_period_breaks='1 day',
@@ -363,15 +365,15 @@ class  ResourceViewsTimeseriesPlot(object):
 		ratio_title = _('Ratio of resource views over unique users grouped by device type')
 		unique_resource_title = _('Number of unique course resource viewed during time period')
 		plots = self.generate_group_by_scatter_plots(
-											df, 
-											group_by,
-											event_title, 
-											user_title, 
-											ratio_title, 
-											unique_resource_title,
-											period_breaks,
-											minor_period_breaks,
-											theme_seaborn_)
+										df, 
+										group_by,
+										event_title, 
+										user_title, 
+										ratio_title, 
+										unique_resource_title,
+										period_breaks,
+										minor_period_breaks,
+										theme_seaborn_)
 		return plots
 
 
@@ -384,11 +386,11 @@ class  ResourceViewsTimeseriesPlot(object):
 						inplace=True)
 
 		plot_users = histogram_plot_x_axis_discrete(
-											df=users_df,
-											x_axis_field='username' ,
-											y_axis_field='number_of_resource_views',
-											x_axis_label=_('Username'),
-											y_axis_label=_('Number of resource views'),
-											title=_('The most active users viewing resource'),
-											stat='identity')
+										df=users_df,
+										x_axis_field='username' ,
+										y_axis_field='number_of_resource_views',
+										x_axis_label=_('Username'),
+										y_axis_label=_('Number of resource views'),
+										title=_('The most active users viewing resource'),
+										stat='identity')
 		return (plot_users,)

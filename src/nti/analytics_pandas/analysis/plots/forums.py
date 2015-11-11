@@ -27,7 +27,9 @@ class ForumsEventsTimeseriesPlot(object):
 		"""
 		self.fet = fet
 
-	def explore_all_events(self, period_breaks='1 week', minor_period_breaks='1 day', theme_seaborn_=True):
+	def explore_all_events(self, period_breaks='1 week',
+						   minor_period_breaks='1 day', theme_seaborn_=True):
+
 		fet = self.fet
 		df = fet.combine_all_events_per_date()
 		if len(df.index) <= 0:
@@ -55,7 +57,7 @@ class ForumsEventsTimeseriesPlot(object):
 				period_breaks=period_breaks,
 				group_by='event_type',
 				minor_breaks=minor_period_breaks,
-				theme_seaborn_ = theme_seaborn_)
+				theme_seaborn_=theme_seaborn_)
 
 		plot_ratio = group_line_plot_x_axis_date(
 				df=df,
@@ -79,7 +81,8 @@ class ForumsCreatedTimeseriesPlot(object):
 		"""
 		self.fct = fct
 
-	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day', theme_seaborn_=True):
+	def explore_events(self, period_breaks='1 week',
+					   minor_period_breaks='1 day', theme_seaborn_=True):
 		"""
 		return scatter plots of forums creation during period of time
 		it consists of:
@@ -129,7 +132,7 @@ class ForumsCreatedTimeseriesPlot(object):
 
 		return (plot_forums_created, plot_unique_users, plot_ratio)
 
-	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day', 
+	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day',
 								theme_seaborn_=True):
 		"""
 		return scatter plots of forums creation grouped by device type during period of time
@@ -454,7 +457,7 @@ class ForumCommentLikesTimeseriesPlot(object):
 		"""
 		self.fclt = fclt
 
-	def analyze_events(self, period_breaks='1 week', minor_period_breaks='1 day', 
+	def analyze_events(self, period_breaks='1 week', minor_period_breaks='1 day',
 						theme_seaborn_=True):
 		"""
 		return plots of forum comment likes during period of time
