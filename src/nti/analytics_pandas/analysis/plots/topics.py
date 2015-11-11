@@ -260,7 +260,8 @@ class TopicViewsTimeseriesPlot(object):
 		"""
 		self.tvt = tvt
 
-	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
+	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day', 
+						theme_seaborn_=True):
 		"""
 		return plots of topics viewed during period of time
 		it consists of:
@@ -283,10 +284,12 @@ class TopicViewsTimeseriesPlot(object):
 									user_title,
 									ratio_title,
 									period_breaks,
-									minor_period_breaks)
+									minor_period_breaks,
+									theme_seaborn_)
 		return plots
 
-	def analyze_events_per_course_sections(self, period_breaks='1 week', minor_period_breaks='1 day'):
+	def analyze_events_per_course_sections(self, period_breaks='1 week', minor_period_breaks='1 day',
+											theme_seaborn_=True):
 		tvt = self.tvt
 		df = tvt.analyze_events_per_course_sections()
 		if df is None:
@@ -306,7 +309,8 @@ class TopicViewsTimeseriesPlot(object):
 															 user_title,
 															 ratio_title,
 															 period_breaks,
-															 minor_period_breaks)
+															 minor_period_breaks,
+															 theme_seaborn_)
 			plots.append(all_section_plots)
 
 		for course_id in course_ids:
@@ -320,12 +324,13 @@ class TopicViewsTimeseriesPlot(object):
 												user_title,
 												ratio_title, 
 												period_breaks,
-												minor_period_breaks)
-			plots.append(section_plots)
-			
+												minor_period_breaks,
+												theme_seaborn_)
+			plots.append(section_plots)		
 		return plots
 
-	def analyze_device_types(self, period_breaks='1 day', minor_period_breaks=None):
+	def analyze_device_types(self, period_breaks='1 day', minor_period_breaks=None,
+							theme_seaborn_=True):
 		"""
 		return plots of topics viewed grouped by device type during period of time
 		it consists of:
@@ -350,11 +355,12 @@ class TopicViewsTimeseriesPlot(object):
 											 user_title,
 											 ratio_title,
 											 period_breaks,
-											 minor_period_breaks)
+											 minor_period_breaks,
+											 theme_seaborn_)
 		return plots
 
 	def generate_plots(self, df, event_title, user_title, ratio_title, 
-						period_breaks, minor_period_breaks):
+						period_breaks, minor_period_breaks, theme_seaborn_):
 
 		plot_topics_viewed = line_plot_x_axis_date(
 									df=df,
@@ -364,7 +370,8 @@ class TopicViewsTimeseriesPlot(object):
 									y_axis_label=_('Number of topics viewed'),
 									title=event_title,
 									period_breaks=period_breaks,
-									minor_breaks=minor_period_breaks)
+									minor_breaks=minor_period_breaks,
+									theme_seaborn_=theme_seaborn_)
 
 		plot_unique_users = line_plot_x_axis_date(
 									df=df,
@@ -374,7 +381,8 @@ class TopicViewsTimeseriesPlot(object):
 									y_axis_label=_('Number of unique users'),
 									title=user_title,
 									period_breaks=period_breaks,
-									minor_breaks=minor_period_breaks)
+									minor_breaks=minor_period_breaks,
+									theme_seaborn_=theme_seaborn_)
 
 		plot_ratio = line_plot_x_axis_date(
 								df=df,
@@ -384,13 +392,15 @@ class TopicViewsTimeseriesPlot(object):
 								y_axis_label=_('Ratio'),
 								title=ratio_title,
 								period_breaks=period_breaks,
-								minor_breaks=minor_period_breaks)
+								minor_breaks=minor_period_breaks,
+								theme_seaborn_=theme_seaborn_)
 
 		return (plot_topics_viewed, plot_unique_users, plot_ratio)
 
 	def generate_group_by_plots(self, df, group_by,
 								event_title, user_title, ratio_title, 
-								period_breaks, minor_period_breaks):
+								period_breaks, minor_period_breaks,
+								theme_seaborn_):
 
 		plot_topics_viewed = group_line_plot_x_axis_date(
 										df=df,
@@ -401,7 +411,8 @@ class TopicViewsTimeseriesPlot(object):
 										title=event_title,
 										period_breaks=period_breaks,
 										group_by=group_by,
-										minor_breaks=minor_period_breaks)
+										minor_breaks=minor_period_breaks,
+										theme_seaborn_=theme_seaborn_)
 
 		plot_unique_users = group_line_plot_x_axis_date(
 										df=df,
@@ -412,7 +423,8 @@ class TopicViewsTimeseriesPlot(object):
 										title=user_title,
 										period_breaks=period_breaks,
 										group_by=group_by,
-										minor_breaks=minor_period_breaks)
+										minor_breaks=minor_period_breaks,
+										theme_seaborn_=theme_seaborn_)
 
 		plot_ratio = group_line_plot_x_axis_date(
 									df=df,
@@ -423,7 +435,8 @@ class TopicViewsTimeseriesPlot(object):
 									title=ratio_title,
 									period_breaks=period_breaks,
 									group_by=group_by,
-									minor_breaks=minor_period_breaks)
+									minor_breaks=minor_period_breaks,
+									theme_seaborn_=theme_seaborn_)
 
 		return (plot_topics_viewed, plot_unique_users, plot_ratio)
 
