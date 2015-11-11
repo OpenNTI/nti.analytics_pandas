@@ -27,7 +27,7 @@ class ForumsEventsTimeseriesPlot(object):
 		"""
 		self.fet = fet
 
-	def explore_all_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
+	def explore_all_events(self, period_breaks='1 week', minor_period_breaks='1 day', theme_seaborn_=True):
 		fet = self.fet
 		df = fet.combine_all_events_per_date()
 		if len(df.index) <= 0:
@@ -42,7 +42,8 @@ class ForumsEventsTimeseriesPlot(object):
 				title=_('Number of forums events grouped by event type during period of time'),
 				period_breaks=period_breaks,
 				group_by='event_type',
-				minor_breaks=minor_period_breaks)
+				minor_breaks=minor_period_breaks,
+				theme_seaborn_=theme_seaborn_)
 
 		plot_unique_users = group_line_plot_x_axis_date(
 				df=df,
@@ -53,7 +54,8 @@ class ForumsEventsTimeseriesPlot(object):
 				title=_('Number of unique users creating forums events during period of time'),
 				period_breaks=period_breaks,
 				group_by='event_type',
-				minor_breaks=minor_period_breaks)
+				minor_breaks=minor_period_breaks,
+				theme_seaborn_ = theme_seaborn_)
 
 		plot_ratio = group_line_plot_x_axis_date(
 				df=df,
@@ -64,7 +66,8 @@ class ForumsEventsTimeseriesPlot(object):
 				title=_('Ratio of forums events over unique user on each available date'),
 				period_breaks=period_breaks,
 				group_by='event_type',
-				minor_breaks=minor_period_breaks)
+				minor_breaks=minor_period_breaks,
+				theme_seaborn_=theme_seaborn_)
 
 		return (plot_forums_events, plot_unique_users, plot_ratio)
 
@@ -76,7 +79,7 @@ class ForumsCreatedTimeseriesPlot(object):
 		"""
 		self.fct = fct
 
-	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
+	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day', theme_seaborn_=True):
 		"""
 		return scatter plots of forums creation during period of time
 		it consists of:
@@ -99,7 +102,8 @@ class ForumsCreatedTimeseriesPlot(object):
 				y_axis_label=_('Number of forums created'),
 				title=_('Number of forums created during period of time'),
 				period_breaks=period_breaks,
-				minor_breaks=minor_period_breaks)
+				minor_breaks=minor_period_breaks,
+				theme_seaborn_=theme_seaborn_)
 
 		plot_unique_users = line_plot_x_axis_date(
 				df=df,
@@ -109,7 +113,8 @@ class ForumsCreatedTimeseriesPlot(object):
 				y_axis_label=_('Number of unique users'),
 				title=_('Number of unique users creating forums during period of time'),
 				period_breaks=period_breaks,
-				minor_breaks=minor_period_breaks)
+				minor_breaks=minor_period_breaks,
+				theme_seaborn_=theme_seaborn_)
 
 		plot_ratio = line_plot_x_axis_date(
 				df=df,
@@ -119,11 +124,13 @@ class ForumsCreatedTimeseriesPlot(object):
 				y_axis_label=_('Ratio'),
 				title=_('Ratio of forums created over unique user on each available date'),
 				period_breaks=period_breaks,
-				minor_breaks=minor_period_breaks)
+				minor_breaks=minor_period_breaks,
+				theme_seaborn_=theme_seaborn_)
 
 		return (plot_forums_created, plot_unique_users, plot_ratio)
 
-	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
+	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day', 
+								theme_seaborn_=True):
 		"""
 		return scatter plots of forums creation grouped by device type during period of time
 		it consists of:
@@ -149,7 +156,8 @@ class ForumsCreatedTimeseriesPlot(object):
 				title=_('Number of forums created grouped by device types'),
 				period_breaks=period_breaks,
 				group_by='device_type',
-				minor_breaks=minor_period_breaks)
+				minor_breaks=minor_period_breaks,
+				theme_seaborn_=theme_seaborn_)
 
 		plot_unique_users = group_line_plot_x_axis_date(
 				df=df,
@@ -160,7 +168,8 @@ class ForumsCreatedTimeseriesPlot(object):
 				title=_('Number of unique users creating forums grouped by device types'),
 				period_breaks=period_breaks,
 				group_by='device_type',
-				minor_breaks=minor_period_breaks)
+				minor_breaks=minor_period_breaks,
+				theme_seaborn_=theme_seaborn_)
 
 		plot_ratio = group_line_plot_x_axis_date(
 				df=df,
@@ -171,7 +180,8 @@ class ForumsCreatedTimeseriesPlot(object):
 				title=_('Ratio of forums created over unique user on each available date'),
 				period_breaks=period_breaks,
 				group_by='device_type',
-				minor_breaks=minor_period_breaks)
+				minor_breaks=minor_period_breaks,
+				theme_seaborn_=theme_seaborn_)
 
 		return (plot_forums_created, plot_unique_users, plot_ratio)
 
