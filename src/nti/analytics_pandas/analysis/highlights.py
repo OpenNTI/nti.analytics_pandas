@@ -89,10 +89,11 @@ class HighlightsCreationTimeseries(object):
 		agg_columns = {	'user_id'	  	: pd.Series.nunique,
 						'highlight_id' 	: pd.Series.count}
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
-		df.rename(columns={'user_id'		:'number_of_unique_users',
-							 'highlight_id'	:'number_of_highlights_created'},
-				  inplace=True)
-		df['ratio'] = df['number_of_highlights_created'] / df['number_of_unique_users']
+		if df is not None:
+			df.rename(columns={'user_id'		:'number_of_unique_users',
+								 'highlight_id'	:'number_of_highlights_created'},
+					  inplace=True)
+			df['ratio'] = df['number_of_highlights_created'] / df['number_of_unique_users']
 		return df
 
 	def get_the_most_active_users(self, max_rank_number=10):
