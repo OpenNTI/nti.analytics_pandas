@@ -127,11 +127,12 @@ class ResourceViewsTimeseries(object):
 						'resource_view_id' 	: pd.Series.count,
 						'resource_id'		: pd.Series.nunique}
 		df = analyze_types_(self.dataframe, group_by_columns, agg_columns)
-		df.rename(columns={	'user_id'	:'number_of_unique_users',
-							'resource_view_id'	:'number_of_resource_views',
-							'resource_id': 'number_of_unique_resource'},
-					inplace=True)
-		df['ratio'] = df['number_of_resource_views'] / df['number_of_unique_users']
+		if df is not None:
+			df.rename(columns={	'user_id'	:'number_of_unique_users',
+								'resource_view_id'	:'number_of_resource_views',
+								'resource_id': 'number_of_unique_resource'},
+						inplace=True)
+			df['ratio'] = df['number_of_resource_views'] / df['number_of_unique_users']
 		return df
 
 	def get_the_most_active_users(self, max_rank_number=10):
