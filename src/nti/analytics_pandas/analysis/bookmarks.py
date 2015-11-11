@@ -92,10 +92,11 @@ class BookmarkCreationTimeseries(object):
 		agg_columns = {	'bookmark_id' 	: pd.Series.nunique,
 						'user_id'		: pd.Series.nunique }
 		df = analyze_types_(self.dataframe, group_by_columns, agg_columns)
-		df.rename(columns={	'bookmark_id'	:'number_of_bookmarks_created',
-							'user_id'		:'number_of_unique_users'},
-					inplace=True)
-		df['ratio'] = df['number_of_bookmarks_created'] / df['number_of_unique_users']
+		if df is not None:
+			df.rename(columns={	'bookmark_id'	:'number_of_bookmarks_created',
+								'user_id'		:'number_of_unique_users'},
+						inplace=True)
+			df['ratio'] = df['number_of_bookmarks_created'] / df['number_of_unique_users']
 		return df
 
 	def analyze_resource_device_types(self):
