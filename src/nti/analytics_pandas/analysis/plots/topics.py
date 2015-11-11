@@ -653,7 +653,8 @@ class TopicFavoritesTimeseriesPlot(object):
 		"""
 		self.tft = tft
 
-	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
+	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day',
+						theme_seaborn_=True):
 		"""
 		return plots of topic favorites during period of time
 		it consists of:
@@ -676,10 +677,12 @@ class TopicFavoritesTimeseriesPlot(object):
 									user_title,
 									ratio_title,
 									period_breaks,
-									minor_period_breaks)
+									minor_period_breaks,
+									theme_seaborn_)
 		return plots
 
-	def analyze_events_per_course_sections(self, period_breaks='1 week', minor_period_breaks='1 day'):
+	def analyze_events_per_course_sections(self, period_breaks='1 week', minor_period_breaks='1 day',
+											theme_seaborn_=True):
 		tft = self.tft
 		df = tft.analyze_events_per_course_sections()
 		if df is None:
@@ -699,7 +702,8 @@ class TopicFavoritesTimeseriesPlot(object):
 															 user_title,
 															 ratio_title,
 															 period_breaks,
-															 minor_period_breaks)
+															 minor_period_breaks,
+															 theme_seaborn_)
 			plots.append(all_section_plots)
 
 		for course_id in course_ids:
@@ -713,11 +717,13 @@ class TopicFavoritesTimeseriesPlot(object):
 												user_title,
 												ratio_title, 
 												period_breaks,
-												minor_period_breaks)
+												minor_period_breaks,
+												theme_seaborn_)
 			plots.append(section_plots)
 		return plots
 
-	def analyze_events_per_device_types(self, period_breaks='1 day', minor_period_breaks=None):
+	def analyze_events_per_device_types(self, period_breaks='1 day', minor_period_breaks=None,
+										theme_seaborn_=True):
 		"""
 		return plots of topic favorites grouped by device  types
 		it consists of:
@@ -742,11 +748,12 @@ class TopicFavoritesTimeseriesPlot(object):
 											 user_title,
 											 ratio_title,
 											 period_breaks,
-											 minor_period_breaks)
+											 minor_period_breaks,
+											 theme_seaborn_)
 		return plots
 
 	def generate_plots(self, df, event_title, user_title, ratio_title, 
-						period_breaks, minor_period_breaks):
+						period_breaks, minor_period_breaks, theme_seaborn_):
 
 		plot_topic_favorites = line_plot_x_axis_date(
 										df=df,
@@ -756,7 +763,8 @@ class TopicFavoritesTimeseriesPlot(object):
 										y_axis_label=_('Number of topic favorites'),
 										title=event_title,
 										period_breaks=period_breaks,
-										minor_breaks=minor_period_breaks)
+										minor_breaks=minor_period_breaks,
+										theme_seaborn_=theme_seaborn_)
 
 		plot_unique_users = line_plot_x_axis_date(
 										df=df,
@@ -766,7 +774,8 @@ class TopicFavoritesTimeseriesPlot(object):
 										y_axis_label=_('Number of unique users'),
 										title=user_title,
 										period_breaks=period_breaks,
-										minor_breaks=minor_period_breaks)
+										minor_breaks=minor_period_breaks,
+										theme_seaborn_=theme_seaborn_)
 
 		plot_ratio = line_plot_x_axis_date(
 								df=df,
@@ -776,13 +785,15 @@ class TopicFavoritesTimeseriesPlot(object):
 								y_axis_label=_('Ratio'),
 								title=ratio_title,
 								period_breaks=period_breaks,
-								minor_breaks=minor_period_breaks)
+								minor_breaks=minor_period_breaks,
+								theme_seaborn_=theme_seaborn_)
 
 		return (plot_topic_favorites, plot_unique_users, plot_ratio)
 
 	def generate_group_by_plots(self, df, group_by,
 								event_title, user_title, ratio_title, 
-								period_breaks, minor_period_breaks):
+								period_breaks, minor_period_breaks,
+								theme_seaborn_):
 		
 		plot_topic_favorites = group_line_plot_x_axis_date(
 											df=df,
@@ -793,7 +804,8 @@ class TopicFavoritesTimeseriesPlot(object):
 											title=event_title,
 											period_breaks=period_breaks,
 											group_by=group_by,
-											minor_breaks=minor_period_breaks)
+											minor_breaks=minor_period_breaks,
+											theme_seaborn_=theme_seaborn_)
 
 		plot_unique_users = group_line_plot_x_axis_date(
 											df=df,
@@ -804,7 +816,8 @@ class TopicFavoritesTimeseriesPlot(object):
 											title=user_title,
 											period_breaks=period_breaks,
 											group_by=group_by,
-											minor_breaks=minor_period_breaks)
+											minor_breaks=minor_period_breaks,
+											theme_seaborn_=theme_seaborn_)
 
 		plot_ratio = group_line_plot_x_axis_date(
 									df=df,
@@ -815,6 +828,7 @@ class TopicFavoritesTimeseriesPlot(object):
 									title=ratio_title,
 									period_breaks=period_breaks,
 									group_by=group_by,
-									minor_breaks=minor_period_breaks)
+									minor_breaks=minor_period_breaks,
+									theme_seaborn_=theme_seaborn_)
 
 		return (plot_topic_favorites, plot_unique_users, plot_ratio)
