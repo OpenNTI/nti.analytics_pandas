@@ -134,8 +134,9 @@ class VideoEventsTimeseries(object):
 		agg_columns = {	'user_id': pd.Series.nunique,
 						'video_view_id': pd.Series.count}
 		df = analyze_types_(dataframe, group_by_items, agg_columns)
-		df.rename(columns={	'user_id'		:'number_of_unique_users',
-							'video_view_id'	:'number_of_video_events'},
-					inplace=True)
-		df['ratio'] = df['number_of_video_events'] / df['number_of_unique_users']
+		if df is not None:
+			df.rename(columns={	'user_id'		:'number_of_unique_users',
+								'video_view_id'	:'number_of_video_events'},
+						inplace=True)
+			df['ratio'] = df['number_of_video_events'] / df['number_of_unique_users']
 		return df
