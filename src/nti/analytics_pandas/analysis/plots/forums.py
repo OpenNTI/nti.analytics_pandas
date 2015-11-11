@@ -454,7 +454,8 @@ class ForumCommentLikesTimeseriesPlot(object):
 		"""
 		self.fclt = fclt
 
-	def analyze_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
+	def analyze_events(self, period_breaks='1 week', minor_period_breaks='1 day', 
+						theme_seaborn_=True):
 		"""
 		return plots of forum comment likes during period of time
 		it consists of:
@@ -477,11 +478,14 @@ class ForumCommentLikesTimeseriesPlot(object):
 									user_title,
 									ratio_title,
 									period_breaks,
-									minor_period_breaks)
+									minor_period_breaks,
+									theme_seaborn_)
 		return plots
 
 
-	def analyze_events_per_course_sections(self, period_breaks='1 week', minor_period_breaks='1 day'):
+	def analyze_events_per_course_sections(self, period_breaks='1 week',
+											minor_period_breaks='1 day',
+											theme_seaborn_=True):
 		fclt = self.fclt
 		df = fclt.analyze_events_per_course_sections()
 		if df is None:
@@ -503,7 +507,8 @@ class ForumCommentLikesTimeseriesPlot(object):
 															 user_title,
 															 ratio_title,
 															 period_breaks,
-															 minor_period_breaks)
+															 minor_period_breaks,
+															 theme_seaborn_)
 			plots.append(all_section_plots)
 
 		for course_id in course_ids:
@@ -517,12 +522,13 @@ class ForumCommentLikesTimeseriesPlot(object):
 												user_title,
 												ratio_title,
 												period_breaks,
-												minor_period_breaks)
+												minor_period_breaks,
+												theme_seaborn_)
 			plots.append(section_plots)
-
 		return plots
 
-	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
+	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day',
+							theme_seaborn_=True):
 		"""
 		plot the number of comments liked on each available date during time period.
 		It also shows the number of unique users liking comments
@@ -544,11 +550,12 @@ class ForumCommentLikesTimeseriesPlot(object):
 											 user_title,
 											 ratio_title,
 											 period_breaks,
-											 minor_period_breaks)
+											 minor_period_breaks,
+											 theme_seaborn_)
 		return plots
 
 	def generate_plots(self, df, event_title, user_title, ratio_title, period_breaks,
-					   minor_period_breaks):
+					   minor_period_breaks, theme_seaborn_):
 
 		plot_comment_likes = line_plot_x_axis_date(
 									df=df,
@@ -558,7 +565,8 @@ class ForumCommentLikesTimeseriesPlot(object):
 									y_axis_label=_('Number of forum comment likes'),
 									title=event_title,
 									period_breaks=period_breaks,
-									minor_breaks=minor_period_breaks)
+									minor_breaks=minor_period_breaks,
+									theme_seaborn_=theme_seaborn_)
 
 		plot_unique_users = line_plot_x_axis_date(
 									df=df,
@@ -568,7 +576,8 @@ class ForumCommentLikesTimeseriesPlot(object):
 									y_axis_label=_('Number of unique users'),
 									title=user_title,
 									period_breaks=period_breaks,
-									minor_breaks=minor_period_breaks)
+									minor_breaks=minor_period_breaks,
+									theme_seaborn_=theme_seaborn_)
 
 		plot_ratio = line_plot_x_axis_date(
 								df=df,
@@ -578,7 +587,8 @@ class ForumCommentLikesTimeseriesPlot(object):
 								y_axis_label=_('Ratio'),
 								title=ratio_title,
 								period_breaks=period_breaks,
-								minor_breaks=minor_period_breaks)
+								minor_breaks=minor_period_breaks,
+								theme_seaborn_=theme_seaborn_)
 
 		return (plot_comment_likes, plot_unique_users, plot_ratio)
 
@@ -589,7 +599,8 @@ class ForumCommentLikesTimeseriesPlot(object):
 								user_title,
 								ratio_title,
 								period_breaks,
-								minor_period_breaks):
+								minor_period_breaks,
+								theme_seaborn_):
 
 		plot_comment_likes = group_line_plot_x_axis_date(
 									df=df,
@@ -600,7 +611,8 @@ class ForumCommentLikesTimeseriesPlot(object):
 									title=event_title,
 									period_breaks=period_breaks,
 									group_by=group_by,
-									minor_breaks=minor_period_breaks)
+									minor_breaks=minor_period_breaks,
+									theme_seaborn_=theme_seaborn_)
 
 		plot_unique_users = group_line_plot_x_axis_date(
 									df=df,
@@ -611,7 +623,8 @@ class ForumCommentLikesTimeseriesPlot(object):
 									title=user_title,
 									period_breaks=period_breaks,
 									group_by=group_by,
-									minor_breaks=minor_period_breaks)
+									minor_breaks=minor_period_breaks,
+									theme_seaborn_=theme_seaborn_)
 
 		plot_ratio = group_line_plot_x_axis_date(
 									df=df,
@@ -622,7 +635,8 @@ class ForumCommentLikesTimeseriesPlot(object):
 									title=_('Ratio of forum comments liked over unique user grouped by device types'),
 									period_breaks=period_breaks,
 									group_by=group_by,
-									minor_breaks=minor_period_breaks)
+									minor_breaks=minor_period_breaks,
+									theme_seaborn_=theme_seaborn_)
 
 		return (plot_comment_likes, plot_unique_users, plot_ratio)
 
