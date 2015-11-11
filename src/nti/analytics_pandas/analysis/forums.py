@@ -200,11 +200,12 @@ class ForumsCommentsCreatedTimeseries(object):
 						'like_count'	: np.sum,
 						'favorite_count': np.sum}
 		df = analyze_types_(self.dataframe, group_by_items, agg_columns)
-		df.rename(columns={	'comment_id'	 :'number_of_comment_created',
-							'user_id'		 :'number_of_unique_users',
-							'comment_length' :'average_comment_length'},
-				  inplace=True)
-		df['ratio'] = df['number_of_comment_created'] / df['number_of_unique_users']
+		if df is not None:
+			df.rename(columns={	'comment_id'	 :'number_of_comment_created',
+								'user_id'		 :'number_of_unique_users',
+								'comment_length' :'average_comment_length'},
+					  inplace=True)
+			df['ratio'] = df['number_of_comment_created'] / df['number_of_unique_users']
 		return df
 
 	def get_the_most_active_users(self, max_rank_number=10):
