@@ -26,7 +26,8 @@ class VideoEventsTimeseriesPlot(object):
 		"""
 		self.vet = vet
 
-	def explore_events(self, period_breaks='1 day', minor_period_breaks=None):
+	def explore_events(self, period_breaks='1 day', minor_period_breaks=None, 
+						theme_seaborn_=True):
 		"""
 		return plots of video events during period of time
 		it consists of:
@@ -50,11 +51,12 @@ class VideoEventsTimeseriesPlot(object):
 								user_title,
 								ratio_title,
 								period_breaks,
-								minor_period_breaks)
+								minor_period_breaks,
+								theme_seaborn_)
 		return plots
 
 	def generate_plots(self, df, event_title, user_title, ratio_title,
-						period_breaks, minor_period_breaks):
+						period_breaks, minor_period_breaks, theme_seaborn_):
 		plot_video_events = line_plot_x_axis_date(
 								df=df,
 								x_axis_field='timestamp_period',
@@ -63,7 +65,8 @@ class VideoEventsTimeseriesPlot(object):
 								y_axis_label=_('Number of videos events'),
 								title=event_title,
 								period_breaks=period_breaks,
-								minor_breaks=minor_period_breaks)
+								minor_breaks=minor_period_breaks,
+								theme_seaborn_=theme_seaborn_)
 
 		plot_unique_users = line_plot_x_axis_date(
 								df=df,
@@ -73,7 +76,8 @@ class VideoEventsTimeseriesPlot(object):
 								y_axis_label=_('Number of unique users'),
 								title=user_title,
 								period_breaks=period_breaks,
-								minor_breaks=minor_period_breaks)
+								minor_breaks=minor_period_breaks,
+								theme_seaborn_=theme_seaborn_)
 
 		plot_ratio = line_plot_x_axis_date(
 								df=df,
@@ -83,13 +87,15 @@ class VideoEventsTimeseriesPlot(object):
 								y_axis_label=_('Ratio'),
 								title=ratio_title,
 								period_breaks=period_breaks,
-								minor_breaks=minor_period_breaks)
+								minor_breaks=minor_period_breaks,
+								theme_seaborn_=theme_seaborn_)
 
 		return (plot_video_events, plot_unique_users, plot_ratio)
 
 	def generate_group_by_plots(self, df, group_by,
 						event_title, user_title, ratio_title,
-						period_breaks, minor_period_breaks):
+						period_breaks, minor_period_breaks,
+						theme_seaborn_):
 
 		plot_video_events = group_line_plot_x_axis_date(
 									df=df,
@@ -100,7 +106,8 @@ class VideoEventsTimeseriesPlot(object):
 									title=event_title,
 									period_breaks=period_breaks,
 									group_by=group_by,
-									minor_breaks=minor_period_breaks)
+									minor_breaks=minor_period_breaks,
+									theme_seaborn_=theme_seaborn_)
 
 		plot_unique_users = group_line_plot_x_axis_date(
 									df=df,
@@ -111,7 +118,8 @@ class VideoEventsTimeseriesPlot(object):
 									title=user_title,
 									period_breaks=period_breaks,
 									group_by=group_by,
-									minor_breaks=minor_period_breaks)
+									minor_breaks=minor_period_breaks,
+									theme_seaborn_=theme_seaborn_)
 
 		plot_ratio = group_line_plot_x_axis_date(
 									df=df,
@@ -122,13 +130,15 @@ class VideoEventsTimeseriesPlot(object):
 									title=ratio_title,
 									period_breaks=period_breaks,
 									group_by=group_by,
-									minor_breaks=minor_period_breaks)
+									minor_breaks=minor_period_breaks,
+									theme_seaborn_=theme_seaborn_)
 
 		return (plot_video_events, plot_unique_users, plot_ratio)
 
 	def analyze_video_events_device_types(self, period_breaks='1 week',
 										  minor_period_breaks='1 day',
-										  video_event_type='WATCH'):
+										  video_event_type='WATCH',
+										  theme_seaborn_=True):
 		"""
 		given a video event type (WATCH or SKIP) return plots of video events during period of time
 		it consists of:
@@ -155,12 +165,14 @@ class VideoEventsTimeseriesPlot(object):
 									user_title, 
 									ratio_title,
 									period_breaks, 
-									minor_period_breaks)
+									minor_period_breaks,
+									theme_seaborn_)
 		return plots
 
 	def analyze_video_events_types(self, period_breaks='1 week',
 								   minor_period_breaks='1 day',
-								   separate_plot_by_type=True):
+								   separate_plot_by_type=True,
+								   theme_seaborn_=True):
 		"""
 		plot video events by video_event_type
 		"""
@@ -183,7 +195,8 @@ class VideoEventsTimeseriesPlot(object):
 													user_title,
 													ratio_title,
 													period_breaks,
-													minor_period_breaks)
+													minor_period_breaks,
+													theme_seaborn_)
 		plots.append(all_video_events_plots)
 
 		if separate_plot_by_type:
@@ -198,14 +211,16 @@ class VideoEventsTimeseriesPlot(object):
 														user_title,
 														ratio_title,
 														period_breaks,
-														minor_period_breaks)
+														minor_period_breaks,
+														theme_seaborn_)
 				plots.append(video_event_plots)
 		return plots
 
 	def analyze_video_events_per_course_sections(self,
 												 video_event_type='WATCH',
 												 period_breaks='1 week',
-												 minor_period_breaks='1 day'):
+												 minor_period_breaks='1 day',
+												 theme_seaborn_=True):
 		vet = self.vet
 		df = vet.analyze_video_events_per_course_sections(video_event_type)
 		if df is None:
@@ -227,7 +242,8 @@ class VideoEventsTimeseriesPlot(object):
 															 user_title,
 															 ratio_title,
 															 period_breaks,
-															 minor_period_breaks)
+															 minor_period_breaks,
+															 theme_seaborn_)
 			plots.append(all_section_plots)
 
 		for course_id in course_ids:
@@ -242,6 +258,7 @@ class VideoEventsTimeseriesPlot(object):
 											user_title,
 											ratio_title, 
 											period_breaks,
-											minor_period_breaks)
+											minor_period_breaks,
+											theme_seaborn_)
 			plots.append(section_plots)
 		return plots
