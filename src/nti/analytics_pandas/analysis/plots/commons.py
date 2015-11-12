@@ -31,6 +31,8 @@ from ggplot import theme_seaborn
 from ggplot import geom_histogram
 from ggplot import scale_x_discrete
 
+from ...utils import Plot
+
 DATE_FORMAT = "%Y-%m-%d"
 
 def line_plot_x_axis_date(df,
@@ -41,7 +43,8 @@ def line_plot_x_axis_date(df,
 						  title,
 						  period_breaks,
 						  minor_breaks=None,
-						  theme_seaborn_=True):
+						  theme_seaborn_=True,
+						  plot_name=None):
 
 	y_max = pd.Series.max(df[y_axis_field]) + 1
 	line_plot = \
@@ -64,6 +67,10 @@ def line_plot_x_axis_date(df,
 	if theme_seaborn_:
 		line_plot = line_plot + theme_seaborn()
 
+	if plot_name is not None:
+		plot = Plot.process(plot_name, line_plot)
+		return plot
+
 	return line_plot
 
 def scatter_plot_x_axis_date(df,
@@ -74,7 +81,8 @@ def scatter_plot_x_axis_date(df,
 						  	 title,
 						  	 period_breaks,
 						  	 minor_breaks=None,
-						  	 theme_seaborn_=True):
+						  	 theme_seaborn_=True,
+						  	 plot_name=None):
 
 	y_max = pd.Series.max(df[y_axis_field]) + 1
 	scatter_plot = \
@@ -96,6 +104,11 @@ def scatter_plot_x_axis_date(df,
 
 	if theme_seaborn_:
 		scatter_plot = scatter_plot + theme_seaborn()
+	
+	if plot_name is not None:
+		plot = Plot.process(plot_name, scatter_plot)
+		return plot
+
 	return scatter_plot
 
 def group_line_plot_x_axis_date(df,
@@ -107,7 +120,8 @@ def group_line_plot_x_axis_date(df,
 								period_breaks,
 								group_by,
 								minor_breaks=None,
-								theme_seaborn_=True):
+								theme_seaborn_=True,
+								plot_name=None):
 
 	y_max = pd.Series.max(df[y_axis_field]) + 1
 	line_plot = \
@@ -130,6 +144,10 @@ def group_line_plot_x_axis_date(df,
 	if theme_seaborn_ :
 		line_plot = line_plot + theme_seaborn()
 
+	if plot_name is not None:
+		plot = Plot.process(plot_name, line_plot)
+		return plot
+
 	return line_plot
 
 def group_scatter_plot_x_axis_date(df,
@@ -141,7 +159,8 @@ def group_scatter_plot_x_axis_date(df,
 								   period_breaks,
 								   group_by,
 								   minor_breaks=None,
-								   theme_seaborn_=True):
+								   theme_seaborn_=True,
+								   plot_name=None):
 
 	y_max = pd.Series.max(df[y_axis_field]) + 1
 	scatter_plot = \
@@ -162,6 +181,10 @@ def group_scatter_plot_x_axis_date(df,
 											 	   labels=date_format(DATE_FORMAT))
 	if theme_seaborn_:
 		scatter_plot = scatter_plot + theme_seaborn()
+
+	if plot_name is not None:
+		plot = Plot.process(plot_name, scatter_plot)
+		return plot
 
 	return scatter_plot
 
@@ -202,13 +225,19 @@ def histogram_plot(df,
 				   x_axis_label,
 				   y_axis_label,
 				   title,
-				   stat):
+				   stat,
+				   plot_name=None):
 	hist_plot = ggplot(df, aes(x=x_axis_field, y=y_axis_field)) + \
 				geom_histogram(stat=stat) + \
 				ggtitle(_(title)) + \
 				theme(title=element_text(size=10, face="bold")) + \
 				ylab(_(y_axis_label)) + \
 				xlab(_(x_axis_label))
+
+	if plot_name is not None:
+		plot = Plot.process(plot_name, hist_plot)
+		return plot
+
 	return hist_plot
 
 def histogram_plot_x_axis_discrete(df,
@@ -218,7 +247,8 @@ def histogram_plot_x_axis_discrete(df,
 								   y_axis_label,
 								   title,
 								   stat,
-								   theme_seaborn_=True):
+								   theme_seaborn_=True,
+								   plot_name=None):
 	hist_plot = ggplot(df, aes(x=x_axis_field, y=y_axis_field)) + \
 				geom_histogram(stat=stat) + \
 				ggtitle(_(title)) + \
@@ -227,6 +257,10 @@ def histogram_plot_x_axis_discrete(df,
 				ylab(_(y_axis_label)) + \
 				xlab(_(x_axis_label)) + \
 				scale_x_discrete(x_axis_field)
+
+	if plot_name is not None:
+		plot = Plot.process(plot_name, hist_plot)
+		return plot
 
 	return hist_plot
 
@@ -238,7 +272,9 @@ def bar_plot_with_fill(df,
 					   title,
 					   stat,
 					   fill,
-					   theme_seaborn_=True):
+					   theme_seaborn_=True,
+					   plot_name=None):
+
 	bar_plot = ggplot(df, aes(x=x_axis_field, y=y_axis_field, fill=fill)) + \
 				geom_bar(stat=stat) + \
 				ggtitle(_(title)) + \
@@ -246,5 +282,9 @@ def bar_plot_with_fill(df,
 					  axis_text_x=element_text(angle=15, hjust=1)) + \
 				ylab(_(y_axis_label)) + \
 				xlab(_(x_axis_label))
+
+	if plot_name is not None:
+		plot = Plot.process(plot_name, bar_plot)
+		return plot
 
 	return bar_plot

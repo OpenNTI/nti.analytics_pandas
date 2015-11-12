@@ -28,3 +28,12 @@ def save_plot_to_png(plot, image_filaname):
 	image = Image.process(image_filaname,buf)
 	return image
 
+class Plot(object):
+	@classmethod
+	def process(cls, plot_name, plot):
+		me = cls()
+		me.plot_name = plot_name
+		me.plot = plot
+		return me
+
+
