@@ -288,3 +288,15 @@ def bar_plot_with_fill(df,
 		return plot
 
 	return bar_plot
+
+def generate_plot_names(event_type):
+	event_name = None
+	user_event_name = None
+	ratio_event_name = None
+
+	if event_type is not None:
+		event_name = 'event_%s' %event_type
+		user_event_name = 'user_%s' %event_type
+		ratio_event_name = 'ratio_%s' %event_type
+
+	return (event_name, user_event_name, ratio_event_name)
