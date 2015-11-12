@@ -16,11 +16,11 @@ import pandas as pd
 import numpy as np
 
 from .commons import histogram_plot
+from .commons import generate_plot_names
 from .commons import line_plot_x_axis_date
 from .commons import group_line_plot_x_axis_date
 from .commons import facet_line_plot_x_axis_date
 from .commons import histogram_plot_x_axis_discrete
-from .commons import generate_plot_names
 
 class BookmarksTimeseriesPlot(object):
 
@@ -63,6 +63,7 @@ class BookmarksTimeseriesPlot(object):
 	def generate_plots(self, df, event_title, user_title, ratio_title,
 					   period_breaks, minor_period_breaks, theme_seaborn_,
 					   event_type=None):
+
 		event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
 		plot_bookmarks_creation = line_plot_x_axis_date(
 										df=df,
@@ -138,7 +139,7 @@ class BookmarksTimeseriesPlot(object):
 			event_title = 'Number of bookmarks created in %s' % (context_name)
 			user_title = 'Number of unique users creating bookmarks in %s' % (context_name)
 			ratio_title = 'Ratio of bookmarks created over unique user in %s' % (context_name)
-			event_type = 'bookmarks_created_in_%s' %(context_name.replace(' ', ''))
+			event_type = 'bookmarks_created_in_%s' % (context_name.replace(' ', ''))
 			section_plots = self.generate_plots(new_df,
 												event_title,
 												user_title,
@@ -224,6 +225,7 @@ class BookmarksTimeseriesPlot(object):
 	def generate_group_by_plots(self, df, group_by, event_title, user_title, ratio_title,
 								period_breaks, minor_period_breaks, theme_seaborn_,
 								event_type=None):
+
 		event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
 		plot_bookmarks_creation = group_line_plot_x_axis_date(
 											df=df,
@@ -272,6 +274,7 @@ class BookmarksTimeseriesPlot(object):
 		Show scatter plot of all types of user agent (device type)
 		# TODO: fix legend for resource_type
 		"""
+
 		bct = self.bct
 		df = bct.analyze_resource_device_types()
 		if df is None:
@@ -324,6 +327,7 @@ class BookmarksTimeseriesPlot(object):
 		return (plot_bookmarks_creation, plot_unique_users, plot_ratio)
 
 	def plot_the_most_active_users(self, max_rank_number=10):
+
 		bct = self.bct
 		users_df = bct.get_the_most_active_users(max_rank_number)
 		if users_df is None:

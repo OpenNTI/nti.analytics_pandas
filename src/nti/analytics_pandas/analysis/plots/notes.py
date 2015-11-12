@@ -16,10 +16,10 @@ import pandas as pd
 import numpy as np
 
 from .commons import bar_plot_with_fill
+from .commons import generate_plot_names
 from .commons import line_plot_x_axis_date
 from .commons import group_line_plot_x_axis_date
 from .commons import histogram_plot_x_axis_discrete
-from .commons import generate_plot_names
 
 class NotesEventsTimeseriesPlot(object):
 
@@ -160,6 +160,7 @@ class NotesCreationTimeseriesPlot(object):
 	def generate_plots(self, df, event_title, user_title, ratio_title,
 					   period_breaks, minor_period_breaks, theme_seaborn_,
 					   event_type=None):
+
 		event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
 
 		plot_notes_created = line_plot_x_axis_date(
@@ -202,6 +203,7 @@ class NotesCreationTimeseriesPlot(object):
 
 	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day',
 							theme_seaborn_=True):
+
 		nct = self.nct
 		dataframe = nct.dataframe
 		df = nct.analyze_device_types(dataframe)
@@ -289,6 +291,7 @@ class NotesCreationTimeseriesPlot(object):
 							   event_type=None):
 		if df is None:
 			return ()
+
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
@@ -335,8 +338,10 @@ class NotesCreationTimeseriesPlot(object):
 
 		return (plot_notes_created, plot_unique_users, plot_ratio)
 
-	def analyze_notes_created_on_videos(self, period_breaks='1 week', minor_period_breaks='1 day',
+	def analyze_notes_created_on_videos(self, period_breaks='1 week', 
+										minor_period_breaks='1 day',
 										theme_seaborn_=True):
+
 		nct = self.nct
 		(sharing_df, device_df) = nct.analyze_notes_created_on_videos()
 
@@ -391,10 +396,11 @@ class NotesViewTimeseriesPlot(object):
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
+		event_type = 'note_views'
 		event_title = _('Number of notes viewed during period of time')
 		user_title = _('Number of unique users viewing notes during period of time')
 		ratio_title = _('Ratio of notes viewed over unique user on each available date')
-		event_type = 'note_views'
+		
 		plots = self.generate_plots(df, 
 								event_title, 
 								user_title, 
@@ -413,10 +419,11 @@ class NotesViewTimeseriesPlot(object):
 		if df is None:
 			return()
 
+		plots = []
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		course_ids = np.unique(df['course_id'].values.ravel())
-		plots = []
+		
 		if len(course_ids) > 1:
 			group_by = 'context_name'
 			event_title = _('Number of notes viewed per course sections')
@@ -688,8 +695,10 @@ class NoteLikesTimeseriesPlot(object):
 		"""
 		self.nlt = nlt
 
-	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day',
-						theme_seaborn_=True):
+	def explore_events(self, period_breaks='1 week', 
+					   minor_period_breaks='1 day',
+					   theme_seaborn_=True):
+
 		nlt = self.nlt
 		df = nlt.analyze_events()
 		if df is None:
@@ -709,8 +718,9 @@ class NoteLikesTimeseriesPlot(object):
 									theme_seaborn_)
 		return plots
 
-	def analyze_events_per_course_sections(self, period_breaks='1 week', minor_period_breaks='1 day',
-											theme_seaborn_=True):
+	def analyze_events_per_course_sections(self, period_breaks='1 week',
+										   minor_period_breaks='1 day',
+										   theme_seaborn_=True):
 		nlt = self.nlt
 		df = nlt.analyze_events_per_course_sections()
 		if df is None:
@@ -735,7 +745,7 @@ class NoteLikesTimeseriesPlot(object):
 															 theme_seaborn_)
 			plots.append(all_section_plots)
 
-		for course_id in course_ids:
+		for course_id in course_ids or ():
 			new_df = df[df['course_id'] == course_id]
 			context_name = new_df.iloc[0]['context_name']
 			event_title = 'Number of note likes in %s' % (context_name)
@@ -751,8 +761,10 @@ class NoteLikesTimeseriesPlot(object):
 			plots.append(section_plots)
 		return plots
 
-	def analyze_events_per_device_types(self, period_breaks='1 week', minor_period_breaks='1 day',
+	def analyze_events_per_device_types(self, period_breaks='1 week',
+										minor_period_breaks='1 day',
 										theme_seaborn_=True):
+
 		nlt = self.nlt
 		df = nlt.analyze_events_per_device_types()
 		if df is None:
@@ -775,8 +787,10 @@ class NoteLikesTimeseriesPlot(object):
 									theme_seaborn_)
 		return plots
 
-	def analyze_events_per_resource_types(self, period_breaks='1 week', minor_period_breaks='1 day',
-											theme_seaborn_=True):
+	def analyze_events_per_resource_types(self, period_breaks='1 week', 
+										  minor_period_breaks='1 day',
+										  theme_seaborn_=True):
+
 		nlt = self.nlt
 		df = nlt.analyze_events_per_resource_types()
 		if df is None:
@@ -802,7 +816,7 @@ class NoteLikesTimeseriesPlot(object):
 	def generate_plots(self, df, event_title, user_title, ratio_title, period_breaks,
 					   minor_period_breaks, theme_seaborn_, event_type=None):
 
-		event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
+		# event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
 
 		plot_note_likes = line_plot_x_axis_date(
 							df=df,
@@ -842,7 +856,8 @@ class NoteLikesTimeseriesPlot(object):
 	def generate_group_by_plots(self, df, group_by, event_title, user_title, ratio_title,
 								period_breaks, minor_period_breaks, theme_seaborn_,
 								event_type=None):
-		event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
+
+		# event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
 
 		plot_note_likes = group_line_plot_x_axis_date(
 							df=df,
@@ -911,17 +926,18 @@ class NoteFavoritesTimeseriesPlot(object):
 									theme_seaborn_)
 		return plots
 
-	def analyze_events_per_course_sections(self, period_breaks='1 week', minor_period_breaks='1 day',
-											theme_seaborn_=True):
+	def analyze_events_per_course_sections(self, period_breaks='1 week', 
+										   minor_period_breaks='1 day',
+										   theme_seaborn_=True):
 		nft = self.nft
 		df = nft.analyze_events_per_course_sections()
 		if df is None:
 			return()
 
+		plots = []
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		course_ids = np.unique(df['course_id'].values.ravel())
-		plots = []
 		if len(course_ids) > 1:
 			group_by = 'context_name'
 			event_title = _('Number of note favorites per course sections')
@@ -937,7 +953,7 @@ class NoteFavoritesTimeseriesPlot(object):
 															 theme_seaborn_)
 			plots.append(all_section_plots)
 
-		for course_id in course_ids:
+		for course_id in course_ids or ():
 			new_df = df[df['course_id'] == course_id]
 			context_name = new_df.iloc[0]['context_name']
 			event_title = 'Number of note favorites in %s' % (context_name)
@@ -961,6 +977,7 @@ class NoteFavoritesTimeseriesPlot(object):
 		df = nft.analyze_events_per_device_types()
 		if df is None:
 			return ()
+
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		group_by = 'device_type'
@@ -985,6 +1002,7 @@ class NoteFavoritesTimeseriesPlot(object):
 		df = nft.analyze_events_per_resource_types()
 		if df is None:
 			return ()
+
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		group_by = 'resource_type'
@@ -1005,7 +1023,8 @@ class NoteFavoritesTimeseriesPlot(object):
 	def generate_plots(self, df, event_title, user_title, ratio_title,
 					   period_breaks, minor_period_breaks, theme_seaborn_,
 					   event_type=None):
-		event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
+
+		# event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
 
 		plot_note_favorites = line_plot_x_axis_date(
 							df=df,
@@ -1045,7 +1064,8 @@ class NoteFavoritesTimeseriesPlot(object):
 	def generate_group_by_plots(self, df, group_by, event_title, user_title, ratio_title,
 								period_breaks, minor_period_breaks, theme_seaborn_,
 								event_type=None):
-		event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
+
+		# event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
 
 		plot_note_favorites = group_line_plot_x_axis_date(
 									df=df,

@@ -28,7 +28,7 @@ class  ResourceViewsTimeseriesPlot(object):
 		"""
 		self.rvt = rvt
 
-	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day', 
+	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day',
 						theme_seaborn_=True):
 		"""
 		return scatter plots of resource views during period of time
@@ -49,19 +49,20 @@ class  ResourceViewsTimeseriesPlot(object):
 		ratio_title = _('Ratio of resource views over unique users during time period')
 		unique_resource_title = _('Number of unique resources viewed during time period')
 		event_type = 'resource_views'
-		plots = self.generate_plots(df, 
-									event_title, 
-									user_title, 
+		plots = self.generate_plots(df,
+									event_title,
+									user_title,
 									ratio_title,
-									unique_resource_title, 
-									period_breaks, 
+									unique_resource_title,
+									period_breaks,
 									minor_period_breaks,
 									theme_seaborn_,
 									event_type)
 		return plots
 
-	def analyze_events_per_course_sections(self, period_breaks='1 week', minor_period_breaks='1 day',
-											theme_seaborn_=True):
+	def analyze_events_per_course_sections(self, period_breaks='1 week',
+										   minor_period_breaks='1 day',
+										   theme_seaborn_=True):
 		rvt = self.rvt
 		df = rvt.analyze_events_per_course_sections()
 		if df is None:
@@ -98,7 +99,7 @@ class  ResourceViewsTimeseriesPlot(object):
 			user_title = 'Number of unique users viewing resources in %s' % (context_name)
 			ratio_title = 'Ratio of resource views over unique user in %s' % (context_name)
 			unique_resource_title = _('Number of unique resources viewed in %s') % (context_name)
-			event_type = 'resource_views_in_%s' %(context_name.replace(' ', '_'))
+			event_type = 'resource_views_in_%s' % (context_name.replace(' ', '_'))
 			section_plots = self.generate_plots(new_df,
 												event_title,
 												user_title,
@@ -111,10 +112,17 @@ class  ResourceViewsTimeseriesPlot(object):
 			plots.append(section_plots)
 		return plots
 
-	def generate_plots(self, df,
-						event_title, user_title, ratio_title, unique_resource_title,
-						period_breaks, minor_period_breaks, theme_seaborn_,
-						event_type=None):
+	def generate_plots(self,
+					   df,
+					   event_title,
+					   user_title,
+					   ratio_title,
+					   unique_resource_title,
+					   period_breaks,
+					   minor_period_breaks,
+					   theme_seaborn_,
+					   event_type=None):
+
 		event_name, user_event_name, ratio_event_name, unique_event_name = self.generate_plot_names(event_type)
 
 		plot_resource_views = line_plot_x_axis_date(
@@ -127,7 +135,7 @@ class  ResourceViewsTimeseriesPlot(object):
 											period_breaks=period_breaks,
 											minor_breaks=minor_period_breaks,
 											theme_seaborn_=theme_seaborn_,
-											plot_name = event_name)
+											plot_name=event_name)
 
 		plot_unique_users = line_plot_x_axis_date(
 											df=df,
@@ -167,11 +175,18 @@ class  ResourceViewsTimeseriesPlot(object):
 
 		return (plot_resource_views, plot_unique_users, plot_ratio, plot_unique_resources)
 
-	def generate_group_by_plots(self, df, group_by,
-								event_title, user_title, ratio_title, unique_resource_title,
-								period_breaks, minor_period_breaks, theme_seaborn_,
+	def generate_group_by_plots(self,
+								df,
+								group_by,
+								event_title,
+								user_title,
+								ratio_title,
+								unique_resource_title,
+								period_breaks,
+								minor_period_breaks,
+								theme_seaborn_,
 								event_type=None):
-		
+
 		event_name, user_event_name, ratio_event_name, unique_event_name = self.generate_plot_names(event_type)
 
 		plot_resource_views = group_line_plot_x_axis_date(
@@ -228,11 +243,19 @@ class  ResourceViewsTimeseriesPlot(object):
 
 		return (plot_resource_views, plot_unique_users, plot_ratio, plot_unique_resources)
 
-	def generate_group_by_scatter_plots(self, df, group_by, event_title, user_title,
-										ratio_title, unique_resource_title,
-										period_breaks, minor_period_breaks, theme_seaborn_):
+	def generate_group_by_scatter_plots(self,
+										df,
+										group_by,
+										event_title,
+										user_title,
+										ratio_title,
+										unique_resource_title,
+										period_breaks,
+										minor_period_breaks,
+										theme_seaborn_,
+										event_type=None):
 
-		event_name, user_event_name, ratio_event_name, unique_event_name = self.generate_plot_names(event_type)
+		# event_name, user_event_name, ratio_event_name, unique_event_name = self.generate_plot_names(event_type)
 
 		plot_resource_views = group_scatter_plot_x_axis_date(
 											df=df,
@@ -284,16 +307,17 @@ class  ResourceViewsTimeseriesPlot(object):
 											group_by=group_by,
 											minor_breaks=minor_period_breaks,
 											theme_seaborn_=theme_seaborn_,
-											plot_name=unique_event_name)
+											plot_name='unique_event_name')
 
 		return (plot_resource_views, plot_unique_users, plot_ratio, plot_unique_resources)
 
-	def analyze_resource_type(self, period_breaks='1 week', 
+	def analyze_resource_type(self, period_breaks='1 week',
 							  minor_period_breaks='1 day',
 							  theme_seaborn_=True):
 		"""
 		plot resource views based on resource type
 		"""
+
 		rvt = self.rvt
 		df = rvt.analyze_events_based_on_resource_type()
 		if df is None:
@@ -308,11 +332,11 @@ class  ResourceViewsTimeseriesPlot(object):
 		unique_resource_title = _('Number of unique course resource viewed during time period')
 		event_type = 'resource_views_per_resource_types'
 		plots = self.generate_group_by_plots(
-									df, 
+									df,
 									group_by,
 									event_title,
 									user_title,
-									ratio_title, 
+									ratio_title,
 									unique_resource_title,
 									period_breaks,
 									minor_period_breaks,
@@ -320,12 +344,13 @@ class  ResourceViewsTimeseriesPlot(object):
 									event_type)
 		return plots
 
-	def analyze_resource_type_scatter_plot(self, period_breaks='1 week', 
+	def analyze_resource_type_scatter_plot(self, period_breaks='1 week',
 										   minor_period_breaks='1 day',
 										   theme_seaborn_=True):
 		"""
 		plot resource views based on resource type
 		"""
+
 		rvt = self.rvt
 		df = rvt.analyze_events_based_on_resource_type()
 		if df is None:
@@ -341,27 +366,29 @@ class  ResourceViewsTimeseriesPlot(object):
 		unique_resource_title = _('Number of unique course resource viewed during time period')
 		event_type = 'resource_views_per_resource_types_scatter_plot'
 		plots = self.generate_group_by_scatter_plots(
-											df, 
+											df,
 											group_by,
-											event_title, 
-											user_title, 
-											ratio_title, 
+											event_title,
+											user_title,
+											ratio_title,
 											unique_resource_title,
-											period_breaks, 
+											period_breaks,
 											minor_period_breaks,
 											theme_seaborn_,
 											event_type)
 		return plots
 
-	def analyze_device_type(self, period_breaks='1 week', minor_period_breaks='1 day', 
+	def analyze_device_type(self, period_breaks='1 week', minor_period_breaks='1 day',
 							theme_seaborn_=True):
 		"""
 		plot course resource views based on device type (user agent)
 		"""
+
 		rvt = self.rvt
 		df = rvt.analyze_events_based_on_device_type()
 		if df is None:
 			return ()
+
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		group_by = 'device_type'
@@ -371,14 +398,14 @@ class  ResourceViewsTimeseriesPlot(object):
 		unique_resource_title = _('Number of unique course resource viewed during time period')
 		event_type = 'resource_views_per_device_types'
 		plots = self.generate_group_by_plots(
-									df, 
+									df,
 									group_by,
-									event_title, 
-									user_title, 
-									ratio_title, 
+									event_title,
+									user_title,
+									ratio_title,
 									unique_resource_title,
 									period_breaks,
-									minor_period_breaks, 
+									minor_period_breaks,
 									theme_seaborn_,
 									event_type)
 		return plots
@@ -388,10 +415,12 @@ class  ResourceViewsTimeseriesPlot(object):
 		"""
 		plot course resource views based on device type (user agent)
 		"""
+
 		rvt = self.rvt
 		df = rvt.analyze_events_based_on_device_type()
 		if df is None:
 			return ()
+
 		df.reset_index(inplace=True, drop=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		group_by = 'device_type'
@@ -401,11 +430,11 @@ class  ResourceViewsTimeseriesPlot(object):
 		unique_resource_title = _('Number of unique course resource viewed during time period')
 		event_type = 'resource_views_per_device_types_scatter_plot'
 		plots = self.generate_group_by_scatter_plots(
-										df, 
+										df,
 										group_by,
-										event_title, 
-										user_title, 
-										ratio_title, 
+										event_title,
+										user_title,
+										ratio_title,
 										unique_resource_title,
 										period_breaks,
 										minor_period_breaks,
@@ -419,6 +448,7 @@ class  ResourceViewsTimeseriesPlot(object):
 		users_df = rvt.get_the_most_active_users(max_rank_number)
 		if users_df is None:
 			return
+
 		users_df.rename(columns={'number_of_activities': 'number_of_resource_views'},
 						inplace=True)
 		event_type = 'most_active_users_viewing_resources'
@@ -434,16 +464,16 @@ class  ResourceViewsTimeseriesPlot(object):
 		return (plot_users,)
 
 	def generate_plot_names(self, event_type):
+		# TODO: Use commons
 		event_name = None
 		user_event_name = None
 		ratio_event_name = None
 		unique_event_name = None
 
 		if event_type is not None:
-			event_name = 'event_%s' %event_type
-			user_event_name = 'user_%s' %event_type
-			ratio_event_name = 'ratio_%s' %event_type
-			unique_event_name = 'unique_%s' %event_type
+			event_name = 'event_%s' % event_type
+			user_event_name = 'user_%s' % event_type
+			ratio_event_name = 'ratio_%s' % event_type
+			unique_event_name = 'unique_%s' % event_type
 
 		return event_name, user_event_name, ratio_event_name, unique_event_name
-
