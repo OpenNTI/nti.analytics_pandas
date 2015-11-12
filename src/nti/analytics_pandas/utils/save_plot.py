@@ -10,9 +10,7 @@ __docformat__ = "restructuredtext en"
 logger = __import__('logging').getLogger(__name__)
 
 from StringIO import StringIO
-from PIL import Image
 import matplotlib.pyplot as plt
-
 
 class Image(object):
 	@classmethod
@@ -22,7 +20,7 @@ class Image(object):
 		me.data = data
 		return me
 
-def save_plot(plot, image_filaname):
+def save_plot_to_png(plot, image_filaname):
 	plt.figure.Figure = plot.draw()
 	buf = StringIO()
 	plt.savefig(buf, format='png')
