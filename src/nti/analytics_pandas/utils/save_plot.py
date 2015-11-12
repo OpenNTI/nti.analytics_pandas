@@ -20,12 +20,12 @@ class Image(object):
 		me.data = data
 		return me
 
-def save_plot_to_png(plot, image_filaname):
+def save_plot_to_png(plot, image_filename):
 	plt.figure.Figure = plot.draw()
 	buf = StringIO()
 	plt.savefig(buf, format='png')
 	plt.close()
-	image = Image.process(image_filaname,buf)
+	image = Image.process(image_filename,buf)
 	return image
 
 class Plot(object):

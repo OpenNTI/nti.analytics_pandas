@@ -45,7 +45,8 @@ class NotesEventsTimeseriesPlot(object):
 								period_breaks=period_breaks,
 								group_by='event_type',
 								minor_breaks=minor_period_breaks,
-								theme_seaborn_=theme_seaborn_)
+								theme_seaborn_=theme_seaborn_,
+								plot_name='note_events')
 
 		plot_unique_users = group_line_plot_x_axis_date(
 								df=df,
@@ -57,7 +58,8 @@ class NotesEventsTimeseriesPlot(object):
 								period_breaks=period_breaks,
 								group_by='event_type',
 								minor_breaks=minor_period_breaks,
-								theme_seaborn_=theme_seaborn_)
+								theme_seaborn_=theme_seaborn_,
+								plot_name='user_note_events')
 
 		plot_ratio = group_line_plot_x_axis_date(
 								df=df,
@@ -69,7 +71,8 @@ class NotesEventsTimeseriesPlot(object):
 								period_breaks=period_breaks,
 								group_by='event_type',
 								minor_breaks=minor_period_breaks,
-								theme_seaborn_=theme_seaborn_)
+								theme_seaborn_=theme_seaborn_,
+								plot_name='ratio_note_events')
 
 		return (plot_notes_events, plot_unique_users, plot_ratio)
 
@@ -94,15 +97,15 @@ class NotesCreationTimeseriesPlot(object):
 		event_title = _('Number of notes created')
 		user_title = _('Number of unique users creating notes')
 		ratio_title = _('Ratio of notes created over unique user')
-
+		event_type = 'notes_created'
 		plots = self.generate_plots(df,
 									event_title,
 									user_title,
 									ratio_title,
 									period_breaks,
 									minor_period_breaks,
-									theme_seaborn_)
-
+									theme_seaborn_,
+									event_type)
 		return (plots)
 
 	def analyze_events_per_course_sections(self, period_breaks='1 week', minor_period_breaks='1 day',
@@ -122,6 +125,7 @@ class NotesCreationTimeseriesPlot(object):
 			event_title = _('Number of notes created per course sections')
 			user_title = _('Number of unique users creating notes per course sections')
 			ratio_title = _('Ratio of notes created over unique user per course sections')
+			event_type = 'notes_created_per_course_sections'
 			all_section_plots = self.generate_group_by_plot(df,
 															group_by,
 															event_title,
@@ -129,7 +133,8 @@ class NotesCreationTimeseriesPlot(object):
 															ratio_title,
 															period_breaks,
 															minor_period_breaks,
-															theme_seaborn_)
+															theme_seaborn_,
+															event_type)
 			plots.append(all_section_plots)
 
 		for course_id in course_ids:
@@ -138,19 +143,29 @@ class NotesCreationTimeseriesPlot(object):
 			event_title = 'Number of notes created in %s' % (context_name)
 			user_title = 'Number of unique users creating notes in %s' % (context_name)
 			ratio_title = 'Ratio of notes created over unique user in %s' % (context_name)
+			event_type = 'notes_created_in_%s' %(context_name.replace(' ', '_'))
 			section_plots = self.generate_plots(new_df,
 												event_title,
 												user_title,
 												ratio_title,
 												period_breaks,
 												minor_period_breaks,
-												theme_seaborn_)
+												theme_seaborn_,
+												event_type)
 			plots.append(section_plots)
 
 		return plots
 
 	def generate_plots(self, df, event_title, user_title, ratio_title,
-					   period_breaks, minor_period_breaks, theme_seaborn_):
+					   period_breaks, minor_period_breaks, theme_seaborn_,
+					   event_type=None):
+		event_name = None
+		user_event_name = None
+		ratio_event_name = None
+		if event_type is not None:
+			event_name = 'event_%s' %event_type
+			user_event_name = 'user_%s' %event_type
+			ratio_event_name = 'ratio_%s' %event_type
 
 		plot_notes_created = line_plot_x_axis_date(
 								df=df,
@@ -161,7 +176,8 @@ class NotesCreationTimeseriesPlot(object):
 								title=event_title,
 								period_breaks=period_breaks,
 								minor_breaks=minor_period_breaks,
-								theme_seaborn_=theme_seaborn_)
+								theme_seaborn_=theme_seaborn_,
+								plot_name=event_name)
 
 		plot_unique_users = line_plot_x_axis_date(
 								df=df,
@@ -172,7 +188,8 @@ class NotesCreationTimeseriesPlot(object):
 								title=user_title,
 								period_breaks=period_breaks,
 								minor_breaks=minor_period_breaks,
-								theme_seaborn_=theme_seaborn_)
+								theme_seaborn_=theme_seaborn_,
+								plot_name=user_event_name)
 
 		plot_ratio = line_plot_x_axis_date(
 								df=df,
@@ -183,7 +200,8 @@ class NotesCreationTimeseriesPlot(object):
 								title=ratio_title,
 								period_breaks=period_breaks,
 								minor_breaks=minor_period_breaks,
-								theme_seaborn_=theme_seaborn_)
+								theme_seaborn_=theme_seaborn_,
+								plot_name=ratio_event_name)
 
 		return (plot_notes_created, plot_unique_users, plot_ratio)
 
@@ -197,6 +215,7 @@ class NotesCreationTimeseriesPlot(object):
 		event_title = _('Number of notes created grouped by device types')
 		user_title = _('Number of unique users creating notes grouped by device types')
 		ratio_title = _('Ratio of notes created grouped by device types over unique user')
+		event_type = 'notes_created_per_device_types'
 		device_plots = self.generate_group_by_plot(df,
 												   group_by,
 												   event_title,
@@ -204,7 +223,8 @@ class NotesCreationTimeseriesPlot(object):
 												   ratio_title,
 												   period_breaks,
 												   minor_period_breaks,
-												   theme_seaborn_)
+												   theme_seaborn_,
+												   event_type)
 		return (device_plots,)
 
 	def analyze_resource_types(self, period_breaks='1 week', minor_period_breaks='1 day',
@@ -216,6 +236,7 @@ class NotesCreationTimeseriesPlot(object):
 		user_title = _('Number of unique users creating notes grouped by resource types')
 		ratio_title = _('Ratio of notes created grouped by resource types over unique user')
 		group_by = 'resource_type'
+		event_type = 'notes_created_per_resource_types'
 		resource_plots = self.generate_group_by_plot(df,
 													 group_by,
 													 event_title,
@@ -223,7 +244,8 @@ class NotesCreationTimeseriesPlot(object):
 													 ratio_title,
 													 period_breaks,
 													 minor_period_breaks,
-													 theme_seaborn_)
+													 theme_seaborn_,
+													 event_type)
 
 		return (resource_plots,)
 
@@ -232,7 +254,7 @@ class NotesCreationTimeseriesPlot(object):
 		users_df = nct.get_the_most_active_users(max_rank_number)
 		if users_df is None:
 			return ()
-
+		event_type='most_active_users_creating_notes'
 		plot_users = histogram_plot_x_axis_discrete(
 								df=users_df,
 								x_axis_field='username' ,
@@ -240,8 +262,8 @@ class NotesCreationTimeseriesPlot(object):
 								x_axis_label=_('Username'),
 								y_axis_label=_('Number of notes created'),
 								title=_('The most active users creating notes'),
-								stat='identity')
-
+								stat='identity',
+								plot_name=event_type)
 		return (plot_users,)
 
 	def analyze_sharing_types(self, period_breaks='1 week', minor_period_breaks='1 day',
@@ -253,7 +275,7 @@ class NotesCreationTimeseriesPlot(object):
 		event_title = _('Number of notes created grouped by sharing types')
 		user_title = _('Number of unique users creating notes grouped by sharing types')
 		ratio_title = _('Ratio of notes created grouped by sharing types over unique user')
-
+		event_type = 'notes_created_per_sharing_types'
 		group_by = 'sharing'
 		sharing_plots = self.generate_group_by_plot(df,
 													group_by,
@@ -262,16 +284,26 @@ class NotesCreationTimeseriesPlot(object):
 													ratio_title,
 													period_breaks,
 													minor_period_breaks,
-													theme_seaborn_)
+													theme_seaborn_,
+													event_type)
 
 		return (sharing_plots,)
 
 	def generate_group_by_plot(self, df, group_by, event_title, user_title, ratio_title,
-							   period_breaks, minor_period_breaks, theme_seaborn_):
+							   period_breaks, minor_period_breaks, theme_seaborn_,
+							   event_type=None):
 		if df is None:
 			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		event_name = None
+		user_event_name = None
+		ratio_event_name = None
+		if event_type is not None:
+			event_name = 'event_%s' %event_type
+			user_event_name = 'user_%s' %event_type
+			ratio_event_name = 'ratio_%s' %event_type
 
 		plot_notes_created = group_line_plot_x_axis_date(
 								df=df,
@@ -283,7 +315,8 @@ class NotesCreationTimeseriesPlot(object):
 								period_breaks=period_breaks,
 								group_by=group_by,
 								minor_breaks=minor_period_breaks,
-								theme_seaborn_=theme_seaborn_)
+								theme_seaborn_=theme_seaborn_,
+								plot_name=event_name)
 
 		plot_unique_users = group_line_plot_x_axis_date(
 								df=df,
@@ -295,7 +328,8 @@ class NotesCreationTimeseriesPlot(object):
 								period_breaks=period_breaks,
 								group_by=group_by,
 								minor_breaks=minor_period_breaks,
-								theme_seaborn_=theme_seaborn_)
+								theme_seaborn_=theme_seaborn_,
+								plot_name=user_event_name)
 
 		plot_ratio = group_line_plot_x_axis_date(
 								df=df,
@@ -307,7 +341,8 @@ class NotesCreationTimeseriesPlot(object):
 								period_breaks=period_breaks,
 								group_by=group_by,
 								minor_breaks=minor_period_breaks,
-								theme_seaborn_=theme_seaborn_)
+								theme_seaborn_=theme_seaborn_,
+								plot_name=ratio_event_name)
 
 		return (plot_notes_created, plot_unique_users, plot_ratio)
 
@@ -321,6 +356,7 @@ class NotesCreationTimeseriesPlot(object):
 		event_title = _('Number of notes created on videos grouped by sharing types')
 		user_title = _('Number of unique users creating notes on videos grouped by sharing types')
 		ratio_title = _('Ratio of notes created on videos grouped by sharing types over unique user')
+		event_type = 'notes_created_on_videos_per_sharing_types'
 		sharing_plots = self.generate_group_by_plot(sharing_df,
 													group_by,
 													event_title,
@@ -328,13 +364,15 @@ class NotesCreationTimeseriesPlot(object):
 													ratio_title,
 													period_breaks,
 													minor_period_breaks,
-													theme_seaborn_)
+													theme_seaborn_,
+													event_type)
 
 		# generate device types plots
 		group_by = 'device_type'
 		event_title = _('Number of notes created on videos grouped by device types')
 		user_title = _('Number of unique users creating notes on videos grouped by device types')
 		ratio_title = _('Ratio of notes created on videos grouped by device types over unique user')
+		event_type = 'notes_created_on_video_per_device_types'
 		device_plots = self.generate_group_by_plot(device_df,
 												   group_by,
 												   event_title,
@@ -342,7 +380,8 @@ class NotesCreationTimeseriesPlot(object):
 												   ratio_title,
 												   period_breaks,
 												   minor_period_breaks,
-												   theme_seaborn_)
+												   theme_seaborn_,
+												   event_type)
 		return (sharing_plots, device_plots)
 
 class NotesViewTimeseriesPlot(object):
