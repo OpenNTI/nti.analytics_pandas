@@ -15,10 +15,10 @@ import pandas as pd
 
 import numpy as np
 
+from .commons import generate_plot_names
 from .commons import line_plot_x_axis_date
 from .commons import group_line_plot_x_axis_date
 from .commons import histogram_plot_x_axis_discrete
-from .commons import generate_plot_names
 
 class TopicsEventsTimeseriesPlot(object):
 
@@ -103,7 +103,7 @@ class TopicsCreationTimeseriesPlot(object):
 		event_title = _('Number of topics created during period of time')
 		user_title = _('Number of unique users creating topics during period of time')
 		ratio_title = _('Ratio of topics created over unique user on each available date')
-		event_type='topics_created'
+		event_type = 'topics_created'
 		plots = self.generate_plots(df,
 									event_title,
 									user_title,
@@ -114,16 +114,19 @@ class TopicsCreationTimeseriesPlot(object):
 									event_type)
 		return plots
 
-	def analyze_events_per_course_sections(self, period_breaks='1 week', minor_period_breaks='1 day',
-											theme_seaborn_=True):
+	def analyze_events_per_course_sections(self, period_breaks='1 week',
+										   minor_period_breaks='1 day',
+										   theme_seaborn_=True):
 		tct = self.tct
 		df = tct.analyze_events_per_course_sections()
 		if df is None:
 			return ()
+
+		plots = []
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		course_ids = np.unique(df['course_id'].values.ravel())
-		plots = []
+
 		if len(course_ids) > 1:
 			group_by = 'context_name'
 			event_title = _('Number of topics created per course sections')
@@ -137,7 +140,7 @@ class TopicsCreationTimeseriesPlot(object):
 															 ratio_title,
 															 period_breaks,
 															 minor_period_breaks,
-															 theme_seaborn_, 
+															 theme_seaborn_,
 															 event_type)
 			plots.append(all_section_plots)
 
@@ -147,7 +150,7 @@ class TopicsCreationTimeseriesPlot(object):
 			event_title = 'Number of topics created in %s' % (context_name)
 			user_title = 'Number of unique users creating topics in %s' % (context_name)
 			ratio_title = 'Ratio of topics created over unique user in %s' % (context_name)
-			event_type = 'topics_created_in_%s' %(context_name.replace(' ', '_'))
+			event_type = 'topics_created_in_%s' % (context_name.replace(' ', '_'))
 			section_plots = self.generate_plots(new_df,
 												event_title,
 												user_title,
@@ -160,7 +163,8 @@ class TopicsCreationTimeseriesPlot(object):
 
 		return plots
 
-	def analyze_events_per_device_types(self, period_breaks='1 week', minor_period_breaks='1 day',
+	def analyze_events_per_device_types(self, period_breaks='1 week',
+										minor_period_breaks='1 day',
 										theme_seaborn_=True):
 		tct = self.tct
 		df = tct.analyze_events_per_device_types()
@@ -184,9 +188,16 @@ class TopicsCreationTimeseriesPlot(object):
 											 event_type)
 		return plots
 
-	def generate_plots(self, df, event_title, user_title, ratio_title,
-						period_breaks, minor_period_breaks, theme_seaborn_,
-						event_type=None):
+	def generate_plots(self,
+					   df,
+					   event_title,
+					   user_title,
+					   ratio_title,
+					   period_breaks,
+					   minor_period_breaks,
+					   theme_seaborn_,
+					   event_type=None):
+
 		event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
 		plot_topics_created = line_plot_x_axis_date(
 									df=df,
@@ -226,10 +237,17 @@ class TopicsCreationTimeseriesPlot(object):
 
 		return (plot_topics_created, plot_unique_users, plot_ratio)
 
-	def generate_group_by_plots(self, df, group_by,
-						event_title, user_title, ratio_title,
-						period_breaks, minor_period_breaks, theme_seaborn_,
-						event_type=None):
+	def generate_group_by_plots(self,
+								df,
+								group_by,
+								event_title,
+								user_title,
+								ratio_title,
+								period_breaks,
+								minor_period_breaks,
+								theme_seaborn_,
+								event_type=None):
+
 		event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
 		plot_topics_created = group_line_plot_x_axis_date(
 										df=df,
@@ -310,12 +328,15 @@ class TopicViewsTimeseriesPlot(object):
 									event_type)
 		return plots
 
-	def analyze_events_per_course_sections(self, period_breaks='1 week', minor_period_breaks='1 day',
-											theme_seaborn_=True):
+	def analyze_events_per_course_sections(self, period_breaks='1 week',
+										   minor_period_breaks='1 day',
+										   theme_seaborn_=True):
+
 		tvt = self.tvt
 		df = tvt.analyze_events_per_course_sections()
 		if df is None:
 			return ()
+
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		course_ids = np.unique(df['course_id'].values.ravel())
@@ -343,7 +364,7 @@ class TopicViewsTimeseriesPlot(object):
 			event_title = 'Number of topics viewed in %s' % (context_name)
 			user_title = 'Number of unique users viewing topics in %s' % (context_name)
 			ratio_title = 'Ratio of topics viewed over unique user in %s' % (context_name)
-			event_type = 'topic_views_in_%s' %(context_name.replace(' ', '_'))
+			event_type = 'topic_views_in_%s' % (context_name.replace(' ', '_'))
 			section_plots = self.generate_plots(new_df,
 												event_title,
 												user_title,
@@ -387,9 +408,16 @@ class TopicViewsTimeseriesPlot(object):
 											 event_type)
 		return plots
 
-	def generate_plots(self, df, event_title, user_title, ratio_title,
-						period_breaks, minor_period_breaks, theme_seaborn_,
-						event_type=None):
+	def generate_plots(self,
+					   df,
+					   event_title,
+					   user_title,
+					   ratio_title,
+					   period_breaks,
+					   minor_period_breaks,
+					   theme_seaborn_,
+					   event_type=None):
+
 		event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
 		plot_topics_viewed = line_plot_x_axis_date(
 									df=df,
@@ -429,10 +457,16 @@ class TopicViewsTimeseriesPlot(object):
 
 		return (plot_topics_viewed, plot_unique_users, plot_ratio)
 
-	def generate_group_by_plots(self, df, group_by,
-								event_title, user_title, ratio_title,
-								period_breaks, minor_period_breaks,
-								theme_seaborn_, event_type=None):
+	def generate_group_by_plots(self,
+								df,
+								group_by,
+								event_title,
+								user_title,
+								ratio_title,
+								period_breaks,
+								minor_period_breaks,
+								theme_seaborn_,
+								event_type=None):
 
 		event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
 		plot_topics_viewed = group_line_plot_x_axis_date(
@@ -477,6 +511,7 @@ class TopicViewsTimeseriesPlot(object):
 		return (plot_topics_viewed, plot_unique_users, plot_ratio)
 
 	def plot_the_most_active_users(self, max_rank_number=10):
+
 		tvt = self.tvt
 		users_df = tvt.get_the_most_active_users(max_rank_number)
 		if users_df is None:
@@ -532,12 +567,15 @@ class TopicLikesTimeseriesPlot(object):
 									event_type)
 		return plots
 
-	def analyze_events_per_course_sections(self, period_breaks='1 week', minor_period_breaks='1 day',
-											theme_seaborn_=True):
+	def analyze_events_per_course_sections(self,
+										   period_breaks='1 week',
+										   minor_period_breaks='1 day',
+										   theme_seaborn_=True):
 		tlt = self.tlt
 		df = tlt.analyze_events_per_course_sections()
 		if df is None:
 			return ()
+
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		course_ids = np.unique(df['course_id'].values.ravel())
@@ -565,7 +603,7 @@ class TopicLikesTimeseriesPlot(object):
 			event_title = 'Number of topic likes in %s' % (context_name)
 			user_title = 'Number of unique users liking topics in %s' % (context_name)
 			ratio_title = 'Ratio of topic likes over unique user in %s' % (context_name)
-			event_type = 'topic_likes_in_%s' %(context_name.replace(' ', '_'))
+			event_type = 'topic_likes_in_%s' % (context_name.replace(' ', '_'))
 			section_plots = self.generate_plots(new_df,
 												event_title,
 												user_title,
@@ -577,7 +615,8 @@ class TopicLikesTimeseriesPlot(object):
 			plots.append(section_plots)
 		return plots
 
-	def analyze_events_per_device_types(self, period_breaks='1 day', minor_period_breaks=None,
+	def analyze_events_per_device_types(self, period_breaks='1 day',
+										minor_period_breaks=None,
 										theme_seaborn_=True):
 		"""
 		return plots of topic likes grouped by device  types
@@ -609,9 +648,16 @@ class TopicLikesTimeseriesPlot(object):
 											 event_type)
 		return plots
 
-	def generate_plots(self, df, event_title, user_title, ratio_title,
-						period_breaks, minor_period_breaks, theme_seaborn_,
-						event_type=None):
+	def generate_plots(self,
+					   df,
+					   event_title,
+					   user_title,
+					   ratio_title,
+					   period_breaks,
+					   minor_period_breaks,
+					   theme_seaborn_,
+					   event_type=None):
+
 		event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
 		plot_topic_likes = line_plot_x_axis_date(
 									df=df,
@@ -651,10 +697,17 @@ class TopicLikesTimeseriesPlot(object):
 
 		return (plot_topic_likes, plot_unique_users, plot_ratio)
 
-	def generate_group_by_plots(self, df, group_by,
-								event_title, user_title, ratio_title,
-								period_breaks, minor_period_breaks,
-								theme_seaborn_, event_type=None):
+	def generate_group_by_plots(self,
+								df,
+								group_by,
+								event_title,
+								user_title,
+								ratio_title,
+								period_breaks,
+								minor_period_breaks,
+								theme_seaborn_,
+								event_type=None):
+
 		event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
 		plot_topic_likes = group_line_plot_x_axis_date(
 									df=df,
@@ -735,16 +788,19 @@ class TopicFavoritesTimeseriesPlot(object):
 									event_type)
 		return plots
 
-	def analyze_events_per_course_sections(self, period_breaks='1 week', minor_period_breaks='1 day',
-											theme_seaborn_=True):
+	def analyze_events_per_course_sections(self, period_breaks='1 week',
+										   minor_period_breaks='1 day',
+										   theme_seaborn_=True):
 		tft = self.tft
 		df = tft.analyze_events_per_course_sections()
 		if df is None:
 			return ()
+
+		plots = []
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		course_ids = np.unique(df['course_id'].values.ravel())
-		plots = []
+
 		if len(course_ids) > 1:
 			group_by = 'context_name'
 			event_title = _('Number of topic favorites per course sections')
@@ -768,7 +824,7 @@ class TopicFavoritesTimeseriesPlot(object):
 			event_title = 'Number of topic favorites in %s' % (context_name)
 			user_title = 'Number of unique users choosing topics as favorites in %s' % (context_name)
 			ratio_title = 'Ratio of topic favorites over unique user in %s' % (context_name)
-			event_type = 'topic_favorites_in_%s' %(context_name.replace(' ', '_'))
+			event_type = 'topic_favorites_in_%s' % (context_name.replace(' ', '_'))
 			section_plots = self.generate_plots(new_df,
 												event_title,
 												user_title,
@@ -780,7 +836,8 @@ class TopicFavoritesTimeseriesPlot(object):
 			plots.append(section_plots)
 		return plots
 
-	def analyze_events_per_device_types(self, period_breaks='1 day', minor_period_breaks=None,
+	def analyze_events_per_device_types(self, period_breaks='1 day',
+										minor_period_breaks=None,
 										theme_seaborn_=True):
 		"""
 		return plots of topic favorites grouped by device  types
@@ -812,9 +869,16 @@ class TopicFavoritesTimeseriesPlot(object):
 											 event_type)
 		return plots
 
-	def generate_plots(self, df, event_title, user_title, ratio_title,
-						period_breaks, minor_period_breaks, theme_seaborn_,
-						event_type=None):
+	def generate_plots(self,
+					   df,
+					   event_title,
+					   user_title,
+					   ratio_title,
+					   period_breaks,
+					   minor_period_breaks,
+					   theme_seaborn_,
+					   event_type=None):
+
 		event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
 		plot_topic_favorites = line_plot_x_axis_date(
 										df=df,
@@ -854,10 +918,17 @@ class TopicFavoritesTimeseriesPlot(object):
 
 		return (plot_topic_favorites, plot_unique_users, plot_ratio)
 
-	def generate_group_by_plots(self, df, group_by,
-								event_title, user_title, ratio_title,
-								period_breaks, minor_period_breaks,
-								theme_seaborn_, event_type=None):
+	def generate_group_by_plots(self,
+								df,
+								group_by,
+								event_title,
+								user_title,
+								ratio_title,
+								period_breaks,
+								minor_period_breaks,
+								theme_seaborn_,
+								event_type=None):
+
 		event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
 		plot_topic_favorites = group_line_plot_x_axis_date(
 											df=df,

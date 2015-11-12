@@ -15,10 +15,10 @@ import pandas as pd
 
 import numpy as np
 
+from .commons import generate_plot_names
 from .commons import line_plot_x_axis_date
 from .commons import group_line_plot_x_axis_date
 from .commons import histogram_plot_x_axis_discrete
-from .commons import generate_plot_names
 
 class ForumsEventsTimeseriesPlot(object):
 
@@ -29,7 +29,8 @@ class ForumsEventsTimeseriesPlot(object):
 		self.fet = fet
 
 	def explore_all_events(self, period_breaks='1 week',
-						   minor_period_breaks='1 day', theme_seaborn_=True):
+						   minor_period_breaks='1 day',
+						   theme_seaborn_=True):
 
 		fet = self.fet
 		df = fet.combine_all_events_per_date()
@@ -86,7 +87,8 @@ class ForumsCreatedTimeseriesPlot(object):
 		self.fct = fct
 
 	def explore_events(self, period_breaks='1 week',
-					   minor_period_breaks='1 day', theme_seaborn_=True):
+					   minor_period_breaks='1 day',
+					   theme_seaborn_=True):
 		"""
 		return scatter plots of forums creation during period of time
 		it consists of:
@@ -139,8 +141,9 @@ class ForumsCreatedTimeseriesPlot(object):
 
 		return (plot_forums_created, plot_unique_users, plot_ratio)
 
-	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day',
-								theme_seaborn_=True):
+	def analyze_device_types(self, period_breaks='1 week',
+							 minor_period_breaks='1 day',
+							 theme_seaborn_=True):
 		"""
 		return scatter plots of forums creation grouped by device type during period of time
 		it consists of:
@@ -153,6 +156,7 @@ class ForumsCreatedTimeseriesPlot(object):
 		df = fct.analyze_events_per_device_types()
 		if df is None:
 			return ()
+
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		df['ratio'] = df['number_of_forums_created'] / df['number_of_unique_users']
@@ -206,8 +210,9 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 		"""
 		self.fcct = fcct
 
-	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day',
-						theme_seaborn_=True):
+	def explore_events(self, period_breaks='1 week',
+					   minor_period_breaks='1 day',
+					   theme_seaborn_=True):
 		"""
 		return scatter plots of forum comments creation during period of time
 		it consists of:
@@ -219,6 +224,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 		df = fcct.analyze_events()
 		if df is None:
 			return ()
+
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
@@ -238,8 +244,9 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 									event_type)
 		return plots
 
-	def analyze_comments_per_section(self, period_breaks='1 week', minor_period_breaks='1 day',
-									theme_seaborn_=True):
+	def analyze_comments_per_section(self, period_breaks='1 week',
+									 minor_period_breaks='1 day',
+									 theme_seaborn_=True):
 		"""
 		return scatter plots of forum comments creation grouped by course section during period of time
 		it consists of:
@@ -252,10 +259,11 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 		df = fcct.analyze_comments_per_section()
 		if df is None:
 			return()
+
+		plots = []
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		course_ids = np.unique(df['course_id'].values.ravel())
-		plots = []
 
 		if len(course_ids) > 1:
 			title_event = _('Number of forum comments created')
@@ -283,7 +291,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 			title_users = 'Number of unique users creating forum comments in %s' % (context_name)
 			title_ratio = 'Ratio of forums comments created over unique user in %s' % (context_name)
 			title_avg_length = 'Average forums comments length on each available date in %s' % (context_name)
-			event_type = 'forum_comments_created_in_%s' %(context_name.replace(' ', '_'))
+			event_type = 'forum_comments_created_in_%s' % (context_name.replace(' ', '_'))
 			section_plots = self.generate_plots(new_df,
 												period_breaks,
 												minor_period_breaks,
@@ -320,7 +328,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 				period_breaks=period_breaks,
 				minor_breaks=minor_period_breaks,
 				theme_seaborn_=theme_seaborn_,
-				plot_name = event_name)
+				plot_name=event_name)
 
 		plot_unique_users = line_plot_x_axis_date(
 				df=df,
@@ -346,7 +354,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 				theme_seaborn_=theme_seaborn_,
 				plot_name=ratio_event_name)
 
-		avg_event_name = 'average_comment_%s' %event_type
+		avg_event_name = 'average_comment_%s' % event_type
 		plot_average_comment_length = line_plot_x_axis_date(
 				df=df,
 				x_axis_field='timestamp_period',
@@ -410,9 +418,9 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 				group_by=group_by,
 				minor_breaks=minor_period_breaks,
 				theme_seaborn_=theme_seaborn_,
-				plot_name = ratio_event_name)
+				plot_name=ratio_event_name)
 
-		avg_event_name = u'average_comment_%s' %event_type
+		avg_event_name = u'average_comment_%s' % event_type
 		plot_average_comment_length = group_line_plot_x_axis_date(
 				df=df,
 				x_axis_field='timestamp_period',
@@ -424,12 +432,14 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 				group_by=group_by,
 				minor_breaks=minor_period_breaks,
 				theme_seaborn_=theme_seaborn_,
-				plot_name= avg_event_name)
+				plot_name=avg_event_name)
 
 		return (plot_forum_comments_created, plot_unique_users, plot_ratio, plot_average_comment_length)
 
-	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day',
-							theme_seaborn_=True):
+	def analyze_device_types(self,
+							 period_breaks='1 week',
+							 minor_period_breaks='1 day',
+							 theme_seaborn_=True):
 		"""
 		return scatter plots of forum comments creation grouped by device_type during period of time
 		it consists of:
@@ -442,6 +452,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 		df = fcct.analyze_device_types()
 		if df is None:
 			return ()
+
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
@@ -450,7 +461,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 		title_users = _('Number of unique users creating forum comments grouped by device types')
 		title_ratio = _('Ratio of forums comments created over unique user on each available date')
 		title_avg_length = _('Average forums comments length on each available date')
-		event_type='forum_comments_created_per_device_types'
+		event_type = 'forum_comments_created_per_device_types'
 		plots = self.generate_group_by_plots(df,
 											 group_by,
 											 period_breaks,
@@ -500,13 +511,14 @@ class ForumCommentLikesTimeseriesPlot(object):
 		df = fclt.analyze_events()
 		if df is None:
 			return ()
+
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
 		event_title = _('Number of forums comment likes during period of time')
 		user_title = _('Number of unique users liking forum comments during period of time')
 		ratio_title = _('Ratio of forum comments liked over unique user on each available date')
-		event_type='forum_comment_likes'
+		event_type = 'forum_comment_likes'
 		plots = self.generate_plots(df,
 									event_title,
 									user_title,
@@ -526,11 +538,11 @@ class ForumCommentLikesTimeseriesPlot(object):
 		if df is None:
 			return()
 
+		plots = []
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		course_ids = np.unique(df['course_id'].values.ravel())
 
-		plots = []
 		if len(course_ids) > 1:
 			group_by = 'context_name'
 			event_title = _('Number of forum comment likes per course sections')
@@ -554,7 +566,7 @@ class ForumCommentLikesTimeseriesPlot(object):
 			event_title = 'Number of forum comment likes in %s' % (context_name)
 			user_title = 'Number of unique users liking forum comments in %s' % (context_name)
 			ratio_title = 'Ratio of forum comments likes over unique user in %s' % (context_name)
-			event_type = 'forum_comment_likes_in_%s' %(context_name.replace(' ', '_'))
+			event_type = 'forum_comment_likes_in_%s' % (context_name.replace(' ', '_'))
 			section_plots = self.generate_plots(new_df,
 												event_title,
 												user_title,
@@ -566,8 +578,9 @@ class ForumCommentLikesTimeseriesPlot(object):
 			plots.append(section_plots)
 		return plots
 
-	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day',
-							theme_seaborn_=True):
+	def analyze_device_types(self, period_breaks='1 week',
+							 minor_period_breaks='1 day',
+							 theme_seaborn_=True):
 		"""
 		plot the number of comments liked on each available date during time period.
 		It also shows the number of unique users liking comments
@@ -576,6 +589,7 @@ class ForumCommentLikesTimeseriesPlot(object):
 		df = fclt.analyze_device_types()
 		if df is None:
 			return ()
+
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
@@ -595,8 +609,16 @@ class ForumCommentLikesTimeseriesPlot(object):
 											 event_type)
 		return plots
 
-	def generate_plots(self, df, event_title, user_title, ratio_title, period_breaks,
-					   minor_period_breaks, theme_seaborn_, event_type=None):
+	def generate_plots(self,
+					   df,
+					   event_title,
+					   user_title,
+					   ratio_title,
+					   period_breaks,
+					   minor_period_breaks,
+					   theme_seaborn_,
+					   event_type=None):
+
 		event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
 		plot_comment_likes = line_plot_x_axis_date(
 									df=df,
@@ -646,6 +668,7 @@ class ForumCommentLikesTimeseriesPlot(object):
 								minor_period_breaks,
 								theme_seaborn_,
 								event_type=None):
+
 		event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
 		plot_comment_likes = group_line_plot_x_axis_date(
 									df=df,
@@ -726,24 +749,26 @@ class ForumCommentFavoritesTimeseriesPlot(object):
 									event_type)
 		return plots
 
-	def analyze_events_per_course_sections(self, period_breaks='1 week', minor_period_breaks='1 day',
-											theme_seaborn_=True):
+	def analyze_events_per_course_sections(self,
+										   period_breaks='1 week',
+										   minor_period_breaks='1 day',
+										   theme_seaborn_=True):
 		fcft = self.fcft
 		df = fcft.analyze_events_per_course_sections()
 		if df is None:
 			return()
 
+		plots = []
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		course_ids = np.unique(df['course_id'].values.ravel())
 
-		plots = []
 		if len(course_ids) > 1:
 			group_by = 'context_name'
 			event_title = _('Number of forum comment favorites per course sections')
 			user_title = _('Number of unique users voting forum comments as favorites per course sections')
 			ratio_title = _('Ratio of forum comment favorites over unique user per course sections')
-			event_type= 'forum_comment_favorites_per_course_sections'
+			event_type = 'forum_comment_favorites_per_course_sections'
 			all_section_plots = self.generate_group_by_plots(df,
 															 group_by,
 															 event_title,
@@ -761,7 +786,7 @@ class ForumCommentFavoritesTimeseriesPlot(object):
 			event_title = 'Number of forum comment favorites in %s' % (context_name)
 			user_title = 'Number of unique users voting forum comments as favorites in %s' % (context_name)
 			ratio_title = 'Ratio of forum comments favorites over unique user in %s' % (context_name)
-			event_type = 'forum_comment_favorites_in_%s' %(context_name.replace(' ', '_'))
+			event_type = 'forum_comment_favorites_in_%s' % (context_name.replace(' ', '_'))
 			section_plots = self.generate_plots(new_df,
 												event_title,
 												user_title,
@@ -773,8 +798,9 @@ class ForumCommentFavoritesTimeseriesPlot(object):
 
 		return plots
 
-	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day',
-							theme_seaborn_=True):
+	def analyze_device_types(self, period_breaks='1 week',
+							 minor_period_breaks='1 day',
+							 theme_seaborn_=True):
 		"""
 		plot the number of comment favorites on each available date during time period.
 		It also shows the number of unique users adding favorites
@@ -783,6 +809,7 @@ class ForumCommentFavoritesTimeseriesPlot(object):
 		df = fcft.analyze_device_types()
 		if df is None:
 			return ()
+
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
@@ -802,8 +829,16 @@ class ForumCommentFavoritesTimeseriesPlot(object):
 											 event_type)
 		return plots
 
-	def generate_plots(self, df, event_title, user_title, ratio_title, period_breaks,
-					   minor_period_breaks, theme_seaborn_, event_type = None):
+	def generate_plots(self,
+					   df,
+					   event_title,
+					   user_title,
+					   ratio_title,
+					   period_breaks,
+					   minor_period_breaks,
+					   theme_seaborn_,
+					   event_type=None):
+
 		event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
 		plot_comment_favorites = line_plot_x_axis_date(
 									df=df,
@@ -853,6 +888,7 @@ class ForumCommentFavoritesTimeseriesPlot(object):
 								minor_period_breaks,
 								theme_seaborn_,
 								event_type=None):
+
 		event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
 		plot_comment_favorites = group_line_plot_x_axis_date(
 										df=df,
