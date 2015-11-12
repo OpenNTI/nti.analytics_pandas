@@ -23,7 +23,7 @@ class Image(object):
 		return me
 
 def save_plot(plot, image_filaname):
-	plt.figure.Figure = gg.draw()
+	plt.figure.Figure = plot.draw()
 	buf = StringIO()
 	plt.savefig(buf, format='png')
 	plt.close()
