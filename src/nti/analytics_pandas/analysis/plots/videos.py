@@ -17,6 +17,7 @@ import numpy as np
 
 from .commons import line_plot_x_axis_date
 from .commons import group_line_plot_x_axis_date
+from .commons import generate_plot_names
 
 class VideoEventsTimeseriesPlot(object):
 
@@ -45,6 +46,7 @@ class VideoEventsTimeseriesPlot(object):
 		event_title = _('Number of videos watched and skipped during period of time')
 		user_title = _('Number of unique users watching or skipping videos during period of time')
 		ratio_title = _('Ratio of videos watched and skipped over unique user on each available date')
+		event_type = 'video_events'
 		plots = self.generate_plots(
 								df,
 								event_title,
@@ -52,12 +54,14 @@ class VideoEventsTimeseriesPlot(object):
 								ratio_title,
 								period_breaks,
 								minor_period_breaks,
-								theme_seaborn_)
+								theme_seaborn_,
+								event_type)
 		return plots
 
 	def generate_plots(self, df, event_title, user_title, ratio_title,
-					   period_breaks, minor_period_breaks, theme_seaborn_):
-
+					   period_breaks, minor_period_breaks, theme_seaborn_,
+					   event_type=None):
+		event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
 		plot_video_events = line_plot_x_axis_date(
 								df=df,
 								x_axis_field='timestamp_period',
@@ -67,7 +71,8 @@ class VideoEventsTimeseriesPlot(object):
 								title=event_title,
 								period_breaks=period_breaks,
 								minor_breaks=minor_period_breaks,
-								theme_seaborn_=theme_seaborn_)
+								theme_seaborn_=theme_seaborn_,
+								plot_name=event_name)
 
 		plot_unique_users = line_plot_x_axis_date(
 								df=df,
@@ -78,7 +83,8 @@ class VideoEventsTimeseriesPlot(object):
 								title=user_title,
 								period_breaks=period_breaks,
 								minor_breaks=minor_period_breaks,
-								theme_seaborn_=theme_seaborn_)
+								theme_seaborn_=theme_seaborn_,
+								plot_name=user_event_name)
 
 		plot_ratio = line_plot_x_axis_date(
 								df=df,
@@ -89,13 +95,15 @@ class VideoEventsTimeseriesPlot(object):
 								title=ratio_title,
 								period_breaks=period_breaks,
 								minor_breaks=minor_period_breaks,
-								theme_seaborn_=theme_seaborn_)
+								theme_seaborn_=theme_seaborn_,
+								plot_name=ratio_event_name)
 
 		return (plot_video_events, plot_unique_users, plot_ratio)
 
 	def generate_group_by_plots(self, df, group_by, event_title, user_title, ratio_title,
-								period_breaks, minor_period_breaks, theme_seaborn_):
-
+								period_breaks, minor_period_breaks, theme_seaborn_,
+								event_type=None):
+		event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
 		plot_video_events = group_line_plot_x_axis_date(
 									df=df,
 									x_axis_field='timestamp_period',
@@ -106,7 +114,8 @@ class VideoEventsTimeseriesPlot(object):
 									period_breaks=period_breaks,
 									group_by=group_by,
 									minor_breaks=minor_period_breaks,
-									theme_seaborn_=theme_seaborn_)
+									theme_seaborn_=theme_seaborn_,
+									plot_name=event_name)
 
 		plot_unique_users = group_line_plot_x_axis_date(
 									df=df,
@@ -118,7 +127,8 @@ class VideoEventsTimeseriesPlot(object):
 									period_breaks=period_breaks,
 									group_by=group_by,
 									minor_breaks=minor_period_breaks,
-									theme_seaborn_=theme_seaborn_)
+									theme_seaborn_=theme_seaborn_,
+									plot_name=user_event_name)
 
 		plot_ratio = group_line_plot_x_axis_date(
 									df=df,
@@ -130,7 +140,8 @@ class VideoEventsTimeseriesPlot(object):
 									period_breaks=period_breaks,
 									group_by=group_by,
 									minor_breaks=minor_period_breaks,
-									theme_seaborn_=theme_seaborn_)
+									theme_seaborn_=theme_seaborn_,
+									plot_name=ratio_event_name)
 
 		return (plot_video_events, plot_unique_users, plot_ratio)
 
@@ -157,6 +168,7 @@ class VideoEventsTimeseriesPlot(object):
 		event_title = _('Number of video events grouped by device types')
 		user_title = _('Number of unique users creating video events grouped by device types')
 		ratio_title = _('Ratio of video events over unique users grouped by device types')
+		event_type = 'video_events_%s' %(video_event_type)
 		plots = self.generate_group_by_plots(
 									df,
 									group_by,
@@ -165,7 +177,8 @@ class VideoEventsTimeseriesPlot(object):
 									ratio_title,
 									period_breaks,
 									minor_period_breaks,
-									theme_seaborn_)
+									theme_seaborn_,
+									event_type)
 		return plots
 
 	def analyze_video_events_types(self, period_breaks='1 week',
@@ -187,6 +200,7 @@ class VideoEventsTimeseriesPlot(object):
 		event_title = _('Number of video events grouped by event types')
 		user_title = _('Number of unique users creating video events grouped by event types')
 		ratio_title = _('Ratio of video events over unique users grouped by event types')
+		event_type = 'video_events_per_types'
 		all_video_events_plots = self.generate_group_by_plots(
 													df,
 													group_by,
@@ -195,7 +209,8 @@ class VideoEventsTimeseriesPlot(object):
 													ratio_title,
 													period_breaks,
 													minor_period_breaks,
-													theme_seaborn_)
+													theme_seaborn_,
+													event_type)
 		plots.append(all_video_events_plots)
 
 		if separate_plot_by_type:
@@ -205,13 +220,15 @@ class VideoEventsTimeseriesPlot(object):
 				event_title = 'Number of video events (%s)' % (video_event_type)
 				user_title = 'Number of unique users  (VIDEO %s)' % (video_event_type)
 				ratio_title = 'Ratio of video events over unique user (VIDEO %s)' % (video_event_type)
+				event_type = 'video_events_%s' %(video_event_type)
 				video_event_plots = self.generate_plots(new_df,
 														event_title,
 														user_title,
 														ratio_title,
 														period_breaks,
 														minor_period_breaks,
-														theme_seaborn_)
+														theme_seaborn_,
+														event_type)
 				plots.append(video_event_plots)
 		return plots
 
@@ -235,6 +252,7 @@ class VideoEventsTimeseriesPlot(object):
 			event_title = 'Number of  video events (%s) per course sections' % video_event_type
 			user_title = 'Number of unique users per course sections (VIDEO %s)' % video_event_type
 			ratio_title = 'Ratio of video events over unique user per course sections (VIDEO %s)' % video_event_type
+			event_type = 'video_events_per_course_sections_%s' %(video_event_type)
 			all_section_plots = self.generate_group_by_plots(df,
 															 group_by,
 															 event_title,
@@ -242,7 +260,8 @@ class VideoEventsTimeseriesPlot(object):
 															 ratio_title,
 															 period_breaks,
 															 minor_period_breaks,
-															 theme_seaborn_)
+															 theme_seaborn_,
+															 event_type)
 			plots.append(all_section_plots)
 
 		for course_id in course_ids:
@@ -251,6 +270,7 @@ class VideoEventsTimeseriesPlot(object):
 			event_title = 'Number of video events (%s) in %s' % (video_event_type, context_name)
 			user_title = 'Number of unique users on video events (%s) in %s' % (video_event_type, context_name)
 			ratio_title = 'Ratio of video events (%s) over unique user in %s' % (video_event_type, context_name)
+			event_type = 'video_events_%s_in_%s' %(video_event_type, context_name.replace(' ', '_'))
 			section_plots = self.generate_plots(
 											new_df,
 											event_title,
@@ -258,6 +278,7 @@ class VideoEventsTimeseriesPlot(object):
 											ratio_title,
 											period_breaks,
 											minor_period_breaks,
-											theme_seaborn_)
+											theme_seaborn_,
+											event_type)
 			plots.append(section_plots)
 		return plots
