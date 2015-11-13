@@ -14,6 +14,7 @@ from hamcrest import greater_than
 from hamcrest import contains_string
 
 import os
+import shutil
 
 from z3c.rml import rml2pdf
 
@@ -48,7 +49,7 @@ class TestResourceViews(AnalyticsPandasTestBase):
 		return result
 	
 	def test_resource_views_rml(self):
-		# make sure  emplate exists
+		# make sure  template exists
 		path = self.resource_views_rml
 		assert_that(os.path.exists(path), is_(True))
 		
@@ -73,6 +74,28 @@ class TestResourceViews(AnalyticsPandasTestBase):
 		rml = self.template(path).bind(view)(**system)
 		assert_that(rml, contains_string('Bleach'))
 		
-		pdf_stream = rml2pdf.parseString( rml )
+		pdf_stream = rml2pdf.parseString(rml)
 		result = pdf_stream.read()
 		assert_that(result, has_length(greater_than(1)))
+
+	def test_generate_pdf_from_rml(self):
+		# make sure  emplate exists
+		path = self.std_report_layout_rml
+		assert_that(os.path.exists(path), is_(True))
+		
+		# prepare view and context
+		context = Context()
+		view = View(context)
+		view._build_data('Bleach')
+		system = {'view':view, 'context':context}
+		rml = self.template(path).bind(view)(**system)
+		assert_that(rml, contains_string('Bleach'))
+		
+		pdf_stream = rml2pdf.parseString(rml)
+		pdf_stream.seek(0)
+		fd = open('test_resource_views.pdf', 'w')
+		shutil.copyfileobj(pdf_stream, fd)
+		
+		assert_that(os.path.exists('test_resource_views.pdf'), is_(True))
+
+
