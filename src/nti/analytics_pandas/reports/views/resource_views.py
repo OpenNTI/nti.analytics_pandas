@@ -24,7 +24,7 @@ from .mixins import AbstractReportView
 class ResourceViewsTimeseriesContext(object):
 
 	def __init__(self, session=None, start_date=None, end_date=None, courses=None,
-				period_breaks=None, minor_period_breaks=None, theme_seaborn_=True):
+				 period_breaks=None, minor_period_breaks=None, theme_seaborn_=True):
 		self.session = session
 		self.courses = courses
 		self.end_date = end_date
@@ -58,10 +58,10 @@ class ResourceViewsTimeseriesReportView(AbstractReportView):
 
 	def get_resource_view_events(self, data):
 		plots = self.rvtp.explore_events(self.context.period_breaks,
-									self.context.minor_period_breaks,
-									self.context.theme_seaborn_)
+										 self.context.minor_period_breaks,
+										 self.context.theme_seaborn_)
 		data['resource_view_events'] = None
-		if plots is not None and len(plots) > 0 :
+		if plots:
 			data['resource_view_events'] = build_plot_images_dictionary_(plots)
 		return data
 

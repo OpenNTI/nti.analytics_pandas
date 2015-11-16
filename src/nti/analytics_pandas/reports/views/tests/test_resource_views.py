@@ -8,13 +8,12 @@ __docformat__ = "restructuredtext en"
 # pylint: disable=W0212,R0904
 
 from hamcrest import is_
+from hamcrest import equal_to
+from hamcrest import has_item
 from hamcrest import has_length
 from hamcrest import assert_that
-from hamcrest import greater_than
-from hamcrest import contains_string
-from hamcrest import equal_to
 from hamcrest import instance_of
-from hamcrest import has_item
+from hamcrest import greater_than
 
 import os
 import shutil
@@ -34,7 +33,7 @@ class TestResourceViews(AnalyticsPandasTestBase):
 
 	def setUp(self):
 		super(TestResourceViews, self).setUp()
-	
+
 	@Lazy
 	def std_report_layout_rml(self):
 		path = os.path.join(os.path.dirname(__file__), '../../templates/std_report_layout.rml')
@@ -50,13 +49,12 @@ class TestResourceViews(AnalyticsPandasTestBase):
 									  auto_reload=(False,),
 									  debug=False)
 		return result
-	
 
 	def test_std_report_layout_rml(self):
 		# make sure  template exists
 		path = self.std_report_layout_rml
 		assert_that(os.path.exists(path), is_(True))
-		
+
 		# prepare view and context
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
@@ -64,12 +62,13 @@ class TestResourceViews(AnalyticsPandasTestBase):
 		period_breaks = '1 week'
 		minor_period_breaks = '1 day'
 		theme_seaborn_ = True
-		context = Context(self.session, start_date, end_date, courses, period_breaks, minor_period_breaks, theme_seaborn_)
+		context = Context(self.session, start_date, end_date, courses, 
+						  period_breaks, minor_period_breaks, theme_seaborn_)
 		view = View(context)
 		view()
 		system = {'view':view, 'context':context}
 		rml = self.template(path).bind(view)(**system)
-		
+
 		pdf_stream = rml2pdf.parseString(rml)
 		result = pdf_stream.read()
 		assert_that(result, has_length(greater_than(1)))
@@ -78,7 +77,7 @@ class TestResourceViews(AnalyticsPandasTestBase):
 		# make sure  template exists
 		path = self.std_report_layout_rml
 		assert_that(os.path.exists(path), is_(True))
-		
+
 		# prepare view and context
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
@@ -86,19 +85,19 @@ class TestResourceViews(AnalyticsPandasTestBase):
 		period_breaks = '1 week'
 		minor_period_breaks = '1 day'
 		theme_seaborn_ = True
-		context = Context(self.session, start_date, end_date, courses, period_breaks, minor_period_breaks, theme_seaborn_)
+		context = Context(self.session, start_date, end_date, courses, 
+						  period_breaks, minor_period_breaks, theme_seaborn_)
 		view = View(context)
 		view()
 		system = {'view':view, 'context':context}
 		rml = self.template(path).bind(view)(**system)
-		
+
 		pdf_stream = rml2pdf.parseString(rml)
 		pdf_stream.seek(0)
 		fd = open('test_resource_views.pdf', 'w')
 		shutil.copyfileobj(pdf_stream, fd)
 		pdf_stream.close()
 		assert_that(os.path.exists('test_resource_views.pdf'), is_(True))
-
 
 	def test_context_view_attributes(self):
 		# make sure  template exists
@@ -112,8 +111,9 @@ class TestResourceViews(AnalyticsPandasTestBase):
 		period_breaks = '1 week'
 		minor_period_breaks = '1 day'
 		theme_seaborn_ = True
-		context = Context(self.session, start_date, end_date, courses, period_breaks, minor_period_breaks, theme_seaborn_)
-		assert_that(context.start_date, equal_to('2015-01-01'))	
+		context = Context(self.session, start_date, end_date, courses, 
+						  period_breaks, minor_period_breaks, theme_seaborn_)
+		assert_that(context.start_date, equal_to('2015-01-01'))
 
 		view = View(context)
 		view()
