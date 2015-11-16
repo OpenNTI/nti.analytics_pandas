@@ -3,9 +3,21 @@
 	xmlns:metal="http://xml.zope.org/namespaces/metal"
 	tal:define="options view/options">
 
-	<h1 style="h1" fontSize="18" spaceAfter=".2in"
-		tal:content="options/data">
-		Data
+	<h1 style="h1" fontSize="12" spaceAfter=".2in">
+		Resource Views
 	</h1>
 
+	<illustration width="5in" height="3in"
+				  tal:condition="options/data/resource_view_events">
+		<image tal:attributes="file options/data/resource_view_events/event_resource_views"
+			   x="0" y="0" width="400" height="200" showBoundary="no" preserveAspectRatio="yes">
+		</image>
+		<image tal:attributes="file options/data/resource_view_events/user_resource_views"
+			   x="300" y="0" width="400" height="200" showBoundary="no" preserveAspectRatio="yes">
+		</image>
+
+		<image tal:attributes="file options/data/resource_view_events/ratio_resource_views"
+			   x="0" y="-210" width="400" height="200" showBoundary="no" preserveAspectRatio="yes">
+		</image>
+	</illustration>
 </metal:block>
