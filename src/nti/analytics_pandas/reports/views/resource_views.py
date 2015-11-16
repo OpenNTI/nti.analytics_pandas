@@ -30,8 +30,8 @@ class ResourceViewsTimeseriesContext(object):
 		self.end_date = end_date
 		self.start_date = start_date
 		self.period_breaks = period_breaks
-		self.minor_period_breaks = minor_period_breaks
 		self.theme_seaborn_ = theme_seaborn_
+		self.minor_period_breaks = minor_period_breaks
 
 Context = ResourceViewsTimeseriesContext
 
@@ -40,7 +40,7 @@ class ResourceViewsTimeseriesReportView(AbstractReportView):
 	@property
 	def report_title(self):
 		return _('Resource Views')
-	
+
 	def _build_data(self, data=_('sample resource views report')):
 		self.options['data'] = data
 		return self.options
@@ -57,8 +57,8 @@ class ResourceViewsTimeseriesReportView(AbstractReportView):
 		return self.options
 
 	def get_resource_view_events(self, data):
-		plots = self.rvtp.explore_events(self.context.period_breaks, 
-									self.context.minor_period_breaks, 
+		plots = self.rvtp.explore_events(self.context.period_breaks,
+									self.context.minor_period_breaks,
 									self.context.theme_seaborn_)
 		if plots is not None and len(plots) > 0 :
 			data['resource_view_events'] = build_plot_images_dictionary_(plots)

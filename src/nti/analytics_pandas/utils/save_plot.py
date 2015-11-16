@@ -36,6 +36,6 @@ def save_plot_(plot, image_filename, image_type='png'):
 	buf = StringIO()
 	plt.savefig(buf, format=image_type)
 	plt.close()
-	image_filename = u'%s.%s' %(image_filename, image_type)
+	image_filename = u'%s.%s' % (image_filename, image_type)
 	image = Image.process(image_filename, buf)
 	return image

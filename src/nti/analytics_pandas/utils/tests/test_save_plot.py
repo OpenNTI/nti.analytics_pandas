@@ -46,7 +46,7 @@ class TestSavePlot(AnalyticsPandasTestBase):
 	def test_save_plot(self):
 		plot = _build_testing_plot()
 		image_filename = 'image_test.png'
-		image = save_plot_to_png(plot, image_filename)
+		image = save_plot_(plot, image_filename)
 		image.data.seek(0)
 		im = PLTImage.open(image.data)
 		im.show()
