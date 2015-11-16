@@ -16,6 +16,8 @@ from zope import interface
 from ...analysis import ResourceViewsTimeseries
 from ...analysis import ResourceViewsTimeseriesPlot
 
+from .commons import build_plot_images_dictionary_
+
 from .mixins import AbstractReportView
 
 @interface.implementer(interface.Interface)
@@ -47,12 +49,19 @@ class ResourceViewsTimeseriesReportView(AbstractReportView):
 		self.rvt = ResourceViewsTimeseries(self.context.session,
 										   self.context.start_date,
 										   self.context.end_date,
-										   self.context.courses,
-										   self.context.period_breaks,
-										   self.context.minor_period_breaks,
-										   self.context.theme_seaborn_)
+										   self.context.courses)
 		self.rvtp = ResourceViewsTimeseriesPlot(self.rvt)
-		self._build_data()
+		data = {}
+		data = self.get_resource_view_events(data)
+		self._build_data(data)
 		return self.options
+
+	def get_resource_view_events(self, data):
+		plots = self.rvtp.explore_events(self.context.period_breaks, 
+									self.context.minor_period_breaks, 
+									self.context.theme_seaborn_)
+		if plots is not None and len(plots) > 0 :
+			data['resource_view_events'] = build_plot_images_dictionary_(plots)
+		return data
 
 View = ResourceViewsTimeseriesReport = ResourceViewsTimeseriesReportView
