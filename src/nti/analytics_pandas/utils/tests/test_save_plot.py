@@ -19,7 +19,7 @@ import pandas as pd
 
 from PIL import Image as PLTImage
 
-from nti.analytics_pandas.utils.save_plot import save_plot_to_png
+from nti.analytics_pandas.utils.save_plot import save_plot_
 
 from nti.analytics_pandas.analysis.resource_views import ResourceViewsTimeseries
 from nti.analytics_pandas.analysis.plots.resource_views import ResourceViewsTimeseriesPlot
@@ -61,7 +61,7 @@ class TestSavePlot(AnalyticsPandasTestBase):
 		plots = rvtp.explore_events()
 		for plot in plots:
 			image_filename = u'%s' % (plot.plot_name)
-			image = save_plot_to_png(plot.plot, image_filename)
+			image = save_plot_(plot.plot, image_filename, image_type='png')
 			image.data.seek(0)
 			im = PLTImage.open(image.data)
 			im.show()

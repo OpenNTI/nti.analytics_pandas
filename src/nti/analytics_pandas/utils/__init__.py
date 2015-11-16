@@ -10,6 +10,7 @@ __docformat__ = "restructuredtext en"
 logger = __import__('logging').getLogger(__name__)
 
 from .save_plot import Plot
+from .save_plot import save_plot_
 
 from .string_folder import StringFolder
 

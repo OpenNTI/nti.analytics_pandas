@@ -79,7 +79,7 @@ class TestResourceViews(AnalyticsPandasTestBase):
 		assert_that(result, has_length(greater_than(1)))
 
 	def test_generate_pdf_from_rml(self):
-		# make sure  emplate exists
+		# make sure  template exists
 		path = self.std_report_layout_rml
 		assert_that(os.path.exists(path), is_(True))
 		
@@ -95,7 +95,7 @@ class TestResourceViews(AnalyticsPandasTestBase):
 		pdf_stream.seek(0)
 		fd = open('test_resource_views.pdf', 'w')
 		shutil.copyfileobj(pdf_stream, fd)
-		
+		pdf_stream.close()
 		assert_that(os.path.exists('test_resource_views.pdf'), is_(True))
 
 

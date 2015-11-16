@@ -31,10 +31,11 @@ class Plot(object):
 		me.plot = plot
 		return me
 
-def save_plot_to_png(plot, image_filename):
+def save_plot_(plot, image_filename, image_type='png'):
 	plt.figure.Figure = plot.draw()
 	buf = StringIO()
-	plt.savefig(buf, format='png')
+	plt.savefig(buf, format=image_type)
 	plt.close()
+	image_filename = u'%.%' %(image_filename, image_type)
 	image = Image.process(image_filename, buf)
 	return image
