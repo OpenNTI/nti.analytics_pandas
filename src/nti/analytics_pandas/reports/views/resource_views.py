@@ -60,6 +60,7 @@ class ResourceViewsTimeseriesReportView(AbstractReportView):
 		plots = self.rvtp.explore_events(self.context.period_breaks,
 									self.context.minor_period_breaks,
 									self.context.theme_seaborn_)
+		data['resource_view_events'] = None
 		if plots is not None and len(plots) > 0 :
 			data['resource_view_events'] = build_plot_images_dictionary_(plots)
 		return data
