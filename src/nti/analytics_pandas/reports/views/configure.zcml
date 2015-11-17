@@ -20,6 +20,12 @@
 		for=".resource_views.ResourceViewsTimeseriesReportView"
 		layer="*" />
 
+	<!-- Notes related events report -->
+	<z3c:template
+		template="../templates/notes.rml"
+		for=".notes.NoteEventsTimeseriesReportView"
+		layer="*" />
+
 	<!-- Macros -->
 	<z3c:macro
 		template="../templates/std_report_macros.pt"
