@@ -25,4 +25,9 @@
 		template="../templates/std_report_macros.pt"
 		name="three_plots_event"
 		layer="*" />
+
+	<z3c:macro
+		template="../templates/std_report_macros.pt"
+		name="one_plot_event"
+		layer="*" />
 </configure>

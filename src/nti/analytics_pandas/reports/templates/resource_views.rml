@@ -2,22 +2,63 @@
 	xmlns:tal="http://xml.zope.org/namespaces/tal"
 	xmlns:metal="http://xml.zope.org/namespaces/metal"
 	tal:define="options view/options">
-
-	<h1 style="h1" fontSize="12" spaceAfter=".2in">
-		Resource Views
-	</h1>
-
-	<illustration width="5in" height="3in"
-				  tal:condition="options/data/resource_view_events">
-		<image tal:attributes="file options/data/resource_view_events/event_resource_views"
-			   x="0" y="0" width="400" height="200" showBoundary="no" preserveAspectRatio="yes">
-		</image>
-		<image tal:attributes="file options/data/resource_view_events/user_resource_views"
-			   x="300" y="0" width="400" height="200" showBoundary="no" preserveAspectRatio="yes">
-		</image>
-
-		<image tal:attributes="file options/data/resource_view_events/ratio_resource_views"
-			   x="0" y="-210" width="400" height="200" showBoundary="no" preserveAspectRatio="yes">
-		</image>
-	</illustration>
+	<!--
+		TODO : fix report's cover
+	-->
+	<hr width="100%" />
+	<setNextTemplate name="main"/>
+	<nextPage />
+	<tal:block tal:condition="python: options['has_data']">
+		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+			Total Resource Views
+		</h1>
+		<hr width="100%" />
+		<illustration width="5in" height="3in"
+					  tal:define="event options/data/resource_view_events/event_resource_views;
+								  user_event options/data/resource_view_events/user_resource_views;
+								  ratio_event options/data/resource_view_events/ratio_resource_views"
+					  tal:condition="options/data/resource_view_events"
+					  metal:use-macro="macro:three_plots_event">
+		</illustration>
+		
+		<setNextTemplate name="main"/>
+		<nextPage />
+		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+			Resource Views per Device Types
+		</h1>
+		<hr width="100%" />
+		<illustration width="5in" height="3in"
+					  tal:define="event options/data/resource_views_per_device_types/event_resource_views_per_device_types;
+								  user_event options/data/resource_views_per_device_types/user_resource_views_per_device_types;
+								  ratio_event options/data/resource_views_per_device_types/ratio_resource_views_per_device_types"
+					  tal:condition="options/data/resource_views_per_device_types"
+					  metal:use-macro="macro:three_plots_event">
+		</illustration>
+		
+		<setNextTemplate name="main"/>
+		<nextPage />
+		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+			Resource Views per Resource Types
+		</h1>
+		<hr width="100%" />
+		<illustration width="5in" height="3in"
+					  tal:define="event options/data/resource_views_per_resource_types/event_resource_views_per_resource_types;
+								  user_event options/data/resource_views_per_resource_types/user_resource_views_per_resource_types;
+								  ratio_event options/data/resource_views_per_resource_types/ratio_resource_views_per_resource_types"
+					  tal:condition="options/data/resource_views_per_resource_types"
+					  metal:use-macro="macro:three_plots_event">
+		</illustration>
+		
+		<setNextTemplate name="main"/>
+		<nextPage />
+		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+			Most active users viewing resources during time period
+		</h1>
+		<hr width="100%" />
+		<illustration width="5in" height="3in"
+					  tal:define="event options/data/resource_view_users/most_active_users_viewing_resources"
+					  tal:condition="options/data/resource_view_users"
+					  metal:use-macro="macro:one_plot_event">
+		</illustration>
+	</tal:block>
 </metal:block>
