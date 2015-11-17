@@ -19,6 +19,7 @@ from .commons import line_plot_x_axis_date
 from .commons import group_line_plot_x_axis_date
 from .commons import group_scatter_plot_x_axis_date
 from .commons import histogram_plot_x_axis_discrete
+from .commons import generate_plot_names as generate_plot_names_
 
 class  ResourceViewsTimeseriesPlot(object):
 
@@ -255,7 +256,7 @@ class  ResourceViewsTimeseriesPlot(object):
 										theme_seaborn_,
 										event_type=None):
 
-		# event_name, user_event_name, ratio_event_name, unique_event_name = self.generate_plot_names(event_type)
+		event_name, user_event_name, ratio_event_name, unique_event_name = self.generate_plot_names(event_type)
 
 		plot_resource_views = group_scatter_plot_x_axis_date(
 											df=df,
@@ -268,7 +269,7 @@ class  ResourceViewsTimeseriesPlot(object):
 											group_by=group_by,
 											minor_breaks=minor_period_breaks,
 											theme_seaborn_=theme_seaborn_,
-											plot_name='event_name')
+											plot_name=event_name)
 
 		plot_unique_users = group_scatter_plot_x_axis_date(
 											df=df,
@@ -281,7 +282,7 @@ class  ResourceViewsTimeseriesPlot(object):
 											group_by=group_by,
 											minor_breaks=minor_period_breaks,
 											theme_seaborn_=theme_seaborn_,
-											plot_name='user_event_name')
+											plot_name=user_event_name)
 
 		plot_ratio = group_scatter_plot_x_axis_date(
 											df=df,
@@ -294,7 +295,7 @@ class  ResourceViewsTimeseriesPlot(object):
 											group_by=group_by,
 											minor_breaks=minor_period_breaks,
 											theme_seaborn_=theme_seaborn_,
-											plot_name='ratio_event_name')
+											plot_name=ratio_event_name)
 
 		plot_unique_resources = group_scatter_plot_x_axis_date(
 											df=df,
@@ -307,7 +308,7 @@ class  ResourceViewsTimeseriesPlot(object):
 											group_by=group_by,
 											minor_breaks=minor_period_breaks,
 											theme_seaborn_=theme_seaborn_,
-											plot_name='unique_event_name')
+											plot_name=unique_event_name)
 
 		return (plot_resource_views, plot_unique_users, plot_ratio, plot_unique_resources)
 
@@ -464,16 +465,7 @@ class  ResourceViewsTimeseriesPlot(object):
 		return (plot_users,)
 
 	def generate_plot_names(self, event_type):
-		# TODO: Use commons
-		event_name = None
-		user_event_name = None
-		ratio_event_name = None
-		unique_event_name = None
-
+		event_name, user_event_name, ratio_event_name = generate_plot_names_(event_type)
 		if event_type is not None:
-			event_name = 'event_%s' % event_type
-			user_event_name = 'user_%s' % event_type
-			ratio_event_name = 'ratio_%s' % event_type
 			unique_event_name = 'unique_%s' % event_type
-
 		return event_name, user_event_name, ratio_event_name, unique_event_name
