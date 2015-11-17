@@ -44,6 +44,8 @@ class ResourceViewsTimeseriesReportView(AbstractReportView):
 		return _('Resource Views')
 
 	def _build_data(self, data=_('sample resource views report')):
+		if 'has_data' not in self.options.keys():
+			self.options['has_data'] = False
 		self.options['data'] = data
 		return self.options
 

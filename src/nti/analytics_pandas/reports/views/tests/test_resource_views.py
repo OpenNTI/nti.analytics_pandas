@@ -65,7 +65,7 @@ class TestResourceViews(AnalyticsPandasTestBase):
 		context = Context(self.session, start_date, end_date, courses, 
 						  period_breaks, minor_period_breaks, theme_seaborn_)
 		view = View(context)
-		view()
+		view._build_data('Bleach')
 		system = {'view':view, 'context':context}
 		rml = self.template(path).bind(view)(**system)
 
@@ -87,8 +87,13 @@ class TestResourceViews(AnalyticsPandasTestBase):
 		theme_seaborn_ = True
 		context = Context(self.session, start_date, end_date, courses, 
 						  period_breaks, minor_period_breaks, theme_seaborn_)
+		assert_that(context.start_date, equal_to('2015-01-01'))
+		
 		view = View(context)
 		view()
+		assert_that(view.options['data'] , instance_of(dict))
+		assert_that(view.options['data'].keys(), has_item('resource_view_events'))
+		
 		system = {'view':view, 'context':context}
 		rml = self.template(path).bind(view)(**system)
 
@@ -98,24 +103,3 @@ class TestResourceViews(AnalyticsPandasTestBase):
 		shutil.copyfileobj(pdf_stream, fd)
 		pdf_stream.close()
 		assert_that(os.path.exists('test_resource_views.pdf'), is_(True))
-
-	def test_context_view_attributes(self):
-		# make sure  template exists
-		path = self.std_report_layout_rml
-		assert_that(os.path.exists(path), is_(True))
-
-		# prepare view and context
-		start_date = '2015-01-01'
-		end_date = '2015-05-31'
-		courses = ['388']
-		period_breaks = '1 week'
-		minor_period_breaks = '1 day'
-		theme_seaborn_ = True
-		context = Context(self.session, start_date, end_date, courses, 
-						  period_breaks, minor_period_breaks, theme_seaborn_)
-		assert_that(context.start_date, equal_to('2015-01-01'))
-
-		view = View(context)
-		view()
-		assert_that(view.options['data'] , instance_of(dict))
-		assert_that(view.options['data'].keys(), has_item('resource_view_events'))
