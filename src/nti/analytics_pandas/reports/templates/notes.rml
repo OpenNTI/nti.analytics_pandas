@@ -29,5 +29,16 @@
 		
 		<setNextTemplate name="main"/>
 		<nextPage />
+		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+			Notes Created per Device Types
+		</h1>
+		<illustration width="5in" height="3in"
+					  tal:define="event options/data/notes_createdper_device_types/event_notes_created_per_device_types;
+								  user_event options/data/notes_createdper_device_types/user_notes_created_per_device_types;
+								  ratio_event options/data/notes_createdper_device_types/ratio_notes_created_per_device_types"
+					  tal:condition="options/data/notes_createdper_device_types"
+					  metal:use-macro="macro:three_plots_event">
+		</illustration>
+
 	</tal:block>
 </metal:block>

@@ -24,7 +24,7 @@ from ...analysis import NotesViewTimeseriesPlot
 from ...analysis import NoteLikesTimeseriesPlot
 from ...analysis import NoteFavoritesTimeseriesPlot
 
-from .commons import build_plot_images_dictionary_
+from .commons import build_plot_images_dictionary
 from .commons import get_course_names
 
 from .mixins import AbstractReportView
@@ -93,7 +93,7 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 										 self.context.minor_period_breaks,
 										 self.context.theme_seaborn_)
 		if plots:
-			data['notes_created'] = build_plot_images_dictionary_(plots)
+			data['notes_created'] = build_plot_images_dictionary(plots)
 		return data
 
 	def get_notes_created_per_device_types_plots(self, data):
@@ -101,7 +101,7 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 										 	   self.context.minor_period_breaks,
 										 	   self.context.theme_seaborn_)
 		if plots:
-			data['notes_created_per_device_types'] = build_plot_images_dictionary_(plots)
+			data['notes_created_per_device_types'] = build_plot_images_dictionary(plots)
 		return data
 
 	def get_notes_created_per_resource_types_plots(self, data):
@@ -109,7 +109,7 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 										 		 self.context.minor_period_breaks,
 										 		 self.context.theme_seaborn_)
 		if plots:
-			data['notes_created_per_resource_types'] = build_plot_images_dictionary_(plots)
+			data['notes_created_per_resource_types'] = build_plot_images_dictionary(plots)
 		return data
 
 	def get_notes_created_sharing_types_plots(self, data):
@@ -117,7 +117,7 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 										 		self.context.minor_period_breaks,
 										 		self.context.theme_seaborn_)
 		if plots:
-			data['notes_created_sharing_types'] = build_plot_images_dictionary_(plots)
+			data['notes_created_sharing_types'] = build_plot_images_dictionary(plots)
 		return data
 
 	def get_notes_created_sharing_types_plots(self, data):
@@ -125,7 +125,7 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 										 		self.context.minor_period_breaks,
 										 		self.context.theme_seaborn_)
 		if plots:
-			data['notes_created_sharing_types'] = build_plot_images_dictionary_(plots)
+			data['notes_created_sharing_types'] = build_plot_images_dictionary(plots)
 		return data
 
 	def get_notes_created_per_course_sections_plots(self, data):
@@ -133,13 +133,13 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 										 					 self.context.minor_period_breaks,
 										 					 self.context.theme_seaborn_)
 		if plots:
-			data['notes_created_per_course_sections'] = build_plot_images_dictionary_(plots)
+			data['notes_created_per_course_sections'] = build_plot_images_dictionary(plots)
 		return data
 
 	def get_notes_created_the_most_active_users(self, data):
 		plots = self.nctp.plot_the_most_active_users(self.context.number_of_most_active_user)
 		if plots:
-			data['notes_created_users'] = build_plot_images_dictionary_(plots)
+			data['notes_created_users'] = build_plot_images_dictionary(plots)
 		return data
 
 View = NoteEventsTimeseriesReport = NoteEventsTimeseriesReportView
