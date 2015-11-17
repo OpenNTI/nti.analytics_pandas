@@ -443,7 +443,6 @@ class  ResourceViewsTimeseriesPlot(object):
 										event_type)
 		return plots
 
-
 	def plot_most_active_users(self, max_rank_number=10):
 		rvt = self.rvt
 		users_df = rvt.get_the_most_active_users(max_rank_number)
@@ -468,4 +467,4 @@ class  ResourceViewsTimeseriesPlot(object):
 		event_name, user_event_name, ratio_event_name = generate_plot_names_(event_type)
 		if event_type is not None:
 			unique_event_name = 'unique_%s' % event_type
-		return event_name, user_event_name, ratio_event_name, unique_event_name
+		return (event_name, user_event_name, ratio_event_name, unique_event_name)

@@ -16,8 +16,8 @@ from zope import interface
 from ...analysis import ResourceViewsTimeseries
 from ...analysis import ResourceViewsTimeseriesPlot
 
-from .commons import build_plot_images_dictionary_
 from .commons import get_course_names
+from .commons import build_plot_images_dictionary
 
 from .mixins import AbstractReportView
 
@@ -58,12 +58,12 @@ class ResourceViewsTimeseriesReportView(AbstractReportView):
 		if self.rvt.dataframe.empty:
 			self.options['has_data'] = False
 			return self.options
-		
+
 		self.options['has_data'] = True
-		
+
 		course_names = get_course_names(self.context.session, self.context.courses)
 		self.options['course_names'] = ",".join(map(str, course_names))
-		
+
 		self.rvtp = ResourceViewsTimeseriesPlot(self.rvt)
 		data = {}
 		data = self.get_resource_view_events(data)
@@ -79,7 +79,7 @@ class ResourceViewsTimeseriesReportView(AbstractReportView):
 										 self.context.theme_seaborn_)
 		data['resource_view_events'] = None
 		if plots:
-			data['resource_view_events'] = build_plot_images_dictionary_(plots)
+			data['resource_view_events'] = build_plot_images_dictionary(plots)
 		return data
 
 	def get_resource_views_per_device_types(self, data):
@@ -88,7 +88,7 @@ class ResourceViewsTimeseriesReportView(AbstractReportView):
 											  self.context.theme_seaborn_)
 		data['resource_views_per_device_types'] = None
 		if plots:
-			data['resource_views_per_device_types'] = build_plot_images_dictionary_(plots)
+			data['resource_views_per_device_types'] = build_plot_images_dictionary(plots)
 		return data
 
 	def get_resource_views_per_resource_types(self, data):
@@ -97,14 +97,14 @@ class ResourceViewsTimeseriesReportView(AbstractReportView):
 												self.context.theme_seaborn_)
 		data['resource_views_per_resource_types'] = None
 		if plots:
-			data['resource_views_per_resource_types'] = build_plot_images_dictionary_(plots)
+			data['resource_views_per_resource_types'] = build_plot_images_dictionary(plots)
 		return data
 
 	def get_the_most_active_users(self, data):
 		plots = self.rvtp.plot_most_active_users(self.context.number_of_most_active_user)
 		data['resource_view_users'] = None
 		if plots:
-			data['resource_view_users'] = build_plot_images_dictionary_(plots)
+			data['resource_view_users'] = build_plot_images_dictionary(plots)
 		return data
 
 View = ResourceViewsTimeseriesReport = ResourceViewsTimeseriesReportView

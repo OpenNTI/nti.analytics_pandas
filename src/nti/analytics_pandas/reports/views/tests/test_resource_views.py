@@ -62,7 +62,7 @@ class TestResourceViews(AnalyticsPandasTestBase):
 		period_breaks = '1 week'
 		minor_period_breaks = '1 day'
 		theme_seaborn_ = True
-		context = Context(self.session, start_date, end_date, courses, 
+		context = Context(self.session, start_date, end_date, courses,
 						  period_breaks, minor_period_breaks, theme_seaborn_)
 		view = View(context)
 		view._build_data('Bleach')
@@ -85,15 +85,15 @@ class TestResourceViews(AnalyticsPandasTestBase):
 		period_breaks = '1 week'
 		minor_period_breaks = '1 day'
 		theme_seaborn_ = True
-		context = Context(self.session, start_date, end_date, courses, 
+		context = Context(self.session, start_date, end_date, courses,
 						  period_breaks, minor_period_breaks, theme_seaborn_)
 		assert_that(context.start_date, equal_to('2015-01-01'))
-		
+
 		view = View(context)
 		view()
 		assert_that(view.options['data'] , instance_of(dict))
 		assert_that(view.options['data'].keys(), has_item('resource_view_events'))
-		
+
 		system = {'view':view, 'context':context}
 		rml = self.template(path).bind(view)(**system)
 

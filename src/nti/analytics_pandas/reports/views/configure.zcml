@@ -30,4 +30,5 @@
 		template="../templates/std_report_macros.pt"
 		name="one_plot_event"
 		layer="*" />
+
 </configure>

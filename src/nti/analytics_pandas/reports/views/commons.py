@@ -17,7 +17,7 @@ from ...queries import QueryCourses
 from ...utils import Plot
 from ...utils import save_plot_
 
-def build_plot_images_dictionary_(plots, image_type='png'):
+def build_plot_images_dictionary(plots, image_type='png'):
 	# TODO: delete the named temporary files after using it to generate report
 	images = {}
 	for plot in plots:
