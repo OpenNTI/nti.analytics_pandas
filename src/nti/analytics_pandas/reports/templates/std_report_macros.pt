@@ -92,4 +92,19 @@
 
 	</stylesheet>
 
+	<illustration width="5in" height="3in" 
+				  metal:define-macro="three_plots_event">
+		<!--! To use, define a variable event, user_event, ratio_event around the invocation -->
+		<image tal:attributes="file event"
+			   x="0" y="0" width="450" height="200" showBoundary="no" preserveAspectRatio="yes">
+		</image>
+		<image tal:attributes="file user_event"
+			   x="300" y="0" width="450" height="200" showBoundary="no" preserveAspectRatio="yes">
+		</image>
+
+		<image tal:attributes="file ratio_event"
+			   x="0" y="-210" width="450" height="200" showBoundary="no" preserveAspectRatio="yes">
+		</image>
+	</illustration>
+
 </document>
