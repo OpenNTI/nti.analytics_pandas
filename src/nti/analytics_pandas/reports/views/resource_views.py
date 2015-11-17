@@ -24,7 +24,8 @@ from .mixins import AbstractReportView
 class ResourceViewsTimeseriesContext(object):
 
 	def __init__(self, session=None, start_date=None, end_date=None, courses=None,
-				 period_breaks=None, minor_period_breaks=None, theme_seaborn_=True):
+				 period_breaks=None, minor_period_breaks=None, theme_seaborn_=True,
+				 number_of_most_active_user=10):
 		self.session = session
 		self.courses = courses
 		self.end_date = end_date
@@ -32,6 +33,7 @@ class ResourceViewsTimeseriesContext(object):
 		self.period_breaks = period_breaks
 		self.theme_seaborn_ = theme_seaborn_
 		self.minor_period_breaks = minor_period_breaks
+		self.number_of_most_active_user = number_of_most_active_user
 
 Context = ResourceViewsTimeseriesContext
 
@@ -50,9 +52,16 @@ class ResourceViewsTimeseriesReportView(AbstractReportView):
 										   self.context.start_date,
 										   self.context.end_date,
 										   self.context.courses)
+		if self.rvt.dataframe.empty:
+			self.options['has_data'] = False
+			return self.options
+		self.options['has_data'] = True
 		self.rvtp = ResourceViewsTimeseriesPlot(self.rvt)
 		data = {}
 		data = self.get_resource_view_events(data)
+		data = self.get_resource_views_per_device_types(data)
+		data = self.get_resource_views_per_resource_types(data)
+		data = self.get_the_most_active_users(data)
 		self._build_data(data)
 		return self.options
 
@@ -63,6 +72,31 @@ class ResourceViewsTimeseriesReportView(AbstractReportView):
 		data['resource_view_events'] = None
 		if plots:
 			data['resource_view_events'] = build_plot_images_dictionary_(plots)
+		return data
+
+	def get_resource_views_per_device_types(self, data):
+		plots = self.rvtp.analyze_device_type(self.context.period_breaks,
+											  self.context.minor_period_breaks,
+											  self.context.theme_seaborn_)
+		data['resource_views_per_device_types'] = None
+		if plots:
+			data['resource_views_per_device_types'] = build_plot_images_dictionary_(plots)
+		return data
+
+	def get_resource_views_per_resource_types(self, data):
+		plots = self.rvtp.analyze_resource_type(self.context.period_breaks,
+												self.context.minor_period_breaks,
+												self.context.theme_seaborn_)
+		data['resource_views_per_resource_types'] = None
+		if plots:
+			data['resource_views_per_resource_types'] = build_plot_images_dictionary_(plots)
+		return data
+
+	def get_the_most_active_users(self, data):
+		plots = self.rvtp.plot_most_active_users(self.context.number_of_most_active_user)
+		data['resource_view_users'] = None
+		if plots:
+			data['resource_view_users'] = build_plot_images_dictionary_(plots)
 		return data
 
 View = ResourceViewsTimeseriesReport = ResourceViewsTimeseriesReportView
