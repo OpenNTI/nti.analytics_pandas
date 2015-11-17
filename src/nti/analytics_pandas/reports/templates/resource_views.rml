@@ -2,10 +2,15 @@
 	xmlns:tal="http://xml.zope.org/namespaces/tal"
 	xmlns:metal="http://xml.zope.org/namespaces/metal"
 	tal:define="options view/options">
-	<!--
-		TODO : fix report's cover
-	-->
+
+	<tal:block tal:condition="python: options['has_data']">
+		<para style="normal" spaceAfter=".5in" >
+			This document presents an overview of resource views in <u>${options/course_names}</u> from <strong>${context/start_date}</strong> through <strong>${context/end_date}</strong>.
+			It includes total number of resource views and most active user viewing resource during the time period. It also shows resource views plots grouped by device and resource types.
+		</para>
+	</tal:block>	
 	<hr width="100%" />
+	
 	<setNextTemplate name="main"/>
 	<nextPage />
 	<tal:block tal:condition="python: options['has_data']">

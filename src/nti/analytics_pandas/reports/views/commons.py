@@ -12,6 +12,8 @@ logger = __import__('logging').getLogger(__name__)
 from shutil import copyfileobj
 from tempfile import NamedTemporaryFile
 
+from ...queries import QueryCourses
+
 from ...utils import Plot
 from ...utils import save_plot_
 
@@ -27,3 +29,9 @@ def build_plot_images_dictionary_(plots, image_type='png'):
 			image.data.close()
 			images[plot.plot_name] = image_file.name
 	return images
+
+def get_course_names(session, courses_id):
+	qc = QueryCourses(session)
+	df = qc.get_context_name(courses_id)
+	course_names = df['context_name'].tolist()
+	return course_names

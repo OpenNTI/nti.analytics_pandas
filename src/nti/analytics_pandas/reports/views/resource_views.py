@@ -17,6 +17,7 @@ from ...analysis import ResourceViewsTimeseries
 from ...analysis import ResourceViewsTimeseriesPlot
 
 from .commons import build_plot_images_dictionary_
+from .commons import get_course_names
 
 from .mixins import AbstractReportView
 
@@ -57,7 +58,12 @@ class ResourceViewsTimeseriesReportView(AbstractReportView):
 		if self.rvt.dataframe.empty:
 			self.options['has_data'] = False
 			return self.options
+		
 		self.options['has_data'] = True
+		
+		course_names = get_course_names(self.context.session, self.context.courses)
+		self.options['course_names'] = ",".join(map(str, course_names))
+		
 		self.rvtp = ResourceViewsTimeseriesPlot(self.rvt)
 		data = {}
 		data = self.get_resource_view_events(data)
