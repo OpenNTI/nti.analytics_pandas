@@ -745,7 +745,7 @@ class NoteLikesTimeseriesPlot(object):
 															 theme_seaborn_)
 			plots.append(all_section_plots)
 
-		for course_id in course_ids or ():
+		for course_id in course_ids:
 			new_df = df[df['course_id'] == course_id]
 			context_name = new_df.iloc[0]['context_name']
 			event_title = 'Number of note likes in %s' % (context_name)
@@ -953,7 +953,7 @@ class NoteFavoritesTimeseriesPlot(object):
 															 theme_seaborn_)
 			plots.append(all_section_plots)
 
-		for course_id in course_ids or ():
+		for course_id in course_ids:
 			new_df = df[df['course_id'] == course_id]
 			context_name = new_df.iloc[0]['context_name']
 			event_title = 'Number of note favorites in %s' % (context_name)
