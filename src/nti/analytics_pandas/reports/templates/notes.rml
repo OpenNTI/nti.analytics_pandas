@@ -1,0 +1,33 @@
+<metal:block
+	xmlns:tal="http://xml.zope.org/namespaces/tal"
+	xmlns:metal="http://xml.zope.org/namespaces/metal"
+	tal:define="options view/options">
+
+	<tal:block tal:condition="python: options['has_notes_created_data']">
+		<para style="normal" spaceAfter=".5in" >
+			This document presents an overview of notes related events in <u>${options/course_names}</u> from <strong>${context/start_date}</strong> through <strong>${context/end_date}</strong>.
+			It includes plots of notes created, note views, note likes and note favorites events.
+			Each related note event plot is grouped by device, resource and sharing types. It also shows note even plots per course sections
+		</para>
+	</tal:block>	
+	<hr width="100%" />
+	
+	<setNextTemplate name="main"/>
+	<nextPage />
+	<tal:block tal:condition="python: options['has_notes_created_data']">
+		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+			Notes Created
+		</h1>
+		<hr width="100%" />
+		<illustration width="5in" height="3in"
+					  tal:define="event options/data/notes_created/event_notes_created;
+								  user_event options/data/notes_created/user_notes_created;
+								  ratio_event options/data/notes_created/ratio_notes_created"
+					  tal:condition="options/data/notes_created"
+					  metal:use-macro="macro:three_plots_event">
+		</illustration>
+		
+		<setNextTemplate name="main"/>
+		<nextPage />
+	</tal:block>
+</metal:block>
