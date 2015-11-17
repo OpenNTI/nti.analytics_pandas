@@ -17,7 +17,7 @@
 		<registerTTFont faceName="OpenSansSemiBold" fileName="[nti.analytics_pandas.reports]/fonts/OpenSans-Semibold.ttf" />
 	</docinit>
 
-	<template pagesize="(842,595)" leftMargin="72" showBoundary="0">
+	<template pagesize="(842,595)" leftMargin="72" showBoundary="0" rightMargin="72">
 		<pageTemplate id="cover" autoNextTemplate="main">
 			<frame id="main_header"
 				   x1="7in" y1="6.8in"
@@ -69,5 +69,4 @@
 			RML Content
 		</metal:block>
 	</story>
-
 </document>
