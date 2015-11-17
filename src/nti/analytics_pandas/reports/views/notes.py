@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*
 """
-.. $Id: notes.py 77243 2015-11-17 13:12:59Z egawati.panjei $
+.. $Id$
 """
 
 from __future__ import print_function, unicode_literals, absolute_import, division
@@ -13,19 +13,11 @@ from . import MessageFactory as _
 
 from zope import interface
 
-from ...analysis import NoteLikesTimeseries
-from ...analysis import NotesViewTimeseries
 from ...analysis import NotesCreationTimeseries
-from ...analysis import NoteFavoritesTimeseries
-from ...analysis import NotesEventsTimeseries
-from ...analysis import NotesEventsTimeseriesPlot
 from ...analysis import NotesCreationTimeseriesPlot
-from ...analysis import NotesViewTimeseriesPlot
-from ...analysis import NoteLikesTimeseriesPlot
-from ...analysis import NoteFavoritesTimeseriesPlot
 
-from .commons import build_plot_images_dictionary
 from .commons import get_course_names
+from .commons import build_plot_images_dictionary
 
 from .mixins import AbstractReportView
 

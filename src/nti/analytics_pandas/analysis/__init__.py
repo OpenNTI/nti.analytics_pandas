@@ -31,6 +31,6 @@ from .forums import ForumCommentFavoritesTimeseries
 
 from .notes import NoteLikesTimeseries
 from .notes import NotesViewTimeseries
+from .notes import NotesEventsTimeseries
 from .notes import NotesCreationTimeseries
 from .notes import NoteFavoritesTimeseries
-from .notes import NotesEventsTimeseries

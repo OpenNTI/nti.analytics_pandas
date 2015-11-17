@@ -11,10 +11,10 @@ logger = __import__('logging').getLogger(__name__)
 
 from .. import MessageFactory
 
-from .notes import NotesEventsTimeseriesPlot
-from .notes import NotesCreationTimeseriesPlot
 from .notes import NotesViewTimeseriesPlot
 from .notes import NoteLikesTimeseriesPlot
+from .notes import NotesEventsTimeseriesPlot
+from .notes import NotesCreationTimeseriesPlot
 from .notes import NoteFavoritesTimeseriesPlot
 
 from .resource_views import ResourceViewsTimeseriesPlot
