@@ -19,6 +19,8 @@ from ...analysis import NotesViewTimeseries
 from ...analysis import NotesViewTimeseriesPlot
 from ...analysis import NoteLikesTimeseries
 from ...analysis import NoteLikesTimeseriesPlot
+from ...analysis import NoteFavoritesTimeseries
+from ...analysis import NoteFavoritesTimeseriesPlot
 
 from .commons import get_course_names
 from .commons import build_plot_images_dictionary
@@ -68,10 +70,8 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 			self.options['has_notes_created_data'] = False
 		else:
 			self.options['has_notes_created_data'] = True
-
-		if self.options['has_notes_created_data']:
 			data = self.generate_notes_created_plots(data)
-
+		
 		self.nvt = NotesViewTimeseries(self.context.session,
 									   self.context.start_date,
 									   self.context.end_date,
@@ -80,9 +80,7 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 			self.options['has_note_views_data'] = False
 		else:
 			self.options['has_note_views_data'] = True
-
-		if self.options['has_note_views_data']:
-			data = self.generate_note_views_plots(data)
+			data = self.generate_note_views_plots(data)		
 
 		self.nlt = NoteLikesTimeseries(self.context.session,
 									   self.context.start_date,
@@ -93,8 +91,18 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 		else:
 			self.options['has_note_likes_data'] = True
 			data = self.generate_note_likes_plots(data)
-			
-		self._build_data(data)
+
+		self.nft = NoteFavoritesTimeseries(self.context.session,
+									   	   self.context.start_date,
+									   	   self.context.end_date,
+									   	   self.context.courses)
+		if self.nlt.dataframe.empty:
+			self.options['has_note_favorites_data'] = False
+		else:
+			self.options['has_note_favorites_data'] = True
+			data = self.generate_note_favorites_plots(data)
+
+		self._build_data(data)	
 		return self.options
 
 	def generate_notes_created_plots(self, data):
@@ -256,5 +264,18 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 		if plots:
 			data['note_likes'] = build_plot_images_dictionary(plots)
 		return data
+
+	def generate_note_favorites_plots(self, data):
+		self.nftp = NoteFavoritesTimeseriesPlot(self.nft)
+		data = self.get_note_favorites_plots(data)
+		return data
+
+	def get_note_favorites_plots(self, data):
+		plots = self.nftp.explore_events(self.context.period_breaks,
+										 self.context.minor_period_breaks,
+										 self.context.theme_seaborn_)
+		if plots:
+			data['note_favorites'] = build_plot_images_dictionary(plots)
+		return data	
 
 View = NoteEventsTimeseriesReport = NoteEventsTimeseriesReportView

@@ -937,13 +937,15 @@ class NoteFavoritesTimeseriesPlot(object):
 		event_title = _('Number of note favorites during period of time')
 		user_title = _('Number of unique users voting notes as favorite during period of time')
 		ratio_title = _('Ratio of note favorites over unique user on each available date')
+		event_type = 'note_favorites'
 		plots = self.generate_plots(df,
 									event_title,
 									user_title,
 									ratio_title,
 									period_breaks,
 									minor_period_breaks,
-									theme_seaborn_)
+									theme_seaborn_,
+									event_type)
 		return plots
 
 	def analyze_events_per_course_sections(self, period_breaks='1 week', 
@@ -963,6 +965,7 @@ class NoteFavoritesTimeseriesPlot(object):
 			event_title = _('Number of note favorites per course sections')
 			user_title = _('Number of unique users voting notes as favorites per course sections')
 			ratio_title = _('Ratio of note favorites over unique user per course sections')
+			event_type = 'note_favorites_per_course_sections'
 			all_section_plots = self.generate_group_by_plots(df,
 															 group_by,
 															 event_title,
@@ -970,7 +973,8 @@ class NoteFavoritesTimeseriesPlot(object):
 															 ratio_title,
 															 period_breaks,
 															 minor_period_breaks,
-															 theme_seaborn_)
+															 theme_seaborn_,
+															 event_type)
 			plots.append(all_section_plots)
 
 		for course_id in course_ids:
@@ -979,13 +983,15 @@ class NoteFavoritesTimeseriesPlot(object):
 			event_title = 'Number of note favorites in %s' % (context_name)
 			user_title = 'Number of unique users voting notes as favorites in %s' % (context_name)
 			ratio_title = 'Ratio of note favorites over unique user in %s' % (context_name)
+			event_type = 'note_favorites_in_%s' %(context_name)
 			section_plots = self.generate_plots(new_df,
 												event_title,
 												user_title,
 												ratio_title,
 												period_breaks,
 												minor_period_breaks,
-												theme_seaborn_)
+												theme_seaborn_,
+												event_type)
 			plots.append(section_plots)
 
 		return plots
@@ -1004,6 +1010,7 @@ class NoteFavoritesTimeseriesPlot(object):
 		event_title = _('Number of note favorites grouped by device types')
 		user_title = _('Number of unique users voting notes as favorite grouped by device types')
 		ratio_title = _('Ratio of note favorites over unique user grouped by device types')
+		event_type = 'note_favorites_per_device_types'
 		plots = self.generate_group_by_plots(
 									df,
 									group_by,
@@ -1012,7 +1019,8 @@ class NoteFavoritesTimeseriesPlot(object):
 									ratio_title,
 									period_breaks,
 									minor_period_breaks,
-									theme_seaborn_)
+									theme_seaborn_,
+									event_type)
 		return plots
 
 	def analyze_events_per_resource_types(self, period_breaks='1 week',
@@ -1029,6 +1037,7 @@ class NoteFavoritesTimeseriesPlot(object):
 		event_title = _('Number of note favorites grouped by resource types')
 		user_title = _('Number of unique users voting notes as favorite grouped by resource types')
 		ratio_title = _('Ratio of note favorites over unique user grouped by resource types')
+		event_type = 'note_favorites_per_resource_types'
 		plots = self.generate_group_by_plots(
 									df,
 									group_by,
@@ -1037,14 +1046,15 @@ class NoteFavoritesTimeseriesPlot(object):
 									ratio_title,
 									period_breaks,
 									minor_period_breaks,
-									theme_seaborn_)
+									theme_seaborn_,
+									event_type)
 		return plots
 
 	def generate_plots(self, df, event_title, user_title, ratio_title,
 					   period_breaks, minor_period_breaks, theme_seaborn_,
 					   event_type=None):
 
-		# event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
+		event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
 
 		plot_note_favorites = line_plot_x_axis_date(
 							df=df,
@@ -1055,7 +1065,8 @@ class NoteFavoritesTimeseriesPlot(object):
 							title=event_title,
 							period_breaks=period_breaks,
 							minor_breaks=minor_period_breaks,
-							theme_seaborn_=theme_seaborn_)
+							theme_seaborn_=theme_seaborn_,
+							plot_name=event_name)
 
 		plot_unique_users = line_plot_x_axis_date(
 							df=df,
@@ -1066,7 +1077,8 @@ class NoteFavoritesTimeseriesPlot(object):
 							title=user_title,
 							period_breaks=period_breaks,
 							minor_breaks=minor_period_breaks,
-							theme_seaborn_=theme_seaborn_)
+							theme_seaborn_=theme_seaborn_,
+							plot_name=user_event_name)
 
 		plot_ratio = line_plot_x_axis_date(
 							df=df,
@@ -1077,7 +1089,8 @@ class NoteFavoritesTimeseriesPlot(object):
 							title=ratio_title,
 							period_breaks=period_breaks,
 							minor_breaks=minor_period_breaks,
-							theme_seaborn_=theme_seaborn_)
+							theme_seaborn_=theme_seaborn_,
+							plot_name=ratio_event_name)
 
 		return (plot_note_favorites, plot_unique_users, plot_ratio)
 
@@ -1085,7 +1098,7 @@ class NoteFavoritesTimeseriesPlot(object):
 								period_breaks, minor_period_breaks, theme_seaborn_,
 								event_type=None):
 
-		# event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
+		event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
 
 		plot_note_favorites = group_line_plot_x_axis_date(
 									df=df,
@@ -1097,7 +1110,8 @@ class NoteFavoritesTimeseriesPlot(object):
 									period_breaks=period_breaks,
 									group_by=group_by,
 									minor_breaks=minor_period_breaks,
-									theme_seaborn_=theme_seaborn_)
+									theme_seaborn_=theme_seaborn_,
+									plot_name=event_name)
 
 		plot_unique_users = group_line_plot_x_axis_date(
 									df=df,
@@ -1109,7 +1123,8 @@ class NoteFavoritesTimeseriesPlot(object):
 									period_breaks=period_breaks,
 									group_by=group_by,
 									minor_breaks=minor_period_breaks,
-									theme_seaborn_=theme_seaborn_)
+									theme_seaborn_=theme_seaborn_,
+									plot_name=user_event_name)
 
 		plot_ratio = group_line_plot_x_axis_date(
 								df=df,
@@ -1121,6 +1136,7 @@ class NoteFavoritesTimeseriesPlot(object):
 								period_breaks=period_breaks,
 								group_by=group_by,
 								minor_breaks=minor_period_breaks,
-								theme_seaborn_=theme_seaborn_)
+								theme_seaborn_=theme_seaborn_,
+								plot_name=ratio_event_name)
 
 		return (plot_note_favorites, plot_unique_users, plot_ratio)
