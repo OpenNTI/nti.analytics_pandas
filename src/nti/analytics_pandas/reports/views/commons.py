@@ -30,6 +30,19 @@ def build_plot_images_dictionary(plots, image_type='png'):
 			images[plot.plot_name] = image_file.name
 	return images
 
+def build_images_dict_from_plot_dict(plots):
+	"""
+	proceed set of plots stored in dictionary
+	"""
+	images = {}
+	if isinstance(plots, dict):
+		for key in plots:
+			if isinstance(plots[key], dict):
+				images[key] = build_images_dict_from_plot_dict(plots[key])
+			elif isinstance(plots[key], tuple) or isinstance (plots[key], list):
+				images[key] = build_plot_images_dictionary(plots[key])
+	return images
+
 def get_course_names(session, courses_id):
 	qc = QueryCourses(session)
 	df = qc.get_context_name(courses_id)

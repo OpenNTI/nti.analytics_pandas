@@ -73,6 +73,20 @@
 						  tal:condition="options/data/notes_created_per_sharing_types"
 						  metal:use-macro="macro:three_plots_event">
 			</illustration>		
+		</tal:block>	
+
+		<setNextTemplate name="main"/>
+		<nextPage />
+		<tal:block tal:condition="python: options['has_notes_created_user']">
+			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+				The most active users creating notes
+			</h1>
+			<hr width="100%" />
+			<illustration width="5in" height="3in"
+					  tal:define="event options/data/notes_created_users/most_active_users_creating_notes"
+					  tal:condition="options/data/notes_created_users"
+					  metal:use-macro="macro:one_plot_event">
+			</illustration>	
 		</tal:block>			
 
 	</tal:block>

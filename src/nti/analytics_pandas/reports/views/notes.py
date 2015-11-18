@@ -18,6 +18,7 @@ from ...analysis import NotesCreationTimeseriesPlot
 
 from .commons import get_course_names
 from .commons import build_plot_images_dictionary
+from .commons import build_images_dict_from_plot_dict
 
 from .mixins import AbstractReportView
 
@@ -124,14 +125,16 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 										 					 self.context.theme_seaborn_)
 		self.options['has_notes_created_data_per_course_sections'] = False								 					
 		if plots:
-			data['notes_created_per_course_sections'] = build_plot_images_dictionary(plots)
+			data['notes_created_per_course_sections'] =build_images_dict_from_plot_dict(plots)
 			self.options['has_notes_created_data_per_course_sections'] = True
 		return data
 
 	def get_notes_created_the_most_active_users(self, data):
 		plots = self.nctp.plot_the_most_active_users(self.context.number_of_most_active_user)
+		self.options['has_notes_created_user'] = False
 		if plots:
 			data['notes_created_users'] = build_plot_images_dictionary(plots)
+			self.options['has_notes_created_user'] = True
 		return data
 
 View = NoteEventsTimeseriesReport = NoteEventsTimeseriesReportView
