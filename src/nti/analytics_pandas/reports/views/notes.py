@@ -28,7 +28,7 @@ from .mixins import AbstractReportView
 class NoteEventsTimeseriesContext(object):
 
 	def __init__(self, session=None, start_date=None, end_date=None, courses=None,
-				 period_breaks=None, minor_period_breaks=None, theme_seaborn_=True,
+				 period_breaks='1 week', minor_period_breaks='1 day', theme_seaborn_=True,
 				 number_of_most_active_user=10):
 		self.session = session
 		self.courses = courses
@@ -160,6 +160,10 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 		data = self.get_note_views_plots_per_device_types(data)
 		data = self.get_note_views_plots_per_resource_types(data)
 		data = self.get_note_views_plots_per_sharing_types(data)
+		if len(self.context.courses) > 1:
+			data = self.get_note_views_per_course_sections_plots(data)
+		else:
+			self.options['has_note_views_data_per_course_sections'] = False
 		return data
 
 	def get_note_views_plots(self, data):
@@ -198,6 +202,16 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 		if plots:
 			data['note_views_per_sharing_types'] = build_plot_images_dictionary(plots)
 			self.options['has_note_views_data_per_sharing_types'] = True
+		return data
+
+	def get_note_views_per_course_sections_plots(self, data):
+		plots = self.nvtp.analyze_total_events_per_course_sections(self.context.period_breaks,
+										 					 	   self.context.minor_period_breaks,
+										 					       self.context.theme_seaborn_)
+		self.options['has_note_views_data_per_course_sections'] = False								 					
+		if plots:
+			data['note_views_per_course_sections'] =build_images_dict_from_plot_dict(plots)
+			self.options['has_note_views_data_per_course_sections'] = True
 		return data
 
 View = NoteEventsTimeseriesReport = NoteEventsTimeseriesReportView
