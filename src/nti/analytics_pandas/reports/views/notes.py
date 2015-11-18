@@ -165,6 +165,7 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 		else:
 			self.options['has_note_views_data_per_course_sections'] = False
 		data = self.get_the_most_active_users_viewing_notes(data)
+		data = self.get_the_most_viewed_notes_and_its_author(data)
 		return data
 
 	def get_note_views_plots(self, data):
@@ -221,6 +222,14 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 		if plots :
 			data['note_views_users'] = build_plot_images_dictionary(plots)
 			self.options['has_note_views_users'] = True
+		return data
+
+	def get_the_most_viewed_notes_and_its_author(self, data):
+		plots = self.nvtp.plot_the_most_viewed_notes_and_its_author()
+		self.options['has_note_views_author'] = False
+		if plots :
+			data['note_views_authors'] = build_plot_images_dictionary(plots)
+			self.options['has_note_views_author'] = True
 		return data
 
 View = NoteEventsTimeseriesReport = NoteEventsTimeseriesReportView

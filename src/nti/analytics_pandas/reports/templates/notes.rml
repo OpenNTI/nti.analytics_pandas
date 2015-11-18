@@ -209,6 +209,19 @@
 				</illustration>	
 			</tal:block>
 
+			<setNextTemplate name="main"/>
+			<nextPage />
+			<tal:block tal:condition="python: options['has_note_views_author']">
+				<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+					The most viewed notes'author
+				</h1>
+				<hr width="100%" />
+				<illustration width="5in" height="3in"
+						  tal:define="event options/data/note_views_authors/most_viewed_notes_author"
+						  metal:use-macro="macro:one_plot_event">
+				</illustration>	
+			</tal:block>
+
 		</tal:block>	
 
 	</tal:block>
