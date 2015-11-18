@@ -77,8 +77,11 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 		data = self.get_notes_created_per_device_types_plots(data)
 		data = self.get_notes_created_per_resource_types_plots(data)
 		data = self.get_notes_created_per_sharing_types_plots(data)
-		data = self.get_notes_created_per_course_sections_plots(data)
 		data = self.get_notes_created_the_most_active_users(data)
+		if len(self.context.courses) > 1:
+			data = self.get_notes_created_per_course_sections_plots(data)
+		else:
+			self.options['has_notes_created_data_per_course_sections'] = False
 		return data
 
 	def get_notes_created_plots(self, data):
