@@ -565,7 +565,7 @@ class NotesViewTimeseriesPlot(object):
 		event_title = _('Number of notes viewed grouped by sharing types')
 		user_title = _('Number of unique users viewing notes grouped by sharing types')
 		ratio_title = _('Ratio of notes viewed grouped by sharing types over unique user')
-		event_type = 'note_views_per_sharing_type'
+		event_type = 'note_views_per_sharing_types'
 		plots = self.generate_group_by_plots(df, 
 											group_by, 
 											event_title, 

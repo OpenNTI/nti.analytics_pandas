@@ -159,6 +159,7 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 		data = self.get_note_views_plots(data)
 		data = self.get_note_views_plots_per_device_types(data)
 		data = self.get_note_views_plots_per_resource_types(data)
+		data = self.get_note_views_plots_per_sharing_types(data)
 		return data
 
 	def get_note_views_plots(self, data):
@@ -187,6 +188,16 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 		if plots:
 			data['note_views_per_resource_types'] = build_plot_images_dictionary(plots)
 			self.options['has_note_views_data_per_resource_types'] = True
+		return data
+
+	def get_note_views_plots_per_sharing_types(self, data):
+		plots = self.nvtp.analyze_total_events_based_on_sharing_type(self.context.period_breaks,
+										 				  			self.context.minor_period_breaks,
+										 				  			self.context.theme_seaborn_)
+		self.options['has_note_views_data_per_sharing_types'] = False
+		if plots:
+			data['note_views_per_sharing_types'] = build_plot_images_dictionary(plots)
+			self.options['has_note_views_data_per_sharing_types'] = True
 		return data
 
 View = NoteEventsTimeseriesReport = NoteEventsTimeseriesReportView
