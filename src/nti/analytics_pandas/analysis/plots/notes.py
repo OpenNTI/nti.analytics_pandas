@@ -222,7 +222,7 @@ class NotesCreationTimeseriesPlot(object):
 												   minor_period_breaks,
 												   theme_seaborn_,
 												   event_type)
-		return (device_plots,)
+		return device_plots
 
 	def analyze_resource_types(self, period_breaks='1 week', minor_period_breaks='1 day',
 								theme_seaborn_=True):
@@ -244,7 +244,7 @@ class NotesCreationTimeseriesPlot(object):
 													 theme_seaborn_,
 													 event_type)
 
-		return (resource_plots,)
+		return resource_plots
 
 	def plot_the_most_active_users(self, max_rank_number=10):
 		nct = self.nct
@@ -284,7 +284,7 @@ class NotesCreationTimeseriesPlot(object):
 													theme_seaborn_,
 													event_type)
 
-		return (sharing_plots,)
+		return sharing_plots
 
 	def generate_group_by_plot(self, df, group_by, event_title, user_title, ratio_title,
 							   period_breaks, minor_period_breaks, theme_seaborn_,
