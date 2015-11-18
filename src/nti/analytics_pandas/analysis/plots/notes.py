@@ -136,7 +136,7 @@ class NotesCreationTimeseriesPlot(object):
 															minor_period_breaks,
 															theme_seaborn_,
 															event_type)
-			plot['all_section_plots'] = all_section_plots
+			plots['all_section_plots'] = all_section_plots
 
 		section_plots_dict = {}
 		for course_id in course_ids:
