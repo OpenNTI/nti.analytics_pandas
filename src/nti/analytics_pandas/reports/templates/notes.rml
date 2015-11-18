@@ -196,6 +196,19 @@
 				</tal:block>		
 			</tal:block>
 
+			<setNextTemplate name="main"/>
+			<nextPage />
+			<tal:block tal:condition="python: options['has_note_views_users']">
+				<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+					The most active users viewing notes
+				</h1>
+				<hr width="100%" />
+				<illustration width="5in" height="3in"
+						  tal:define="event options/data/note_views_users/most_active_user_viewing_notes"
+						  metal:use-macro="macro:one_plot_event">
+				</illustration>	
+			</tal:block>
+
 		</tal:block>	
 
 	</tal:block>
