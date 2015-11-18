@@ -38,7 +38,6 @@ class TestNotesCreationPlot(AnalyticsPandasTestBase):
 		nct = NotesCreationTimeseries(self.session, start_date, end_date, course_id)
 		nctp = NotesCreationTimeseriesPlot(nct)
 		_ = nctp.analyze_device_types()
-		
 
 	def test_analyze_resource_types(self):
 		start_date = '2015-01-01'

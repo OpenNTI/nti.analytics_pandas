@@ -13,13 +13,13 @@ from . import MessageFactory as _
 
 from zope import interface
 
-from ...analysis import NotesCreationTimeseries
-from ...analysis import NotesCreationTimeseriesPlot
+from ...analysis import NoteLikesTimeseries
 from ...analysis import NotesViewTimeseries
 from ...analysis import NotesViewTimeseriesPlot
-from ...analysis import NoteLikesTimeseries
 from ...analysis import NoteLikesTimeseriesPlot
 from ...analysis import NoteFavoritesTimeseries
+from ...analysis import NotesCreationTimeseries
+from ...analysis import NotesCreationTimeseriesPlot
 from ...analysis import NoteFavoritesTimeseriesPlot
 
 from .commons import get_course_names
@@ -32,8 +32,8 @@ from .mixins import AbstractReportView
 class NoteEventsTimeseriesContext(object):
 
 	def __init__(self, session=None, start_date=None, end_date=None, courses=None,
-				 period_breaks='1 week', minor_period_breaks='1 day', theme_seaborn_=True,
-				 number_of_most_active_user=10):
+				 period_breaks='1 week', minor_period_breaks='1 day',
+				 theme_seaborn_=True, number_of_most_active_user=10):
 		self.session = session
 		self.courses = courses
 		self.end_date = end_date
@@ -71,7 +71,7 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 		else:
 			self.options['has_notes_created_data'] = True
 			data = self.generate_notes_created_plots(data)
-		
+
 		self.nvt = NotesViewTimeseries(self.context.session,
 									   self.context.start_date,
 									   self.context.end_date,
@@ -80,7 +80,7 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 			self.options['has_note_views_data'] = False
 		else:
 			self.options['has_note_views_data'] = True
-			data = self.generate_note_views_plots(data)		
+			data = self.generate_note_views_plots(data)
 
 		self.nlt = NoteLikesTimeseries(self.context.session,
 									   self.context.start_date,
@@ -102,7 +102,7 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 			self.options['has_note_favorites_data'] = True
 			data = self.generate_note_favorites_plots(data)
 
-		self._build_data(data)	
+		self._build_data(data)
 		return self.options
 
 	def generate_notes_created_plots(self, data):
@@ -160,9 +160,9 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 		plots = self.nctp.analyze_events_per_course_sections(self.context.period_breaks,
 										 					 self.context.minor_period_breaks,
 										 					 self.context.theme_seaborn_)
-		self.options['has_notes_created_data_per_course_sections'] = False								 					
+		self.options['has_notes_created_data_per_course_sections'] = False
 		if plots:
-			data['notes_created_per_course_sections'] =build_images_dict_from_plot_dict(plots)
+			data['notes_created_per_course_sections'] = build_images_dict_from_plot_dict(plots)
 			self.options['has_notes_created_data_per_course_sections'] = True
 		return data
 
@@ -229,10 +229,10 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 	def get_note_views_per_course_sections_plots(self, data):
 		plots = self.nvtp.analyze_total_events_per_course_sections(self.context.period_breaks,
 										 					 	   self.context.minor_period_breaks,
-										 					       self.context.theme_seaborn_)
-		self.options['has_note_views_data_per_course_sections'] = False								 					
+										 						   self.context.theme_seaborn_)
+		self.options['has_note_views_data_per_course_sections'] = False
 		if plots:
-			data['note_views_per_course_sections'] =build_images_dict_from_plot_dict(plots)
+			data['note_views_per_course_sections'] = build_images_dict_from_plot_dict(plots)
 			self.options['has_note_views_data_per_course_sections'] = True
 		return data
 
@@ -276,6 +276,6 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 										 self.context.theme_seaborn_)
 		if plots:
 			data['note_favorites'] = build_plot_images_dictionary(plots)
-		return data	
+		return data
 
 View = NoteEventsTimeseriesReport = NoteEventsTimeseriesReportView

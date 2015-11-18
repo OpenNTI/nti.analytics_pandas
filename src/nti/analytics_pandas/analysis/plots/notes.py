@@ -109,8 +109,9 @@ class NotesCreationTimeseriesPlot(object):
 									event_type)
 		return (plots)
 
-	def analyze_events_per_course_sections(self, period_breaks='1 week', minor_period_breaks='1 day',
-											theme_seaborn_=True):
+	def analyze_events_per_course_sections(self, period_breaks='1 week',
+										   minor_period_breaks='1 day',
+										   theme_seaborn_=True):
 		nct = self.nct
 		df = nct.analyze_events_per_course_sections()
 		if df is None:
@@ -145,7 +146,7 @@ class NotesCreationTimeseriesPlot(object):
 			event_title = 'Number of notes created in %s' % (context_name)
 			user_title = 'Number of unique users creating notes in %s' % (context_name)
 			ratio_title = 'Ratio of notes created over unique user in %s' % (context_name)
-			event_type = 'notes_created_in_%s' %(context_name.replace(' ', '_'))
+			event_type = 'notes_created_in_%s' % (context_name.replace(' ', '_'))
 			section_plots = self.generate_plots(new_df,
 												event_title,
 												user_title,
@@ -154,7 +155,7 @@ class NotesCreationTimeseriesPlot(object):
 												minor_period_breaks,
 												theme_seaborn_,
 												event_type)
-			key = 'section_plots_%s' %course_id
+			key = 'section_plots_%s' % course_id
 			section_plots_dict[key] = section_plots
 		plots['section_plots'] = section_plots_dict
 		return plots
@@ -226,8 +227,9 @@ class NotesCreationTimeseriesPlot(object):
 												   event_type)
 		return device_plots
 
-	def analyze_resource_types(self, period_breaks='1 week', minor_period_breaks='1 day',
-								theme_seaborn_=True):
+	def analyze_resource_types(self, period_breaks='1 week',
+							   minor_period_breaks='1 day',
+							   theme_seaborn_=True):
 		nct = self.nct
 		df = nct.analyze_resource_types()
 
@@ -253,7 +255,7 @@ class NotesCreationTimeseriesPlot(object):
 		users_df = nct.get_the_most_active_users(max_rank_number)
 		if users_df is None:
 			return ()
-		event_type='most_active_users_creating_notes'
+		event_type = 'most_active_users_creating_notes'
 		plot_users = histogram_plot_x_axis_discrete(
 								df=users_df,
 								x_axis_field='username' ,
@@ -265,8 +267,9 @@ class NotesCreationTimeseriesPlot(object):
 								plot_name=event_type)
 		return (plot_users,)
 
-	def analyze_sharing_types(self, period_breaks='1 week', minor_period_breaks='1 day',
-								theme_seaborn_=True):
+	def analyze_sharing_types(self, period_breaks='1 week',
+							  minor_period_breaks='1 day',
+							  theme_seaborn_=True):
 		nct = self.nct
 		dataframe = nct.dataframe
 		df = nct.analyze_sharing_types(dataframe)
@@ -340,7 +343,7 @@ class NotesCreationTimeseriesPlot(object):
 
 		return (plot_notes_created, plot_unique_users, plot_ratio)
 
-	def analyze_notes_created_on_videos(self, period_breaks='1 week', 
+	def analyze_notes_created_on_videos(self, period_breaks='1 week',
 										minor_period_breaks='1 day',
 										theme_seaborn_=True):
 
@@ -402,15 +405,16 @@ class NotesViewTimeseriesPlot(object):
 		event_title = _('Number of notes viewed during period of time')
 		user_title = _('Number of unique users viewing notes during period of time')
 		ratio_title = _('Ratio of notes viewed over unique user on each available date')
-		
-		plots = self.generate_plots(df, 
-								event_title, 
-								user_title, 
-								ratio_title,
-								period_breaks, 
-								minor_period_breaks, 
-								theme_seaborn_,
-								event_type)
+
+		plots = self.generate_plots(
+							df,
+							event_title,
+							user_title,
+							ratio_title,
+							period_breaks,
+							minor_period_breaks,
+							theme_seaborn_,
+							event_type)
 		return (plots)
 
 	def analyze_total_events_per_course_sections(self, period_breaks='1 week',
@@ -425,7 +429,7 @@ class NotesViewTimeseriesPlot(object):
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		course_ids = np.unique(df['course_id'].values.ravel())
-		
+
 		if len(course_ids) > 1:
 			group_by = 'context_name'
 			event_title = _('Number of notes viewed per course sections')
@@ -450,7 +454,7 @@ class NotesViewTimeseriesPlot(object):
 			event_title = 'Number of notes viewed in %s' % (context_name)
 			user_title = 'Number of unique users viewing notes in %s' % (context_name)
 			ratio_title = 'Ratio of notes viewed over unique user in %s' % (context_name)
-			event_type = 'note_views_in_%s' %(context_name.replace(' ', '_'))
+			event_type = 'note_views_in_%s' % (context_name.replace(' ', '_'))
 			section_plots = self.generate_plots(new_df,
 												event_title,
 												user_title,
@@ -459,14 +463,14 @@ class NotesViewTimeseriesPlot(object):
 												minor_period_breaks,
 												theme_seaborn_,
 												event_type)
-			key = 'section_plots_%s' %course_id
+			key = 'section_plots_%s' % course_id
 			section_plots_dict[key] = section_plots
 		plots['section_plots'] = section_plots_dict
 		return plots
 
 	def generate_plots(self, df, event_title, user_title,
-						ratio_title, period_breaks, minor_period_breaks,
-						theme_seaborn_, event_type):
+					   ratio_title, period_breaks, minor_period_breaks,
+					   theme_seaborn_, event_type):
 
 		event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
 
@@ -480,7 +484,7 @@ class NotesViewTimeseriesPlot(object):
 								period_breaks=period_breaks,
 								minor_breaks=minor_period_breaks,
 								theme_seaborn_=theme_seaborn_,
-								plot_name = event_name)
+								plot_name=event_name)
 
 		plot_unique_users = line_plot_x_axis_date(
 								df=df,
@@ -512,7 +516,7 @@ class NotesViewTimeseriesPlot(object):
 							   period_breaks, minor_period_breaks,
 							   theme_seaborn_, event_type):
 		event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
-		
+
 		plot_notes_viewed = group_line_plot_x_axis_date(
 								df=df,
 								x_axis_field='timestamp_period',
@@ -569,12 +573,12 @@ class NotesViewTimeseriesPlot(object):
 		user_title = _('Number of unique users viewing notes grouped by sharing types')
 		ratio_title = _('Ratio of notes viewed grouped by sharing types over unique user')
 		event_type = 'note_views_per_sharing_types'
-		plots = self.generate_group_by_plots(df, 
-											group_by, 
-											event_title, 
+		plots = self.generate_group_by_plots(df,
+											group_by,
+											event_title,
 											user_title,
-											ratio_title, 
-											period_breaks, 
+											ratio_title,
+											period_breaks,
 											minor_period_breaks,
 											theme_seaborn_,
 											event_type)
@@ -700,7 +704,7 @@ class NoteLikesTimeseriesPlot(object):
 		"""
 		self.nlt = nlt
 
-	def explore_events(self, period_breaks='1 week', 
+	def explore_events(self, period_breaks='1 week',
 					   minor_period_breaks='1 day',
 					   theme_seaborn_=True):
 
@@ -760,7 +764,7 @@ class NoteLikesTimeseriesPlot(object):
 			event_title = 'Number of note likes in %s' % (context_name)
 			user_title = 'Number of unique users liking notes in %s' % (context_name)
 			ratio_title = 'Ratio of note likes over unique user in %s' % (context_name)
-			event_type = 'note_likes_in_%s' %(context_name)
+			event_type = 'note_likes_in_%s' % (context_name)
 			section_plots = self.generate_plots(new_df,
 												event_title,
 												user_title,
@@ -799,7 +803,7 @@ class NoteLikesTimeseriesPlot(object):
 									event_type)
 		return plots
 
-	def analyze_events_per_resource_types(self, period_breaks='1 week', 
+	def analyze_events_per_resource_types(self, period_breaks='1 week',
 										  minor_period_breaks='1 day',
 										  theme_seaborn_=True):
 
@@ -948,7 +952,7 @@ class NoteFavoritesTimeseriesPlot(object):
 									event_type)
 		return plots
 
-	def analyze_events_per_course_sections(self, period_breaks='1 week', 
+	def analyze_events_per_course_sections(self, period_breaks='1 week',
 										   minor_period_breaks='1 day',
 										   theme_seaborn_=True):
 		nft = self.nft
@@ -983,7 +987,7 @@ class NoteFavoritesTimeseriesPlot(object):
 			event_title = 'Number of note favorites in %s' % (context_name)
 			user_title = 'Number of unique users voting notes as favorites in %s' % (context_name)
 			ratio_title = 'Ratio of note favorites over unique user in %s' % (context_name)
-			event_type = 'note_favorites_in_%s' %(context_name)
+			event_type = 'note_favorites_in_%s' % (context_name)
 			section_plots = self.generate_plots(new_df,
 												event_title,
 												user_title,
