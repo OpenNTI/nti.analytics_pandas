@@ -17,6 +17,8 @@ from ...analysis import NotesCreationTimeseries
 from ...analysis import NotesCreationTimeseriesPlot
 from ...analysis import NotesViewTimeseries
 from ...analysis import NotesViewTimeseriesPlot
+from ...analysis import NoteLikesTimeseries
+from ...analysis import NoteLikesTimeseriesPlot
 
 from .commons import get_course_names
 from .commons import build_plot_images_dictionary
@@ -81,6 +83,16 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 
 		if self.options['has_note_views_data']:
 			data = self.generate_note_views_plots(data)
+
+		self.nlt = NoteLikesTimeseries(self.context.session,
+									   self.context.start_date,
+									   self.context.end_date,
+									   self.context.courses)
+		if self.nlt.dataframe.empty:
+			self.options['has_note_likes_data'] = False
+		else:
+			self.options['has_note_likes_data'] = True
+			data = self.generate_note_likes_plots(data)
 			
 		self._build_data(data)
 		return self.options
@@ -230,6 +242,19 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 		if plots :
 			data['note_views_authors'] = build_plot_images_dictionary(plots)
 			self.options['has_note_views_author'] = True
+		return data
+
+	def generate_note_likes_plots(self, data):
+		self.nltp = NoteLikesTimeseriesPlot(self.nlt)
+		data = self.get_note_likes_plots(data)
+		return data
+
+	def get_note_likes_plots(self, data):
+		plots = self.nltp.explore_events(self.context.period_breaks,
+										 self.context.minor_period_breaks,
+										 self.context.theme_seaborn_)
+		if plots:
+			data['note_likes'] = build_plot_images_dictionary(plots)
 		return data
 
 View = NoteEventsTimeseriesReport = NoteEventsTimeseriesReportView
