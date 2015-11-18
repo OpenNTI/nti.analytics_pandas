@@ -15,6 +15,8 @@ from zope import interface
 
 from ...analysis import NotesCreationTimeseries
 from ...analysis import NotesCreationTimeseriesPlot
+from ...analysis import NotesViewTimeseries
+from ...analysis import NotesViewTimeseriesPlot
 
 from .commons import get_course_names
 from .commons import build_plot_images_dictionary
@@ -68,6 +70,18 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 		if self.options['has_notes_created_data']:
 			data = self.generate_notes_created_plots(data)
 
+		self.nvt = NotesViewTimeseries(self.context.session,
+									   self.context.start_date,
+									   self.context.end_date,
+									   self.context.courses)
+		if self.nvt.dataframe.empty:
+			self.options['has_note_views_data'] = False
+		else:
+			self.options['has_note_views_data'] = True
+
+		if self.options['has_note_views_data']:
+			data = self.generate_note_views_plots(data)
+			
 		self._build_data(data)
 		return self.options
 
@@ -138,6 +152,19 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 		if plots:
 			data['notes_created_users'] = build_plot_images_dictionary(plots)
 			self.options['has_notes_created_user'] = True
+		return data
+
+	def generate_note_views_plots(self, data):
+		self.nvtp = NotesViewTimeseriesPlot(self.nvt)
+		data = self.get_note_views_plots(data)
+		return data
+
+	def get_note_views_plots(self, data):
+		plots = self.nvtp.explore_events(self.context.period_breaks,
+										 self.context.minor_period_breaks,
+										 self.context.theme_seaborn_)
+		if plots:
+			data['note_views'] = build_plot_images_dictionary(plots)
 		return data
 
 View = NoteEventsTimeseriesReport = NoteEventsTimeseriesReportView
