@@ -111,7 +111,7 @@
 				  metal:define-macro="one_plot_event">
 		<!--! To use, define a variable event, user_event, ratio_event around the invocation -->
 		<image tal:attributes="file event"
-			   x="0" y="0" width="450" height="200" showBoundary="no" preserveAspectRatio="yes">
+			   x="0" y="0" width="5in" height="3in" showBoundary="no" preserveAspectRatio="yes">
 		</image>
 	</illustration>
 

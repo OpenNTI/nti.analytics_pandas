@@ -213,7 +213,7 @@
 			<nextPage />
 			<tal:block tal:condition="python: options['has_note_views_author']">
 				<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
-					The most viewed notes'author
+					The most viewed notes' author
 				</h1>
 				<hr width="100%" />
 				<illustration width="5in" height="3in"
