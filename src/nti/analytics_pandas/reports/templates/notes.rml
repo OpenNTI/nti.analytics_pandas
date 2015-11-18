@@ -43,7 +43,37 @@
 			</illustration>		
 		</tal:block>
 
-		
+		<setNextTemplate name="main"/>
+		<nextPage />
+		<tal:block tal:condition="python: options['has_notes_created_data_per_resource_types']">
+			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+				Notes Created per Resource Types
+			</h1>
+			<hr width="100%" />
+			<illustration width="5in" height="3in"
+						  tal:define="event options/data/notes_created_per_resource_types/event_notes_created_per_resource_types;
+									  user_event options/data/notes_created_per_resource_types/user_notes_created_per_resource_types;
+									  ratio_event options/data/notes_created_per_resource_types/ratio_notes_created_per_resource_types"
+						  tal:condition="options/data/notes_created_per_resource_types"
+						  metal:use-macro="macro:three_plots_event">
+			</illustration>		
+		</tal:block>
+
+		<setNextTemplate name="main"/>
+		<nextPage />
+		<tal:block tal:condition="python: options['has_notes_created_data_per_sharing_types']">
+			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+				Notes Created per Sharing Types
+			</h1>
+			<hr width="100%" />
+			<illustration width="5in" height="3in"
+						  tal:define="event options/data/notes_created_per_sharing_types/event_notes_created_per_sharing_types;
+									  user_event options/data/notes_created_per_sharing_types/user_notes_created_per_sharing_types;
+									  ratio_event options/data/notes_created_per_sharing_types/ratio_notes_created_per_sharing_types"
+						  tal:condition="options/data/notes_created_per_sharing_types"
+						  metal:use-macro="macro:three_plots_event">
+			</illustration>		
+		</tal:block>			
 
 	</tal:block>
 </metal:block>

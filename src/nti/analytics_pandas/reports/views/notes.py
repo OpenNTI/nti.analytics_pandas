@@ -68,7 +68,6 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 			data = self.generate_notes_created_plots(data)
 
 		self._build_data(data)
-		print (self.options)
 		return self.options
 
 	def generate_notes_created_plots(self, data):
@@ -103,24 +102,30 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 		plots = self.nctp.analyze_resource_types(self.context.period_breaks,
 										 		 self.context.minor_period_breaks,
 										 		 self.context.theme_seaborn_)
+		self.options['has_notes_created_data_per_resource_types'] = False
 		if plots:
 			data['notes_created_per_resource_types'] = build_plot_images_dictionary(plots)
+			self.options['has_notes_created_data_per_resource_types'] = True
 		return data
 
 	def get_notes_created_per_sharing_types_plots(self, data):
 		plots = self.nctp.analyze_sharing_types(self.context.period_breaks,
 										 		self.context.minor_period_breaks,
 										 		self.context.theme_seaborn_)
+		self.options['has_notes_created_data_per_sharing_types'] = False
 		if plots:
 			data['notes_created_per_sharing_types'] = build_plot_images_dictionary(plots)
+			self.options['has_notes_created_data_per_sharing_types'] = True
 		return data
 
 	def get_notes_created_per_course_sections_plots(self, data):
 		plots = self.nctp.analyze_events_per_course_sections(self.context.period_breaks,
 										 					 self.context.minor_period_breaks,
 										 					 self.context.theme_seaborn_)
+		self.options['has_notes_created_data_per_course_sections'] = False								 					
 		if plots:
 			data['notes_created_per_course_sections'] = build_plot_images_dictionary(plots)
+			self.options['has_notes_created_data_per_course_sections'] = True
 		return data
 
 	def get_notes_created_the_most_active_users(self, data):
