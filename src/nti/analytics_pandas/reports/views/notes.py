@@ -68,6 +68,7 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 			data = self.generate_notes_created_plots(data)
 
 		self._build_data(data)
+		print (self.options)
 		return self.options
 
 	def generate_notes_created_plots(self, data):
@@ -75,7 +76,7 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 		data = self.get_notes_created_plots(data)
 		data = self.get_notes_created_per_device_types_plots(data)
 		data = self.get_notes_created_per_resource_types_plots(data)
-		data = self.get_notes_created_sharing_types_plots(data)
+		data = self.get_notes_created_per_sharing_types_plots(data)
 		data = self.get_notes_created_per_course_sections_plots(data)
 		data = self.get_notes_created_the_most_active_users(data)
 		return data
@@ -92,8 +93,12 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 		plots = self.nctp.analyze_device_types(self.context.period_breaks,
 										 	   self.context.minor_period_breaks,
 										 	   self.context.theme_seaborn_)
+		self.options['has_notes_created_data_per_device_types'] = False
 		if plots:
+			print('HERE')
+			print(plots)
 			data['notes_created_per_device_types'] = build_plot_images_dictionary(plots)
+			self.options['has_notes_created_data_per_device_types'] = True
 		return data
 
 	def get_notes_created_per_resource_types_plots(self, data):
@@ -104,7 +109,7 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 			data['notes_created_per_resource_types'] = build_plot_images_dictionary(plots)
 		return data
 
-	def get_notes_created_sharing_types_plots(self, data):
+	def get_notes_created_per_sharing_types_plots(self, data):
 		plots = self.nctp.analyze_sharing_types(self.context.period_breaks,
 										 		self.context.minor_period_breaks,
 										 		self.context.theme_seaborn_)
