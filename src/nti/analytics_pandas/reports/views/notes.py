@@ -95,8 +95,6 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 										 	   self.context.theme_seaborn_)
 		self.options['has_notes_created_data_per_device_types'] = False
 		if plots:
-			print('HERE')
-			print(plots)
 			data['notes_created_per_device_types'] = build_plot_images_dictionary(plots)
 			self.options['has_notes_created_data_per_device_types'] = True
 		return data
