@@ -157,6 +157,8 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 	def generate_note_views_plots(self, data):
 		self.nvtp = NotesViewTimeseriesPlot(self.nvt)
 		data = self.get_note_views_plots(data)
+		data = self.get_note_views_plots_per_device_types(data)
+		data = self.get_note_views_plots_per_resource_types(data)
 		return data
 
 	def get_note_views_plots(self, data):
@@ -165,6 +167,26 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 										 self.context.theme_seaborn_)
 		if plots:
 			data['note_views'] = build_plot_images_dictionary(plots)
+		return data
+
+	def get_note_views_plots_per_device_types(self, data):
+		plots = self.nvtp.analyze_total_events_based_on_device_type(self.context.period_breaks,
+										 				  			self.context.minor_period_breaks,
+										 				  			self.context.theme_seaborn_)
+		self.options['has_note_views_data_per_device_types'] = False
+		if plots:
+			data['note_views_per_device_types'] = build_plot_images_dictionary(plots)
+			self.options['has_note_views_data_per_device_types'] = True
+		return data
+
+	def get_note_views_plots_per_resource_types(self, data):
+		plots = self.nvtp.analyze_total_events_based_on_resource_type(self.context.period_breaks,
+										 				  			self.context.minor_period_breaks,
+										 				  			self.context.theme_seaborn_)
+		self.options['has_note_views_data_per_resource_types'] = False
+		if plots:
+			data['note_views_per_resource_types'] = build_plot_images_dictionary(plots)
+			self.options['has_note_views_data_per_resource_types'] = True
 		return data
 
 View = NoteEventsTimeseriesReport = NoteEventsTimeseriesReportView
