@@ -37,7 +37,6 @@ class TestBookmarksPlot(AnalyticsPandasTestBase):
 		bct = BookmarkCreationTimeseries(self.session, start_date, end_date, course_id)
 		bctp = BookmarksTimeseriesPlot(bct)
 		_ = bctp.analyze_device_types()
-		print(_)
 
 	def test_analyze_bookmark_resource_device_types(self):
 		start_date = '2015-01-01'

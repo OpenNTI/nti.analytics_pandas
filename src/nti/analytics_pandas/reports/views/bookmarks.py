@@ -52,6 +52,9 @@ class BookmarksTimeseriesReportView(AbstractReportView):
 		if 'has_bookmark_data_per_device_types' not in self.options.keys():
 			self.options['has_bookmark_data_per_device_types'] = False
 
+		if 'has_bookmark_data_per_resource_types' not in self.options.keys():
+			self.options['has_bookmark_data_per_resource_types'] = False
+
 		self.options['data'] = data
 		return self.options
 
@@ -78,6 +81,7 @@ class BookmarksTimeseriesReportView(AbstractReportView):
 		self.bctp = BookmarksTimeseriesPlot(self.bct)
 		data = self.get_bookmarks_created_plots(data)
 		data = self.get_bookmarks_created_plots_per_device_types(data)
+		data = self.get_bookmarks_created_plots_per_resource_types(data)
 		return data
 
 	def get_bookmarks_created_plots(self, data):
@@ -104,7 +108,7 @@ class BookmarksTimeseriesReportView(AbstractReportView):
 										 	   	 self.context.theme_seaborn_)
 		self.options['has_bookmark_data_per_resource_types'] = False
 		if plots:
-			data['bookmarks_created_per_resource_types'] = build_plot_images_dictionary(plots)
+			data['bookmarks_created_per_resource_types'] = build_images_dict_from_plot_dict(plots)
 			self.options['has_bookmark_data_per_resource_types'] = True
 		return data
 

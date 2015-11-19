@@ -170,6 +170,8 @@ class BookmarksTimeseriesPlot(object):
 		user_title = _('Number of unique users creating bookmarks  grouped by resource types')
 		ratio_title = _('Ratio of bookmarks created over unique user grouped by resource types')
 		event_type = 'bookmarks_created_per_resource_types'
+		
+		plots_dict = {}
 		plots = self.generate_group_by_plots(df,
 											 group_by,
 											 event_title,
@@ -179,6 +181,7 @@ class BookmarksTimeseriesPlot(object):
 											 minor_period_breaks,
 											 theme_seaborn_,
 											 event_type)
+		plots_dict['line_plots'] = plots
 
 		resource_df.reset_index(inplace=True)
 
@@ -192,7 +195,8 @@ class BookmarksTimeseriesPlot(object):
 												stat='bar',
 												plot_name='bookmarks_created_per_resource_types_hist')
 
-		return (plots, plot_total_bookmark_on_each_type)
+		plots_dict['hist_plot'] = plot_total_bookmark_on_each_type
+		return plots_dict
 
 	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day',
 							theme_seaborn_=True):
