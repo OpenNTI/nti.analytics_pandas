@@ -1,0 +1,30 @@
+<metal:block
+	xmlns:tal="http://xml.zope.org/namespaces/tal"
+	xmlns:metal="http://xml.zope.org/namespaces/metal"
+	tal:define="options view/options">
+
+	<tal:block tal:condition="python: options['has_video_data']">
+		<para style="normal" spaceAfter=".5in" >
+			This document presents an overview of videos related events created in <u>${options/course_names}</u> from <strong>${context/start_date}</strong> through <strong>${context/end_date}</strong>.
+		</para>
+	</tal:block>	
+	<hr width="100%" />
+
+	<setNextTemplate name="main"/>
+	<nextPage />
+	<tal:block tal:condition="python: options['has_video_data']">
+		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+			Overview of Video Watched
+		</h1>
+		<hr width="100%" />
+		<tal:block tal:define="videos_watched options/data/videos_watched">
+			<illustration width="5in" height="3in"
+					  	  tal:define="event videos_watched/event_video_events;
+					  	  			  user_event videos_watched/user_video_events;
+								      ratio_event videos_watched/ratio_video_events"
+					      metal:use-macro="macro:three_plots_event">
+			</illustration>
+		</tal:block>
+	</tal:block>
+
+</metal:block>

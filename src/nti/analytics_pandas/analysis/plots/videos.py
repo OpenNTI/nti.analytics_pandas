@@ -28,7 +28,7 @@ class VideoEventsTimeseriesPlot(object):
 		self.vet = vet
 
 	def explore_events(self, period_breaks='1 day', minor_period_breaks=None,
-					   theme_seaborn_=True):
+					   theme_seaborn_=True, video_event_type='watch'):
 		"""
 		return plots of video events during period of time
 		it consists of:
@@ -37,15 +37,18 @@ class VideoEventsTimeseriesPlot(object):
 			- ratio of video events over unique users
 		"""
 		vet = self.vet
-		df = vet.analyze_video_events(video_event_type=None)
+		df = vet.analyze_video_events(video_event_type=video_event_type.upper())
 		if df is None:
 			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
-		event_title = _('Number of videos watched and skipped during period of time')
-		user_title = _('Number of unique users watching or skipping videos during period of time')
-		ratio_title = _('Ratio of videos watched and skipped over unique user on each available date')
+		if video_event_type == 'skip':
+			video_event_type = 'skipp'
+
+		event_title = 'Number of videos %sed during period of time' %(video_event_type)
+		user_title =  'Number of unique users %sing videos during period of time' %(video_event_type)
+		ratio_title = 'Ratio of videos %sed over unique user on each available date' %(video_event_type)
 		event_type = 'video_events'
 		plots = self.generate_plots(
 								df,

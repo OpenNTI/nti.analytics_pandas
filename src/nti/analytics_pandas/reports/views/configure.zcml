@@ -38,6 +38,12 @@
 		for=".highlights.HighlightsTimeseriesReportView"
 		layer="*" />
 
+	<!-- Videos related events report -->
+	<z3c:template
+		template="../templates/videos.rml"
+		for=".videos.VideosTimeseriesReportView"
+		layer="*" />
+
 	<!-- Macros -->
 	<z3c:macro
 		template="../templates/std_report_macros.pt"

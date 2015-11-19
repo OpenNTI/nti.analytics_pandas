@@ -22,3 +22,5 @@ from .notes import NotesCreationTimeseriesPlot
 from .notes import NoteFavoritesTimeseriesPlot
 
 from .resource_views import ResourceViewsTimeseriesPlot
+
+from .videos import VideoEventsTimeseriesPlot

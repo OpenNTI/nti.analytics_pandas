@@ -19,6 +19,7 @@ from .plots import NotesViewTimeseriesPlot
 from .plots import NoteLikesTimeseriesPlot
 from .plots import NoteFavoritesTimeseriesPlot
 from .plots import ResourceViewsTimeseriesPlot
+from .plots import VideoEventsTimeseriesPlot
 
 from .bookmarks import BookmarkCreationTimeseries
 
@@ -38,3 +39,5 @@ from .notes import NotesViewTimeseries
 from .notes import NotesEventsTimeseries
 from .notes import NotesCreationTimeseries
 from .notes import NoteFavoritesTimeseries
+
+from .videos import VideoEventsTimeseries
