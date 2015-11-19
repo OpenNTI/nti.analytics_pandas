@@ -9,46 +9,59 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
+import os
+import atexit
+import shutil
+import tempfile
 from collections import Mapping
-
-from shutil import copyfileobj
-from tempfile import NamedTemporaryFile
 
 from ...queries import QueryCourses
 
 from ...utils import Plot
 from ...utils import save_plot_
 
-def build_images_dict_from_plot_dict(plots, image_type='png'):
+def build_images_dict_from_plot_dict(plots, image_type='png', dirname=None):
 	"""
 	proceed set of plots stored in dictionary
 	"""
 	images = {}
+	if dirname is None:
+		dirname = tempfile.mkdtemp()
+		if not os.path.exists(dirname):
+			os.makedirs(dirname)
+		atexit.register(shutil.rmtree, dirname)
+
 	if isinstance(plots, Mapping):
 		for key in plots:
 			if isinstance(plots[key], Mapping):
-				images[key] = build_images_dict_from_plot_dict(plots[key])
+				images[key] = build_images_dict_from_plot_dict(plots[key], 
+															   dirname=dirname,
+															   image_type=image_type)
 			elif isinstance(plots[key], (list,tuple)):
-				images[key] = build_plot_images_dictionary(plots[key])
+				images[key] = build_plot_images_dictionary(plots[key],
+														   dirname=dirname,
+														   image_type=image_type)
 			elif isinstance(plots[key], Plot):
-				images[key] = copy_plot_to_temporary_file(plots[key], image_type)
+				images[key] = copy_plot_to_temporary_file(plots[key],
+														  image_type=image_type)
 	return images
 
-def build_plot_images_dictionary(plots, image_type='png'):
+def build_plot_images_dictionary(plots, image_type='png', dirname=None):
 	images = {}
 	for plot in plots:
 		if isinstance(plot, Plot):
-			filename = copy_plot_to_temporary_file(plot, image_type)
+			filename = copy_plot_to_temporary_file(plot, image_type, dirname=dirname)
 			images[plot.plot_name] = filename
 	return images
 
 def copy_plot_to_temporary_file(plot, image_type, dirname=None):
-	# TODO: delete the named temporary files after using it to generate report
 	image = save_plot_(plot.plot, plot.plot_name, image_type)
-	image_file = NamedTemporaryFile(delete=False, dir=dirname)
-	image.data.seek(0)
-	copyfileobj(image.data, image_file)
-	image.data.close()
+	try:
+		image_file = tempfile.NamedTemporaryFile(delete=False, dir=dirname)
+		image.data.seek(0)
+		shutil.copyfileobj(image.data, image_file)
+	finally:
+		image.data.close()
 	return image_file.name
 
 def get_course_names(session, courses_id):
