@@ -51,6 +51,9 @@ class VideosTimeseriesReportView(AbstractReportView):
 		if 'has_video_watched_data' not in self.options.keys():
 			self.options['has_video_watched_data'] = False
 
+		if 'has_video_watched_data_per_device_types' not in self.options.keys():
+			self.options['has_video_watched_data_per_device_types'] = False
+
 		self.options['data'] = data
 		return self.options
 
@@ -76,6 +79,7 @@ class VideosTimeseriesReportView(AbstractReportView):
 	def generate_video_events_plots(self, data):
 		self.vetp = VideoEventsTimeseriesPlot(self.vet)
 		data = self.generate_video_watched_plots(data)
+		data = self.generate_video_watched_plots_per_device_types(data)
 		return data
 
 	def generate_video_watched_plots(self, data):
@@ -86,6 +90,16 @@ class VideosTimeseriesReportView(AbstractReportView):
 		if plots:
 			data['videos_watched'] = build_plot_images_dictionary(plots)
 			self.options['has_video_watched_data'] = True
+		return data
+
+	def generate_video_watched_plots_per_device_types(self, data):
+		plots = self.vetp.analyze_video_events_device_types(self.context.period_breaks,
+										 					self.context.minor_period_breaks,
+										 					video_event_type = 'watch',
+											 				theme_seaborn_=self.context.theme_seaborn_)
+		if plots:
+			data['videos_watched_per_device_types'] = build_plot_images_dictionary(plots)
+			self.options['has_video_watched_data_per_device_types'] = True
 		return data
 
 View = VideosTimeseriesReport = VideosTimeseriesReportView

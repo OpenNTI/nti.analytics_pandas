@@ -170,7 +170,7 @@ class VideoEventsTimeseriesPlot(object):
 		grouped by device types
 		"""
 		vet = self.vet
-		df = vet.analyze_video_events_device_types(video_event_type)
+		df = vet.analyze_video_events_device_types(video_event_type.upper())
 		if df is None:
 			return ()
 
@@ -181,7 +181,7 @@ class VideoEventsTimeseriesPlot(object):
 		event_title = _('Number of video events grouped by device types')
 		user_title = _('Number of unique users creating video events grouped by device types')
 		ratio_title = _('Ratio of video events over unique users grouped by device types')
-		event_type = 'video_events_%s' % (video_event_type)
+		event_type = 'video_events_%s' % (video_event_type.lower())
 		plots = self.generate_group_by_plots(
 									df,
 									group_by,
