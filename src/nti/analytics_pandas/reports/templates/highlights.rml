@@ -62,6 +62,21 @@
 			</tal:block>
 		</tal:block>
 
+		<setNextTemplate name="main"/>
+		<nextPage />
+		<tal:block tal:condition="python: options['has_highlight_created_users']">
+			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+				The most active users creating highlights
+			</h1>
+			<hr width="100%" />
+			<tal:block tal:define="highlights_created_users options/data/highlight_created_users">
+				<illustration width="5in" height="3in"
+						  	  tal:define="event highlights_created_users/most_active_users_creating_highlights"
+						      metal:use-macro="macro:one_plot_event">
+				</illustration>
+			</tal:block>
+		</tal:block>
+
 	</tal:block>
 
 </metal:block>
