@@ -16,7 +16,7 @@
 	<nextPage />
 	<tal:block tal:condition="python: options['has_bookmark_data']">
 		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
-			Note Likes
+			Overview of Bookmarks Created
 		</h1>
 		<hr width="100%" />
 		<tal:block tal:define="bookmarks_created options/data/bookmarks_created">
