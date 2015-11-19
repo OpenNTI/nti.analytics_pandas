@@ -26,6 +26,12 @@
 		for=".notes.NoteEventsTimeseriesReportView"
 		layer="*" />
 
+	<!-- Bookmarks related events report -->
+	<z3c:template
+		template="../templates/bookmarks.rml"
+		for=".bookmarks.BookmarksTimeseriesReportView"
+		layer="*" />
+
 	<!-- Macros -->
 	<z3c:macro
 		template="../templates/std_report_macros.pt"

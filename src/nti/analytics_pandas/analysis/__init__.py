@@ -11,6 +11,7 @@ logger = __import__('logging').getLogger(__name__)
 
 from .. import MessageFactory
 
+from .plots import BookmarksTimeseriesPlot
 from .plots import NotesEventsTimeseriesPlot
 from .plots import NotesCreationTimeseriesPlot
 from .plots import NotesViewTimeseriesPlot
