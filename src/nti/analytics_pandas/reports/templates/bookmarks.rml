@@ -49,7 +49,7 @@
 		<nextPage />
 		<tal:block tal:condition="python: options['has_bookmark_data_per_resource_types']">
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
-				Bookmarks Created per Device Types
+				Bookmarks Created per Resource Types
 			</h1>
 			<hr width="100%" />
 			<tal:block tal:define="bookmarks_created options/data/bookmarks_created_per_resource_types/line_plots;
@@ -60,6 +60,21 @@
 									      ratio_event bookmarks_created/ratio_bookmarks_created_per_resource_types;
 									      additional_plot bookmarks_created_hist"
 						      metal:use-macro="macro:four_plots_event">
+				</illustration>
+			</tal:block>
+		</tal:block>
+
+		<setNextTemplate name="main"/>
+		<nextPage />
+		<tal:block tal:condition="python: options['has_bookmark_created_users']">
+			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+				The most active users creating bookmarks
+			</h1>
+			<hr width="100%" />
+			<tal:block tal:define="bookmark_created_users options/data/bookmark_created_users">
+				<illustration width="5in" height="3in"
+						  	  tal:define="event bookmark_created_users/most_active_user_creating_bookmarks"
+						      metal:use-macro="macro:one_plot_event">
 				</illustration>
 			</tal:block>
 		</tal:block>

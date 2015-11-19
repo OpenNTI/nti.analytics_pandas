@@ -55,6 +55,9 @@ class BookmarksTimeseriesReportView(AbstractReportView):
 		if 'has_bookmark_data_per_resource_types' not in self.options.keys():
 			self.options['has_bookmark_data_per_resource_types'] = False
 
+		if 'has_bookmark_created_users' not in self.options.keys():
+			self.options['has_bookmark_created_users'] = False
+
 		self.options['data'] = data
 		return self.options
 
@@ -82,6 +85,7 @@ class BookmarksTimeseriesReportView(AbstractReportView):
 		data = self.get_bookmarks_created_plots(data)
 		data = self.get_bookmarks_created_plots_per_device_types(data)
 		data = self.get_bookmarks_created_plots_per_resource_types(data)
+		data = self.get_the_most_active_users_plot(data)
 		return data
 
 	def get_bookmarks_created_plots(self, data):
@@ -96,7 +100,6 @@ class BookmarksTimeseriesReportView(AbstractReportView):
 		plots = self.bctp.analyze_device_types(self.context.period_breaks,
 										 	   self.context.minor_period_breaks,
 										 	   self.context.theme_seaborn_)
-		self.options['has_bookmark_data_per_device_types'] = False
 		if plots:
 			data['bookmarks_created_per_device_types'] = build_plot_images_dictionary(plots)
 			self.options['has_bookmark_data_per_device_types'] = True
@@ -106,10 +109,16 @@ class BookmarksTimeseriesReportView(AbstractReportView):
 		plots = self.bctp.analyze_resource_types(self.context.period_breaks,
 										 	   	 self.context.minor_period_breaks,
 										 	   	 self.context.theme_seaborn_)
-		self.options['has_bookmark_data_per_resource_types'] = False
 		if plots:
 			data['bookmarks_created_per_resource_types'] = build_images_dict_from_plot_dict(plots)
 			self.options['has_bookmark_data_per_resource_types'] = True
+		return data
+
+	def get_the_most_active_users_plot(self, data):
+		plot = self.bctp.plot_the_most_active_users(self.context.number_of_most_active_user)
+		if plot:
+			data['bookmark_created_users'] = build_plot_images_dictionary(plot)
+			self.options['has_bookmark_created_users'] = True
 		return data
 
 View = BookmarksTimeseriesReport = BookmarksTimeseriesReportView
