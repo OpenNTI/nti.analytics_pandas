@@ -16,7 +16,6 @@ from hamcrest import instance_of
 from hamcrest import greater_than
 
 import os
-import shutil
 
 from z3c.rml import rml2pdf
 
@@ -99,7 +98,5 @@ class TestResourceViews(AnalyticsPandasTestBase):
 
 		pdf_stream = rml2pdf.parseString(rml)
 		pdf_stream.seek(0)
-		fd = open('test_resource_views.pdf', 'w')
-		shutil.copyfileobj(pdf_stream, fd)
-		pdf_stream.close()
-		assert_that(os.path.exists('test_resource_views.pdf'), is_(True))
+		readbuf = pdf_stream.read()
+		assert_that(readbuf, has_length(greater_than(0)))

@@ -149,7 +149,7 @@ class BookmarksTimeseriesPlot(object):
 												minor_period_breaks,
 												theme_seaborn_,
 												event_type)
-			key = 'section_%s' %(course_id)
+			key = 'section_%s' % (course_id)
 			section_plots_dict[key] = section_plots
 		plots['section_plots'] = section_plots_dict
 		return plots
@@ -172,7 +172,7 @@ class BookmarksTimeseriesPlot(object):
 		user_title = _('Number of unique users creating bookmarks  grouped by resource types')
 		ratio_title = _('Ratio of bookmarks created over unique user grouped by resource types')
 		event_type = 'bookmarks_created_per_resource_types'
-		
+
 		plots_dict = {}
 		plots = self.generate_group_by_plots(df,
 											 group_by,

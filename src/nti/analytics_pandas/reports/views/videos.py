@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*
 """
-.. $Id: videos.py 77243 2015-11-17 13:12:59Z egawati.panjei $
+.. $Id$
 """
 
 from __future__ import print_function, unicode_literals, absolute_import, division
@@ -16,8 +16,8 @@ from zope import interface
 from ...analysis import VideoEventsTimeseries
 from ...analysis import VideoEventsTimeseriesPlot
 
-from .commons import build_plot_images_dictionary
 from .commons import get_course_names
+from .commons import build_plot_images_dictionary
 
 from .mixins import AbstractReportView
 
@@ -58,21 +58,21 @@ class VideosTimeseriesReportView(AbstractReportView):
 		return self.options
 
 	def __call__(self):
-		self.vet =  VideoEventsTimeseries(self.context.session,
+		self.vet = VideoEventsTimeseries(self.context.session,
 										   self.context.start_date,
 										   self.context.end_date,
 										   self.context.courses)
 		if self.vet.dataframe.empty:
 			self.options['has_video_data'] = False
 			return self.options
-		
+
 		self.options['has_video_data'] = True
-		
+
 		course_names = get_course_names(self.context.session, self.context.courses)
 		self.options['course_names'] = ", ".join(map(str, course_names))
 
 		data = {}
-		data  = self.generate_video_events_plots(data)
+		data = self.generate_video_events_plots(data)
 		self._build_data(data)
 		return self.options
 
@@ -86,7 +86,7 @@ class VideosTimeseriesReportView(AbstractReportView):
 		plots = self.vetp.explore_events(self.context.period_breaks,
 										 self.context.minor_period_breaks,
 										 self.context.theme_seaborn_,
-										 video_event_type = 'watch')
+										 video_event_type='watch')
 		if plots:
 			data['videos_watched'] = build_plot_images_dictionary(plots)
 			self.options['has_video_watched_data'] = True
@@ -95,7 +95,7 @@ class VideosTimeseriesReportView(AbstractReportView):
 	def generate_video_watched_plots_per_device_types(self, data):
 		plots = self.vetp.analyze_video_events_device_types(self.context.period_breaks,
 										 					self.context.minor_period_breaks,
-										 					video_event_type = 'watch',
+										 					video_event_type='watch',
 											 				theme_seaborn_=self.context.theme_seaborn_)
 		if plots:
 			data['videos_watched_per_device_types'] = build_plot_images_dictionary(plots)

@@ -9,6 +9,8 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
+from collections import Mapping
+
 from shutil import copyfileobj
 from tempfile import NamedTemporaryFile
 
@@ -22,11 +24,11 @@ def build_images_dict_from_plot_dict(plots, image_type='png'):
 	proceed set of plots stored in dictionary
 	"""
 	images = {}
-	if isinstance(plots, dict):
+	if isinstance(plots, Mapping):
 		for key in plots:
-			if isinstance(plots[key], dict):
+			if isinstance(plots[key], Mapping):
 				images[key] = build_images_dict_from_plot_dict(plots[key])
-			elif isinstance(plots[key], tuple) or isinstance (plots[key], list):
+			elif isinstance(plots[key], (list,tuple)):
 				images[key] = build_plot_images_dictionary(plots[key])
 			elif isinstance(plots[key], Plot):
 				images[key] = copy_plot_to_temporary_file(plots[key], image_type)
@@ -40,10 +42,10 @@ def build_plot_images_dictionary(plots, image_type='png'):
 			images[plot.plot_name] = filename
 	return images
 
-def copy_plot_to_temporary_file(plot,image_type):
+def copy_plot_to_temporary_file(plot, image_type, dirname=None):
 	# TODO: delete the named temporary files after using it to generate report
 	image = save_plot_(plot.plot, plot.plot_name, image_type)
-	image_file = NamedTemporaryFile(delete=False)
+	image_file = NamedTemporaryFile(delete=False, dir=dirname)
 	image.data.seek(0)
 	copyfileobj(image.data, image_file)
 	image.data.close()

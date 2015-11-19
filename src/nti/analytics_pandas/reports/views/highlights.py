@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*
 """
-.. $Id: highlights.py 77243 2015-11-17 13:12:59Z egawati.panjei $
+.. $Id$
 """
 
 from __future__ import print_function, unicode_literals, absolute_import, division
@@ -13,12 +13,12 @@ from . import MessageFactory as _
 
 from zope import interface
 
-from ...analysis import HighlightsCreationTimeseriesPlot
 from ...analysis import HighlightsCreationTimeseries
+from ...analysis import HighlightsCreationTimeseriesPlot
 
+from .commons import get_course_names
 from .commons import build_plot_images_dictionary
 from .commons import build_images_dict_from_plot_dict
-from .commons import get_course_names
 
 from .mixins import AbstractReportView
 
@@ -72,9 +72,9 @@ class HighlightsTimeseriesReportView(AbstractReportView):
 		if self.hct.dataframe.empty:
 			self.options['has_highlight_data'] = False
 			return self.options
-		
+
 		self.options['has_highlight_data'] = True
-		
+
 		course_names = get_course_names(self.context.session, self.context.courses)
 		self.options['course_names'] = ", ".join(map(str, course_names))
 		data = {}
@@ -112,8 +112,8 @@ class HighlightsTimeseriesReportView(AbstractReportView):
 
 	def get_highlights_created_plots_per_resource_types(self, data):
 		plots = self.hctp.analyze_resource_types(self.context.period_breaks,
-										 	     self.context.minor_period_breaks,
-										 	     self.context.theme_seaborn_)
+										 		 self.context.minor_period_breaks,
+										 		 self.context.theme_seaborn_)
 		if plots:
 			data['highlights_created_per_resource_types'] = build_plot_images_dictionary(plots)
 			self.options['has_highlight_data_per_resource_types'] = True
@@ -128,8 +128,8 @@ class HighlightsTimeseriesReportView(AbstractReportView):
 
 	def get_highlights_created_plots_per_course_sections(self, data):
 		plots = self.hctp.analyze_events_per_course_sections(self.context.period_breaks,
-										 	     			 self.context.minor_period_breaks,
-										 	     			 self.context.theme_seaborn_)
+										 		 			 self.context.minor_period_breaks,
+										 		 			 self.context.theme_seaborn_)
 		if plots:
 			data['highlights_created_per_course_sections'] = build_images_dict_from_plot_dict(plots)
 		return data

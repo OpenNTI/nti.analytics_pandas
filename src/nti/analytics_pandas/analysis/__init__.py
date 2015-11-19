@@ -12,14 +12,15 @@ logger = __import__('logging').getLogger(__name__)
 from .. import MessageFactory
 
 from .plots import BookmarksTimeseriesPlot
-from .plots import HighlightsCreationTimeseriesPlot
-from .plots import NotesEventsTimeseriesPlot
-from .plots import NotesCreationTimeseriesPlot
-from .plots import NotesViewTimeseriesPlot
+
 from .plots import NoteLikesTimeseriesPlot
+from .plots import NotesViewTimeseriesPlot
+from .plots import NotesEventsTimeseriesPlot
+from .plots import VideoEventsTimeseriesPlot
+from .plots import NotesCreationTimeseriesPlot
 from .plots import NoteFavoritesTimeseriesPlot
 from .plots import ResourceViewsTimeseriesPlot
-from .plots import VideoEventsTimeseriesPlot
+from .plots import HighlightsCreationTimeseriesPlot
 
 from .bookmarks import BookmarkCreationTimeseries
 
@@ -31,8 +32,8 @@ from .resource_views import ResourceViewsTimeseries
 
 from .forums import ForumsCreatedTimeseries
 from .forums import ForumCommentLikesTimeseries
-from .forums import ForumsCommentsCreatedTimeseries
 from .forums import ForumCommentFavoritesTimeseries
+from .forums import ForumsCommentsCreatedTimeseries
 
 from .notes import NoteLikesTimeseries
 from .notes import NotesViewTimeseries

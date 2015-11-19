@@ -51,14 +51,14 @@ class VideoEventsTimeseriesPlot(object):
 		ratio_title = 'Ratio of videos %sed over unique user on each available date' %(video_event_type)
 		event_type = 'video_events'
 		plots = self.generate_plots(
-								df,
-								event_title,
-								user_title,
-								ratio_title,
-								period_breaks,
-								minor_period_breaks,
-								theme_seaborn_,
-								event_type)
+							df,
+							event_title,
+							user_title,
+							ratio_title,
+							period_breaks,
+							minor_period_breaks,
+							theme_seaborn_,
+							event_type)
 		return plots
 
 	def generate_plots(self, df, event_title, user_title, ratio_title,

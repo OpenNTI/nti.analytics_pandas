@@ -65,16 +65,16 @@ class ForumsEventsTimeseries(object):
 
 		if forum_comments_created_df is not None:
 			forum_comments_created_df = forum_comments_created_df[ ['number_of_comment_created',
-																	'number_of_unique_users', 
+																	'number_of_unique_users',
 																	'ratio'] ]
 			forum_comments_created_df = self.update_events_dataframe(forum_comments_created_df,
-																	 column_to_rename='number_of_comment_created', 
+																	 column_to_rename='number_of_comment_created',
 																	 event_type='COMMENTS CREATED')
 			df = df.append(forum_comments_created_df)
 
 		if forum_comment_likes_df is not None:
 			forum_comment_likes_df = self.update_events_dataframe(forum_comment_likes_df,
-																  column_to_rename='number_of_likes', 
+																  column_to_rename='number_of_likes',
 																  event_type='COMMENT LIKES')
 			df = df.append(forum_comment_likes_df)
 
@@ -172,7 +172,7 @@ class ForumsCommentsCreatedTimeseries(object):
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
 
-		categorical_columns = [	'forum_id', 'parent_user_id', 'device_type', 
+		categorical_columns = [	'forum_id', 'parent_user_id', 'device_type',
 								'user_id', 'course_id', 'context_name']
 		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
@@ -311,7 +311,7 @@ class ForumCommentFavoritesTimeseries(object):
 	def analyze_events_per_course_sections(self):
 		group_by_items = ['timestamp_period', 'course_id', 'context_name']
 		df = self.build_dataframe(group_by_items)
-		return df	
+		return df
 
 	def analyze_device_types(self):
 		if 'device_type' in self.dataframe.columns:
