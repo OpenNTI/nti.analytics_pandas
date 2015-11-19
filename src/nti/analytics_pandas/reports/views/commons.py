@@ -17,7 +17,7 @@ from ...queries import QueryCourses
 from ...utils import Plot
 from ...utils import save_plot_
 
-def build_images_dict_from_plot_dict(plots):
+def build_images_dict_from_plot_dict(plots, image_type='png'):
 	"""
 	proceed set of plots stored in dictionary
 	"""
@@ -28,20 +28,26 @@ def build_images_dict_from_plot_dict(plots):
 				images[key] = build_images_dict_from_plot_dict(plots[key])
 			elif isinstance(plots[key], tuple) or isinstance (plots[key], list):
 				images[key] = build_plot_images_dictionary(plots[key])
+			elif isinstance(plots[key], Plot):
+				images[key] = copy_plot_to_temporary_file(plots[key], image_type)
 	return images
 
 def build_plot_images_dictionary(plots, image_type='png'):
-	# TODO: delete the named temporary files after using it to generate report
 	images = {}
 	for plot in plots:
 		if isinstance(plot, Plot):
-			image = save_plot_(plot.plot, plot.plot_name, image_type)
-			image_file = NamedTemporaryFile(delete=False)
-			image.data.seek(0)
-			copyfileobj(image.data, image_file)
-			image.data.close()
-			images[plot.plot_name] = image_file.name
+			filename = copy_plot_to_temporary_file(plot, image_type)
+			images[plot.plot_name] = filename
 	return images
+
+def copy_plot_to_temporary_file(plot,image_type):
+	# TODO: delete the named temporary files after using it to generate report
+	image = save_plot_(plot.plot, plot.plot_name, image_type)
+	image_file = NamedTemporaryFile(delete=False)
+	image.data.seek(0)
+	copyfileobj(image.data, image_file)
+	image.data.close()
+	return image_file.name
 
 def get_course_names(session, courses_id):
 	qc = QueryCourses(session)

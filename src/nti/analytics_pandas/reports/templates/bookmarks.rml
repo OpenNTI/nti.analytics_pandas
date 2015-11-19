@@ -52,12 +52,14 @@
 				Bookmarks Created per Device Types
 			</h1>
 			<hr width="100%" />
-			<tal:block tal:define="bookmarks_created options/data/bookmarks_created_per_resource_types/line_plots">
+			<tal:block tal:define="bookmarks_created options/data/bookmarks_created_per_resource_types/line_plots;
+								   bookmarks_created_hist options/data/bookmarks_created_per_resource_types/hist_plot">
 				<illustration width="5in" height="3in"
 						  	  tal:define="event bookmarks_created/event_bookmarks_created_per_resource_types;
 						  	  			  user_event bookmarks_created/user_bookmarks_created_per_resource_types;
-									      ratio_event bookmarks_created/ratio_bookmarks_created_per_resource_types"
-						      metal:use-macro="macro:three_plots_event">
+									      ratio_event bookmarks_created/ratio_bookmarks_created_per_resource_types;
+									      additional_plot bookmarks_created_hist"
+						      metal:use-macro="macro:four_plots_event">
 				</illustration>
 			</tal:block>
 		</tal:block>
