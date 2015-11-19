@@ -17,6 +17,7 @@ from ...analysis import HighlightsCreationTimeseriesPlot
 from ...analysis import HighlightsCreationTimeseries
 
 from .commons import build_plot_images_dictionary
+from .commons import build_images_dict_from_plot_dict
 from .commons import get_course_names
 
 from .mixins import AbstractReportView
@@ -57,6 +58,9 @@ class HighlightsTimeseriesReportView(AbstractReportView):
 		if 'has_highlight_created_users' not in self.options.keys():
 			self.options['has_highlight_created_users'] = False
 
+		if 'has_highlight_data_per_course_sections' not in self.options.keys():
+			self.options['has_highlight_data_per_course_sections'] = False
+
 		self.options['data'] = data
 		return self.options
 
@@ -84,6 +88,9 @@ class HighlightsTimeseriesReportView(AbstractReportView):
 		data = self.get_highlights_created_plots_per_device_types(data)
 		data = self.get_highlights_created_plots_per_resource_types(data)
 		data = self.get_the_most_active_users_plot(data)
+		if len(self.context.courses) > 1:
+			data = self.get_highlights_created_plots_per_course_sections(data)
+			self.options['has_highlight_data_per_course_sections'] = True
 		return data
 
 	def get_highlights_created_plots(self, data):
@@ -117,6 +124,14 @@ class HighlightsTimeseriesReportView(AbstractReportView):
 		if plot:
 			data['highlight_created_users'] = build_plot_images_dictionary(plot)
 			self.options['has_highlight_created_users'] = True
+		return data
+
+	def get_highlights_created_plots_per_course_sections(self, data):
+		plots = self.hctp.analyze_events_per_course_sections(self.context.period_breaks,
+										 	     			 self.context.minor_period_breaks,
+										 	     			 self.context.theme_seaborn_)
+		if plots:
+			data['highlights_created_per_course_sections'] = build_images_dict_from_plot_dict(plots)
 		return data
 
 View = HighlightsTimeseriesReport = HighlightsTimeseriesReportView
