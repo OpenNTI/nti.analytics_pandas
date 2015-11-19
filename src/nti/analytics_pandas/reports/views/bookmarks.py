@@ -58,6 +58,9 @@ class BookmarksTimeseriesReportView(AbstractReportView):
 		if 'has_bookmark_created_users' not in self.options.keys():
 			self.options['has_bookmark_created_users'] = False
 
+		if 'has_bookmark_data_per_course_sections' not in self.options.keys():
+			self.options['has_bookmark_data_per_course_sections'] = False
+
 		self.options['data'] = data
 		return self.options
 
@@ -74,7 +77,7 @@ class BookmarksTimeseriesReportView(AbstractReportView):
 		
 		course_names = get_course_names(self.context.session, self.context.courses)
 		self.options['course_names'] = ", ".join(map(str, course_names))
-		
+
 		data = {}
 		data = self.generate_bookmarks_created_plots(data)
 		self._build_data(data)
@@ -86,6 +89,10 @@ class BookmarksTimeseriesReportView(AbstractReportView):
 		data = self.get_bookmarks_created_plots_per_device_types(data)
 		data = self.get_bookmarks_created_plots_per_resource_types(data)
 		data = self.get_the_most_active_users_plot(data)
+		if len(self.context.courses) > 1:
+			data = self.get_bookmarks_created_plots_per_course_sections(data)
+		else:
+			self.options['has_bookmark_data_per_course_sections'] = False
 		return data
 
 	def get_bookmarks_created_plots(self, data):
@@ -119,6 +126,15 @@ class BookmarksTimeseriesReportView(AbstractReportView):
 		if plot:
 			data['bookmark_created_users'] = build_plot_images_dictionary(plot)
 			self.options['has_bookmark_created_users'] = True
+		return data
+
+	def get_bookmarks_created_plots_per_course_sections(self, data):
+		plots = self.bctp.analyze_events_per_course_sections(self.context.period_breaks,
+										 	   	 			 self.context.minor_period_breaks,
+										 	   	 			 self.context.theme_seaborn_)
+		if plots:
+			data['bookmarks_created_per_course_sections'] = build_images_dict_from_plot_dict(plots)
+			self.options['has_bookmark_data_per_course_sections'] = True
 		return data
 
 View = BookmarksTimeseriesReport = BookmarksTimeseriesReportView
