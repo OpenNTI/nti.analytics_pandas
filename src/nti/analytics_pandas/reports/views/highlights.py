@@ -48,6 +48,9 @@ class HighlightsTimeseriesReportView(AbstractReportView):
 		if 'has_highlight_data' not in self.options.keys():
 			self.options['has_highlight_data'] = False
 
+		if 'has_highlight_data_per_device_types' not in self.options.keys():
+			self.options['has_highlight_data_per_device_types'] = False
+
 		self.options['data'] = data
 		return self.options
 
@@ -72,6 +75,7 @@ class HighlightsTimeseriesReportView(AbstractReportView):
 	def generate_highlights_created_plots(self, data):
 		self.hctp = HighlightsCreationTimeseriesPlot(self.hct)
 		data = self.get_highlights_created_plots(data)
+		data = self.get_highlights_created_plots_per_device_types(data)
 		return data
 
 	def get_highlights_created_plots(self, data):
@@ -80,6 +84,15 @@ class HighlightsTimeseriesReportView(AbstractReportView):
 										 self.context.theme_seaborn_)
 		if plots:
 			data['highlights_created'] = build_plot_images_dictionary(plots)
+		return data
+
+	def get_highlights_created_plots_per_device_types(self, data):
+		plots = self.hctp.analyze_device_types(self.context.period_breaks,
+										 	   self.context.minor_period_breaks,
+										 	   self.context.theme_seaborn_)
+		if plots:
+			data['highlights_created_per_device_types'] = build_plot_images_dictionary(plots)
+			self.options['has_highlight_data_per_device_types'] = True
 		return data
 
 View = HighlightsTimeseriesReport = HighlightsTimeseriesReportView
