@@ -11,6 +11,23 @@
 		</para>
 	</tal:block>	
 	<hr width="100%" />
+
+	<setNextTemplate name="main"/>
+	<nextPage />
+	<tal:block tal:condition="python: options['has_note_events_data']">
+		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+			Overview of Notes Events
+		</h1>
+		<hr width="100%" />
+		<tal:block tal:define="note_events options/data/note_events"> 
+			<illustration width="5in" height="3in"
+					  tal:define="event note_events/note_events;
+								  user_event note_events/user_note_events;
+								  ratio_event note_events/ratio_note_events"
+					  metal:use-macro="macro:three_plots_event">
+			</illustration>
+		</tal:block>
+	</tal:block>	
 	
 	<setNextTemplate name="main"/>
 	<nextPage />
