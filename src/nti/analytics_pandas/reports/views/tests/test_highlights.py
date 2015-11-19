@@ -20,8 +20,8 @@ import shutil
 
 from z3c.rml import rml2pdf
 
-from nti.analytics_pandas.reports.views.bookmarks import View
-from nti.analytics_pandas.reports.views.bookmarks import Context
+from nti.analytics_pandas.reports.views.highlights import View
+from nti.analytics_pandas.reports.views.highlights import Context
 
 from nti.analytics_pandas.reports.z3c_zpt import ViewPageTemplateFile
 
@@ -29,10 +29,10 @@ from nti.common.property import Lazy
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
-class TestBookmarksEvents(AnalyticsPandasTestBase):
+class TestHighlightsEvents(AnalyticsPandasTestBase):
 
 	def setUp(self):
-		super(TestBookmarksEvents, self).setUp()
+		super(TestHighlightsEvents, self).setUp()
 
 	@Lazy
 	def std_report_layout_rml(self):
@@ -40,8 +40,8 @@ class TestBookmarksEvents(AnalyticsPandasTestBase):
 		return path
 
 	@Lazy
-	def bookmarks_rml(self):
-		path = os.path.join(os.path.dirname(__file__), '../../templates/bookmarks.rml')
+	def highlights_rml(self):
+		path = os.path.join(os.path.dirname(__file__), '../../templates/highlights.rml')
 		return path
 
 	def template(self, path):
@@ -75,8 +75,8 @@ class TestBookmarksEvents(AnalyticsPandasTestBase):
 		start_date = '2015-10-05'
 		end_date = '2015-10-20'
 		courses = ['1068', '1096', '1097', '1098', '1099']
-		period_breaks = '1 week'
-		minor_period_breaks = '1 day'
+		period_breaks = '1 day'
+		minor_period_breaks = None
 		theme_seaborn_ = True
 		context = Context(self.session, start_date, end_date, courses,
 						  period_breaks, minor_period_breaks, theme_seaborn_)
@@ -85,14 +85,14 @@ class TestBookmarksEvents(AnalyticsPandasTestBase):
 		view = View(context)
 		view()
 		assert_that(view.options['data'] , instance_of(dict))
-		assert_that(view.options['data'].keys(), has_item('bookmarks_created'))
+		assert_that(view.options['data'].keys(), has_item('highlights_created'))
 
 		system = {'view':view, 'context':context}
 		rml = self.template(path).bind(view)(**system)
 
 		pdf_stream = rml2pdf.parseString(rml)
 		pdf_stream.seek(0)
-		fd = open('test_bookmarks.pdf', 'w')
+		fd = open('test_highlights.pdf', 'w')
 		shutil.copyfileobj(pdf_stream, fd)
 		pdf_stream.close()
-		assert_that(os.path.exists('test_bookmarks.pdf'), is_(True))
+		assert_that(os.path.exists('test_highlights.pdf'), is_(True))

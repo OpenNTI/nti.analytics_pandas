@@ -1,0 +1,32 @@
+<metal:block
+	xmlns:tal="http://xml.zope.org/namespaces/tal"
+	xmlns:metal="http://xml.zope.org/namespaces/metal"
+	tal:define="options view/options">
+
+	<tal:block tal:condition="python: options['has_highlight_data']">
+		<para style="normal" spaceAfter=".5in" >
+			This document presents an overview of highlights created in <u>${options/course_names}</u> from <strong>${context/start_date}</strong> through <strong>${context/end_date}</strong>.
+			It includes plots of highlights created grouped by resource and device types.
+			It also shows the most active users creating highlights.
+		</para>
+	</tal:block>	
+	<hr width="100%" />
+
+	<setNextTemplate name="main"/>
+	<nextPage />
+	<tal:block tal:condition="python: options['has_highlight_data']">
+		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+			Overview of highlights Created
+		</h1>
+		<hr width="100%" />
+		<tal:block tal:define="highlights_created options/data/highlights_created">
+			<illustration width="5in" height="3in"
+					  	  tal:define="event highlights_created/event_highlights_created;
+					  	  			  user_event highlights_created/user_highlights_created;
+								      ratio_event highlights_created/ratio_highlights_created"
+					      metal:use-macro="macro:three_plots_event">
+			</illustration>
+		</tal:block>
+	</tal:block>
+
+</metal:block>

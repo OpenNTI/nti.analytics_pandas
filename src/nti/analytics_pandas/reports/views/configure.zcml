@@ -32,6 +32,12 @@
 		for=".bookmarks.BookmarksTimeseriesReportView"
 		layer="*" />
 
+	<!-- Highlights related events report -->
+	<z3c:template
+		template="../templates/highlights.rml"
+		for=".highlights.HighlightsTimeseriesReportView"
+		layer="*" />
+
 	<!-- Macros -->
 	<z3c:macro
 		template="../templates/std_report_macros.pt"

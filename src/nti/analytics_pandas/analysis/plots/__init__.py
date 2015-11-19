@@ -13,6 +13,8 @@ from .. import MessageFactory
 
 from .bookmarks import BookmarksTimeseriesPlot
 
+from .highlights import HighlightsCreationTimeseriesPlot
+
 from .notes import NotesViewTimeseriesPlot
 from .notes import NoteLikesTimeseriesPlot
 from .notes import NotesEventsTimeseriesPlot
