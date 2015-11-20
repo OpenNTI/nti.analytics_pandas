@@ -43,6 +43,40 @@
 			</tal:block>
 		</tal:block>
 
+		<setNextTemplate name="main"/>
+		<nextPage />
+		<tal:block tal:condition="python: options['has_video_skipped_data']">
+			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+				Overview of Videos Skipped
+			</h1>
+			<hr width="100%" />
+			<tal:block tal:define="videos_skipped options/data/videos_skipped">
+				<illustration width="5in" height="3in"
+						  	  tal:define="event videos_skipped/event_video_events;
+						  	  			  user_event videos_skipped/user_video_events;
+									      ratio_event videos_skipped/ratio_video_events"
+						      metal:use-macro="macro:three_plots_event">
+				</illustration>
+			</tal:block>
+		</tal:block>
+
+		<setNextTemplate name="main"/>
+		<nextPage />
+		<tal:block tal:condition="python: options['has_video_skipped_data_per_device_types']">
+			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+				Videos Watched per Device Types
+			</h1>
+			<hr width="100%" />
+			<tal:block tal:define="videos_skipped options/data/videos_skipped_per_device_types">
+				<illustration width="5in" height="3in"
+						  	  tal:define="event videos_skipped/event_video_events_skip;
+						  	  			  user_event videos_skipped/user_video_events_skip;
+									      ratio_event videos_skipped/ratio_video_events_skip"
+						      metal:use-macro="macro:three_plots_event">
+				</illustration>
+			</tal:block>
+		</tal:block>
+
 	</tal:block>
 
 </metal:block>

@@ -54,6 +54,12 @@ class VideosTimeseriesReportView(AbstractReportView):
 		if 'has_video_watched_data_per_device_types' not in self.options.keys():
 			self.options['has_video_watched_data_per_device_types'] = False
 
+		if 'has_video_skipped_data' not in self.options.keys():
+			self.options['has_video_skipped_data'] = False
+
+		if 'has_video_skipped_data_per_device_types' not in self.options.keys():
+			self.options['has_video_skipped_data_per_device_types'] = False
+
 		self.options['data'] = data
 		return self.options
 
@@ -78,11 +84,13 @@ class VideosTimeseriesReportView(AbstractReportView):
 
 	def generate_video_events_plots(self, data):
 		self.vetp = VideoEventsTimeseriesPlot(self.vet)
-		data = self.generate_video_watched_plots(data)
-		data = self.generate_video_watched_plots_per_device_types(data)
+		data = self.get_video_watched_plots(data)
+		data = self.get_video_watched_plots_per_device_types(data)
+		data = self.get_video_skipped_plots(data)
+		data = self.get_video_skipped_plots_per_device_types(data)
 		return data
 
-	def generate_video_watched_plots(self, data):
+	def get_video_watched_plots(self, data):
 		plots = self.vetp.explore_events(self.context.period_breaks,
 										 self.context.minor_period_breaks,
 										 self.context.theme_seaborn_,
@@ -92,7 +100,7 @@ class VideosTimeseriesReportView(AbstractReportView):
 			self.options['has_video_watched_data'] = True
 		return data
 
-	def generate_video_watched_plots_per_device_types(self, data):
+	def get_video_watched_plots_per_device_types(self, data):
 		plots = self.vetp.analyze_video_events_device_types(self.context.period_breaks,
 										 					self.context.minor_period_breaks,
 										 					video_event_type='watch',
@@ -100,6 +108,26 @@ class VideosTimeseriesReportView(AbstractReportView):
 		if plots:
 			data['videos_watched_per_device_types'] = build_plot_images_dictionary(plots)
 			self.options['has_video_watched_data_per_device_types'] = True
+		return data
+
+	def get_video_skipped_plots(self, data):
+		plots = self.vetp.explore_events(self.context.period_breaks,
+										 self.context.minor_period_breaks,
+										 self.context.theme_seaborn_,
+										 video_event_type='skip')
+		if plots:
+			data['videos_skipped'] = build_plot_images_dictionary(plots)
+			self.options['has_video_skipped_data'] = True
+		return data
+
+	def get_video_skipped_plots_per_device_types(self, data):
+		plots = self.vetp.analyze_video_events_device_types(self.context.period_breaks,
+										 					self.context.minor_period_breaks,
+										 					video_event_type='skip',
+											 				theme_seaborn_=self.context.theme_seaborn_)
+		if plots:
+			data['videos_skipped_per_device_types'] = build_plot_images_dictionary(plots)
+			self.options['has_video_skipped_data_per_device_types'] = True
 		return data
 
 View = VideosTimeseriesReport = VideosTimeseriesReportView
