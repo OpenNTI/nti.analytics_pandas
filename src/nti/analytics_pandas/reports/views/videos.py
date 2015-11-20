@@ -65,9 +65,9 @@ class VideosTimeseriesReportView(AbstractReportView):
 
 	def __call__(self):
 		self.vet = VideoEventsTimeseries(self.context.session,
-										   self.context.start_date,
-										   self.context.end_date,
-										   self.context.courses)
+										 self.context.start_date,
+										 self.context.end_date,
+										 self.context.courses)
 		if self.vet.dataframe.empty:
 			self.options['has_video_data'] = False
 			return self.options
@@ -77,8 +77,7 @@ class VideosTimeseriesReportView(AbstractReportView):
 		course_names = get_course_names(self.context.session, self.context.courses)
 		self.options['course_names'] = ", ".join(map(str, course_names))
 
-		data = {}
-		data = self.generate_video_events_plots(data)
+		data = self.generate_video_events_plots(data={})
 		self._build_data(data)
 		return self.options
 
