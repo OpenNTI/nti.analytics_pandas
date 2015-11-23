@@ -85,6 +85,9 @@ class ForumsTimeseriesReportView(AbstractReportView):
 		if 'has_forum_comment_favorites_data' not in keys:
 			self.options['has_forum_comment_favorites_data']=False
 
+		if 'has_forum_comment_favorites_per_device_types' not in keys:
+			self.options['has_forum_comment_favorites_per_device_types'] = False
+
 		self.options['data'] = data
 		return self.options
 
@@ -233,6 +236,7 @@ class ForumsTimeseriesReportView(AbstractReportView):
 	def generate_forum_comment_favorites_plots(self, data):
 		self.fcftp = ForumCommentFavoritesTimeseriesPlot(self.fcft)
 		data = self.get_forum_comment_favorites_plots(data)
+		data = self.get_forum_comment_favorites_plots_per_device_types(data)
 		return data
 
 	def get_forum_comment_favorites_plots(self, data):
@@ -241,6 +245,15 @@ class ForumsTimeseriesReportView(AbstractReportView):
 						 				  self.context.theme_seaborn_)
 		if plots:
 			data['forum_comment_favorites'] = build_plot_images_dictionary(plots)
+		return data 
+
+	def get_forum_comment_favorites_plots_per_device_types(self, data):
+		plots = self.fcftp.analyze_device_types(self.context.period_breaks,
+							  				    self.context.minor_period_breaks,
+							 				    self.context.theme_seaborn_)
+		if plots:
+			data['forum_comment_favorites_per_device_types'] = build_plot_images_dictionary(plots)
+			self.options['has_forum_comment_favorites_per_device_types'] = True
 		return data 
 
 View = ForumsTimeseriesReport = ForumsTimeseriesReportView
