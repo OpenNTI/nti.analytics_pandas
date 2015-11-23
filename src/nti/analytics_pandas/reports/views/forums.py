@@ -82,6 +82,9 @@ class ForumsTimeseriesReportView(AbstractReportView):
 		if 'has_forum_comment_likes_per_course_sections' not in keys:
 			self.options['has_forum_comment_likes_per_course_sections'] = False
 
+		if 'has_forum_comment_favorites_data' not in keys:
+			self.options['has_forum_comment_favorites_data']=False
+
 		self.options['data'] = data
 		return self.options
 
@@ -95,7 +98,7 @@ class ForumsTimeseriesReportView(AbstractReportView):
 										   self.context.courses)
 		if self.fct.dataframe.empty:
 			self.options['has_forums_created_data'] = False
-			return self.options
+		
 		self.options['has_forums_created_data'] = True
 
 		data = {}
@@ -106,8 +109,7 @@ class ForumsTimeseriesReportView(AbstractReportView):
 												    self.context.end_date,
 												    self.context.courses)
 		if self.fcct.dataframe.empty:
-			self.options['has_forum_comments_created_data'] = False
-			return self.options
+			self.options['has_forum_comments_created_data'] = False			
 		self.options['has_forum_comments_created_data'] = True
 		data = self.generate_forum_comments_created_plots(data)
 
@@ -116,9 +118,16 @@ class ForumsTimeseriesReportView(AbstractReportView):
 											    self.context.end_date,
 											    self.context.courses)
 		if self.fclt.dataframe.empty:
-			self.options['has_forum_comment_likes_data'] = False
-			return self.options
+			self.options['has_forum_comment_likes_data'] = False	
 		data = self.generate_forum_comment_likes_plots(data)
+
+		self.fcft = ForumCommentFavoritesTimeseries(self.context.session,
+													self.context.start_date,
+												    self.context.end_date,
+												    self.context.courses)
+		if self.fcft.dataframe.empty:
+			self.options['has_forum_comment_favorites_data']=False
+		data = self.generate_forum_comment_favorites_plots(data)
 
 		self._build_data(data)
 		return self.options
@@ -220,5 +229,18 @@ class ForumsTimeseriesReportView(AbstractReportView):
 			data['forum_comment_likes_per_course_sections'] = build_images_dict_from_plot_dict(plots)
 			self.options['has_forum_comment_likes_per_course_sections'] = True
 		return data
+
+	def generate_forum_comment_favorites_plots(self, data):
+		self.fcftp = ForumCommentFavoritesTimeseriesPlot(self.fcft)
+		data = self.get_forum_comment_favorites_plots(data)
+		return data
+
+	def get_forum_comment_favorites_plots(self, data):
+		plots = self.fcftp.explore_events(self.context.period_breaks,
+						  				  self.context.minor_period_breaks,
+						 				  self.context.theme_seaborn_)
+		if plots:
+			data['forum_comment_favorites'] = build_plot_images_dictionary(plots)
+		return data 
 
 View = ForumsTimeseriesReport = ForumsTimeseriesReportView

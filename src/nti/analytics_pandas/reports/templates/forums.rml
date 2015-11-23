@@ -164,4 +164,21 @@
 		</tal:block>
 	</tal:block>
 
+	<setNextTemplate name="main"/>
+	<nextPage />
+	<tal:block tal:condition="python: options['has_forum_comment_favorites_data']">
+		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+			Overview of Forum Comment Favorites
+		</h1>
+		<hr width="100%" />
+		<tal:block tal:define="forum_comment_favorites options/data/forum_comment_favorites">
+			<illustration width="5in" height="3in"
+					  	  tal:define="event forum_comment_favorites/event_forum_comment_favorites;
+					  	  			  user_event forum_comment_favorites/user_forum_comment_favorites;
+								      ratio_event forum_comment_favorites/ratio_forum_comment_favorites"
+					      metal:use-macro="macro:three_plots_event">
+			</illustration>
+		</tal:block>
+	</tal:block>
+
 </metal:block>
