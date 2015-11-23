@@ -67,6 +67,9 @@ class ForumsTimeseriesReportView(AbstractReportView):
 		if 'has_forum_comments_created_data_per_device_types' not in keys:
 			self.options['has_forum_comments_created_data_per_device_types'] = False
 
+		if 'has_forum_comments_created_data_per_course_sections' not in keys:
+			self.options['has_forum_comments_created_data_per_course_sections'] = False
+
 		self.options['data'] = data
 		return self.options
 
@@ -125,6 +128,8 @@ class ForumsTimeseriesReportView(AbstractReportView):
 		self.fcctp = ForumsCommentsCreatedTimeseriesPlot(self.fcct)
 		data = self.get_forum_comments_created_plots(data)
 		data = self.get_forum_comments_created_plots_per_device_types(data)
+		if len(self.context.courses) > 1:
+			pass
 		return data
 
 	def get_forum_comments_created_plots(self, data):
@@ -137,11 +142,20 @@ class ForumsTimeseriesReportView(AbstractReportView):
 
 	def get_forum_comments_created_plots_per_device_types(self, data):
 		plots = self.fcctp.analyze_device_types(self.context.period_breaks,
-										  self.context.minor_period_breaks,
-										  self.context.theme_seaborn_)
+										  		self.context.minor_period_breaks,
+										  		self.context.theme_seaborn_)
 		if plots:
 			data['forum_comments_created_per_device_types'] = build_plot_images_dictionary(plots)
 			self.options['has_forum_comments_created_data_per_device_types'] = True
+		return data
+
+	def get_forum_comments_created_plots_per_course_sections(self, data):
+		plots = self.fcctp.analyze_comments_per_section(self.context.period_breaks,
+										  				self.context.minor_period_breaks,
+										 				self.context.theme_seaborn_)
+		if plots:
+			data['forum_comments_created_per_course_sections'] = build_plot_images_dictionary(plots)
+			self.options['has_forum_comments_created_data_per_course_sections'] = True
 		return data
 
 

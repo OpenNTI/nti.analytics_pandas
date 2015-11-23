@@ -71,12 +71,13 @@
 				<illustration width="5in" height="3in"
 						  	  tal:define="event forum_comments_created/event_forum_comments_created_per_device_types;
 						  	  			  user_event forum_comments_created/user_forum_comments_created_per_device_types;
-									      ratio_event forum_comments_created/ratio_forum_comments_created_per_device_types"
-						      metal:use-macro="macro:three_plots_event">
+									      ratio_event forum_comments_created/ratio_forum_comments_created_per_device_types;
+									      additional_plot forum_comments_created/average_comment_forum_comments_created_per_device_types"
+						      metal:use-macro="macro:four_plots_event">
 				</illustration>
 			</tal:block>
 		</tal:block>
-		
+
 	</tal:block>
 
 </metal:block>
