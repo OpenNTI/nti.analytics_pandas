@@ -17,6 +17,7 @@ from ...analysis import ForumsCreatedTimeseries
 from ...analysis import ForumCommentLikesTimeseries
 from ...analysis import ForumCommentFavoritesTimeseries
 from ...analysis import ForumsCommentsCreatedTimeseries
+from ...analysis import ForumsEventsTimeseries
 
 from ...analysis import ForumsEventsTimeseriesPlot
 from ...analysis import ForumsCreatedTimeseriesPlot
@@ -91,6 +92,9 @@ class ForumsTimeseriesReportView(AbstractReportView):
 		if 'has_forum_comment_favorites_per_course_sections' not in keys:
 			self.options['has_forum_comment_favorites_per_course_sections'] = False
 
+		if 'has_forum_events_data' not in keys:
+			self.options['has_forum_events_data'] = False
+
 		self.options['data'] = data
 		return self.options
 
@@ -135,8 +139,25 @@ class ForumsTimeseriesReportView(AbstractReportView):
 			self.options['has_forum_comment_favorites_data']=False
 		data = self.generate_forum_comment_favorites_plots(data)
 
+		self.fet = ForumsEventsTimeseries(self.fct, self.fcct, self.fclt, self.fcft)
+		data = self.generate_forum_event_plots(data)
+
 		self._build_data(data)
 		return self.options
+
+	def generate_forum_event_plots(self, data):
+		self.fetp = ForumsEventsTimeseriesPlot(self.fet)
+		data = self.get_forum_event_plots(data)
+		return data
+
+	def get_forum_event_plots(self, data):
+		plots = self.fetp.explore_all_events(self.context.period_breaks,
+											 self.context.minor_period_breaks,
+											 self.context.theme_seaborn_)
+		if plots:
+			data['forum_events'] = build_plot_images_dictionary(plots)
+			self.options['has_forum_events_data'] = True
+		return data
 
 	def generate_forums_created_plots(self, data):
 		self.fctp  = ForumsCreatedTimeseriesPlot(self.fct)

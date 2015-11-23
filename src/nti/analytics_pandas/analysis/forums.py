@@ -54,8 +54,7 @@ class ForumsEventsTimeseries(object):
 		forum_comment_likes_df = fclt.analyze_events()
 		forum_comment_favorites_df = fcft.analyze_events()
 
-		df = pd.DataFrame(columns=[	'timestamp_period', 'total_events',
-									'number_of_unique_users', 'ratio', 'event_type'])
+		df = pd.DataFrame(columns=[	'timestamp_period', 'total_events','number_of_unique_users', 'ratio', 'event_type'])
 
 		if forums_created_df is not None:
 			forums_created_df = self.update_events_dataframe(forums_created_df,

@@ -12,6 +12,23 @@
 
 	<setNextTemplate name="main"/>
 	<nextPage />
+	<tal:block tal:condition="python: options['has_forum_events_data']">
+		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+			Overview of Forum Events
+		</h1>
+		<hr width="100%" />
+		<tal:block tal:define="forum_events options/data/forum_events">
+			<illustration width="5in" height="3in"
+					  	  tal:define="event forum_events/event_forum_events;
+					  	  			  user_event forum_events/user_forum_events;
+								      ratio_event forum_events/ratio_forum_events"
+					      metal:use-macro="macro:three_plots_event">
+			</illustration>
+		</tal:block>
+	</tal:block>
+
+	<setNextTemplate name="main"/>
+	<nextPage />
 	<tal:block tal:condition="python: options['has_forums_created_data']">
 		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 			Overview of Forums Created

@@ -48,7 +48,7 @@ class ForumsEventsTimeseriesPlot(object):
 				group_by='event_type',
 				minor_breaks=minor_period_breaks,
 				theme_seaborn_=theme_seaborn_,
-				plot_name='forum_events')
+				plot_name='event_forum_events')
 
 		plot_unique_users = group_line_plot_x_axis_date(
 				df=df,
