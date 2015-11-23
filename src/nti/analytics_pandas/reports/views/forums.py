@@ -70,6 +70,9 @@ class ForumsTimeseriesReportView(AbstractReportView):
 		if 'has_forum_comments_created_data_per_course_sections' not in keys:
 			self.options['has_forum_comments_created_data_per_course_sections'] = False
 
+		if 'has_forum_comments_users' not in keys:
+			self.options['has_forum_comments_users'] = False
+
 		self.options['data'] = data
 		return self.options
 
@@ -130,6 +133,7 @@ class ForumsTimeseriesReportView(AbstractReportView):
 		data = self.get_forum_comments_created_plots_per_device_types(data)
 		if len(self.context.courses) > 1:
 			data = self.get_forum_comments_created_plots_per_course_sections(data)
+		data = self.get_the_most_active_forum_comment_users_plot(data)
 		return data
 
 	def get_forum_comments_created_plots(self, data):
@@ -156,6 +160,13 @@ class ForumsTimeseriesReportView(AbstractReportView):
 		if plots:
 			data['forum_comments_created_per_course_sections'] = build_images_dict_from_plot_dict(plots)
 			self.options['has_forum_comments_created_data_per_course_sections'] = True
+		return data
+
+	def get_the_most_active_forum_comment_users_plot(self, data):
+		plots = self.fcctp.plot_the_most_active_users(self.context.number_of_most_active_user)
+		if plots:
+			data['forum_comments_created_users'] = build_plot_images_dictionary(plots)
+			self.options['has_forum_comments_users'] = True
 		return data
 
 
