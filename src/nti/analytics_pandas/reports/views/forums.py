@@ -13,11 +13,11 @@ from . import MessageFactory as _
 
 from zope import interface
 
+from ...analysis import ForumsEventsTimeseries
 from ...analysis import ForumsCreatedTimeseries
 from ...analysis import ForumCommentLikesTimeseries
 from ...analysis import ForumCommentFavoritesTimeseries
 from ...analysis import ForumsCommentsCreatedTimeseries
-from ...analysis import ForumsEventsTimeseries
 
 from ...analysis import ForumsEventsTimeseriesPlot
 from ...analysis import ForumsCreatedTimeseriesPlot
@@ -25,9 +25,9 @@ from ...analysis import ForumCommentLikesTimeseriesPlot
 from ...analysis import ForumsCommentsCreatedTimeseriesPlot
 from ...analysis import ForumCommentFavoritesTimeseriesPlot
 
+from .commons import get_course_names
 from .commons import build_plot_images_dictionary
 from .commons import  build_images_dict_from_plot_dict
-from .commons import get_course_names
 
 from .mixins import AbstractReportView
 
