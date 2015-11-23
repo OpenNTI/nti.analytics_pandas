@@ -76,6 +76,12 @@ class ForumsTimeseriesReportView(AbstractReportView):
 		if 'has_forum_comment_likes_data' not in keys:
 			self.options['has_forum_comment_likes_data'] = False
 
+		if 'has_forum_comment_likes_per_device_types' not in keys:
+			self.options['has_forum_comment_likes_per_device_types'] = False
+
+		if 'has_forum_comment_likes_per_course_sections' not in keys:
+			self.options['has_forum_comment_likes_per_course_sections'] = False
+
 		self.options['data'] = data
 		return self.options
 
@@ -184,6 +190,9 @@ class ForumsTimeseriesReportView(AbstractReportView):
 	def generate_forum_comment_likes_plots(self, data):
 		self.fcltp = ForumCommentLikesTimeseriesPlot(self.fclt)
 		data = self.get_forum_comment_likes_plots(data)
+		data = self.get_forum_comment_likes_plots_per_device_types(data)
+		if len(self.context.courses) > 1:
+			data = self.get_forum_comment_likes_plots_per_course_sections(data)
 		return data 
 
 	def get_forum_comment_likes_plots(self, data):
@@ -192,6 +201,24 @@ class ForumsTimeseriesReportView(AbstractReportView):
 						 				  self.context.theme_seaborn_)
 		if plots:
 			data['forum_comment_likes'] = build_plot_images_dictionary(plots)
+		return data
+
+	def get_forum_comment_likes_plots_per_device_types(self, data):
+		plots = self.fcltp.analyze_device_types(self.context.period_breaks,
+							  				    self.context.minor_period_breaks,
+							 				    self.context.theme_seaborn_)
+		if plots:
+			data['forum_comment_likes_per_device_types'] = build_plot_images_dictionary(plots)
+			self.options['has_forum_comment_likes_per_device_types'] = True
+		return data
+
+	def get_forum_comment_likes_plots_per_course_sections(self, data):
+		plots = self.fcltp.analyze_events_per_course_sections(self.context.period_breaks,
+											  				  self.context.minor_period_breaks,
+											 				  self.context.theme_seaborn_)
+		if plots:
+			data['forum_comment_likes_per_course_sections'] = build_images_dict_from_plot_dict(plots)
+			self.options['has_forum_comment_likes_per_course_sections'] = True
 		return data
 
 View = ForumsTimeseriesReport = ForumsTimeseriesReportView
