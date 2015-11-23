@@ -30,6 +30,7 @@ class TestBookmarksEDA(AnalyticsPandasTestBase):
 		assert_that(len(bct.dataframe.index), equal_to(54))
 		assert_that(bct.dataframe.columns, has_item('resource_type'))
 		assert_that(bct.dataframe.columns, has_item('device_type'))
+		assert_that(bct.dataframe.columns, has_item('enrollment_type'))
 
 		df = bct.analyze_events()
 		assert_that(len(df.index), equal_to(20))

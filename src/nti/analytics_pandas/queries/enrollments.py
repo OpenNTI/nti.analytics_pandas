@@ -68,7 +68,8 @@ class QueryCourseEnrollments(TableQueryMixin):
 		query = self.session.query(ce.timestamp,
 								   ce.type_id,
 								   ce.session_id,
-								   ce.user_id).filter(ce.timestamp.between(start_date, end_date)).filter(ce.course_id.in_(course_id))
+								   ce.user_id,
+								   ce.course_id).filter(ce.timestamp.between(start_date, end_date)).filter(ce.course_id.in_(course_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
@@ -79,6 +80,12 @@ class QueryCourseEnrollments(TableQueryMixin):
 	def filter_by_user_id(self, courses_id):
 		ce = self.table
 		query = self.session.query(ce.user_id, ce.type_id).filter(ce.course_id.in_(courses_id))
+		dataframe = orm_dataframe(query, self.columns)
+		return dataframe
+
+	def filter_by_course_id_user_id(self, courses_id, users_id):
+		ce = self.table
+		query = self.session.query(ce.user_id, ce.type_id).filter(ce.course_id.in_(courses_id)).filter(ce.user_id.in_(users_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
@@ -100,6 +107,13 @@ class QueryEnrollmentTypes(TableQueryMixin):
 		et = self.table
 		query = self.session.query(et.type_id,
 								   et.type_name)
+		dataframe = orm_dataframe(query, self.columns)
+		return dataframe
+
+	def get_enrollment_types_given_type_id(self, types_id):
+		et = self.table
+		query = self.session.query(et.type_id,
+								   et.type_name).filter(et.type_id.in_(types_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 

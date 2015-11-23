@@ -28,7 +28,8 @@ class BookmarkCreationTimeseries(object):
 
 	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_resource_type=True, with_device_type=True,
-				 time_period_date=True, with_context_name=True):
+				 time_period_date=True, with_context_name=True,
+				 with_enrollment_type=True):
 
 		self.session = session
 		qbc = self.query_bookmarks_created = QueryBookmarksCreated(self.session)
@@ -58,6 +59,12 @@ class BookmarkCreationTimeseries(object):
 			if new_df is not None:
 				self.dataframe = new_df
 				categorical_columns.append('context_name')
+
+		if with_enrollment_type:
+			new_df = qbc.add_enrollment_type(self.dataframe, course_id)
+			if new_df is not None:
+				self.dataframe = new_df
+				categorical_columns.append('enrollment_type')
 
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
