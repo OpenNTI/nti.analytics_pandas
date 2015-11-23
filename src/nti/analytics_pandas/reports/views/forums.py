@@ -129,7 +129,7 @@ class ForumsTimeseriesReportView(AbstractReportView):
 		data = self.get_forum_comments_created_plots(data)
 		data = self.get_forum_comments_created_plots_per_device_types(data)
 		if len(self.context.courses) > 1:
-			pass
+			data = self.get_forum_comments_created_plots_per_course_sections(data)
 		return data
 
 	def get_forum_comments_created_plots(self, data):
@@ -154,7 +154,7 @@ class ForumsTimeseriesReportView(AbstractReportView):
 										  				self.context.minor_period_breaks,
 										 				self.context.theme_seaborn_)
 		if plots:
-			data['forum_comments_created_per_course_sections'] = build_plot_images_dictionary(plots)
+			data['forum_comments_created_per_course_sections'] = build_images_dict_from_plot_dict(plots)
 			self.options['has_forum_comments_created_data_per_course_sections'] = True
 		return data
 

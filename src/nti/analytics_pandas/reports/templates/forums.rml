@@ -55,8 +55,9 @@
 			<illustration width="5in" height="3in"
 					  	  tal:define="event forum_comments_created/event_forum_comments_created;
 					  	  			  user_event forum_comments_created/user_forum_comments_created;
-								      ratio_event forum_comments_created/ratio_forum_comments_created"
-					      metal:use-macro="macro:three_plots_event">
+								      ratio_event forum_comments_created/ratio_forum_comments_created;
+								      additional_plot forum_comments_created/average_comment_forum_comments_created"
+					      metal:use-macro="macro:four_plots_event">
 			</illustration>
 		</tal:block>
 
@@ -73,6 +74,24 @@
 						  	  			  user_event forum_comments_created/user_forum_comments_created_per_device_types;
 									      ratio_event forum_comments_created/ratio_forum_comments_created_per_device_types;
 									      additional_plot forum_comments_created/average_comment_forum_comments_created_per_device_types"
+						      metal:use-macro="macro:four_plots_event">
+				</illustration>
+			</tal:block>
+		</tal:block>
+
+		<setNextTemplate name="main"/>
+		<nextPage />
+		<tal:block tal:condition="python: options['has_forum_comments_created_data_per_course_sections']">
+			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+				Forums Created per Device Types
+			</h1>
+			<hr width="100%" />
+			<tal:block tal:define="forum_comments_created options/data/forum_comments_created_per_course_sections/all_section_plots">
+				<illustration width="5in" height="3in"
+						  	  tal:define="event forum_comments_created/event_forum_comments_created_per_course_sections;
+						  	  			  user_event forum_comments_created/user_forum_comments_created_per_course_sections;
+									      ratio_event forum_comments_created/ratio_forum_comments_created_per_course_sections;
+									      additional_plot forum_comments_created/average_comment_forum_comments_created_per_course_sections"
 						      metal:use-macro="macro:four_plots_event">
 				</illustration>
 			</tal:block>
