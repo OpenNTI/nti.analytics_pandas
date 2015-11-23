@@ -60,7 +60,10 @@ class ForumsTimeseriesReportView(AbstractReportView):
 
 		if 'has_forums_created_data_per_device_types' not in keys:
 			self.options['has_forums_created_data_per_device_types'] = False
-			
+
+		if 'has_forum_comments_created_data' not in keys:
+			self.options['has_forum_comments_created_data'] = False
+
 		self.options['data'] = data
 		return self.options
 
@@ -79,8 +82,18 @@ class ForumsTimeseriesReportView(AbstractReportView):
 
 		data = {}
 		data = self.generate_forums_created_plots(data)
-		self._build_data(data)
 
+		self.fcct = ForumsCommentsCreatedTimeseries(self.context.session,
+												    self.context.start_date,
+												    self.context.end_date,
+												    self.context.courses)
+		if self.fcct.dataframe.empty:
+			self.options['has_forum_comments_created_data'] = False
+			return self.options
+		self.options['has_forum_comments_created_data'] = True
+		data = self.generate_forum_comments_created_plots(data)
+
+		self._build_data(data)
 		return self.options
 
 	def generate_forums_created_plots(self, data):
@@ -104,5 +117,19 @@ class ForumsTimeseriesReportView(AbstractReportView):
 			data['forums_created_per_device_types'] = build_plot_images_dictionary(plots)
 			self.options['has_forums_created_data_per_device_types'] = True
 		return data
+
+	def generate_forum_comments_created_plots(self, data):
+		self.fcctp = ForumsCommentsCreatedTimeseriesPlot(self.fcct)
+		data = self.get_forum_comments_created_plots(data)
+		return data
+
+	def get_forum_comments_created_plots(self, data):
+		plots = self.fcctp.explore_events(self.context.period_breaks,
+										  self.context.minor_period_breaks,
+										  self.context.theme_seaborn_)
+		if plots:
+			data['forum_comments_created'] = build_plot_images_dictionary(plots)
+		return data
+
 
 View = ForumsTimeseriesReport = ForumsTimeseriesReportView
