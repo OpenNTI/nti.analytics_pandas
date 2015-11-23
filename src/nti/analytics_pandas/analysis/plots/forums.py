@@ -172,7 +172,7 @@ class ForumsCreatedTimeseriesPlot(object):
 				group_by='device_type',
 				minor_breaks=minor_period_breaks,
 				theme_seaborn_=theme_seaborn_,
-				plot_name='forums_created_per_device_types')
+				plot_name='event_forums_created_per_device_types')
 
 		plot_unique_users = group_line_plot_x_axis_date(
 				df=df,

@@ -54,8 +54,13 @@ class ForumsTimeseriesReportView(AbstractReportView):
 		return _('Forums Related Events')
 
 	def _build_data(self, data=_('sample forums related events report')):
-		if 'has_forums_created_data' not in self.options.keys():
+		keys = self.options.keys()
+		if 'has_forums_created_data' not in keys:
 			self.options['has_forums_created_data'] = False
+
+		if 'has_forums_created_data_per_device_types' not in keys:
+			self.options['has_forums_created_data_per_device_types'] = False
+			
 		self.options['data'] = data
 		return self.options
 
@@ -89,6 +94,15 @@ class ForumsTimeseriesReportView(AbstractReportView):
 										 self.context.theme_seaborn_)
 		if plots:
 			data['forums_created'] = build_plot_images_dictionary(plots)
+		return data
+
+	def get_forums_created_plots_per_device_types(self, data):
+		plots = self.fctp.analyze_device_types(self.context.period_breaks,
+										       self.context.minor_period_breaks,
+										 	   self.context.theme_seaborn_)
+		if plots:
+			data['forums_created_per_device_types'] = build_plot_images_dictionary(plots)
+			self.options['has_forums_created_data_per_device_types'] = True
 		return data
 
 View = ForumsTimeseriesReport = ForumsTimeseriesReportView
