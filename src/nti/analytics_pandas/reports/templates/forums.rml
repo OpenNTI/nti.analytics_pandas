@@ -145,6 +145,23 @@
 				</illustration>
 			</tal:block>
 		</tal:block>
+
+		<setNextTemplate name="main"/>
+		<nextPage />
+		<tal:block tal:condition="python: options['has_forum_comment_likes_per_course_sections']">
+			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+				Forum Comment Likes per Course Sections
+			</h1>
+			<hr width="100%" />
+			<tal:block tal:define="forum_comment_likes options/data/forum_comment_likes_per_course_sections/all_section_plots">
+				<illustration width="5in" height="3in"
+						  	  tal:define="event forum_comment_likes/event_forum_comment_likes_per_course_sections;
+						  	  			  user_event forum_comment_likes/user_forum_comment_likes_per_course_sections;
+									      ratio_event forum_comment_likes/ratio_forum_comment_likes_per_course_sections"
+						      metal:use-macro="macro:three_plots_event">
+				</illustration>
+			</tal:block>
+		</tal:block>
 	</tal:block>
 
 </metal:block>
