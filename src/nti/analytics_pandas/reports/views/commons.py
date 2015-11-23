@@ -14,6 +14,7 @@ import atexit
 import shutil
 import tempfile
 from collections import Mapping
+from z3c.rml import rml2pdf
 
 from ...queries import QueryCourses
 
@@ -69,3 +70,14 @@ def get_course_names(session, courses_id):
 	df = qc.get_context_name(courses_id)
 	course_names = df['context_name'].tolist()
 	return course_names
+
+def create_pdf_file_from_rml(rml, filepath):
+	pdf_stream = rml2pdf.parseString(rml)
+	try:
+		pdf_stream.seek(0)
+		with open(filepath, 'w') as f:
+			shutil.copyfileobj(pdf_stream, f)
+	finally:
+		pdf_stream.close()
+
+
