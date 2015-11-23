@@ -302,7 +302,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 												title_avg_length,
 												theme_seaborn_,
 												event_type)
-			key = 'section_%s' %(course_id)
+			key = 'section_%s' % (course_id)
 			section_plots_dict[key] = section_plots
 		plots['section_plots'] = section_plots_dict
 
@@ -579,7 +579,7 @@ class ForumCommentLikesTimeseriesPlot(object):
 												minor_period_breaks,
 												theme_seaborn_,
 												event_type)
-			key = 'section_%s' %(course_id)
+			key = 'section_%s' % (course_id)
 			section_plots_dict[key] = section_plots
 		plots['section_plots'] = section_plots_dict
 		return plots
@@ -801,7 +801,7 @@ class ForumCommentFavoritesTimeseriesPlot(object):
 												period_breaks,
 												minor_period_breaks,
 												theme_seaborn_)
-			key = 'section_%s' %(course_id)
+			key = 'section_%s' % (course_id)
 			section_plots_dict[key] = section_plots
 		plots['section_plots'] = section_plots_dict
 		return plots
@@ -936,4 +936,5 @@ class ForumCommentFavoritesTimeseriesPlot(object):
 										minor_breaks=minor_period_breaks,
 										theme_seaborn_=theme_seaborn_,
 										plot_name=ratio_event_name)
+
 		return (plot_comment_favorites, plot_unique_users, plot_ratio)

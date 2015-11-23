@@ -35,11 +35,11 @@ from .highlights import HighlightsCreationTimeseries
 
 from .resource_views import ResourceViewsTimeseries
 
+from .forums import ForumsEventsTimeseries
 from .forums import ForumsCreatedTimeseries
 from .forums import ForumCommentLikesTimeseries
 from .forums import ForumCommentFavoritesTimeseries
 from .forums import ForumsCommentsCreatedTimeseries
-from .forums import ForumsEventsTimeseries
 
 from .notes import NoteLikesTimeseries
 from .notes import NotesViewTimeseries

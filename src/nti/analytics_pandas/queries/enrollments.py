@@ -9,6 +9,8 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
+import numpy as np
+
 from nti.analytics_database.enrollments import CourseDrops
 from nti.analytics_database.enrollments import EnrollmentTypes
 from nti.analytics_database.enrollments import CourseEnrollments
@@ -142,3 +144,26 @@ class QueryCourseDrops(TableQueryMixin):
 	def add_device_type(self, dataframe):
 		new_df = add_device_type_(self.session, dataframe)
 		return new_df
+
+def add_enrollment_type_(session, dataframe, course_ids):
+	if 'user_id' not in dataframe.columns:
+		return
+	users_id = np.unique(dataframe['user_id'].values.ravel())
+	if len(users_id) == 1 and users_id[0] is None:
+		return
+	users_id = users_id[~np.isnan(users_id)].tolist()
+
+	qce = QueryCourseEnrollments(session)
+	enrollments_df = qce.filter_by_course_id_user_id(course_ids, users_id)
+
+	types_id = np.unique(enrollments_df['type_id'].values.ravel())
+	if len(types_id) == 1 and types_id[0] is None:
+		return
+	types_id = types_id[~np.isnan(types_id)].tolist()
+
+	qet = QueryEnrollmentTypes(session)
+	enrollment_types_df = qet.get_enrollment_types_given_type_id(types_id)
+	enrollment_types_df.rename(columns={'type_name':'enrollment_type'}, inplace=True)
+
+	new_df = dataframe.merge(enrollments_df, how='left').merge(enrollment_types_df, how='left')
+	return new_df

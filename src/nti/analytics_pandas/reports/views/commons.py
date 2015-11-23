@@ -35,10 +35,10 @@ def build_images_dict_from_plot_dict(plots, image_type='png', dirname=None):
 	if isinstance(plots, Mapping):
 		for key in plots:
 			if isinstance(plots[key], Mapping):
-				images[key] = build_images_dict_from_plot_dict(plots[key], 
+				images[key] = build_images_dict_from_plot_dict(plots[key],
 															   dirname=dirname,
 															   image_type=image_type)
-			elif isinstance(plots[key], (list,tuple)):
+			elif isinstance(plots[key], (list, tuple)):
 				images[key] = build_plot_images_dictionary(plots[key],
 														   dirname=dirname,
 														   image_type=image_type)
@@ -75,9 +75,7 @@ def create_pdf_file_from_rml(rml, filepath):
 	pdf_stream = rml2pdf.parseString(rml)
 	try:
 		pdf_stream.seek(0)
-		with open(filepath, 'w') as f:
-			shutil.copyfileobj(pdf_stream, f)
+		with open(filepath, 'w') as fp:
+			shutil.copyfileobj(pdf_stream, fp)
 	finally:
 		pdf_stream.close()
-
-

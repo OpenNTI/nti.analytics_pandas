@@ -16,7 +16,8 @@ from .mixins import TableQueryMixin
 from .common import add_device_type_
 from .common import add_context_name_
 from .common import add_resource_type_
-from .common import add_enrollment_type_
+
+from .enrollments import add_enrollment_type_
 
 from . import orm_dataframe
 
