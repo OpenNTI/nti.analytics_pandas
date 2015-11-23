@@ -21,6 +21,11 @@ from .plots import NotesCreationTimeseriesPlot
 from .plots import NoteFavoritesTimeseriesPlot
 from .plots import ResourceViewsTimeseriesPlot
 from .plots import HighlightsCreationTimeseriesPlot
+from .plots import ForumsEventsTimeseriesPlot
+from .plots import ForumsCreatedTimeseriesPlot
+from .plots import ForumCommentLikesTimeseriesPlot
+from .plots import ForumsCommentsCreatedTimeseriesPlot
+from .plots import ForumCommentFavoritesTimeseriesPlot
 
 from .bookmarks import BookmarkCreationTimeseries
 

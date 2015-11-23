@@ -13,6 +13,12 @@ from .. import MessageFactory
 
 from .bookmarks import BookmarksTimeseriesPlot
 
+from .forums import ForumsEventsTimeseriesPlot
+from .forums import ForumsCreatedTimeseriesPlot
+from .forums import ForumCommentLikesTimeseriesPlot
+from .forums import ForumsCommentsCreatedTimeseriesPlot
+from .forums import ForumCommentFavoritesTimeseriesPlot
+
 from .highlights import HighlightsCreationTimeseriesPlot
 
 from .notes import NotesViewTimeseriesPlot

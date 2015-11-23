@@ -1,0 +1,30 @@
+<metal:block
+	xmlns:tal="http://xml.zope.org/namespaces/tal"
+	xmlns:metal="http://xml.zope.org/namespaces/metal"
+	tal:define="options view/options">
+
+	<tal:block tal:condition="python: options['has_forums_created_data']">
+		<para style="normal" spaceAfter=".5in" >
+			This document presents an overview of forums related events created in <u>${options/course_names}</u> from <strong>${context/start_date}</strong> through <strong>${context/end_date}</strong>.
+		</para>
+	</tal:block>	
+	<hr width="100%" />
+
+	<setNextTemplate name="main"/>
+	<nextPage />
+	<tal:block tal:condition="python: options['has_forums_created_data']">
+		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+			Overview of Forums Created
+		</h1>
+		<hr width="100%" />
+		<tal:block tal:define="forums_created options/data/forums_created">
+			<illustration width="5in" height="3in"
+					  	  tal:define="event forums_created/event_forums_created;
+					  	  			  user_event forums_created/user_forums_created;
+								      ratio_event forums_created/ratio_forums_created"
+					      metal:use-macro="macro:three_plots_event">
+			</illustration>
+		</tal:block>
+	</tal:block>
+
+</metal:block>

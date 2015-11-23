@@ -19,8 +19,8 @@ import os
 
 from z3c.rml import rml2pdf
 
-from nti.analytics_pandas.reports.views.videos import View
-from nti.analytics_pandas.reports.views.videos import Context
+from nti.analytics_pandas.reports.views.forums import View
+from nti.analytics_pandas.reports.views.forums import Context
 
 from nti.analytics_pandas.reports.z3c_zpt import ViewPageTemplateFile
 
@@ -28,10 +28,10 @@ from nti.common.property import Lazy
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
-class TestVideosEvents(AnalyticsPandasTestBase):
+class TestForumsEvents(AnalyticsPandasTestBase):
 
 	def setUp(self):
-		super(TestVideosEvents, self).setUp()
+		super(TestForumsEvents, self).setUp()
 
 	@Lazy
 	def std_report_layout_rml(self):
@@ -40,7 +40,7 @@ class TestVideosEvents(AnalyticsPandasTestBase):
 
 	@Lazy
 	def videos_rml(self):
-		path = os.path.join(os.path.dirname(__file__), '../../templates/videos.rml')
+		path = os.path.join(os.path.dirname(__file__), '../../templates/forums.rml')
 		return path
 
 	def template(self, path):
@@ -84,7 +84,7 @@ class TestVideosEvents(AnalyticsPandasTestBase):
 		view = View(context)
 		view()
 		assert_that(view.options['data'] , instance_of(dict))
-		assert_that(view.options['data'].keys(), has_item('videos_watched'))
+		assert_that(view.options['data'].keys(), has_item('forums_created'))
 
 		system = {'view':view, 'context':context}
 		rml = self.template(path).bind(view)(**system)

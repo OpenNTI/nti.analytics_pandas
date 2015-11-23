@@ -113,7 +113,7 @@ class ForumsCreatedTimeseriesPlot(object):
 				period_breaks=period_breaks,
 				minor_breaks=minor_period_breaks,
 				theme_seaborn_=theme_seaborn_,
-				plot_name='forums_created')
+				plot_name='event_forums_created')
 
 		plot_unique_users = line_plot_x_axis_date(
 				df=df,
