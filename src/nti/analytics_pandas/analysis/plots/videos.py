@@ -194,6 +194,43 @@ class VideoEventsTimeseriesPlot(object):
 									event_type)
 		return plots
 
+	def analyze_video_events_enrollment_types(self, period_breaks='1 week',
+										  minor_period_breaks='1 day',
+										  video_event_type='WATCH',
+										  theme_seaborn_=True):
+		"""
+		given a video event type (WATCH or SKIP) return plots of video events during period of time
+		it consists of:
+			- number of video events
+			- number of unique users
+			- ratio of video events over unique users
+		grouped by enrollment types
+		"""
+		vet = self.vet
+		df = vet.analyze_video_events_enrollment_types(video_event_type.upper())
+		if df is None:
+			return ()
+
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		group_by = 'enrollment_type'
+		event_title = _('Number of video events grouped by enrollment types')
+		user_title = _('Number of unique users creating video events grouped by enrollment types')
+		ratio_title = _('Ratio of video events over unique users grouped by enrollment types')
+		event_type = 'video_events_%s' % (video_event_type.lower())
+		plots = self.generate_group_by_plots(
+									df,
+									group_by,
+									event_title,
+									user_title,
+									ratio_title,
+									period_breaks,
+									minor_period_breaks,
+									theme_seaborn_,
+									event_type)
+		return plots
+
 	def analyze_video_events_types(self, period_breaks='1 week',
 								   minor_period_breaks='1 day',
 								   separate_plot_by_type=True,

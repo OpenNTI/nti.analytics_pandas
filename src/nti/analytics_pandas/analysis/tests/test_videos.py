@@ -29,6 +29,8 @@ class TestVideosEDA(AnalyticsPandasTestBase):
 		vet = VideoEventsTimeseries(self.session, start_date, end_date, course_id)
 		assert_that(len(vet.dataframe.index), equal_to(1480))
 		assert_that(vet.dataframe.columns, has_item('device_type'))
+		assert_that(vet.dataframe.columns, has_item('context_name'))
+		assert_that(vet.dataframe.columns, has_item('enrollment_type'))
 
 		event_by_date_df = vet.analyze_video_events()
 		assert_that(len(event_by_date_df.index), equal_to(95))

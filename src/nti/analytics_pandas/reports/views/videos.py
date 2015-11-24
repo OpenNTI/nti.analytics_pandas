@@ -45,19 +45,23 @@ class VideosTimeseriesReportView(AbstractReportView):
 		return _('Videos Related Events')
 
 	def _build_data(self, data=_('sample Videos related events report')):
-		if 'has_video_data' not in self.options.keys():
+		keys = self.options.keys()
+		if 'has_video_data' not in keys:
 			self.options['has_video_data'] = False
 
-		if 'has_video_watched_data' not in self.options.keys():
+		if 'has_video_watched_data' not in keys:
 			self.options['has_video_watched_data'] = False
 
-		if 'has_video_watched_data_per_device_types' not in self.options.keys():
+		if 'has_video_watched_data_per_device_types' not in keys:
 			self.options['has_video_watched_data_per_device_types'] = False
 
-		if 'has_video_skipped_data' not in self.options.keys():
+		if 'has_video_watched_data_per_enrollment_types' not in keys:
+			self.options['has_video_watched_data_per_enrollment_types'] = False
+
+		if 'has_video_skipped_data' not in keys:
 			self.options['has_video_skipped_data'] = False
 
-		if 'has_video_skipped_data_per_device_types' not in self.options.keys():
+		if 'has_video_skipped_data_per_device_types' not in keys:
 			self.options['has_video_skipped_data_per_device_types'] = False
 
 		self.options['data'] = data
@@ -107,6 +111,16 @@ class VideosTimeseriesReportView(AbstractReportView):
 		if plots:
 			data['videos_watched_per_device_types'] = build_plot_images_dictionary(plots)
 			self.options['has_video_watched_data_per_device_types'] = True
+		return data
+
+	def get_video_watched_plots_per_enrollment_types(self, data):
+		plots = self.vetp.analyze_video_events_enrollment_types(self.context.period_breaks,
+										 					self.context.minor_period_breaks,
+										 					video_event_type='watch',
+											 				theme_seaborn_=self.context.theme_seaborn_)
+		if plots:
+			data['videos_watched_per_enrollment_types'] = build_plot_images_dictionary(plots)
+			self.options['has_video_watched_data_per_enrollment_types'] = True
 		return data
 
 	def get_video_skipped_plots(self, data):
