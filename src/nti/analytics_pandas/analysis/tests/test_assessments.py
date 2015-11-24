@@ -41,6 +41,7 @@ class TestAssignmentViewsTimeseries(AnalyticsPandasTestBase):
 										end_date=end_date,
 										course_id=courses_id)
 		assert_that(avt.dataframe.columns, has_item('context_name'))
+		assert_that(avt.dataframe.columns, has_item('enrollment_type'))
 		df = avt.analyze_events()
 		assert_that(len(df.index), equal_to(6))
 		assert_that(df.columns, has_item('number_assignments_viewed'))
@@ -110,6 +111,7 @@ class TestAssignmentsTakenTimeseries(AnalyticsPandasTestBase):
 										 course_id=courses_id)
 		assert_that(att.dataframe.columns, has_item('assignment_title'))
 		assert_that(att.dataframe.columns, has_item('context_name'))
+		assert_that(att.dataframe.columns, has_item('enrollment_type'))
 
 	def test_analyze_events(self):
 		"""
@@ -204,6 +206,7 @@ class TestSelfAssessmentViewsTimeseries(AnalyticsPandasTestBase):
 											 end_date=end_date,
 											 course_id=courses_id)
 		assert_that(savt.dataframe.columns, has_item('context_name'))
+		assert_that(savt.dataframe.columns, has_item('enrollment_type'))
 		df = savt.analyze_events()
 		assert_that(len(df.index), equal_to(3))
 		assert_that(df.columns, has_item('number_self_assessments_viewed'))
@@ -280,6 +283,7 @@ class TestSelfAssessmentsTakenTimeseries(AnalyticsPandasTestBase):
 											  end_date=end_date,
 											  course_id=courses_id)
 		assert_that(satt.dataframe.columns, has_item('context_name'))
+		assert_that(satt.dataframe.columns, has_item('enrollment_type'))
 		df = satt.analyze_events()
 		assert_that(len(df.index), equal_to(85))
 		assert_that(df.columns, has_item('number_self_assessments_taken'))

@@ -87,7 +87,8 @@ class AssignmentViewsTimeseries(object):
 
 	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_resource_type=True, with_device_type=True,
-				 time_period_date=True, with_context_name=True):
+				 time_period_date=True, with_context_name=True,
+				 with_enrollment_type=True):
 
 		self.session = session
 		qav = self.query_assignment_view = QueryAssignmentViews(self.session)
@@ -120,6 +121,12 @@ class AssignmentViewsTimeseries(object):
 			if new_df is not None:
 				self.dataframe = new_df
 				categorical_columns.append('context_name')
+
+		if with_enrollment_type:
+			new_df = qav.add_enrollment_type(self.dataframe, course_id)
+			if new_df is not None:
+				self.dataframe = new_df
+				categorical_columns.append('enrollment_type')
 
 		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
@@ -159,6 +166,18 @@ class AssignmentViewsTimeseries(object):
 		df = self.build_dataframe(group_by_columns)
 		return df
 
+	def analyze_events_group_by_enrollment_type(self):
+		"""
+		return a dataframe contains:
+		 - the number of assignment views,
+		 - the number of unique user viewing assignment
+		 - ratio of assignment views over unique users
+		grouped by enrollment type on each available date
+		"""
+		group_by_columns = ['timestamp_period', 'enrollment_type']
+		df = self.build_dataframe(group_by_columns)
+		return df	
+
 	def analyze_events_group_by_resource_type(self):
 		"""
 		return a dataframe contains:
@@ -190,7 +209,7 @@ class AssignmentsTakenTimeseries(object):
 	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_resource_type=True, with_device_type=True,
 				 time_period_date=True, with_assignment_title=True,
-				 with_context_name=True):
+				 with_context_name=True, with_enrollment_type=True):
 
 		self.session = session
 		self.course_id = course_id
@@ -225,6 +244,12 @@ class AssignmentsTakenTimeseries(object):
 				self.dataframe = new_df
 				categorical_columns.append('context_name')
 
+		if with_enrollment_type:
+			new_df = qat.add_enrollment_type(self.dataframe, course_id)
+			if new_df is not None:
+				self.dataframe = new_df
+				categorical_columns.append('enrollment_type')
+
 		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def analyze_events(self):
@@ -260,6 +285,18 @@ class AssignmentsTakenTimeseries(object):
 		grouped by device type on each available date
 		"""
 		group_by_columns = ['timestamp_period', 'device_type']
+		df = self.build_dataframe(group_by_columns)
+		return df
+
+	def analyze_events_group_by_enrollment_type(self):
+		"""
+		return a dataframe contains:
+		 - the number of assignments taken
+		 - the number of unique user taking assignments
+		 - ratio of assignments taken over unique users
+		grouped by enrollment type on each available date
+		"""
+		group_by_columns = ['timestamp_period', 'enrollment_type']
 		df = self.build_dataframe(group_by_columns)
 		return df
 
@@ -296,7 +333,8 @@ class SelfAssessmentViewsTimeseries(object):
 
 	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_resource_type=True, with_device_type=True,
-				 time_period_date=True, with_context_name=True):
+				 time_period_date=True, with_context_name=True,
+				 with_enrollment_type=True):
 
 		self.session = session
 		qsav = self.query_self_assessment_view = QuerySelfAssessmentViews(self.session)
@@ -328,6 +366,12 @@ class SelfAssessmentViewsTimeseries(object):
 			if new_df is not None:
 				self.dataframe = new_df
 				categorical_columns.append('context_name')
+
+		if with_enrollment_type:
+			new_df = qsav.add_enrollment_type(self.dataframe, course_id)
+			if new_df is not None:
+				self.dataframe = new_df
+				categorical_columns.append('enrollment_type')
 
 		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
@@ -368,6 +412,19 @@ class SelfAssessmentViewsTimeseries(object):
 			df = self.build_dataframe(group_by_columns)
 			return df
 
+	def analyze_events_group_by_enrollment_type(self):
+		"""
+		return a dataframe contains:
+		 - the number of self assessments views,
+		 - the number of unique user viewing self assessments
+		 - ratio of self assessments views over unique users
+		grouped by enrollment type on each available date
+		"""
+		if 'device_type' in self.dataframe.columns:
+			group_by_columns = ['timestamp_period', 'enrollment_type']
+			df = self.build_dataframe(group_by_columns)
+			return df
+
 	def analyze_events_group_by_resource_type(self):
 		"""
 		return a dataframe contains:
@@ -399,7 +456,8 @@ class SelfAssessmentsTakenTimeseries(object):
 
 	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_resource_type=True, with_device_type=True,
-				 time_period_date=True, with_context_name=True):
+				 time_period_date=True, with_context_name=True,
+				 with_enrollment_type=True):
 
 		self.session = session
 		qsat = self.query_self_assessments_taken = QuerySelfAssessmentsTaken(self.session)
@@ -423,6 +481,12 @@ class SelfAssessmentsTakenTimeseries(object):
 			if new_df is not None:
 				self.dataframe = new_df
 				categorical_columns.append('context_name')
+
+		if with_enrollment_type:
+			new_df = qsat.add_enrollment_type(self.dataframe, course_id)
+			if new_df is not None:
+				self.dataframe = new_df
+				categorical_columns.append('enrollment_type')
 
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
@@ -462,6 +526,18 @@ class SelfAssessmentsTakenTimeseries(object):
 		grouped by device type on each available date
 		"""
 		group_by_columns = ['timestamp_period', 'device_type']
+		df = self.build_dataframe(group_by_columns)
+		return df
+
+	def analyze_events_group_by_enrollment_type(self):
+		"""
+		return a dataframe contains:
+		 - the number of self assessments taken
+		 - the number of unique user taking self assessments
+		 - ratio of self assessments taken over unique users
+		grouped by enrollment type on each available date
+		"""
+		group_by_columns = ['timestamp_period', 'enrollment_type']
 		df = self.build_dataframe(group_by_columns)
 		return df
 
