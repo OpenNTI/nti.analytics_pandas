@@ -95,6 +95,11 @@ class BookmarkCreationTimeseries(object):
 		df = self.build_dataframe(group_by_items)
 		return df
 
+	def analyze_enrollment_types(self):
+		group_by_items = ['timestamp_period', 'enrollment_type']
+		df = self.build_dataframe(group_by_items)
+		return df
+
 	def build_dataframe(self, group_by_columns):
 		agg_columns = {	'bookmark_id' 	: pd.Series.nunique,
 						'user_id'		: pd.Series.nunique }
