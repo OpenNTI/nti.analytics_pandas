@@ -22,6 +22,8 @@ from .common import add_device_type_
 from .common import add_context_name_
 from .common import add_resource_type_
 
+from .enrollments import add_enrollment_type_
+
 from . import orm_dataframe
 
 class QueryNotesCreated(TableQueryMixin):
@@ -76,6 +78,10 @@ class QueryNotesCreated(TableQueryMixin):
 
 	def add_context_name(self, dataframe, course_id):
 		new_df = add_context_name_(self.session, dataframe, course_id)
+		return new_df
+
+	def add_enrollment_type(self, dataframe, course_id):
+		new_df = add_enrollment_type_(self.session, dataframe, course_id)
 		return new_df
 
 	def get_author_id_filter_by_note_id(self, notes_id):
@@ -141,6 +147,10 @@ class QueryNotesViewed(TableQueryMixin):
 		new_df = add_context_name_(self.session, dataframe, course_id)
 		return new_df
 
+	def add_enrollment_type(self, dataframe, course_id):
+		new_df = add_enrollment_type_(self.session, dataframe, course_id)
+		return new_df
+
 class QueryNoteFavorites(TableQueryMixin):
 
 	table = NoteFavorites
@@ -187,6 +197,10 @@ class QueryNoteFavorites(TableQueryMixin):
 		new_df = add_context_name_(self.session, dataframe, course_id)
 		return new_df
 
+	def add_enrollment_type(self, dataframe, course_id):
+		new_df = add_enrollment_type_(self.session, dataframe, course_id)
+		return new_df
+
 class QueryNoteLikes(TableQueryMixin):
 
 	table = NoteLikes
@@ -231,6 +245,10 @@ class QueryNoteLikes(TableQueryMixin):
 
 	def add_context_name(self, dataframe, course_id):
 		new_df = add_context_name_(self.session, dataframe, course_id)
+		return new_df
+
+	def add_enrollment_type(self, dataframe, course_id):
+		new_df = add_enrollment_type_(self.session, dataframe, course_id)
 		return new_df
 
 def add_sharing_type_(session, dataframe):

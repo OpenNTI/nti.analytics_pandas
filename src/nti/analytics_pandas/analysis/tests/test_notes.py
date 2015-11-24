@@ -36,6 +36,7 @@ class TestNotesEDA(AnalyticsPandasTestBase):
 
 		dataframe = nct.dataframe
 		assert_that(dataframe.columns, has_item('context_name'))
+		assert_that(dataframe.columns, has_item('enrollment_type'))
 
 		df = nct.analyze_device_types(dataframe)
 		assert_that(df.columns, has_item('number_of_unique_users'))
@@ -83,6 +84,7 @@ class TestNotesEDA(AnalyticsPandasTestBase):
 		assert_that(nvt.dataframe.columns, has_item('device_type'))
 		assert_that(nvt.dataframe.columns, has_item('resource_type'))
 		assert_that(nvt.dataframe.columns, has_item('context_name'))
+		assert_that(nvt.dataframe.columns, has_item('enrollment_type'))
 
 		events_df = nvt.analyze_total_events()
 
@@ -132,6 +134,10 @@ class TestNotesEDA(AnalyticsPandasTestBase):
 		nlt = NoteLikesTimeseries(self.session, start_date, end_date, course_id)
 		assert_that(len(nlt.dataframe.index), equal_to(41))
 
+		dataframe = nlt.dataframe
+		assert_that(dataframe.columns, has_item('context_name'))
+		assert_that(dataframe.columns, has_item('enrollment_type'))
+
 		events_df = nlt.analyze_events()
 		assert_that(len(events_df.index), equal_to(13))
 		assert_that(events_df.columns, has_item('number_of_note_likes'))
@@ -144,6 +150,10 @@ class TestNotesEDA(AnalyticsPandasTestBase):
 		course_id = ['1068', '1096', '1097', '1098', '1099']
 		nft = NoteFavoritesTimeseries(self.session, start_date, end_date, course_id)
 		assert_that(len(nft.dataframe.index), equal_to(2))
+
+		dataframe = nft.dataframe
+		assert_that(dataframe.columns, has_item('context_name'))
+		assert_that(dataframe.columns, has_item('enrollment_type'))
 
 		events_df = nft.analyze_events()
 		assert_that(len(events_df.index), equal_to(1))

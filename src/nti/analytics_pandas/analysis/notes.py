@@ -94,7 +94,8 @@ class NotesCreationTimeseries(object):
 
 	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_resource_type=True, with_device_type=True,
-				 time_period_date=True, with_context_name=True):
+				 time_period_date=True, with_context_name=True,
+				 with_enrollment_type=True):
 		self.session = session
 		qnc = self.query_notes_created = QueryNotesCreated(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -126,6 +127,12 @@ class NotesCreationTimeseries(object):
 			if new_df is not None:
 				self.dataframe = new_df
 				categorical_columns.append('context_name')
+
+		if with_enrollment_type:
+			new_df = qnc.add_enrollment_type(self.dataframe, course_id)
+			if new_df is not None:
+				self.dataframe = new_df
+				categorical_columns.append('enrollment_type')
 
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
@@ -159,6 +166,16 @@ class NotesCreationTimeseries(object):
 		return the result as dataframe
 		"""
 		group_by_items = ['timestamp_period', 'device_type']
+		df = self.build_dataframe(dataframe, group_by_items)
+		return df
+
+	def analyze_enrollment_types(self, dataframe):
+		"""
+		group notes created dataframe by timestamp_period and enrollment_type
+		count the number of notes created, unique users and ratio in each group
+		return the result as dataframe
+		"""
+		group_by_items = ['timestamp_period', 'enrollment_type']
 		df = self.build_dataframe(dataframe, group_by_items)
 		return df
 
@@ -234,7 +251,7 @@ class NotesViewTimeseries(object):
 	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_resource_type=True, with_device_type=True,
 				 time_period_date=True, with_sharing_type=True,
-				 with_context_name=True):
+				 with_context_name=True, with_enrollment_type=True):
 		self.session = session
 		qnv = self.query_notes_viewed = QueryNotesViewed(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -272,6 +289,12 @@ class NotesViewTimeseries(object):
 			if new_df is not None:
 				self.dataframe = new_df
 				categorical_columns.append('context_name')
+
+		if with_enrollment_type:
+			new_df = qnv.add_enrollment_type(self.dataframe, course_id)
+			if new_df is not None:
+				self.dataframe = new_df
+				categorical_columns.append('enrollment_type')
 
 		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
@@ -336,6 +359,16 @@ class NotesViewTimeseries(object):
 		notes viewed over unique users
 		"""
 		group_by_items = ['timestamp_period', 'device_type']
+		df = self.build_dataframe(group_by_items)
+		return df
+
+	def analyze_total_events_based_on_enrollment_type(self):
+		"""
+		group notes viewed dataframe by timestamp_period and enrollment_type
+		count the total number of notes views, unique users and ratio of number of
+		notes viewed over unique users
+		"""
+		group_by_items = ['timestamp_period', 'enrollment_type']
 		df = self.build_dataframe(group_by_items)
 		return df
 
@@ -417,7 +450,8 @@ class NoteLikesTimeseries(object):
 
 	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_resource_type=True, with_device_type=True,
-				 time_period_date=True, with_context_name=True):
+				 time_period_date=True, with_context_name=True,
+				 with_enrollment_type=True):
 		self.session = session
 		qnl = self.query_notes_viewed = QueryNoteLikes(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -445,6 +479,11 @@ class NoteLikesTimeseries(object):
 			if new_df is not None:
 				self.dataframe = new_df
 
+		if with_enrollment_type:
+			new_df = qnl.add_enrollment_type(self.dataframe, course_id)
+			if new_df is not None:
+				self.dataframe = new_df
+				
 	def analyze_events(self):
 		group_by_items = ['timestamp_period']
 		df = self.build_dataframe(group_by_items, self.dataframe)
@@ -457,6 +496,11 @@ class NoteLikesTimeseries(object):
 
 	def analyze_events_per_device_types(self):
 		group_by_items = ['timestamp_period', 'device_type']
+		df = self.build_dataframe(group_by_items, self.dataframe)
+		return df
+
+	def analyze_events_per_enrollment_types(self):
+		group_by_items = ['timestamp_period', 'enrollment_type']
 		df = self.build_dataframe(group_by_items, self.dataframe)
 		return df
 
@@ -483,7 +527,8 @@ class NoteFavoritesTimeseries(object):
 
 	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_resource_type=True, with_device_type=True,
-				 time_period_date=True, with_context_name=True):
+				 time_period_date=True, with_context_name=True,
+				 with_enrollment_type=True):
 		self.session = session
 		qnf = self.query_notes_viewed = QueryNoteFavorites(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -511,6 +556,11 @@ class NoteFavoritesTimeseries(object):
 			if new_df is not None:
 				self.dataframe = new_df
 
+		if with_enrollment_type:
+			new_df = qnf.add_enrollment_type(self.dataframe, course_id)
+			if new_df is not None:
+				self.dataframe = new_df
+
 	def analyze_events(self):
 		group_by_items = ['timestamp_period']
 		df = self.build_dataframe(group_by_items, self.dataframe)
@@ -523,6 +573,11 @@ class NoteFavoritesTimeseries(object):
 
 	def analyze_events_per_device_types(self):
 		group_by_items = ['timestamp_period', 'device_type']
+		df = self.build_dataframe(group_by_items, self.dataframe)
+		return df
+
+	def analyze_events_per_enrollment_types(self):
+		group_by_items = ['timestamp_period', 'enrollment_type']
 		df = self.build_dataframe(group_by_items, self.dataframe)
 		return df
 
