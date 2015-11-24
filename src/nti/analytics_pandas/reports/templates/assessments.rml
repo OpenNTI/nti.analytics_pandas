@@ -25,6 +25,24 @@
 						  metal:use-macro="macro:three_plots_event">
 			</illustration>
 		</tal:block>
+
+		<setNextTemplate name="main"/>
+		<nextPage />
+		<tal:block tal:condition="python: options['has_assignment_taken_per_device_types']">
+			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+				Assignments Taken per Device Types
+			</h1>
+			<hr width="100%" />
+			<tal:block tal:define="assignment_taken options/data/assignment_taken_per_device_types">
+				<illustration width="5in" height="3in"
+							  tal:define="event assignment_taken/event_assignments_taken_per_device_types;
+										  user_event assignment_taken/user_assignments_taken_per_device_types;
+										  ratio_event assignment_taken/event_assignments_taken_per_device_types"
+							  metal:use-macro="macro:three_plots_event">
+				</illustration>
+			</tal:block>
+		</tal:block>
+
 	</tal:block>
 
 </metal:block>
