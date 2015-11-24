@@ -86,6 +86,10 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 		data = self.get_assignments_taken_plots(data)
 		data = self.get_assignments_taken_plots_per_device_types(data)
 		data = self.get_assignments_taken_plots_per_enrollment_types(data)
+		if len(self.context.courses) > 1:
+			data = self.get_assignments_taken_plots_per_course_sections(data)
+		else:
+			self.options['has_assignment_taken_per_course_sections'] = False
 		return data
 
 	def get_assignments_taken_plots(self, data):
@@ -116,6 +120,16 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 		if plots:
 			data['assignment_taken_per_enrollment_types'] = build_plot_images_dictionary(plots)
 			self.options['has_assignment_taken_per_enrollment_types'] = True
+		return data
+
+	def get_assignments_taken_plots_per_course_sections(self, data):
+		plots = self.attp.analyze_events_per_course_sections(self.context.period_breaks,
+															 self.context.minor_period_breaks,
+															 self.context.theme_seaborn_)
+		self.options['has_assignment_taken_per_course_sections'] = False
+		if plots:
+			data['assignment_taken_per_course_sections'] = build_images_dict_from_plot_dict(plots)
+			self.options['has_assignment_taken_per_course_sections'] = True
 		return data
 	
 View = AssessmentsEventsTimeseriesReport = AssessmentsEventsTimeseriesReportView
