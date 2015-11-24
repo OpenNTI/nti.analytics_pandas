@@ -221,36 +221,37 @@ class AssignmentsTakenTimeseries(object):
 		else:
 			self.dataframe = qat.filter_by_period_of_time(start_date, end_date)
 
-		categorical_columns = ['assignment_taken_id', 'user_id']
+		if not self.dataframe.empty:
+			categorical_columns = ['assignment_taken_id', 'user_id']
 
-		if with_device_type:
-			new_df = qat.add_device_type(self.dataframe)
-			if new_df is not None:
-				self.dataframe = new_df
-				categorical_columns.append('device_type')
+			if with_device_type:
+				new_df = qat.add_device_type(self.dataframe)
+				if new_df is not None:
+					self.dataframe = new_df
+					categorical_columns.append('device_type')
 
-		if time_period_date:
-			self.dataframe = add_timestamp_period_(self.dataframe)
+			if time_period_date:
+				self.dataframe = add_timestamp_period_(self.dataframe)
 
-		if with_assignment_title:
-			new_df = qat.add_assignment_title(self.dataframe)
-			if new_df is not None:
-				self.dataframe = new_df
-				categorical_columns.append('assignment_title')
+			if with_assignment_title:
+				new_df = qat.add_assignment_title(self.dataframe)
+				if new_df is not None:
+					self.dataframe = new_df
+					categorical_columns.append('assignment_title')
 
-		if with_context_name:
-			new_df = qat.add_context_name(self.dataframe, course_id)
-			if new_df is not None:
-				self.dataframe = new_df
-				categorical_columns.append('context_name')
+			if with_context_name:
+				new_df = qat.add_context_name(self.dataframe, course_id)
+				if new_df is not None:
+					self.dataframe = new_df
+					categorical_columns.append('context_name')
 
-		if with_enrollment_type:
-			new_df = qat.add_enrollment_type(self.dataframe, course_id)
-			if new_df is not None:
-				self.dataframe = new_df
-				categorical_columns.append('enrollment_type')
+			if with_enrollment_type:
+				new_df = qat.add_enrollment_type(self.dataframe, course_id)
+				if new_df is not None:
+					self.dataframe = new_df
+					categorical_columns.append('enrollment_type')
 
-		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
+			self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def analyze_events(self):
 		"""

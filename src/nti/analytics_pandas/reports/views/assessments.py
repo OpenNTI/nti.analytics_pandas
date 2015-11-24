@@ -60,7 +60,6 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 			self.options['has_assignment_taken_data'] = False
 
 		self.options['data'] = data
-		print(keys)
 		return self.options
 
 	def __call__(self):
