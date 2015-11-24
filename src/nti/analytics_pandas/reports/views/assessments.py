@@ -59,6 +59,9 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 		if 'has_assignment_taken_data' not in keys:
 			self.options['has_assignment_taken_data'] = False
 
+		if 'has_assignment_views_data' not in keys:
+			self.options['has_assignment_views_data'] = False
+
 		self.options['data'] = data
 		return self.options
 
@@ -78,6 +81,19 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 		else:
 			self.options['has_assignment_taken_data'] = True
 			data = self.generate_assignments_taken_plots(data)
+
+
+		self.avt = AssignmentViewsTimeseries(self.context.session,
+										     self.context.start_date,
+										     self.context.end_date,
+										     self.context.courses)
+
+		if self.avt.dataframe.empty:
+			self.options['has_assignment_views_data'] = False
+		else:
+			self.options['has_assignment_views_data'] = True
+			data = self.generate_assignment_view_plots(data)
+
 		self._build_data(data)
 		return self.options
 
@@ -130,6 +146,19 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 		if plots:
 			data['assignment_taken_per_course_sections'] = build_images_dict_from_plot_dict(plots)
 			self.options['has_assignment_taken_per_course_sections'] = True
+		return data
+
+	def generate_assignment_view_plots(self, data):
+		self.avtp = AssignmentViewsTimeseriesPlot(self.avt)
+		data = self.get_assignment_view_plots(data)
+		return data
+
+	def get_assignment_view_plots(self, data):
+		plots = self.avtp.analyze_events(self.context.period_breaks,
+										 self.context.minor_period_breaks,
+										 self.context.theme_seaborn_)
+		if plots:
+			data['assignment_views'] = build_plot_images_dictionary(plots)
 		return data
 	
 View = AssessmentsEventsTimeseriesReport = AssessmentsEventsTimeseriesReportView
