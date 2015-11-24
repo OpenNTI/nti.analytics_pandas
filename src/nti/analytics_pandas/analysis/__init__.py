@@ -26,6 +26,17 @@ from .plots import ForumsCreatedTimeseriesPlot
 from .plots import ForumCommentLikesTimeseriesPlot
 from .plots import ForumsCommentsCreatedTimeseriesPlot
 from .plots import ForumCommentFavoritesTimeseriesPlot
+from .plots import AssignmentViewsTimeseriesPlot
+from .plots import AssignmentsTakenTimeseriesPlot
+from .plots import AssessmentEventsTimeseriesPlot
+from .plots import SelfAssessmentViewsTimeseriesPlot
+from .plots import SelfAssessmentsTakenTimeseriesPlot
+
+from.assessments import AssignmentViewsTimeseries
+from.assessments import AssignmentsTakenTimeseries
+from.assessments import AssessmentEventsTimeseries
+from.assessments import SelfAssessmentViewsTimeseries
+from.assessments import SelfAssessmentsTakenTimeseries
 
 from .bookmarks import BookmarkCreationTimeseries
 

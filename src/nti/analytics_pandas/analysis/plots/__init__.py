@@ -11,6 +11,12 @@ logger = __import__('logging').getLogger(__name__)
 
 from .. import MessageFactory
 
+from.assessments import AssignmentViewsTimeseriesPlot
+from.assessments import AssignmentsTakenTimeseriesPlot
+from.assessments import AssessmentEventsTimeseriesPlot
+from.assessments import SelfAssessmentViewsTimeseriesPlot
+from.assessments import SelfAssessmentsTakenTimeseriesPlot
+
 from .bookmarks import BookmarksTimeseriesPlot
 
 from .forums import ForumsEventsTimeseriesPlot
