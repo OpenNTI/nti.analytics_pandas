@@ -179,6 +179,32 @@ class AssignmentViewsTimeseriesPlot(object):
 											 event_type)
 		return plots
 
+	def analyze_events_group_by_enrollment_type(self, period_breaks='1 week',
+											minor_period_breaks='1 day',
+											theme_seaborn_=True):
+		avt = self.avt
+		df = avt.analyze_events_group_by_enrollment_type()
+		if df is None :
+			return ()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		group_by = 'enrollment_type'
+		event_title = _('Number of assignments viewed grouped by enrollment types')
+		user_title = _('Number of unique users viewing assignments grouped by enrollment types')
+		ratio_title = _('Ratio of assignments viewed over unique user grouped by enrollment types')
+		event_type = 'assignment_views_per_enrollment_types'
+		plots = self.generate_group_by_plots(df,
+											 group_by,
+											 event_title,
+											 user_title,
+											 ratio_title,
+											 period_breaks,
+											 minor_period_breaks,
+											 theme_seaborn_,
+											 event_type)
+		return plots
+
 	def generate_plots(self, df, event_title, user_title, ratio_title,
 					   period_breaks, minor_period_breaks, theme_seaborn_,
 					   event_type=None):
@@ -365,7 +391,33 @@ class AssignmentsTakenTimeseriesPlot(object):
 		event_title = _('Number of assignments taken during period of time')
 		user_title = _('Number of unique users taking assignments during period of time')
 		ratio_title = _('Ratio of assignments taken over unique user on each available date')
-		event_type = 'assignments_taken'
+		event_type = 'assignments_taken_per_device_types'
+		plots = self.generate_group_by_plots(df,
+											 group_by,
+											 event_title,
+											 user_title,
+											 ratio_title,
+											 period_breaks,
+											 minor_period_breaks,
+											 theme_seaborn_,
+											 event_type)
+		return plots
+
+	def analyze_events_group_by_enrollment_type(self, period_breaks='1 week',
+											minor_period_breaks='1 day',
+											theme_seaborn_=True):
+		att = self.att
+		df = att.analyze_events_group_by_enrollment_type()
+		if df is None :
+			return ()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		group_by = 'enrollment_type'
+		event_title = _('Number of assignments taken during period of time')
+		user_title = _('Number of unique users taking assignments during period of time')
+		ratio_title = _('Ratio of assignments taken over unique user on each available date')
+		event_type = 'assignments_taken_per_enrollment_types'
 		plots = self.generate_group_by_plots(df,
 											 group_by,
 											 event_title,
@@ -587,6 +639,32 @@ class SelfAssessmentViewsTimeseriesPlot(object):
 											 event_type)
 		return plots
 
+	def analyze_events_group_by_enrollment_type(self, period_breaks='1 week',
+											minor_period_breaks='1 day',
+											theme_seaborn_=True):
+		savt = self.savt
+		df = savt.analyze_events_group_by_enrollment_type()
+		if df is None :
+			return ()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		group_by = 'enrollment_type'
+		event_title = _('Number of self assessments viewed grouped by enrollment types')
+		user_title = _('Number of unique users viewing self assessments grouped by enrollment types')
+		ratio_title = _('Ratio of self assessments viewed over unique user grouped by enrollment types')
+		event_type = 'self_assessment_views_per_enrollment_types'
+		plots = self.generate_group_by_plots(df,
+											 group_by,
+											 event_title,
+											 user_title,
+											 ratio_title,
+											 period_breaks,
+											 minor_period_breaks,
+											 theme_seaborn_,
+											 event_type)
+		return plots
+
 	def generate_plots(self, df, event_title, user_title, ratio_title,
 					   period_breaks, minor_period_breaks, theme_seaborn_,
 					   event_type=None):
@@ -770,6 +848,32 @@ class SelfAssessmentsTakenTimeseriesPlot(object):
 		user_title = _('Number of unique users taking self assessments grouped by device types')
 		ratio_title = _('Ratio of self assessments taken over unique user grouped by device types')
 		event_type = 'self_assessments_taken_per_device_types'
+		plots = self.generate_group_by_plots(df,
+											 group_by,
+											 event_title,
+											 user_title,
+											 ratio_title,
+											 period_breaks,
+											 minor_period_breaks,
+											 theme_seaborn_,
+											 event_type)
+		return plots
+
+	def analyze_events_group_by_enrollment_type(self, period_breaks='1 week',
+											minor_period_breaks='1 day',
+											theme_seaborn_=True):
+		satt = self.satt
+		df = satt.analyze_events_group_by_enrollment_type()
+		if df is None :
+			return ()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		group_by = 'enrollment_type'
+		event_title = _('Number of self assessments taken grouped by enrollment types')
+		user_title = _('Number of unique users taking self assessments grouped by enrollment types')
+		ratio_title = _('Ratio of self assessments taken over unique user grouped by enrollment types')
+		event_type = 'self_assessments_taken_per_enrollment_types'
 		plots = self.generate_group_by_plots(df,
 											 group_by,
 											 event_title,
