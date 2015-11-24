@@ -132,6 +132,7 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 		data = self.get_notes_created_per_resource_types_plots(data)
 		data = self.get_notes_created_per_sharing_types_plots(data)
 		data = self.get_notes_created_the_most_active_users(data)
+		data = self.get_notes_created_per_enrollment_types_plots(data)
 		if len(self.context.courses) > 1:
 			data = self.get_notes_created_per_course_sections_plots(data)
 		else:
@@ -154,6 +155,16 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 		if plots:
 			data['notes_created_per_device_types'] = build_plot_images_dictionary(plots)
 			self.options['has_notes_created_data_per_device_types'] = True
+		return data
+
+	def get_notes_created_per_enrollment_types_plots(self, data):
+		plots = self.nctp.analyze_enrollment_types(self.context.period_breaks,
+										 	   self.context.minor_period_breaks,
+										 	   self.context.theme_seaborn_)
+		self.options['has_notes_created_data_per_enrollment_types'] = False
+		if plots:
+			data['notes_created_per_enrollment_types'] = build_plot_images_dictionary(plots)
+			self.options['has_notes_created_data_per_enrollment_types'] = True
 		return data
 
 	def get_notes_created_per_resource_types_plots(self, data):
