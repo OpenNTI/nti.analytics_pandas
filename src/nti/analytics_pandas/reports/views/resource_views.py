@@ -46,11 +46,20 @@ class ResourceViewsTimeseriesReportView(AbstractReportView):
 
 	def _build_data(self, data=_('sample resource views report')):
 		keys = self.options.keys()
-		if 'has_data' not in keys:
-			self.options['has_data'] = False
+		if 'has_resource_view_events' not in keys:
+			self.options['has_resource_view_events'] = False
 
 		if 'has_resource_views_per_enrollment_types' not in keys:
 			self.options['has_resource_views_per_enrollment_types'] = False
+
+		if 'has_resource_views_per_device_types' not in keys:
+			self.options['has_resource_views_per_device_types'] = False
+
+		if 'has_resource_views_per_resource_types' not in keys:
+			self.options['has_resource_views_per_resource_types'] = False
+
+		if 'has_resource_view_users' not in keys:
+			self.options['has_resource_view_users'] = False
 
 		self.options['data'] = data
 		return self.options
@@ -61,10 +70,10 @@ class ResourceViewsTimeseriesReportView(AbstractReportView):
 										   self.context.end_date,
 										   self.context.courses)
 		if self.rvt.dataframe.empty:
-			self.options['has_data'] = False
+			self.options['has_resource_view_events'] = False
 			return self.options
 
-		self.options['has_data'] = True
+		self.options['has_resource_view_events'] = True
 
 		course_names = get_course_names(self.context.session, self.context.courses)
 		self.options['course_names'] = ",".join(map(str, course_names))
@@ -82,7 +91,6 @@ class ResourceViewsTimeseriesReportView(AbstractReportView):
 		plots = self.rvtp.explore_events(self.context.period_breaks,
 										 self.context.minor_period_breaks,
 										 self.context.theme_seaborn_)
-		data['resource_view_events'] = None
 		if plots:
 			data['resource_view_events'] = build_plot_images_dictionary(plots)
 		return data
@@ -91,9 +99,9 @@ class ResourceViewsTimeseriesReportView(AbstractReportView):
 		plots = self.rvtp.analyze_device_type(self.context.period_breaks,
 											  self.context.minor_period_breaks,
 											  self.context.theme_seaborn_)
-		data['resource_views_per_device_types'] = None
 		if plots:
 			data['resource_views_per_device_types'] = build_plot_images_dictionary(plots)
+			self.options['has_resource_views_per_device_types'] = True
 		return data
 
 	def get_resource_views_per_enrollment_types(self, data):
@@ -109,16 +117,16 @@ class ResourceViewsTimeseriesReportView(AbstractReportView):
 		plots = self.rvtp.analyze_resource_type(self.context.period_breaks,
 												self.context.minor_period_breaks,
 												self.context.theme_seaborn_)
-		data['resource_views_per_resource_types'] = None
 		if plots:
 			data['resource_views_per_resource_types'] = build_plot_images_dictionary(plots)
+			self.options['has_resource_views_per_resource_types'] = True
 		return data
 
 	def get_the_most_active_users(self, data):
 		plots = self.rvtp.plot_most_active_users(self.context.number_of_most_active_user)
-		data['resource_view_users'] = None
 		if plots:
 			data['resource_view_users'] = build_plot_images_dictionary(plots)
+			self.options['has_resource_view_users'] = True
 		return data
 
 View = ResourceViewsTimeseriesReport = ResourceViewsTimeseriesReportView
