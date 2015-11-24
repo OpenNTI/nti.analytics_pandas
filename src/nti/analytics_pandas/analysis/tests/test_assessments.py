@@ -159,7 +159,7 @@ class TestAssignmentsTakenTimeseries(AnalyticsPandasTestBase):
 										 start_date=start_date,
 										 end_date=end_date,
 										 course_id=courses_id)
-		
+
 		df = att.analyze_events_per_course_sections()
 		assert_that(df.columns, has_item('number_assignments_taken'))
 		assert_that(df.columns, has_item('number_of_unique_users'))
@@ -261,11 +261,7 @@ class TestSelfAssessmentViewsTimeseries(AnalyticsPandasTestBase):
 		df2 = savt.analyze_events()
 		assert_that(len(df.sum(level='timestamp_period')), equal_to(len(df2.index)))
 
-
 class TestSelfAssessmentsTakenTimeseries(AnalyticsPandasTestBase):
-
-	def setUp(self):
-		super(TestSelfAssessmentsTakenTimeseries, self).setUp()
 
 	def test_analyze_events(self):
 		"""
@@ -323,10 +319,6 @@ class TestSelfAssessmentsTakenTimeseries(AnalyticsPandasTestBase):
 		assert_that(len(df.sum(level='timestamp_period')), equal_to(len(df2.index)))
 
 class TestAssessmentEventsTimeseries(AnalyticsPandasTestBase):
-
-	def setUp(self):
-		super(TestAssessmentEventsTimeseries, self).setUp()
-
 
 	def test_combine_events(self):
 		start_date = u'2015-01-01'

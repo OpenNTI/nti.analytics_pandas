@@ -42,7 +42,7 @@ class TestAssignmentViewsPlot(AnalyticsPandasTestBase):
 		_ = avtp.analyze_events_group_by_device_type(period_breaks='1 day',
 													 minor_period_breaks=None)
 
-	def test_analyze_events_group_by_device_type(self):
+	def test_analyze_events_group_by_enrollment_type(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
 		courses_id = ['1024', '1025', '1026', '1027', '1028']
@@ -50,7 +50,7 @@ class TestAssignmentViewsPlot(AnalyticsPandasTestBase):
 										end_date=end_date, course_id=courses_id)
 		avtp = AssignmentViewsTimeseriesPlot(avt)
 		_ = avtp.analyze_events_group_by_enrollment_type(period_breaks='1 day',
-													 minor_period_breaks=None)
+														 minor_period_breaks=None)
 
 	def test_analyze_events_per_course_sections(self):
 		start_date = u'2015-01-01'
@@ -111,8 +111,6 @@ class TestAssignmentsTakenPlot(AnalyticsPandasTestBase):
 										 end_date=end_date, course_id=courses_id)
 		attp = AssignmentsTakenTimeseriesPlot(att)
 		_ = attp.analyze_assignment_taken_over_total_enrollments()
-
-
 
 class TestSelfAssessmentViewsPlot(AnalyticsPandasTestBase):
 
@@ -192,7 +190,7 @@ class TestSelfAssessmentsTakenPlot(AnalyticsPandasTestBase):
 		sattp = SelfAssessmentsTakenTimeseriesPlot(satt)
 		_ = sattp.analyze_events_group_by_enrollment_type(period_breaks='1 week',
 													  minor_period_breaks='1 day')
-		
+
 class TestAssessmentEventsPlot(AnalyticsPandasTestBase):
 
 	def test_combine_events(self):

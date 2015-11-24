@@ -15,6 +15,8 @@ import pandas as pd
 
 import numpy as np
 
+from zope.i18n import translate
+
 from .commons import line_plot_x_axis_date
 from .commons import group_line_plot_x_axis_date
 from .commons import group_scatter_plot_x_axis_date
@@ -96,10 +98,18 @@ class  ResourceViewsTimeseriesPlot(object):
 		for course_id in course_ids:
 			new_df = df[df['course_id'] == course_id]
 			context_name = new_df.iloc[0]['context_name']
-			event_title = 'Number of resource views in %s' % (context_name)
-			user_title = 'Number of unique users viewing resources in %s' % (context_name)
-			ratio_title = 'Ratio of resource views over unique user in %s' % (context_name)
-			unique_resource_title = _('Number of unique resources viewed in %s') % (context_name)
+			event_title = translate(_("Number of resource views in  ${title}",
+									  mapping={'title': context_name}))
+
+			user_title = translate(_("Number of unique users viewing resources in ${title}",
+									  mapping={'title': context_name}))
+
+			ratio_title = translate(_("Ratio of resource views over unique user in ${title}",
+									  mapping={'title': context_name}))
+
+			unique_resource_title = translate(_("Number of unique resources viewed in  ${title}",
+									 		  mapping={'title': context_name}))
+
 			event_type = 'resource_views_in_%s' % (context_name.replace(' ', '_'))
 			section_plots = self.generate_plots(new_df,
 												event_title,

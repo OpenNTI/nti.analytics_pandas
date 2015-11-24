@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*
 """
-.. $Id: notes.py 77689 2015-11-24 10:06:00Z egawati.panjei $
+.. $Id$
 """
 
 from __future__ import print_function, unicode_literals, absolute_import, division
@@ -15,14 +15,8 @@ from zope import interface
 
 from ...analysis import AssignmentViewsTimeseries
 from ...analysis import AssignmentsTakenTimeseries
-from ...analysis import AssessmentEventsTimeseries
-from ...analysis import SelfAssessmentViewsTimeseries
-from ...analysis import SelfAssessmentsTakenTimeseries
 from ...analysis import AssignmentViewsTimeseriesPlot
 from ...analysis import AssignmentsTakenTimeseriesPlot
-from ...analysis import AssessmentEventsTimeseriesPlot
-from ...analysis import SelfAssessmentViewsTimeseriesPlot
-from ...analysis import SelfAssessmentsTakenTimeseriesPlot
 
 from .commons import get_course_names
 from .commons import build_plot_images_dictionary
@@ -34,8 +28,8 @@ from .mixins import AbstractReportView
 class AssessmentsEventsTimeseriesContext(object):
 
 	def __init__(self, session=None, start_date=None, end_date=None, courses=None,
-				 period_breaks='1 week', minor_period_breaks='1 day', theme_seaborn_=True,
-				 number_of_most_active_user=10):
+				 period_breaks='1 week', minor_period_breaks='1 day',
+				 theme_seaborn_=True, number_of_most_active_user=10):
 		self.session = session
 		self.courses = courses
 		self.end_date = end_date
@@ -70,12 +64,11 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 		self.options['course_names'] = ", ".join(map(str, course_names))
 		data = {}
 
-		
 		self.att = AssignmentsTakenTimeseries(self.context.session,
-										      self.context.start_date,
-										      self.context.end_date,
-										      self.context.courses)
-		
+											  self.context.start_date,
+											  self.context.end_date,
+											  self.context.courses)
+
 		if self.att.dataframe.empty:
 			self.options['has_assignment_taken_data'] = False
 		else:
@@ -84,9 +77,9 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 
 
 		self.avt = AssignmentViewsTimeseries(self.context.session,
-										     self.context.start_date,
-										     self.context.end_date,
-										     self.context.courses)
+											 self.context.start_date,
+											 self.context.end_date,
+											 self.context.courses)
 
 		if self.avt.dataframe.empty:
 			self.options['has_assignment_views_data'] = False
@@ -120,7 +113,7 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 		plots = self.attp.analyze_events_group_by_device_type(self.context.period_breaks,
 															  self.context.minor_period_breaks,
 															  self.context.theme_seaborn_)
-		
+
 		self.options['has_assignment_taken_per_device_types'] = False
 		if plots:
 			data['assignment_taken_per_device_types'] = build_plot_images_dictionary(plots)
@@ -131,7 +124,7 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 		plots = self.attp.analyze_events_group_by_enrollment_type(self.context.period_breaks,
 																  self.context.minor_period_breaks,
 																  self.context.theme_seaborn_)
-		
+
 		self.options['has_assignment_taken_per_enrollment_types'] = False
 		if plots:
 			data['assignment_taken_per_enrollment_types'] = build_plot_images_dictionary(plots)
@@ -196,5 +189,5 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 			data['assignment_views_per_course_sections'] = build_images_dict_from_plot_dict(plots)
 			self.options['has_assignment_views_per_course_sections'] = True
 		return data
-	
+
 View = AssessmentsEventsTimeseriesReport = AssessmentsEventsTimeseriesReportView

@@ -47,8 +47,8 @@ class TestVideoEventsPlot(AnalyticsPandasTestBase):
 		vet = VideoEventsTimeseries(self.session, start_date, end_date, course_id)
 		vetp = VideoEventsTimeseriesPlot(vet)
 		_ = vetp.analyze_video_events_enrollment_types(period_breaks='1 week',
-												   minor_period_breaks='1 day',
-												   video_event_type='WATCH')
+												   	   minor_period_breaks='1 day',
+												   	   video_event_type='WATCH')
 
 	def test_analyze_video_events_per_course_sections(self):
 		start_date = '2015-01-01'
@@ -56,7 +56,6 @@ class TestVideoEventsPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		vet = VideoEventsTimeseries(self.session, start_date, end_date, course_id)
 		vetp = VideoEventsTimeseriesPlot(vet)
-		_ = vetp.analyze_video_events_per_course_sections(
-												period_breaks='1 week',
-												minor_period_breaks='1 day',
-												video_event_type='WATCH')
+		_ = vetp.analyze_video_events_per_course_sections(period_breaks='1 week',
+														  minor_period_breaks='1 day',
+														  video_event_type='WATCH')

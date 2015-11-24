@@ -483,7 +483,7 @@ class NoteLikesTimeseries(object):
 			new_df = qnl.add_enrollment_type(self.dataframe, course_id)
 			if new_df is not None:
 				self.dataframe = new_df
-				
+
 	def analyze_events(self):
 		group_by_items = ['timestamp_period']
 		df = self.build_dataframe(group_by_items, self.dataframe)

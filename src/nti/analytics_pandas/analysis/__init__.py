@@ -16,25 +16,32 @@ from .plots import BookmarksTimeseriesPlot
 from .plots import NoteLikesTimeseriesPlot
 from .plots import NotesViewTimeseriesPlot
 from .plots import NotesEventsTimeseriesPlot
-from .plots import VideoEventsTimeseriesPlot
 from .plots import NotesCreationTimeseriesPlot
 from .plots import NoteFavoritesTimeseriesPlot
+
+from .plots import VideoEventsTimeseriesPlot
+
 from .plots import ResourceViewsTimeseriesPlot
+
 from .plots import HighlightsCreationTimeseriesPlot
+
 from .plots import ForumsEventsTimeseriesPlot
 from .plots import ForumsCreatedTimeseriesPlot
 from .plots import ForumCommentLikesTimeseriesPlot
 from .plots import ForumsCommentsCreatedTimeseriesPlot
 from .plots import ForumCommentFavoritesTimeseriesPlot
+
 from .plots import AssignmentViewsTimeseriesPlot
 from .plots import AssignmentsTakenTimeseriesPlot
 from .plots import AssessmentEventsTimeseriesPlot
+
 from .plots import SelfAssessmentViewsTimeseriesPlot
 from .plots import SelfAssessmentsTakenTimeseriesPlot
 
 from.assessments import AssignmentViewsTimeseries
 from.assessments import AssignmentsTakenTimeseries
 from.assessments import AssessmentEventsTimeseries
+
 from.assessments import SelfAssessmentViewsTimeseries
 from.assessments import SelfAssessmentsTakenTimeseries
 

@@ -15,6 +15,8 @@ import pandas as pd
 
 import numpy as np
 
+from zope.i18n import translate
+
 from .commons import generate_plot_names
 from .commons import line_plot_x_axis_date
 from .commons import group_line_plot_x_axis_date
@@ -87,9 +89,14 @@ class HighlightsCreationTimeseriesPlot(object):
 		for course_id in course_ids:
 			new_df = df[df['course_id'] == course_id]
 			context_name = new_df.iloc[0]['context_name']
-			event_title = 'Number of highlights created in %s' % (context_name)
-			user_title = 'Number of unique users creating highlights in %s' % (context_name)
-			ratio_title = 'Ratio of highlights created over unique user in %s' % (context_name)
+			event_title = translate(_("Number of highlights created in ${title}",
+									  mapping={'title': context_name}))
+
+			user_title = translate(_("Number of unique users creating highlights in ${title}",
+									  mapping={'title': context_name}))
+
+			ratio_title = translate(_("Ratio of highlights created over unique user in ${title}",
+									  mapping={'title': context_name}))
 			event_type = 'highlights_created_in_%s' % (context_name.replace(' ', '_'))
 			section_plots = self.generate_plots(new_df,
 												event_title,

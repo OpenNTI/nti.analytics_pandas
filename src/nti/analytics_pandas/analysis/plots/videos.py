@@ -15,6 +15,8 @@ import pandas as pd
 
 import numpy as np
 
+from zope.i18n import translate
+
 from .commons import generate_plot_names
 from .commons import line_plot_x_axis_date
 from .commons import group_line_plot_x_axis_date
@@ -46,9 +48,14 @@ class VideoEventsTimeseriesPlot(object):
 		if video_event_type == 'skip':
 			video_event_type = 'skipp'
 
-		event_title = 'Number of videos %sed during period of time' %(video_event_type)
-		user_title =  'Number of unique users %sing videos during period of time' %(video_event_type)
-		ratio_title = 'Ratio of videos %sed over unique user on each available date' %(video_event_type)
+		event_title = translate(_("Number of videos ${event}ed during period of time",
+								  mapping={'event': video_event_type}))
+
+		user_title = translate(_("Number of unique users ${event}ing videos during period of time",
+								  mapping={'event': video_event_type}))
+
+		ratio_title = translate(_("Ratio of videos ${event}ed over unique user on each available date",
+								  mapping={'event': video_event_type}))
 		event_type = 'video_events'
 		plots = self.generate_plots(
 							df,
@@ -268,9 +275,14 @@ class VideoEventsTimeseriesPlot(object):
 			video_event_types = np.unique(df['video_event_type'].values.ravel())
 			for video_event_type in video_event_types:
 				new_df = df[df['video_event_type'] == video_event_type]
-				event_title = 'Number of video events (%s)' % (video_event_type)
-				user_title = 'Number of unique users  (VIDEO %s)' % (video_event_type)
-				ratio_title = 'Ratio of video events over unique user (VIDEO %s)' % (video_event_type)
+				event_title = translate(_("Number of video events (${event})",
+								 		mapping={'event': video_event_type}))
+
+				user_title = translate(_("Number of unique users (VIDEO ${event})",
+								 	   mapping={'event': video_event_type}))
+
+				ratio_title = translate(_("Ratio of video events over unique user (VIDEO ${event})",
+								  		mapping={'event': video_event_type}))
 				event_type = 'video_events_%s' % (video_event_type)
 				video_event_plots = self.generate_plots(new_df,
 														event_title,
@@ -300,9 +312,14 @@ class VideoEventsTimeseriesPlot(object):
 
 		if len(course_ids) > 1:
 			group_by = 'context_name'
-			event_title = 'Number of  video events (%s) per course sections' % video_event_type
-			user_title = 'Number of unique users per course sections (VIDEO %s)' % video_event_type
-			ratio_title = 'Ratio of video events over unique user per course sections (VIDEO %s)' % video_event_type
+			event_title = translate(_("Number of video events (${event}) per course sections",
+							 		mapping={'event': video_event_type}))
+
+			user_title = translate(_("Number of unique users per course sections (VIDEO ${event})",
+							 	   mapping={'event': video_event_type}))
+
+			ratio_title = translate(_("Ratio of video events over unique user per course sections (VIDEO ${event})",
+							  		mapping={'event': video_event_type}))
 			event_type = 'video_events_per_course_sections_%s' % (video_event_type)
 			all_section_plots = self.generate_group_by_plots(df,
 															 group_by,
@@ -318,9 +335,16 @@ class VideoEventsTimeseriesPlot(object):
 		for course_id in course_ids:
 			new_df = df[df['course_id'] == course_id]
 			context_name = new_df.iloc[0]['context_name']
-			event_title = 'Number of video events (%s) in %s' % (video_event_type, context_name)
-			user_title = 'Number of unique users on video events (%s) in %s' % (video_event_type, context_name)
-			ratio_title = 'Ratio of video events (%s) over unique user in %s' % (video_event_type, context_name)
+			event_title = translate(_("Number of video events (${event}) in ${context}",
+								 	   mapping={'event': video_event_type,
+												'context':context_name}))
+
+			user_title = translate(_("Number of unique users on video events (${event}) in ${context}",
+								 	  mapping={'event': video_event_type,
+											   'context':context_name}))
+
+			ratio_title = translate(_("Ratio of video events (${event}) over unique user in ${context}",
+								  	mapping={'event': video_event_type, 'context':context_name}))
 			event_type = 'video_events_%s_in_%s' % (video_event_type, context_name.replace(' ', '_'))
 			section_plots = self.generate_plots(
 											new_df,

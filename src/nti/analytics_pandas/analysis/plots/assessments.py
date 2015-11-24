@@ -15,6 +15,8 @@ import pandas as pd
 
 import numpy as np
 
+from zope.i18n import translate
+
 from .commons import generate_plot_names
 from .commons import line_plot_x_axis_date
 from .commons import group_line_plot_x_axis_date
@@ -91,10 +93,10 @@ class AssignmentViewsTimeseriesPlot(object):
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
+		event_type = 'assignment_views'
 		event_title = _('Number of assignments viewed during period of time')
 		user_title = _('Number of unique users viewing assignments during period of time')
 		ratio_title = _('Ratio of assignments viewed over unique user on each available date')
-		event_type = 'assignment_views'
 		plots = self.generate_plots(df,
 									event_title,
 									user_title,
@@ -139,9 +141,16 @@ class AssignmentViewsTimeseriesPlot(object):
 		for course_id in course_ids:
 			new_df = df[df['course_id'] == course_id]
 			context_name = new_df.iloc[0]['context_name']
-			event_title = 'Number of assignments viewed in %s' % (context_name)
-			user_title = 'Number of unique users viewing assignments in %s' % (context_name)
-			ratio_title = 'Ratio of assignments viewed over unique user in %s' % (context_name)
+
+			event_title = translate(_("Number of assignments viewed in ${title}",
+									  mapping={'title': context_name}))
+
+			user_title = translate(_("Number of unique users viewing assignments in ${title}",
+									  mapping={'title': context_name}))
+
+			ratio_title = translate(_("Ratio of assignments viewed over unique user in ${title}",
+									  mapping={'title': context_name}))
+
 			event_type = 'assignment_views_in_%s' % (context_name.replace(' ', '_'))
 			section_plots = self.generate_plots(new_df,
 												event_title,
@@ -150,7 +159,7 @@ class AssignmentViewsTimeseriesPlot(object):
 												period_breaks,
 												minor_period_breaks,
 												theme_seaborn_)
-			key = 'section_%s' %(course_id)
+			key = 'section_%s' % (course_id)
 			section_plots_dict[key] = section_plots
 		plots['section_plots'] = section_plots_dict
 		return plots
@@ -364,9 +373,15 @@ class AssignmentsTakenTimeseriesPlot(object):
 		for course_id in course_ids:
 			new_df = df[df['course_id'] == course_id]
 			context_name = new_df.iloc[0]['context_name']
-			event_title = 'Number of assignments taken in %s' % (context_name)
-			user_title = 'Number of unique users taking assignments in %s' % (context_name)
-			ratio_title = 'Ratio of assignments taken over unique user in %s' % (context_name)
+			event_title = translate(_("Number of assignments taken in ${title}",
+									  mapping={'title': context_name}))
+
+			user_title = translate(_("Number of unique users taking assignments in ${title}",
+									  mapping={'title': context_name}))
+
+			ratio_title = translate(_("Ratio of assignments taken over unique user in ${title}",
+									  mapping={'title': context_name}))
+
 			event_type = 'assignments_taken_in_%s' % (context_name.replace(' ', '_'))
 			section_plots = self.generate_plots(new_df,
 												event_title,
@@ -376,7 +391,7 @@ class AssignmentsTakenTimeseriesPlot(object):
 												minor_period_breaks,
 												theme_seaborn_,
 												event_type)
-			key = 'section_%s' %(course_id)
+			key = 'section_%s' % (course_id)
 			section_plots_dict[key] = section_plots
 		plots['section_plots'] = section_plots_dict
 		return plots
@@ -547,7 +562,9 @@ class SelfAssessmentViewsTimeseriesPlot(object):
 		"""
 		self.savt = savt
 
-	def analyze_events(self, period_breaks='1 week', minor_period_breaks='1 day', theme_seaborn_=True):
+	def analyze_events(self, period_breaks='1 week',
+					   minor_period_breaks='1 day',
+					   theme_seaborn_=True):
 		savt = self.savt
 		df = savt.analyze_events()
 		if df is None :
@@ -602,9 +619,14 @@ class SelfAssessmentViewsTimeseriesPlot(object):
 		for course_id in course_ids:
 			new_df = df[df['course_id'] == course_id]
 			context_name = new_df.iloc[0]['context_name']
-			event_title = 'Number of self assessments viewed in %s' % (context_name)
-			user_title = 'Number of unique users viewing self assessments in %s' % (context_name)
-			ratio_title = 'Ratio of self assessments viewed over unique user in %s' % (context_name)
+			event_title = translate(_("Number of self assessments viewed in ${title}",
+									  mapping={'title': context_name}))
+
+			user_title = translate(_("Number of unique users viewing self assessments in ${title}",
+									  mapping={'title': context_name}))
+
+			ratio_title = translate(_("Ratio of self assessments viewed over unique user in ${title}",
+									  mapping={'title': context_name}))
 			event_type = 'self_assessment_views_in_%s' % (context_name.replace(' ', '_'))
 			section_plots = self.generate_plots(new_df,
 												event_title,
@@ -823,9 +845,14 @@ class SelfAssessmentsTakenTimeseriesPlot(object):
 		for course_id in course_ids:
 			new_df = df[df['course_id'] == course_id]
 			context_name = new_df.iloc[0]['context_name']
-			event_title = 'Number of self assessments taken in %s' % (context_name)
-			user_title = 'Number of unique users taking self assessments in %s' % (context_name)
-			ratio_title = 'Ratio of self assessments taken over unique user in %s' % (context_name)
+			event_title = translate(_("Number of self assessments taken in ${title}",
+									  mapping={'title': context_name}))
+
+			user_title = translate(_("Number of unique users taking self assessments in ${title}",
+									  mapping={'title': context_name}))
+
+			ratio_title = translate(_("Ratio of self assessments taken over unique user in ${title}",
+									  mapping={'title': context_name}))
 			event_type = 'self_assessments_taken_in_%s' % (context_name.replace(' ', '_'))
 			section_plots = self.generate_plots(new_df,
 												event_title,
