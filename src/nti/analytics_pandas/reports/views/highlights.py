@@ -46,20 +46,24 @@ class HighlightsTimeseriesReportView(AbstractReportView):
 		return _('Highlight Events Report')
 
 	def _build_data(self, data=_('sample highlights created events report')):
-		if 'has_highlight_data' not in self.options.keys():
+		keys = self.options.keys()
+		if 'has_highlight_data' not in keys:
 			self.options['has_highlight_data'] = False
 
-		if 'has_highlight_data_per_device_types' not in self.options.keys():
+		if 'has_highlight_data_per_device_types' not in keys:
 			self.options['has_highlight_data_per_device_types'] = False
 
-		if 'has_highlight_data_per_resource_types' not in self.options.keys():
+		if 'has_highlight_data_per_resource_types' not in keys:
 			self.options['has_highlight_data_per_resource_types'] = False
 
-		if 'has_highlight_created_users' not in self.options.keys():
+		if 'has_highlight_created_users' not in keys:
 			self.options['has_highlight_created_users'] = False
 
-		if 'has_highlight_data_per_course_sections' not in self.options.keys():
+		if 'has_highlight_data_per_course_sections' not in keys:
 			self.options['has_highlight_data_per_course_sections'] = False
+
+		if 'has_highlight_data_per_enrollment_types' not in keys:
+			self.options['has_highlight_data_per_enrollment_types'] = False
 
 		self.options['data'] = data
 		return self.options
@@ -108,6 +112,15 @@ class HighlightsTimeseriesReportView(AbstractReportView):
 		if plots:
 			data['highlights_created_per_device_types'] = build_plot_images_dictionary(plots)
 			self.options['has_highlight_data_per_device_types'] = True
+		return data
+
+	def get_highlights_created_plots_per_enrollment_types(self, data):
+		plots = self.hctp.analyze_enrollment_types(self.context.period_breaks,
+										 	   self.context.minor_period_breaks,
+										 	   self.context.theme_seaborn_)
+		if plots:
+			data['highlights_created_per_enrollment_types'] = build_plot_images_dictionary(plots)
+			self.options['has_highlight_data_per_enrollment_types'] = True
 		return data
 
 	def get_highlights_created_plots_per_resource_types(self, data):

@@ -30,6 +30,23 @@
 
 		<setNextTemplate name="main"/>
 		<nextPage />
+		<tal:block tal:condition="python: options['has_highlight_data_per_enrollment_types']">
+			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+				Highlights Created per Enrollment Types
+			</h1>
+			<hr width="100%" />
+			<tal:block tal:define="highlights_created options/data/highlights_created_per_enrollment_types">
+				<illustration width="5in" height="3in"
+						  	  tal:define="event highlights_created/event_highlights_created_per_enrollment_types;
+						  	  			  user_event highlights_created/user_highlights_created_per_enrollment_types;
+									      ratio_event highlights_created/ratio_highlights_created_per_enrollment_types"
+						      metal:use-macro="macro:three_plots_event">
+				</illustration>
+			</tal:block>
+		</tal:block>
+
+		<setNextTemplate name="main"/>
+		<nextPage />
 		<tal:block tal:condition="python: options['has_highlight_data_per_device_types']">
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Highlights Created per Device Types

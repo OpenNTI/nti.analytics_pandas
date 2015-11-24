@@ -25,6 +25,7 @@ class TestHighlightsEDA(AnalyticsPandasTestBase):
 		assert_that(len(hct.dataframe.index), equal_to(779))
 		assert_that(hct.dataframe.columns, has_item('device_type'))
 		assert_that(hct.dataframe.columns, has_item('resource_type'))
+		assert_that(hct.dataframe.columns, has_item('enrollment_type'))
 
 		df = hct.analyze_events()
 		assert_that(len(df.index), equal_to(36))
