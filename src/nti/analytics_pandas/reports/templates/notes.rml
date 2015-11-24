@@ -123,156 +123,156 @@
 				</illustration>
 			</tal:block>		
 		</tal:block>				
+	</tal:block>
+
+    <setNextTemplate name="main"/>
+	<nextPage />
+	<tal:block tal:condition="python: options['has_note_views_data']">
+		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+			Note Views
+		</h1>
+		<hr width="100%" />
+		<tal:block tal:define= "note_views options/data/note_views">
+			<illustration width="5in" height="3in"
+						  tal:define="event note_views/event_note_views;
+									  user_event note_views/user_note_views;
+									  ratio_event note_views/ratio_note_views"
+						  tal:condition="note_views"
+						  metal:use-macro="macro:three_plots_event">
+			</illustration>
+		</tal:block>
 
 		<setNextTemplate name="main"/>
 		<nextPage />
-		<tal:block tal:condition="python: options['has_note_views_data']">
+		<tal:block tal:condition="python: options['has_note_views_data_per_device_types']">
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
-				Note Views
+				Note Views per Device Types
 			</h1>
 			<hr width="100%" />
-			<tal:block tal:define= "note_views options/data/note_views">
+			<tal:block tal:define= "note_views options/data/note_views_per_device_types">
 				<illustration width="5in" height="3in"
-							  tal:define="event note_views/event_note_views;
-										  user_event note_views/user_note_views;
-										  ratio_event note_views/ratio_note_views"
+							  tal:define="event note_views/event_note_views_per_device_types;
+										  user_event note_views/user_note_views_per_device_types;
+										  ratio_event note_views/ratio_note_views_per_device_types"
 							  tal:condition="note_views"
 							  metal:use-macro="macro:three_plots_event">
 				</illustration>
-			</tal:block>
-
-			<setNextTemplate name="main"/>
-			<nextPage />
-			<tal:block tal:condition="python: options['has_note_views_data_per_device_types']">
-				<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
-					Note Views per Device Types
-				</h1>
-				<hr width="100%" />
-				<tal:block tal:define= "note_views options/data/note_views_per_device_types">
-					<illustration width="5in" height="3in"
-								  tal:define="event note_views/event_note_views_per_device_types;
-											  user_event note_views/user_note_views_per_device_types;
-											  ratio_event note_views/ratio_note_views_per_device_types"
-								  tal:condition="note_views"
-								  metal:use-macro="macro:three_plots_event">
-					</illustration>
-				</tal:block>		
-			</tal:block>
-
-			<setNextTemplate name="main"/>
-			<nextPage />
-			<tal:block tal:condition="python: options['has_note_views_data_per_resource_types']">
-				<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
-					Note Views per Resource Types
-				</h1>
-				<hr width="100%" />
-				<tal:block tal:define= "note_views options/data/note_views_per_resource_types">
-					<illustration width="5in" height="3in"
-								  tal:define="event note_views/event_note_views_per_resource_types;
-											  user_event note_views/user_note_views_per_resource_types;
-											  ratio_event note_views/ratio_note_views_per_resource_types"
-								  tal:condition="note_views"
-								  metal:use-macro="macro:three_plots_event">
-					</illustration>
-				</tal:block>		
-			</tal:block>
-
-			<setNextTemplate name="main"/>
-			<nextPage />
-			<tal:block tal:condition="python: options['has_note_views_data_per_sharing_types']">
-				<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
-					Note Views per Sharing Types
-				</h1>
-				<hr width="100%" />
-				<tal:block tal:define= "note_views options/data/note_views_per_sharing_types">
-					<illustration width="5in" height="3in"
-								  tal:define="event note_views/event_note_views_per_sharing_types;
-											  user_event note_views/user_note_views_per_sharing_types;
-											  ratio_event note_views/ratio_note_views_per_sharing_types"
-								  tal:condition="note_views"
-								  metal:use-macro="macro:three_plots_event">
-					</illustration>
-				</tal:block>		
-			</tal:block>
-
-			<setNextTemplate name="main"/>
-			<nextPage />
-			<tal:block tal:condition="python: options['has_note_views_data_per_course_sections']">
-				<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
-					Note Views per Course Sections
-				</h1>
-				<hr width="100%" />
-				<tal:block tal:define= "all_sections options/data/note_views_per_course_sections/all_section_plots">
-					<illustration width="5in" height="3in"
-								  tal:define="event all_sections/event_note_views_per_course_sections;
-											  user_event all_sections/user_note_views_per_course_sections;
-											  ratio_event all_sections/ratio_note_views_per_course_sections"
-								  tal:condition="all_sections"
-								  metal:use-macro="macro:three_plots_event">
-					</illustration>
-				</tal:block>		
-			</tal:block>
-
-			<setNextTemplate name="main"/>
-			<nextPage />
-			<tal:block tal:condition="python: options['has_note_views_users']">
-				<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
-					The most active users viewing notes
-				</h1>
-				<hr width="100%" />
-				<illustration width="5in" height="3in"
-						  tal:define="event options/data/note_views_users/most_active_user_viewing_notes"
-						  metal:use-macro="macro:one_plot_event">
-				</illustration>	
-			</tal:block>
-
-			<setNextTemplate name="main"/>
-			<nextPage />
-			<tal:block tal:condition="python: options['has_note_views_author']">
-				<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
-					The most viewed notes' author
-				</h1>
-				<hr width="100%" />
-				<illustration width="5in" height="3in"
-						  tal:define="event options/data/note_views_authors/most_viewed_notes_author"
-						  metal:use-macro="macro:one_plot_event">
-				</illustration>	
-			</tal:block>
+			</tal:block>		
 		</tal:block>
 
 		<setNextTemplate name="main"/>
 		<nextPage />
-		<tal:block tal:condition="python: options['has_note_likes_data']">
+		<tal:block tal:condition="python: options['has_note_views_data_per_resource_types']">
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
-				Note Likes
+				Note Views per Resource Types
 			</h1>
 			<hr width="100%" />
-			<tal:block tal:define="note_likes options/data/note_likes">
+			<tal:block tal:define= "note_views options/data/note_views_per_resource_types">
 				<illustration width="5in" height="3in"
-						  	  tal:define="event note_likes/event_note_likes;
-						  	  			  user_event note_likes/user_note_likes;
-									      ratio_event note_likes/ratio_note_likes"
-						      metal:use-macro="macro:three_plots_event">
+							  tal:define="event note_views/event_note_views_per_resource_types;
+										  user_event note_views/user_note_views_per_resource_types;
+										  ratio_event note_views/ratio_note_views_per_resource_types"
+							  tal:condition="note_views"
+							  metal:use-macro="macro:three_plots_event">
 				</illustration>
-			</tal:block>
+			</tal:block>		
 		</tal:block>
 
 		<setNextTemplate name="main"/>
 		<nextPage />
-		<tal:block tal:condition="python: options['has_note_favorites_data']">
+		<tal:block tal:condition="python: options['has_note_views_data_per_sharing_types']">
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
-				Note Likes
+				Note Views per Sharing Types
 			</h1>
 			<hr width="100%" />
-			<tal:block tal:define="note_favorites options/data/note_favorites">
+			<tal:block tal:define= "note_views options/data/note_views_per_sharing_types">
 				<illustration width="5in" height="3in"
-						  	  tal:define="event note_favorites/event_note_favorites;
-						  	  			  user_event note_favorites/user_note_favorites;
-									      ratio_event note_favorites/ratio_note_favorites"
-						      metal:use-macro="macro:three_plots_event">
+							  tal:define="event note_views/event_note_views_per_sharing_types;
+										  user_event note_views/user_note_views_per_sharing_types;
+										  ratio_event note_views/ratio_note_views_per_sharing_types"
+							  tal:condition="note_views"
+							  metal:use-macro="macro:three_plots_event">
 				</illustration>
-			</tal:block>
+			</tal:block>		
 		</tal:block>
 
+		<setNextTemplate name="main"/>
+		<nextPage />
+		<tal:block tal:condition="python: options['has_note_views_data_per_course_sections']">
+			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+				Note Views per Course Sections
+			</h1>
+			<hr width="100%" />
+			<tal:block tal:define= "all_sections options/data/note_views_per_course_sections/all_section_plots">
+				<illustration width="5in" height="3in"
+							  tal:define="event all_sections/event_note_views_per_course_sections;
+										  user_event all_sections/user_note_views_per_course_sections;
+										  ratio_event all_sections/ratio_note_views_per_course_sections"
+							  tal:condition="all_sections"
+							  metal:use-macro="macro:three_plots_event">
+				</illustration>
+			</tal:block>		
+		</tal:block>
+
+		<setNextTemplate name="main"/>
+		<nextPage />
+		<tal:block tal:condition="python: options['has_note_views_users']">
+			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+				The most active users viewing notes
+			</h1>
+			<hr width="100%" />
+			<illustration width="5in" height="3in"
+					  tal:define="event options/data/note_views_users/most_active_user_viewing_notes"
+					  metal:use-macro="macro:one_plot_event">
+			</illustration>	
+		</tal:block>
+
+		<setNextTemplate name="main"/>
+		<nextPage />
+		<tal:block tal:condition="python: options['has_note_views_author']">
+			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+				The most viewed notes' author
+			</h1>
+			<hr width="100%" />
+			<illustration width="5in" height="3in"
+					  tal:define="event options/data/note_views_authors/most_viewed_notes_author"
+					  metal:use-macro="macro:one_plot_event">
+			</illustration>	
+		</tal:block>
 	</tal:block>
+
+	<setNextTemplate name="main"/>
+	<nextPage />
+	<tal:block tal:condition="python: options['has_note_likes_data']">
+		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+			Note Likes
+		</h1>
+		<hr width="100%" />
+		<tal:block tal:define="note_likes options/data/note_likes">
+			<illustration width="5in" height="3in"
+					  	  tal:define="event note_likes/event_note_likes;
+					  	  			  user_event note_likes/user_note_likes;
+								      ratio_event note_likes/ratio_note_likes"
+					      metal:use-macro="macro:three_plots_event">
+			</illustration>
+		</tal:block>
+	</tal:block>
+
+	<setNextTemplate name="main"/>
+	<nextPage />
+	<tal:block tal:condition="python: options['has_note_favorites_data']">
+		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+			Note Likes
+		</h1>
+		<hr width="100%" />
+		<tal:block tal:define="note_favorites options/data/note_favorites">
+			<illustration width="5in" height="3in"
+					  	  tal:define="event note_favorites/event_note_favorites;
+					  	  			  user_event note_favorites/user_note_favorites;
+								      ratio_event note_favorites/ratio_note_favorites"
+					      metal:use-macro="macro:three_plots_event">
+			</illustration>
+		</tal:block>
+	</tal:block>
+
 </metal:block>

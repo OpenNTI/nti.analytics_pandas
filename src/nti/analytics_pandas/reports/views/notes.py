@@ -54,11 +54,22 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 		return _('Notes Related Events')
 
 	def _build_data(self, data=_('sample notes related events report')):
-		if 'has_notes_created_data' not in self.options.keys():
+		keys = self.options.keys()
+
+		if 'has_notes_created_data' not in keys:
 			self.options['has_notes_created_data'] = False
 
-		if 'has_note_events_data' not in self.options.keys():
+		if 'has_note_events_data' not in keys:
 			self.options['has_note_events_data'] = False
+
+		if 'has_note_views_data' not in keys:
+			self.options['has_note_views_data'] = False
+
+		if 'has_note_likes_data' not in keys:
+			self.options['has_note_likes_data'] = False
+
+		if 'has_note_favorites_data' not in keys:
+			self.options['has_note_favorites_data'] = False
 
 		self.options['data'] = data
 		return self.options
