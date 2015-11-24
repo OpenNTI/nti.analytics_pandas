@@ -151,6 +151,7 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 	def generate_assignment_view_plots(self, data):
 		self.avtp = AssignmentViewsTimeseriesPlot(self.avt)
 		data = self.get_assignment_view_plots(data)
+		data = self.get_assignment_view_plots_per_device_types(data)
 		return data
 
 	def get_assignment_view_plots(self, data):
@@ -159,6 +160,16 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 										 self.context.theme_seaborn_)
 		if plots:
 			data['assignment_views'] = build_plot_images_dictionary(plots)
+		return data
+
+	def get_assignment_view_plots_per_device_types(self, data):
+		plots = self.avtp.analyze_events_group_by_device_type(self.context.period_breaks,
+															  self.context.minor_period_breaks,
+															  self.context.theme_seaborn_)
+		self.options['has_assignment_views_per_device_types'] = False
+		if plots:
+			data['assignment_views_per_device_types'] = build_plot_images_dictionary(plots)
+			self.options['has_assignment_views_per_device_types'] = True
 		return data
 	
 View = AssessmentsEventsTimeseriesReport = AssessmentsEventsTimeseriesReportView
