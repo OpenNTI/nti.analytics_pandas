@@ -227,6 +227,29 @@ class NotesCreationTimeseriesPlot(object):
 												   event_type)
 		return device_plots
 
+	def analyze_enrollment_types(self, period_breaks='1 week', minor_period_breaks='1 day',
+							theme_seaborn_=True):
+
+		nct = self.nct
+		dataframe = nct.dataframe
+		df = nct.analyze_enrollment_types(dataframe)
+
+		group_by = 'enrollment_type'
+		event_title = _('Number of notes created grouped by enrollment types')
+		user_title = _('Number of unique users creating notes grouped by enrollment types')
+		ratio_title = _('Ratio of notes created grouped by enrollment types over unique user')
+		event_type = 'notes_created_per_enrollment_types'
+		enrollment_plots = self.generate_group_by_plot(df,
+												   group_by,
+												   event_title,
+												   user_title,
+												   ratio_title,
+												   period_breaks,
+												   minor_period_breaks,
+												   theme_seaborn_,
+												   event_type)
+		return enrollment_plots
+
 	def analyze_resource_types(self, period_breaks='1 week',
 							   minor_period_breaks='1 day',
 							   theme_seaborn_=True):
@@ -612,9 +635,9 @@ class NotesViewTimeseriesPlot(object):
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
 		group_by = 'device_type'
-		event_title = _('Number of notes viewed grouped by device types')
+		event_title = _('Number of note views grouped by device types')
 		user_title = _('Number of unique users viewing notes grouped by device types')
-		ratio_title = _('ratio of notes viewed grouped by device types over unique user')
+		ratio_title = _('Ratio of note views grouped by device types over unique user')
 		event_type = 'note_views_per_device_types'
 		plots = self.generate_group_by_plots(df,
 											 group_by,
@@ -626,7 +649,34 @@ class NotesViewTimeseriesPlot(object):
 											 theme_seaborn_,
 											 event_type)
 
-		return (plots)
+		return plots
+
+	def analyze_total_events_based_on_enrollment_type(self, period_breaks='1 week',
+												  minor_period_breaks='1 day',
+												  theme_seaborn_=True):
+		nvt = self.nvt
+		df = nvt.analyze_total_events_based_on_enrollment_type()
+		if df is None:
+			return ()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		group_by = 'enrollment_type'
+		event_title = _('Number of note views grouped by enrollment types')
+		user_title = _('Number of unique users viewing notes grouped by enrollment types')
+		ratio_title = _('Ratio of note views grouped by enrollment types over unique user')
+		event_type = 'note_views_per_enrollment_types'
+		plots = self.generate_group_by_plots(df,
+											 group_by,
+											 event_title,
+											 user_title,
+											 ratio_title,
+											 period_breaks,
+											 minor_period_breaks,
+											 theme_seaborn_,
+											 event_type)
+
+		return plots
 
 	def analyze_total_events_based_on_resource_type(self, period_breaks='1 week',
 													minor_period_breaks='1 day',
@@ -791,6 +841,34 @@ class NoteLikesTimeseriesPlot(object):
 		user_title = _('Number of unique users liking notes grouped by device types')
 		ratio_title = _('Ratio of note likes over unique user grouped by device types')
 		event_type = 'note_likes_per_device_types'
+		plots = self.generate_group_by_plots(
+									df,
+									group_by,
+									event_title,
+									user_title,
+									ratio_title,
+									period_breaks,
+									minor_period_breaks,
+									theme_seaborn_,
+									event_type)
+		return plots
+
+	def analyze_events_per_enrollment_types(self, period_breaks='1 week',
+										minor_period_breaks='1 day',
+										theme_seaborn_=True):
+
+		nlt = self.nlt
+		df = nlt.analyze_events_per_enrollment_types()
+		if df is None:
+			return ()
+
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		group_by = 'enrollment_type'
+		event_title = _('Number of note likes grouped by enrollment types')
+		user_title = _('Number of unique users liking notes grouped by enrollment types')
+		ratio_title = _('Ratio of note likes over unique user grouped by enrollment types')
+		event_type = 'note_likes_per_enrollment_types'
 		plots = self.generate_group_by_plots(
 									df,
 									group_by,
@@ -1026,6 +1104,34 @@ class NoteFavoritesTimeseriesPlot(object):
 									theme_seaborn_,
 									event_type)
 		return plots
+
+	def analyze_events_per_enrollment_types(self, period_breaks='1 week',
+										minor_period_breaks='1 day',
+										theme_seaborn_=True):
+		nft = self.nft
+		df = nft.analyze_events_per_enrollment_types()
+		if df is None:
+			return ()
+
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		group_by = 'enrollment_type'
+		event_title = _('Number of note favorites grouped by enrollment types')
+		user_title = _('Number of unique users voting notes as favorite grouped by enrollment types')
+		ratio_title = _('Ratio of note favorites over unique user grouped by enrollment types')
+		event_type = 'note_favorites_per_enrollment_types'
+		plots = self.generate_group_by_plots(
+									df,
+									group_by,
+									event_title,
+									user_title,
+									ratio_title,
+									period_breaks,
+									minor_period_breaks,
+									theme_seaborn_,
+									event_type)
+		return plots
+
 
 	def analyze_events_per_resource_types(self, period_breaks='1 week',
 										  minor_period_breaks='1 day',
