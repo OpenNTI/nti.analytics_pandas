@@ -45,8 +45,13 @@ class ResourceViewsTimeseriesReportView(AbstractReportView):
 		return _('Resource Views')
 
 	def _build_data(self, data=_('sample resource views report')):
-		if 'has_data' not in self.options.keys():
+		keys = self.options.keys()
+		if 'has_data' not in keys:
 			self.options['has_data'] = False
+
+		if 'has_resource_views_per_enrollment_types' not in keys:
+			self.options['has_resource_views_per_enrollment_types'] = False
+
 		self.options['data'] = data
 		return self.options
 
@@ -89,6 +94,15 @@ class ResourceViewsTimeseriesReportView(AbstractReportView):
 		data['resource_views_per_device_types'] = None
 		if plots:
 			data['resource_views_per_device_types'] = build_plot_images_dictionary(plots)
+		return data
+
+	def get_resource_views_per_enrollment_types(self, data):
+		plots = self.rvtp.analyze_enrollment_type(self.context.period_breaks,
+											  self.context.minor_period_breaks,
+											  self.context.theme_seaborn_)
+		if plots:
+			data['resource_views_per_enrollment_types'] = build_plot_images_dictionary(plots)
+			self.options['has_resource_views_per_enrollment_types'] = True
 		return data
 
 	def get_resource_views_per_resource_types(self, data):

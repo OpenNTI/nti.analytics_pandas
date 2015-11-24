@@ -30,6 +30,14 @@ class TestResourceViewsPlot(AnalyticsPandasTestBase):
 		rvtp = ResourceViewsTimeseriesPlot(rvt)
 		_ = rvtp.analyze_events_per_course_sections()
 
+	def test_analyze_events_per_enrollment_types(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		rvt = ResourceViewsTimeseries(self.session, start_date, end_date, course_id)
+		rvtp = ResourceViewsTimeseriesPlot(rvt)
+		_ = rvtp.analyze_enrollment_type()
+		
 	def test_resource_and_device_type_analysis(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'

@@ -25,6 +25,8 @@ class TestResourceViewsEDA(AnalyticsPandasTestBase):
 		assert_that(len(rvt.dataframe.index), equal_to(4240))
 		assert_that(rvt.dataframe.columns, has_item('device_type'))
 		assert_that(rvt.dataframe.columns, has_item('resource_type'))
+		assert_that(rvt.dataframe.columns, has_item('context_name'))
+		assert_that(rvt.dataframe.columns, has_item('enrollment_type'))
 
 		event_df = rvt.analyze_events()
 		assert_that(len(event_df.index), equal_to(129))

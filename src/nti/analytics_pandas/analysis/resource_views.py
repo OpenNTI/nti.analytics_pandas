@@ -30,7 +30,8 @@ class ResourceViewsTimeseries(object):
 
 	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_resource_type=True, with_device_type=True,
-				 time_period_date=True, with_context_name=True):
+				 time_period_date=True, with_context_name=True,
+				 with_enrollment_type=True):
 		self.session = session
 		self.start_date = start_date
 		self.end_date = end_date
@@ -61,6 +62,12 @@ class ResourceViewsTimeseries(object):
 			if new_df is not None:
 				self.dataframe = new_df
 				categorical_columns.append('context_name')
+
+		if with_enrollment_type:
+			new_df = qrv.add_enrollment_type(self.dataframe, course_id)
+			if new_df is not None:
+				self.dataframe = new_df
+				categorical_columns.append('enrollment_type')
 
 		if time_period_date:
 			self.dataframe = add_timestamp_period_(self.dataframe)
@@ -108,6 +115,17 @@ class ResourceViewsTimeseries(object):
 
 		"""
 		group_by_columns = ['timestamp_period', 'device_type']
+		df = self.build_dataframe(group_by_columns)
+		return df
+
+	def analyze_events_based_on_enrollment_type(self):
+		"""
+		group course resource views dataframe by timestamp_period and enrollment_type
+		count the number of unique users, number of resource views and number of unique
+		resources in each group return the result as dataframe
+
+		"""
+		group_by_columns = ['timestamp_period', 'enrollment_type']
 		df = self.build_dataframe(group_by_columns)
 		return df
 

@@ -393,11 +393,43 @@ class  ResourceViewsTimeseriesPlot(object):
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		group_by = 'device_type'
-		event_title = _('Number of resource views on each device type')
-		user_title = _('Number of unique users viewing each device type at given time period')
+		event_title = _('Number of resource views per device type')
+		user_title = _('Number of unique users viewing resources per device type')
 		ratio_title = _('Ratio of resource views over unique users grouped by device type')
 		unique_resource_title = _('Number of unique course resource viewed during time period')
 		event_type = 'resource_views_per_device_types'
+		plots = self.generate_group_by_plots(
+									df,
+									group_by,
+									event_title,
+									user_title,
+									ratio_title,
+									unique_resource_title,
+									period_breaks,
+									minor_period_breaks,
+									theme_seaborn_,
+									event_type)
+		return plots
+
+	def analyze_enrollment_type(self, period_breaks='1 week', minor_period_breaks='1 day',
+							theme_seaborn_=True):
+		"""
+		plot course resource views based on enrollment type
+		"""
+
+		rvt = self.rvt
+		df = rvt.analyze_events_based_on_enrollment_type()
+		if df is None:
+			return ()
+
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		group_by = 'enrollment_type'
+		event_title = _('Number of resource views per enrollment type')
+		user_title = _('Number of unique users viewing resource per enrollment type')
+		ratio_title = _('Ratio of resource views over unique users per enrollment type')
+		unique_resource_title = _('Number of unique course resource viewed during time period')
+		event_type = 'resource_views_per_enrollment_types'
 		plots = self.generate_group_by_plots(
 									df,
 									group_by,

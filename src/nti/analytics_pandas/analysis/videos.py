@@ -50,7 +50,7 @@ class VideoEventsTimeseries(object):
 				self.dataframe = new_df
 				categorical_columns.append('context_name')
 
-		if with_context_name:
+		if with_enrollment_type:
 			new_df = qve.add_enrollment_type(self.dataframe, course_id)
 			if new_df is not None:
 				self.dataframe = new_df
