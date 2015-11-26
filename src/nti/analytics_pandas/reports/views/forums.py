@@ -130,7 +130,9 @@ class ForumsTimeseriesReportView(AbstractReportView):
 												self.context.courses)
 		if self.fclt.dataframe.empty:
 			self.options['has_forum_comment_likes_data'] = False
-		data = self.generate_forum_comment_likes_plots(data)
+		else:
+			self.options['has_forum_comment_likes_data'] = True
+			data = self.generate_forum_comment_likes_plots(data)
 
 		self.fcft = ForumCommentFavoritesTimeseries(self.context.session,
 													self.context.start_date,
@@ -238,6 +240,7 @@ class ForumsTimeseriesReportView(AbstractReportView):
 	def generate_forum_comment_likes_plots(self, data):
 		self.fcltp = ForumCommentLikesTimeseriesPlot(self.fclt)
 		data = self.get_forum_comment_likes_plots(data)
+		data = self.get_forum_comment_likes_plots_per_enrollment_types(data)
 		data = self.get_forum_comment_likes_plots_per_device_types(data)
 		if len(self.context.courses) > 1:
 			data = self.get_forum_comment_likes_plots_per_course_sections(data)
@@ -258,6 +261,16 @@ class ForumsTimeseriesReportView(AbstractReportView):
 		if plots:
 			data['forum_comment_likes_per_device_types'] = build_plot_images_dictionary(plots)
 			self.options['has_forum_comment_likes_per_device_types'] = True
+		return data
+
+	def get_forum_comment_likes_plots_per_enrollment_types(self, data):
+		plots = self.fcltp.analyze_enrollment_types(self.context.period_breaks,
+							  					self.context.minor_period_breaks,
+							 					self.context.theme_seaborn_)
+		self.options['has_forum_comment_likes_per_enrollment_types'] = False
+		if plots:
+			data['forum_comment_likes_per_enrollment_types'] = build_plot_images_dictionary(plots)
+			self.options['has_forum_comment_likes_per_enrollment_types'] = True
 		return data
 
 	def get_forum_comment_likes_plots_per_course_sections(self, data):
