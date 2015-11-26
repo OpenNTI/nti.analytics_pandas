@@ -106,14 +106,14 @@ class ForumsTimeseriesReportView(AbstractReportView):
 										   self.context.start_date,
 										   self.context.end_date,
 										   self.context.courses)
+		data = {}
+		
 		if self.fct.dataframe.empty:
 			self.options['has_forums_created_data'] = False
-
-		self.options['has_forums_created_data'] = True
-
-		data = {}
-		data = self.generate_forums_created_plots(data)
-
+		else:
+			self.options['has_forums_created_data'] = True
+			data = self.generate_forums_created_plots(data)
+		
 		self.fcct = ForumsCommentsCreatedTimeseries(self.context.session,
 													self.context.start_date,
 													self.context.end_date,
@@ -140,7 +140,9 @@ class ForumsTimeseriesReportView(AbstractReportView):
 													self.context.courses)
 		if self.fcft.dataframe.empty:
 			self.options['has_forum_comment_favorites_data'] = False
-		data = self.generate_forum_comment_favorites_plots(data)
+		else:
+			self.options['has_forum_comment_favorites_data'] = True
+			data = self.generate_forum_comment_favorites_plots(data)
 
 		self.fet = ForumsEventsTimeseries(self.fct, self.fcct, self.fclt, self.fcft)
 		data = self.generate_forum_event_plots(data)
@@ -285,6 +287,7 @@ class ForumsTimeseriesReportView(AbstractReportView):
 	def generate_forum_comment_favorites_plots(self, data):
 		self.fcftp = ForumCommentFavoritesTimeseriesPlot(self.fcft)
 		data = self.get_forum_comment_favorites_plots(data)
+		data = self.get_forum_comment_favorites_plots_per_enrollment_types(data)
 		data = self.get_forum_comment_favorites_plots_per_device_types(data)
 		if len(self.context.courses) > 1:
 			data = self.get_forum_comment_favorites_plots_per_course_sections(data)
@@ -296,6 +299,16 @@ class ForumsTimeseriesReportView(AbstractReportView):
 						 				  self.context.theme_seaborn_)
 		if plots:
 			data['forum_comment_favorites'] = build_plot_images_dictionary(plots)
+		return data
+
+	def get_forum_comment_favorites_plots_per_enrollment_types(self, data):
+		plots = self.fcftp.analyze_enrollment_types(self.context.period_breaks,
+							  					self.context.minor_period_breaks,
+							 					self.context.theme_seaborn_)
+		self.options['has_forum_comment_favorites_per_enrollment_types'] = False
+		if plots:
+			data['forum_comment_favorites_per_enrollment_types'] = build_plot_images_dictionary(plots)
+			self.options['has_forum_comment_favorites_per_enrollment_types'] = True
 		return data
 
 	def get_forum_comment_favorites_plots_per_device_types(self, data):
