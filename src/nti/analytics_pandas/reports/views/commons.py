@@ -14,6 +14,7 @@ import atexit
 import shutil
 import tempfile
 from collections import Mapping
+import matplotlib.pyplot as plt
 from z3c.rml import rml2pdf
 
 from ...queries import QueryCourses
@@ -55,7 +56,10 @@ def build_plot_images_dictionary(plots, image_type='png', dirname=None):
 			images[plot.plot_name] = filename
 	return images
 
-def copy_plot_to_temporary_file(plot, image_type, dirname=None):
+def copy_plot_to_temporary_file_(plot, image_type, dirname=None):
+	"""
+	ega: please keep this function for further reference
+	"""
 	image = save_plot_(plot.plot, plot.plot_name, image_type)
 	try:
 		image_file = tempfile.NamedTemporaryFile(delete=False, dir=dirname)
@@ -63,6 +67,13 @@ def copy_plot_to_temporary_file(plot, image_type, dirname=None):
 		shutil.copyfileobj(image.data, image_file)
 	finally:
 		image.data.close()
+	return image_file.name
+
+def copy_plot_to_temporary_file(plot, image_type, dirname=None):
+	image_file = tempfile.NamedTemporaryFile(delete=False, dir=dirname)
+	plt.figure.Figure = plot.plot.draw()
+	plt.savefig(image_file.name, format=image_type)
+	plt.close()
 	return image_file.name
 
 def get_course_names(session, courses_id):

@@ -32,6 +32,9 @@ class Plot(object):
 		return me
 
 def save_plot_(plot, image_filename, image_type='png'):
+	"""
+	ega: please keep this function for further reference
+	"""
 	plt.figure.Figure = plot.draw()
 	buf = StringIO()
 	plt.savefig(buf, format=image_type)
