@@ -477,6 +477,44 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 											 event_type)
 		return plots
 
+	def analyze_enrollment_types(self,
+							 	 period_breaks='1 week',
+							 	 minor_period_breaks='1 day',
+							 	 theme_seaborn_=True):
+		"""
+		return plots of forum comments creation grouped by enrollment_type during period of time
+		it consists of:
+			- number of forums comment creation
+			- number of unique users
+			- ratio of forum comment creation over unique users
+			- average comment length
+		"""
+		fcct = self.fcct
+		df = fcct.analyze_enrollment_types()
+		if df is None:
+			return ()
+
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		group_by = 'enrollment_type'
+		title_event = _('Number of forum comments created grouped by enrollment types')
+		title_users = _('Number of unique users creating forum comments grouped by enrollment types')
+		title_ratio = _('Ratio of forums comments created over unique user on each available date')
+		title_avg_length = _('Average forums comments length on each available date')
+		event_type = 'forum_comments_created_per_enrollment_types'
+		plots = self.generate_group_by_plots(df,
+											 group_by,
+											 period_breaks,
+											 minor_period_breaks,
+											 title_event,
+											 title_users,
+											 title_ratio,
+											 title_avg_length,
+											 theme_seaborn_,
+											 event_type)
+		return plots
+
 	def plot_the_most_active_users(self, max_rank_number=10):
 		fcct = self.fcct
 		users_df = fcct.get_the_most_active_users(max_rank_number)
@@ -604,6 +642,37 @@ class ForumCommentLikesTimeseriesPlot(object):
 		user_title = _('Number of unique users liking forum comments grouped by device types')
 		ratio_title = _('Ratio of forum comments liked over unique user grouped by device types')
 		event_type = 'forum_comment_likes_per_device_types'
+		plots = self.generate_group_by_plots(df,
+											 group_by,
+											 event_title,
+											 user_title,
+											 ratio_title,
+											 period_breaks,
+											 minor_period_breaks,
+											 theme_seaborn_,
+											 event_type)
+		return plots
+
+	def analyze_enrollment_types(self, period_breaks='1 week',
+								 minor_period_breaks='1 day',
+								 theme_seaborn_=True):
+		"""
+		plot the number of comments liked per enrollment types on each available date during time period.
+		It also shows the number of unique users liking comments
+		"""
+		fclt = self.fclt
+		df = fclt.analyze_enrollment_types()
+		if df is None:
+			return ()
+
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		group_by = 'enrollment_type'
+		event_title = _('Number of forum comments likes grouped by enrollment types')
+		user_title = _('Number of unique users liking forum comments grouped by enrollment types')
+		ratio_title = _('Ratio of forum comments liked over unique user grouped by enrollment types')
+		event_type = 'forum_comment_likes_per_enrollment_types'
 		plots = self.generate_group_by_plots(df,
 											 group_by,
 											 event_title,
@@ -826,6 +895,37 @@ class ForumCommentFavoritesTimeseriesPlot(object):
 		user_title = _('Number of unique users voting forum comments as favorites grouped by device types')
 		ratio_title = _('Ratio of forum comment favorites over unique users grouped by device types')
 		event_type = 'forum_comment_favorites_per_device_types'
+		plots = self.generate_group_by_plots(df,
+											 group_by,
+											 event_title,
+											 user_title,
+											 ratio_title,
+											 period_breaks,
+											 minor_period_breaks,
+											 theme_seaborn_,
+											 event_type)
+		return plots
+
+	def analyze_enrollment_types(self, period_breaks='1 week',
+							     minor_period_breaks='1 day',
+							     theme_seaborn_=True):
+		"""
+		plot the number of comment favorites per enrollment types on each available date during time period.
+		It also shows the number of unique users adding favorites
+		"""
+		fcft = self.fcft
+		df = fcft.analyze_enrollment_types()
+		if df is None:
+			return ()
+
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		group_by = 'enrollment_type'
+		event_title = _('Number of forum comment favorites grouped by enrollment types')
+		user_title = _('Number of unique users voting forum comments as favorites grouped by enrollment types')
+		ratio_title = _('Ratio of forum comment favorites over unique users grouped by enrollment types')
+		event_type = 'forum_comment_favorites_per_enrollment_types'
 		plots = self.generate_group_by_plots(df,
 											 group_by,
 											 event_title,
