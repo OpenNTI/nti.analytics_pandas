@@ -137,7 +137,31 @@
 							  metal:use-macro="macro:three_plots_event">
 				</illustration>
 			</tal:block>		
-		</tal:block>				
+		</tal:block>
+
+		<setNextTemplate name="main"/>
+		<nextPage />
+		<tal:block tal:condition="python: options['has_notes_created_on_videos']">
+			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+				Notes Created on Videos
+			</h1>
+			<hr width="100%" />
+			<tal:block tal:condition="python: options['has_notes_created_on_videos_per_sharing_types']">
+				<h2 style="h2" fontSize="12" spaceBefore=".3in" spaceAfter=".3in">
+					Notes created on videos per sharing types
+				</h2>
+				<hr width="75%" />
+				<tal:block tal:define= "sharing options/data/notes_created_on_videos/sharing">
+					<illustration width="5in" height="3in"
+								  tal:define="event sharing/event_notes_created_on_videos_per_sharing_types;
+											  user_event sharing/user_notes_created_on_videos_per_sharing_types;
+											  ratio_event sharing/ratio_notes_created_on_videos_per_sharing_types"
+								  metal:use-macro="macro:three_plots_event">
+					</illustration>
+				</tal:block>
+			</tal:block>
+		</tal:block>	
+
 	</tal:block>
 
     <setNextTemplate name="main"/>

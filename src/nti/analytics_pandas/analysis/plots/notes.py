@@ -380,6 +380,7 @@ class NotesCreationTimeseriesPlot(object):
 		nct = self.nct
 		(sharing_df, device_df) = nct.analyze_notes_created_on_videos()
 
+		plots = {}
 		# generate sharing types plots
 		group_by = 'sharing'
 		event_title = _('Number of notes created on videos grouped by sharing types')
@@ -395,7 +396,7 @@ class NotesCreationTimeseriesPlot(object):
 													minor_period_breaks,
 													theme_seaborn_,
 													event_type)
-
+		plots['sharing'] = sharing_plots
 		# generate device types plots
 		group_by = 'device_type'
 		event_title = _('Number of notes created on videos grouped by device types')
@@ -411,7 +412,8 @@ class NotesCreationTimeseriesPlot(object):
 												   minor_period_breaks,
 												   theme_seaborn_,
 												   event_type)
-		return (sharing_plots, device_plots)
+		plots['user_agent'] = device_plots
+		return plots
 
 class NotesViewTimeseriesPlot(object):
 
