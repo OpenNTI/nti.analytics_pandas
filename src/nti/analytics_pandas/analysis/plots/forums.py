@@ -15,6 +15,8 @@ import pandas as pd
 
 import numpy as np
 
+from zope.i18n import translate
+
 from .commons import generate_plot_names
 from .commons import line_plot_x_axis_date
 from .commons import group_line_plot_x_axis_date
@@ -288,10 +290,19 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 		for course_id in course_ids:
 			new_df = df[df['course_id'] == course_id]
 			context_name = new_df.iloc[0]['context_name']
-			title_event = 'Number of forum comments created in %s' % (context_name)
-			title_users = 'Number of unique users creating forum comments in %s' % (context_name)
-			title_ratio = 'Ratio of forums comments created over unique user in %s' % (context_name)
-			title_avg_length = 'Average forums comments length on each available date in %s' % (context_name)
+
+			title_event = translate(_("Number of forum comments created in ${title}",
+									  mapping={'title': context_name}))
+
+			title_users = translate(_("Number of unique users creating forum comments in ${title}",
+									  mapping={'title': context_name}))
+		
+			title_ratio = translate(_("Ratio of forums comments created over unique user in ${title}",
+									  mapping={'title': context_name}))
+	
+			title_avg_length = translate(_("Average forums comments length on each available date in ${title}",
+									  	 mapping={'title': context_name}))
+
 			event_type = 'forum_comments_created_in_%s' % (context_name.replace(' ', '_'))
 			section_plots = self.generate_plots(new_df,
 												period_breaks,
@@ -859,9 +870,15 @@ class ForumCommentFavoritesTimeseriesPlot(object):
 		for course_id in course_ids:
 			new_df = df[df['course_id'] == course_id]
 			context_name = new_df.iloc[0]['context_name']
-			event_title = 'Number of forum comment favorites in %s' % (context_name)
-			user_title = 'Number of unique users voting forum comments as favorites in %s' % (context_name)
-			ratio_title = 'Ratio of forum comments favorites over unique user in %s' % (context_name)
+			event_title = translate(_("Number of forum comments favorites in ${title}",
+									  mapping={'title': context_name}))
+
+			user_title = translate(_("Number of unique users voting forum comments as favorites in ${title}",
+									 mapping={'title': context_name}))
+
+			ratio_title = translate(_("Ratio of forums comments favorites over unique user in ${title}",
+									  mapping={'title': context_name}))
+
 			event_type = 'forum_comment_favorites_in_%s' % (context_name.replace(' ', '_'))
 			section_plots = self.generate_plots(new_df,
 												event_title,

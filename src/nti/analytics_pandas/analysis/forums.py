@@ -18,10 +18,11 @@ from ..queries import QueryForumCommentLikes
 from ..queries import QueryForumsCommentsCreated
 from ..queries import QueryForumCommentFavorites
 
+from ..utils import cast_columns_as_category_
+
 from .common import analyze_types_
 from .common import add_timestamp_period_
 from .common import get_most_active_users_
-from ..utils import cast_columns_as_category_
 
 class ForumsEventsTimeseries(object):
 	"""
@@ -182,7 +183,7 @@ class ForumsCommentsCreatedTimeseries(object):
 			if time_period_date:
 				self.dataframe = add_timestamp_period_(self.dataframe)
 
-			
+
 			self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def analyze_events(self):
@@ -307,7 +308,7 @@ class ForumCommentFavoritesTimeseries(object):
 
 	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_device_type=True, time_period_date=True,
-				 with_context_name=True):
+				 with_context_name=True, with_enrollment_type=True):
 		self.session = session
 		qfcf = self.query_forum_comment_favorites = QueryForumCommentFavorites(self.session)
 		if isinstance (course_id, (tuple, list)):

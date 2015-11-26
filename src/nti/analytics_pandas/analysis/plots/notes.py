@@ -825,9 +825,15 @@ class NoteLikesTimeseriesPlot(object):
 		for course_id in course_ids:
 			new_df = df[df['course_id'] == course_id]
 			context_name = new_df.iloc[0]['context_name']
-			event_title = 'Number of note likes in %s' % (context_name)
-			user_title = 'Number of unique users liking notes in %s' % (context_name)
-			ratio_title = 'Ratio of note likes over unique user in %s' % (context_name)
+			event_title = translate(_("Number of notes likes in ${title}",
+									  mapping={'title': context_name}))
+
+			user_title = translate(_("Number of unique users liking notes in ${title}",
+									  mapping={'title': context_name}))
+
+			ratio_title = translate(_("Ratio of notes likes over unique user in ${title}",
+									  mapping={'title': context_name}))
+
 			event_type = 'note_likes_in_%s' % (context_name)
 			section_plots = self.generate_plots(new_df,
 												event_title,

@@ -14,7 +14,9 @@ import atexit
 import shutil
 import tempfile
 from collections import Mapping
+
 import matplotlib.pyplot as plt
+
 from z3c.rml import rml2pdf
 
 from ...queries import QueryCourses

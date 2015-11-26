@@ -177,7 +177,7 @@ class AssignmentViewsTimeseries(object):
 		"""
 		group_by_columns = ['timestamp_period', 'enrollment_type']
 		df = self.build_dataframe(group_by_columns)
-		return df	
+		return df
 
 	def analyze_events_group_by_resource_type(self):
 		"""

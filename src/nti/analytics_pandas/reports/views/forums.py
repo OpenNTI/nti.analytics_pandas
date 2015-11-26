@@ -83,13 +83,13 @@ class ForumsTimeseriesReportView(AbstractReportView):
 										   self.context.end_date,
 										   self.context.courses)
 		data = {}
-		
+
 		if self.fct.dataframe.empty:
 			self.options['has_forums_created_data'] = False
 		else:
 			self.options['has_forums_created_data'] = True
 			data = self.generate_forums_created_plots(data)
-		
+
 		self.fcct = ForumsCommentsCreatedTimeseries(self.context.session,
 													self.context.start_date,
 													self.context.end_date,

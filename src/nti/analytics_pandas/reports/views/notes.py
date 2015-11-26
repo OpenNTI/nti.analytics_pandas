@@ -34,8 +34,8 @@ from .mixins import AbstractReportView
 class NoteEventsTimeseriesContext(object):
 
 	def __init__(self, session=None, start_date=None, end_date=None, courses=None,
-				 period_breaks='1 week', minor_period_breaks='1 day', theme_seaborn_=True,
-				 number_of_most_active_user=10):
+				 period_breaks='1 week', minor_period_breaks='1 day', 
+				 theme_seaborn_=True, number_of_most_active_user=10):
 		self.session = session
 		self.courses = courses
 		self.end_date = end_date
@@ -160,8 +160,8 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 
 	def get_notes_created_per_enrollment_types_plots(self, data):
 		plots = self.nctp.analyze_enrollment_types(self.context.period_breaks,
-										 	   self.context.minor_period_breaks,
-										 	   self.context.theme_seaborn_)
+										 		   self.context.minor_period_breaks,
+										 		   self.context.theme_seaborn_)
 		self.options['has_notes_created_data_per_enrollment_types'] = False
 		if plots:
 			data['notes_created_per_enrollment_types'] = build_plot_images_dictionary(plots)
