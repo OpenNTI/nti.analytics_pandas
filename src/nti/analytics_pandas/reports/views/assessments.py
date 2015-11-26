@@ -18,6 +18,11 @@ from ...analysis import AssignmentsTakenTimeseries
 from ...analysis import AssignmentViewsTimeseriesPlot
 from ...analysis import AssignmentsTakenTimeseriesPlot
 
+from ...analysis import SelfAssessmentViewsTimeseries
+from ...analysis import SelfAssessmentsTakenTimeseries
+from ...analysis import SelfAssessmentViewsTimeseriesPlot
+from ...analysis import SelfAssessmentsTakenTimeseriesPlot
+
 from .commons import get_course_names
 from .commons import build_plot_images_dictionary
 from .commons import build_images_dict_from_plot_dict
@@ -56,6 +61,9 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 		if 'has_assignment_views_data' not in keys:
 			self.options['has_assignment_views_data'] = False
 
+		if 'has_self_assessment_views_data' not in keys:
+			self.options['has_self_assessment_views_data'] = False
+
 		self.options['data'] = data
 		return self.options
 
@@ -86,6 +94,18 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 		else:
 			self.options['has_assignment_views_data'] = True
 			data = self.generate_assignment_view_plots(data)
+
+
+		self.savt = SelfAssessmentViewsTimeseries(self.context.session,
+												  self.context.start_date,
+												  self.context.end_date,
+												  self.context.courses)
+
+		if self.savt.dataframe.empty:
+			self.options['has_self_assessment_views_data'] = False
+		else:
+			self.options['has_self_assessment_views_data'] = True
+			data = self.generate_self_assessment_view_plots(data)
 
 		self._build_data(data)
 		return self.options
@@ -188,6 +208,19 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 		if plots:
 			data['assignment_views_per_course_sections'] = build_images_dict_from_plot_dict(plots)
 			self.options['has_assignment_views_per_course_sections'] = True
+		return data
+
+	def generate_self_assessment_view_plots(self, data):
+		self.savtp = SelfAssessmentViewsTimeseriesPlot(self.savt)
+		data = self.get_self_assessment_view_plots(data)
+		return data
+
+	def get_self_assessment_view_plots(self, data):
+		plots = self.savtp.analyze_events(self.context.period_breaks,
+										  self.context.minor_period_breaks,
+										  self.context.theme_seaborn_)
+		if plots:
+			data['self_assessment_views'] = build_plot_images_dictionary(plots)
 		return data
 
 View = AssessmentsEventsTimeseriesReport = AssessmentsEventsTimeseriesReportView
