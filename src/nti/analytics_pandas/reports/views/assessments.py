@@ -278,6 +278,7 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 	def generate_self_assessment_taken_plots(self, data):
 		self.sattp = SelfAssessmentsTakenTimeseriesPlot(self.satt)
 		data = self.get_self_assessment_taken_plots(data)
+		data = self.get_self_assessment_taken_plots_per_enrollment_types(data)
 		return data
 
 	def get_self_assessment_taken_plots(self, data):
@@ -286,6 +287,16 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 										 self.context.theme_seaborn_)
 		if plots:
 			data['self_assessments_taken'] = build_plot_images_dictionary(plots)
+		return data
+
+	def get_self_assessment_taken_plots_per_enrollment_types(self, data):
+		plots = self.attp.analyze_events_group_by_enrollment_type(self.context.period_breaks,
+																  self.context.minor_period_breaks,
+																  self.context.theme_seaborn_)
+		self.options['has_self_assessments_taken_per_enrollment_types'] = False
+		if plots:
+			data['self_assessments_taken_per_enrollment_types'] = build_plot_images_dictionary(plots)
+			self.options['has_self_assessments_taken_per_enrollment_types'] = True
 		return data
 
 View = AssessmentsEventsTimeseriesReport = AssessmentsEventsTimeseriesReportView
