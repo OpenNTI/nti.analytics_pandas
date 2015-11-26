@@ -167,7 +167,7 @@
 		<nextPage />
 		<tal:block tal:condition="python: options['has_self_assessment_views_per_device_types']">
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
-				Self Assessments Views per Device Types
+				Self Assessment Views per Device Types
 			</h1>
 			<hr width="100%" />
 			<tal:block tal:define="self_assessment_views options/data/self_assessment_views_per_device_types">
@@ -184,7 +184,7 @@
 		<nextPage />
 		<tal:block tal:condition="python: options['has_self_assessment_views_per_enrollment_types']">
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
-				Self Assessments Views per Enrollment Types
+				Self Assessment Views per Enrollment Types
 			</h1>
 			<hr width="100%" />
 			<tal:block tal:define="self_assessment_views options/data/self_assessment_views_per_enrollment_types">
@@ -201,7 +201,7 @@
 		<nextPage />
 		<tal:block tal:condition="python: options['has_self_assessment_views_per_course_sections']">
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
-				Self Assessments Views per Course Sections
+				Self Assessment Views per Course Sections
 			</h1>
 			<hr width="100%" />
 			<tal:block tal:condition="python: options['has_self_assessment_views_all_section_plots']">
@@ -264,6 +264,25 @@
 										  ratio_event self_assessments_taken/ratio_event_self_assessments_taken_per_device_types"
 							  metal:use-macro="macro:three_plots_event">
 				</illustration>
+			</tal:block>
+		</tal:block>
+
+		<setNextTemplate name="main"/>
+		<nextPage />
+		<tal:block tal:condition="python: options['has_self_assessments_taken_data_per_course_sections']">
+			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+				Self Assessments Taken per Course Sections
+			</h1>
+			<hr width="100%" />
+			<tal:block tal:condition="python: options['has_self_assessments_taken_all_section_plots']">
+				<tal:block tal:define="self_assessments_taken options/data/self_assessments_taken_per_course_sections/all_section_plots">
+					<illustration width="5in" height="3in"
+								  tal:define="event self_assessments_taken/event_self_assessments_taken_per_course_sections;
+											  user_event self_assessments_taken/user_event_self_assessments_taken_per_course_sections;
+											  ratio_event self_assessments_taken/ratio_event_self_assessments_taken_per_course_sections"
+								  metal:use-macro="macro:three_plots_event">
+					</illustration>
+				</tal:block>
 			</tal:block>
 		</tal:block>
 
