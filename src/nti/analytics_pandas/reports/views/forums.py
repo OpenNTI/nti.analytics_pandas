@@ -59,38 +59,14 @@ class ForumsTimeseriesReportView(AbstractReportView):
 		if 'has_forums_created_data' not in keys:
 			self.options['has_forums_created_data'] = False
 
-		if 'has_forums_created_data_per_device_types' not in keys:
-			self.options['has_forums_created_data_per_device_types'] = False
-
 		if 'has_forum_comments_created_data' not in keys:
 			self.options['has_forum_comments_created_data'] = False
-
-		if 'has_forum_comments_created_data_per_device_types' not in keys:
-			self.options['has_forum_comments_created_data_per_device_types'] = False
-
-		if 'has_forum_comments_created_data_per_course_sections' not in keys:
-			self.options['has_forum_comments_created_data_per_course_sections'] = False
-
-		if 'has_forum_comments_users' not in keys:
-			self.options['has_forum_comments_users'] = False
 
 		if 'has_forum_comment_likes_data' not in keys:
 			self.options['has_forum_comment_likes_data'] = False
 
-		if 'has_forum_comment_likes_per_device_types' not in keys:
-			self.options['has_forum_comment_likes_per_device_types'] = False
-
-		if 'has_forum_comment_likes_per_course_sections' not in keys:
-			self.options['has_forum_comment_likes_per_course_sections'] = False
-
 		if 'has_forum_comment_favorites_data' not in keys:
 			self.options['has_forum_comment_favorites_data'] = False
-
-		if 'has_forum_comment_favorites_per_device_types' not in keys:
-			self.options['has_forum_comment_favorites_per_device_types'] = False
-
-		if 'has_forum_comment_favorites_per_course_sections' not in keys:
-			self.options['has_forum_comment_favorites_per_course_sections'] = False
 
 		if 'has_forum_events_data' not in keys:
 			self.options['has_forum_events_data'] = False
@@ -167,6 +143,7 @@ class ForumsTimeseriesReportView(AbstractReportView):
 	def generate_forums_created_plots(self, data):
 		self.fctp = ForumsCreatedTimeseriesPlot(self.fct)
 		data = self.get_forums_created_plots(data)
+		data = self.get_forums_created_plots_per_device_types(data)
 		return data
 
 	def get_forums_created_plots(self, data):
@@ -181,6 +158,7 @@ class ForumsTimeseriesReportView(AbstractReportView):
 		plots = self.fctp.analyze_device_types(self.context.period_breaks,
 											   self.context.minor_period_breaks,
 										 	   self.context.theme_seaborn_)
+		self.options['has_forums_created_data_per_device_types'] = False
 		if plots:
 			data['forums_created_per_device_types'] = build_plot_images_dictionary(plots)
 			self.options['has_forums_created_data_per_device_types'] = True
@@ -218,6 +196,7 @@ class ForumsTimeseriesReportView(AbstractReportView):
 		plots = self.fcctp.analyze_device_types(self.context.period_breaks,
 										  		self.context.minor_period_breaks,
 										  		self.context.theme_seaborn_)
+		self.options['has_forum_comments_created_data_per_device_types'] = False
 		if plots:
 			data['forum_comments_created_per_device_types'] = build_plot_images_dictionary(plots)
 			self.options['has_forum_comments_created_data_per_device_types'] = True
@@ -227,6 +206,7 @@ class ForumsTimeseriesReportView(AbstractReportView):
 		plots = self.fcctp.analyze_comments_per_section(self.context.period_breaks,
 										  				self.context.minor_period_breaks,
 										 				self.context.theme_seaborn_)
+		self.options['has_forum_comments_created_data_per_course_sections'] = False
 		if plots:
 			data['forum_comments_created_per_course_sections'] = build_images_dict_from_plot_dict(plots)
 			self.options['has_forum_comments_created_data_per_course_sections'] = True
@@ -234,6 +214,7 @@ class ForumsTimeseriesReportView(AbstractReportView):
 
 	def get_the_most_active_forum_comment_users_plot(self, data):
 		plots = self.fcctp.plot_the_most_active_users(self.context.number_of_most_active_user)
+		self.options['has_forum_comments_users'] = False
 		if plots:
 			data['forum_comments_created_users'] = build_plot_images_dictionary(plots)
 			self.options['has_forum_comments_users'] = True
@@ -260,6 +241,7 @@ class ForumsTimeseriesReportView(AbstractReportView):
 		plots = self.fcltp.analyze_device_types(self.context.period_breaks,
 							  					self.context.minor_period_breaks,
 							 					self.context.theme_seaborn_)
+		self.options['has_forum_comment_likes_per_device_types'] = False
 		if plots:
 			data['forum_comment_likes_per_device_types'] = build_plot_images_dictionary(plots)
 			self.options['has_forum_comment_likes_per_device_types'] = True
@@ -279,6 +261,7 @@ class ForumsTimeseriesReportView(AbstractReportView):
 		plots = self.fcltp.analyze_events_per_course_sections(self.context.period_breaks,
 											  				  self.context.minor_period_breaks,
 											 				  self.context.theme_seaborn_)
+		self.options['has_forum_comment_likes_per_course_sections'] = False
 		if plots:
 			data['forum_comment_likes_per_course_sections'] = build_images_dict_from_plot_dict(plots)
 			self.options['has_forum_comment_likes_per_course_sections'] = True
@@ -315,6 +298,7 @@ class ForumsTimeseriesReportView(AbstractReportView):
 		plots = self.fcftp.analyze_device_types(self.context.period_breaks,
 							  					self.context.minor_period_breaks,
 							 					self.context.theme_seaborn_)
+		self.options['has_forum_comment_favorites_per_device_types'] = False
 		if plots:
 			data['forum_comment_favorites_per_device_types'] = build_plot_images_dictionary(plots)
 			self.options['has_forum_comment_favorites_per_device_types'] = True
@@ -324,6 +308,7 @@ class ForumsTimeseriesReportView(AbstractReportView):
 		plots = self.fcftp.analyze_events_per_course_sections(self.context.period_breaks,
 										  					  self.context.minor_period_breaks,
 										 					  self.context.theme_seaborn_)
+		self.options['has_forum_comment_favorites_per_course_sections'] = False
 		if plots:
 			data['forum_comment_favorites_per_course_sections'] = build_images_dict_from_plot_dict(plots)
 			self.options['has_forum_comment_favorites_per_course_sections'] = True
