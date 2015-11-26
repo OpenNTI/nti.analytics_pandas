@@ -151,7 +151,7 @@
 	<nextPage />
 	<tal:block tal:condition="python: options['has_self_assessment_views_data']">
 		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
-			Overview of Self Assessments Views
+			Overview of Self Assessment Views
 		</h1>
 		<hr width="100%" />
 		<tal:block tal:define="self_assessment_views options/data/self_assessment_views">
@@ -214,6 +214,23 @@
 					</illustration>
 				</tal:block>
 			</tal:block>
+		</tal:block>
+	</tal:block>
+
+	<setNextTemplate name="main"/>
+	<nextPage />
+	<tal:block tal:condition="python: options[''has_self_assessments_taken_data']">
+		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+			Overview of Self Assessments Taken
+		</h1>
+		<hr width="100%" />
+		<tal:block tal:define="self_assessments_taken options/data/self_assessments_taken">
+			<illustration width="5in" height="3in"
+						  tal:define="event self_assessments_taken/event_self_assessments_taken;
+									  user_event self_assessments_taken/user_event_self_assessments_taken;
+									  ratio_event self_assessments_taken/ratio_event_self_assessments_taken"
+						  metal:use-macro="macro:three_plots_event">
+			</illustration>
 		</tal:block>
 
 	</tal:block>

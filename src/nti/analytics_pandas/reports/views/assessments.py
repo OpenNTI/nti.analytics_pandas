@@ -107,6 +107,18 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 			self.options['has_self_assessment_views_data'] = True
 			data = self.generate_self_assessment_view_plots(data)
 
+
+		self.satt = SelfAssessmentsTakenTimeseries(self.context.session,
+												   self.context.start_date,
+												   self.context.end_date,
+												   self.context.courses)
+
+		if self.satt.dataframe.empty:
+			self.options['has_self_assessments_taken_data'] = False
+		else:
+			self.options['has_self_assessments_taken_data'] = True
+			data = self.generate_self_assessment_taken_plots(data)
+
 		self._build_data(data)
 		return self.options
 
@@ -261,6 +273,19 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 				self.options['has_self_assessment_views_all_section_plots'] = True
 			else:
 				self.options['has_self_assessment_views_all_section_plots'] = False
+		return data
+
+	def generate_self_assessment_taken_plots(self, data):
+		self.sattp = SelfAssessmentsTakenTimeseriesPlot(self.satt)
+		data = self.get_self_assessment_taken_plots(data)
+		return data
+
+	def get_self_assessment_taken_plots(self, data):
+		plots = self.attp.analyze_events(self.context.period_breaks,
+										 self.context.minor_period_breaks,
+										 self.context.theme_seaborn_)
+		if plots:
+			data['self_assessments_taken'] = build_plot_images_dictionary(plots)
 		return data
 
 View = AssessmentsEventsTimeseriesReport = AssessmentsEventsTimeseriesReportView
