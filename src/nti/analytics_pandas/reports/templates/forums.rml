@@ -80,6 +80,24 @@
 
 		<setNextTemplate name="main"/>
 		<nextPage />
+		<tal:block tal:condition="python: options['has_forum_comments_created_data_per_enrollment_types']">
+			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+				Forums Created per Device Types
+			</h1>
+			<hr width="100%" />
+			<tal:block tal:define="forum_comments_created options/data/forum_comments_created_per_enrollment_types">
+				<illustration width="5in" height="3in"
+						  	  tal:define="event forum_comments_created/event_forum_comments_created_per_enrollment_types;
+						  	  			  user_event forum_comments_created/user_forum_comments_created_per_enrollment_types;
+									      ratio_event forum_comments_created/ratio_forum_comments_created_per_enrollment_types;
+									      additional_plot forum_comments_created/average_comment_forum_comments_created_per_enrollment_types"
+						      metal:use-macro="macro:four_plots_event">
+				</illustration>
+			</tal:block>
+		</tal:block>
+
+		<setNextTemplate name="main"/>
+		<nextPage />
 		<tal:block tal:condition="python: options['has_forum_comments_created_data_per_device_types']">
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Forums Created per Device Types
