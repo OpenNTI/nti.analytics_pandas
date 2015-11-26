@@ -13,6 +13,9 @@ from . import MessageFactory as _
 
 from zope import interface
 
+from ...analysis import AssessmentEventsTimeseries
+from ...analysis import AssessmentEventsTimeseriesPlot
+
 from ...analysis import AssignmentViewsTimeseries
 from ...analysis import AssignmentsTakenTimeseries
 from ...analysis import AssignmentViewsTimeseriesPlot
@@ -63,6 +66,9 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 
 		if 'has_self_assessment_views_data' not in keys:
 			self.options['has_self_assessment_views_data'] = False
+
+		if 'has_assessment_events' not in keys:
+			self.options['has_assessment_events'] = False
 
 		self.options['data'] = data
 		return self.options
@@ -118,6 +124,9 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 		else:
 			self.options['has_self_assessments_taken_data'] = True
 			data = self.generate_self_assessment_taken_plots(data)
+
+		self.aet = AssessmentEventsTimeseries(avt=self.avt, att=self.att, savt=self.savt, satt=self.satt)
+		data = self.generate_combined_assessment_event_plots(data)
 
 		self._build_data(data)
 		return self.options
@@ -326,6 +335,16 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 				self.options['has_self_assessments_taken_all_section_plots'] = True
 			else:
 				self.options['has_self_assessments_taken_all_section_plots'] = False
+		return data
+
+	def generate_combined_assessment_event_plots(self, data):
+		self.aetp = AssessmentEventsTimeseriesPlot(self.aet)
+		plots = self.aetp.combine_events(self.context.period_breaks,
+										 self.context.minor_period_breaks,
+										 self.context.theme_seaborn_)
+		if plots:
+			data['assessment_events'] = build_plot_images_dictionary(plots)
+			self.options['has_assessment_events'] = True
 		return data
 
 View = AssessmentsEventsTimeseriesReport = AssessmentsEventsTimeseriesReportView
