@@ -214,6 +214,7 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 		self.savtp = SelfAssessmentViewsTimeseriesPlot(self.savt)
 		data = self.get_self_assessment_view_plots(data)
 		data = self.get_self_assessment_view_plots_per_device_types(data)
+		data = self.get_self_assessment_view_plots_per_enrollment_types(data)
 		return data
 
 	def get_self_assessment_view_plots(self, data):
@@ -232,6 +233,16 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 		if plots:
 			data['self_assessment_views_per_device_types'] = build_plot_images_dictionary(plots)
 			self.options['has_self_assessment_views_per_device_types'] = True
+		return data
+
+	def get_self_assessment_view_plots_per_enrollment_types(self, data):
+		plots = self.savtp.analyze_events_group_by_enrollment_type(self.context.period_breaks,
+																   self.context.minor_period_breaks,
+																   self.context.theme_seaborn_)
+		self.options['has_self_assessment_views_per_enrollment_types'] = False
+		if plots:
+			data['self_assessment_views_per_enrollment_types'] = build_plot_images_dictionary(plots)
+			self.options['has_self_assessment_views_per_enrollment_types'] = True
 		return data
 
 View = AssessmentsEventsTimeseriesReport = AssessmentsEventsTimeseriesReportView

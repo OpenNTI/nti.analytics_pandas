@@ -180,6 +180,23 @@
 			</tal:block>
 		</tal:block>
 
+		<setNextTemplate name="main"/>
+		<nextPage />
+		<tal:block tal:condition="python: options['has_self_assessment_views_per_enrollment_types']">
+			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+				Self Assessments Views per Enrollment Types
+			</h1>
+			<hr width="100%" />
+			<tal:block tal:define="self_assessment_views options/data/self_assessment_views_per_enrollment_types">
+				<illustration width="5in" height="3in"
+							  tal:define="event self_assessment_views/event_self_assessment_views_per_enrollment_types;
+										  user_event self_assessment_views/user_self_assessment_views_per_enrollment_types;
+										  ratio_event self_assessment_views/ratio_self_assessment_views_per_enrollment_types"
+							  metal:use-macro="macro:three_plots_event">
+				</illustration>
+			</tal:block>
+		</tal:block>
+
 	</tal:block>
 
 </metal:block>
