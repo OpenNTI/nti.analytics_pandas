@@ -215,6 +215,10 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 		data = self.get_self_assessment_view_plots(data)
 		data = self.get_self_assessment_view_plots_per_device_types(data)
 		data = self.get_self_assessment_view_plots_per_enrollment_types(data)
+		if len(self.context.courses) > 1:
+			data = self.get_self_assessment_view_plots_per_course_sections(data)
+		else:
+			self.options['has_self_assessment_views_per_course_sections'] = False
 		return data
 
 	def get_self_assessment_view_plots(self, data):
@@ -243,6 +247,20 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 		if plots:
 			data['self_assessment_views_per_enrollment_types'] = build_plot_images_dictionary(plots)
 			self.options['has_self_assessment_views_per_enrollment_types'] = True
+		return data
+
+	def get_self_assessment_view_plots_per_course_sections(self, data):
+		plots = self.savtp.analyze_events_per_course_sections(self.context.period_breaks,
+															  self.context.minor_period_breaks,
+															  self.context.theme_seaborn_)
+		self.options['has_self_assessment_views_per_course_sections'] = False
+		if plots:
+			data['self_assessment_views_per_course_sections'] = build_images_dict_from_plot_dict(plots)
+			self.options['has_self_assessment_views_per_course_sections'] = True
+			if 'all_section_plots' in data['self_assessment_views_per_course_sections'].keys():
+				self.options['has_self_assessment_views_all_section_plots'] = True
+			else:
+				self.options['has_self_assessment_views_all_section_plots'] = False
 		return data
 
 View = AssessmentsEventsTimeseriesReport = AssessmentsEventsTimeseriesReportView

@@ -197,6 +197,25 @@
 			</tal:block>
 		</tal:block>
 
+		<setNextTemplate name="main"/>
+		<nextPage />
+		<tal:block tal:condition="python: options['has_self_assessment_views_per_course_sections']">
+			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+				Self Assessments Views per Course Sections
+			</h1>
+			<hr width="100%" />
+			<tal:block tal:condition="python: options['has_self_assessment_views_all_section_plots']">
+				<tal:block tal:define="self_assessment_views options/data/self_assessment_views_per_course_sections/all_section_plots">
+					<illustration width="5in" height="3in"
+								  tal:define="event self_assessment_views/event_self_assessment_views_per_course_sections;
+											  user_event self_assessment_views/user_self_assessment_views_per_course_sections;
+											  ratio_event self_assessment_views/ratio_self_assessment_views_per_course_sections"
+								  metal:use-macro="macro:three_plots_event">
+					</illustration>
+				</tal:block>
+			</tal:block>
+		</tal:block>
+
 	</tal:block>
 
 </metal:block>
