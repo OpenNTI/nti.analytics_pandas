@@ -17,6 +17,8 @@ from nti.analytics_database.boards import ForumCommentFavorites
 from .common import add_device_type_
 from .common import add_context_name_
 
+from .enrollments import add_enrollment_type_
+
 from .mixins import TableQueryMixin
 
 from . import orm_dataframe
@@ -54,6 +56,7 @@ class QueryForumsCreated(TableQueryMixin):
 	def add_device_type(self, dataframe):
 		new_df = add_device_type_(self.session, dataframe)
 		return new_df
+
 
 class QueryForumsCommentsCreated(TableQueryMixin):
 
@@ -105,6 +108,10 @@ class QueryForumsCommentsCreated(TableQueryMixin):
 		new_df = add_context_name_(self.session, dataframe, course_id)
 		return new_df
 
+	def add_enrollment_type(self, dataframe, course_id):
+		new_df = add_enrollment_type_(self.session, dataframe, course_id)
+		return new_df
+
 class QueryForumCommentFavorites(TableQueryMixin):
 
 	table = ForumCommentFavorites
@@ -136,6 +143,10 @@ class QueryForumCommentFavorites(TableQueryMixin):
 
 	def add_context_name(self, dataframe, course_id):
 		new_df = add_context_name_(self.session, dataframe, course_id)
+		return new_df
+
+	def add_enrollment_type(self, dataframe, course_id):
+		new_df = add_enrollment_type_(self.session, dataframe, course_id)
 		return new_df
 
 class QueryForumCommentLikes(TableQueryMixin):
@@ -170,4 +181,8 @@ class QueryForumCommentLikes(TableQueryMixin):
 
 	def add_context_name(self, dataframe, course_id):
 		new_df = add_context_name_(self.session, dataframe, course_id)
+		return new_df
+
+	def add_enrollment_type(self, dataframe, course_id):
+		new_df = add_enrollment_type_(self.session, dataframe, course_id)
 		return new_df

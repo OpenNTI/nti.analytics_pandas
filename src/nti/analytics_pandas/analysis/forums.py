@@ -110,13 +110,14 @@ class ForumsCreatedTimeseries(object):
 		else:
 			self.dataframe = qfc.filter_by_period_of_time(start_date, end_date)
 
-		if with_device_type:
-			new_df = qfc.add_device_type(self.dataframe)
-			if new_df is not None:
-				self.dataframe = new_df
+		if not self.dataframe.empty:
+			if with_device_type:
+				new_df = qfc.add_device_type(self.dataframe)
+				if new_df is not None:
+					self.dataframe = new_df
 
-		if time_period_date:
-			self.dataframe = add_timestamp_period_(self.dataframe)
+			if time_period_date:
+				self.dataframe = add_timestamp_period_(self.dataframe)
 
 	def analyze_events(self):
 		group_by_items = ['timestamp_period']
@@ -147,7 +148,7 @@ class ForumsCommentsCreatedTimeseries(object):
 
 	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_device_type=True, time_period_date=True,
-				 with_context_name=True):
+				 with_context_name=True, with_enrollment_type=True):
 
 		self.session = session
 		qfcc = self.query_forums_comments_created = QueryForumsCommentsCreated(self.session)
@@ -158,22 +159,31 @@ class ForumsCommentsCreatedTimeseries(object):
 		else:
 			self.dataframe = qfcc.filter_by_period_of_time(start_date, end_date)
 
-		if with_device_type:
-			new_df = qfcc.add_device_type(self.dataframe)
-			if new_df is not None:
-				self.dataframe = new_df
+		if not self.dataframe.empty:
+			categorical_columns = [	'forum_id', 'parent_user_id', 'user_id', 'course_id']
+			if with_device_type:
+				new_df = qfcc.add_device_type(self.dataframe)
+				if new_df is not None:
+					self.dataframe = new_df
+					categorical_columns.append('device_type')
 
-		if with_context_name:
-			new_df = qfcc.add_context_name(self.dataframe, course_id)
-			if new_df is not None:
-				self.dataframe = new_df
+			if with_context_name:
+				new_df = qfcc.add_context_name(self.dataframe, course_id)
+				if new_df is not None:
+					self.dataframe = new_df
+					categorical_columns.append('context_name')
 
-		if time_period_date:
-			self.dataframe = add_timestamp_period_(self.dataframe)
+			if with_enrollment_type:
+				new_df = qfcc.add_enrollment_type(self.dataframe, course_id)
+				if new_df is not None:
+					self.dataframe = new_df
+					categorical_columns.append('enrollment_type')
 
-		categorical_columns = [	'forum_id', 'parent_user_id', 'device_type',
-								'user_id', 'course_id', 'context_name']
-		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
+			if time_period_date:
+				self.dataframe = add_timestamp_period_(self.dataframe)
+
+			
+			self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def analyze_events(self):
 		group_by_items = ['timestamp_period']
@@ -183,6 +193,12 @@ class ForumsCommentsCreatedTimeseries(object):
 	def analyze_device_types(self):
 		if 'device_type' in self.dataframe.columns:
 			group_by_items = ['timestamp_period', 'device_type']
+			df = self.build_dataframe(group_by_items)
+			return df
+
+	def analyze_enrollment_types(self):
+		if 'enrollment_type' in self.dataframe.columns:
+			group_by_items = ['timestamp_period', 'enrollment_type']
 			df = self.build_dataframe(group_by_items)
 			return df
 
@@ -221,7 +237,7 @@ class ForumCommentLikesTimeseries(object):
 
 	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_device_type=True, time_period_date=True,
-				 with_context_name=True):
+				 with_context_name=True, with_enrollment_type=True):
 
 		self.session = session
 		qfcl = self.query_forum_comment_likes = QueryForumCommentLikes(self.session)
@@ -232,18 +248,24 @@ class ForumCommentLikesTimeseries(object):
 		else:
 			self.dataframe = qfcl.filter_by_period_of_time(start_date, end_date)
 
-		if with_device_type:
-			new_df = qfcl.add_device_type(self.dataframe)
-			if new_df is not None:
-				self.dataframe = new_df
+		if not self.dataframe.empty:
+			if with_device_type:
+				new_df = qfcl.add_device_type(self.dataframe)
+				if new_df is not None:
+					self.dataframe = new_df
 
-		if with_context_name:
-			new_df = qfcl.add_context_name(self.dataframe, course_id)
-			if new_df is not None:
-				self.dataframe = new_df
+			if with_context_name:
+				new_df = qfcl.add_context_name(self.dataframe, course_id)
+				if new_df is not None:
+					self.dataframe = new_df
 
-		if time_period_date:
-			self.dataframe = add_timestamp_period_(self.dataframe)
+			if with_enrollment_type:
+				new_df = qfcl.add_enrollment_type(self.dataframe, course_id)
+				if new_df is not None:
+					self.dataframe = new_df
+
+			if time_period_date:
+				self.dataframe = add_timestamp_period_(self.dataframe)
 
 	def analyze_events(self):
 		group_by_items = ['timestamp_period']
@@ -258,6 +280,12 @@ class ForumCommentLikesTimeseries(object):
 	def analyze_device_types(self):
 		if 'device_type' in self.dataframe.columns:
 			group_by_items = ['timestamp_period', 'device_type']
+			df = self.build_dataframe(group_by_items)
+			return df
+
+	def analyze_enrollment_types(self):
+		if 'enrollment_type' in self.dataframe.columns:
+			group_by_items = ['timestamp_period', 'enrollment_type']
 			df = self.build_dataframe(group_by_items)
 			return df
 
@@ -289,18 +317,24 @@ class ForumCommentFavoritesTimeseries(object):
 		else:
 			self.dataframe = qfcf.filter_by_period_of_time(start_date, end_date)
 
-		if with_device_type:
-			new_df = qfcf.add_device_type(self.dataframe)
-			if new_df is not None:
-				self.dataframe = new_df
+		if not self.dataframe.empty:
+			if with_device_type:
+				new_df = qfcf.add_device_type(self.dataframe)
+				if new_df is not None:
+					self.dataframe = new_df
 
-		if with_context_name:
-			new_df = qfcf.add_context_name(self.dataframe, course_id)
-			if new_df is not None:
-				self.dataframe = new_df
+			if with_context_name:
+				new_df = qfcf.add_context_name(self.dataframe, course_id)
+				if new_df is not None:
+					self.dataframe = new_df
 
-		if time_period_date:
-			self.dataframe = add_timestamp_period_(self.dataframe)
+			if with_enrollment_type:
+					new_df = qfcf.add_enrollment_type(self.dataframe, course_id)
+					if new_df is not None:
+						self.dataframe = new_df
+
+			if time_period_date:
+				self.dataframe = add_timestamp_period_(self.dataframe)
 
 	def analyze_events(self):
 		group_by_items = ['timestamp_period']
@@ -315,6 +349,12 @@ class ForumCommentFavoritesTimeseries(object):
 	def analyze_device_types(self):
 		if 'device_type' in self.dataframe.columns:
 			group_by_items = ['timestamp_period', 'device_type']
+			df = self.build_dataframe(group_by_items)
+			return df
+
+	def analyze_enrollment_types(self):
+		if 'enrollment_type' in self.dataframe.columns:
+			group_by_items = ['timestamp_period', 'enrollment_type']
 			df = self.build_dataframe(group_by_items)
 			return df
 
