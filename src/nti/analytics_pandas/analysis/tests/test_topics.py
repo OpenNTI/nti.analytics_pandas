@@ -56,6 +56,7 @@ class TestTopicsEDA(AnalyticsPandasTestBase):
 		assert_that(len(tvt.dataframe.index), equal_to(1610))
 		assert_that(tvt.dataframe.columns, has_item('device_type'))
 		assert_that(tvt.dataframe.columns, has_item('context_name'))
+		assert_that(tvt.dataframe.columns, has_item('enrollment_type'))
 
 		event_df = tvt.analyze_events()
 		df = tvt.analyze_events_per_course_sections()
@@ -70,6 +71,7 @@ class TestTopicsEDA(AnalyticsPandasTestBase):
 		course_id = ['1068', '1096', '1097', '1098', '1099']
 		tlt = TopicLikesTimeseries(self.session, start_date, end_date, course_id)
 		assert_that(tlt.dataframe.columns, has_item('device_type'))
+		assert_that(tlt.dataframe.columns, has_item('enrollment_type'))
 
 		event_df = tlt.analyze_events()
 		total_events = np.sum(event_df['number_of_topic_likes'])
@@ -90,6 +92,7 @@ class TestTopicsEDA(AnalyticsPandasTestBase):
 		course_id = ['1068', '1096', '1097', '1098', '1099']
 		tft = TopicFavoritesTimeseries(self.session, start_date, end_date, course_id)
 		assert_that(tft.dataframe.columns, has_item('device_type'))
+		assert_that(tft.dataframe.columns, has_item('enrollment_type'))
 
 		event_df = tft.analyze_events()
 		total_events = np.sum(event_df['number_of_topic_favorites'])
