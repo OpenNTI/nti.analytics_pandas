@@ -19,6 +19,9 @@ from ...analysis import TopicsCreationTimeseriesPlot
 from ...analysis import TopicViewsTimeseries
 from ...analysis import TopicViewsTimeseriesPlot
 
+from ...analysis import TopicLikesTimeseries
+from ...analysis import TopicLikesTimeseriesPlot
+
 from .commons import get_course_names
 from .commons import build_plot_images_dictionary
 from .commons import build_images_dict_from_plot_dict
@@ -57,6 +60,9 @@ class TopicsTimeseriesReportView(AbstractReportView):
 		if 'has_topic_views_data' not in keys:
 			self.options['has_topic_views_data'] = False
 
+		if 'has_topic_likes_data' not in keys:
+			self.options['has_topic_likes_data'] = False
+
 		self.options['data'] = data
 		return self.options
 
@@ -80,12 +86,22 @@ class TopicsTimeseriesReportView(AbstractReportView):
 								   	    self.context.start_date,
 								   	    self.context.end_date,
 									    self.context.courses)
-
 		if self.tvt.dataframe.empty:
 			self.options['has_topic_views_data'] = False
 		else:
 			self.options['has_topic_views_data'] = True
-			data = self.generate_topic_view_plots(data)		
+			data = self.generate_topic_view_plots(data)	
+
+		self.tlt = TopicLikesTimeseries(self.context.session,
+								   	    self.context.start_date,
+								   	    self.context.end_date,
+									    self.context.courses)
+
+		if self.tlt.dataframe.empty:
+			self.options['has_topic_likes_data'] = False
+		else:
+			self.options['has_topic_likes_data'] = True
+			data = self.generate_topic_like_plots(data)	
 
 		self._build_data(data)
 		return self.options
@@ -180,12 +196,25 @@ class TopicsTimeseriesReportView(AbstractReportView):
 
 	def get_topic_view_plots_per_enrollment_types(self, data):
 		plots = self.tvtp.analyze_enrollment_types(self.context.period_breaks,
-											   self.context.minor_period_breaks,
-											   self.context.theme_seaborn_)
+												   self.context.minor_period_breaks,
+												   self.context.theme_seaborn_)
 		self.options['has_topic_views_per_enrollment_types'] = False
 		if plots:
 			data['topic_views_per_enrollment_types'] = build_plot_images_dictionary(plots)
 			self.options['has_topic_views_per_enrollment_types'] = True
 		return data
+
+	def generate_topic_like_plots(self, data):
+		self.tltp = TopicLikesTimeseriesPlot(self.tlt)
+		data = self.get_topic_like_plots(data)
+		return data
+
+	def get_topic_like_plots(self, data):	
+		plots = self.tltp.explore_events(self.context.period_breaks,
+									     self.context.minor_period_breaks,
+									     self.context.theme_seaborn_)
+		if plots:
+			data['topic_likes'] = build_plot_images_dictionary(plots)
+		return data	
 
 View = TopicsTimeseriesReport = TopicsTimeseriesReportView
