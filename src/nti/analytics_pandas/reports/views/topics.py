@@ -147,6 +147,7 @@ class TopicsTimeseriesReportView(AbstractReportView):
 			data = self.get_topic_view_plots_per_course_sections(data)
 		else:
 			self.options['has_topic_views_per_course_sections'] = False
+		data = self.get_topic_view_plots_per_enrollment_types(data)
 		return data
 
 	def get_topic_view_plots(self, data):
@@ -175,6 +176,16 @@ class TopicsTimeseriesReportView(AbstractReportView):
 		if plots:
 			data['topic_views_per_course_sections'] = build_images_dict_from_plot_dict(plots)
 			self.options['has_topic_views_per_course_sections'] = True
+		return data
+
+	def get_topic_view_plots_per_enrollment_types(self, data):
+		plots = self.tvtp.analyze_enrollment_types(self.context.period_breaks,
+											   self.context.minor_period_breaks,
+											   self.context.theme_seaborn_)
+		self.options['has_topic_views_per_enrollment_types'] = False
+		if plots:
+			data['topic_views_per_enrollment_types'] = build_plot_images_dictionary(plots)
+			self.options['has_topic_views_per_enrollment_types'] = True
 		return data
 
 View = TopicsTimeseriesReport = TopicsTimeseriesReportView

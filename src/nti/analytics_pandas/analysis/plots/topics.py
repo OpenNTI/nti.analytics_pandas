@@ -438,6 +438,38 @@ class TopicViewsTimeseriesPlot(object):
 											 event_type)
 		return plots
 
+	def analyze_enrollment_types(self, period_breaks='1 day', minor_period_breaks=None,
+							theme_seaborn_=True):
+		"""
+		return plots of topics viewed grouped by enrollment type during period of time
+		it consists of:
+			- number of topics viewed
+			- number of unique users
+			- ratio of topics viewed over unique users
+		"""
+		tvt = self.tvt
+		df = tvt.analyze_enrollment_types()
+		if df is None:
+			return ()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		group_by = 'enrollment_type'
+		event_title = _('Number of topics viewed grouped by enrollment types')
+		user_title = _('Number of unique users viewing topics grouped by enrollment types')
+		ratio_title = _('Ratio of topics viewed over unique user grouped by enrollment types')
+		event_type = 'topic_views_per_enrollment_types'
+		plots = self.generate_group_by_plots(df,
+											 group_by,
+											 event_title,
+											 user_title,
+											 ratio_title,
+											 period_breaks,
+											 minor_period_breaks,
+											 theme_seaborn_,
+											 event_type)
+		return plots
+
 	def generate_plots(self,
 					   df,
 					   event_title,
