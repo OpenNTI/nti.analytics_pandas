@@ -113,7 +113,7 @@ class TopicsTimeseriesReportView(AbstractReportView):
 									   	    self.context.start_date,
 									   	    self.context.end_date,
 										    self.context.courses)	
-		if self.tlt.dataframe.empty:
+		if self.tft.dataframe.empty:
 			self.options['has_topic_favorites_data'] = False
 		else:
 			self.options['has_topic_favorites_data'] = True
