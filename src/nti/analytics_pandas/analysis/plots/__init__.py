@@ -35,4 +35,10 @@ from .notes import NoteFavoritesTimeseriesPlot
 
 from .resource_views import ResourceViewsTimeseriesPlot
 
+from .topics import TopicLikesTimeseriesPlot
+from .topics import TopicViewsTimeseriesPlot
+from .topics import TopicsEventsTimeseriesPlot
+from .topics import TopicsCreationTimeseriesPlot
+from .topics import TopicFavoritesTimeseriesPlot
+
 from .videos import VideoEventsTimeseriesPlot

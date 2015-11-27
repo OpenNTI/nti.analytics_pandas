@@ -56,6 +56,12 @@
 		for=".assessments.AssessmentsEventsTimeseriesReportView"
 		layer="*" />
 
+	<!-- Topics related events report -->
+	<z3c:template
+		template="../templates/topics.rml"
+		for=".topics.TopicsTimeseriesReportView"
+		layer="*" />
+
 	<!-- Macros -->
 	<z3c:macro
 		template="../templates/std_report_macros.pt"

@@ -38,6 +38,12 @@ from .plots import AssessmentEventsTimeseriesPlot
 from .plots import SelfAssessmentViewsTimeseriesPlot
 from .plots import SelfAssessmentsTakenTimeseriesPlot
 
+from .plots import TopicLikesTimeseriesPlot
+from .plots import TopicViewsTimeseriesPlot
+from .plots import TopicsEventsTimeseriesPlot
+from .plots import TopicsCreationTimeseriesPlot
+from .plots import TopicFavoritesTimeseriesPlot
+
 from.assessments import AssignmentViewsTimeseries
 from.assessments import AssignmentsTakenTimeseries
 from.assessments import AssessmentEventsTimeseries
@@ -64,5 +70,11 @@ from .notes import NotesViewTimeseries
 from .notes import NotesEventsTimeseries
 from .notes import NotesCreationTimeseries
 from .notes import NoteFavoritesTimeseries
+
+from .topics import TopicViewsTimeseries
+from .topics import TopicLikesTimeseries
+from .topics import TopicsEventsTimeseries
+from .topics import TopicsCreationTimeseries
+from .topics import TopicFavoritesTimeseries
 
 from .videos import VideoEventsTimeseries
