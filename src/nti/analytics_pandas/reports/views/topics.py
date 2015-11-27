@@ -22,6 +22,9 @@ from ...analysis import TopicViewsTimeseriesPlot
 from ...analysis import TopicLikesTimeseries
 from ...analysis import TopicLikesTimeseriesPlot
 
+from ...analysis import TopicFavoritesTimeseries
+from ...analysis import TopicFavoritesTimeseriesPlot
+
 from .commons import get_course_names
 from .commons import build_plot_images_dictionary
 from .commons import build_images_dict_from_plot_dict
@@ -63,6 +66,9 @@ class TopicsTimeseriesReportView(AbstractReportView):
 		if 'has_topic_likes_data' not in keys:
 			self.options['has_topic_likes_data'] = False
 
+		if 'has_topic_favorites_data' not in keys:
+			self.options['has_topic_favorites_data'] = False
+
 		self.options['data'] = data
 		return self.options
 
@@ -102,6 +108,16 @@ class TopicsTimeseriesReportView(AbstractReportView):
 		else:
 			self.options['has_topic_likes_data'] = True
 			data = self.generate_topic_like_plots(data)	
+
+		self.tft = TopicFavoritesTimeseries(self.context.session,
+									   	    self.context.start_date,
+									   	    self.context.end_date,
+										    self.context.courses)	
+		if self.tlt.dataframe.empty:
+			self.options['has_topic_favorites_data'] = False
+		else:
+			self.options['has_topic_favorites_data'] = True
+			data = self.generate_topic_favorite_plots(data)	
 
 		self._build_data(data)
 		return self.options
@@ -215,6 +231,19 @@ class TopicsTimeseriesReportView(AbstractReportView):
 									     self.context.theme_seaborn_)
 		if plots:
 			data['topic_likes'] = build_plot_images_dictionary(plots)
+		return data	
+
+	def generate_topic_favorite_plots(self, data):
+		self.tftp = TopicFavoritesTimeseriesPlot(self.tft)
+		data = self.get_topic_favorite_plots(data)
+		return data	
+
+	def get_topic_favorite_plots(self, data):	
+		plots = self.tftp.explore_events(self.context.period_breaks,
+									     self.context.minor_period_breaks,
+									     self.context.theme_seaborn_)
+		if plots:
+			data['topic_favorites'] = build_plot_images_dictionary(plots)
 		return data	
 
 View = TopicsTimeseriesReport = TopicsTimeseriesReportView
