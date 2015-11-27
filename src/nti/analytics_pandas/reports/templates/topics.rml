@@ -25,6 +25,23 @@
 					      metal:use-macro="macro:three_plots_event">
 			</illustration>
 		</tal:block>
+
+		<setNextTemplate name="main"/>
+		<nextPage />
+		<tal:block tal:condition="python: options['has_topics_created_per_device_types']">
+			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+				Topics Created per Device Types
+			</h1>
+			<hr width="100%" />
+			<tal:block tal:define="topics_created options/data/topics_created_per_device_types">
+				<illustration width="5in" height="3in"
+						  	  tal:define="event topics_created/event_topics_created_per_device_types;
+						  	  			  user_event topics_created/user_topics_created_per_device_types;
+									      ratio_event topics_created/ratio_topics_created_per_device_types"
+						      metal:use-macro="macro:three_plots_event">
+				</illustration>
+			</tal:block>
+		</tal:block>
 	</tal:block>
-	
+
 </metal:block>
