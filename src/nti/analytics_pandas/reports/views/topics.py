@@ -142,6 +142,7 @@ class TopicsTimeseriesReportView(AbstractReportView):
 	def generate_topic_view_plots(self, data):
 		self.tvtp = TopicViewsTimeseriesPlot(self.tvt)
 		data = self.get_topic_view_plots(data)
+		data = self.get_topic_view_plots_per_device_types(data)
 		return data
 
 	def get_topic_view_plots(self, data):
@@ -150,6 +151,16 @@ class TopicsTimeseriesReportView(AbstractReportView):
 										 self.context.theme_seaborn_)
 		if plots:
 			data['topic_views'] = build_plot_images_dictionary(plots)
+		return data
+
+	def get_topic_view_plots_per_device_types(self, data):
+		plots = self.tvtp.analyze_device_types(self.context.period_breaks,
+											   self.context.minor_period_breaks,
+											   self.context.theme_seaborn_)
+		self.options['has_topic_views_per_device_types'] = False
+		if plots:
+			data['topic_views_per_device_types'] = build_plot_images_dictionary(plots)
+			self.options['has_topic_views_per_device_types'] = True
 		return data
 
 View = TopicsTimeseriesReport = TopicsTimeseriesReportView
