@@ -190,6 +190,31 @@ class TopicsCreationTimeseriesPlot(object):
 											 event_type)
 		return plots
 
+	def analyze_events_per_enrollment_types(self, period_breaks='1 week',
+										minor_period_breaks='1 day',
+										theme_seaborn_=True):
+		tct = self.tct
+		df = tct.analyze_events_per_enrollment_types()
+		if df is None:
+			return ()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		group_by = 'enrollment_type'
+		event_title = _('Number of topics created per enrollment types')
+		user_title = _('Number of unique users creating topics per enrollment types')
+		ratio_title = _('Ratio of topics created over unique user per enrollment types')
+		event_type = 'topics_created_per_enrollment_types'
+		plots = self.generate_group_by_plots(df,
+											 group_by,
+											 event_title,
+											 user_title,
+											 ratio_title,
+											 period_breaks,
+											 minor_period_breaks,
+											 theme_seaborn_,
+											 event_type)
+		return plots
+
 	def generate_plots(self,
 					   df,
 					   event_title,

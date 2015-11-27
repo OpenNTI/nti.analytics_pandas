@@ -28,6 +28,10 @@ class TestTopicsEDA(AnalyticsPandasTestBase):
 		end_date = '2015-10-20'
 		course_id = ['1068', '1096', '1097', '1098', '1099']
 		tct = TopicsCreationTimeseries(self.session, start_date, end_date, course_id)
+		assert_that(tct.dataframe.columns, has_item('device_type'))
+		assert_that(tct.dataframe.columns, has_item('context_name'))
+		assert_that(tct.dataframe.columns, has_item('enrollment_type'))
+
 		event_df = tct.analyze_events()
 		assert_that(event_df.columns, has_item('number_of_unique_users'))
 		assert_that(event_df.columns, has_item('number_of_topics_created'))

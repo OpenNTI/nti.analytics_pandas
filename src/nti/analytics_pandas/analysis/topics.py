@@ -93,7 +93,7 @@ class TopicsCreationTimeseries(object):
 
 	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_device_type=True, time_period_date=True,
-				 with_context_name=True):
+				 with_context_name=True, with_enrollment_type=True):
 		self.session = session
 		qtc = self.query_topics_created = QueryTopicsCreated(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -118,6 +118,12 @@ class TopicsCreationTimeseries(object):
 					self.dataframe = new_df
 					categorical_columns.append('context_name')
 
+			if with_enrollment_type:
+				new_df = qtc.add_enrollment_type(self.dataframe, course_id)
+				if new_df is not None:
+					self.dataframe = new_df
+					categorical_columns.append('enrollment_type')
+
 			if time_period_date:
 				self.dataframe = add_timestamp_period_(self.dataframe)
 
@@ -135,6 +141,11 @@ class TopicsCreationTimeseries(object):
 
 	def analyze_events_per_device_types(self):
 		group_by_items = ['timestamp_period', 'device_type']
+		df = self.build_dataframe(group_by_items, self.dataframe)
+		return df
+
+	def analyze_events_per_enrollment_types(self):
+		group_by_items = ['timestamp_period', 'enrollment_type']
 		df = self.build_dataframe(group_by_items, self.dataframe)
 		return df
 
