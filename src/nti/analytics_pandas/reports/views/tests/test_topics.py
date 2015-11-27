@@ -30,9 +30,6 @@ from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
 class TestNoteEvents(AnalyticsPandasTestBase):
 
-	def setUp(self):
-		super(TestNoteEvents, self).setUp()
-
 	@Lazy
 	def std_report_layout_rml(self):
 		path = os.path.join(os.path.dirname(__file__), '../../templates/std_report_layout.rml')

@@ -241,7 +241,7 @@ class TopicViewsTimeseries(object):
 	"""
 
 	def __init__(self, session, start_date, end_date, course_id=None,
-				 with_device_type=True, time_period_date=True, 
+				 with_device_type=True, time_period_date=True,
 				 with_context_name=True, with_enrollment_type=True):
 		self.session = session
 		qtv = self.query_topics_viewed = QueryTopicsViewed(self.session)
