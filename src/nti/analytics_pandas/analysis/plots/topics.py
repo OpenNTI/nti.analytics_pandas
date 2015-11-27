@@ -367,7 +367,7 @@ class TopicViewsTimeseriesPlot(object):
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		course_ids = np.unique(df['course_id'].values.ravel())
-		plots = []
+		plots = {}
 		if len(course_ids) > 1:
 			group_by = 'context_name'
 			event_title = _('Number of topics viewed per course sections')
@@ -383,8 +383,9 @@ class TopicViewsTimeseriesPlot(object):
 															 minor_period_breaks,
 															 theme_seaborn_,
 															 event_type)
-			plots.append(all_section_plots)
+			plots['all_section_plots'] = all_section_plots
 
+		section_plots_dict = {}
 		for course_id in course_ids:
 			new_df = df[df['course_id'] == course_id]
 			context_name = new_df.iloc[0]['context_name']
@@ -400,7 +401,9 @@ class TopicViewsTimeseriesPlot(object):
 												minor_period_breaks,
 												theme_seaborn_,
 												event_type)
-			plots.append(section_plots)
+			key = 'section_%s' %(course_id)
+			section_plots_dict[key] = section_plots
+		plots['section_plots'] = section_plots_dict
 		return plots
 
 	def analyze_device_types(self, period_breaks='1 day', minor_period_breaks=None,

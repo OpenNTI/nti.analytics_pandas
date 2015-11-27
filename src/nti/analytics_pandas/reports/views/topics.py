@@ -143,6 +143,10 @@ class TopicsTimeseriesReportView(AbstractReportView):
 		self.tvtp = TopicViewsTimeseriesPlot(self.tvt)
 		data = self.get_topic_view_plots(data)
 		data = self.get_topic_view_plots_per_device_types(data)
+		if len(self.context.courses) > 1:
+			data = self.get_topic_view_plots_per_course_sections(data)
+		else:
+			self.options['has_topic_views_per_course_sections'] = False
 		return data
 
 	def get_topic_view_plots(self, data):
@@ -161,6 +165,16 @@ class TopicsTimeseriesReportView(AbstractReportView):
 		if plots:
 			data['topic_views_per_device_types'] = build_plot_images_dictionary(plots)
 			self.options['has_topic_views_per_device_types'] = True
+		return data
+
+	def get_topic_view_plots_per_course_sections(self, data):
+		plots = self.tvtp.analyze_events_per_course_sections(self.context.period_breaks,
+														     self.context.minor_period_breaks,
+														     self.context.theme_seaborn_)
+		self.options['has_topic_views_per_course_sections'] = False
+		if plots:
+			data['topic_views_per_course_sections'] = build_images_dict_from_plot_dict(plots)
+			self.options['has_topic_views_per_course_sections'] = True
 		return data
 
 View = TopicsTimeseriesReport = TopicsTimeseriesReportView
