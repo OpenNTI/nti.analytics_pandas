@@ -9,9 +9,12 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
-from StringIO import StringIO
+try:
+	from cStringIO import StringIO
+except ImportError:
+	from StringIO import StringIO
 
-import matplotlib.pyplot as plt
+from matplotlib import pyplot as plt
 
 class Image(object):
 
@@ -42,3 +45,5 @@ def save_plot_(plot, image_filename, image_type='png'):
 	image_filename = u'%s.%s' % (image_filename, image_type)
 	image = Image.process(image_filename, buf)
 	return image
+save_plot = save_plot_
+
