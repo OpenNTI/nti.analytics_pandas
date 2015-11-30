@@ -210,7 +210,7 @@ class CourseDropsTimeseriesPlot(object):
 		"""
 		self.cdt = cdt
 
-	def explore_events(self, period_breaks='1 month', minor_period_breaks='1 week'):
+	def explore_events(self, period_breaks='1 month', minor_period_breaks='1 week', theme_seaborn_=True):
 		"""
 		return scatter plots of course enrollments during period of time
 		"""
@@ -221,19 +221,20 @@ class CourseDropsTimeseriesPlot(object):
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
-		plot_course_drops = \
-				ggplot(df, aes(x='timestamp_period', y='number_of_course_drops')) + \
-				geom_line() + \
-				geom_point() + \
-				ggtitle(_('Number of course drops during period of time')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
-				ylab(_('Number of drops')) + \
-				xlab(_('Date'))
-
+		plot_course_drops = line_plot_x_axis_date(
+										df=df,
+										x_axis_field='timestamp_period',
+										y_axis_field='number_of_course_drops',
+										x_axis_label=_('Date'),
+										y_axis_label=_('Number of drops'),
+										title=_('Number of course drops during period of time'),
+										period_breaks=period_breaks,
+										minor_breaks=minor_period_breaks,
+										theme_seaborn_=theme_seaborn_,
+										plot_name='course_drops')
 		return (plot_course_drops,)
 
-	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
+	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day', theme_seaborn_=True):
 		"""
 		return plots of the course drops grouped by user agent (device_type)
 		"""
@@ -244,18 +245,22 @@ class CourseDropsTimeseriesPlot(object):
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
-		plot_course_drops_by_device = \
-				ggplot(df, aes(x='timestamp_period', y='number_of_course_drops', color='device_type')) + \
-				geom_point() + \
-				ggtitle(_('Number of course drops grouped by device type during period of time')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
-				ylab(_('Number of course drops')) + \
-				xlab(_('Date'))
+		plot_course_drops_by_device = group_line_plot_x_axis_date(
+										df=df,
+										x_axis_field='timestamp_period',
+										y_axis_field='number_of_course_drops',
+										x_axis_label=_('Date'),
+										y_axis_label=_('Number of course drops'),
+										title=_('Number of course drops per device types during period of time'),
+										period_breaks=period_breaks,
+										group_by='device_type',
+										minor_breaks=minor_period_breaks,
+										theme_seaborn_=theme_seaborn_,
+										plot_name='course_drops_per_device_types')
 
 		return (plot_course_drops_by_device,)
 
-	def analyze_enrollment_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
+	def analyze_enrollment_types(self, period_breaks='1 week', minor_period_breaks='1 day', theme_seaborn_=True):
 		"""
 		return plots of the course drops grouped by enrollment types
 		"""
@@ -268,14 +273,18 @@ class CourseDropsTimeseriesPlot(object):
 
 		df.rename(columns={	'type_name':'enrollment_type'}, inplace=True)
 
-		plot_course_drops_by_enrollment_type = \
-				ggplot(df, aes(x='timestamp_period', y='number_of_course_drops', color='enrollment_type')) + \
-				geom_point() + \
-				ggtitle(_('Number of course drops grouped by enrollment types during period of time')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
-				ylab(_('Number of course drops')) + \
-				xlab(_('Date'))
+		plot_course_drops_by_enrollment_type = group_line_plot_x_axis_date(
+										df=df,
+										x_axis_field='timestamp_period',
+										y_axis_field='number_of_course_drops',
+										x_axis_label=_('Date'),
+										y_axis_label=_('Number of course drops'),
+										title=_('Number of course course drops per enrollment types during period of time'),
+										period_breaks=period_breaks,
+										group_by='enrollment_type',
+										minor_breaks=minor_period_breaks,
+										theme_seaborn_=theme_seaborn_,
+										plot_name='course_drops_per_enrollment_types')
 
 		return (plot_course_drops_by_enrollment_type,)
 

@@ -74,8 +74,7 @@
 						      metal:use-macro="macro:two_plots_event">
 				</illustration>
 			</tal:block>
-		</tal:block>
-		
+		</tal:block>	
 	</tal:block>
 
 </metal:block>
