@@ -26,8 +26,8 @@ class CourseCatalogViewsTimeseries(object):
 	analyze the number of course catalog views given time period and list of course id
 	"""
 
-	def __init__(self, session, start_date, end_date, course_id=None, with_device_type=True,
-				 time_period_date=True):
+	def __init__(self, session, start_date, end_date, course_id=None,
+				 with_device_type=True, time_period_date=True):
 		self.session = session
 		qccv = self.query_course_catalog_views = QueryCourseCatalogViews(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -115,7 +115,7 @@ class CourseEnrollmentsTimeseries(object):
 		df = analyze_types_(base_dataframe, group_by_items, agg_columns)
 		if df is not None:
 			df.rename(columns={	'user_id':'number_of_enrollments'}, inplace=True)
-		return df 
+		return df
 
 class CourseDropsTimeseries(object):
 	"""

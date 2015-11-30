@@ -30,7 +30,6 @@ class BookmarkCreationTimeseries(object):
 				 with_resource_type=True, with_device_type=True,
 				 time_period_date=True, with_context_name=True,
 				 with_enrollment_type=True):
-
 		self.session = session
 		qbc = self.query_bookmarks_created = QueryBookmarksCreated(self.session)
 		if isinstance (course_id, (tuple, list)):

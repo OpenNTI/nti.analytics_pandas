@@ -49,10 +49,10 @@ class NotesEventsTimeseries(object):
 		nlt = self.nlt
 		nft = self.nft
 
-		notes_created_df = nct.analyze_events()
-		notes_viewed_df = nvt.analyze_total_events()
 		note_likes_df = nlt.analyze_events()
+		notes_created_df = nct.analyze_events()
 		note_favorites_df = nft.analyze_events()
+		notes_viewed_df = nvt.analyze_total_events()
 
 		df = pd.DataFrame(columns=[	'timestamp_period', 'total_events',
 									'number_of_unique_users', 'ratio', 'event_type'])

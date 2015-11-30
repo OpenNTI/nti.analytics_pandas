@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*
 """
-.. $Id: enrollments.py 77820 2015-11-26 16:09:09Z carlos.sanchez $
+.. $Id$
 """
 
 from __future__ import print_function, unicode_literals, absolute_import, division
@@ -13,21 +13,20 @@ from . import MessageFactory as _
 
 from zope import interface
 
+from ...analysis import CourseDropsTimeseries
+from ...analysis import CourseDropsTimeseriesPlot
+
 from ...analysis import CourseCatalogViewsTimeseries
 from ...analysis import CourseCatalogViewsTimeseriesPlot
 
 from ...analysis import CourseEnrollmentsTimeseries
 from ...analysis import CourseEnrollmentsTimeseriesPlot
 
-from ...analysis import CourseDropsTimeseries
-from ...analysis import CourseDropsTimeseriesPlot
-
 from ...analysis import CourseEnrollmentsEventsTimeseries
 from ...analysis import CourseEnrollmentsEventsTimeseriesPlot
 
 from .commons import get_course_names
 from .commons import build_plot_images_dictionary
-from .commons import build_images_dict_from_plot_dict
 
 from .mixins import AbstractReportView
 
