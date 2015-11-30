@@ -25,6 +25,8 @@ from ggplot import date_format
 from ggplot import element_text
 from ggplot import scale_x_date
 
+from .commons import generate_three_plots
+from .commons import generate_three_group_by_plots
 from .commons import group_line_plot_x_axis_date
 
 class CourseCatalogViewsTimeseriesPlot(object):
@@ -35,7 +37,7 @@ class CourseCatalogViewsTimeseriesPlot(object):
 		"""
 		self.ccvt = ccvt
 
-	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
+	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day', theme_seaborn_=True):
 		"""
 		return scatter plots of course catalog views during period of time
 		it consists of:
@@ -49,40 +51,25 @@ class CourseCatalogViewsTimeseriesPlot(object):
 			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		event_title = _('Course catalog views during time period')
+		user_title = _('Number of unique users viewing course catalog')
+		ratio_title = _('Ratio of course catalog views over unique user')
+		event_type = 'course_catalog_views'
+		event_y_axis_field = 'number_of_course_catalog_views'
+		event_y_axis_label = 'Number of course catalog views'
+		plots = generate_three_plots(df,
+									 event_title,
+									 user_title,
+									 ratio_title,
+									 event_y_axis_field, 
+									 event_y_axis_label,
+									 period_breaks,
+									 minor_period_breaks,
+									 theme_seaborn_,
+									 event_type)
+		return plots
 
-		plot_catalog_views = \
-				ggplot(df, aes(x='timestamp_period', y='number_of_course_catalog_views')) + \
-				geom_line() + \
-				geom_point(color='orange') + \
-				ggtitle(_('Number of course catalog views during period of time')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
-				ylab(_('Number of course catalog views')) + \
-				xlab(_('Date'))
-
-		plot_unique_users = \
-				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users')) + \
-				geom_line() + \
-				geom_point(color='blue') + \
-				ggtitle(_('Number of unique users viewing course catalog during period of time')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
-				ylab(_('Number of unique users')) + \
-				xlab(_('Date'))
-
-		plot_ratio = \
-				ggplot(df, aes(x='timestamp_period', y='ratio')) + \
-				geom_line() + \
-				geom_point(color='red') + \
-				ggtitle(_('Ratio of course catalog views over unique user on each available date')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
-				ylab(_('Ratio')) + \
-				xlab(_('Date'))
-
-		return (plot_catalog_views, plot_unique_users, plot_ratio)
-
-	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day'):
+	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day', theme_seaborn_=True):
 		"""
 		plot course catalog views based on user agent (device type)
 		the plots consists of:
@@ -95,38 +82,26 @@ class CourseCatalogViewsTimeseriesPlot(object):
 			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		group_by = 'device_type'
+		event_title = _('Number of course catalog views per device_type')
+		user_title = _('Number of unique users viewing course catalog per device_type')
+		ratio_title = _('Ratio of course catalog views over unique user per device_type')
+		event_type = 'course_catalog_views'
+		event_y_axis_field = 'number_of_course_catalog_views'
+		event_y_axis_label = 'Number of course catalog views'
+		plots = generate_three_group_by_plots(df,
+											  group_by,
+											  event_title,
+											  user_title,
+											  ratio_title,
+											  event_y_axis_field,
+											  event_y_axis_label,
+											  period_breaks,
+											  minor_period_breaks,
+											  theme_seaborn_,
+											  event_type)
 
-		plot_average_time_length = \
-				ggplot(df, aes(x='timestamp_period', y='average_time_length', color='device_type')) + \
-				geom_line() + \
-				geom_point() + \
-				ggtitle(_('Average time length user spent viewing course catalog during period of time')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
-				ylab(_('Average time length (in seconds)')) + \
-				xlab(_('Date'))
-
-		plot_catalog_view_events = \
-				ggplot(df, aes(x='timestamp_period', y='number_of_course_catalog_views', color='device_type')) + \
-				geom_line() + \
-				geom_point() + \
-				ggtitle(_('Number of course catalog views during period of time')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
-				ylab(_('Number of unique users')) + \
-				xlab(_('Date'))
-
-		plot_unique_users = \
-				ggplot(df, aes(x='timestamp_period', y='number_of_unique_users', color='device_type')) + \
-				geom_line() + \
-				geom_point() + \
-				ggtitle(_('Number of unique users viewing course catalog during period of time')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
-				ylab('Number of unique users') + \
-				xlab(_('Date'))
-
-		return (plot_average_time_length, plot_catalog_view_events, plot_unique_users)
+		return plots
 
 class CourseEnrollmentsTimeseriesPlot(object):
 

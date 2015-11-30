@@ -301,3 +301,95 @@ def generate_plot_names(event_type):
 		ratio_event_name = 'ratio_%s' % event_type
 
 	return (event_name, user_event_name, ratio_event_name)
+
+
+def generate_three_plots(df, event_title, user_title, ratio_title,
+						 event_y_axis_field, event_y_axis_label,
+						 period_breaks, minor_period_breaks, theme_seaborn_,
+						 event_type=None):
+
+	event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
+	plot_event = line_plot_x_axis_date(
+									df=df,
+									x_axis_field='timestamp_period',
+									y_axis_field=event_y_axis_field,
+									x_axis_label=_('Date'),
+									y_axis_label=event_y_axis_label,
+									title=event_title,
+									period_breaks=period_breaks,
+									minor_breaks=minor_period_breaks,
+									theme_seaborn_=theme_seaborn_,
+									plot_name=event_name)
+
+	plot_unique_users = line_plot_x_axis_date(
+									df=df,
+									x_axis_field='timestamp_period',
+									y_axis_field='number_of_unique_users',
+									x_axis_label=_('Date'),
+									y_axis_label=_('Number of unique users'),
+									title=user_title,
+									period_breaks=period_breaks,
+									minor_breaks=minor_period_breaks,
+									theme_seaborn_=theme_seaborn_,
+									plot_name=user_event_name)
+
+	plot_ratio = line_plot_x_axis_date(
+									df=df,
+									x_axis_field='timestamp_period',
+									y_axis_field='ratio',
+									x_axis_label=_('Date'),
+									y_axis_label=_('Ratio'),
+									title=ratio_title,
+									period_breaks=period_breaks,
+									minor_breaks=minor_period_breaks,
+									theme_seaborn_=theme_seaborn_,
+									plot_name=ratio_event_name)
+
+	return (plot_event, plot_unique_users, plot_ratio)
+
+def generate_three_group_by_plots(df, group_by, event_title, user_title, ratio_title,
+								  event_y_axis_field, event_y_axis_label,
+								  period_breaks, minor_period_breaks, theme_seaborn_,
+								  event_type=None):
+
+	event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
+	plot_events = group_line_plot_x_axis_date(
+										df=df,
+										x_axis_field='timestamp_period',
+										y_axis_field=event_y_axis_field,
+										x_axis_label=_('Date'),
+										y_axis_label=event_y_axis_label,
+										title=event_title,
+										period_breaks=period_breaks,
+										group_by=group_by,
+										minor_breaks=minor_period_breaks,
+										theme_seaborn_=theme_seaborn_,
+										plot_name=event_name)
+
+	plot_unique_users = group_line_plot_x_axis_date(
+										df=df,
+										x_axis_field='timestamp_period',
+										y_axis_field='number_of_unique_users',
+										x_axis_label=_('Date'),
+										y_axis_label=_('Number of unique users'),
+										title=user_title,
+										period_breaks=period_breaks,
+										group_by=group_by,
+										minor_breaks=minor_period_breaks,
+										theme_seaborn_=theme_seaborn_,
+										plot_name=user_event_name)
+
+	plot_ratio = group_line_plot_x_axis_date(
+										df=df,
+										x_axis_field='timestamp_period',
+										y_axis_field='ratio',
+										x_axis_label=_('Date'),
+										y_axis_label=_('Ratio'),
+										title=ratio_title,
+										period_breaks=period_breaks,
+										group_by=group_by,
+										minor_breaks=minor_period_breaks,
+										theme_seaborn_=theme_seaborn_,
+										plot_name=ratio_event_name)
+
+	return (plot_events, plot_unique_users, plot_ratio)
