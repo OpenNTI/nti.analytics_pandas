@@ -19,6 +19,11 @@ from.assessments import SelfAssessmentsTakenTimeseriesPlot
 
 from .bookmarks import BookmarksTimeseriesPlot
 
+from .enrollments import CourseDropsTimeseriesPlot
+from .enrollments import CourseEnrollmentsTimeseriesPlot
+from .enrollments import CourseCatalogViewsTimeseriesPlot
+from .enrollments import CourseEnrollmentsEventsTimeseriesPlot
+
 from .forums import ForumsEventsTimeseriesPlot
 from .forums import ForumsCreatedTimeseriesPlot
 from .forums import ForumCommentLikesTimeseriesPlot

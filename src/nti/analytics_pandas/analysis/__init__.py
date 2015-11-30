@@ -44,6 +44,11 @@ from .plots import TopicsEventsTimeseriesPlot
 from .plots import TopicsCreationTimeseriesPlot
 from .plots import TopicFavoritesTimeseriesPlot
 
+from .plots import CourseDropsTimeseriesPlot
+from .plots import CourseEnrollmentsTimeseriesPlot
+from .plots import CourseCatalogViewsTimeseriesPlot
+from .plots import CourseEnrollmentsEventsTimeseriesPlot
+
 from.assessments import AssignmentViewsTimeseries
 from.assessments import AssignmentsTakenTimeseries
 from.assessments import AssessmentEventsTimeseries
@@ -54,6 +59,9 @@ from.assessments import SelfAssessmentsTakenTimeseries
 from .bookmarks import BookmarkCreationTimeseries
 
 from .enrollments import CourseCatalogViewsTimeseries
+from .enrollments import CourseDropsTimeseries
+from .enrollments import CourseEnrollmentsTimeseries
+from .enrollments import CourseEnrollmentsEventsTimeseries
 
 from .highlights import HighlightsCreationTimeseries
 
