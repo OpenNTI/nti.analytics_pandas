@@ -210,6 +210,7 @@ class EnrollmentTimeseriesReportView(AbstractReportView):
 	def generate_combined_enrollment_event_plots(self,data):
 		self.ceetp = CourseEnrollmentsEventsTimeseriesPlot(self.ceet)
 		data = self.get_course_enrollments_vs_drops_plots(data)
+		data = self.get_course_enrollments_vs_catalog_views_plots(data)
 		return data
 
 	def get_course_enrollments_vs_drops_plots(self, data):
@@ -220,6 +221,16 @@ class EnrollmentTimeseriesReportView(AbstractReportView):
 		if plots:
 			data['course_enrollments_vs_drops']  = build_plot_images_dictionary(plots)
 			self.options['has_course_enrollments_vs_drops'] = True
+		return data
+
+	def get_course_enrollments_vs_catalog_views_plots(self, data):
+		plots = self.ceetp.explore_course_catalog_views_vs_enrollments(self.context.period_breaks,
+																	   self.context.minor_period_breaks,
+																	   self.context.theme_seaborn_)
+		self.options['has_course_enrollments_vs_catalog_views'] = False
+		if plots:
+			data['course_enrollments_vs_catalog_views']  = build_plot_images_dictionary(plots)
+			self.options['has_course_enrollments_vs_catalog_views'] = True
 		return data
 
 View = EnrollmentTimeseriesReport = EnrollmentTimeseriesReportView

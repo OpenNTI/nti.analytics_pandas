@@ -125,6 +125,21 @@
 	<setNextTemplate name="main"/>
 	<nextPage />
 	<tal:block tal:condition="python: options['has_enrollment_event_data']">
+		<tal:block tal:condition="python: options['has_course_enrollments_vs_catalog_views']">
+			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+				Course Enrollments vs Catalog Views
+			</h1>
+			<hr width="100%" />
+			<tal:block tal:define="enrollment_event options/data/course_enrollments_vs_catalog_views">
+				<illustration width="5in" height="3in"
+						  	  tal:define="event enrollment_event/course_enrollments_vs_catalog_views"
+						      metal:use-macro="macro:one_plot_event">
+				</illustration>
+			</tal:block>
+		</tal:block>
+
+		<setNextTemplate name="main"/>
+		<nextPage />
 		<tal:block tal:condition="python: options['has_course_enrollments_vs_drops']">
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Course Enrollments vs Drops
