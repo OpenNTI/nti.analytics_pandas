@@ -37,13 +37,14 @@ class CourseCatalogViewsTimeseries(object):
 		else:
 			self.dataframe = qccv.filter_by_period_of_time(start_date, end_date)
 
-		if with_device_type:
-			new_df = qccv.add_device_type(self.dataframe)
-			if new_df is not None:
-				self.dataframe = new_df
+		if not self.dataframe.empty:
+			if with_device_type:
+				new_df = qccv.add_device_type(self.dataframe)
+				if new_df is not None:
+					self.dataframe = new_df
 
-		if time_period_date:
-			self.dataframe = add_timestamp_period_(self.dataframe)
+			if time_period_date:
+				self.dataframe = add_timestamp_period_(self.dataframe)
 
 	def analyze_events(self):
 		group_by_items = ['timestamp_period']
@@ -84,18 +85,19 @@ class CourseEnrollmentsTimeseries(object):
 		else:
 			self.dataframe = qce.filter_by_period_of_time(start_date, end_date)
 
-		if with_device_type:
-			new_df = qce.add_device_type(self.dataframe)
-			if new_df is not None:
-				self.dataframe = new_df
+		if not self.dataframe.empty:
+			if with_device_type:
+				new_df = qce.add_device_type(self.dataframe)
+				if new_df is not None:
+					self.dataframe = new_df
 
-		if time_period_date:
-			self.dataframe = add_timestamp_period_(self.dataframe)
+			if time_period_date:
+				self.dataframe = add_timestamp_period_(self.dataframe)
 
-		if enrollment_type:
-			qet = QueryEnrollmentTypes(session)
-			enrollment_type_df = qet.get_enrollment_types()
-			self.dataframe = self.dataframe.merge(enrollment_type_df, how='left')
+			if enrollment_type:
+				qet = QueryEnrollmentTypes(session)
+				enrollment_type_df = qet.get_enrollment_types()
+				self.dataframe = self.dataframe.merge(enrollment_type_df, how='left')
 
 	def analyze_events(self):
 		group_by_items = ['timestamp_period']
@@ -132,21 +134,22 @@ class CourseDropsTimeseries(object):
 		else:
 			self.dataframe = qcd.filter_by_period_of_time(start_date, end_date)
 
-		if with_device_type:
-			new_df = qcd.add_device_type(self.dataframe)
-			if new_df is not None:
-				self.dataframe = new_df
+		if not self.dataframe.empty:
+			if with_device_type:
+				new_df = qcd.add_device_type(self.dataframe)
+				if new_df is not None:
+					self.dataframe = new_df
 
-		if time_period_date:
-			self.dataframe = add_timestamp_period_(self.dataframe)
+			if time_period_date:
+				self.dataframe = add_timestamp_period_(self.dataframe)
 
-		if enrollment_type:
-			qet = QueryEnrollmentTypes(session)
-			cet = QueryCourseEnrollments(session)
-			enrollment_type_df = qet.get_enrollment_types()
-			user_enrollment_type_df = cet.filter_by_user_id(course_id)
-			user_enrollment_type_df = user_enrollment_type_df.merge(enrollment_type_df)
-			self.dataframe = self.dataframe.merge(user_enrollment_type_df, how='left')
+			if enrollment_type:
+				qet = QueryEnrollmentTypes(session)
+				cet = QueryCourseEnrollments(session)
+				enrollment_type_df = qet.get_enrollment_types()
+				user_enrollment_type_df = cet.filter_by_user_id(course_id)
+				user_enrollment_type_df = user_enrollment_type_df.merge(enrollment_type_df)
+				self.dataframe = self.dataframe.merge(user_enrollment_type_df, how='left')
 
 	def analyze_events(self):
 		group_by_items = ['timestamp_period']
