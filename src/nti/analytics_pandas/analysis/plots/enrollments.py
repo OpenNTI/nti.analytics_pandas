@@ -198,7 +198,7 @@ class CourseEnrollmentsTimeseriesPlot(object):
 										group_by='enrollment_type',
 										minor_breaks=minor_period_breaks,
 										theme_seaborn_=theme_seaborn_,
-										plot_name='course_enrollments_per_enrollments_types')
+										plot_name='course_enrollments_per_enrollment_types')
 		
 		return (plot_course_enrollments_by_device, plot_course_enrollments_by_type)
 

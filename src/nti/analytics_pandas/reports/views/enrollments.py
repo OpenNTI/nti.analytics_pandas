@@ -114,6 +114,7 @@ class EnrollmentTimeseriesReportView(AbstractReportView):
 	def generate_course_enrollment_plots(self, data):
 		self.cetp = CourseEnrollmentsTimeseriesPlot(self.cet)
 		data = self.get_course_enrollment_plots(data)
+		data = self.get_course_enrollment_plots_per_types(data)
 		return data
 
 	def get_course_enrollment_plots(self, data):
@@ -122,6 +123,16 @@ class EnrollmentTimeseriesReportView(AbstractReportView):
 										 self.context.theme_seaborn_)
 		if plots:
 			data['course_enrollments'] = build_plot_images_dictionary(plots)
+		return data
+
+	def get_course_enrollment_plots_per_types(self, data):
+		plots = self.cetp.analyze_device_enrollment_types(self.context.period_breaks,
+														  self.context.minor_period_breaks,
+														  self.context.theme_seaborn_)
+		self.options['has_course_enrollments_per_types'] = False
+		if plots:
+			data['course_enrollments_per_types'] = build_plot_images_dictionary(plots)
+			self.options['has_course_enrollments_per_types'] = True
 		return data
 
 View = EnrollmentTimeseriesReport = EnrollmentTimeseriesReportView
