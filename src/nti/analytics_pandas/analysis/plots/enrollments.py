@@ -138,7 +138,7 @@ class CourseEnrollmentsTimeseriesPlot(object):
 		"""
 		self.cet = cet
 
-	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day'):
+	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day', theme_seaborn_=True):
 		"""
 		return scatter plots of course enrollments during period of time
 		"""
@@ -149,16 +149,17 @@ class CourseEnrollmentsTimeseriesPlot(object):
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
-		plot_course_enrollments = \
-				ggplot(df, aes(x='timestamp_period', y='number_of_enrollments')) + \
-				geom_line() + \
-				geom_point() + \
-				ggtitle(('Number of enrollments during period of time')) + \
-				theme(title=element_text(size=10, face="bold")) + \
-				scale_x_date(breaks=period_breaks, minor_breaks=minor_period_breaks, labels=date_format("%y-%m-%d")) + \
-				ylab(_('Number of enrollments')) + \
-				xlab(_('Date'))
-
+		plot_course_enrollments = line_plot_x_axis_date(
+										df=df,
+										x_axis_field='timestamp_period',
+										y_axis_field='number_of_enrollments',
+										x_axis_label=_('Date'),
+										y_axis_label=_('Number of enrollments'),
+										title=_('Number of enrollments during period of time'),
+										period_breaks=period_breaks,
+										minor_breaks=minor_period_breaks,
+										theme_seaborn_=theme_seaborn_,
+										plot_name='course_enrollments')
 		return (plot_course_enrollments,)
 
 	def analyze_device_enrollment_types(self, period_breaks='1 month', minor_period_breaks='1 week'):
