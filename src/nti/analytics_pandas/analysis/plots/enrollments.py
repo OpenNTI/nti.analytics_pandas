@@ -28,6 +28,7 @@ from ggplot import scale_x_date
 from .commons import generate_three_plots
 from .commons import generate_three_group_by_plots
 from .commons import group_line_plot_x_axis_date
+from .commons import line_plot_x_axis_date
 
 class CourseCatalogViewsTimeseriesPlot(object):
 
@@ -67,6 +68,19 @@ class CourseCatalogViewsTimeseriesPlot(object):
 									 minor_period_breaks,
 									 theme_seaborn_,
 									 event_type)
+
+		plot_average_time_length = line_plot_x_axis_date(
+										df=df,
+										x_axis_field='timestamp_period',
+										y_axis_field='average_time_length',
+										x_axis_label=_('Date'),
+										y_axis_label=_('Average time length'),
+										title=_('Average time length viewing course catalog'),
+										period_breaks=period_breaks,
+										minor_breaks=minor_period_breaks,
+										plot_name='average_time_length')
+		
+		plots = plots + (plot_average_time_length, )
 		return plots
 
 	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day', theme_seaborn_=True):
@@ -101,6 +115,19 @@ class CourseCatalogViewsTimeseriesPlot(object):
 											  theme_seaborn_,
 											  event_type)
 
+		plot_average_time_length = group_line_plot_x_axis_date(
+										df=df,
+										x_axis_field='timestamp_period',
+										y_axis_field='average_time_length',
+										x_axis_label=_('Date'),
+										y_axis_label=_('Average time length'),
+										title=_('Average time length viewing course catalog per device type'),
+										period_breaks=period_breaks,
+										group_by='device_type',
+										minor_breaks=minor_period_breaks,
+										plot_name='average_time_length')
+
+		plots = plots + (plot_average_time_length,)
 		return plots
 
 class CourseEnrollmentsTimeseriesPlot(object):
