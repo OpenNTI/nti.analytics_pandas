@@ -158,6 +158,12 @@ class EnrollmentTimeseriesReportView(AbstractReportView):
 			data = self.get_course_drop_plots_per_device_types(data)
 		else:
 			self.options['has_course_drops_per_device_types'] = False
+
+		if 'type_name' in self.cdt.dataframe.columns:
+			data = self.get_course_drop_plots_per_enrollment_types(data)
+		else:
+			self.options['has_course_drops_per_enrollment_types'] = False
+
 		return data
 
 	def get_course_drop_plots(self, data):
@@ -176,6 +182,16 @@ class EnrollmentTimeseriesReportView(AbstractReportView):
 		if plots:
 			data['course_drops_per_device_types'] = build_plot_images_dictionary(plots)
 			self.options['has_course_drops_per_device_types'] = True
+		return data
+
+	def get_course_drop_plots_per_enrollment_types(self, data):
+		plots = self.cdtp.analyze_enrollment_types(self.context.period_breaks,
+											   self.context.minor_period_breaks,
+											   self.context.theme_seaborn_)
+		self.options['has_course_drops_per_enrollment_types'] = False
+		if plots:
+			data['course_drops_per_enrollment_types'] = build_plot_images_dictionary(plots)
+			self.options['has_course_drops_per_enrollment_types'] = True
 		return data
 
 View = EnrollmentTimeseriesReport = EnrollmentTimeseriesReportView
