@@ -19,6 +19,9 @@ from ...analysis import CourseCatalogViewsTimeseriesPlot
 from ...analysis import CourseEnrollmentsTimeseries
 from ...analysis import CourseEnrollmentsTimeseriesPlot
 
+from ...analysis import CourseDropsTimeseries
+from ...analysis import CourseDropsTimeseriesPlot
+
 from .commons import get_course_names
 from .commons import build_plot_images_dictionary
 from .commons import build_images_dict_from_plot_dict
@@ -56,6 +59,9 @@ class EnrollmentTimeseriesReportView(AbstractReportView):
 		if 'has_course_enrollment_data' not in keys:
 			self.options['has_course_enrollment_data'] = False
 
+		if 'has_course_drop_data' not in keys:
+			self.options['has_course_drop_data'] = False
+
 		self.options['data'] = data
 		return self.options
 
@@ -83,6 +89,16 @@ class EnrollmentTimeseriesReportView(AbstractReportView):
 		else:
 			self.options['has_course_enrollment_data'] = True
 			data = self.generate_course_enrollment_plots(data)
+
+		self.cdt = CourseDropsTimeseries(self.context.session,
+								   	     self.context.start_date,
+								   	     self.context.end_date,
+									     self.context.courses)
+		if self.cdt.dataframe.empty:
+			self.options['has_course_drop_data'] = False
+		else:
+			self.options['has_course_drop_data'] = True
+			data = self.generate_course_drop_plots(data)
 
 		self._build_data(data)
 		return self.options
@@ -133,6 +149,19 @@ class EnrollmentTimeseriesReportView(AbstractReportView):
 		if plots:
 			data['course_enrollments_per_types'] = build_plot_images_dictionary(plots)
 			self.options['has_course_enrollments_per_types'] = True
+		return data
+
+	def generate_course_drop_plots(self, data):
+		self.cdtp = CourseDropsTimeseriesPlot(self.cdt)
+		data = self.get_course_drop_plots(data)
+		return data
+
+	def get_course_drop_plots(self, data):
+		plots = self.cdtp.explore_events(self.context.period_breaks,
+										 self.context.minor_period_breaks,
+										 self.context.theme_seaborn_)
+		if plots:
+			data['course_drops'] = build_plot_images_dictionary(plots)
 		return data
 
 View = EnrollmentTimeseriesReport = EnrollmentTimeseriesReportView
