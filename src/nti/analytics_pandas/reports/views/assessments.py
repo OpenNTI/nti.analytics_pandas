@@ -67,8 +67,12 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 		if 'has_self_assessment_views_data' not in keys:
 			self.options['has_self_assessment_views_data'] = False
 
+		if 'has_self_assessments_taken_data' not in keys:
+			self.options['has_self_assessments_taken_data'] = False
+
 		if 'has_assessment_events' not in keys:
 			self.options['has_assessment_events'] = False
+
 
 		self.options['data'] = data
 		return self.options
@@ -296,17 +300,17 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 		return data
 
 	def get_self_assessment_taken_plots(self, data):
-		plots = self.attp.analyze_events(self.context.period_breaks,
-										 self.context.minor_period_breaks,
-										 self.context.theme_seaborn_)
+		plots = self.sattp.analyze_events(self.context.period_breaks,
+										  self.context.minor_period_breaks,
+										  self.context.theme_seaborn_)
 		if plots:
 			data['self_assessments_taken'] = build_plot_images_dictionary(plots)
 		return data
 
 	def get_self_assessment_taken_plots_per_enrollment_types(self, data):
-		plots = self.attp.analyze_events_group_by_enrollment_type(self.context.period_breaks,
-																  self.context.minor_period_breaks,
-																  self.context.theme_seaborn_)
+		plots = self.sattp.analyze_events_group_by_enrollment_type(self.context.period_breaks,
+																   self.context.minor_period_breaks,
+																   self.context.theme_seaborn_)
 		self.options['has_self_assessments_taken_per_enrollment_types'] = False
 		if plots:
 			data['self_assessments_taken_per_enrollment_types'] = build_plot_images_dictionary(plots)
@@ -314,9 +318,9 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 		return data
 
 	def get_self_assessment_taken_plots_per_device_types(self, data):
-		plots = self.attp.analyze_events_group_by_device_type(self.context.period_breaks,
-															  self.context.minor_period_breaks,
-															  self.context.theme_seaborn_)
+		plots = self.sattp.analyze_events_group_by_device_type(self.context.period_breaks,
+															   self.context.minor_period_breaks,
+															   self.context.theme_seaborn_)
 		self.options['has_self_assessments_taken_per_device_types'] = False
 		if plots:
 			data['self_assessments_taken_per_device_types'] = build_plot_images_dictionary(plots)
@@ -324,7 +328,7 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 		return data
 
 	def get_self_assessment_taken_plots_per_course_sections(self, data):
-		plots = self.attp.analyze_events_per_course_sections(self.context.period_breaks,
+		plots = self.sattp.analyze_events_per_course_sections(self.context.period_breaks,
 															 self.context.minor_period_breaks,
 															 self.context.theme_seaborn_)
 		self.options['has_self_assessments_taken_per_course_sections'] = False

@@ -41,34 +41,38 @@ class AssessmentEventsTimeseries(object):
 		if self.avt is not None:
 			avt = self.avt
 			assignment_views_df = avt.analyze_events()
-			assignment_views_df = self.update_events_dataframe(assignment_views_df,
-				column_to_rename='number_assignments_viewed',
-				event_type='Assignment View')
-			df = df.append(assignment_views_df)
+			if assignment_views_df is not None:
+				assignment_views_df = self.update_events_dataframe(assignment_views_df,
+					column_to_rename='number_assignments_viewed',
+					event_type='Assignment View')
+				df = df.append(assignment_views_df)
 
 		if self.att is not None:
 			att = self.att
 			assignments_taken_df = att.analyze_events()
-			assignments_taken_df = self.update_events_dataframe(assignments_taken_df,
-				column_to_rename='number_assignments_taken',
-				event_type='Assignment Taken')
-			df = df.append(assignments_taken_df)
+			if assignments_taken_df is not None:
+				assignments_taken_df = self.update_events_dataframe(assignments_taken_df,
+					column_to_rename='number_assignments_taken',
+					event_type='Assignment Taken')
+				df = df.append(assignments_taken_df)
 
 		if self.savt is not None:
 			savt = self.savt
 			self_assessment_views_df = savt.analyze_events()
-			self_assessment_views_df = self.update_events_dataframe(self_assessment_views_df,
-				column_to_rename='number_self_assessments_viewed',
-				event_type='Self Asst. View')
-			df = df.append(self_assessment_views_df)
+			if self_assessment_views_df is not None:
+				self_assessment_views_df = self.update_events_dataframe(self_assessment_views_df,
+					column_to_rename='number_self_assessments_viewed',
+					event_type='Self Asst. View')
+				df = df.append(self_assessment_views_df)
 
 		if self.satt is not None:
 			satt = self.satt
 			self_assessments_taken_df = satt.analyze_events()
-			self_assessments_taken_df = self.update_events_dataframe(self_assessments_taken_df,
-				column_to_rename='number_self_assessments_taken',
-				event_type='Self Asst. Taken')
-			df = df.append(self_assessments_taken_df)
+			if self_assessments_taken_df is not None:
+				self_assessments_taken_df = self.update_events_dataframe(self_assessments_taken_df,
+					column_to_rename='number_self_assessments_taken',
+					event_type='Self Asst. Taken')
+				df = df.append(self_assessments_taken_df)
 
 		df.reset_index(inplace=True, drop=True)
 		return df
