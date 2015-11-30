@@ -22,6 +22,9 @@ from ...analysis import CourseEnrollmentsTimeseriesPlot
 from ...analysis import CourseDropsTimeseries
 from ...analysis import CourseDropsTimeseriesPlot
 
+from ...analysis import CourseEnrollmentsEventsTimeseries
+from ...analysis import CourseEnrollmentsEventsTimeseriesPlot
+
 from .commons import get_course_names
 from .commons import build_plot_images_dictionary
 from .commons import build_images_dict_from_plot_dict
@@ -62,6 +65,9 @@ class EnrollmentTimeseriesReportView(AbstractReportView):
 		if 'has_course_drop_data' not in keys:
 			self.options['has_course_drop_data'] = False
 
+		if 'has_enrollment_event_data' not in keys:
+			self.options['has_enrollment_event_data'] = False
+
 		self.options['data'] = data
 		return self.options
 
@@ -99,6 +105,13 @@ class EnrollmentTimeseriesReportView(AbstractReportView):
 		else:
 			self.options['has_course_drop_data'] = True
 			data = self.generate_course_drop_plots(data)
+
+		self.ceet = CourseEnrollmentsEventsTimeseries(cet=self.cet, cdt=self.cdt, ccvt=self.ccvt)
+		if not self.ccvt.dataframe.empty or not self.cet.dataframe.empty or not self.cdt.dataframe.empty:
+			self.options['has_enrollment_event_data'] = True
+			data = self.generate_combined_enrollment_event_plots(data)
+		else:
+			self.options['has_enrollment_event_data'] = False
 
 		self._build_data(data)
 		return self.options
@@ -186,12 +199,27 @@ class EnrollmentTimeseriesReportView(AbstractReportView):
 
 	def get_course_drop_plots_per_enrollment_types(self, data):
 		plots = self.cdtp.analyze_enrollment_types(self.context.period_breaks,
-											   self.context.minor_period_breaks,
-											   self.context.theme_seaborn_)
+												   self.context.minor_period_breaks,
+												   self.context.theme_seaborn_)
 		self.options['has_course_drops_per_enrollment_types'] = False
 		if plots:
 			data['course_drops_per_enrollment_types'] = build_plot_images_dictionary(plots)
 			self.options['has_course_drops_per_enrollment_types'] = True
+		return data
+
+	def generate_combined_enrollment_event_plots(self,data):
+		self.ceetp = CourseEnrollmentsEventsTimeseriesPlot(self.ceet)
+		data = self.get_course_enrollments_vs_drops_plots(data)
+		return data
+
+	def get_course_enrollments_vs_drops_plots(self, data):
+		plots = self.ceetp.explore_course_enrollments_vs_drops(self.context.period_breaks,
+															   self.context.minor_period_breaks,
+															   self.context.theme_seaborn_)
+		self.options['has_course_enrollments_vs_drops'] = False
+		if plots:
+			data['course_enrollments_vs_drops']  = build_plot_images_dictionary(plots)
+			self.options['has_course_enrollments_vs_drops'] = True
 		return data
 
 View = EnrollmentTimeseriesReport = EnrollmentTimeseriesReportView

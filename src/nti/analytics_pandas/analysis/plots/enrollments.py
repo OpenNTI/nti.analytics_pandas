@@ -305,7 +305,7 @@ class CourseEnrollmentsEventsTimeseriesPlot(object):
 										theme_seaborn_=theme_seaborn_,
 										plot_name='course_enrollments_vs_drops')
 
-		return (plot_enrollments_events)
+		return (plot_enrollments_events,)
 
 	def explore_course_catalog_views_vs_enrollments(self, period_breaks='1 week', 
 													minor_period_breaks='1 day',
