@@ -105,39 +105,37 @@ class NotesCreationTimeseries(object):
 		else:
 			self.dataframe = qnc.filter_by_period_of_time(start_date, end_date)
 
-		if len(self.dataframe) <= 0:
-			return
+		if not self.dataframe.empty:
+			categorical_columns = [	'note_id', 'user_id', 'sharing']
 
-		categorical_columns = [	'note_id', 'user_id', 'sharing']
+			if with_device_type:
+				new_df = qnc.add_device_type(self.dataframe)
+				if new_df is not None:
+					self.dataframe = new_df
+					categorical_columns.append('device_type')
 
-		if with_device_type:
-			new_df = qnc.add_device_type(self.dataframe)
-			if new_df is not None:
-				self.dataframe = new_df
-				categorical_columns.append('device_type')
+			if with_resource_type:
+				new_df = qnc.add_resource_type(self.dataframe)
+				if new_df is not None:
+					self.dataframe = new_df
+					categorical_columns.append('resource_type')
 
-		if with_resource_type:
-			new_df = qnc.add_resource_type(self.dataframe)
-			if new_df is not None:
-				self.dataframe = new_df
-				categorical_columns.append('resource_type')
+			if with_context_name:
+				new_df = qnc.add_context_name(self.dataframe, course_id)
+				if new_df is not None:
+					self.dataframe = new_df
+					categorical_columns.append('context_name')
 
-		if with_context_name:
-			new_df = qnc.add_context_name(self.dataframe, course_id)
-			if new_df is not None:
-				self.dataframe = new_df
-				categorical_columns.append('context_name')
+			if with_enrollment_type:
+				new_df = qnc.add_enrollment_type(self.dataframe, course_id)
+				if new_df is not None:
+					self.dataframe = new_df
+					categorical_columns.append('enrollment_type')
 
-		if with_enrollment_type:
-			new_df = qnc.add_enrollment_type(self.dataframe, course_id)
-			if new_df is not None:
-				self.dataframe = new_df
-				categorical_columns.append('enrollment_type')
+			if time_period_date:
+				self.dataframe = add_timestamp_period_(self.dataframe)
 
-		if time_period_date:
-			self.dataframe = add_timestamp_period_(self.dataframe)
-
-		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
+			self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def analyze_events(self):
 		"""
@@ -261,42 +259,43 @@ class NotesViewTimeseries(object):
 		else:
 			self.dataframe = qnv.filter_by_period_of_time(start_date, end_date)
 
-		categorical_columns = ['note_id', 'user_id']
+		if not self.dataframe.empty:
+			categorical_columns = ['note_id', 'user_id']
 
-		if with_device_type:
-			new_df = qnv.add_device_type(self.dataframe)
-			if new_df is not None:
-				self.dataframe = new_df
-				categorical_columns.append('device_type')
+			if with_device_type:
+				new_df = qnv.add_device_type(self.dataframe)
+				if new_df is not None:
+					self.dataframe = new_df
+					categorical_columns.append('device_type')
 
-		if with_resource_type:
-			new_df = qnv.add_resource_type(self.dataframe)
-			if new_df is not None:
-				self.dataframe = new_df
-				categorical_columns.append('resource_type')
+			if with_resource_type:
+				new_df = qnv.add_resource_type(self.dataframe)
+				if new_df is not None:
+					self.dataframe = new_df
+					categorical_columns.append('resource_type')
 
-		if time_period_date:
-			self.dataframe = add_timestamp_period_(self.dataframe)
+			if time_period_date:
+				self.dataframe = add_timestamp_period_(self.dataframe)
 
-		if with_sharing_type:
-			new_df = qnv.add_sharing_type(self.dataframe)
-			if new_df is not None:
-				self.dataframe = new_df
-				categorical_columns.append('sharing')
+			if with_sharing_type:
+				new_df = qnv.add_sharing_type(self.dataframe)
+				if new_df is not None:
+					self.dataframe = new_df
+					categorical_columns.append('sharing')
 
-		if with_context_name:
-			new_df = qnv.add_context_name(self.dataframe, course_id)
-			if new_df is not None:
-				self.dataframe = new_df
-				categorical_columns.append('context_name')
+			if with_context_name:
+				new_df = qnv.add_context_name(self.dataframe, course_id)
+				if new_df is not None:
+					self.dataframe = new_df
+					categorical_columns.append('context_name')
 
-		if with_enrollment_type:
-			new_df = qnv.add_enrollment_type(self.dataframe, course_id)
-			if new_df is not None:
-				self.dataframe = new_df
-				categorical_columns.append('enrollment_type')
+			if with_enrollment_type:
+				new_df = qnv.add_enrollment_type(self.dataframe, course_id)
+				if new_df is not None:
+					self.dataframe = new_df
+					categorical_columns.append('enrollment_type')
 
-		self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
+			self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def analyze_unique_events_based_on_device_type(self):
 		"""
@@ -461,28 +460,29 @@ class NoteLikesTimeseries(object):
 		else:
 			self.dataframe = qnl.filter_by_period_of_time(start_date, end_date)
 
-		if with_device_type:
-			new_df = qnl.add_device_type(self.dataframe)
-			if new_df is not None:
-				self.dataframe = new_df
+		if not self.dataframe.empty:
+			if with_device_type:
+				new_df = qnl.add_device_type(self.dataframe)
+				if new_df is not None:
+					self.dataframe = new_df
 
-		if with_resource_type:
-			new_df = qnl.add_resource_type(self.dataframe)
-			if new_df is not None:
-				self.dataframe = new_df
+			if with_resource_type:
+				new_df = qnl.add_resource_type(self.dataframe)
+				if new_df is not None:
+					self.dataframe = new_df
 
-		if time_period_date:
-			self.dataframe = add_timestamp_period_(self.dataframe)
+			if time_period_date:
+				self.dataframe = add_timestamp_period_(self.dataframe)
 
-		if with_context_name:
-			new_df = qnl.add_context_name(self.dataframe, course_id)
-			if new_df is not None:
-				self.dataframe = new_df
+			if with_context_name:
+				new_df = qnl.add_context_name(self.dataframe, course_id)
+				if new_df is not None:
+					self.dataframe = new_df
 
-		if with_enrollment_type:
-			new_df = qnl.add_enrollment_type(self.dataframe, course_id)
-			if new_df is not None:
-				self.dataframe = new_df
+			if with_enrollment_type:
+				new_df = qnl.add_enrollment_type(self.dataframe, course_id)
+				if new_df is not None:
+					self.dataframe = new_df
 
 	def analyze_events(self):
 		group_by_items = ['timestamp_period']
@@ -538,28 +538,29 @@ class NoteFavoritesTimeseries(object):
 		else:
 			self.dataframe = qnf.filter_by_period_of_time(start_date, end_date)
 
-		if with_device_type:
-			new_df = qnf.add_device_type(self.dataframe)
-			if new_df is not None:
-				self.dataframe = new_df
+		if not self.dataframe.empty:
+			if with_device_type:
+				new_df = qnf.add_device_type(self.dataframe)
+				if new_df is not None:
+					self.dataframe = new_df
 
-		if with_resource_type:
-			new_df = qnf.add_resource_type(self.dataframe)
-			if new_df is not None:
-				self.dataframe = new_df
+			if with_resource_type:
+				new_df = qnf.add_resource_type(self.dataframe)
+				if new_df is not None:
+					self.dataframe = new_df
 
-		if time_period_date:
-			self.dataframe = add_timestamp_period_(self.dataframe)
+			if time_period_date:
+				self.dataframe = add_timestamp_period_(self.dataframe)
 
-		if with_context_name:
-			new_df = qnf.add_context_name(self.dataframe, course_id)
-			if new_df is not None:
-				self.dataframe = new_df
+			if with_context_name:
+				new_df = qnf.add_context_name(self.dataframe, course_id)
+				if new_df is not None:
+					self.dataframe = new_df
 
-		if with_enrollment_type:
-			new_df = qnf.add_enrollment_type(self.dataframe, course_id)
-			if new_df is not None:
-				self.dataframe = new_df
+			if with_enrollment_type:
+				new_df = qnf.add_enrollment_type(self.dataframe, course_id)
+				if new_df is not None:
+					self.dataframe = new_df
 
 	def analyze_events(self):
 		group_by_items = ['timestamp_period']
