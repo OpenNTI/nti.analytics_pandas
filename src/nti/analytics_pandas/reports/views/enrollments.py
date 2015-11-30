@@ -47,8 +47,8 @@ class EnrollmentTimeseriesReportView(AbstractReportView):
 
 	def _build_data(self, data=_('sample enrollment related events report')):
 		keys = self.options.keys()
-		if 'has_catalog_view_data' not in keys:
-			self.options['has_catalog_view_data'] = False
+		if 'has_course_catalog_view_data' not in keys:
+			self.options['has_course_catalog_view_data'] = False
 
 		self.options['data'] = data
 		return self.options
@@ -63,21 +63,21 @@ class EnrollmentTimeseriesReportView(AbstractReportView):
 											   	  self.context.end_date,
 												  self.context.courses)
 		if self.ccvt.dataframe.empty:
-			self.options['has_catalog_view_data'] = False
+			self.options['has_course_catalog_view_data'] = False
 		else:
-			self.options['has_catalog_view_data'] = True
-			data = self.generate_catalog_view_plots(data)
+			self.options['has_course_catalog_view_data'] = True
+			data = self.generate_course_catalog_view_plots(data)
 
 		self._build_data(data)
 		return self.options
 
-	def generate_catalog_view_plots(self, data):
+	def generate_course_catalog_view_plots(self, data):
 		self.ccvtp = CourseCatalogViewsTimeseriesPlot(self.ccvt)
-		data = self.get_catalog_view_plots(data)
-		data = self.get_catalog_view_plots_per_device_types(data)
+		data = self.get_course_catalog_view_plots(data)
+		data = self.get_course_catalog_view_plots_per_device_types(data)
 		return data
 
-	def get_catalog_view_plots(self, data):
+	def get_course_catalog_view_plots(self, data):
 		plots = self.ccvtp.explore_events(self.context.period_breaks,
 										  self.context.minor_period_breaks,
 										  self.context.theme_seaborn_)
@@ -85,7 +85,7 @@ class EnrollmentTimeseriesReportView(AbstractReportView):
 			data['course_catalog_views'] = build_plot_images_dictionary(plots)
 		return data
 
-	def get_catalog_view_plots_per_device_types(self, data):
+	def get_course_catalog_view_plots_per_device_types(self, data):
 		plots = self.ccvtp.analyze_device_types(self.context.period_breaks,
 											    self.context.minor_period_breaks,
 											    self.context.theme_seaborn_)
