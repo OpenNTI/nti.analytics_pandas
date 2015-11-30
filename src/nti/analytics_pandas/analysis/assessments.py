@@ -329,7 +329,6 @@ class AssignmentsTakenTimeseries(object):
 		total_enrollments = qce.count_enrollments(self.course_id)
 
 		df['ratio'] = df['number_assignments_taken'] / total_enrollments
-
 		return df
 
 class SelfAssessmentViewsTimeseries(object):

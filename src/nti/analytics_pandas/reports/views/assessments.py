@@ -73,7 +73,6 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 		if 'has_assessment_events' not in keys:
 			self.options['has_assessment_events'] = False
 
-
 		self.options['data'] = data
 		return self.options
 
@@ -104,7 +103,6 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 		else:
 			self.options['has_assignment_views_data'] = True
 			data = self.generate_assignment_view_plots(data)
-
 
 		self.savt = SelfAssessmentViewsTimeseries(self.context.session,
 												  self.context.start_date,
@@ -158,7 +156,6 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 		plots = self.attp.analyze_events_group_by_device_type(self.context.period_breaks,
 															  self.context.minor_period_breaks,
 															  self.context.theme_seaborn_)
-
 		self.options['has_assignment_taken_per_device_types'] = False
 		if plots:
 			data['assignment_taken_per_device_types'] = build_plot_images_dictionary(plots)
@@ -169,7 +166,6 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 		plots = self.attp.analyze_events_group_by_enrollment_type(self.context.period_breaks,
 																  self.context.minor_period_breaks,
 																  self.context.theme_seaborn_)
-
 		self.options['has_assignment_taken_per_enrollment_types'] = False
 		if plots:
 			data['assignment_taken_per_enrollment_types'] = build_plot_images_dictionary(plots)
