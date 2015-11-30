@@ -34,7 +34,7 @@ from .mixins import AbstractReportView
 class EnrollmentTimeseriesContext(object):
 
 	def __init__(self, session=None, start_date=None, end_date=None, courses=None,
-				 period_breaks='1 week', minor_period_breaks='1 day', 
+				 period_breaks='1 week', minor_period_breaks='1 day',
 				 theme_seaborn_=True, number_of_most_active_user=10):
 		self.session = session
 		self.courses = courses
@@ -96,9 +96,9 @@ class EnrollmentTimeseriesReportView(AbstractReportView):
 			data = self.generate_course_enrollment_plots(data)
 
 		self.cdt = CourseDropsTimeseries(self.context.session,
-								   	     self.context.start_date,
-								   	     self.context.end_date,
-									     self.context.courses)
+								   		 self.context.start_date,
+								   		 self.context.end_date,
+										 self.context.courses)
 		if self.cdt.dataframe.empty:
 			self.options['has_course_drop_data'] = False
 		else:
@@ -131,8 +131,8 @@ class EnrollmentTimeseriesReportView(AbstractReportView):
 
 	def get_course_catalog_view_plots_per_device_types(self, data):
 		plots = self.ccvtp.analyze_device_types(self.context.period_breaks,
-											    self.context.minor_period_breaks,
-											    self.context.theme_seaborn_)
+												self.context.minor_period_breaks,
+												self.context.theme_seaborn_)
 		self.options['has_course_catalog_views_per_device_types'] = False
 		if plots:
 			data['course_catalog_views_per_device_types'] = build_plot_images_dictionary(plots)
@@ -206,7 +206,7 @@ class EnrollmentTimeseriesReportView(AbstractReportView):
 			self.options['has_course_drops_per_enrollment_types'] = True
 		return data
 
-	def generate_combined_enrollment_event_plots(self,data):
+	def generate_combined_enrollment_event_plots(self, data):
 		self.ceetp = CourseEnrollmentsEventsTimeseriesPlot(self.ceet)
 		data = self.get_course_enrollments_vs_drops_plots(data)
 		data = self.get_course_enrollments_vs_catalog_views_plots(data)
@@ -218,7 +218,7 @@ class EnrollmentTimeseriesReportView(AbstractReportView):
 															   self.context.theme_seaborn_)
 		self.options['has_course_enrollments_vs_drops'] = False
 		if plots:
-			data['course_enrollments_vs_drops']  = build_plot_images_dictionary(plots)
+			data['course_enrollments_vs_drops'] = build_plot_images_dictionary(plots)
 			self.options['has_course_enrollments_vs_drops'] = True
 		return data
 
@@ -228,7 +228,7 @@ class EnrollmentTimeseriesReportView(AbstractReportView):
 																	   self.context.theme_seaborn_)
 		self.options['has_course_enrollments_vs_catalog_views'] = False
 		if plots:
-			data['course_enrollments_vs_catalog_views']  = build_plot_images_dictionary(plots)
+			data['course_enrollments_vs_catalog_views'] = build_plot_images_dictionary(plots)
 			self.options['has_course_enrollments_vs_catalog_views'] = True
 		return data
 

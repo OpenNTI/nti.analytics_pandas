@@ -50,7 +50,7 @@ class CourseCatalogViewsTimeseriesPlot(object):
 									 event_title,
 									 user_title,
 									 ratio_title,
-									 event_y_axis_field, 
+									 event_y_axis_field,
 									 event_y_axis_label,
 									 period_breaks,
 									 minor_period_breaks,
@@ -67,8 +67,8 @@ class CourseCatalogViewsTimeseriesPlot(object):
 										period_breaks=period_breaks,
 										minor_breaks=minor_period_breaks,
 										plot_name='average_time_length')
-		
-		plots = plots + (plot_average_time_length, )
+
+		plots = plots + (plot_average_time_length,)
 		return plots
 
 	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day', theme_seaborn_=True):
@@ -187,7 +187,7 @@ class CourseEnrollmentsTimeseriesPlot(object):
 										minor_breaks=minor_period_breaks,
 										theme_seaborn_=theme_seaborn_,
 										plot_name='course_enrollments_per_enrollment_types')
-		
+
 		return (plot_course_enrollments_by_device, plot_course_enrollments_by_type)
 
 class CourseDropsTimeseriesPlot(object):
@@ -284,9 +284,9 @@ class CourseEnrollmentsEventsTimeseriesPlot(object):
 		"""
 		self.ceet = ceet
 
-	def explore_course_enrollments_vs_drops(self, period_breaks='1 week', 
-											minor_period_breaks='1 day', 
-										    theme_seaborn_=True):
+	def explore_course_enrollments_vs_drops(self, period_breaks='1 week',
+											minor_period_breaks='1 day',
+											theme_seaborn_=True):
 		ceet = self.ceet
 		df = ceet.explore_course_enrollments_vs_drops()
 		if len(df.index) <= 0:
@@ -307,7 +307,7 @@ class CourseEnrollmentsEventsTimeseriesPlot(object):
 
 		return (plot_enrollments_events,)
 
-	def explore_course_catalog_views_vs_enrollments(self, period_breaks='1 week', 
+	def explore_course_catalog_views_vs_enrollments(self, period_breaks='1 week',
 													minor_period_breaks='1 day',
 													theme_seaborn_=True):
 		ceet = self.ceet
@@ -327,5 +327,5 @@ class CourseEnrollmentsEventsTimeseriesPlot(object):
 									minor_breaks=minor_period_breaks,
 									theme_seaborn_=theme_seaborn_,
 									plot_name='course_enrollments_vs_catalog_views')
-		
+
 		return (plot_enrollments_events,)
