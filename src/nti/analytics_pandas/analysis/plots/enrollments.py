@@ -284,7 +284,9 @@ class CourseEnrollmentsEventsTimeseriesPlot(object):
 		"""
 		self.ceet = ceet
 
-	def explore_course_enrollments_vs_drops(self, period_breaks='1 week', minor_period_breaks='1 day'):
+	def explore_course_enrollments_vs_drops(self, period_breaks='1 week', 
+											minor_period_breaks='1 day', 
+										    theme_seaborn_=True):
 		ceet = self.ceet
 		df = ceet.explore_course_enrollments_vs_drops()
 		if len(df.index) <= 0:
@@ -299,11 +301,15 @@ class CourseEnrollmentsEventsTimeseriesPlot(object):
 										title=_('Number of course enrollments vs drops during period of time'),
 										period_breaks=period_breaks,
 										group_by='event_type',
-										minor_breaks=minor_period_breaks)
+										minor_breaks=minor_period_breaks,
+										theme_seaborn_=theme_seaborn_,
+										plot_name='course_enrollments_vs_drops')
 
 		return (plot_enrollments_events)
 
-	def explore_course_catalog_views_vs_enrollments(self, period_breaks='1 week', minor_period_breaks='1 day'):
+	def explore_course_catalog_views_vs_enrollments(self, period_breaks='1 week', 
+													minor_period_breaks='1 day',
+													theme_seaborn_=True):
 		ceet = self.ceet
 		df = ceet.explore_course_catalog_views_vs_enrollments()
 		if len(df.index) <= 0:
@@ -318,6 +324,8 @@ class CourseEnrollmentsEventsTimeseriesPlot(object):
 									title=_('Number of course catalog views vs enrollments during period of time'),
 									period_breaks=period_breaks,
 									group_by='event_type',
-									minor_breaks=minor_period_breaks)
-
+									minor_breaks=minor_period_breaks,
+									theme_seaborn_=theme_seaborn_,
+									plot_name='course_enrollments_vs_catalog_views')
+		
 		return (plot_enrollments_events,)
