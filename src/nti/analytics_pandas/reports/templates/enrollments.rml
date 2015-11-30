@@ -26,6 +26,24 @@
 					      metal:use-macro="macro:four_plots_event">
 			</illustration>
 		</tal:block>
+
+		<setNextTemplate name="main"/>
+		<nextPage />
+		<tal:block tal:condition="python: options['has_course_catalog_views_per_device_types']">
+			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+				Overview of Course Catalog Views
+			</h1>
+			<hr width="100%" />
+			<tal:block tal:define="course_catalog_views options/data/course_catalog_views_per_device_types">
+				<illustration width="5in" height="3in"
+						  	  tal:define="event course_catalog_views/event_course_catalog_views_per_device_types;
+						  	  			  user_event course_catalog_views/ratio_course_catalog_views_per_device_types;
+									      ratio_event course_catalog_views/user_course_catalog_views_per_device_types;
+									      additional_plot course_catalog_views/average_time_length_per_device_types"
+						      metal:use-macro="macro:four_plots_event">
+				</illustration>
+			</tal:block>
+		</tal:block>
 	</tal:block>
 
 </metal:block>

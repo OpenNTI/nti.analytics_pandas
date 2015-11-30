@@ -100,7 +100,7 @@ class CourseCatalogViewsTimeseriesPlot(object):
 		event_title = _('Number of course catalog views per device_type')
 		user_title = _('Number of unique users viewing course catalog per device_type')
 		ratio_title = _('Ratio of course catalog views over unique user per device_type')
-		event_type = 'course_catalog_views'
+		event_type = 'course_catalog_views_per_device_types'
 		event_y_axis_field = 'number_of_course_catalog_views'
 		event_y_axis_label = 'Number of course catalog views'
 		plots = generate_three_group_by_plots(df,
@@ -125,7 +125,7 @@ class CourseCatalogViewsTimeseriesPlot(object):
 										period_breaks=period_breaks,
 										group_by='device_type',
 										minor_breaks=minor_period_breaks,
-										plot_name='average_time_length')
+										plot_name='average_time_length_per_device_types')
 
 		plots = plots + (plot_average_time_length,)
 		return plots

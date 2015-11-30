@@ -74,6 +74,7 @@ class EnrollmentTimeseriesReportView(AbstractReportView):
 	def generate_catalog_view_plots(self, data):
 		self.ccvtp = CourseCatalogViewsTimeseriesPlot(self.ccvt)
 		data = self.get_catalog_view_plots(data)
+		data = self.get_catalog_view_plots_per_device_types(data)
 		return data
 
 	def get_catalog_view_plots(self, data):
@@ -82,6 +83,16 @@ class EnrollmentTimeseriesReportView(AbstractReportView):
 										  self.context.theme_seaborn_)
 		if plots:
 			data['course_catalog_views'] = build_plot_images_dictionary(plots)
+		return data
+
+	def get_catalog_view_plots_per_device_types(self, data):
+		plots = self.ccvtp.analyze_device_types(self.context.period_breaks,
+											    self.context.minor_period_breaks,
+											    self.context.theme_seaborn_)
+		self.options['has_course_catalog_views_per_device_types'] = False
+		if plots:
+			data['course_catalog_views_per_device_types'] = build_plot_images_dictionary(plots)
+			self.options['has_course_catalog_views_per_device_types'] = True
 		return data
 
 View = EnrollmentTimeseriesReport = EnrollmentTimeseriesReportView
