@@ -3,7 +3,7 @@
 	xmlns:metal="http://xml.zope.org/namespaces/metal"
 	tal:define="options view/options">
 
-	<tal:block tal:condition="python: options['has_course_catalog_view_data']">
+	<tal:block tal:condition="python: options['has_enrollment_event_data']">
 		<para style="normal" spaceAfter=".5in" >
 			This document presents an overview of enrollment related events in <u>${options/course_names}</u> from <strong>${context/start_date}</strong> through <strong>${context/end_date}</strong>.
 		</para>
