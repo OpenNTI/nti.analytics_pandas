@@ -16,6 +16,9 @@ from zope import interface
 from ...analysis import CourseCatalogViewsTimeseries
 from ...analysis import CourseCatalogViewsTimeseriesPlot
 
+from ...analysis import CourseEnrollmentsTimeseries
+from ...analysis import CourseEnrollmentsTimeseriesPlot
+
 from .commons import get_course_names
 from .commons import build_plot_images_dictionary
 from .commons import build_images_dict_from_plot_dict
@@ -50,6 +53,9 @@ class EnrollmentTimeseriesReportView(AbstractReportView):
 		if 'has_course_catalog_view_data' not in keys:
 			self.options['has_course_catalog_view_data'] = False
 
+		if 'has_course_enrollment_data' not in keys:
+			self.options['has_course_enrollment_data'] = False
+
 		self.options['data'] = data
 		return self.options
 
@@ -59,14 +65,24 @@ class EnrollmentTimeseriesReportView(AbstractReportView):
 		data = {}
 
 		self.ccvt = CourseCatalogViewsTimeseries(self.context.session,
-											   	  self.context.start_date,
-											   	  self.context.end_date,
-												  self.context.courses)
+											   	 self.context.start_date,
+											   	 self.context.end_date,
+												 self.context.courses)
 		if self.ccvt.dataframe.empty:
 			self.options['has_course_catalog_view_data'] = False
 		else:
 			self.options['has_course_catalog_view_data'] = True
 			data = self.generate_course_catalog_view_plots(data)
+
+		self.cet = CourseEnrollmentsTimeseries(self.context.session,
+										   	   self.context.start_date,
+										   	   self.context.end_date,
+											   self.context.courses)
+		if self.cet.dataframe.empty:
+			self.options['has_course_enrollment_data'] = False
+		else:
+			self.options['has_course_enrollment_data'] = True
+			data = self.generate_course_enrollment_plots(data)
 
 		self._build_data(data)
 		return self.options
@@ -93,6 +109,19 @@ class EnrollmentTimeseriesReportView(AbstractReportView):
 		if plots:
 			data['course_catalog_views_per_device_types'] = build_plot_images_dictionary(plots)
 			self.options['has_course_catalog_views_per_device_types'] = True
+		return data
+
+	def generate_course_enrollment_plots(self, data):
+		self.cetp = CourseEnrollmentsTimeseriesPlot(self.cet)
+		data = self.get_course_enrollment_plots(data)
+		return data
+
+	def get_course_enrollment_plots(self, data):
+		plots = self.cetp.explore_events(self.context.period_breaks,
+										 self.context.minor_period_breaks,
+										 self.context.theme_seaborn_)
+		if plots:
+			data['course_enrollments'] = build_plot_images_dictionary(plots)
 		return data
 
 View = EnrollmentTimeseriesReport = EnrollmentTimeseriesReportView
