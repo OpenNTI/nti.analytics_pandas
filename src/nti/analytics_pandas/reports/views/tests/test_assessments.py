@@ -128,5 +128,3 @@ class TestAssessmentsEvents(AnalyticsPandasTestBase):
 
 		data = view.options['data']
 		cleanup_temporary_file(data)
-
-

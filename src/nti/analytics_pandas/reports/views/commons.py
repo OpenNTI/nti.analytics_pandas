@@ -10,6 +10,7 @@ __docformat__ = "restructuredtext en"
 logger = __import__('logging').getLogger(__name__)
 
 import os
+import six
 import atexit
 import shutil
 import tempfile
@@ -82,7 +83,7 @@ def copy_plot_to_temporary_file(plot, image_type, dirname=None):
 	finally:
 		image_file.close()
 		yield image_file.name
-	
+
 def get_course_names(session, courses_id):
 	qc = QueryCourses(session)
 	df = qc.get_context_name(courses_id)
@@ -99,10 +100,9 @@ def create_pdf_file_from_rml(rml, filepath):
 		pdf_stream.close()
 
 def cleanup_temporary_file(data):
-	if isinstance(data, dict):
-		for key in data.keys():
-			if isinstance(data[key], str):
-				if os.path.isfile(data[key]):
-					os.unlink(data[key])
-			elif isinstance(data[key], dict):
-				cleanup_temporary_file(data[key])
+	if isinstance(data, six.string_types):
+		if os.path.isfile(data):
+			os.unlink(data)
+	elif isinstance(data, Mapping):
+		for value in data.values():
+			cleanup_temporary_file(value)

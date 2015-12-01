@@ -21,9 +21,9 @@ from z3c.rml import rml2pdf
 
 from nti.analytics_pandas.reports.views.bookmarks import View
 from nti.analytics_pandas.reports.views.bookmarks import Context
+from nti.analytics_pandas.reports.views.commons import cleanup_temporary_file
 
 from nti.analytics_pandas.reports.z3c_zpt import ViewPageTemplateFile
-from nti.analytics_pandas.reports.views.commons import cleanup_temporary_file
 
 from nti.common.property import Lazy
 
@@ -94,6 +94,6 @@ class TestBookmarksEvents(AnalyticsPandasTestBase):
 		pdf_stream.seek(0)
 		readbuf = pdf_stream.read()
 		assert_that(readbuf, has_length(greater_than(0)))
-		
+
 		data = view.options['data']
 		cleanup_temporary_file(data)

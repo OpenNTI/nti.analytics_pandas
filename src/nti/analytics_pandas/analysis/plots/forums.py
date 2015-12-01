@@ -17,13 +17,11 @@ import numpy as np
 
 from zope.i18n import translate
 
-from .commons import generate_plot_names
+from .commons import generate_three_plots
 from .commons import line_plot_x_axis_date
 from .commons import group_line_plot_x_axis_date
-from .commons import histogram_plot_x_axis_discrete
-
-from .commons import generate_three_plots
 from .commons import generate_three_group_by_plots
+from .commons import histogram_plot_x_axis_discrete
 
 class ForumsEventsTimeseriesPlot(object):
 
@@ -42,7 +40,7 @@ class ForumsEventsTimeseriesPlot(object):
 		if len(df.index) <= 0:
 			return ()
 
-		group_by='event_type'
+		group_by = 'event_type'
 		event_title = _('Number of forums events grouped by event type during period of time')
 		user_title = _('Number of unique users creating forums events during period of time')
 		ratio_title = _('Ratio of forums events over unique user on each available date')
@@ -89,7 +87,7 @@ class ForumsCreatedTimeseriesPlot(object):
 
 		event_title = _('Number of forums created during period of time')
 		user_title = _('Number of unique users creating forums during period of time')
-		ratio_title =_('Ratio of forums created over unique user on each available date')
+		ratio_title = _('Ratio of forums created over unique user on each available date')
 		event_type = 'forums_created'
 		event_y_axis_field = 'number_of_forums_created'
 		event_y_axis_label = _('Number of forums created')
@@ -128,7 +126,7 @@ class ForumsCreatedTimeseriesPlot(object):
 		group_by = 'device_type'
 		event_title = _('Number of forums created grouped by device types')
 		user_title = _('Number of unique users creating forums grouped by device types')
-		ratio_title =_('Ratio of forums created over unique user grouped by device types')
+		ratio_title = _('Ratio of forums created over unique user grouped by device types')
 		event_type = 'forums_created_per_device_types'
 		event_y_axis_field = 'number_of_forums_created'
 		event_y_axis_label = _('Number of forums created per device type')
@@ -238,10 +236,10 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 
 			title_users = translate(_("Number of unique users creating forum comments in ${title}",
 									  mapping={'title': context_name}))
-		
+
 			title_ratio = translate(_("Ratio of forums comments created over unique user in ${title}",
 									  mapping={'title': context_name}))
-	
+
 			title_avg_length = translate(_("Average forums comments length on each available date in ${title}",
 									  	 mapping={'title': context_name}))
 
@@ -347,8 +345,8 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 							 minor_period_breaks='1 day',
 							 theme_seaborn_=True):
 		"""
-		return scatter plots of forum comments creation grouped by device_type during period of time
-		it consists of:
+		return scatter plots of forum comments creation grouped by device_type during
+		period of time it consists of:
 			- number of forums comment creation
 			- number of unique users
 			- ratio of forum comment creation over unique users
@@ -763,8 +761,8 @@ class ForumCommentFavoritesTimeseriesPlot(object):
 		return plots
 
 	def analyze_enrollment_types(self, period_breaks='1 week',
-							     minor_period_breaks='1 day',
-							     theme_seaborn_=True):
+								 minor_period_breaks='1 day',
+								 theme_seaborn_=True):
 		"""
 		plot the number of comment favorites per enrollment types on each available date during time period.
 		It also shows the number of unique users adding favorites

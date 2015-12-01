@@ -18,13 +18,10 @@ import numpy as np
 from zope.i18n import translate
 
 from .commons import bar_plot_with_fill
-from .commons import generate_plot_names
-from .commons import line_plot_x_axis_date
-from .commons import group_line_plot_x_axis_date
-from .commons import histogram_plot_x_axis_discrete
-
 from .commons import generate_three_plots
+from .commons import group_line_plot_x_axis_date
 from .commons import generate_three_group_by_plots
+from .commons import histogram_plot_x_axis_discrete
 
 class NotesEventsTimeseriesPlot(object):
 
@@ -41,7 +38,7 @@ class NotesEventsTimeseriesPlot(object):
 		if len(df.index) <= 0:
 			return ()
 
-		group_by='event_type'
+		group_by = 'event_type'
 		event_title = _('Number of notes events grouped by event type during period of time')
 		user_title = _('Number of unique users creating notes events during period of time')
 		ratio_title = _('Ratio of notes events over unique user on each available date')
@@ -202,15 +199,16 @@ class NotesCreationTimeseriesPlot(object):
 		user_title = _('Number of unique users creating notes grouped by enrollment types')
 		ratio_title = _('Ratio of notes created grouped by enrollment types over unique user')
 		event_type = 'notes_created_per_enrollment_types'
-		enrollment_plots = self.generate_group_by_plot(df,
-												   group_by,
-												   event_title,
-												   user_title,
-												   ratio_title,
-												   period_breaks,
-												   minor_period_breaks,
-												   theme_seaborn_,
-												   event_type)
+		enrollment_plots = self.generate_group_by_plot(
+												df,
+												group_by,
+												event_title,
+												user_title,
+												ratio_title,
+												period_breaks,
+												minor_period_breaks,
+												theme_seaborn_,
+												event_type)
 		return enrollment_plots
 
 	def analyze_resource_types(self, period_breaks='1 week',
@@ -1037,5 +1035,3 @@ class NoteFavoritesTimeseriesPlot(object):
 											  theme_seaborn_,
 											  event_type)
 		return plots
-
-

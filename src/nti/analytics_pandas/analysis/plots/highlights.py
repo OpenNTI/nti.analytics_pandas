@@ -17,13 +17,9 @@ import numpy as np
 
 from zope.i18n import translate
 
-from .commons import generate_plot_names
-from .commons import line_plot_x_axis_date
-from .commons import group_line_plot_x_axis_date
-from .commons import histogram_plot_x_axis_discrete
-
 from .commons import generate_three_plots
 from .commons import generate_three_group_by_plots
+from .commons import histogram_plot_x_axis_discrete
 
 class HighlightsCreationTimeseriesPlot(object):
 
@@ -233,10 +229,16 @@ class HighlightsCreationTimeseriesPlot(object):
 		user_title = _('Number of unique users created highlights grouped by resource types')
 		ratio_title = _('Ratio of highlights created over unique users grouped by resource types')
 		event_type = 'highlights_created_per_resource_types'
-		plots = self.generate_group_by_plots(df, group_by,
-											event_title, user_title, ratio_title,
-											period_breaks, minor_period_breaks,
-											theme_seaborn_, event_type)
+		plots = self.generate_group_by_plots(
+									df, 
+									group_by,
+									event_title, 
+									user_title, 
+									ratio_title,
+									period_breaks, 
+									minor_period_breaks,
+									theme_seaborn_, 
+									event_type)
 
 		return plots
 

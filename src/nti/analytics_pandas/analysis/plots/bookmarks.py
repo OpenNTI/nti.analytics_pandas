@@ -18,14 +18,10 @@ import numpy as np
 from zope.i18n import translate
 
 from .commons import histogram_plot
-from .commons import generate_plot_names
-from .commons import line_plot_x_axis_date
-from .commons import group_line_plot_x_axis_date
-from .commons import facet_line_plot_x_axis_date
-from .commons import histogram_plot_x_axis_discrete
-
 from .commons import generate_three_plots
+from .commons import facet_line_plot_x_axis_date
 from .commons import generate_three_group_by_plots
+from .commons import histogram_plot_x_axis_discrete
 
 class BookmarksTimeseriesPlot(object):
 
@@ -91,17 +87,18 @@ class BookmarksTimeseriesPlot(object):
 			event_type = 'bookmarks_created_per_course_sections'
 			event_y_axis_field = 'number_of_bookmarks_created'
 			event_y_axis_label = _('Number of bookmarks created')
-			all_section_plots = generate_three_group_by_plots(df,
-												  group_by,
-												  event_title,
-												  user_title,
-												  ratio_title,
-												  event_y_axis_field,
-												  event_y_axis_label,
-												  period_breaks,
-												  minor_period_breaks,
-												  theme_seaborn_,
-												  event_type)
+			all_section_plots = generate_three_group_by_plots(
+												df,
+												group_by,
+												event_title,
+												user_title,
+												ratio_title,
+												event_y_axis_field,
+												event_y_axis_label,
+												period_breaks,
+												minor_period_breaks,
+												theme_seaborn_,
+												event_type)
 			plots['all_section_plots'] = all_section_plots
 
 		section_plots_dict = {}
@@ -119,16 +116,17 @@ class BookmarksTimeseriesPlot(object):
 			event_type = 'bookmarks_created_in_%s' % (context_name.replace(' ', ''))
 			event_y_axis_field = 'number_of_bookmarks_created'
 			event_y_axis_label = _('Number of bookmarks created')
-			section_plots = generate_three_plots(df,
-									 event_title,
-									 user_title,
-									 ratio_title,
-									 event_y_axis_field,
-									 event_y_axis_label,
-									 period_breaks,
-									 minor_period_breaks,
-									 theme_seaborn_,
-									 event_type)
+			section_plots = generate_three_plots(
+										df,
+										event_title,
+										user_title,
+										ratio_title,
+										event_y_axis_field,
+										event_y_axis_label,
+										period_breaks,
+										minor_period_breaks,
+										theme_seaborn_,
+										event_type)
 			key = 'section_%s' % (course_id)
 			section_plots_dict[key] = section_plots
 		plots['section_plots'] = section_plots_dict
@@ -290,18 +288,18 @@ class BookmarksTimeseriesPlot(object):
 											text_size=8)
 
 		plot_ratio = facet_line_plot_x_axis_date(
-											df=df,
-											x_axis_field='timestamp_period',
-											y_axis_field='ratio',
-											x_axis_label=_('Date'),
-											y_axis_label=_('Ratio'),
-											title=_('Ratio of bookmark creation over unique user on each available date'),
-											period_breaks=period_breaks,
-											group_by='resource_type',
-											facet='device_type',
-											minor_breaks=minor_period_breaks,
-											scales='free',
-											text_size=8)
+										df=df,
+										x_axis_field='timestamp_period',
+										y_axis_field='ratio',
+										x_axis_label=_('Date'),
+										y_axis_label=_('Ratio'),
+										title=_('Ratio of bookmark creation over unique user on each available date'),
+										period_breaks=period_breaks,
+										group_by='resource_type',
+										facet='device_type',
+										minor_breaks=minor_period_breaks,
+										scales='free',
+										text_size=8)
 
 		return (plot_bookmarks_creation, plot_unique_users, plot_ratio)
 

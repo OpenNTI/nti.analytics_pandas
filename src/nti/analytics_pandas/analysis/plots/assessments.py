@@ -17,13 +17,10 @@ import numpy as np
 
 from zope.i18n import translate
 
-from .commons import generate_plot_names
-from .commons import line_plot_x_axis_date
-from .commons import group_line_plot_x_axis_date
-from .commons import histogram_plot_x_axis_discrete
-
 from .commons import generate_three_plots
+from .commons import group_line_plot_x_axis_date
 from .commons import generate_three_group_by_plots
+from .commons import histogram_plot_x_axis_discrete
 
 class AssessmentEventsTimeseriesPlot(object):
 
@@ -211,8 +208,8 @@ class AssignmentViewsTimeseriesPlot(object):
 		return plots
 
 	def analyze_events_group_by_enrollment_type(self, period_breaks='1 week',
-											minor_period_breaks='1 day',
-											theme_seaborn_=True):
+												minor_period_breaks='1 day',
+												theme_seaborn_=True):
 		avt = self.avt
 		df = avt.analyze_events_group_by_enrollment_type()
 		if df is None :
@@ -277,8 +274,8 @@ class AssignmentsTakenTimeseriesPlot(object):
 		return plots
 
 	def analyze_events_per_course_sections(self, period_breaks='1 week',
-										  minor_period_breaks='1 day',
-										  theme_seaborn_=True):
+										   minor_period_breaks='1 day',
+										   theme_seaborn_=True):
 
 		att = self.att
 		df = att.analyze_events_per_course_sections()
@@ -664,16 +661,17 @@ class SelfAssessmentsTakenTimeseriesPlot(object):
 			event_type = 'self_assessments_taken_in_%s' % (context_name.replace(' ', '_'))
 			event_y_axis_field = 'number_self_assessments_taken'
 			event_y_axis_label = _('Number of self assessments taken')
-			section_plots = generate_three_plots(df,
-										 event_title,
-										 user_title,
-										 ratio_title,
-										 event_y_axis_field,
-										 event_y_axis_label,
-										 period_breaks,
-										 minor_period_breaks,
-										 theme_seaborn_,
-										 event_type)
+			section_plots = generate_three_plots(
+										df,
+										event_title,
+										user_title,
+										ratio_title,
+										event_y_axis_field,
+										event_y_axis_label,
+										period_breaks,
+										minor_period_breaks,
+										theme_seaborn_,
+										event_type)
 			key = 'section_%s' % (course_id)
 			section_plots_dict[key] = section_plots
 		plots['section_plots'] = section_plots_dict
@@ -696,17 +694,18 @@ class SelfAssessmentsTakenTimeseriesPlot(object):
 		event_type = 'self_assessments_taken_per_device_types'
 		event_y_axis_field = 'number_self_assessments_taken'
 		event_y_axis_label = _('Number of self assessments taken')
-		plots = generate_three_group_by_plots(df,
-														  group_by,
-														  event_title,
-														  user_title,
-														  ratio_title,
-														  event_y_axis_field,
-														  event_y_axis_label,
-														  period_breaks,
-														  minor_period_breaks,
-														  theme_seaborn_,
-														  event_type)
+		plots = generate_three_group_by_plots(
+										df,
+									  	group_by,
+									  	event_title,
+										user_title,
+									 	ratio_title,
+										event_y_axis_field,
+										event_y_axis_label,
+										period_breaks,
+										minor_period_breaks,
+										theme_seaborn_,
+										event_type)
 		return plots
 
 	def analyze_events_group_by_enrollment_type(self, period_breaks='1 week',
