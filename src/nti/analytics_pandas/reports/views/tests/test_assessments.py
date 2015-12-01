@@ -21,6 +21,7 @@ from z3c.rml import rml2pdf
 
 from nti.analytics_pandas.reports.views.assessments import View
 from nti.analytics_pandas.reports.views.assessments import Context
+from nti.analytics_pandas.reports.views.commons import cleanup_temporary_file
 
 from nti.analytics_pandas.reports.z3c_zpt import ViewPageTemplateFile
 
@@ -94,6 +95,9 @@ class TestAssessmentsEvents(AnalyticsPandasTestBase):
 		readbuf = pdf_stream.read()
 		assert_that(readbuf, has_length(greater_than(0)))
 
+		data = view.options['data']
+		cleanup_temporary_file(data)
+
 	def test_generate_pdf_from_rml_with_empty_dataframe(self):
 		# make sure  template exists
 		path = self.std_report_layout_rml
@@ -121,3 +125,8 @@ class TestAssessmentsEvents(AnalyticsPandasTestBase):
 		pdf_stream.seek(0)
 		readbuf = pdf_stream.read()
 		assert_that(readbuf, has_length(greater_than(0)))
+
+		data = view.options['data']
+		cleanup_temporary_file(data)
+
+

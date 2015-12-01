@@ -14,6 +14,7 @@ import atexit
 import shutil
 import tempfile
 from collections import Mapping
+from contextlib import contextmanager
 
 import matplotlib.pyplot as plt
 
@@ -46,16 +47,16 @@ def build_images_dict_from_plot_dict(plots, image_type='png', dirname=None):
 														   dirname=dirname,
 														   image_type=image_type)
 			elif isinstance(plots[key], Plot):
-				images[key] = copy_plot_to_temporary_file(plots[key],
-														  image_type=image_type)
+				with copy_plot_to_temporary_file(plot, image_type, dirname=dirname) as filename:
+					images[key] = filename
 	return images
 
 def build_plot_images_dictionary(plots, image_type='png', dirname=None):
 	images = {}
 	for plot in plots:
 		if isinstance(plot, Plot):
-			filename = copy_plot_to_temporary_file(plot, image_type, dirname=dirname)
-			images[plot.plot_name] = filename
+			with copy_plot_to_temporary_file(plot, image_type, dirname=dirname) as filename:
+				images[plot.plot_name] = filename
 	return images
 
 def copy_plot_to_temporary_file_(plot, image_type, dirname=None):
@@ -71,13 +72,17 @@ def copy_plot_to_temporary_file_(plot, image_type, dirname=None):
 		image.data.close()
 	return image_file.name
 
+@contextmanager
 def copy_plot_to_temporary_file(plot, image_type, dirname=None):
 	image_file = tempfile.NamedTemporaryFile(delete=False, dir=dirname)
-	plt.figure.Figure = plot.plot.draw()
-	plt.savefig(image_file.name, format=image_type)
-	plt.close()
-	return image_file.name
-
+	try:
+		plt.figure.Figure = plot.plot.draw()
+		plt.savefig(image_file.name, format=image_type)
+		plt.close()
+	finally:
+		image_file.close()
+		yield image_file.name
+	
 def get_course_names(session, courses_id):
 	qc = QueryCourses(session)
 	df = qc.get_context_name(courses_id)
@@ -92,3 +97,12 @@ def create_pdf_file_from_rml(rml, filepath):
 			shutil.copyfileobj(pdf_stream, fp)
 	finally:
 		pdf_stream.close()
+
+def cleanup_temporary_file(data):
+	if isinstance(data, dict):
+		for key in data.keys():
+			if isinstance(data[key], str):
+				if os.path.isfile(data[key]):
+					os.unlink(data[key])
+			elif isinstance(data[key], dict):
+				cleanup_temporary_file(data[key])
