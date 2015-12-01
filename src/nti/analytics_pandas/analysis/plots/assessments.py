@@ -442,14 +442,18 @@ class SelfAssessmentViewsTimeseriesPlot(object):
 		user_title = _('Number of unique users viewing self assessments during period of time')
 		ratio_title = _('Ratio of self assessments viewed over unique user on each available date')
 		event_type = 'self_assessment_views'
-		plots = self.generate_plots(df,
-									event_title,
-									user_title,
-									ratio_title,
-									period_breaks,
-									minor_period_breaks,
-									theme_seaborn_,
-									event_type)
+		event_y_axis_field = 'number_self_assessments_viewed'
+		event_y_axis_label = _('Number of self assessment views')
+		plots = generate_three_plots(df,
+									 event_title,
+									 user_title,
+									 ratio_title,
+									 event_y_axis_field,
+									 event_y_axis_label,
+									 period_breaks,
+									 minor_period_breaks,
+									 theme_seaborn_,
+									 event_type)
 		return plots
 
 	def analyze_events_per_course_sections(self, period_breaks='1 week',
@@ -471,15 +475,19 @@ class SelfAssessmentViewsTimeseriesPlot(object):
 			user_title = _('Number of unique users viewing self assessments per course sections')
 			ratio_title = _('Ratio of self assessments viewed over unique user per course sections')
 			event_type = 'self_assessment_views_per_course_sections'
-			all_section_plots = self.generate_group_by_plots(df,
-															 group_by,
-															 event_title,
-															 user_title,
-															 ratio_title,
-															 period_breaks,
-															 minor_period_breaks,
-															 theme_seaborn_,
-															 event_type)
+			event_y_axis_field = 'number_self_assessments_viewed'
+			event_y_axis_label = _('Number of self assessment views')
+			all_section_plots = generate_three_group_by_plots(df,
+															  group_by,
+															  event_title,
+															  user_title,
+															  ratio_title,
+															  event_y_axis_field,
+															  event_y_axis_label,
+															  period_breaks,
+															  minor_period_breaks,
+															  theme_seaborn_,
+															  event_type)
 			plots['all_section_plots'] = all_section_plots
 
 		section_plots_dict = {}
@@ -495,14 +503,18 @@ class SelfAssessmentViewsTimeseriesPlot(object):
 			ratio_title = translate(_("Ratio of self assessments viewed over unique user in ${title}",
 									  mapping={'title': context_name}))
 			event_type = 'self_assessment_views_in_%s' % (context_name.replace(' ', '_'))
-			section_plots = self.generate_plots(new_df,
-												event_title,
-												user_title,
-												ratio_title,
-												period_breaks,
-												minor_period_breaks,
-												theme_seaborn_,
-												event_type)
+			event_y_axis_field = 'number_self_assessments_viewed'
+			event_y_axis_label = _('Number of self assessment views')
+			section_plots = generate_three_plots(df,
+												 event_title,
+												 user_title,
+												 ratio_title,
+												 event_y_axis_field,
+												 event_y_axis_label,
+												 period_breaks,
+												 minor_period_breaks,
+												 theme_seaborn_,
+												 event_type)
 			key = 'section_%s' % (course_id)
 			section_plots_dict[key] = section_plots
 		plots['section_plots'] = section_plots_dict
@@ -523,15 +535,19 @@ class SelfAssessmentViewsTimeseriesPlot(object):
 		user_title = _('Number of unique users viewing self assessments grouped by device types')
 		ratio_title = _('Ratio of self assessments viewed over unique user grouped by device types')
 		event_type = 'self_assessment_views_per_device_types'
-		plots = self.generate_group_by_plots(df,
-											 group_by,
-											 event_title,
-											 user_title,
-											 ratio_title,
-											 period_breaks,
-											 minor_period_breaks,
-											 theme_seaborn_,
-											 event_type)
+		event_y_axis_field = 'number_self_assessments_viewed'
+		event_y_axis_label = _('Number of self assessment views')
+		plots = generate_three_group_by_plots(df,
+											  group_by,
+											  event_title,
+											  user_title,
+											  ratio_title,
+											  event_y_axis_field,
+											  event_y_axis_label,
+											  period_breaks,
+											  minor_period_breaks,
+											  theme_seaborn_,
+											  event_type)
 		return plots
 
 	def analyze_events_group_by_enrollment_type(self, period_breaks='1 week',
@@ -549,106 +565,20 @@ class SelfAssessmentViewsTimeseriesPlot(object):
 		user_title = _('Number of unique users viewing self assessments grouped by enrollment types')
 		ratio_title = _('Ratio of self assessments viewed over unique user grouped by enrollment types')
 		event_type = 'self_assessment_views_per_enrollment_types'
-		plots = self.generate_group_by_plots(df,
-											 group_by,
-											 event_title,
-											 user_title,
-											 ratio_title,
-											 period_breaks,
-											 minor_period_breaks,
-											 theme_seaborn_,
-											 event_type)
+		event_y_axis_field = 'number_self_assessments_viewed'
+		event_y_axis_label = _('Number of self assessment views')
+		plots = generate_three_group_by_plots(df,
+											  group_by,
+											  event_title,
+											  user_title,
+											  ratio_title,
+											  event_y_axis_field,
+											  event_y_axis_label,
+											  period_breaks,
+											  minor_period_breaks,
+											  theme_seaborn_,
+											  event_type)
 		return plots
-
-	def generate_plots(self, df, event_title, user_title, ratio_title,
-					   period_breaks, minor_period_breaks, theme_seaborn_,
-					   event_type=None):
-		event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
-		plot_self_assessments_views = line_plot_x_axis_date(
-										df=df,
-										x_axis_field='timestamp_period',
-										y_axis_field='number_self_assessments_viewed',
-										x_axis_label=_('Date'),
-										y_axis_label=_('Number of self assessments viewed'),
-										title=event_title,
-										period_breaks=period_breaks,
-										minor_breaks=minor_period_breaks,
-										theme_seaborn_=theme_seaborn_,
-										plot_name=event_name)
-
-		plot_unique_users = line_plot_x_axis_date(
-										df=df,
-										x_axis_field='timestamp_period',
-										y_axis_field='number_of_unique_users',
-										x_axis_label=_('Date'),
-										y_axis_label=_('Number of unique users'),
-										title=user_title,
-										period_breaks=period_breaks,
-										minor_breaks=minor_period_breaks,
-										theme_seaborn_=theme_seaborn_,
-										plot_name=user_event_name)
-
-		plot_ratio = line_plot_x_axis_date(
-										df=df,
-										x_axis_field='timestamp_period',
-										y_axis_field='ratio',
-										x_axis_label=_('Date'),
-										y_axis_label=_('Ratio'),
-										title=ratio_title,
-										period_breaks=period_breaks,
-										minor_breaks=minor_period_breaks,
-										theme_seaborn_=theme_seaborn_,
-										plot_name=ratio_event_name)
-
-		return (plot_self_assessments_views, plot_unique_users, plot_ratio)
-
-	def generate_group_by_plots(self, df, group_by,
-								event_title, user_title, ratio_title,
-								period_breaks, minor_period_breaks, theme_seaborn_,
-								event_type=None):
-
-		event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
-		plot_self_assessments_views = group_line_plot_x_axis_date(
-											df=df,
-											x_axis_field='timestamp_period',
-											y_axis_field='number_self_assessments_viewed',
-											x_axis_label=_('Date'),
-											y_axis_label=_('Number of self assessments viewed'),
-											title=event_title,
-											period_breaks=period_breaks,
-											group_by=group_by,
-											minor_breaks=minor_period_breaks,
-											theme_seaborn_=theme_seaborn_,
-											plot_name=event_name)
-
-		plot_unique_users = group_line_plot_x_axis_date(
-											df=df,
-											x_axis_field='timestamp_period',
-											y_axis_field='number_of_unique_users',
-											x_axis_label=_('Date'),
-											y_axis_label=_('Number of unique users'),
-											title=user_title,
-											period_breaks=period_breaks,
-											group_by=group_by,
-											minor_breaks=minor_period_breaks,
-											theme_seaborn_=theme_seaborn_,
-											plot_name=user_event_name)
-
-		plot_ratio = group_line_plot_x_axis_date(
-											df=df,
-											x_axis_field='timestamp_period',
-											y_axis_field='ratio',
-											x_axis_label=_('Date'),
-											y_axis_label=_('Ratio'),
-											title=ratio_title,
-											period_breaks=period_breaks,
-											group_by=group_by,
-											minor_breaks=minor_period_breaks,
-											theme_seaborn_=theme_seaborn_,
-											plot_name=ratio_event_name)
-
-		return (plot_self_assessments_views, plot_unique_users, plot_ratio)
-
 
 class SelfAssessmentsTakenTimeseriesPlot(object):
 
