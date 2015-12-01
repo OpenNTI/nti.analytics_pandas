@@ -24,6 +24,9 @@ from .commons import group_line_plot_x_axis_date
 from .commons import facet_line_plot_x_axis_date
 from .commons import histogram_plot_x_axis_discrete
 
+from .commons import generate_three_plots
+from .commons import generate_three_group_by_plots
+
 class BookmarksTimeseriesPlot(object):
 
 	def __init__(self, bct):
@@ -52,58 +55,20 @@ class BookmarksTimeseriesPlot(object):
 		user_title = _('Number of unique users creating bookmarks during period of time')
 		ratio_title = _('Ratio of bookmarks created over unique user on each available date')
 		event_type = 'bookmarks_created'
-		plots = self.generate_plots(df,
-									event_title,
-									user_title,
-									ratio_title,
-									period_breaks,
-									minor_period_breaks,
-									theme_seaborn_,
-									event_type)
+		event_y_axis_field = 'number_of_bookmarks_created'
+		event_y_axis_label = _('Number of bookmarks created')
+
+		plots = generate_three_plots(df,
+									 event_title,
+									 user_title,
+									 ratio_title,
+									 event_y_axis_field,
+									 event_y_axis_label,
+									 period_breaks,
+									 minor_period_breaks,
+									 theme_seaborn_,
+									 event_type)
 		return plots
-
-	def generate_plots(self, df, event_title, user_title, ratio_title,
-					   period_breaks, minor_period_breaks, theme_seaborn_,
-					   event_type=None):
-
-		event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
-		plot_bookmarks_creation = line_plot_x_axis_date(
-										df=df,
-										x_axis_field='timestamp_period',
-										y_axis_field='number_of_bookmarks_created',
-										x_axis_label=_('Date'),
-										y_axis_label=_('Number of bookmarks created'),
-										title=event_title,
-										period_breaks=period_breaks,
-										minor_breaks=minor_period_breaks,
-										theme_seaborn_=theme_seaborn_,
-										plot_name=event_name)
-
-		plot_unique_users = line_plot_x_axis_date(
-										df=df,
-										x_axis_field='timestamp_period',
-										y_axis_field='number_of_unique_users',
-										x_axis_label=_('Date'),
-										y_axis_label=_('Number of unique users'),
-										title=user_title,
-										period_breaks=period_breaks,
-										minor_breaks=minor_period_breaks,
-										theme_seaborn_=theme_seaborn_,
-										plot_name=user_event_name)
-
-		plot_ratio = line_plot_x_axis_date(
-										df=df,
-										x_axis_field='timestamp_period',
-										y_axis_field='ratio',
-										x_axis_label=_('Date'),
-										y_axis_label=_('Ratio'),
-										title=ratio_title,
-										period_breaks=period_breaks,
-										minor_breaks=minor_period_breaks,
-										theme_seaborn_=theme_seaborn_,
-										plot_name=ratio_event_name)
-
-		return (plot_bookmarks_creation, plot_unique_users, plot_ratio)
 
 	def analyze_events_per_course_sections(self, period_breaks='1 week',
 										   minor_period_breaks='1 day',
@@ -124,15 +89,19 @@ class BookmarksTimeseriesPlot(object):
 			user_title = _('Number of unique users creating bookmarks per course sections')
 			ratio_title = _('Ratio of bookmarks created over unique user per course sections')
 			event_type = 'bookmarks_created_per_course_sections'
-			all_section_plots = self.generate_group_by_plots(df,
-															 group_by,
-															 event_title,
-															 user_title,
-															 ratio_title,
-															 period_breaks,
-															 minor_period_breaks,
-															 theme_seaborn_,
-															 event_type)
+			event_y_axis_field = 'number_of_bookmarks_created'
+			event_y_axis_label = _('Number of bookmarks created')
+			all_section_plots = generate_three_group_by_plots(df,
+												  group_by,
+												  event_title,
+												  user_title,
+												  ratio_title,
+												  event_y_axis_field,
+												  event_y_axis_label,
+												  period_breaks,
+												  minor_period_breaks,
+												  theme_seaborn_,
+												  event_type)
 			plots['all_section_plots'] = all_section_plots
 
 		section_plots_dict = {}
@@ -148,14 +117,18 @@ class BookmarksTimeseriesPlot(object):
 			ratio_title = translate(_("Ratio of bookmarks created over unique user in ${title}",
 									  mapping={'title': context_name}))
 			event_type = 'bookmarks_created_in_%s' % (context_name.replace(' ', ''))
-			section_plots = self.generate_plots(new_df,
-												event_title,
-												user_title,
-												ratio_title,
-												period_breaks,
-												minor_period_breaks,
-												theme_seaborn_,
-												event_type)
+			event_y_axis_field = 'number_of_bookmarks_created'
+			event_y_axis_label = _('Number of bookmarks created')
+			section_plots = generate_three_plots(df,
+									 event_title,
+									 user_title,
+									 ratio_title,
+									 event_y_axis_field,
+									 event_y_axis_label,
+									 period_breaks,
+									 minor_period_breaks,
+									 theme_seaborn_,
+									 event_type)
 			key = 'section_%s' % (course_id)
 			section_plots_dict[key] = section_plots
 		plots['section_plots'] = section_plots_dict
@@ -174,22 +147,25 @@ class BookmarksTimeseriesPlot(object):
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
+		plots_dict = {}
 		group_by = 'resource_type'
 		event_title = _('Number of bookmarks created grouped by resource types')
 		user_title = _('Number of unique users creating bookmarks  grouped by resource types')
 		ratio_title = _('Ratio of bookmarks created over unique user grouped by resource types')
 		event_type = 'bookmarks_created_per_resource_types'
-
-		plots_dict = {}
-		plots = self.generate_group_by_plots(df,
-											 group_by,
-											 event_title,
-											 user_title,
-											 ratio_title,
-											 period_breaks,
-											 minor_period_breaks,
-											 theme_seaborn_,
-											 event_type)
+		event_y_axis_field = 'number_of_bookmarks_created'
+		event_y_axis_label = _('Number of bookmarks created')
+		plots = generate_three_group_by_plots(df,
+											  group_by,
+											  event_title,
+											  user_title,
+											  ratio_title,
+											  event_y_axis_field,
+											  event_y_axis_label,
+											  period_breaks,
+											  minor_period_breaks,
+											  theme_seaborn_,
+											  event_type)
 		plots_dict['line_plots'] = plots
 
 		resource_df.reset_index(inplace=True)
@@ -224,15 +200,19 @@ class BookmarksTimeseriesPlot(object):
 		user_title = _('Number of unique users creating bookmarks  grouped by device types')
 		ratio_title = _('Ratio of bookmarks created over unique user grouped by device types')
 		event_type = 'bookmarks_created_per_device_types'
-		plots = self.generate_group_by_plots(df,
-											 group_by,
-											 event_title,
-											 user_title,
-											 ratio_title,
-											 period_breaks,
-											 minor_period_breaks,
-											 theme_seaborn_,
-											 event_type)
+		event_y_axis_field = 'number_of_bookmarks_created'
+		event_y_axis_label = _('Number of bookmarks created')
+		plots = generate_three_group_by_plots(df,
+											  group_by,
+											  event_title,
+											  user_title,
+											  ratio_title,
+											  event_y_axis_field,
+											  event_y_axis_label,
+											  period_breaks,
+											  minor_period_breaks,
+											  theme_seaborn_,
+											  event_type)
 		return plots
 
 	def analyze_enrollment_types(self, period_breaks='1 week', minor_period_breaks='1 day',
@@ -252,62 +232,20 @@ class BookmarksTimeseriesPlot(object):
 		user_title = _('Number of unique users creating bookmarks  grouped by enrollment types')
 		ratio_title = _('Ratio of bookmarks created over unique user grouped by enrollment types')
 		event_type = 'bookmarks_created_per_enrollment_types'
-		plots = self.generate_group_by_plots(df,
-											 group_by,
-											 event_title,
-											 user_title,
-											 ratio_title,
-											 period_breaks,
-											 minor_period_breaks,
-											 theme_seaborn_,
-											 event_type)
+		event_y_axis_field = 'number_of_bookmarks_created'
+		event_y_axis_label = _('Number of bookmarks created')
+		plots = generate_three_group_by_plots(df,
+											  group_by,
+											  event_title,
+											  user_title,
+											  ratio_title,
+											  event_y_axis_field,
+											  event_y_axis_label,
+											  period_breaks,
+											  minor_period_breaks,
+											  theme_seaborn_,
+											  event_type)
 		return plots
-
-	def generate_group_by_plots(self, df, group_by, event_title, user_title, ratio_title,
-								period_breaks, minor_period_breaks, theme_seaborn_,
-								event_type=None):
-
-		event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
-		plot_bookmarks_creation = group_line_plot_x_axis_date(
-											df=df,
-											x_axis_field='timestamp_period',
-											y_axis_field='number_of_bookmarks_created',
-											x_axis_label=_('Date'),
-											y_axis_label=_('Number of bookmarks created'),
-											title=event_title,
-											period_breaks=period_breaks,
-											group_by=group_by,
-											minor_breaks=minor_period_breaks,
-											theme_seaborn_=theme_seaborn_,
-											plot_name=event_name)
-
-		plot_unique_users = group_line_plot_x_axis_date(
-											df=df,
-											x_axis_field='timestamp_period',
-											y_axis_field='number_of_unique_users',
-											x_axis_label=_('Date'),
-											y_axis_label=_('Number of unique users'),
-											title=user_title,
-											period_breaks=period_breaks,
-											group_by=group_by,
-											minor_breaks=minor_period_breaks,
-											theme_seaborn_=theme_seaborn_,
-											plot_name=user_event_name)
-
-		plot_ratio = group_line_plot_x_axis_date(
-											df=df,
-											x_axis_field='timestamp_period',
-											y_axis_field='ratio',
-											x_axis_label=_('Date'),
-											y_axis_label=_('Ratio'),
-											title=ratio_title,
-											period_breaks=period_breaks,
-											group_by=group_by,
-											minor_breaks=minor_period_breaks,
-											theme_seaborn_=theme_seaborn_,
-											plot_name=ratio_event_name)
-
-		return (plot_bookmarks_creation, plot_unique_users, plot_ratio)
 
 	def analyze_resource_device_types(self, period_breaks='1 week', minor_period_breaks='1 day',):
 		"""
