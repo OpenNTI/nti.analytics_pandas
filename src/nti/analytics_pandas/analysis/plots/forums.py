@@ -49,7 +49,6 @@ class ForumsEventsTimeseriesPlot(object):
 		event_type = 'forum_events'
 		event_y_axis_field = 'total_events'
 		event_y_axis_label = _('Number of forums events')
-
 		plots = generate_three_group_by_plots(df,
 											  group_by,
 											  event_title,
@@ -88,43 +87,23 @@ class ForumsCreatedTimeseriesPlot(object):
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
-		plot_forums_created = line_plot_x_axis_date(
-				df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_of_forums_created',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of forums created'),
-				title=_('Number of forums created during period of time'),
-				period_breaks=period_breaks,
-				minor_breaks=minor_period_breaks,
-				theme_seaborn_=theme_seaborn_,
-				plot_name='event_forums_created')
-
-		plot_unique_users = line_plot_x_axis_date(
-				df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_of_unique_users',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of unique users'),
-				title=_('Number of unique users creating forums during period of time'),
-				period_breaks=period_breaks,
-				minor_breaks=minor_period_breaks,
-				theme_seaborn_=theme_seaborn_,
-				plot_name='user_forums_created')
-
-		plot_ratio = line_plot_x_axis_date(
-				df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='ratio',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Ratio'),
-				title=_('Ratio of forums created over unique user on each available date'),
-				period_breaks=period_breaks,
-				minor_breaks=minor_period_breaks,
-				theme_seaborn_=theme_seaborn_,
-				plot_name='ratio_forums_created')
-
-		return (plot_forums_created, plot_unique_users, plot_ratio)
+		event_title = _('Number of forums created during period of time')
+		user_title = _('Number of unique users creating forums during period of time')
+		ratio_title =_('Ratio of forums created over unique user on each available date')
+		event_type = 'forums_created'
+		event_y_axis_field = 'number_of_forums_created'
+		event_y_axis_label = _('Number of forums created')
+		plots = generate_three_plots(df,
+									 event_title,
+									 user_title,
+									 ratio_title,
+									 event_y_axis_field,
+									 event_y_axis_label,
+									 period_breaks,
+									 minor_period_breaks,
+									 theme_seaborn_,
+									 event_type)
+		return plots
 
 	def analyze_device_types(self, period_breaks='1 week',
 							 minor_period_breaks='1 day',
@@ -146,46 +125,26 @@ class ForumsCreatedTimeseriesPlot(object):
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		df['ratio'] = df['number_of_forums_created'] / df['number_of_unique_users']
 
-		plot_forums_created = group_line_plot_x_axis_date(
-				df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_of_forums_created',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of forums created'),
-				title=_('Number of forums created grouped by device types'),
-				period_breaks=period_breaks,
-				group_by='device_type',
-				minor_breaks=minor_period_breaks,
-				theme_seaborn_=theme_seaborn_,
-				plot_name='event_forums_created_per_device_types')
+		group_by = 'device_type'
+		event_title = _('Number of forums created grouped by device types')
+		user_title = _('Number of unique users creating forums grouped by device types')
+		ratio_title =_('Ratio of forums created over unique user grouped by device types')
+		event_type = 'forums_created_per_device_types'
+		event_y_axis_field = 'number_of_forums_created'
+		event_y_axis_label = _('Number of forums created per device type')
 
-		plot_unique_users = group_line_plot_x_axis_date(
-				df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='number_of_unique_users',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Number of unique users'),
-				title=_('Number of unique users creating forums grouped by device types'),
-				period_breaks=period_breaks,
-				group_by='device_type',
-				minor_breaks=minor_period_breaks,
-				theme_seaborn_=theme_seaborn_,
-				plot_name='user_forums_created_per_device_types')
-
-		plot_ratio = group_line_plot_x_axis_date(
-				df=df,
-				x_axis_field='timestamp_period',
-				y_axis_field='ratio',
-				x_axis_label=_('Date'),
-				y_axis_label=_('Ratio'),
-				title=_('Ratio of forums created over unique user on each available date'),
-				period_breaks=period_breaks,
-				group_by='device_type',
-				minor_breaks=minor_period_breaks,
-				theme_seaborn_=theme_seaborn_,
-				plot_name='ratio_forums_created_per_device_types')
-
-		return (plot_forums_created, plot_unique_users, plot_ratio)
+		plots = generate_three_group_by_plots(df,
+											  group_by,
+											  event_title,
+											  user_title,
+											  ratio_title,
+											  event_y_axis_field,
+											  event_y_axis_label,
+											  period_breaks,
+											  minor_period_breaks,
+											  theme_seaborn_,
+											  event_type)
+		return plots
 
 class ForumsCommentsCreatedTimeseriesPlot(object):
 
