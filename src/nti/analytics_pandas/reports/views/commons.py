@@ -47,7 +47,7 @@ def build_images_dict_from_plot_dict(plots, image_type='png', dirname=None):
 														   dirname=dirname,
 														   image_type=image_type)
 			elif isinstance(plots[key], Plot):
-				with copy_plot_to_temporary_file(plot, image_type, dirname=dirname) as filename:
+				with copy_plot_to_temporary_file(plots[key], image_type, dirname=dirname) as filename:
 					images[key] = filename
 	return images
 
