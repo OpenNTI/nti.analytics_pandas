@@ -12,9 +12,9 @@
 	</tal:block>	
 	<hr width="100%" />
 
-	<setNextTemplate name="main"/>
-	<nextPage />
 	<tal:block tal:condition="python: options['has_bookmark_data']">
+		<setNextTemplate name="main"/>
+		<nextPage />
 		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 			Overview of Bookmarks Created
 		</h1>
@@ -28,9 +28,9 @@
 			</illustration>
 		</tal:block>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_bookmark_data_per_enrollment_types']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Bookmarks Created per Enrollment Types
 			</h1>
@@ -45,9 +45,9 @@
 			</tal:block>
 		</tal:block>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_bookmark_data_per_device_types']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Bookmarks Created per Device Types
 			</h1>
@@ -62,9 +62,9 @@
 			</tal:block>
 		</tal:block>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_bookmark_data_per_resource_types']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Bookmarks Created per Resource Types
 			</h1>
@@ -81,9 +81,9 @@
 			</tal:block>
 		</tal:block>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_bookmark_created_users']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				The most active users creating bookmarks
 			</h1>
@@ -96,9 +96,9 @@
 			</tal:block>
 		</tal:block>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_bookmark_data_per_course_sections']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Bookmarks Created per Course Sections
 			</h1>
