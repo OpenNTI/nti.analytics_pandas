@@ -18,9 +18,11 @@ import numpy as np
 from zope.i18n import translate
 
 from .commons import generate_plot_names
-from .commons import line_plot_x_axis_date
+from .commons import generate_three_plots
+from .commons import generate_three_group_by_plots
 from .commons import group_line_plot_x_axis_date
 from .commons import histogram_plot_x_axis_discrete
+from .commons import line_plot_x_axis_date
 
 class TopicsEventsTimeseriesPlot(object):
 
@@ -37,46 +39,25 @@ class TopicsEventsTimeseriesPlot(object):
 		if len(df.index) <= 0:
 			return ()
 
-		plot_topics_events = group_line_plot_x_axis_date(
-									df=df,
-									x_axis_field='timestamp_period',
-									y_axis_field='total_events',
-									x_axis_label=_('Date'),
-									y_axis_label=_('Number of topics events'),
-									title=_('Number of topics events grouped by event type during period of time'),
-									period_breaks=period_breaks,
-									group_by='event_type',
-									minor_breaks=minor_period_breaks,
-									theme_seaborn_=theme_seaborn_,
-									plot_name='topic_events')
-
-		plot_unique_users = group_line_plot_x_axis_date(
-									df=df,
-									x_axis_field='timestamp_period',
-									y_axis_field='total_unique_users',
-									x_axis_label=_('Date'),
-									y_axis_label=_('Number of unique users'),
-									title=_('Number of unique users creating topics events during period of time'),
-									period_breaks=period_breaks,
-									group_by='event_type',
-									minor_breaks=minor_period_breaks,
-									theme_seaborn_=theme_seaborn_,
-									plot_name='user_topic_events')
-
-		plot_ratio = group_line_plot_x_axis_date(
-									df=df,
-									x_axis_field='timestamp_period',
-									y_axis_field='ratio',
-									x_axis_label=_('Date'),
-									y_axis_label=_('Ratio'),
-									title=_('Ratio of topics events over unique user on each available date'),
-									period_breaks=period_breaks,
-									group_by='event_type',
-									minor_breaks=minor_period_breaks,
-									theme_seaborn_=theme_seaborn_,
-									plot_name='ratio_topic_events')
-
-		return (plot_topics_events, plot_unique_users, plot_ratio)
+		group_by = 'event_type'
+		event_title = _('Number of topics events grouped by event type during period of time')
+		user_title = _('Number of unique users creating topics events during period of time')
+		ratio_title = _('Ratio of topics events over unique user on each available date')
+		event_type = 'forum_comment_favorites_per_device_types'
+		event_y_axis_field = 'total_events'
+		event_y_axis_label = _('Number of topics events')
+		plots = generate_three_group_by_plots(df,
+											  group_by,
+											  event_title,
+											  user_title,
+											  ratio_title,
+											  event_y_axis_field,
+											  event_y_axis_label,
+											  period_breaks,
+											  minor_period_breaks,
+											  theme_seaborn_,
+											  event_type)
+		return plots
 
 class TopicsCreationTimeseriesPlot(object):
 
