@@ -17,11 +17,13 @@ import numpy as np
 
 from zope.i18n import translate
 
-from .commons import line_plot_x_axis_date
 from .commons import group_line_plot_x_axis_date
 from .commons import group_scatter_plot_x_axis_date
-from .commons import histogram_plot_x_axis_discrete
+from .commons import generate_three_plots
+from .commons import generate_three_group_by_plots
 from .commons import generate_plot_names as generate_plot_names_
+from .commons import histogram_plot_x_axis_discrete
+from .commons import line_plot_x_axis_date
 
 class  ResourceViewsTimeseriesPlot(object):
 
@@ -133,45 +135,21 @@ class  ResourceViewsTimeseriesPlot(object):
 					   minor_period_breaks,
 					   theme_seaborn_,
 					   event_type=None):
-
-		event_name, user_event_name, ratio_event_name, unique_event_name = self.generate_plot_names(event_type)
-
-		plot_resource_views = line_plot_x_axis_date(
-											df=df,
-											x_axis_field='timestamp_period',
-											y_axis_field='number_of_resource_views',
-											x_axis_label=_('Date'),
-											y_axis_label=_('Number of resource views'),
-											title=event_title,
-											period_breaks=period_breaks,
-											minor_breaks=minor_period_breaks,
-											theme_seaborn_=theme_seaborn_,
-											plot_name=event_name)
-
-		plot_unique_users = line_plot_x_axis_date(
-											df=df,
-											x_axis_field='timestamp_period',
-											y_axis_field='number_of_unique_users',
-											x_axis_label=_('Date'),
-											y_axis_label=_('Number of unique users'),
-											title=user_title,
-											period_breaks=period_breaks,
-											minor_breaks=minor_period_breaks,
-											theme_seaborn_=theme_seaborn_,
-											plot_name=user_event_name)
-
-		plot_ratio = line_plot_x_axis_date(
-											df=df,
-											x_axis_field='timestamp_period',
-											y_axis_field='ratio',
-											x_axis_label=_('Date'),
-											y_axis_label=_('Ratio'),
-											title=ratio_title,
-											period_breaks=period_breaks,
-											minor_breaks=minor_period_breaks,
-											theme_seaborn_=theme_seaborn_,
-											plot_name=ratio_event_name)
-
+		event_y_axis_field = 'number_of_resource_views'
+		event_y_axis_label = _('Number of resource views')
+		plots = generate_three_plots(df,
+									 event_title,
+									 user_title,
+									 ratio_title,
+									 event_y_axis_field,
+									 event_y_axis_label,
+									 period_breaks,
+									 minor_period_breaks,
+									 theme_seaborn_,
+									 event_type)
+		unique_event_name = None
+		if event_type is not None:
+			unique_event_name = 'unique_event_%s' %event_type
 		plot_unique_resources = line_plot_x_axis_date(
 											df=df,
 											x_axis_field='timestamp_period',
@@ -183,8 +161,8 @@ class  ResourceViewsTimeseriesPlot(object):
 											minor_breaks=minor_period_breaks,
 											theme_seaborn_=theme_seaborn_,
 											plot_name=unique_event_name)
-
-		return (plot_resource_views, plot_unique_users, plot_ratio, plot_unique_resources)
+		plots = plots + (plot_unique_resources,)
+		return plots
 
 	def generate_group_by_plots(self,
 								df,
@@ -198,47 +176,22 @@ class  ResourceViewsTimeseriesPlot(object):
 								theme_seaborn_,
 								event_type=None):
 
-		event_name, user_event_name, ratio_event_name, unique_event_name = self.generate_plot_names(event_type)
-
-		plot_resource_views = group_line_plot_x_axis_date(
-											df=df,
-											x_axis_field='timestamp_period',
-											y_axis_field='number_of_resource_views',
-											x_axis_label=_('Date'),
-											y_axis_label=_('Number of resource views'),
-											title=event_title,
-											period_breaks=period_breaks,
-											group_by=group_by,
-											minor_breaks=minor_period_breaks,
-											theme_seaborn_=theme_seaborn_,
-											plot_name=event_name)
-
-		plot_unique_users = group_line_plot_x_axis_date(
-											df=df,
-											x_axis_field='timestamp_period',
-											y_axis_field='number_of_unique_users',
-											x_axis_label=_('Date'),
-											y_axis_label=_('Number of unique users'),
-											title=user_title,
-											period_breaks=period_breaks,
-											group_by=group_by,
-											minor_breaks=minor_period_breaks,
-											theme_seaborn_=theme_seaborn_,
-											plot_name=user_event_name)
-
-		plot_ratio = group_line_plot_x_axis_date(
-											df=df,
-											x_axis_field='timestamp_period',
-											y_axis_field='ratio',
-											x_axis_label=_('Date'),
-											y_axis_label=_('Ratio'),
-											title=ratio_title,
-											period_breaks=period_breaks,
-											group_by=group_by,
-											minor_breaks=minor_period_breaks,
-											theme_seaborn_=theme_seaborn_,
-											plot_name=ratio_event_name)
-
+		event_y_axis_field = 'number_of_resource_views'
+		event_y_axis_label = _('Number of resource views')
+		plots = generate_three_group_by_plots(df,
+											  group_by,
+											  event_title,
+											  user_title,
+											  ratio_title,
+											  event_y_axis_field,
+											  event_y_axis_label,
+											  period_breaks,
+											  minor_period_breaks,
+											  theme_seaborn_,
+											  event_type)
+		unique_event_name = None
+		if event_type is not None:
+			unique_event_name = 'unique_event_%s' %event_type
 		plot_unique_resources = group_line_plot_x_axis_date(
 											df=df,
 											x_axis_field='timestamp_period',
@@ -251,8 +204,8 @@ class  ResourceViewsTimeseriesPlot(object):
 											minor_breaks=minor_period_breaks,
 											theme_seaborn_=theme_seaborn_,
 											plot_name=unique_event_name)
-
-		return (plot_resource_views, plot_unique_users, plot_ratio, plot_unique_resources)
+		plots = plots + (plot_unique_resources,)
+		return plots
 
 	def generate_group_by_scatter_plots(self,
 										df,
