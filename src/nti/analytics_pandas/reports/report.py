@@ -29,6 +29,7 @@ from .views import EnrollmentTimeseriesContext
 from .views import EnrollmentTimeseriesReportView
 
 from .views import create_pdf_file_from_rml
+from .views import cleanup_temporary_file
 
 from .z3c_zpt import ViewPageTemplateFile
 
@@ -69,18 +70,20 @@ def build_rml(Context, View, session, start_date, end_date, courses,
 	path = std_report_layout_rml()
 	system = {'view':view, 'context':context}
 	rml = template(path).bind(view)(**system)
-	return rml
+	data = view.options['data']
+	return rml, data
 
 def generate_assessments_report(session, start_date, end_date, courses,
 			  					period_breaks, minor_period_breaks, theme_seaborn_,
 			  					output_dir):
 	Context = AssessmentsEventsTimeseriesContext
 	View = AssessmentsEventsTimeseriesReportView
-	rml = build_rml(Context, View, session, start_date, end_date, courses,
+	rml, data = build_rml(Context, View, session, start_date, end_date, courses,
 			  		period_breaks, minor_period_breaks, theme_seaborn_)
 
 	filepath = '%s/assessments.pdf' % output_dir
 	report = create_pdf_file_from_rml(rml, filepath)
+	cleanup_temporary_file(data)
 	return report
 
 def generate_bookmarks_report(session, start_date, end_date, courses,
@@ -88,24 +91,28 @@ def generate_bookmarks_report(session, start_date, end_date, courses,
 			  					output_dir):
 	Context = BookmarksTimeseriesContext
 	View = BookmarksTimeseriesReportView
-	rml = build_rml(Context, View, session, start_date, end_date, courses,
+	rml, data = build_rml(Context, View, session, start_date, end_date, courses,
 			  		period_breaks, minor_period_breaks, theme_seaborn_)
 
 	filepath = '%s/bookmarks.pdf' % output_dir
 	report = create_pdf_file_from_rml(rml, filepath)
+	cleanup_temporary_file(data)
 	return report
+
 
 def generate_enrollments_report(session, start_date, end_date, courses,
 			  					period_breaks, minor_period_breaks, theme_seaborn_,
 			  					output_dir):
 	Context = EnrollmentTimeseriesContext
 	View = EnrollmentTimeseriesReportView
-	rml = build_rml(Context, View, session, start_date, end_date, courses,
+	rml, data = build_rml(Context, View, session, start_date, end_date, courses,
 			  		period_breaks, minor_period_breaks, theme_seaborn_)
 
 	filepath = '%s/enrollments.pdf' % output_dir
 	report = create_pdf_file_from_rml(rml, filepath)
+	cleanup_temporary_file(data)
 	return report
+
 
 def main():
 	# Parse command line args
@@ -125,7 +132,7 @@ def main():
 	db = DBConnection()
 
 	"""
-	only for test (line 102 - 109)
+	only for test (line 137 - 150)
 	"""
 	start_date = '2015-10-05'
 	end_date = '2015-10-20'
