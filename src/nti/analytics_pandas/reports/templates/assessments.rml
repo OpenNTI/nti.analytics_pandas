@@ -19,7 +19,7 @@
 		<hr width="100%" />
 		<tal:block tal:define="assessment_events options/data/assessment_events">
 			<illustration width="5in" height="3in"
-						  tal:define="event assessment_events/assessment_events;
+						  tal:define="event assessment_events/event_assessment_events;
 									  user_event assessment_events/user_assessment_events;
 									  ratio_event assessment_events/ratio_assessment_events"
 						  metal:use-macro="macro:three_plots_event">
