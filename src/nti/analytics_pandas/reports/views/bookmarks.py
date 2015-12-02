@@ -91,6 +91,7 @@ class BookmarksTimeseriesReportView(AbstractReportView):
 		self.bctp = BookmarksTimeseriesPlot(self.bct)
 		data = self.get_bookmarks_created_plots(data)
 		data = self.get_bookmarks_created_plots_per_device_types(data)
+		data = self.get_bookmarks_created_plots_per_enrollment_types(data)
 		data = self.get_bookmarks_created_plots_per_resource_types(data)
 		data = self.get_the_most_active_users_plot(data)
 		if len(self.context.courses) > 1:
