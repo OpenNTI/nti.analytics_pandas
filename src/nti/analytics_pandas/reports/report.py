@@ -13,6 +13,10 @@ import os
 import logging
 import argparse
 
+from zope.configuration import xmlconfig, config
+
+import nti.analytics_pandas
+
 from ..databases import DBConnection
 
 from .views import AssessmentsEventsTimeseriesContext
@@ -71,9 +75,9 @@ def generate_assessments_report(session, start_date, end_date, courses,
 	View = AssessmentsEventsTimeseriesReportView
 	rml = build_rml(Context, View, session, start_date, end_date, courses,
 			  		period_breaks, minor_period_breaks, theme_seaborn_)
+
 	filepath = '%s/assessments.pdf' % output_dir
 	report = create_pdf_file_from_rml(rml, filepath)
-	return report
 
 def generate_bookmarks_report(session, start_date, end_date, courses,
 			  					period_breaks, minor_period_breaks, theme_seaborn_,
@@ -82,9 +86,9 @@ def generate_bookmarks_report(session, start_date, end_date, courses,
 	View = BookmarksTimeseriesReportView
 	rml = build_rml(Context, View, session, start_date, end_date, courses,
 			  		period_breaks, minor_period_breaks, theme_seaborn_)
-	filepath = '%s/bookmarks.pdf' % output_dir
+
+	filepath = '%s/bookmarks.pdf' %output_dir
 	report = create_pdf_file_from_rml(rml, filepath)
-	return report
 
 def main():
 	# Parse command line args
@@ -92,6 +96,11 @@ def main():
 
 	_setup_configs()
 
+
+	context = config.ConfigurationMachine()
+	xmlconfig.registerCommonDirectives(context)
+	xmlconfig.file('configure.zcml', package=nti.analytics_pandas, context=context)
+	
 	# Create the output directory if it does not exist
 	if not os.path.exists(args.output):
 		os.mkdir(args.output)
@@ -101,11 +110,11 @@ def main():
 	"""
 	only for test (line 102 - 109)
 	"""
-	start_date = u'2015-01-01'
-	end_date = u'2015-05-31'
-	courses = ['1024', '1025', '1026', '1027', '1028']
-	period_breaks = '1 day'
-	minor_period_breaks = None
+	start_date = '2015-10-05'
+	end_date = '2015-10-20'
+	courses = ['1068', '1096', '1097', '1098', '1099']
+	period_breaks = '1 week'
+	minor_period_breaks = '1 day'
 	theme_seaborn_ = True
 
 	generate_bookmarks_report(db.session, start_date, end_date, courses,
