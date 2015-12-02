@@ -10,9 +10,9 @@
 	</tal:block>	
 	<hr width="100%" />
 
-	<setNextTemplate name="main"/>
-	<nextPage />
 	<tal:block tal:condition="python: options['has_course_catalog_view_data']">
+		<setNextTemplate name="main"/>
+		<nextPage />
 		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 			Overview of Course Catalog Views
 		</h1>
@@ -27,9 +27,9 @@
 			</illustration>
 		</tal:block>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_course_catalog_views_per_device_types']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Overview of Course Catalog Views
 			</h1>
@@ -46,9 +46,9 @@
 		</tal:block>
 	</tal:block>
 
-	<setNextTemplate name="main"/>
-	<nextPage />
 	<tal:block tal:condition="python: options['has_course_enrollment_data']">
+		<setNextTemplate name="main"/>
+		<nextPage />
 		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 			Overview of Course Enrollments
 		</h1>
@@ -60,9 +60,9 @@
 			</illustration>
 		</tal:block>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_course_enrollments_per_types']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Course Enrollments per Device and Enrollment Types
 			</h1>
@@ -77,9 +77,9 @@
 		</tal:block>	
 	</tal:block>
 
-	<setNextTemplate name="main"/>
-	<nextPage />
 	<tal:block tal:condition="python: options['has_course_drop_data']">
+		<setNextTemplate name="main"/>
+		<nextPage />
 		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 			Overview of Course Drops
 		</h1>
@@ -91,9 +91,9 @@
 			</illustration>
 		</tal:block>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_course_drops_per_device_types']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Course Drops per Device Types
 			</h1>
@@ -106,9 +106,9 @@
 			</tal:block>
 		</tal:block>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_course_drops_per_enrollment_types']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Course Drops per Enrollment Types
 			</h1>
@@ -122,10 +122,10 @@
 		</tal:block>
 	</tal:block>
 
-	<setNextTemplate name="main"/>
-	<nextPage />
 	<tal:block tal:condition="python: options['has_enrollment_event_data']">
 		<tal:block tal:condition="python: options['has_course_enrollments_vs_catalog_views']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Course Enrollments vs Catalog Views
 			</h1>
@@ -138,9 +138,9 @@
 			</tal:block>
 		</tal:block>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_course_enrollments_vs_drops']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Course Enrollments vs Drops
 			</h1>
