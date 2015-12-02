@@ -42,6 +42,9 @@ def main():
 	if not os.path.exists( args.output ):
 		os.mkdir( args.output )
 
+	db = DBConnection()
+	print(db.session)
+
 
 if __name__ == '__main__': # pragma: no cover
 	main()

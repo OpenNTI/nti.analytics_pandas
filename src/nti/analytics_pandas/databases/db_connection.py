@@ -15,6 +15,8 @@ from sqlalchemy.pool import StaticPool
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy import create_engine as sqlalchemy_create_engine
 
+from nti.analytics_database import Base
+
 from ..utils.string_folder import StringFolder
 
 def create_engine(dburi, pool_size=30, max_overflow=10, pool_recycle=300):    
