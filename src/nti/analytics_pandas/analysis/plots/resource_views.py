@@ -17,13 +17,13 @@ import numpy as np
 
 from zope.i18n import translate
 
+from .commons import generate_three_plots
+from .commons import line_plot_x_axis_date
 from .commons import group_line_plot_x_axis_date
 from .commons import group_scatter_plot_x_axis_date
-from .commons import generate_three_plots
 from .commons import generate_three_group_by_plots
-from .commons import generate_plot_names as generate_plot_names_
 from .commons import histogram_plot_x_axis_discrete
-from .commons import line_plot_x_axis_date
+from .commons import generate_plot_names as generate_plot_names_
 
 class  ResourceViewsTimeseriesPlot(object):
 
@@ -149,7 +149,7 @@ class  ResourceViewsTimeseriesPlot(object):
 									 event_type)
 		unique_event_name = None
 		if event_type is not None:
-			unique_event_name = 'unique_event_%s' %event_type
+			unique_event_name = 'unique_event_%s' % event_type
 		plot_unique_resources = line_plot_x_axis_date(
 											df=df,
 											x_axis_field='timestamp_period',
@@ -191,7 +191,7 @@ class  ResourceViewsTimeseriesPlot(object):
 											  event_type)
 		unique_event_name = None
 		if event_type is not None:
-			unique_event_name = 'unique_event_%s' %event_type
+			unique_event_name = 'unique_event_%s' % event_type
 		plot_unique_resources = group_line_plot_x_axis_date(
 											df=df,
 											x_axis_field='timestamp_period',

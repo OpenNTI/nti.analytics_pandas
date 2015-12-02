@@ -11,12 +11,11 @@ logger = __import__('logging').getLogger(__name__)
 
 from .. import MessageFactory
 
+from .bookmarks import BookmarksTimeseriesContext
+from .bookmarks import BookmarksTimeseriesReportView
 
 from .assessments import AssessmentsEventsTimeseriesContext
 from .assessments import AssessmentsEventsTimeseriesReportView
-
-from .bookmarks import BookmarksTimeseriesContext
-from .bookmarks import BookmarksTimeseriesReportView
 
 from .commons import cleanup_temporary_file
 from .commons import create_pdf_file_from_rml

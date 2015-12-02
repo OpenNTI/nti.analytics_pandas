@@ -17,11 +17,8 @@ import numpy as np
 
 from zope.i18n import translate
 
-from .commons import generate_plot_names
 from .commons import generate_three_plots
 from .commons import generate_three_group_by_plots
-from .commons import group_line_plot_x_axis_date
-from .commons import line_plot_x_axis_date
 
 class VideoEventsTimeseriesPlot(object):
 

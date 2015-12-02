@@ -17,12 +17,9 @@ import numpy as np
 
 from zope.i18n import translate
 
-from .commons import generate_plot_names
 from .commons import generate_three_plots
 from .commons import generate_three_group_by_plots
-from .commons import group_line_plot_x_axis_date
 from .commons import histogram_plot_x_axis_discrete
-from .commons import line_plot_x_axis_date
 
 class TopicsEventsTimeseriesPlot(object):
 
@@ -143,7 +140,7 @@ class TopicsCreationTimeseriesPlot(object):
 												minor_period_breaks,
 												theme_seaborn_,
 												event_type)
-			key = 'section_%s' %(course_id)
+			key = 'section_%s' % (course_id)
 			section_plots_dict[key] = section_plots
 		plots['section_plots'] = section_plots_dict
 		return plots
@@ -320,7 +317,7 @@ class TopicViewsTimeseriesPlot(object):
 			context_name = new_df.iloc[0]['context_name']
 			event_title = translate(_("Number of topics viewed in ${title}",
 									  mapping={'title': context_name}))
-		
+
 			user_title = translate(_("Number of unique users viewing topics in ${title}",
 									  mapping={'title': context_name}))
 
@@ -336,7 +333,7 @@ class TopicViewsTimeseriesPlot(object):
 												minor_period_breaks,
 												theme_seaborn_,
 												event_type)
-			key = 'section_%s' %(course_id)
+			key = 'section_%s' % (course_id)
 			section_plots_dict[key] = section_plots
 		plots['section_plots'] = section_plots_dict
 		return plots
@@ -545,7 +542,7 @@ class TopicLikesTimeseriesPlot(object):
 			context_name = new_df.iloc[0]['context_name']
 			event_title = translate(_("Number of topics likes in ${title}",
 									  mapping={'title': context_name}))
-		
+
 			user_title = translate(_("Number of unique users liking topics in ${title}",
 									  mapping={'title': context_name}))
 
@@ -718,7 +715,7 @@ class TopicFavoritesTimeseriesPlot(object):
 			context_name = new_df.iloc[0]['context_name']
 			event_title = translate(_("Number of topics favorites in ${title}",
 									  mapping={'title': context_name}))
-		
+
 			user_title = translate(_("Number of unique users choosing topics as favorites in ${title}",
 									  mapping={'title': context_name}))
 
@@ -816,4 +813,3 @@ class TopicFavoritesTimeseriesPlot(object):
 											  theme_seaborn_,
 											  event_type)
 		return plots
-		

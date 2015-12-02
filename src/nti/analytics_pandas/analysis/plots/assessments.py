@@ -18,7 +18,6 @@ import numpy as np
 from zope.i18n import translate
 
 from .commons import generate_three_plots
-from .commons import group_line_plot_x_axis_date
 from .commons import generate_three_group_by_plots
 from .commons import histogram_plot_x_axis_discrete
 
