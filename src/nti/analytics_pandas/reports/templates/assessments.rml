@@ -10,9 +10,9 @@
 	</tal:block>	
 	<hr width="100%" />
 
-	<setNextTemplate name="main"/>
-	<nextPage />
 	<tal:block tal:condition="python: options['has_assessment_events']">
+		<setNextTemplate name="main"/>
+		<nextPage />
 		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 			Overview of Assessment related Events
 		</h1>
@@ -27,9 +27,9 @@
 		</tal:block>
 	</tal:block>
 
-	<setNextTemplate name="main"/>
-	<nextPage />
 	<tal:block tal:condition="python: options['has_assignment_views_data']">
+		<setNextTemplate name="main"/>
+		<nextPage />
 		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 			Overview of Assignment Views
 		</h1>
@@ -43,9 +43,9 @@
 			</illustration>
 		</tal:block>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_assignment_views_per_enrollment_types']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Assignment Views per Enrollment Types
 			</h1>
@@ -60,9 +60,9 @@
 			</tal:block>
 		</tal:block>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_assignment_views_per_device_types']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Assignment Views per Device Types
 			</h1>
@@ -77,9 +77,9 @@
 			</tal:block>
 		</tal:block>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_assignment_views_per_course_sections']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Assignment Views per Course Sections
 			</h1>
@@ -95,9 +95,10 @@
 		</tal:block>
 	</tal:block>
 
-	<setNextTemplate name="main"/>
-	<nextPage />
+	
 	<tal:block tal:condition="python: options['has_assignment_taken_data']">
+		<setNextTemplate name="main"/>
+		<nextPage />
 		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 			Overview of Assignments Taken
 		</h1>
@@ -111,9 +112,9 @@
 			</illustration>
 		</tal:block>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_assignment_taken_per_enrollment_types']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Assignments Taken per Enrollment Types
 			</h1>
@@ -128,9 +129,9 @@
 			</tal:block>
 		</tal:block>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_assignment_taken_per_device_types']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Assignments Taken per Device Types
 			</h1>
@@ -145,9 +146,9 @@
 			</tal:block>
 		</tal:block>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_assignment_taken_per_course_sections']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Assignments Taken per Course Sections
 			</h1>
@@ -163,9 +164,9 @@
 		</tal:block>
 	</tal:block>
 
-	<setNextTemplate name="main"/>
-	<nextPage />
 	<tal:block tal:condition="python: options['has_self_assessment_views_data']">
+		<setNextTemplate name="main"/>
+		<nextPage />
 		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 			Overview of Self Assessment Views
 		</h1>
@@ -179,9 +180,9 @@
 			</illustration>
 		</tal:block>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_self_assessment_views_per_device_types']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Self Assessment Views per Device Types
 			</h1>
@@ -196,9 +197,9 @@
 			</tal:block>
 		</tal:block>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_self_assessment_views_per_enrollment_types']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Self Assessment Views per Enrollment Types
 			</h1>
@@ -213,9 +214,9 @@
 			</tal:block>
 		</tal:block>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_self_assessment_views_per_course_sections']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Self Assessment Views per Course Sections
 			</h1>
@@ -233,9 +234,9 @@
 		</tal:block>
 	</tal:block>
 
-	<setNextTemplate name="main"/>
-	<nextPage />
 	<tal:block tal:condition="python: options['has_self_assessments_taken_data']">
+		<setNextTemplate name="main"/>
+		<nextPage />		
 		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 			Overview of Self Assessments Taken
 		</h1>
@@ -249,9 +250,9 @@
 			</illustration>
 		</tal:block>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_self_assessments_taken_per_enrollment_types']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Self Assessments Taken per Enrollment Types
 			</h1>
@@ -266,9 +267,9 @@
 			</tal:block>
 		</tal:block>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_self_assessments_taken_per_device_types']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Self Assessments Taken per Device Types
 			</h1>
@@ -283,9 +284,9 @@
 			</tal:block>
 		</tal:block>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_self_assessments_taken_per_course_sections']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Self Assessments Taken per Course Sections
 			</h1>
