@@ -40,8 +40,8 @@ class TestAssessmentsEvents(AnalyticsPandasTestBase):
 		return path
 
 	@Lazy
-	def bookmarks_rml(self):
-		path = os.path.join(os.path.dirname(__file__), '../../templates/bookmarks.rml')
+	def assessments_rml(self):
+		path = os.path.join(os.path.dirname(__file__), '../../templates/assessments_rml')
 		return path
 
 	def template(self, path):
