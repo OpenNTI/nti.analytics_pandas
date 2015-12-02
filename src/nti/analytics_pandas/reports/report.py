@@ -31,6 +31,9 @@ from .views import EnrollmentTimeseriesReportView
 from .views import create_pdf_file_from_rml
 from .views import cleanup_temporary_file
 
+from .views import ForumsTimeseriesContext
+from .views import ForumsTimeseriesReportView
+
 from .z3c_zpt import ViewPageTemplateFile
 
 DEFAULT_FORMAT_STRING = '[%(asctime)-15s] [%(name)s] %(levelname)s: %(message)s'
@@ -113,6 +116,19 @@ def generate_enrollments_report(session, start_date, end_date, courses,
 	cleanup_temporary_file(data)
 	return report
 
+def generate_forums_report(session, start_date, end_date, courses,
+			  			   period_breaks, minor_period_breaks, theme_seaborn_,
+			  			   output_dir):
+	Context = ForumsTimeseriesContext
+	View = ForumsTimeseriesReportView
+	rml, data = build_rml(Context, View, session, start_date, end_date, courses,
+			  		period_breaks, minor_period_breaks, theme_seaborn_)
+
+	filepath = '%s/forums.pdf' % output_dir
+	report = create_pdf_file_from_rml(rml, filepath)
+	cleanup_temporary_file(data)
+	return report
+
 
 def main():
 	# Parse command line args
@@ -152,6 +168,10 @@ def main():
 	generate_enrollments_report(db.session, start_date, end_date, courses,
 			  					period_breaks, minor_period_breaks, theme_seaborn_,
 			  					args.output)
+
+	generate_forums_report(db.session, start_date, end_date, courses,
+		  				   period_breaks, minor_period_breaks, theme_seaborn_,
+		  				   args.output)
 
 	db.close_session()
 

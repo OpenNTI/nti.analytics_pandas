@@ -10,9 +10,9 @@
 	</tal:block>	
 	<hr width="100%" />
 
-	<setNextTemplate name="main"/>
-	<nextPage />
 	<tal:block tal:condition="python: options['has_forum_events_data']">
+		<setNextTemplate name="main"/>
+		<nextPage />
 		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 			Overview of Forum Events
 		</h1>
@@ -27,9 +27,9 @@
 		</tal:block>
 	</tal:block>
 
-	<setNextTemplate name="main"/>
-	<nextPage />
 	<tal:block tal:condition="python: options['has_forums_created_data']">
+		<setNextTemplate name="main"/>
+		<nextPage />
 		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 			Overview of Forums Created
 		</h1>
@@ -43,9 +43,9 @@
 			</illustration>
 		</tal:block>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_forums_created_data_per_device_types']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Forums Created per Device Types
 			</h1>
@@ -61,11 +61,12 @@
 		</tal:block>
 	</tal:block>
 
-	<setNextTemplate name="main"/>
-	<nextPage />
+
 	<tal:block tal:condition="python: options['has_forum_comments_created_data']">
+		<setNextTemplate name="main"/>
+		<nextPage />
 		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
-			Forums Created per Device Types
+			Overview of Forum Comments Created 
 		</h1>
 		<hr width="100%" />
 		<tal:block tal:define="forum_comments_created options/data/forum_comments_created">
@@ -78,11 +79,11 @@
 			</illustration>
 		</tal:block>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_forum_comments_created_data_per_enrollment_types']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
-				Forums Created per Enrollment Types
+				Forum Comments Created per Enrollment Types
 			</h1>
 			<hr width="100%" />
 			<tal:block tal:define="forum_comments_created options/data/forum_comments_created_per_enrollment_types">
@@ -96,11 +97,11 @@
 			</tal:block>
 		</tal:block>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_forum_comments_created_data_per_device_types']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
-				Forums Created per Device Types
+				Forum Comments Created per Device Types
 			</h1>
 			<hr width="100%" />
 			<tal:block tal:define="forum_comments_created options/data/forum_comments_created_per_device_types">
@@ -114,11 +115,11 @@
 			</tal:block>
 		</tal:block>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_forum_comments_created_data_per_course_sections']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
-				Forums Created per Course Sections
+				Forum Comments Created per Course Sections
 			</h1>
 			<hr width="100%" />
 			<tal:block tal:define="forum_comments_created options/data/forum_comments_created_per_course_sections/all_section_plots">
@@ -132,9 +133,9 @@
 			</tal:block>
 		</tal:block>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_forum_comments_users']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				The most active users commenting on forums
 			</h1>
@@ -148,9 +149,9 @@
 		</tal:block>
 	</tal:block>
 
-	<setNextTemplate name="main"/>
-	<nextPage />
 	<tal:block tal:condition="python: options['has_forum_comment_likes_data']">
+		<setNextTemplate name="main"/>
+		<nextPage />
 		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 			Overview of Forum Comment Likes
 		</h1>
@@ -164,9 +165,9 @@
 			</illustration>
 		</tal:block>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_forum_comment_likes_per_enrollment_types']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Forum Comment Likes per Enrollment Types
 			</h1>
@@ -181,9 +182,9 @@
 			</tal:block>
 		</tal:block>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_forum_comment_likes_per_device_types']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Forum Comment Likes per Device Types
 			</h1>
@@ -198,9 +199,9 @@
 			</tal:block>
 		</tal:block>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_forum_comment_likes_per_course_sections']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Forum Comment Likes per Course Sections
 			</h1>
@@ -216,9 +217,9 @@
 		</tal:block>
 	</tal:block>
 
-	<setNextTemplate name="main"/>
-	<nextPage />
 	<tal:block tal:condition="python: options['has_forum_comment_favorites_data']">
+		<setNextTemplate name="main"/>
+		<nextPage />
 		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 			Overview of Forum Comment Favorites
 		</h1>
@@ -232,9 +233,10 @@
 			</illustration>
 		</tal:block>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
+		
 		<tal:block tal:condition="python: options['has_forum_comment_favorites_per_enrollment_types']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Forum Comment Favorites per Enrollment Types
 			</h1>
@@ -249,9 +251,9 @@
 			</tal:block>
 		</tal:block>
 		
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_forum_comment_favorites_per_device_types']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Forum Comment Favorites per Device Types
 			</h1>
@@ -266,9 +268,9 @@
 			</tal:block>
 		</tal:block>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_forum_comment_favorites_per_course_sections']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Forum Comment Favorites per Course Sections
 			</h1>

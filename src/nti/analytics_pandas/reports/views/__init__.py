@@ -20,5 +20,8 @@ from .assessments import AssessmentsEventsTimeseriesReportView
 from .enrollments import EnrollmentTimeseriesContext
 from .enrollments import EnrollmentTimeseriesReportView
 
+from .forums import ForumsTimeseriesContext
+from .forums import ForumsTimeseriesReportView
+
 from .commons import cleanup_temporary_file
 from .commons import create_pdf_file_from_rml
