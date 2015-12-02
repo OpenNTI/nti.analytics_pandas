@@ -17,5 +17,8 @@ from .bookmarks import BookmarksTimeseriesReportView
 from .assessments import AssessmentsEventsTimeseriesContext
 from .assessments import AssessmentsEventsTimeseriesReportView
 
+from .enrollments import EnrollmentTimeseriesContext
+from .enrollments import EnrollmentTimeseriesReportView
+
 from .commons import cleanup_temporary_file
 from .commons import create_pdf_file_from_rml

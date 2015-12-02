@@ -25,6 +25,9 @@ from .views import AssessmentsEventsTimeseriesReportView
 from .views import BookmarksTimeseriesContext
 from .views import BookmarksTimeseriesReportView
 
+from .views import EnrollmentTimeseriesContext
+from .views import EnrollmentTimeseriesReportView
+
 from .views import create_pdf_file_from_rml
 
 from .z3c_zpt import ViewPageTemplateFile
@@ -90,6 +93,17 @@ def generate_bookmarks_report(session, start_date, end_date, courses,
 	filepath = '%s/bookmarks.pdf' %output_dir
 	report = create_pdf_file_from_rml(rml, filepath)
 
+def generate_enrollments_report(session, start_date, end_date, courses,
+			  					period_breaks, minor_period_breaks, theme_seaborn_,
+			  					output_dir):
+	Context = EnrollmentTimeseriesContext
+	View = EnrollmentTimeseriesReportView
+	rml = build_rml(Context, View, session, start_date, end_date, courses,
+			  		period_breaks, minor_period_breaks, theme_seaborn_)
+
+	filepath = '%s/enrollments.pdf' %output_dir
+	report = create_pdf_file_from_rml(rml, filepath)
+
 def main():
 	# Parse command line args
 	args = _parse_args()
@@ -122,6 +136,10 @@ def main():
 			  					args.output)
 
 	generate_assessments_report(db.session, start_date, end_date, courses,
+			  					period_breaks, minor_period_breaks, theme_seaborn_,
+			  					args.output)
+
+	generate_enrollments_report(db.session, start_date, end_date, courses,
 			  					period_breaks, minor_period_breaks, theme_seaborn_,
 			  					args.output)
 
