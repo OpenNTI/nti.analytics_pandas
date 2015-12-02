@@ -5,6 +5,7 @@ VERSION = '0.0.0'
 
 entry_points = {
 	'console_scripts': [
+		'nti_analytics_report = nti.analytics_pandas.reports.report:main',
 	],
 }
 

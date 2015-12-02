@@ -45,15 +45,15 @@ def create_session(sessionmaker):
 
 class DBConnection():
 	def __init__(self):
-        # TODO: Fix URI
-        dburi="mysql+pymysql://root@localhost:3306/Analytics"
-        self.engine = create_engine(dburi)
-        self.metadata = getattr(Base, 'metadata').create_all(self.engine)
-        self.sessionmaker = create_sessionmaker(self.engine)
-        self.session = create_session(self.sessionmaker)
+		# TODO: Fix URI
+		dburi="mysql+pymysql://root@localhost:3306/Analytics"
+		self.engine = create_engine(dburi)
+		self.metadata = getattr(Base, 'metadata').create_all(self.engine)
+		self.sessionmaker = create_sessionmaker(self.engine)
+		self.session = create_session(self.sessionmaker)
 
-    def close_session(self):
-    	self.session.close()
+	def close_session(self):
+		self.session.close()
 
 def create_engine_mysql(db_user='root', pwd=None, host='localhost', port='3306',
 						db_name='Analytics'):
