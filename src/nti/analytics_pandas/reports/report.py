@@ -81,6 +81,7 @@ def generate_assessments_report(session, start_date, end_date, courses,
 
 	filepath = '%s/assessments.pdf' % output_dir
 	report = create_pdf_file_from_rml(rml, filepath)
+	return report
 
 def generate_bookmarks_report(session, start_date, end_date, courses,
 			  					period_breaks, minor_period_breaks, theme_seaborn_,
@@ -90,8 +91,9 @@ def generate_bookmarks_report(session, start_date, end_date, courses,
 	rml = build_rml(Context, View, session, start_date, end_date, courses,
 			  		period_breaks, minor_period_breaks, theme_seaborn_)
 
-	filepath = '%s/bookmarks.pdf' %output_dir
+	filepath = '%s/bookmarks.pdf' % output_dir
 	report = create_pdf_file_from_rml(rml, filepath)
+	return report
 
 def generate_enrollments_report(session, start_date, end_date, courses,
 			  					period_breaks, minor_period_breaks, theme_seaborn_,
@@ -101,8 +103,9 @@ def generate_enrollments_report(session, start_date, end_date, courses,
 	rml = build_rml(Context, View, session, start_date, end_date, courses,
 			  		period_breaks, minor_period_breaks, theme_seaborn_)
 
-	filepath = '%s/enrollments.pdf' %output_dir
+	filepath = '%s/enrollments.pdf' % output_dir
 	report = create_pdf_file_from_rml(rml, filepath)
+	return report
 
 def main():
 	# Parse command line args
@@ -114,7 +117,7 @@ def main():
 	context = config.ConfigurationMachine()
 	xmlconfig.registerCommonDirectives(context)
 	xmlconfig.file('configure.zcml', package=nti.analytics_pandas, context=context)
-	
+
 	# Create the output directory if it does not exist
 	if not os.path.exists(args.output):
 		os.mkdir(args.output)
