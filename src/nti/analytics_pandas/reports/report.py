@@ -236,6 +236,7 @@ def main():
 	minor_period_breaks = None
 	theme_seaborn_ = True
 
+	"""
 	generate_bookmarks_report(db.session, start_date, end_date, courses,
 		  					  period_breaks, minor_period_breaks, theme_seaborn_,
 		  					  args.output)
@@ -267,7 +268,7 @@ def main():
 	generate_topics_report(db.session, start_date, end_date, courses,
 		  				  period_breaks, minor_period_breaks, theme_seaborn_,
 		  				  args.output)
-
+	"""
 	generate_videos_report(db.session, start_date, end_date, courses,
 		  				   period_breaks, minor_period_breaks, theme_seaborn_,
 		  				   args.output)

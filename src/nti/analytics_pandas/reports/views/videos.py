@@ -18,6 +18,7 @@ from ...analysis import VideoEventsTimeseriesPlot
 
 from .commons import get_course_names
 from .commons import build_plot_images_dictionary
+from .commons import build_images_dict_from_plot_dict
 
 from .mixins import AbstractReportView
 
@@ -96,6 +97,9 @@ class VideosTimeseriesReportView(AbstractReportView):
 		data = self.get_video_skipped_plots(data)
 		data = self.get_video_skipped_plots_per_device_types(data)
 		data = self.get_video_skipped_plots_per_enrollment_types(data)
+		if len(self.context.courses) > 1 :
+			data = self.get_video_watched_plots_per_course_sections(data)
+			data = self.get_video_skipped_plots_per_course_sections(data)
 		return data
 
 	def get_video_watched_plots(self, data):
@@ -128,6 +132,17 @@ class VideosTimeseriesReportView(AbstractReportView):
 			self.options['has_video_watched_data_per_enrollment_types'] = True
 		return data
 
+	def get_video_watched_plots_per_course_sections(self, data):
+		plots = self.vetp.analyze_video_events_per_course_sections(self.context.period_breaks,
+												 				   self.context.minor_period_breaks,
+												 				   video_event_type='watch',
+													 			   theme_seaborn_=self.context.theme_seaborn_)
+		self.options['has_video_watched_data_per_course_sections'] = False
+		if plots:
+			data['videos_watched_per_course_sections'] = build_images_dict_from_plot_dict(plots)
+			self.options['has_video_watched_data_per_course_sections'] = True
+		return data
+
 	def get_video_skipped_plots(self, data):
 		plots = self.vetp.explore_events(self.context.period_breaks,
 										 self.context.minor_period_breaks,
@@ -156,6 +171,17 @@ class VideosTimeseriesReportView(AbstractReportView):
 		if plots:
 			data['videos_skipped_per_enrollment_types'] = build_plot_images_dictionary(plots)
 			self.options['has_video_skipped_data_per_enrollment_types'] = True
+		return data
+
+	def get_video_skipped_plots_per_course_sections(self, data):
+		plots = self.vetp.analyze_video_events_per_course_sections(self.context.period_breaks,
+												 				   self.context.minor_period_breaks,
+												 				   video_event_type='skip',
+													 			   theme_seaborn_=self.context.theme_seaborn_)
+		self.options['has_video_skipped_data_per_course_sections'] = False
+		if plots:
+			data['videos_skipped_per_course_sections'] = build_images_dict_from_plot_dict(plots)
+			self.options['has_video_skipped_data_per_course_sections'] = True
 		return data
 
 View = VideosTimeseriesReport = VideosTimeseriesReportView

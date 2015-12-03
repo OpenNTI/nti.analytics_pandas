@@ -241,16 +241,16 @@ class VideoEventsTimeseriesPlot(object):
 		return plots
 
 	def analyze_video_events_per_course_sections(self,
-												 video_event_type='WATCH',
 												 period_breaks='1 week',
 												 minor_period_breaks='1 day',
+												 video_event_type='WATCH',
 												 theme_seaborn_=True):
 		vet = self.vet
-		df = vet.analyze_video_events_per_course_sections(video_event_type)
+		df = vet.analyze_video_events_per_course_sections(video_event_type.upper())
 		if df is None:
 			return()
 
-		plots = []
+		plots = {}
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		course_ids = np.unique(df['course_id'].values.ravel())
@@ -275,8 +275,9 @@ class VideoEventsTimeseriesPlot(object):
 															 minor_period_breaks,
 															 theme_seaborn_,
 															 event_type)
-			plots.append(all_section_plots)
+			plots['all_section_plots'] = all_section_plots
 
+		section_plots_dict = {}
 		for course_id in course_ids:
 			new_df = df[df['course_id'] == course_id]
 			context_name = new_df.iloc[0]['context_name']
@@ -300,5 +301,7 @@ class VideoEventsTimeseriesPlot(object):
 											minor_period_breaks,
 											theme_seaborn_,
 											event_type)
-			plots.append(section_plots)
+			key = 'section_%s' %(course_id)
+			section_plots_dict[key] = section_plots
+		plots['section_plots'] = section_plots_dict
 		return plots
