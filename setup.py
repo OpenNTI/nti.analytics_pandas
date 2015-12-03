@@ -11,6 +11,7 @@ entry_points = {
 		'nti_analytics_forums = nti.analytics_pandas.reports.scripts.forums:main',
 		'nti_analytics_highlights = nti.analytics_pandas.reports.scripts.highlights:main',
 		'nti_analytics_notes = nti.analytics_pandas.reports.scripts.notes:main',
+		'nti_analytics_resource_views = nti.analytics_pandas.reports.scripts.resource_views:main',
 	],
 }
 
