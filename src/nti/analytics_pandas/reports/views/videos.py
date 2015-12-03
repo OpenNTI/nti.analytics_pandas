@@ -84,7 +84,7 @@ class VideosTimeseriesReportView(AbstractReportView):
 		else:
 			self.options['has_video_data'] = True
 			data = self.generate_video_events_plots(data)
-		
+
 		self._build_data(data)
 		return self.options
 
@@ -173,9 +173,9 @@ class VideosTimeseriesReportView(AbstractReportView):
 
 	def get_video_skipped_plots_per_enrollment_types(self, data):
 		plots = self.vetp.analyze_video_events_enrollment_types(self.context.period_breaks,
-										 					self.context.minor_period_breaks,
-										 					video_event_type='skip',
-											 				theme_seaborn_=self.context.theme_seaborn_)
+										 						self.context.minor_period_breaks,
+										 						video_event_type='skip',
+											 					theme_seaborn_=self.context.theme_seaborn_)
 		if plots:
 			data['videos_skipped_per_enrollment_types'] = build_plot_images_dictionary(plots)
 			self.options['has_video_skipped_data_per_enrollment_types'] = True

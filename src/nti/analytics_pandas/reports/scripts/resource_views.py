@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*
 """
-.. $Id: resource_views.py 77907 2015-11-30 16:28:37Z carlos.sanchez $
+.. $Id$
 """
 
 from __future__ import print_function, unicode_literals, absolute_import, division
@@ -11,10 +11,10 @@ logger = __import__('logging').getLogger(__name__)
 
 import os
 
-from ..report import _configure_config
-from ..report import _setup_configs
-from ..report import process_args
 from ..report import Report
+from ..report import process_args
+from ..report import setup_configs
+from ..report import configure_config
 
 from ..views import ResourceViewsTimeseriesContext
 from ..views import ResourceViewsTimeseriesReportView
@@ -23,26 +23,26 @@ def main():
 	# Parse command line args
 	args = process_args()
 
-	_setup_configs()
+	setup_configs()
+	configure_config()
 
-	_configure_config()
-	
 	# Create the output directory if it does not exist
 	if not os.path.exists(args['output']):
 		os.mkdir(args['output'])
 
-	filepath = '%s/resource_views.pdf' %(args['output'])
-	
-	report_generator = Report(Context = ResourceViewsTimeseriesContext, 
-							  View = ResourceViewsTimeseriesReportView, 
-							  start_date = args['start_date'], 
-							  end_date = args['end_date'], 
-							  courses = args['courses'],
-						 	  period_breaks = args['period_breaks'], 
-						 	  minor_period_breaks = args['minor_period_breaks'],
-						 	  theme_seaborn_ = args['theme_seaborn'], 
+	filepath = '%s/resource_views.pdf' % (args['output'])
+
+	report_generator = Report(Context=ResourceViewsTimeseriesContext,
+							  View=ResourceViewsTimeseriesReportView,
+							  start_date=args['start_date'],
+							  end_date=args['end_date'],
+							  courses=args['courses'],
+						 	  period_breaks=args['period_breaks'],
+						 	  minor_period_breaks=args['minor_period_breaks'],
+						 	  theme_seaborn_=args['theme_seaborn'],
 						 	  filepath=filepath)
 	report = report_generator.build()
+	return report
 
 if __name__ == '__main__':  # pragma: no cover
 	main()
