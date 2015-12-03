@@ -32,5 +32,8 @@ from .notes import NoteEventsTimeseriesReportView
 from .resource_views import ResourceViewsTimeseriesContext
 from .resource_views import ResourceViewsTimeseriesReportView
 
+from .topics import TopicsTimeseriesContext
+from .topics import TopicsTimeseriesReportView
+
 from .commons import cleanup_temporary_file
 from .commons import create_pdf_file_from_rml

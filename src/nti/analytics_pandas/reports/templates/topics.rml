@@ -10,9 +10,9 @@
 	</tal:block>	
 	<hr width="100%" />
 
-	<setNextTemplate name="main"/>
-	<nextPage />
 	<tal:block tal:condition="python: options['has_topics_created_data']">
+		<setNextTemplate name="main"/>
+		<nextPage />
 		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 			Overview of Topics Created
 		</h1>
@@ -26,9 +26,9 @@
 			</illustration>
 		</tal:block>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_topics_created_per_enrollment_types']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Topics Created per Enrolment Types
 			</h1>
@@ -43,9 +43,9 @@
 			</tal:block>
 		</tal:block>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_topics_created_per_device_types']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Topics Created per Device Types
 			</h1>
@@ -60,9 +60,9 @@
 			</tal:block>
 		</tal:block>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_topics_created_per_course_sections']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Topics Created per Course Sections
 			</h1>
@@ -78,9 +78,9 @@
 		</tal:block>
 	</tal:block>
 
-	<setNextTemplate name="main"/>
-	<nextPage />
 	<tal:block tal:condition="python: options['has_topic_views_data']">
+		<setNextTemplate name="main"/>
+		<nextPage />
 		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 			Overview of Topic Views
 		</h1>
@@ -94,9 +94,9 @@
 			</illustration>
 		</tal:block>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_topic_views_per_enrollment_types']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Topic Views per Enrollment Types
 			</h1>
@@ -111,9 +111,9 @@
 			</tal:block>
 		</tal:block>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_topic_views_per_device_types']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Topic Views per Device Types
 			</h1>
@@ -128,9 +128,9 @@
 			</tal:block>
 		</tal:block>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_topic_views_per_course_sections']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Topic Views per Course Sections
 			</h1>
@@ -146,9 +146,9 @@
 		</tal:block>
 	</tal:block>
 
-	<setNextTemplate name="main"/>
-	<nextPage />
 	<tal:block tal:condition="python: options['has_topic_likes_data']">
+		<setNextTemplate name="main"/>
+		<nextPage />
 		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 			Overview of Topic Likes
 		</h1>
@@ -163,9 +163,9 @@
 		</tal:block>
 	</tal:block>
 
-	<setNextTemplate name="main"/>
-	<nextPage />
 	<tal:block tal:condition="python: options['has_topic_likes_data']">
+		<setNextTemplate name="main"/>
+		<nextPage />
 		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 			Overview of Topic Favorites
 		</h1>
