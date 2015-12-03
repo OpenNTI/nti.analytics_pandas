@@ -35,8 +35,10 @@ def _parse_args():
 	arg_parser.add_argument('courses',
 							 help="Course/s ID. For example %s" %'1068, 1096, 1097, 1098, 1099')
 	arg_parser.add_argument('-pb', '--period_breaks',
+							 default='1 week',
 							 help="Set period breaks on generated plots. The default is %s" %"'1 week'")
 	arg_parser.add_argument('-mpb', '--minor_period_breaks',
+							 default='1 day',
 							 help="Set minor period breaks on generated plots. The default is %s" %"'1 day'")
 	arg_parser.add_argument('-ts', '--theme_seaborn',
 							 default=True,
