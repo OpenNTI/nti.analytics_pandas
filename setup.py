@@ -9,6 +9,7 @@ entry_points = {
 		'nti_analytics_bookmarks = nti.analytics_pandas.reports.scripts.bookmarks:main',
 		'nti_analytics_enrollments = nti.analytics_pandas.reports.scripts.enrollments:main',
 		'nti_analytics_forums = nti.analytics_pandas.reports.scripts.forums:main',
+		'nti_analytics_highlights = nti.analytics_pandas.reports.scripts.highlights:main',
 	],
 }
 
