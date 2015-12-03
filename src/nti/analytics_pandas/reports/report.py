@@ -24,7 +24,6 @@ from .z3c_zpt import ViewPageTemplateFile
 
 from ..databases import DBConnection
 
-
 DEFAULT_FORMAT_STRING = '[%(asctime)-15s] [%(name)s] %(levelname)s: %(message)s'
 
 def _parse_args():

@@ -6,6 +6,7 @@ VERSION = '0.0.0'
 entry_points = {
 	'console_scripts': [
 		'nti_analytics_assesments = nti.analytics_pandas.reports.scripts.assessments:main',
+		'nti_analytics_bookmarks = nti.analytics_pandas.reports.scripts.bookmarks:main',
 	],
 }
 
