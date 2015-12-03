@@ -92,8 +92,10 @@ class VideosTimeseriesReportView(AbstractReportView):
 		self.vetp = VideoEventsTimeseriesPlot(self.vet)
 		data = self.get_video_watched_plots(data)
 		data = self.get_video_watched_plots_per_device_types(data)
+		data = self.get_video_watched_plots_per_enrollment_types(data)
 		data = self.get_video_skipped_plots(data)
 		data = self.get_video_skipped_plots_per_device_types(data)
+		data = self.get_video_skipped_plots_per_enrollment_types(data)
 		return data
 
 	def get_video_watched_plots(self, data):
