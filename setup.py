@@ -13,6 +13,7 @@ entry_points = {
 		'nti_analytics_notes = nti.analytics_pandas.reports.scripts.notes:main',
 		'nti_analytics_resource_views = nti.analytics_pandas.reports.scripts.resource_views:main',
 		'nti_analytics_topics = nti.analytics_pandas.reports.scripts.topics:main',
+		'nti_analytics_videos = nti.analytics_pandas.reports.scripts.videos:main',
 	],
 }
 
