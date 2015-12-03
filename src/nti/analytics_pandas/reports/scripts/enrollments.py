@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*
 """
-.. $Id: bookmarks.py 77907 2015-11-30 16:28:37Z carlos.sanchez $
+.. $Id: enrollments.py 77907 2015-11-30 16:28:37Z carlos.sanchez $
 """
 
 from __future__ import print_function, unicode_literals, absolute_import, division
@@ -16,8 +16,8 @@ from ..report import _setup_configs
 from ..report import process_args
 from ..report import Report
 
-from ..views import BookmarksTimeseriesContext
-from ..views import BookmarksTimeseriesReportView
+from ..views import EnrollmentTimeseriesContext
+from ..views import EnrollmentTimeseriesReportView
 
 def main():
 	# Parse command line args
@@ -31,11 +31,11 @@ def main():
 	if not os.path.exists(args['output']):
 		os.mkdir(args['output'])
 
-	filepath = '%s/bookmarks.pdf' %(args['output'])
+	filepath = '%s/enrollments.pdf' %(args['output'])
 
 	
-	report_generator = Report(Context = BookmarksTimeseriesContext, 
-							  View = BookmarksTimeseriesReportView, 
+	report_generator = Report(Context = EnrollmentTimeseriesContext, 
+							  View = EnrollmentTimeseriesReportView, 
 							  start_date = args['start_date'], 
 							  end_date = args['end_date'], 
 							  courses = args['courses'],
