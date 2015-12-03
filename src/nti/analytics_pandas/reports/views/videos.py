@@ -72,25 +72,25 @@ class VideosTimeseriesReportView(AbstractReportView):
 		return self.options
 
 	def __call__(self):
+		course_names = get_course_names(self.context.session, self.context.courses)
+		self.options['course_names'] = ", ".join(map(str, course_names))
+		data = {}
 		self.vet = VideoEventsTimeseries(self.context.session,
 										 self.context.start_date,
 										 self.context.end_date,
 										 self.context.courses)
 		if self.vet.dataframe.empty:
 			self.options['has_video_data'] = False
-			return self.options
-
-		self.options['has_video_data'] = True
-
-		course_names = get_course_names(self.context.session, self.context.courses)
-		self.options['course_names'] = ", ".join(map(str, course_names))
-
-		data = self.generate_video_events_plots(data={})
+		else:
+			self.options['has_video_data'] = True
+			data = self.generate_video_events_plots(data)
+		
 		self._build_data(data)
 		return self.options
 
 	def generate_video_events_plots(self, data):
 		self.vetp = VideoEventsTimeseriesPlot(self.vet)
+		data = self.get_video_event_plots(data)
 		data = self.get_video_watched_plots(data)
 		data = self.get_video_watched_plots_per_device_types(data)
 		data = self.get_video_watched_plots_per_enrollment_types(data)
@@ -100,6 +100,14 @@ class VideosTimeseriesReportView(AbstractReportView):
 		if len(self.context.courses) > 1 :
 			data = self.get_video_watched_plots_per_course_sections(data)
 			data = self.get_video_skipped_plots_per_course_sections(data)
+		return data
+
+	def get_video_event_plots(self, data):
+		plots = self.vetp.analyze_video_events_types(self.context.period_breaks,
+													 self.context.minor_period_breaks,
+													 self.context.theme_seaborn_)
+		if plots:
+			data['video_events'] = build_plot_images_dictionary(plots)
 		return data
 
 	def get_video_watched_plots(self, data):

@@ -185,7 +185,6 @@ class VideoEventsTimeseriesPlot(object):
 
 	def analyze_video_events_types(self, period_breaks='1 week',
 								   minor_period_breaks='1 day',
-								   separate_plot_by_type=True,
 								   theme_seaborn_=True):
 		"""
 		plot video events by video_event_type
@@ -198,46 +197,20 @@ class VideoEventsTimeseriesPlot(object):
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
-		plots = []
 		group_by = 'video_event_type'
 		event_title = _('Number of video events grouped by event types')
 		user_title = _('Number of unique users creating video events grouped by event types')
 		ratio_title = _('Ratio of video events over unique users grouped by event types')
 		event_type = 'video_events_per_types'
-		all_video_events_plots = self.generate_group_by_plots(
-													df,
-													group_by,
-													event_title,
-													user_title,
-													ratio_title,
-													period_breaks,
-													minor_period_breaks,
-													theme_seaborn_,
-													event_type)
-		plots.append(all_video_events_plots)
-
-		if separate_plot_by_type:
-			video_event_types = np.unique(df['video_event_type'].values.ravel())
-			for video_event_type in video_event_types:
-				new_df = df[df['video_event_type'] == video_event_type]
-				event_title = translate(_("Number of video events (${event})",
-								 		mapping={'event': video_event_type}))
-
-				user_title = translate(_("Number of unique users (VIDEO ${event})",
-								 	   mapping={'event': video_event_type}))
-
-				ratio_title = translate(_("Ratio of video events over unique user (VIDEO ${event})",
-								  		mapping={'event': video_event_type}))
-				event_type = 'video_events_%s' % (video_event_type)
-				video_event_plots = self.generate_plots(new_df,
-														event_title,
-														user_title,
-														ratio_title,
-														period_breaks,
-														minor_period_breaks,
-														theme_seaborn_,
-														event_type)
-				plots.append(video_event_plots)
+		plots = self.generate_group_by_plots(df,
+											 group_by,
+											 event_title,
+											 user_title,
+											 ratio_title,
+											 period_breaks,
+											 minor_period_breaks,
+											 theme_seaborn_,
+											 event_type)
 		return plots
 
 	def analyze_video_events_per_course_sections(self,
