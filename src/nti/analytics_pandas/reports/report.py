@@ -46,6 +46,9 @@ from .views import ResourceViewsTimeseriesReportView
 from .views import TopicsTimeseriesContext
 from .views import TopicsTimeseriesReportView
 
+from .views import VideosTimeseriesContext
+from .views import VideosTimeseriesReportView
+
 from .z3c_zpt import ViewPageTemplateFile
 
 DEFAULT_FORMAT_STRING = '[%(asctime)-15s] [%(name)s] %(levelname)s: %(message)s'
@@ -193,6 +196,19 @@ def generate_topics_report(session, start_date, end_date, courses,
 	cleanup_temporary_file(data)
 	return report
 
+def generate_videos_report(session, start_date, end_date, courses,
+			  			   period_breaks, minor_period_breaks, theme_seaborn_,
+			  			   output_dir):
+	Context = VideosTimeseriesContext
+	View = VideosTimeseriesReportView
+	rml, data = build_rml(Context, View, session, start_date, end_date, courses,
+			  		period_breaks, minor_period_breaks, theme_seaborn_)
+
+	filepath = '%s/videos.pdf' % output_dir
+	report = create_pdf_file_from_rml(rml, filepath)
+	cleanup_temporary_file(data)
+	return report
+
 def main():
 	# Parse command line args
 	args = _parse_args()
@@ -251,6 +267,10 @@ def main():
 	generate_topics_report(db.session, start_date, end_date, courses,
 		  				  period_breaks, minor_period_breaks, theme_seaborn_,
 		  				  args.output)
+
+	generate_videos_report(db.session, start_date, end_date, courses,
+		  				   period_breaks, minor_period_breaks, theme_seaborn_,
+		  				   args.output)
 
 	db.close_session()
 

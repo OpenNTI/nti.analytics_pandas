@@ -35,5 +35,8 @@ from .resource_views import ResourceViewsTimeseriesReportView
 from .topics import TopicsTimeseriesContext
 from .topics import TopicsTimeseriesReportView
 
+from .videos import VideosTimeseriesContext
+from .videos import VideosTimeseriesReportView
+
 from .commons import cleanup_temporary_file
 from .commons import create_pdf_file_from_rml
