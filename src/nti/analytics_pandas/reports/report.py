@@ -34,6 +34,9 @@ from .views import cleanup_temporary_file
 from .views import ForumsTimeseriesContext
 from .views import ForumsTimeseriesReportView
 
+from .views import HighlightsTimeseriesContext
+from .views import HighlightsTimeseriesReportView
+
 from .z3c_zpt import ViewPageTemplateFile
 
 DEFAULT_FORMAT_STRING = '[%(asctime)-15s] [%(name)s] %(levelname)s: %(message)s'
@@ -129,6 +132,18 @@ def generate_forums_report(session, start_date, end_date, courses,
 	cleanup_temporary_file(data)
 	return report
 
+def generate_highlights_report(session, start_date, end_date, courses,
+				  			   period_breaks, minor_period_breaks, theme_seaborn_,
+				  			   output_dir):
+	Context = HighlightsTimeseriesContext
+	View = HighlightsTimeseriesReportView
+	rml, data = build_rml(Context, View, session, start_date, end_date, courses,
+			  		period_breaks, minor_period_breaks, theme_seaborn_)
+
+	filepath = '%s/highlights.pdf' % output_dir
+	report = create_pdf_file_from_rml(rml, filepath)
+	cleanup_temporary_file(data)
+	return report
 
 def main():
 	# Parse command line args
@@ -158,8 +173,8 @@ def main():
 	theme_seaborn_ = True
 
 	generate_bookmarks_report(db.session, start_date, end_date, courses,
-			  					period_breaks, minor_period_breaks, theme_seaborn_,
-			  					args.output)
+		  					  period_breaks, minor_period_breaks, theme_seaborn_,
+		  					  args.output)
 
 	generate_assessments_report(db.session, start_date, end_date, courses,
 			  					period_breaks, minor_period_breaks, theme_seaborn_,
@@ -172,6 +187,10 @@ def main():
 	generate_forums_report(db.session, start_date, end_date, courses,
 		  				   period_breaks, minor_period_breaks, theme_seaborn_,
 		  				   args.output)
+
+	generate_highlights_report(db.session, start_date, end_date, courses,
+			  				   period_breaks, minor_period_breaks, theme_seaborn_,
+			  				   args.output)
 
 	db.close_session()
 

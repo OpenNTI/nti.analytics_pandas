@@ -23,5 +23,8 @@ from .enrollments import EnrollmentTimeseriesReportView
 from .forums import ForumsTimeseriesContext
 from .forums import ForumsTimeseriesReportView
 
+from .highlights import HighlightsTimeseriesContext
+from .highlights import HighlightsTimeseriesReportView
+
 from .commons import cleanup_temporary_file
 from .commons import create_pdf_file_from_rml
