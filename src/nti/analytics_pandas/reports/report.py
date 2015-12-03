@@ -37,6 +37,12 @@ from .views import ForumsTimeseriesReportView
 from .views import HighlightsTimeseriesContext
 from .views import HighlightsTimeseriesReportView
 
+from .views import NoteEventsTimeseriesContext
+from .views import NoteEventsTimeseriesReportView
+
+from .views import ResourceViewsTimeseriesContext
+from .views import ResourceViewsTimeseriesReportView
+
 from .z3c_zpt import ViewPageTemplateFile
 
 DEFAULT_FORMAT_STRING = '[%(asctime)-15s] [%(name)s] %(levelname)s: %(message)s'
@@ -145,6 +151,32 @@ def generate_highlights_report(session, start_date, end_date, courses,
 	cleanup_temporary_file(data)
 	return report
 
+def generate_notes_report(session, start_date, end_date, courses,
+			  			   period_breaks, minor_period_breaks, theme_seaborn_,
+			  			   output_dir):
+	Context = NoteEventsTimeseriesContext
+	View = NoteEventsTimeseriesReportView
+	rml, data = build_rml(Context, View, session, start_date, end_date, courses,
+			  		period_breaks, minor_period_breaks, theme_seaborn_)
+
+	filepath = '%s/notes.pdf' % output_dir
+	report = create_pdf_file_from_rml(rml, filepath)
+	cleanup_temporary_file(data)
+	return report
+
+def generate_resource_views_report(session, start_date, end_date, courses,
+			  			   period_breaks, minor_period_breaks, theme_seaborn_,
+			  			   output_dir):
+	Context = ResourceViewsTimeseriesContext
+	View = ResourceViewsTimeseriesReportView
+	rml, data = build_rml(Context, View, session, start_date, end_date, courses,
+			  		period_breaks, minor_period_breaks, theme_seaborn_)
+
+	filepath = '%s/resource_views.pdf' % output_dir
+	report = create_pdf_file_from_rml(rml, filepath)
+	cleanup_temporary_file(data)
+	return report
+
 def main():
 	# Parse command line args
 	args = _parse_args()
@@ -163,7 +195,7 @@ def main():
 	db = DBConnection()
 
 	"""
-	only for test (line 137 - 150)
+	only for test 
 	"""
 	start_date = '2015-10-05'
 	end_date = '2015-10-20'
@@ -191,6 +223,14 @@ def main():
 	generate_highlights_report(db.session, start_date, end_date, courses,
 			  				   period_breaks, minor_period_breaks, theme_seaborn_,
 			  				   args.output)
+
+	generate_notes_report(db.session, start_date, end_date, courses,
+		  				  period_breaks, minor_period_breaks, theme_seaborn_,
+		  				  args.output)
+
+	generate_resource_views_report(db.session, start_date, end_date, courses,
+				  				   period_breaks, minor_period_breaks, theme_seaborn_,
+				  				   args.output)
 
 	db.close_session()
 

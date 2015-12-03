@@ -11,9 +11,9 @@
 	</tal:block>	
 	<hr width="100%" />
 	
-	<setNextTemplate name="main"/>
-	<nextPage />
 	<tal:block tal:condition="python: options['has_resource_view_events']">
+		<setNextTemplate name="main"/>
+		<nextPage />
 		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 			Total Resource Views
 		</h1>
@@ -26,9 +26,9 @@
 					  metal:use-macro="macro:three_plots_event">
 		</illustration>
 
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_resource_views_per_enrollment_types']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Resource Views per Enrollment Types
 			</h1>
@@ -43,9 +43,9 @@
 			</tal:block>
 		</tal:block>
 		
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_resource_views_per_device_types']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Resource Views per Device Types
 			</h1>
@@ -60,9 +60,9 @@
 			</tal:block>
 		</tal:block>
 		
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_resource_views_per_resource_types']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Resource Views per Device Types
 			</h1>
@@ -77,9 +77,9 @@
 			</tal:block>
 		</tal:block>
 		
-		<setNextTemplate name="main"/>
-		<nextPage />
 		<tal:block tal:condition="python: options['has_resource_view_users']">
+			<setNextTemplate name="main"/>
+			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
 				Most active users viewing resources during time period
 			</h1>

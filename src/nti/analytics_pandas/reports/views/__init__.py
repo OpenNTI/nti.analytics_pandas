@@ -26,5 +26,11 @@ from .forums import ForumsTimeseriesReportView
 from .highlights import HighlightsTimeseriesContext
 from .highlights import HighlightsTimeseriesReportView
 
+from .notes import NoteEventsTimeseriesContext
+from .notes import NoteEventsTimeseriesReportView
+
+from .resource_views import ResourceViewsTimeseriesContext
+from .resource_views import ResourceViewsTimeseriesReportView
+
 from .commons import cleanup_temporary_file
 from .commons import create_pdf_file_from_rml
