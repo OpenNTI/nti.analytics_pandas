@@ -87,7 +87,9 @@ def copy_plot_to_temporary_file(plot, image_type, dirname=None):
 def get_course_names(session, courses_id):
 	qc = QueryCourses(session)
 	df = qc.get_context_name(courses_id)
-	course_names = df['context_name'].tolist()
+	course_names = ''
+	if not df.empty:
+		course_names = df['context_name'].tolist()
 	return course_names
 
 def create_pdf_file_from_rml(rml, filepath):

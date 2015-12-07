@@ -128,3 +128,33 @@ class TestAssessmentsEvents(AnalyticsPandasTestBase):
 
 		data = view.options['data']
 		cleanup_temporary_file(data)
+
+	def test_generate_pdf_from_rml_empty_result(self):
+		# make sure  template exists
+		path = self.std_report_layout_rml
+		assert_that(os.path.exists(path), is_(True))
+
+		# prepare view and context
+		start_date = '2015-10-05'
+		end_date = '2015-10-20'
+		courses = ['xxx']
+		period_breaks = '1 day'
+		minor_period_breaks = None
+		theme_seaborn_ = True
+		context = Context(self.session, start_date, end_date, courses,
+						  period_breaks, minor_period_breaks, theme_seaborn_)
+
+		view = View(context)
+		view()
+		assert_that(view.options['data'] , instance_of(dict))
+
+		system = {'view':view, 'context':context}
+		rml = self.template(path).bind(view)(**system)
+
+		pdf_stream = rml2pdf.parseString(rml)
+		pdf_stream.seek(0)
+		readbuf = pdf_stream.read()
+		assert_that(readbuf, has_length(greater_than(0)))
+
+		data = view.options['data']
+		cleanup_temporary_file(data)
