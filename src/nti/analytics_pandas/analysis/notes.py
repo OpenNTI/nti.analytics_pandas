@@ -420,12 +420,16 @@ class NotesViewTimeseries(object):
 		"""
 		find the top n most viewed notes and return as pandas.Series
 		"""
+		if self.dataframe.empty:
+			return
 		df = self.dataframe
 		most_viewed = df.groupby('note_id').size().sort_values(ascending=False)[:max_rank_number]
 		return most_viewed
 
 	def get_the_most_viewed_notes_and_its_author(self, max_rank_number=10):
 		most_views = self.get_the_most_viewed_notes(max_rank_number)
+		if most_views is None:
+			return
 		df = most_views.to_frame(name='number_of_views')
 		df.reset_index(level=0, inplace=True)
 
@@ -441,6 +445,8 @@ class NotesViewTimeseries(object):
 
 	def get_the_most_active_users(self, max_rank_number=10):
 		user_df = get_most_active_users_(self.dataframe, self.session, max_rank_number)
+		if user_df is None:
+			return
 		user_df.rename(columns={'number_of_activities':'number_of_note_views'}, inplace=True)
 		return user_df
 

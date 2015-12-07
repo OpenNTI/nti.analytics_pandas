@@ -187,6 +187,32 @@ class TestNoteViewsPlot(AnalyticsPandasTestBase):
 		nvtp = NotesViewTimeseriesPlot(nvt)
 		_ = nvtp.plot_the_most_viewed_notes_and_its_author()
 
+	def test_empty_result(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['123']
+		nvt = NotesViewTimeseries(self.session, start_date, end_date, course_id)
+		nvtp = NotesViewTimeseriesPlot(nvt)
+		_ = nvtp.plot_the_most_viewed_notes_and_its_author()
+		assert_that(len(_), equal_to(0))
+		_ = nvtp.analyze_total_events_per_course_sections()
+		assert_that(len(_), equal_to(0))
+		_ = nvtp.analyze_unique_events_based_on_sharing_type(period_breaks='1 week')
+		assert_that(len(_), equal_to(0))
+		_ = nvtp.explore_events(period_breaks='1 week')
+		assert_that(len(_), equal_to(0))
+		_ = nvtp.plot_the_most_active_users()
+		assert_that(len(_), equal_to(0))
+		_ = nvtp.analyze_total_events_based_on_resource_type(period_breaks='1 week')
+		assert_that(len(_), equal_to(0))
+		_ = nvtp.analyze_total_events_based_on_enrollment_type(period_breaks='1 week')
+		assert_that(len(_), equal_to(0))
+		_ = nvtp.analyze_total_events_based_on_device_type(period_breaks='1 week')
+		assert_that(len(_), equal_to(0))
+		_ = nvtp.analyze_total_events_based_on_sharing_type(period_breaks='1 week')
+		assert_that(len(_), equal_to(0))
+
+
 class TestNoteLikesPlot(AnalyticsPandasTestBase):
 
 	def test_explore_events(self):
