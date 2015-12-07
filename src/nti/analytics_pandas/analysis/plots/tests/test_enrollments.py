@@ -51,7 +51,6 @@ class TestCourseCatalogViewsPlot(AnalyticsPandasTestBase):
 		_ = ccvtp.analyze_device_types()
 		assert_that(len(_), equal_to(0))
 
-
 class TestCourseEnrollmentsPlot(AnalyticsPandasTestBase):
 
 	def test_explore_events_course_enrollments(self):
@@ -78,8 +77,8 @@ class TestCourseEnrollmentsPlot(AnalyticsPandasTestBase):
 		cetp = CourseEnrollmentsTimeseriesPlot(cet)
 		_ = cetp.explore_events()
 		assert_that(len(_), equal_to(0))
-		_ = cetp.analyze_device_enrollment_types()	
-		assert_that(len(_), equal_to(0))	
+		_ = cetp.analyze_device_enrollment_types()
+		assert_that(len(_), equal_to(0))
 
 class TestCourseDropsPlot(AnalyticsPandasTestBase):
 
@@ -115,11 +114,10 @@ class TestCourseDropsPlot(AnalyticsPandasTestBase):
 		cdtp = CourseDropsTimeseriesPlot(cdt)
 		_ = cdtp.analyze_enrollment_types()
 		assert_that(len(_), equal_to(0))
-		_ = cdtp.analyze_device_types()	
+		_ = cdtp.analyze_device_types()
 		assert_that(len(_), equal_to(0))
 		_ = cdtp.explore_events()
-		assert_that(len(_), equal_to(0))	
-
+		assert_that(len(_), equal_to(0))
 
 class TestEnrollmentsEventsPlot(AnalyticsPandasTestBase):
 

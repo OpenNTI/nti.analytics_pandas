@@ -91,7 +91,7 @@ class BookmarkCreationTimeseries(object):
 			resource_df = grouped.aggregate({'number_of_bookmarks_created': np.sum})
 			return (df, resource_df)
 		else:
-			return (df,None)
+			return (df, None)
 
 	def analyze_device_types(self):
 		group_by_items = ['timestamp_period', 'device_type']

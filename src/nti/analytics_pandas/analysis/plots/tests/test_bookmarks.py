@@ -93,4 +93,3 @@ class TestBookmarksPlot(AnalyticsPandasTestBase):
 		assert_that(len(_), equal_to(0))
 		_ = bctp.analyze_events_per_course_sections()
 		assert_that(len(_), equal_to(0))
-

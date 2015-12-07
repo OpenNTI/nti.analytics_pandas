@@ -6,6 +6,7 @@ __docformat__ = "restructuredtext en"
 
 # disable: accessing protected members, too many methods
 # pylint: disable=W0212,R0904
+
 from hamcrest import equal_to
 from hamcrest import assert_that
 
@@ -82,4 +83,3 @@ class TestHighlightsCreationPlot(AnalyticsPandasTestBase):
 		assert_that(len(_), equal_to(0))
 		_ = hctp.explore_events()
 		assert_that(len(_), equal_to(0))
-

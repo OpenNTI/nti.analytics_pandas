@@ -6,6 +6,7 @@ __docformat__ = "restructuredtext en"
 
 # disable: accessing protected members, too many methods
 # pylint: disable=W0212,R0904
+
 from hamcrest import equal_to
 from hamcrest import assert_that
 
@@ -83,8 +84,3 @@ class TestVideoEventsPlot(AnalyticsPandasTestBase):
 		assert_that(len(_), equal_to(0))
 		_ = vetp.explore_events(period_breaks='1 week', minor_period_breaks='1 day')
 		assert_that(len(_), equal_to(0))
-
-
-
-
-

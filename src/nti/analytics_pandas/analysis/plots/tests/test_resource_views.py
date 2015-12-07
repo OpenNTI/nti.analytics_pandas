@@ -6,6 +6,7 @@ __docformat__ = "restructuredtext en"
 
 # disable: accessing protected members, too many methods
 # pylint: disable=W0212,R0904
+
 from hamcrest import equal_to
 from hamcrest import assert_that
 
@@ -39,7 +40,7 @@ class TestResourceViewsPlot(AnalyticsPandasTestBase):
 		rvt = ResourceViewsTimeseries(self.session, start_date, end_date, course_id)
 		rvtp = ResourceViewsTimeseriesPlot(rvt)
 		_ = rvtp.analyze_enrollment_type()
-		
+
 	def test_resource_and_device_type_analysis(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'

@@ -419,7 +419,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 	def plot_the_most_active_users(self, max_rank_number=10):
 		fcct = self.fcct
 		users_df = fcct.get_the_most_active_users(max_rank_number)
-		if users_df is None: 
+		if users_df is None:
 			return ()
 
 		plot_users = histogram_plot_x_axis_discrete(
