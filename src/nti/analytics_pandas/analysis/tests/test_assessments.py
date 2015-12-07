@@ -48,6 +48,16 @@ class TestAssignmentViewsTimeseries(AnalyticsPandasTestBase):
 		assert_that(df.columns, has_item('number_of_unique_users'))
 		assert_that(df.columns, has_item('ratio'))
 
+	def test_analyze_events(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		courses_id = ['xxx']
+		avt = AssignmentViewsTimeseries(self.session,
+										start_date=start_date,
+										end_date=end_date,
+										course_id=courses_id)
+		assert_that(avt.dataframe.empty, equal_to(True))
+
 	def test_analyze_events_group_by_device_type(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
