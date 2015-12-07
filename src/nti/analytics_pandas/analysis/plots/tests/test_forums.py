@@ -103,7 +103,7 @@ class TestForumCommentsCreatedPlot(AnalyticsPandasTestBase):
 		_ = fcctp.analyze_comments_per_section(period_breaks='1 day', minor_period_breaks=None)
 		assert_that(len(_), equal_to(0))
 		_ = fcctp.plot_the_most_active_users()
-		assert_that(_, equal_to(None))
+		assert_that(len(_), equal_to(0))
 		_ = fcctp.analyze_device_types()
 		assert_that(len(_), equal_to(0))
 		_ = fcctp.explore_events()

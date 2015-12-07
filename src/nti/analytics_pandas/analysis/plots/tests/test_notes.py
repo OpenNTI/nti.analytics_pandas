@@ -98,7 +98,7 @@ class TestNotesCreationPlot(AnalyticsPandasTestBase):
 		_ = nctp.analyze_events_per_course_sections()
 		assert_that(len(_), equal_to(0))
 		_ = nctp.analyze_notes_created_on_videos(period_breaks='1 day', minor_period_breaks='None')
-		assert_that(_, equal_to(None))
+		assert_that(len(_), equal_to(0))
 		_ = nctp.analyze_sharing_types()
 		assert_that(len(_), equal_to(0))
 		_ = nctp.plot_the_most_active_users()
@@ -254,6 +254,23 @@ class TestNoteLikesPlot(AnalyticsPandasTestBase):
 		nlt = NoteLikesTimeseries(self.session, start_date, end_date, course_id)
 		nltp = NoteLikesTimeseriesPlot(nlt)
 		_ = nltp.analyze_events_per_course_sections(period_breaks='1 day', minor_period_breaks=None)
+
+	def test_empty_result(self):
+		start_date = '2015-10-05'
+		end_date = '2015-12-04'
+		course_id = ['123']
+		nlt = NoteLikesTimeseries(self.session, start_date, end_date, course_id)
+		nltp = NoteLikesTimeseriesPlot(nlt)
+		_ = nltp.analyze_events_per_course_sections(period_breaks='1 day', minor_period_breaks=None)
+		assert_that(len(_), equal_to(0))
+		_ = nltp.analyze_events_per_resource_types(period_breaks='1 day', minor_period_breaks=None)
+		assert_that(len(_), equal_to(0))
+		_ = nltp.analyze_events_per_enrollment_types(period_breaks='1 day', minor_period_breaks=None)
+		assert_that(len(_), equal_to(0))
+		_ = nltp.analyze_events_per_device_types(period_breaks='1 day', minor_period_breaks=None)
+		assert_that(len(_), equal_to(0))
+		_ = nltp.explore_events(period_breaks='1 day', minor_period_breaks=None)
+		assert_that(len(_), equal_to(0))
 
 class TestNoteFavoritesPlot(AnalyticsPandasTestBase):
 

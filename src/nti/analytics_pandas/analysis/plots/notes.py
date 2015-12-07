@@ -307,7 +307,7 @@ class NotesCreationTimeseriesPlot(object):
 		nct = self.nct
 		df = nct.analyze_notes_created_on_videos()
 		if df is None:
-			return
+			return ()
 		(sharing_df, device_df) = df
 
 		plots = {}
