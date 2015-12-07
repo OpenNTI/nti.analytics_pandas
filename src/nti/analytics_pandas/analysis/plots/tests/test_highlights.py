@@ -6,6 +6,8 @@ __docformat__ = "restructuredtext en"
 
 # disable: accessing protected members, too many methods
 # pylint: disable=W0212,R0904
+from hamcrest import equal_to
+from hamcrest import assert_that
 
 from nti.analytics_pandas.analysis.highlights import HighlightsCreationTimeseries
 from nti.analytics_pandas.analysis.plots.highlights import HighlightsCreationTimeseriesPlot
@@ -61,3 +63,23 @@ class TestHighlightsCreationPlot(AnalyticsPandasTestBase):
 		hct = HighlightsCreationTimeseries(self.session, start_date, end_date, course_id)
 		hctp = HighlightsCreationTimeseriesPlot(hct)
 		_ = hctp.plot_the_most_active_users()
+
+	def test_empty_result(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['123']
+		hct = HighlightsCreationTimeseries(self.session, start_date, end_date, course_id)
+		hctp = HighlightsCreationTimeseriesPlot(hct)
+		_ = hctp.plot_the_most_active_users()
+		assert_that(len(_), equal_to(0))
+		_ = hctp.analyze_events_per_course_sections()
+		assert_that(len(_), equal_to(0))
+		_ = hctp.analyze_resource_types()
+		assert_that(len(_), equal_to(0))
+		_ = hctp.analyze_enrollment_types()
+		assert_that(len(_), equal_to(0))
+		_ = hctp.analyze_device_types()
+		assert_that(len(_), equal_to(0))
+		_ = hctp.explore_events()
+		assert_that(len(_), equal_to(0))
+

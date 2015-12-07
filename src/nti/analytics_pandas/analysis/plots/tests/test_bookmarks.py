@@ -76,7 +76,7 @@ class TestBookmarksPlot(AnalyticsPandasTestBase):
 	def test_empty_result(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
-		course_id = ['xxx']
+		course_id = ['123']
 		bct = BookmarkCreationTimeseries(self.session, start_date, end_date, course_id)
 		bctp = BookmarksTimeseriesPlot(bct)
 		_ = bctp.explore_events()

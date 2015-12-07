@@ -38,7 +38,7 @@ class TestAssignmentViewsPlot(AnalyticsPandasTestBase):
 	def test_analyze_events_empty(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
-		courses_id = ['xxx']
+		courses_id = ['123']
 		avt = AssignmentViewsTimeseries(self.session, start_date=start_date,
 										end_date=end_date, course_id=courses_id)
 		avtp = AssignmentViewsTimeseriesPlot(avt)
@@ -58,7 +58,7 @@ class TestAssignmentViewsPlot(AnalyticsPandasTestBase):
 	def test_analyze_events_group_by_device_type_empty(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
-		courses_id = ['xxx']
+		courses_id = ['123']
 		avt = AssignmentViewsTimeseries(self.session, start_date=start_date,
 										end_date=end_date, course_id=courses_id)
 		avtp = AssignmentViewsTimeseriesPlot(avt)
@@ -79,7 +79,7 @@ class TestAssignmentViewsPlot(AnalyticsPandasTestBase):
 	def test_analyze_events_group_by_enrollment_type_empty(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
-		courses_id = ['xxx']
+		courses_id = ['123']
 		avt = AssignmentViewsTimeseries(self.session, start_date=start_date,
 										end_date=end_date, course_id=courses_id)
 		avtp = AssignmentViewsTimeseriesPlot(avt)
@@ -100,7 +100,7 @@ class TestAssignmentViewsPlot(AnalyticsPandasTestBase):
 	def test_analyze_events_per_course_sections_empty(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
-		courses_id = ['xxx']
+		courses_id = ['123']
 		avt = AssignmentViewsTimeseries(self.session, start_date=start_date,
 										end_date=end_date, course_id=courses_id)
 		avtp = AssignmentViewsTimeseriesPlot(avt)
@@ -122,7 +122,7 @@ class TestAssignmentsTakenPlot(AnalyticsPandasTestBase):
 	def test_analyze_events_empty(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
-		courses_id = ['xxx']
+		courses_id = ['123']
 		att = AssignmentsTakenTimeseries(self.session, start_date=start_date,
 										 end_date=end_date, course_id=courses_id)
 		attp = AssignmentsTakenTimeseriesPlot(att)
@@ -142,7 +142,7 @@ class TestAssignmentsTakenPlot(AnalyticsPandasTestBase):
 	def test_analyze_events_per_course_sections_empty(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
-		courses_id = ['xxx']
+		courses_id = ['123']
 		att = AssignmentsTakenTimeseries(self.session, start_date=start_date,
 										 end_date=end_date, course_id=courses_id)
 		attp = AssignmentsTakenTimeseriesPlot(att)
@@ -163,7 +163,7 @@ class TestAssignmentsTakenPlot(AnalyticsPandasTestBase):
 	def test_analyze_events_per_device_types_empty(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
-		courses_id = ['xxx']
+		courses_id = ['123']
 		att = AssignmentsTakenTimeseries(self.session, start_date=start_date,
 										 end_date=end_date, course_id=courses_id)
 		attp = AssignmentsTakenTimeseriesPlot(att)
@@ -184,7 +184,7 @@ class TestAssignmentsTakenPlot(AnalyticsPandasTestBase):
 	def test_analyze_events_per_enrollment_types_empty(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
-		courses_id = ['xxx']
+		courses_id = ['123']
 		att = AssignmentsTakenTimeseries(self.session, start_date=start_date,
 										 end_date=end_date, course_id=courses_id)
 		attp = AssignmentsTakenTimeseriesPlot(att)
@@ -204,7 +204,7 @@ class TestAssignmentsTakenPlot(AnalyticsPandasTestBase):
 def test_analyze_assignment_taken_over_total_enrollments_empty(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
-		courses_id = ['xxx']
+		courses_id = ['123']
 		att = AssignmentsTakenTimeseries(self.session, start_date=start_date,
 										 end_date=end_date, course_id=courses_id)
 		attp = AssignmentsTakenTimeseriesPlot(att)
@@ -225,7 +225,7 @@ class TestSelfAssessmentViewsPlot(AnalyticsPandasTestBase):
 	def test_analyze_events_empty(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
-		courses_id = ['xxx']
+		courses_id = ['123']
 		savt = SelfAssessmentViewsTimeseries(self.session, start_date=start_date,
 											 end_date=end_date, course_id=courses_id)
 		savtp = SelfAssessmentViewsTimeseriesPlot(savt)
@@ -244,7 +244,7 @@ class TestSelfAssessmentViewsPlot(AnalyticsPandasTestBase):
 	def test_analyze_events_per_course_sections_empty(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
-		courses_id = ['xxx']
+		courses_id = ['123']
 		savt = SelfAssessmentViewsTimeseries(self.session, start_date=start_date,
 											 end_date=end_date, course_id=courses_id)
 		savtp = SelfAssessmentViewsTimeseriesPlot(savt)
@@ -264,7 +264,7 @@ class TestSelfAssessmentViewsPlot(AnalyticsPandasTestBase):
 	def test_analyze_events_group_by_device_type_empty(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
-		courses_id = ['xxx']
+		courses_id = ['123']
 		savt = SelfAssessmentViewsTimeseries(self.session, start_date=start_date,
 											 end_date=end_date, course_id=courses_id)
 		savtp = SelfAssessmentViewsTimeseriesPlot(savt)
@@ -285,7 +285,7 @@ class TestSelfAssessmentViewsPlot(AnalyticsPandasTestBase):
 	def test_analyze_events_group_by_enrollment_type_empty(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
-		courses_id = ['xxx']
+		courses_id = ['123']
 		savt = SelfAssessmentViewsTimeseries(self.session, start_date=start_date,
 											 end_date=end_date, course_id=courses_id)
 		savtp = SelfAssessmentViewsTimeseriesPlot(savt)
@@ -307,7 +307,7 @@ class TestSelfAssessmentsTakenPlot(AnalyticsPandasTestBase):
 	def test_analyze_events_empty(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
-		courses_id = ['xxx']
+		courses_id = ['123']
 		satt = SelfAssessmentsTakenTimeseries(self.session, start_date=start_date,
 											  end_date=end_date, course_id=courses_id)
 		sattp = SelfAssessmentsTakenTimeseriesPlot(satt)
@@ -326,7 +326,7 @@ class TestSelfAssessmentsTakenPlot(AnalyticsPandasTestBase):
 	def test_analyze_events_per_course_sections_empty(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
-		courses_id = ['xxx']
+		courses_id = ['123']
 		satt = SelfAssessmentsTakenTimeseries(self.session, start_date=start_date,
 											  end_date=end_date, course_id=courses_id)
 		sattp = SelfAssessmentsTakenTimeseriesPlot(satt)
@@ -346,7 +346,7 @@ class TestSelfAssessmentsTakenPlot(AnalyticsPandasTestBase):
 	def test_analyze_events_group_by_device_type_empty(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
-		courses_id = ['xxx']
+		courses_id = ['123']
 		satt = SelfAssessmentsTakenTimeseries(self.session, start_date=start_date,
 											  end_date=end_date, course_id=courses_id)
 		sattp = SelfAssessmentsTakenTimeseriesPlot(satt)
@@ -367,7 +367,7 @@ class TestSelfAssessmentsTakenPlot(AnalyticsPandasTestBase):
 	def test_analyze_events_group_by_enrollment_type_empty(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
-		courses_id = ['xxx']
+		courses_id = ['123']
 		satt = SelfAssessmentsTakenTimeseries(self.session, start_date=start_date,
 											  end_date=end_date, course_id=courses_id)
 		sattp = SelfAssessmentsTakenTimeseriesPlot(satt)
@@ -405,7 +405,7 @@ class TestAssessmentEventsPlot(AnalyticsPandasTestBase):
 	def test_combine_events_empty(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
-		courses_id = ['xxx']
+		courses_id = ['123']
 		avt = AssignmentViewsTimeseries(self.session,
 										start_date=start_date,
 										end_date=end_date,

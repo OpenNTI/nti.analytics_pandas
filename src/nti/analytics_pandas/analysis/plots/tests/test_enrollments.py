@@ -43,7 +43,7 @@ class TestCourseCatalogViewsPlot(AnalyticsPandasTestBase):
 	def test_empty_result(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
-		course_id = ['xxx']
+		course_id = ['123']
 		ccvt = CourseCatalogViewsTimeseries(self.session, start_date, end_date, course_id)
 		ccvtp = CourseCatalogViewsTimeseriesPlot(ccvt)
 		_ = ccvtp.explore_events()
@@ -73,7 +73,7 @@ class TestCourseEnrollmentsPlot(AnalyticsPandasTestBase):
 	def test_empty_result(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
-		course_id = ['xxx']
+		course_id = ['123']
 		cet = CourseEnrollmentsTimeseries(self.session, start_date, end_date, course_id)
 		cetp = CourseEnrollmentsTimeseriesPlot(cet)
 		_ = cetp.explore_events()
@@ -110,7 +110,7 @@ class TestCourseDropsPlot(AnalyticsPandasTestBase):
 	def test_empty_result(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
-		course_id = ['xxx']
+		course_id = ['123']
 		cdt = CourseDropsTimeseries(self.session, start_date, end_date, course_id)
 		cdtp = CourseDropsTimeseriesPlot(cdt)
 		_ = cdtp.analyze_enrollment_types()
@@ -146,7 +146,7 @@ class TestEnrollmentsEventsPlot(AnalyticsPandasTestBase):
 	def test_empty_result(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
-		course_id = ['xxx']
+		course_id = ['123']
 		cet = CourseEnrollmentsTimeseries(self.session, start_date, end_date, course_id)
 		ccvt = CourseCatalogViewsTimeseries(self.session, start_date, end_date, course_id)
 		ceet = CourseEnrollmentsEventsTimeseries(cet, ccvt=ccvt)
