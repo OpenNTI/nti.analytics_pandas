@@ -219,9 +219,9 @@ class TopicLikesTimeseries(object):
 		df = self.build_dataframe(group_by_items, dataframe)
 		return df
 
-	def analyze_enrollment_types(self):
+	def analyze_events_per_enrollment_types(self, dataframe):
 		group_by_items = ['timestamp_period', 'enrollment_type']
-		df = self.build_dataframe(group_by_items)
+		df = self.build_dataframe(group_by_items, dataframe)
 		return df
 
 	def build_dataframe(self, group_by_items, dataframe):
@@ -376,9 +376,9 @@ class TopicFavoritesTimeseries(object):
 		df = self.build_dataframe(group_by_items, dataframe)
 		return df
 
-	def analyze_enrollment_types(self):
+	def analyze_events_per_enrollment_types(self, dataframe):
 		group_by_items = ['timestamp_period', 'enrollment_type']
-		df = self.build_dataframe(group_by_items)
+		df = self.build_dataframe(group_by_items, dataframe)
 		return df
 
 	def build_dataframe(self, group_by_items, dataframe):

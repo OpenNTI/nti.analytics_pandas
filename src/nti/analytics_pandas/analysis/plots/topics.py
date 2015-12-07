@@ -594,6 +594,39 @@ class TopicLikesTimeseriesPlot(object):
 											 event_type)
 		return plots
 
+	def analyze_events_per_enrollment_types(self, period_breaks='1 day',
+										minor_period_breaks=None,
+										theme_seaborn_=True):
+		"""
+		return plots of topic likes grouped by enrollment  types
+		it consists of:
+			- number of topic likes
+			- number of unique users
+			- ratio of topic likes over unique users
+		"""
+		tlt = self.tlt
+		df = tlt.analyze_events_per_enrollment_types(tlt.dataframe)
+		if df is None:
+			return ()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		group_by = 'enrollment_type'
+		event_title = _('Number of topics likes grouped by enrollment types')
+		user_title = _('Number of unique users liking topics grouped by enrollment types')
+		ratio_title = _('Ratio of topic likes over unique user grouped by enrollment types')
+		event_type = 'topic_likes_per_enrollment_types'
+		plots = self.generate_group_by_plots(df,
+											 group_by,
+											 event_title,
+											 user_title,
+											 ratio_title,
+											 period_breaks,
+											 minor_period_breaks,
+											 theme_seaborn_,
+											 event_type)
+		return plots
+
 	def generate_plots(self,
 					   df,
 					   event_title,
@@ -755,6 +788,39 @@ class TopicFavoritesTimeseriesPlot(object):
 		user_title = _('Number of unique users choosing topics as favorite grouped by device types')
 		ratio_title = _('Ratio of topic favorites over unique user grouped by device types')
 		event_type = 'topic_favorites_per_device_types'
+		plots = self.generate_group_by_plots(df,
+											 group_by,
+											 event_title,
+											 user_title,
+											 ratio_title,
+											 period_breaks,
+											 minor_period_breaks,
+											 theme_seaborn_,
+											 event_type)
+		return plots
+
+	def analyze_events_per_enrollment_types(self, period_breaks='1 day',
+										minor_period_breaks=None,
+										theme_seaborn_=True):
+		"""
+		return plots of topic favorites grouped by enrollment  types
+		it consists of:
+			- number of topic favorites
+			- number of unique users
+			- ratio of topic likes over unique users
+		"""
+		tft = self.tft
+		df = tft.analyze_events_per_enrollment_types(tft.dataframe)
+		if df is None:
+			return ()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		group_by = 'enrollment_type'
+		event_title = _('Number of topics favorites grouped by enrollment types')
+		user_title = _('Number of unique users choosing topics as favorite grouped by enrollment types')
+		ratio_title = _('Ratio of topic favorites over unique user grouped by enrollment types')
+		event_type = 'topic_favorites_per_enrollment_types'
 		plots = self.generate_group_by_plots(df,
 											 group_by,
 											 event_title,
