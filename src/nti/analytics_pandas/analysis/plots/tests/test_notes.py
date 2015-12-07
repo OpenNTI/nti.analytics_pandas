@@ -6,6 +6,8 @@ __docformat__ = "restructuredtext en"
 
 # disable: accessing protected members, too many methods
 # pylint: disable=W0212,R0904
+from hamcrest import equal_to
+from hamcrest import assert_that
 
 from nti.analytics_pandas.analysis.notes import NoteLikesTimeseries
 from nti.analytics_pandas.analysis.notes import NotesViewTimeseries
@@ -38,6 +40,14 @@ class TestNotesCreationPlot(AnalyticsPandasTestBase):
 		nct = NotesCreationTimeseries(self.session, start_date, end_date, course_id)
 		nctp = NotesCreationTimeseriesPlot(nct)
 		_ = nctp.analyze_device_types()
+
+	def test_analyze_enrollment_types(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		nct = NotesCreationTimeseries(self.session, start_date, end_date, course_id)
+		nctp = NotesCreationTimeseriesPlot(nct)
+		_ = nctp.analyze_enrollment_types()
 
 	def test_analyze_resource_types(self):
 		start_date = '2015-01-01'
@@ -78,6 +88,30 @@ class TestNotesCreationPlot(AnalyticsPandasTestBase):
 		nct = NotesCreationTimeseries(self.session, start_date, end_date, course_id)
 		nctp = NotesCreationTimeseriesPlot(nct)
 		_ = nctp.analyze_events_per_course_sections()
+
+	def test_empty_result(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['123']
+		nct = NotesCreationTimeseries(self.session, start_date, end_date, course_id)
+		nctp = NotesCreationTimeseriesPlot(nct)
+		_ = nctp.analyze_events_per_course_sections()
+		assert_that(len(_), equal_to(0))
+		_ = nctp.analyze_notes_created_on_videos(period_breaks='1 day', minor_period_breaks='None')
+		assert_that(_, equal_to(None))
+		_ = nctp.analyze_sharing_types()
+		assert_that(len(_), equal_to(0))
+		_ = nctp.plot_the_most_active_users()
+		assert_that(len(_), equal_to(0))
+		_ = nctp.analyze_resource_types()
+		assert_that(len(_), equal_to(0))
+		_ = nctp.analyze_device_types()
+		assert_that(len(_), equal_to(0))
+		_ = nctp.explore_events()
+		assert_that(len(_), equal_to(0))
+		_ = nctp.analyze_enrollment_types()
+		assert_that(len(_), equal_to(0))
+
 
 class TestNoteViewsPlot(AnalyticsPandasTestBase):
 

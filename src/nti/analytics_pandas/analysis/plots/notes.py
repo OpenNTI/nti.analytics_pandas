@@ -305,7 +305,10 @@ class NotesCreationTimeseriesPlot(object):
 										theme_seaborn_=True):
 
 		nct = self.nct
-		(sharing_df, device_df) = nct.analyze_notes_created_on_videos()
+		df = nct.analyze_notes_created_on_videos()
+		if df is None:
+			return
+		(sharing_df, device_df) = df
 
 		plots = {}
 		# generate sharing types plots

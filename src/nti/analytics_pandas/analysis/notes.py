@@ -234,6 +234,8 @@ class NotesCreationTimeseries(object):
 		- number_of_unique_users
 		- ratio
 		"""
+		if self.dataframe.empty:
+			return 
 		dataframe = self.dataframe[['timestamp_period', 'resource_type',
 									'device_type', 'note_id', 'user_id', 'sharing']]
 		dataframe = dataframe.loc[((dataframe['resource_type'] == 'video') | (dataframe['resource_type'] == 'slide video'))]
