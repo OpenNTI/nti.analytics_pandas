@@ -74,6 +74,8 @@ class VideoEventsTimeseries(object):
 		if video_event_type is None:
 			dataframe = self.dataframe
 		else:
+			if self.dataframe.empty:
+				return
 			dataframe = self.dataframe[['timestamp_period', 'video_view_id', 'user_id',
 										'video_event_type']]
 			dataframe = dataframe.loc[dataframe['video_event_type'] == video_event_type]
@@ -99,6 +101,8 @@ class VideoEventsTimeseries(object):
 		- number of unique users
 		- ratio of video events over unique users
 		"""
+		if self.dataframe.empty:
+			return
 		dataframe = self.dataframe[['timestamp_period', 'video_view_id', 'user_id',
 									'course_id', 'context_name', 'video_event_type']]
 		dataframe = dataframe.loc[dataframe['video_event_type'] == video_event_type]
@@ -115,6 +119,8 @@ class VideoEventsTimeseries(object):
 		- ratio of video events over unique users
 		grouped by device_type
 		"""
+		if self.dataframe.empty:
+			return
 		dataframe = self.dataframe[['timestamp_period', 'video_view_id', 'user_id',
 									'device_type', 'video_event_type']]
 		dataframe = dataframe.loc[dataframe['video_event_type'] == video_event_type]
@@ -131,6 +137,8 @@ class VideoEventsTimeseries(object):
 		- ratio of video events over unique users
 		grouped by enrollment_type
 		"""
+		if self.dataframe.empty:
+			return
 		dataframe = self.dataframe[['timestamp_period', 'video_view_id', 'user_id',
 									'enrollment_type', 'video_event_type']]
 		dataframe = dataframe.loc[dataframe['video_event_type'] == video_event_type]
@@ -147,6 +155,8 @@ class VideoEventsTimeseries(object):
 		- ratio of video events over unique users
 		grouped by with_transcript values
 		"""
+		if self.dataframe.empty:
+			return
 		dataframe = self.dataframe[['timestamp_period', 'video_view_id', 'user_id',
 									'with_transcript', 'video_event_type']]
 		dataframe = dataframe.loc[dataframe['video_event_type'] == video_event_type]
