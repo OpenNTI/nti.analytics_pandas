@@ -442,7 +442,7 @@ class  ResourceViewsTimeseriesPlot(object):
 		rvt = self.rvt
 		users_df = rvt.get_the_most_active_users(max_rank_number)
 		if users_df is None:
-			return
+			return ()
 
 		users_df.rename(columns={'number_of_activities': 'number_of_resource_views'},
 						inplace=True)

@@ -6,6 +6,8 @@ __docformat__ = "restructuredtext en"
 
 # disable: accessing protected members, too many methods
 # pylint: disable=W0212,R0904
+from hamcrest import equal_to
+from hamcrest import assert_that
 
 from nti.analytics_pandas.analysis.resource_views import ResourceViewsTimeseries
 from nti.analytics_pandas.analysis.plots.resource_views import ResourceViewsTimeseriesPlot
@@ -54,3 +56,22 @@ class TestResourceViewsPlot(AnalyticsPandasTestBase):
 		rvt = ResourceViewsTimeseries(self.session, start_date, end_date, course_id)
 		rvtp = ResourceViewsTimeseriesPlot(rvt)
 		_ = rvtp.plot_most_active_users()
+
+	def test_empty_result(self):
+		start_date = '2015-10-05'
+		end_date = '2015-12-04'
+		course_id = ['123']
+		rvt = ResourceViewsTimeseries(self.session, start_date, end_date, course_id)
+		rvtp = ResourceViewsTimeseriesPlot(rvt)
+		_ = rvtp.plot_most_active_users()
+		assert_that(len(_), equal_to(0))
+		_ = rvtp.analyze_resource_type()
+		assert_that(len(_), equal_to(0))
+		_ = rvtp.analyze_device_type()
+		assert_that(len(_), equal_to(0))
+		_ = rvtp.analyze_enrollment_type()
+		assert_that(len(_), equal_to(0))
+		_ = rvtp.analyze_events_per_course_sections()
+		assert_that(len(_), equal_to(0))
+		_ = rvtp.explore_events()
+		assert_that(len(_), equal_to(0))
