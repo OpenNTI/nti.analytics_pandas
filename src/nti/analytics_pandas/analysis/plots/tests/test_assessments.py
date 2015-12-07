@@ -119,6 +119,16 @@ class TestAssignmentsTakenPlot(AnalyticsPandasTestBase):
 		attp = AssignmentsTakenTimeseriesPlot(att)
 		_ = attp.analyze_events(period_breaks='1 week', minor_period_breaks='1 day')
 
+	def test_analyze_events_empty(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		courses_id = ['xxx']
+		att = AssignmentsTakenTimeseries(self.session, start_date=start_date,
+										 end_date=end_date, course_id=courses_id)
+		attp = AssignmentsTakenTimeseriesPlot(att)
+		_ = attp.analyze_events(period_breaks='1 week', minor_period_breaks='1 day')
+		assert_that(len(_), equal_to(0))
+
 	def test_analyze_events_per_course_sections(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
@@ -128,6 +138,17 @@ class TestAssignmentsTakenPlot(AnalyticsPandasTestBase):
 		attp = AssignmentsTakenTimeseriesPlot(att)
 		_ = attp.analyze_events_per_course_sections(period_breaks='1 week',
 													 minor_period_breaks='1 day')
+
+	def test_analyze_events_per_course_sections_empty(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		courses_id = ['xxx']
+		att = AssignmentsTakenTimeseries(self.session, start_date=start_date,
+										 end_date=end_date, course_id=courses_id)
+		attp = AssignmentsTakenTimeseriesPlot(att)
+		_ = attp.analyze_events_per_course_sections(period_breaks='1 week',
+													 minor_period_breaks='1 day')
+		assert_that(len(_), equal_to(0))
 
 	def test_analyze_events_per_device_types(self):
 		start_date = u'2015-01-01'
@@ -139,6 +160,17 @@ class TestAssignmentsTakenPlot(AnalyticsPandasTestBase):
 		_ = attp.analyze_events_group_by_device_type(period_breaks='1 week',
 													 minor_period_breaks='1 day')
 
+	def test_analyze_events_per_device_types_empty(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		courses_id = ['xxx']
+		att = AssignmentsTakenTimeseries(self.session, start_date=start_date,
+										 end_date=end_date, course_id=courses_id)
+		attp = AssignmentsTakenTimeseriesPlot(att)
+		_ = attp.analyze_events_group_by_device_type(period_breaks='1 week',
+													 minor_period_breaks='1 day')
+		assert_that(len(_), equal_to(0))
+
 	def test_analyze_events_per_enrollment_types(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
@@ -149,6 +181,17 @@ class TestAssignmentsTakenPlot(AnalyticsPandasTestBase):
 		_ = attp.analyze_events_group_by_enrollment_type(period_breaks='1 week',
 													 minor_period_breaks='1 day')
 
+	def test_analyze_events_per_enrollment_types_empty(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		courses_id = ['xxx']
+		att = AssignmentsTakenTimeseries(self.session, start_date=start_date,
+										 end_date=end_date, course_id=courses_id)
+		attp = AssignmentsTakenTimeseriesPlot(att)
+		_ = attp.analyze_events_group_by_enrollment_type(period_breaks='1 week',
+													 minor_period_breaks='1 day')
+		assert_that(len(_), equal_to(0))
+
 	def test_analyze_assignment_taken_over_total_enrollments(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
@@ -157,6 +200,16 @@ class TestAssignmentsTakenPlot(AnalyticsPandasTestBase):
 										 end_date=end_date, course_id=courses_id)
 		attp = AssignmentsTakenTimeseriesPlot(att)
 		_ = attp.analyze_assignment_taken_over_total_enrollments()
+
+def test_analyze_assignment_taken_over_total_enrollments_empty(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		courses_id = ['xxx']
+		att = AssignmentsTakenTimeseries(self.session, start_date=start_date,
+										 end_date=end_date, course_id=courses_id)
+		attp = AssignmentsTakenTimeseriesPlot(att)
+		_ = attp.analyze_assignment_taken_over_total_enrollments()
+		assert_that(len(_), equal_to(0))
 
 class TestSelfAssessmentViewsPlot(AnalyticsPandasTestBase):
 
