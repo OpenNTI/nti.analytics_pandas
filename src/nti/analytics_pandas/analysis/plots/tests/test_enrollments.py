@@ -7,6 +7,9 @@ __docformat__ = "restructuredtext en"
 # disable: accessing protected members, too many methods
 # pylint: disable=W0212,R0904
 
+from hamcrest import equal_to
+from hamcrest import assert_that
+
 from nti.analytics_pandas.analysis.enrollments import CourseDropsTimeseries
 from nti.analytics_pandas.analysis.enrollments import CourseEnrollmentsTimeseries
 from nti.analytics_pandas.analysis.enrollments import CourseCatalogViewsTimeseries
@@ -37,6 +40,18 @@ class TestCourseCatalogViewsPlot(AnalyticsPandasTestBase):
 		ccvtp = CourseCatalogViewsTimeseriesPlot(ccvt)
 		_ = ccvtp.analyze_device_types()
 
+	def test_empty_result(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['xxx']
+		ccvt = CourseCatalogViewsTimeseries(self.session, start_date, end_date, course_id)
+		ccvtp = CourseCatalogViewsTimeseriesPlot(ccvt)
+		_ = ccvtp.explore_events()
+		assert_that(len(_), equal_to(0))
+		_ = ccvtp.analyze_device_types()
+		assert_that(len(_), equal_to(0))
+
+
 class TestCourseEnrollmentsPlot(AnalyticsPandasTestBase):
 
 	def test_explore_events_course_enrollments(self):
@@ -54,6 +69,17 @@ class TestCourseEnrollmentsPlot(AnalyticsPandasTestBase):
 		cet = CourseEnrollmentsTimeseries(self.session, start_date, end_date, course_id)
 		cetp = CourseEnrollmentsTimeseriesPlot(cet)
 		_ = cetp.analyze_device_enrollment_types()
+
+	def test_empty_result(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['xxx']
+		cet = CourseEnrollmentsTimeseries(self.session, start_date, end_date, course_id)
+		cetp = CourseEnrollmentsTimeseriesPlot(cet)
+		_ = cetp.explore_events()
+		assert_that(len(_), equal_to(0))
+		_ = cetp.analyze_device_enrollment_types()	
+		assert_that(len(_), equal_to(0))	
 
 class TestCourseDropsPlot(AnalyticsPandasTestBase):
 
@@ -81,6 +107,20 @@ class TestCourseDropsPlot(AnalyticsPandasTestBase):
 		cdtp = CourseDropsTimeseriesPlot(cdt)
 		_ = cdtp.analyze_enrollment_types()
 
+	def test_empty_result(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['xxx']
+		cdt = CourseDropsTimeseries(self.session, start_date, end_date, course_id)
+		cdtp = CourseDropsTimeseriesPlot(cdt)
+		_ = cdtp.analyze_enrollment_types()
+		assert_that(len(_), equal_to(0))
+		_ = cdtp.analyze_device_types()	
+		assert_that(len(_), equal_to(0))
+		_ = cdtp.explore_events()
+		assert_that(len(_), equal_to(0))	
+
+
 class TestEnrollmentsEventsPlot(AnalyticsPandasTestBase):
 
 	def test_explore_course_enrollments_vs_drops(self):
@@ -102,3 +142,16 @@ class TestEnrollmentsEventsPlot(AnalyticsPandasTestBase):
 		ceet = CourseEnrollmentsEventsTimeseries(cet, ccvt=ccvt)
 		ceetp = CourseEnrollmentsEventsTimeseriesPlot(ceet)
 		_ = ceetp.explore_course_catalog_views_vs_enrollments()
+
+	def test_empty_result(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['xxx']
+		cet = CourseEnrollmentsTimeseries(self.session, start_date, end_date, course_id)
+		ccvt = CourseCatalogViewsTimeseries(self.session, start_date, end_date, course_id)
+		ceet = CourseEnrollmentsEventsTimeseries(cet, ccvt=ccvt)
+		ceetp = CourseEnrollmentsEventsTimeseriesPlot(ceet)
+		_ = ceetp.explore_course_catalog_views_vs_enrollments()
+		assert_that(len(_), equal_to(0))
+		_ = ceetp.explore_course_enrollments_vs_drops()
+		assert_that(len(_), equal_to(0))
