@@ -84,11 +84,14 @@ class BookmarkCreationTimeseries(object):
 	def analyze_resource_types(self):
 		group_by_items = ['timestamp_period', 'resource_type']
 		df = self.build_dataframe(group_by_items)
-		resource_df = df[['number_of_bookmarks_created']]
-		resource_df.reset_index(inplace=True)
-		grouped = resource_df.groupby(['resource_type'])
-		resource_df = grouped.aggregate({'number_of_bookmarks_created': np.sum})
-		return (df, resource_df)
+		if df is not None:
+			resource_df = df[['number_of_bookmarks_created']]
+			resource_df.reset_index(inplace=True)
+			grouped = resource_df.groupby(['resource_type'])
+			resource_df = grouped.aggregate({'number_of_bookmarks_created': np.sum})
+			return (df, resource_df)
+		else:
+			return (df,None)
 
 	def analyze_device_types(self):
 		group_by_items = ['timestamp_period', 'device_type']
