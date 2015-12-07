@@ -175,6 +175,20 @@ class TestForumCommentFavoritesPlot(AnalyticsPandasTestBase):
 		fcftp = ForumCommentFavoritesTimeseriesPlot(fcft)
 		_ = fcftp.analyze_events_per_course_sections()
 
+
+	def test_empty_result(self):
+		start_date = '2015-10-05'
+		end_date = '2015-10-20'
+		course_id = ['xxx']
+		fcft = ForumCommentFavoritesTimeseries(self.session, start_date, end_date, course_id)
+		fcftp = ForumCommentFavoritesTimeseriesPlot(fcft)
+		_ = fcftp.analyze_events_per_course_sections()
+		assert_that(len(_), equal_to(0))
+		_ = fcftp.explore_events()
+		assert_that(len(_), equal_to(0))
+		_ = fcftp.analyze_device_types()
+		assert_that(len(_), equal_to(0))
+
 class TestForumEventsPlot(AnalyticsPandasTestBase):
 
 	def test_explore_all_events(self):
