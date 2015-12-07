@@ -6,6 +6,8 @@ __docformat__ = "restructuredtext en"
 
 # disable: accessing protected members, too many methods
 # pylint: disable=W0212,R0904
+from hamcrest import equal_to
+from hamcrest import assert_that
 
 from nti.analytics_pandas.analysis.forums import ForumsEventsTimeseries
 from nti.analytics_pandas.analysis.forums import ForumsCreatedTimeseries
@@ -38,6 +40,17 @@ class TestForumsCreatedPlot(AnalyticsPandasTestBase):
 		fct = ForumsCreatedTimeseries(self.session, start_date, end_date, course_id)
 		fctp = ForumsCreatedTimeseriesPlot(fct)
 		_ = fctp.analyze_device_types()
+
+	def test_empty_result(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['xxx']
+		fct = ForumsCreatedTimeseries(self.session, start_date, end_date, course_id)
+		fctp = ForumsCreatedTimeseriesPlot(fct)
+		_ = fctp.analyze_device_types()
+		assert_that(len(_), equal_to(0))
+		_ = fctp.explore_events()
+		assert_that(len(_), equal_to(0))
 
 class TestForumCommentsCreatedPlot(AnalyticsPandasTestBase):
 
@@ -80,6 +93,21 @@ class TestForumCommentsCreatedPlot(AnalyticsPandasTestBase):
 		fcct = ForumsCommentsCreatedTimeseries(self.session, start_date, end_date, course_id)
 		fcctp = ForumsCommentsCreatedTimeseriesPlot(fcct)
 		_ = fcctp.analyze_comments_per_section(period_breaks='1 day', minor_period_breaks=None)
+
+	def test_empty_result(self):
+		start_date = '2015-10-05'
+		end_date = '2015-12-04'
+		course_id = ['xxx']
+		fcct = ForumsCommentsCreatedTimeseries(self.session, start_date, end_date, course_id)
+		fcctp = ForumsCommentsCreatedTimeseriesPlot(fcct)
+		_ = fcctp.analyze_comments_per_section(period_breaks='1 day', minor_period_breaks=None)
+		assert_that(len(_), equal_to(0))
+		_ = fcctp.plot_the_most_active_users()
+		assert_that(_, equal_to(None))
+		_ = fcctp.analyze_device_types()
+		assert_that(len(_), equal_to(0))
+		_ = fcctp.explore_events()
+		assert_that(len(_), equal_to(0))
 
 class TestForumCommentLikesPlot(AnalyticsPandasTestBase):
 
