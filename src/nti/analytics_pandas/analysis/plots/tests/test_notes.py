@@ -314,6 +314,23 @@ class TestNoteFavoritesPlot(AnalyticsPandasTestBase):
 		nftp = NoteFavoritesTimeseriesPlot(nft)
 		_ = nftp.analyze_events_per_course_sections(period_breaks='1 day', minor_period_breaks=None)
 
+	def test_empty_result(self):
+		start_date = '2015-10-05'
+		end_date = '2015-12-04'
+		course_id = ['123']
+		nft = NoteFavoritesTimeseries(self.session, start_date, end_date, course_id)
+		nftp = NoteFavoritesTimeseriesPlot(nft)
+		_ = nftp.analyze_events_per_course_sections(period_breaks='1 day', minor_period_breaks=None)
+		assert_that(len(_), equal_to(0))
+		_ = nftp.analyze_events_per_resource_types(period_breaks='1 day', minor_period_breaks=None)
+		assert_that(len(_), equal_to(0))
+		_ = nftp.analyze_events_per_enrollment_types(period_breaks='1 day', minor_period_breaks=None)
+		assert_that(len(_), equal_to(0))
+		_ = nftp.analyze_events_per_device_types(period_breaks='1 day', minor_period_breaks=None)
+		assert_that(len(_), equal_to(0))
+		_ = nftp.explore_events(period_breaks='1 day', minor_period_breaks=None)
+		assert_that(len(_), equal_to(0))
+
 class TestNotesEventsPlot(AnalyticsPandasTestBase):
 
 	def test_notes_events(self):
@@ -328,3 +345,17 @@ class TestNotesEventsPlot(AnalyticsPandasTestBase):
 		net = NotesEventsTimeseries(nct, nvt, nlt, nft)
 		netp = NotesEventsTimeseriesPlot(net)
 		_ = netp.explore_all_events()
+
+	def test_empty_result(self):
+		start_date = '2015-10-05'
+		end_date = '2015-12-04'
+		course_id = ['123']
+		nct = NotesCreationTimeseries(self.session, start_date, end_date, course_id)
+		nvt = NotesViewTimeseries(self.session, start_date, end_date, course_id)
+		nlt = NoteLikesTimeseries(self.session, start_date, end_date, course_id)
+		nft = NoteFavoritesTimeseries(self.session, start_date, end_date, course_id)
+
+		net = NotesEventsTimeseries(nct, nvt, nlt, nft)
+		netp = NotesEventsTimeseriesPlot(net)
+		_ = netp.explore_all_events()
+		assert_that(len(_), equal_to(0))
