@@ -135,6 +135,20 @@ class TestForumCommentLikesPlot(AnalyticsPandasTestBase):
 		fcltp = ForumCommentLikesTimeseriesPlot(fclt)
 		_ = fcltp.analyze_events_per_course_sections(period_breaks='1 day', minor_period_breaks=None)
 
+	def test_empty_result(self):
+		start_date = '2015-10-05'
+		end_date = '2015-10-20'
+		course_id = ['xxx']
+		fclt = ForumCommentLikesTimeseries(self.session, start_date, end_date, course_id)
+		fcltp = ForumCommentLikesTimeseriesPlot(fclt)
+		_ = fcltp.analyze_events_per_course_sections(period_breaks='1 day', minor_period_breaks=None)
+		assert_that(len(_), equal_to(0))
+		_ = fcltp.analyze_device_types(period_breaks='1 day', minor_period_breaks=None)
+		assert_that(len(_), equal_to(0))
+		_ = fcltp.analyze_events(period_breaks='1 day', minor_period_breaks=None)
+		assert_that(len(_), equal_to(0))
+
+
 class TestForumCommentFavoritesPlot(AnalyticsPandasTestBase):
 
 	def test_analyze_device_types_forum_comment_favorites(self):
