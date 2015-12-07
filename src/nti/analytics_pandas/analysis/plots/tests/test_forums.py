@@ -44,7 +44,7 @@ class TestForumsCreatedPlot(AnalyticsPandasTestBase):
 	def test_empty_result(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
-		course_id = ['xxx']
+		course_id = ['123']
 		fct = ForumsCreatedTimeseries(self.session, start_date, end_date, course_id)
 		fctp = ForumsCreatedTimeseriesPlot(fct)
 		_ = fctp.analyze_device_types()
@@ -97,7 +97,7 @@ class TestForumCommentsCreatedPlot(AnalyticsPandasTestBase):
 	def test_empty_result(self):
 		start_date = '2015-10-05'
 		end_date = '2015-12-04'
-		course_id = ['xxx']
+		course_id = ['123']
 		fcct = ForumsCommentsCreatedTimeseries(self.session, start_date, end_date, course_id)
 		fcctp = ForumsCommentsCreatedTimeseriesPlot(fcct)
 		_ = fcctp.analyze_comments_per_section(period_breaks='1 day', minor_period_breaks=None)
@@ -138,7 +138,7 @@ class TestForumCommentLikesPlot(AnalyticsPandasTestBase):
 	def test_empty_result(self):
 		start_date = '2015-10-05'
 		end_date = '2015-10-20'
-		course_id = ['xxx']
+		course_id = ['123']
 		fclt = ForumCommentLikesTimeseries(self.session, start_date, end_date, course_id)
 		fcltp = ForumCommentLikesTimeseriesPlot(fclt)
 		_ = fcltp.analyze_events_per_course_sections(period_breaks='1 day', minor_period_breaks=None)
@@ -179,7 +179,7 @@ class TestForumCommentFavoritesPlot(AnalyticsPandasTestBase):
 	def test_empty_result(self):
 		start_date = '2015-10-05'
 		end_date = '2015-10-20'
-		course_id = ['xxx']
+		course_id = ['123']
 		fcft = ForumCommentFavoritesTimeseries(self.session, start_date, end_date, course_id)
 		fcftp = ForumCommentFavoritesTimeseriesPlot(fcft)
 		_ = fcftp.analyze_events_per_course_sections()
@@ -202,3 +202,16 @@ class TestForumEventsPlot(AnalyticsPandasTestBase):
 		fet = ForumsEventsTimeseries(fct, fcct, fclt, fcft)
 		fetp = ForumsEventsTimeseriesPlot(fet)
 		_ = fetp.explore_all_events()
+
+	def test_empty_result(self):
+		start_date = '2015-10-05'
+		end_date = '2015-10-20'
+		course_id = ['123']
+		fct = ForumsCreatedTimeseries(self.session, start_date, end_date, course_id)
+		fcct = ForumsCommentsCreatedTimeseries(self.session, start_date, end_date, course_id)
+		fclt = ForumCommentLikesTimeseries(self.session, start_date, end_date, course_id)
+		fcft = ForumCommentFavoritesTimeseries(self.session, start_date, end_date, course_id)
+		fet = ForumsEventsTimeseries(fct, fcct, fclt, fcft)
+		fetp = ForumsEventsTimeseriesPlot(fet)
+		_ = fetp.explore_all_events()
+		assert_that(len(_), equal_to(0))
