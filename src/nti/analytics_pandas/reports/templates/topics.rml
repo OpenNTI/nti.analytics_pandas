@@ -47,7 +47,7 @@
 			<setNextTemplate name="main"/>
 			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
-				Topics Created per Device Types
+				Topics Created per Application Types
 			</h1>
 			<hr width="100%" />
 			<tal:block tal:define="topics_created options/data/topics_created_per_device_types">
@@ -115,7 +115,7 @@
 			<setNextTemplate name="main"/>
 			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
-				Topic Views per Device Types
+				Topic Views per Application Types
 			</h1>
 			<hr width="100%" />
 			<tal:block tal:define="topic_views options/data/topic_views_per_device_types">

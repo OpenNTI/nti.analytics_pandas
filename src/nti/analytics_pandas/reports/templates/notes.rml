@@ -65,7 +65,7 @@
 			<setNextTemplate name="main"/>
 			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
-				Notes Created per Device Types
+				Notes Created per Application Types
 			</h1>
 			<hr width="100%" />
 			<illustration width="5in" height="3in"
@@ -167,7 +167,7 @@
 				<setNextTemplate name="main"/>
 				<nextPage />
 				<h1 style="h1" fontSize="12" spaceBefore=".3in" spaceAfter=".3in">
-					Notes created on videos per sharing types
+					Notes created on videos per application types
 				</h1>
 				<hr width="75%" />
 				<tal:block tal:define= "user_agent options/data/notes_created_on_videos/user_agent">
@@ -204,7 +204,7 @@
 			<setNextTemplate name="main"/>
 			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
-				Note Views per Device Types
+				Note Views per Enrollment Types
 			</h1>
 			<hr width="100%" />
 			<tal:block tal:define= "note_views options/data/note_views_per_enrollment_types">
@@ -221,7 +221,7 @@
 			<setNextTemplate name="main"/>
 			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
-				Note Views per Device Types
+				Note Views per Application Types
 			</h1>
 			<hr width="100%" />
 			<tal:block tal:define= "note_views options/data/note_views_per_device_types">

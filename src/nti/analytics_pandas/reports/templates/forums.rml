@@ -47,7 +47,7 @@
 			<setNextTemplate name="main"/>
 			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
-				Forums Created per Device Types
+				Forums Created per Application Types
 			</h1>
 			<hr width="100%" />
 			<tal:block tal:define="forums_created options/data/forums_created_per_device_types">
@@ -101,7 +101,7 @@
 			<setNextTemplate name="main"/>
 			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
-				Forum Comments Created per Device Types
+				Forum Comments Created per Application Types
 			</h1>
 			<hr width="100%" />
 			<tal:block tal:define="forum_comments_created options/data/forum_comments_created_per_device_types">
@@ -186,7 +186,7 @@
 			<setNextTemplate name="main"/>
 			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
-				Forum Comment Likes per Device Types
+				Forum Comment Likes per Application Types
 			</h1>
 			<hr width="100%" />
 			<tal:block tal:define="forum_comment_likes options/data/forum_comment_likes_per_device_types">
@@ -255,7 +255,7 @@
 			<setNextTemplate name="main"/>
 			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
-				Forum Comment Favorites per Device Types
+				Forum Comment Favorites per Application Types
 			</h1>
 			<hr width="100%" />
 			<tal:block tal:define="forum_comment_favorites options/data/forum_comment_favorites_per_device_types">

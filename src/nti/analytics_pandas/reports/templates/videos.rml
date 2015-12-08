@@ -63,7 +63,7 @@
 				<setNextTemplate name="main"/>
 				<nextPage />
 				<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
-					Videos Watched per Device Types
+					Videos Watched per Application Types
 				</h1>
 				<hr width="100%" />
 				<tal:block tal:define="videos_watched options/data/videos_watched_per_device_types">
@@ -131,7 +131,7 @@
 				<setNextTemplate name="main"/>
 				<nextPage />
 				<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
-					Videos Skipped per Device Types
+					Videos Skipped per Application Types
 				</h1>
 				<hr width="100%" />
 				<tal:block tal:define="videos_skipped options/data/videos_skipped_per_device_types">

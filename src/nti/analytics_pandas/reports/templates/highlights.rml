@@ -52,7 +52,7 @@
 			<setNextTemplate name="main"/>
 			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
-				Highlights Created per Device Types
+				Highlights Created per Application Types
 			</h1>
 			<hr width="100%" />
 			<tal:block tal:define="highlights_created options/data/highlights_created_per_device_types">

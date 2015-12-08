@@ -47,7 +47,7 @@
 			<setNextTemplate name="main"/>
 			<nextPage />
 			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
-				Resource Views per Device Types
+				Resource Views per Application Types
 			</h1>
 			<hr width="100%" />
 			<tal:block tal:define="resource_views options/data/resource_views_per_device_types" >
