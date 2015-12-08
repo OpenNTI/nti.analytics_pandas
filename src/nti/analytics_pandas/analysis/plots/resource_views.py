@@ -109,7 +109,7 @@ class  ResourceViewsTimeseriesPlot(object):
 			ratio_title = translate(_("Ratio of resource views over unique user in ${title}",
 									  mapping={'title': context_name}))
 
-			unique_resource_title = translate(_("Number of unique resources viewed in  ${title}",
+			unique_resource_title = translate(_("Number of unique resources viewed in ${title}",
 									 		  mapping={'title': context_name}))
 
 			event_type = 'resource_views_in_%s' % (context_name.replace(' ', '_'))

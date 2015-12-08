@@ -26,18 +26,18 @@ class QuerySessions(TableQueryMixin):
 
 	def get_sessions_by_id(self, sessions_id):
 		s = self.table
-		query = self.session.query(	s.session_id,
-									s.user_id,
-									s.ip_addr,
-									s.user_agent_id,
-									s.start_time,
-									s.end_time).filter(s.session_id.in_(sessions_id))
+		query = self.session.query(s.session_id,
+								   s.user_id,
+								   s.ip_addr,
+								   s.user_agent_id,
+								   s.start_time,
+								   s.end_time).filter(s.session_id.in_(sessions_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
 	def get_sessions_user_agent_id(self, sessions_id):
 		s = self.table
-		query = self.session.query(	s.session_id,
+		query = self.session.query(s.session_id,
 									s.user_agent_id).filter(s.session_id.in_(sessions_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
@@ -48,7 +48,7 @@ class QueryUserAgents(TableQueryMixin):
 
 	def get_user_agents_by_id(self, user_agents_id):
 		ua = self.table
-		query = self.session.query(	ua.user_agent_id,
+		query = self.session.query(ua.user_agent_id,
 									ua.user_agent).filter(ua.user_agent_id.in_(user_agents_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe

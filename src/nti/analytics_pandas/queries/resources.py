@@ -23,7 +23,7 @@ class QueryResources(TableQueryMixin):
 
 	def get_all_resources(self):
 		r = self.table
-		query = self.session.query( r.resource_id,
+		query = self.session.query(r.resource_id,
 									r.resource_ds_id,
 									r.resource_display_name,
 									r.max_time_length)
@@ -32,14 +32,14 @@ class QueryResources(TableQueryMixin):
 
 	def get_resources_ds_id_given_id(self, resource_id=()):
 		r = self.table
-		query = self.session.query( r.resource_id,
+		query = self.session.query(r.resource_id,
 									r.resource_ds_id).filter(r.resource_id.in_(resource_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
 	def get_resources_given_id(self, resources_id=None):
 		r = self.table
-		query = self.session.query( r.resource_id,
+		query = self.session.query(r.resource_id,
 									r.resource_ds_id,
 									r.resource_display_name,
 									r.max_time_length).filter(r.resource_id.in_(resources_id))
@@ -48,7 +48,7 @@ class QueryResources(TableQueryMixin):
 
 	def get_resource_display_name_given_id(self, resources_id=None):
 		r = self.table
-		query = self.session.query( r.resource_id,
+		query = self.session.query(r.resource_id,
 									r.resource_display_name).filter(r.resource_id.in_(resources_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
