@@ -324,6 +324,9 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 											  event_type)
 
 		avg_event_name = u'average_comment_%s' % event_type
+		if 'device_type' in group_by:
+			group_by = 'application_type'
+			title_avg_length = title_avg_length.replace('device', 'application')
 		plot_average_comment_length = group_line_plot_x_axis_date(
 				df=df,
 				x_axis_field='timestamp_period',

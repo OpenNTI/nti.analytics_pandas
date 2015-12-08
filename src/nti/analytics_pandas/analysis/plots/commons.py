@@ -352,6 +352,14 @@ def generate_three_group_by_plots(df, group_by, event_title, user_title, ratio_t
 								  period_breaks, minor_period_breaks, theme_seaborn_,
 								  event_type=None):
 
+	if 'device_type' in df.columns and 'device_type' in group_by:
+		group_by = 'application_type'
+		df.rename(columns={	'device_type'	:'application_type'},
+				  inplace=True)
+		event_title = event_title.replace('device', 'application')
+		user_title = user_title.replace('device', 'application')
+		ratio_title = ratio_title.replace('device', 'application')
+
 	event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
 	plot_events = group_line_plot_x_axis_date(
 										df=df,

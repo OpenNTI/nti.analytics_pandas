@@ -192,6 +192,9 @@ class  ResourceViewsTimeseriesPlot(object):
 		unique_event_name = None
 		if event_type is not None:
 			unique_event_name = 'unique_event_%s' % event_type
+		if 'device_type' in group_by:
+			group_by = 'application_type'
+			unique_resource_title = unique_resource_title.replace('device' ,'application')
 		plot_unique_resources = group_line_plot_x_axis_date(
 											df=df,
 											x_axis_field='timestamp_period',

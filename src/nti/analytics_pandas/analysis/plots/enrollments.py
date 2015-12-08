@@ -109,9 +109,9 @@ class CourseCatalogViewsTimeseriesPlot(object):
 										y_axis_field='average_time_length',
 										x_axis_label=_('Date'),
 										y_axis_label=_('Average time length'),
-										title=_('Average time length viewing course catalog per device type'),
+										title=_('Average time length viewing course catalog per application type'),
 										period_breaks=period_breaks,
-										group_by='device_type',
+										group_by='application_type',
 										minor_breaks=minor_period_breaks,
 										plot_name='average_time_length_per_device_types')
 
