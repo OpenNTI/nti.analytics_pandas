@@ -56,17 +56,23 @@ class QueryUserAgents(TableQueryMixin):
 	@classmethod
 	def _label_user_agents(cls, ua_string):
 		if 'iPad' in ua_string:
-			return _('iPad')
+			return _('iPad App')
 		else:
 			user_agent = parse(ua_string)
 			if user_agent.is_mobile :
-				return _('mobile')
+				return _('Mobile App')
 			elif user_agent.is_tablet :
-				return _('tablet')
+				if 'mobile' in user_agent.browser.family.lower():
+					return _('Mobile App')
+				else:
+					return _('Web App')
 			elif user_agent.is_pc :
-				return _('pc')
+				return _('Web App')
 			else :
-				return _('unknown')
+				if 'mobile' in user_agent.browser.family.lower():
+					return _('Mobile App')
+				else:
+					return _('Web App')
 
 	def add_device_type(self, ua_dataframe):
 		index = ua_dataframe['user_agent']
