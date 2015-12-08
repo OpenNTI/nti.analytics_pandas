@@ -71,8 +71,15 @@ class QueryResources(TableQueryMixin):
 				return _(u'reading')
 			elif u'lecture' in resource_ds_id:
 				return _(u'related work lecture')
+			elif u'hw' in resource_ds_id:
+				return _(u'homework')
+			elif u'syllabus' in resource_ds_id:
+				return _(u'syllabus')
+			elif 'problem' in resource_ds_id:
+				return _(u'problems')
 			else:
-				return _(u'unknown relatedworkref')
+				print(resource_ds_id)
+				return _(u'relatedworkref')
 
 		# assignment
 		if u'naq.asg.assignment:' in resource_ds_id:
@@ -85,11 +92,11 @@ class QueryResources(TableQueryMixin):
 		# quiz
 		if u'.naq.qid.' in resource_ds_id:
 			if u'self_check' in resource_ds_id:
-				return _(u'self_check')
+				return _(u'self check question')
 			elif u'quiz' in resource_ds_id:
-				return _(u'quiz')
+				return _(u'quiz question')
 			else :
-				return _(u'naq_qid')
+				return _(u'question')
 		elif u'quiz' in resource_ds_id:
 			return _(u'quiz')
 
@@ -133,6 +140,13 @@ class QueryResources(TableQueryMixin):
 		if u'JSON:Timeline' in resource_ds_id:
 			return _(u'timeline')
 
+		if 'practice_problems' in resource_ds_id:
+			return _(u'practice problems')
+
+		if 'problem' in resource_ds_id:
+			return _(u'problems')
+
+		print(resource_ds_id)
 		return _(u'unknown')
 
 	def add_resource_type(self, dataframe):
