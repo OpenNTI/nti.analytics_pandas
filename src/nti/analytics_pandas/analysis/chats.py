@@ -72,3 +72,45 @@ class ChatsInitiatedTimeseries(object):
 			users_df.rename(columns={'number_of_activities': 'number_of_chats_initiated'},
 							inplace=True)
 		return users_df
+
+class ChatsJoinedTimeseries(object):
+	"""
+	analyze the number of chats initiated
+	"""
+
+	def __init__(self, session, start_date, end_date,
+				 with_application_type=True,
+				 time_period_date=True,
+				 with_enrollment_type=True):
+		self.session = session
+		qcj = QueryChatsJoined(self.session)
+
+		self.dataframe = qcj.filter_by_period_of_time(start_date, end_date)
+
+		if not self.dataframe.empty:
+			if with_application_type:
+				new_df = qcj.add_application_type(self.dataframe)
+				if new_df is not None:
+					self.dataframe = new_df
+
+			if time_period_date:
+				self.dataframe = add_timestamp_period_(self.dataframe)
+
+	def get_number_of_users_joining_chat(self):
+		group_by_items = ['timestamp_period', 'chat_id']
+		df = self.build_dataframe(group_by_items)
+		return df
+
+	def get_application_types_used_to_join_chats(self):
+		group_by_items = ['timestamp_period','application_type']
+		df = self.build_dataframe(group_by_items)
+		return df
+
+	def build_dataframe(self, group_by_columns):
+		agg_columns = {	'user_id'	: pd.Series.count }
+		df = analyze_types_(self.dataframe, group_by_columns, agg_columns)
+		if df is not None:
+			df.rename(columns={	'user_id'	:'number_of_users_join_chats'},
+						inplace=True)
+		return df
+
