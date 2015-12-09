@@ -45,12 +45,14 @@ def explore_ratio_of_events_over_unique_users_based_timestamp_date_(events_df,
 
 def analyze_types_(df, group_by_items, agg_columns=None):
 	if len(df.index) > 0:
-		grouped = df.groupby(group_by_items)
-		if agg_columns is not None:
-			events_df = grouped.aggregate(agg_columns)
-		else:
-			events_df = grouped.aggregate(pd.Series.nunique)
-		return events_df
+		check = set(group_by_items) & set(df.columns)
+		if len(check) == len(group_by_items):
+			grouped = df.groupby(group_by_items)
+			if agg_columns is not None:
+				events_df = grouped.aggregate(agg_columns)
+			else:
+				events_df = grouped.aggregate(pd.Series.nunique)
+			return events_df
 
 def get_most_active_users_(df, session, max_rank_number=10):
 	if df is None or df.empty:
