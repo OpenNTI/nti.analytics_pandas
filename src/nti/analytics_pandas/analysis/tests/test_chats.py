@@ -59,3 +59,10 @@ class TestChatsJoinedTimeseries(AnalyticsPandasTestBase):
 		df = cjt.get_number_of_users_joining_chat()
 		assert_that(df.empty, equal_to(False))
 		assert_that(df.columns, has_item('number_of_users_join_chats'))
+
+		df = cjt.analyze_number_of_users_join_chats_per_date()
+		assert_that(df.empty, equal_to(False))
+		
+		df  = cjt.analyze_unique_users_per_date()
+		assert_that(df.columns, has_item('number_of_unique_users'))
+		
