@@ -14,7 +14,7 @@ from nti.analytics_database.social import ChatsJoined
 
 from .mixins import TableQueryMixin
 
-from .common import add_device_type_
+from .common import add_application_type_
 
 
 from .enrollments import add_enrollment_type_
@@ -35,8 +35,8 @@ class QueryChatsInitiated(TableQueryMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
-	def add_device_type(self, dataframe):
-		new_df = add_device_type_(self.session, dataframe)
+	def add_application_type(self, dataframe):
+		new_df = add_application_type_(self.session, dataframe)
 		return new_df
 
 class QueryChatsJoined(TableQueryMixin):
@@ -52,6 +52,6 @@ class QueryChatsJoined(TableQueryMixin):
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
-	def add_device_type(self, dataframe):
-		new_df = add_device_type_(self.session, dataframe)
+	def add_application_type(self, dataframe):
+		new_df = add_application_type_(self.session, dataframe)
 		return new_df

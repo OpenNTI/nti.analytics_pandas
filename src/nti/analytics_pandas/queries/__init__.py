@@ -18,6 +18,9 @@ from .assessments import QuerySelfAssessmentsTaken
 
 from .bookmarks import QueryBookmarksCreated
 
+from .chats import QueryChatsInitiated
+from .chats import QueryChatsJoined
+
 from .courses import QueryCourses
 
 from .enrollments import QueryCourseDrops

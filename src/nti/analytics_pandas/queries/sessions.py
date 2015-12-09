@@ -78,3 +78,8 @@ class QueryUserAgents(TableQueryMixin):
 		index = ua_dataframe['user_agent']
 		ua_dataframe['device_type'] = index.apply(lambda x : self._label_user_agents(x))
 		return ua_dataframe
+
+	def add_application_type(self, ua_dataframe):
+		index = ua_dataframe['user_agent']
+		ua_dataframe['application_type'] = index.apply(lambda x : self._label_user_agents(x))
+		return ua_dataframe
