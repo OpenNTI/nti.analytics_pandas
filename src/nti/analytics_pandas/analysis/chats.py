@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-.. $Id: bookmarks.py 78428 2015-12-07 15:25:49Z carlos.sanchez $
+.. $Id$
 """
 
 from __future__ import print_function, unicode_literals, absolute_import, division
@@ -9,14 +9,10 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
-import numpy as np
-
 import pandas as pd
 
-from ..queries import QueryChatsInitiated
 from ..queries import QueryChatsJoined
-
-from ..utils import cast_columns_as_category_
+from ..queries import QueryChatsInitiated
 
 from .common import analyze_types_
 from .common import add_timestamp_period_
@@ -109,7 +105,7 @@ class ChatsJoinedTimeseries(object):
 		return df
 
 	def get_application_types_used_to_join_chats(self):
-		group_by_items = ['timestamp_period','application_type']
+		group_by_items = ['timestamp_period', 'application_type']
 		df = self.build_dataframe(group_by_items)
 		return df
 
@@ -117,7 +113,7 @@ class ChatsJoinedTimeseries(object):
 		agg_columns = {	'user_id'	: pd.Series.count }
 		df = analyze_types_(self.dataframe, group_by_columns, agg_columns)
 		if df is not None:
-			df.rename(columns={	'user_id'	:'number_of_users_join_chats'},
+			df.rename(columns={	'user_id' :'number_of_users_join_chats'},
 						inplace=True)
 		return df
 
@@ -126,7 +122,7 @@ class ChatsJoinedTimeseries(object):
 		if df is not None:
 			df = df.groupby(['timestamp_period']).agg({'number_of_users_join_chats' :[pd.Series.mean, pd.Series.sum],
 													   'chat_id' : pd.Series.nunique})
-			df.rename(columns={	'chat_id'	:'number_of_chats_created'},
+			df.rename(columns={	'chat_id' :'number_of_chats_created'},
 						inplace=True)
 			df = self.reset_dataframe(df)
 			return df
@@ -134,10 +130,7 @@ class ChatsJoinedTimeseries(object):
 	def analyze_unique_users_per_date(self):
 		df = self.dataframe.groupby(['timestamp_period']).agg({'user_id' : pd.Series.count})
 		if df is not None:
-			df.rename(columns={	'user_id'	:'number_of_unique_users'},
+			df.rename(columns={	'user_id' :'number_of_unique_users'},
 						inplace=True)
 			df = self.reset_dataframe(df)
 		return df
-
-			
-

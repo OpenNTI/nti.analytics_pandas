@@ -17,16 +17,12 @@ from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
 class TestChats(AnalyticsPandasTestBase):
 
-	def setUp(self):
-		super(TestChats, self).setUp()
-
 	def test_query_chats_initiated_period_of_time(self):
 		start_date = u'2015-10-05'
 		end_date = u'2015-10-19'
 		qci = QueryChatsInitiated(self.session)
 		dataframe = qci.filter_by_period_of_time(start_date, end_date)
 		assert_that(len(dataframe.index), greater_than(0))
-
 
 	def test_query_chats_joined_period_of_time(self):
 		start_date = u'2015-10-05'

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-.. $Id: chats.py 77632 2015-11-23 15:51:11Z carlos.sanchez $
+.. $Id$
 """
 
 from __future__ import print_function, unicode_literals, absolute_import, division
@@ -9,15 +9,12 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
-from nti.analytics_database.social import ChatsInitiated
 from nti.analytics_database.social import ChatsJoined
+from nti.analytics_database.social import ChatsInitiated
 
 from .mixins import TableQueryMixin
 
 from .common import add_application_type_
-
-
-from .enrollments import add_enrollment_type_
 
 from . import orm_dataframe
 

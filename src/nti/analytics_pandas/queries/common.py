@@ -19,7 +19,6 @@ from .sessions import QuerySessions
 from .sessions import QueryUserAgents
 
 def add_resource_type_(session, dataframe):
-
 	if 'resource_id' in dataframe.columns:
 		resources_id = np.unique(dataframe['resource_id'].values.ravel())
 		if len(resources_id) == 1 and resources_id[0] is None:
@@ -33,7 +32,6 @@ def add_resource_type_(session, dataframe):
 		return new_df
 
 def add_device_type_(session, dataframe):
-
 	if 'session_id' in dataframe.columns:
 		sessions_id = np.unique(dataframe['session_id'].values.ravel())
 		if len(sessions_id) == 1 and sessions_id[0] is None :
@@ -62,7 +60,6 @@ def add_context_name_(session, dataframe, course_ids):
 		return new_df
 
 def add_application_type_(session, dataframe):
-
 	if 'session_id' in dataframe.columns:
 		sessions_id = np.unique(dataframe['session_id'].values.ravel())
 		if len(sessions_id) == 1 and sessions_id[0] is None :
