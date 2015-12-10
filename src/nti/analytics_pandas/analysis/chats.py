@@ -138,6 +138,24 @@ class ChatsJoinedTimeseries(object):
 			df = reset_dataframe(df)
 		return df
 
+	def count_number_of_chats_per_date(self, df):
+		if not df.empty:
+			df = df.groupby(['timestamp_period']).agg({'chat_id' : pd.Series.count})
+			df.rename(columns={'chat_id' : 'number_of_chats'}, inplace=True)
+			df = reset_dataframe(df)
+		return df
+
+
+	def analyze_chat_and_group_chat(self):
+		df = self.get_number_of_users_joining_chat()
+		if df is not None:
+			chat_df = df[df['number_of_users_join_chats'] == 2]
+			chat_df = self.count_number_of_chats_per_date(chat_df)
+			group_chat_df = df[df['number_of_users_join_chats'] > 2]
+			group_chat_df = self.count_number_of_chats_per_date(group_chat_df)
+			return (chat_df, group_chat_df)
+			
+
 def reset_dataframe(df):
 	df.reset_index(inplace=True)
 	df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
