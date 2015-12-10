@@ -25,4 +25,12 @@ class TestChatsPlot(AnalyticsPandasTestBase):
 		citp = ChatsTimeseriesPlot(cit=cit)
 		_ = citp.explore_chats_initiated()
 		assert_that(len(_), equal_to(3))
-	
+
+
+	def test_analyze_application_types(self):
+		start_date = '2015-01-01'
+		end_date = '2015-10-19'
+		cit = ChatsInitiatedTimeseries(self.session, start_date, end_date)
+		citp = ChatsTimeseriesPlot(cit=cit)
+		_ = citp.analyze_application_types()
+		assert_that(len(_), equal_to(3))

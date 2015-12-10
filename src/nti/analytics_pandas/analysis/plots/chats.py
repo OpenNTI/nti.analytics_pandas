@@ -20,6 +20,7 @@ from zope.i18n import translate
 from .commons import histogram_plot
 from .commons import line_plot_x_axis_date
 from .commons import generate_three_plots
+from .commons import generate_three_group_by_plots
 
 
 class ChatsTimeseriesPlot(object):
@@ -60,6 +61,37 @@ class ChatsTimeseriesPlot(object):
 									 theme_seaborn_,
 									 event_type)
 
+		return plots
+
+	def analyze_application_types(self, period_breaks='1 day', minor_period_breaks=None,
+					  		 	  theme_seaborn_=True):
+		cit = self.cit
+		if cit is None:
+			return ()
+		if cit.dataframe.empty:
+			return ()
+		df = cit.analyze_application_types()
+		if df is None:
+			return()
+		group_by = 'application_type'
+		event_title = _('Number of chats initiated per application types')
+		user_title = _('Number of unique users initiating chats per application types')
+		ratio_title = _('Ratio of chats initiated over unique user per application types')
+		event_type = 'chats_initiated'
+		event_y_axis_field = 'number_of_chats_initiated'
+		event_y_axis_label = _('Number of chats initiated')
+
+		plots = generate_three_group_by_plots(df,
+											  group_by,
+											  event_title,
+											  user_title,
+											  ratio_title,
+											  event_y_axis_field,
+											  event_y_axis_label,
+											  period_breaks,
+											  minor_period_breaks,
+											  theme_seaborn_,
+											  event_type)
 		return plots
 
 
