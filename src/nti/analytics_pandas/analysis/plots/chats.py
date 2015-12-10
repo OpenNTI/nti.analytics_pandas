@@ -94,7 +94,59 @@ class ChatsTimeseriesPlot(object):
 											  event_type)
 		return plots
 
+	def analyze_number_of_users_join_chats_per_date(self, 
+													period_breaks='1 day', 
+													minor_period_breaks=None,
+													theme_seaborn_=True):
 
+		cjt = self.cjt
+		if cjt is None:
+			return ()
+		if cjt.dataframe.empty:
+			return ()
+
+		df = self.cjt.analyze_number_of_users_join_chats_per_date()
+		if df is None:
+			return ()
+		plot_average_number_of_users_chatting_each_date = line_plot_x_axis_date(
+															  df = df,
+															  x_axis_field = 'timestamp_period',
+															  y_axis_field = 'average_number_of_users_join_chats',
+															  x_axis_label = 'Date',
+															  y_axis_label = 'Average number of users',
+															  title = 'Average number of users join chats',
+															  period_breaks = period_breaks,
+															  minor_breaks= minor_period_breaks,
+															  theme_seaborn_=theme_seaborn_,
+															  plot_name='average_number_user_join_chats')
+
+		plot_total_number_of_users_chatting_each_date = line_plot_x_axis_date(
+															  df = df,
+															  x_axis_field = 'timestamp_period',
+															  y_axis_field = 'total_number_of_users_join_chats',
+															  x_axis_label = 'Date',
+															  y_axis_label = 'Total number of users',
+															  title = 'Total number of users join chats',
+															  period_breaks = period_breaks,
+															  minor_breaks= minor_period_breaks,
+															  theme_seaborn_=theme_seaborn_,
+															  plot_name='total_number_user_join_chats')
+
+		plot_number_of_chats_created = line_plot_x_axis_date(
+															  df = df,
+															  x_axis_field = 'timestamp_period',
+															  y_axis_field = 'number_of_chats_created',
+															  x_axis_label = 'Date',
+															  y_axis_label = 'Number of chats created',
+															  title = 'Number of chats created',
+															  period_breaks = period_breaks,
+															  minor_breaks= minor_period_breaks,
+															  theme_seaborn_=theme_seaborn_,
+															  plot_name='chats_created')
+		
+		return (plot_average_number_of_users_chatting_each_date, 
+				plot_total_number_of_users_chatting_each_date,
+				plot_number_of_chats_created)
 
 		
 

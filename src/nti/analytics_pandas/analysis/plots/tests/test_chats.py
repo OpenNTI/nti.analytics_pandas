@@ -27,10 +27,22 @@ class TestChatsPlot(AnalyticsPandasTestBase):
 		assert_that(len(_), equal_to(3))
 
 
-	def test_analyze_application_types(self):
+	def test_analyze_application_type_chats_initiated(self):
 		start_date = '2015-01-01'
 		end_date = '2015-10-19'
 		cit = ChatsInitiatedTimeseries(self.session, start_date, end_date)
 		citp = ChatsTimeseriesPlot(cit=cit)
 		_ = citp.analyze_application_types()
 		assert_that(len(_), equal_to(3))
+
+
+	def test_analyze_number_of_users_join_chats_per_date(self):
+		start_date = '2015-10-05'
+		end_date = '2015-10-19'
+		cjt = ChatsJoinedTimeseries(self.session, start_date, end_date)
+		ctp = ChatsTimeseriesPlot(cjt=cjt)
+		_ = ctp.analyze_number_of_users_join_chats_per_date(period_breaks='1 day', 
+															minor_period_breaks=None,
+															theme_seaborn_=True)
+		assert_that(len(_), equal_to(3))
+		
