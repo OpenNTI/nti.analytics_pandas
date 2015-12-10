@@ -45,4 +45,14 @@ class TestChatsPlot(AnalyticsPandasTestBase):
 															minor_period_breaks=None,
 															theme_seaborn_=True)
 		assert_that(len(_), equal_to(3))
+
+	def test_analyze_chat_and_group_chat(self):
+		start_date = '2015-02-05'
+		end_date = '2015-10-19'
+		cjt = ChatsJoinedTimeseries(self.session, start_date, end_date)
+		ctp = ChatsTimeseriesPlot(cjt=cjt)
+		plots = ctp.analyze_chat_and_group_chat(period_breaks=None, 
+											minor_period_breaks=None,
+											theme_seaborn_=True)
+		assert_that(len(plots.keys()), equal_to(2))
 		

@@ -148,6 +148,48 @@ class ChatsTimeseriesPlot(object):
 				plot_total_number_of_users_chatting_each_date,
 				plot_number_of_chats_created)
 
-		
+	def analyze_chat_and_group_chat(self, period_breaks='1 day', 
+									minor_period_breaks=None, theme_seaborn_=True):
+		cjt = self.cjt
+		if cjt is None:
+			return ()
+		if cjt.dataframe.empty:
+			return ()
+
+		dfs = cjt.analyze_chat_and_group_chat()
+		if dfs is None:
+			return ()
+		chat_df, group_chat_df = dfs
+		plots = {}
+		if not chat_df.empty:
+			plot_one_one_chats = line_plot_x_axis_date(
+									  df = chat_df,
+									  x_axis_field = 'timestamp_period',
+									  y_axis_field = 'number_of_chats',
+									  x_axis_label = 'Date',
+									  y_axis_label = 'Number of chats',
+									  title = 'Number of 1-1 chats',
+									  period_breaks = period_breaks,
+									  minor_breaks= minor_period_breaks,
+									  theme_seaborn_=theme_seaborn_,
+									  plot_name='one_one_chats')
+			plots['one_one_chats'] = plot_one_one_chats
+
+		if not group_chat_df.empty:
+			plot_group_chats = line_plot_x_axis_date(
+									  df = group_chat_df,
+									  x_axis_field = 'timestamp_period',
+									  y_axis_field = 'number_of_chats',
+									  x_axis_label = 'Date',
+									  y_axis_label = 'Number of chats',
+									  title = 'Number of group chats',
+									  period_breaks = period_breaks,
+									  minor_breaks= minor_period_breaks,
+									  theme_seaborn_=theme_seaborn_,
+									  plot_name='group_chats')
+			plots['group_chats'] = plot_group_chats
+		return plots
+
+
 
 	
