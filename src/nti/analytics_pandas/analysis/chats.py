@@ -118,8 +118,15 @@ class ChatsJoinedTimeseries(object):
 		if df is not None:
 			df = df.groupby(['timestamp_period']).agg({'number_of_users_join_chats' :[pd.Series.mean, pd.Series.sum],
 													   'chat_id' : pd.Series.nunique})
-			df.rename(columns={	'chat_id' :'number_of_chats_created'},
-						inplace=True)
+			
+			##should reset multindex dataframe
+			levels = df.columns.levels
+			labels = df.columns.labels
+			df.columns = levels[1][labels[1]]
+			df.rename(columns={	'mean' :'average_number_of_users_join_chats',
+								'sum'  :'total_number_of_users_join_chats',
+								'nunique' :'number_of_chats_created'},
+				 	  inplace=True)
 			df = reset_dataframe(df)
 			return df
 
