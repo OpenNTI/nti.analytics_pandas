@@ -131,7 +131,7 @@ class ChatsJoinedTimeseries(object):
 			return df
 
 	def analyze_unique_users_per_date(self):
-		df = self.dataframe.groupby(['timestamp_period']).agg({'user_id' : pd.Series.count})
+		df = self.dataframe.groupby(['timestamp_period']).agg({'user_id' : pd.Series.nunique})
 		if df is not None:
 			df.rename(columns={	'user_id' :'number_of_unique_users'},
 						inplace=True)
