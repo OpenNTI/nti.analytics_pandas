@@ -60,6 +60,7 @@ class ChatsInitiatedTimeseries(object):
 								'user_id'	:'number_of_unique_users'},
 						inplace=True)
 			df['ratio'] = df['number_of_chats_initiated'] / df['number_of_unique_users']
+			df = reset_dataframe(df)
 		return df
 
 	def get_the_most_active_users(self, max_rank_number=10):
@@ -92,16 +93,11 @@ class ChatsJoinedTimeseries(object):
 			if time_period_date:
 				self.dataframe = add_timestamp_period_(self.dataframe)
 
-	def reset_dataframe(self, df):
-		df.reset_index(inplace=True)
-		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
-		return df
-
 	def get_number_of_users_joining_chat(self):
 		group_by_items = ['timestamp_period', 'chat_id']
 		df = self.build_dataframe(group_by_items)
 		if df is not None:
-			df = self.reset_dataframe(df)
+			df = reset_dataframe(df)
 		return df
 
 	def get_application_types_used_to_join_chats(self):
@@ -124,7 +120,7 @@ class ChatsJoinedTimeseries(object):
 													   'chat_id' : pd.Series.nunique})
 			df.rename(columns={	'chat_id' :'number_of_chats_created'},
 						inplace=True)
-			df = self.reset_dataframe(df)
+			df = reset_dataframe(df)
 			return df
 
 	def analyze_unique_users_per_date(self):
@@ -132,5 +128,10 @@ class ChatsJoinedTimeseries(object):
 		if df is not None:
 			df.rename(columns={	'user_id' :'number_of_unique_users'},
 						inplace=True)
-			df = self.reset_dataframe(df)
+			df = reset_dataframe(df)
 		return df
+
+def reset_dataframe(df):
+	df.reset_index(inplace=True)
+	df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+	return df
