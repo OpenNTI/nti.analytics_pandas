@@ -118,8 +118,8 @@ class ChatsJoinedTimeseries(object):
 		if df is not None:
 			df = df.groupby(['timestamp_period']).agg({'number_of_users_join_chats' :[pd.Series.mean, pd.Series.sum],
 													   'chat_id' : pd.Series.nunique})
-			
-			##should reset multindex dataframe
+
+			# #should reset multindex dataframe
 			levels = df.columns.levels
 			labels = df.columns.labels
 			df.columns = levels[1][labels[1]]
@@ -145,7 +145,6 @@ class ChatsJoinedTimeseries(object):
 			df = reset_dataframe(df)
 		return df
 
-
 	def analyze_chat_and_group_chat(self):
 		df = self.get_number_of_users_joining_chat()
 		if df is not None:
@@ -154,7 +153,7 @@ class ChatsJoinedTimeseries(object):
 			group_chat_df = df[df['number_of_users_join_chats'] > 2]
 			group_chat_df = self.count_number_of_chats_per_date(group_chat_df)
 			return (chat_df, group_chat_df)
-			
+
 
 def reset_dataframe(df):
 	df.reset_index(inplace=True)

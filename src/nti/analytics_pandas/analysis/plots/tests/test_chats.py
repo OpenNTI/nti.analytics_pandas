@@ -26,7 +26,6 @@ class TestChatsPlot(AnalyticsPandasTestBase):
 		_ = citp.explore_chats_initiated()
 		assert_that(len(_), equal_to(3))
 
-
 	def test_analyze_application_type_chats_initiated(self):
 		start_date = '2015-01-01'
 		end_date = '2015-10-19'
@@ -41,7 +40,7 @@ class TestChatsPlot(AnalyticsPandasTestBase):
 		end_date = '2015-10-19'
 		cjt = ChatsJoinedTimeseries(self.session, start_date, end_date)
 		ctp = ChatsTimeseriesPlot(cjt=cjt)
-		_ = ctp.analyze_number_of_users_join_chats_per_date(period_breaks='1 day', 
+		_ = ctp.analyze_number_of_users_join_chats_per_date(period_breaks='1 day',
 															minor_period_breaks=None,
 															theme_seaborn_=True)
 		assert_that(len(_), equal_to(3))
@@ -51,8 +50,7 @@ class TestChatsPlot(AnalyticsPandasTestBase):
 		end_date = '2015-10-19'
 		cjt = ChatsJoinedTimeseries(self.session, start_date, end_date)
 		ctp = ChatsTimeseriesPlot(cjt=cjt)
-		plots = ctp.analyze_chat_and_group_chat(period_breaks=None, 
+		plots = ctp.analyze_chat_and_group_chat(period_breaks=None,
 												minor_period_breaks=None,
 												theme_seaborn_=True)
 		assert_that(len(plots.keys()), equal_to(1))
-		
