@@ -27,7 +27,6 @@ def add_timestamp_period_(df, period_format=u'%Y-%m-%d', time_period='daily'):
 	if 'timestamp' in df.columns:
 		if time_period == 'weekly':
 			df['timestamp_period'] = df['timestamp'].apply(lambda x: first_date_of_the_week(x.year, x.week))
-			print(df)
 		else:
 			df['timestamp_period'] = df['timestamp'].apply(lambda x: x.strftime(period_format))
 	return df
