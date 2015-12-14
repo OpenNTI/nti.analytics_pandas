@@ -741,3 +741,26 @@ class SelfAssessmentsTakenTimeseriesPlot(object):
 											  theme_seaborn_,
 											  event_type)
 		return plots
+
+	def analyze_self_assessments_taken_over_total_enrollments_ts(self, 
+																 period_breaks='1 week',
+														   		 minor_period_breaks='1 day',
+														   		 theme_seaborn_=True):
+		satt = self.satt
+		df = satt.analyze_self_assessments_taken_over_total_enrollments_ts()
+		if df is None:
+			return ()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		plot = line_plot_x_axis_date(
+								df = df,
+								x_axis_field = 'timestamp_period',
+								y_axis_field = 'ratio',
+								x_axis_label = 'Date',
+								y_axis_label = 'Ratio',
+								title = 'Ratio of Self Assessments Taken over Total Enrollments',
+								period_breaks = period_breaks,
+								minor_breaks=minor_period_breaks,
+								theme_seaborn_=theme_seaborn_,
+								plot_name='self_assessments_taken_over_total_enrollments')
+		return (plot, )

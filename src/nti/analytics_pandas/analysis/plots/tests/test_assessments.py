@@ -373,6 +373,16 @@ class TestSelfAssessmentsTakenPlot(AnalyticsPandasTestBase):
 		_ = sattp.analyze_events_group_by_enrollment_type(period_breaks='1 week',
 													  minor_period_breaks='1 day')
 
+	def test_analyze_self_assessments_taken_over_total_enrollments_ts(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		courses_id = ['1024', '1025', '1026', '1027', '1028']
+		satt = SelfAssessmentsTakenTimeseries(self.session, start_date=start_date,
+											  end_date=end_date, course_id=courses_id)
+		sattp = SelfAssessmentsTakenTimeseriesPlot(satt)
+		_ = sattp.analyze_self_assessments_taken_over_total_enrollments_ts(period_breaks='1 week',
+													  					   minor_period_breaks='1 day')
+
 	def test_analyze_events_group_by_enrollment_type_empty(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'

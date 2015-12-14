@@ -204,9 +204,8 @@ class TestAssignmentsTakenTimeseries(AnalyticsPandasTestBase):
 										 end_date=end_date,
 										 course_id=courses_id)
 		df = att.analyze_assignment_taken_over_total_enrollments_ts()
-		assert_that(df.columns, has_item('variable'))
-		assert_that(df.columns, has_item('value'))
-		assert_that(df.columns, has_item('timestamp_period'))
+		assert_that(df.columns, has_item('assignments_taken'))
+		assert_that(df.columns, has_item('ratio'))
 
 class TestSelfAssessmentViewsTimeseries(AnalyticsPandasTestBase):
 
@@ -340,6 +339,18 @@ class TestSelfAssessmentsTakenTimeseries(AnalyticsPandasTestBase):
 
 		df2 = satt.analyze_events()
 		assert_that(len(df.sum(level='timestamp_period')), equal_to(len(df2.index)))
+
+
+	def test_analyze_self_assessments_taken_over_total_enrollments_ts(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		courses_id = ['1024', '1025', '1026', '1027', '1028']
+		satt = SelfAssessmentsTakenTimeseries(self.session,
+											  start_date=start_date,
+											  end_date=end_date,
+											  course_id=courses_id)
+		df = satt.analyze_self_assessments_taken_over_total_enrollments_ts()
+		assert_that(df.columns, has_item('ratio'))
 
 class TestAssessmentEventsTimeseries(AnalyticsPandasTestBase):
 

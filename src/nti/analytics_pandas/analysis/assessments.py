@@ -482,6 +482,7 @@ class SelfAssessmentsTakenTimeseries(object):
 				 with_enrollment_type=True):
 
 		self.session = session
+		self.course_id = course_id
 		qsat = self.query_self_assessments_taken = QuerySelfAssessmentsTaken(self.session)
 		if isinstance (course_id, (tuple, list)):
 			self.dataframe = qsat.filter_by_course_id_and_period_of_time(start_date,
@@ -574,3 +575,18 @@ class SelfAssessmentsTakenTimeseries(object):
 						inplace=True)
 			df['ratio'] = df['number_self_assessments_taken'] / df['number_of_unique_users']
 		return df
+
+	def analyze_self_assessments_taken_over_total_enrollments_ts(self):
+		if not self.dataframe.empty:
+			dataframe = self.dataframe[['self_assessment_id', 'timestamp_period']]
+			group_by_columns = ['timestamp_period']
+			agg_columns = {'self_assessment_id' : pd.Series.count}
+
+			df = analyze_types_(dataframe, group_by_columns, agg_columns)
+			df.rename(columns={'self_assessment_id' :'self_assessment_taken'}, inplace=True)
+
+			qce = QueryCourseEnrollments(self.session)
+			total_enrollments = qce.count_enrollments(self.course_id)
+
+			df['ratio'] = df['self_assessment_taken'] / total_enrollments
+			return df
