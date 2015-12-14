@@ -377,3 +377,21 @@ class TestAssessmentEventsTimeseries(AnalyticsPandasTestBase):
 		aet = AssessmentEventsTimeseries(avt=avt, att=att, savt=savt, satt=satt)
 		df = aet.combine_events()
 		assert_that(len(df.index), equal_to(223))
+
+	def test_combine_events(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		courses_id = ['1024', '1025', '1026', '1027', '1028']
+		att = AssignmentsTakenTimeseries(self.session,
+										 start_date=start_date,
+										 end_date=end_date,
+										 course_id=courses_id)
+		satt = SelfAssessmentsTakenTimeseries(self.session,
+											  start_date=start_date,
+											  end_date=end_date,
+											  course_id=courses_id)
+		aet = AssessmentEventsTimeseries(att=att, satt=satt)
+		df = aet.analyze_assessments_taken_over_total_enrollments()
+		assert_that(df.columns, has_item('ratio'))
+		assert_that(df.columns, has_item('event_type'))
+

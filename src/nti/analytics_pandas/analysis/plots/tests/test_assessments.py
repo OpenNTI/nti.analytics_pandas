@@ -446,3 +446,29 @@ class TestAssessmentEventsPlot(AnalyticsPandasTestBase):
 		aetp = AssessmentEventsTimeseriesPlot(aet)
 		_ = aetp.combine_events()
 		assert_that(len(_), equal_to(0))
+
+	def test_analyze_assessments_taken_over_total_enrollments(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		courses_id = ['1024', '1025', '1026', '1027', '1028']
+		avt = AssignmentViewsTimeseries(self.session,
+										start_date=start_date,
+										end_date=end_date,
+										course_id=courses_id)
+
+		att = AssignmentsTakenTimeseries(self.session,
+										 start_date=start_date,
+										 end_date=end_date,
+										 course_id=courses_id)
+		savt = SelfAssessmentViewsTimeseries(self.session,
+											 start_date=start_date,
+											 end_date=end_date,
+											 course_id=courses_id)
+		satt = SelfAssessmentsTakenTimeseries(self.session,
+											  start_date=start_date,
+											  end_date=end_date,
+											  course_id=courses_id)
+		aet = AssessmentEventsTimeseries(avt=avt, att=att, savt=savt, satt=satt)
+		aetp = AssessmentEventsTimeseriesPlot(aet)
+		_ = aetp.analyze_assessments_taken_over_total_enrollments()
+

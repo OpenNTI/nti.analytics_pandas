@@ -84,6 +84,22 @@ class AssessmentEventsTimeseries(object):
 		df['event_type'] = event_type
 		return df
 
+	def analyze_assessments_taken_over_total_enrollments(self):
+		if self.att is None or self.satt is None:
+			return
+		att = self.att
+		satt = self.satt
+		assignments_df = att.analyze_assignment_taken_over_total_enrollments_ts()
+		self_assessment_df = satt.analyze_self_assessments_taken_over_total_enrollments_ts()
+
+		if assignments_df is None or self_assessment_df is None:
+			return
+
+		assignments_df['assessment_type'] = 'assignments'
+		self_assessment_df['assessment_type'] = 'self assessment'
+		df = assignments_df.append(self_assessment_df)
+		return df
+
 class AssignmentViewsTimeseries(object):
 	"""
 	analyze the number of assignment views given time period and list of course id
