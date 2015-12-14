@@ -9,19 +9,21 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
+from datetime import date
+from datetime import datetime
+from datetime import timedelta
+
 import pandas as pd
-from datetime import datetime, timedelta, date
 
 from ..queries import QueryUsers
 
 from ..utils import get_values_of_series_categorical_index_
 
-
 def first_date_of_the_week(year, week):
-    ret = datetime.strptime('%04d-%02d-1' % (year, week), '%Y-%W-%w')
-    if date(year, 1, 4).isoweekday() > 4:
-        ret -= timedelta(days=7)
-    return ret
+	ret = datetime.strptime('%04d-%02d-1' % (year, week), '%Y-%W-%w')
+	if date(year, 1, 4).isoweekday() > 4:
+		ret -= timedelta(days=7)
+	return ret
 
 def add_timestamp_period_(df, period_format=u'%Y-%m-%d', time_period='daily'):
 	if 'timestamp' in df.columns:
@@ -81,14 +83,14 @@ def get_most_active_users_(df, session, max_rank_number=10):
 	most_active_user_df.reset_index(inplace=True, drop=True)
 	return most_active_user_df
 
-def generate_pivot_table(df, index_columns, values_columns, agg_funcs):
+def generate_pivot_table_(df, index_columns, values_columns, agg_funcs):
 	table = pd.pivot_table(df,
 						   index=index_columns,
 						   values=values_columns,
 						   aggfunc=agg_funcs, fill_value=0)
 	return table
 
-def reset_dataframe(df):
+def reset_dataframe_(df):
 	df.reset_index(inplace=True)
 	df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 	return df

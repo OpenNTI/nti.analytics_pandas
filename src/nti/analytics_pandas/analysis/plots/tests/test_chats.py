@@ -10,8 +10,9 @@ __docformat__ = "restructuredtext en"
 from hamcrest import equal_to
 from hamcrest import assert_that
 
-from nti.analytics_pandas.analysis.chats import ChatsInitiatedTimeseries
 from nti.analytics_pandas.analysis.chats import ChatsJoinedTimeseries
+from nti.analytics_pandas.analysis.chats import ChatsInitiatedTimeseries
+
 from nti.analytics_pandas.analysis.plots.chats import ChatsTimeseriesPlot
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase

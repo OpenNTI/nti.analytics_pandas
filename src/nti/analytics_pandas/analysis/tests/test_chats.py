@@ -11,8 +11,8 @@ from hamcrest import equal_to
 from hamcrest import has_item
 from hamcrest import assert_that
 
-from nti.analytics_pandas.analysis.chats import ChatsInitiatedTimeseries
 from nti.analytics_pandas.analysis.chats import ChatsJoinedTimeseries
+from nti.analytics_pandas.analysis.chats import ChatsInitiatedTimeseries
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
@@ -41,7 +41,7 @@ class TestChatsInitiatedTimeseries(AnalyticsPandasTestBase):
 		#why None?
 		#because the session_id in table chatsinitiated are NULL for the given time period
 		#compare with the following query:
-			select distinct session_id from chatsinitiated 
+			select distinct session_id from chatsinitiated
 			where date(timestamp) between '2015-10-05' and '2015-10-19'
 		"""
 		assert_that(df, equal_to(None))
@@ -59,7 +59,6 @@ class TestChatsInitiatedTimeseries(AnalyticsPandasTestBase):
 		assert_that(df.columns, has_item('number_of_chats_initiated'))
 		assert_that(df.columns, has_item('number_of_unique_users'))
 		assert_that(df.columns, has_item('ratio'))
-		
 
 class TestChatsJoinedTimeseries(AnalyticsPandasTestBase):
 
@@ -77,9 +76,8 @@ class TestChatsJoinedTimeseries(AnalyticsPandasTestBase):
 
 		df = cjt.analyze_number_of_users_join_chats_per_date()
 		assert_that(df.empty, equal_to(False))
-		
-		df  = cjt.analyze_unique_users_per_date()
+
+		df = cjt.analyze_unique_users_per_date()
 		assert_that(df.columns, has_item('number_of_unique_users'))
 
-		chat_df, group_chat_df = cjt.analyze_chat_and_group_chat()
-		
+		cjt.analyze_chat_and_group_chat()

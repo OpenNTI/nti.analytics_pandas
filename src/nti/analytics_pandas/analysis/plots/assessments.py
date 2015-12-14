@@ -18,10 +18,10 @@ import numpy as np
 from zope.i18n import translate
 
 from .commons import generate_three_plots
-from .commons import generate_three_group_by_plots
-from .commons import group_line_plot_x_axis_date
-from .commons import histogram_plot_x_axis_discrete
 from .commons import line_plot_x_axis_date
+from .commons import group_line_plot_x_axis_date
+from .commons import generate_three_group_by_plots
+from .commons import histogram_plot_x_axis_discrete
 
 class AssessmentEventsTimeseriesPlot(object):
 
@@ -58,9 +58,9 @@ class AssessmentEventsTimeseriesPlot(object):
 											  event_type)
 		return plots
 
-	def analyze_assessments_taken_over_total_enrollments(self, 
+	def analyze_assessments_taken_over_total_enrollments(self,
 														 period_breaks='1 week',
-					   									 minor_period_breaks='1 day', 
+					   									 minor_period_breaks='1 day',
 					   									 theme_seaborn_=True):
 		aet = self.aet
 		df = aet.analyze_assessments_taken_over_total_enrollments()
@@ -71,17 +71,17 @@ class AssessmentEventsTimeseriesPlot(object):
 			return ()
 
 		df.reset_index(inplace=True)
-		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])		
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
 		plot = group_line_plot_x_axis_date(
-								df = df,
-								x_axis_field = 'timestamp_period',
-								y_axis_field = 'ratio',
-								x_axis_label = 'Date',
-								y_axis_label = 'Ratio',
-								title = 'Ratio of assessments taken over total enrollments',
-								period_breaks = period_breaks,
-								group_by = 'assessment_type',
+								df=df,
+								x_axis_field='timestamp_period',
+								y_axis_field='ratio',
+								x_axis_label='Date',
+								y_axis_label='Ratio',
+								title='Ratio of assessments taken over total enrollments',
+								period_breaks=period_breaks,
+								group_by='assessment_type',
 								minor_breaks=minor_period_breaks,
 								theme_seaborn_=theme_seaborn_,
 								plot_name='ratio_assessments_taken')
@@ -439,17 +439,17 @@ class AssignmentsTakenTimeseriesPlot(object):
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		plot = line_plot_x_axis_date(
-								df = df,
-								x_axis_field = 'timestamp_period',
-								y_axis_field = 'ratio',
-								x_axis_label = 'Date',
-								y_axis_label = 'Ratio',
-								title = 'Ratio of Assignments Taken over Total Enrollments',
-								period_breaks = period_breaks,
+								df=df,
+								x_axis_field='timestamp_period',
+								y_axis_field='ratio',
+								x_axis_label='Date',
+								y_axis_label='Ratio',
+								title='Ratio of Assignments Taken over Total Enrollments',
+								period_breaks=period_breaks,
 								minor_breaks=minor_period_breaks,
 								theme_seaborn_=theme_seaborn_,
 								plot_name='assignments_taken_over_total_enrollments')
-		return (plot, )
+		return (plot,)
 
 class SelfAssessmentViewsTimeseriesPlot(object):
 
@@ -772,7 +772,7 @@ class SelfAssessmentsTakenTimeseriesPlot(object):
 											  event_type)
 		return plots
 
-	def analyze_self_assessments_taken_over_total_enrollments_ts(self, 
+	def analyze_self_assessments_taken_over_total_enrollments_ts(self,
 																 period_breaks='1 week',
 														   		 minor_period_breaks='1 day',
 														   		 theme_seaborn_=True):
@@ -783,14 +783,14 @@ class SelfAssessmentsTakenTimeseriesPlot(object):
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 		plot = line_plot_x_axis_date(
-								df = df,
-								x_axis_field = 'timestamp_period',
-								y_axis_field = 'ratio',
-								x_axis_label = 'Date',
-								y_axis_label = 'Ratio',
-								title = 'Ratio of Self Assessments Taken over Total Enrollments',
-								period_breaks = period_breaks,
+								df=df,
+								x_axis_field='timestamp_period',
+								y_axis_field='ratio',
+								x_axis_label='Date',
+								y_axis_label='Ratio',
+								title='Ratio of Self Assessments Taken over Total Enrollments',
+								period_breaks=period_breaks,
 								minor_breaks=minor_period_breaks,
 								theme_seaborn_=theme_seaborn_,
 								plot_name='self_assessments_taken_over_total_enrollments')
-		return (plot, )
+		return (plot,)

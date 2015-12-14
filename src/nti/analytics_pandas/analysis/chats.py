@@ -15,9 +15,9 @@ from ..queries import QueryChatsJoined
 from ..queries import QueryChatsInitiated
 
 from .common import analyze_types_
+from .common import reset_dataframe_
 from .common import add_timestamp_period_
 from .common import get_most_active_users_
-from .common import reset_dataframe
 
 class ChatsInitiatedTimeseries(object):
 	"""
@@ -61,7 +61,7 @@ class ChatsInitiatedTimeseries(object):
 								'user_id'	:'number_of_unique_users'},
 						inplace=True)
 			df['ratio'] = df['number_of_chats_initiated'] / df['number_of_unique_users']
-			df = reset_dataframe(df)
+			df = reset_dataframe_(df)
 		return df
 
 	def get_the_most_active_users(self, max_rank_number=10):
@@ -99,7 +99,7 @@ class ChatsJoinedTimeseries(object):
 		group_by_items = ['timestamp_period', 'chat_id']
 		df = self.build_dataframe(group_by_items)
 		if df is not None:
-			df = reset_dataframe(df)
+			df = reset_dataframe_(df)
 		return df
 
 	def get_application_types_used_to_join_chats(self):
@@ -129,7 +129,7 @@ class ChatsJoinedTimeseries(object):
 								'sum'  :'total_number_of_users_join_chats',
 								'nunique' :'number_of_chats_created'},
 				 	  inplace=True)
-			df = reset_dataframe(df)
+			df = reset_dataframe_(df)
 			return df
 
 	def analyze_unique_users_per_date(self):
@@ -137,14 +137,14 @@ class ChatsJoinedTimeseries(object):
 		if df is not None:
 			df.rename(columns={	'user_id' :'number_of_unique_users'},
 						inplace=True)
-			df = reset_dataframe(df)
+			df = reset_dataframe_(df)
 		return df
 
 	def count_number_of_chats_per_date(self, df):
 		if not df.empty:
 			df = df.groupby(['timestamp_period']).agg({'chat_id' : pd.Series.count})
 			df.rename(columns={'chat_id' : 'number_of_chats'}, inplace=True)
-			df = reset_dataframe(df)
+			df = reset_dataframe_(df)
 		return df
 
 	def analyze_chat_and_group_chat(self):
@@ -155,4 +155,3 @@ class ChatsJoinedTimeseries(object):
 			group_chat_df = df[df['number_of_users_join_chats'] > 2]
 			group_chat_df = self.count_number_of_chats_per_date(group_chat_df)
 			return (chat_df, group_chat_df)
-

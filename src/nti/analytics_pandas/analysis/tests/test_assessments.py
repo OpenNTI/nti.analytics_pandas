@@ -48,7 +48,7 @@ class TestAssignmentViewsTimeseries(AnalyticsPandasTestBase):
 		assert_that(df.columns, has_item('number_of_unique_users'))
 		assert_that(df.columns, has_item('ratio'))
 
-	def test_analyze_events(self):
+	def test_analyze_events_empty(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
 		courses_id = ['xxx']
@@ -378,7 +378,7 @@ class TestAssessmentEventsTimeseries(AnalyticsPandasTestBase):
 		df = aet.combine_events()
 		assert_that(len(df.index), equal_to(223))
 
-	def test_combine_events(self):
+	def test_over_total_enrollments(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
 		courses_id = ['1024', '1025', '1026', '1027', '1028']
@@ -394,4 +394,3 @@ class TestAssessmentEventsTimeseries(AnalyticsPandasTestBase):
 		df = aet.analyze_assessments_taken_over_total_enrollments()
 		assert_that(df.columns, has_item('ratio'))
 		assert_that(df.columns, has_item('event_type'))
-

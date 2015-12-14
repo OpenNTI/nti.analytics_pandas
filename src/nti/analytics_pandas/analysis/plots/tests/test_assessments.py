@@ -471,4 +471,3 @@ class TestAssessmentEventsPlot(AnalyticsPandasTestBase):
 		aet = AssessmentEventsTimeseries(avt=avt, att=att, savt=savt, satt=satt)
 		aetp = AssessmentEventsTimeseriesPlot(aet)
 		_ = aetp.analyze_assessments_taken_over_total_enrollments()
-
