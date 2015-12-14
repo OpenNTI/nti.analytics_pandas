@@ -20,6 +20,7 @@ from zope.i18n import translate
 from .commons import generate_three_plots
 from .commons import generate_three_group_by_plots
 from .commons import histogram_plot_x_axis_discrete
+from .commons import line_plot_x_axis_date
 
 class AssessmentEventsTimeseriesPlot(object):
 
@@ -384,6 +385,8 @@ class AssignmentsTakenTimeseriesPlot(object):
 		"""
 		att = self.att
 		df = att.analyze_assignment_taken_over_total_enrollments()
+		if df is None:
+			return ()
 		df.reset_index(inplace=True)
 		plot = histogram_plot_x_axis_discrete(
 								df=df,
@@ -395,6 +398,28 @@ class AssignmentsTakenTimeseriesPlot(object):
 								stat='bar',
 								plot_name='assignments_taken_over_total_enrollments')
 		return (plot,)
+
+	def analyze_assignment_taken_over_total_enrollments_ts(self, period_breaks='1 week',
+														   minor_period_breaks='1 day',
+														   theme_seaborn_=True):
+		att = self.att
+		df = att.analyze_assignment_taken_over_total_enrollments_ts()
+		if df is None:
+			return ()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		plot = line_plot_x_axis_date(
+								df = df,
+								x_axis_field = 'timestamp_period',
+								y_axis_field = 'ratio',
+								x_axis_label = 'Date',
+								y_axis_label = 'Ratio',
+								title = 'Ratio of Assignments Taken over Total Enrollments',
+								period_breaks = period_breaks,
+								minor_breaks=minor_period_breaks,
+								theme_seaborn_=theme_seaborn_,
+								plot_name='assignments_taken_over_total_enrollments')
+		return (plot, )
 
 class SelfAssessmentViewsTimeseriesPlot(object):
 
