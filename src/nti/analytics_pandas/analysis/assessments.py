@@ -331,6 +331,22 @@ class AssignmentsTakenTimeseries(object):
 		df['ratio'] = df['number_assignments_taken'] / total_enrollments
 		return df
 
+	def analyze_assignment_taken_over_total_enrollments_ts(self):
+		dataframe = self.dataframe[['assignment_taken_id', 'timestamp_period']]
+		group_by_columns = ['timestamp_period']
+		agg_columns = {'assignment_taken_id' : pd.Series.count}
+
+		df = analyze_types_(dataframe, group_by_columns, agg_columns)
+		df.rename(columns={'assignment_taken_id' :'number_assignments_taken'}, inplace=True)
+
+		qce = QueryCourseEnrollments(self.session)
+		total_enrollments = qce.count_enrollments(self.course_id)
+
+		df['ratio'] = df['number_assignments_taken'] / total_enrollments
+		df.reset_index(inplace=True)
+		df = pd.melt(df, id_vars = 'timestamp_period')
+		return df
+
 class SelfAssessmentViewsTimeseries(object):
 	"""
 	analyze the number of self assessments views given time period and list of course id
