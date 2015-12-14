@@ -94,13 +94,9 @@ def scatter_plot_x_axis_date(df,
 		xlab(_(x_axis_label)) + \
 		ylim(0, y_max)
 
-	if minor_breaks is not None:
-		scatter_plot = scatter_plot + scale_x_date(breaks=period_breaks,
-											 	   minor_breaks=minor_breaks,
-											 	   labels=date_format(DATE_FORMAT))
-	else:
-		scatter_plot = scatter_plot + scale_x_date(breaks=period_breaks,
-											 	   labels=date_format(DATE_FORMAT))
+	scatter_plot = scatter_plot + scale_x_date(breaks=period_breaks,
+											   minor_breaks=minor_breaks,
+											   labels=date_format(DATE_FORMAT))
 
 	if theme_seaborn_:
 		scatter_plot = scatter_plot + theme_seaborn()

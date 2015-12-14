@@ -46,6 +46,21 @@ class TestChatsInitiatedTimeseries(AnalyticsPandasTestBase):
 		"""
 		assert_that(df, equal_to(None))
 
+	def test_chats_initiated_weekly(self):
+		start_date = '2015-10-05'
+		end_date = '2015-10-19'
+		cit = ChatsInitiatedTimeseries(self.session, start_date, end_date, time_period='weekly')
+		assert_that(cit.dataframe, has_item('timestamp'))
+		assert_that(cit.dataframe, has_item('timestamp_period'))
+		assert_that(cit.dataframe, has_item('chat_id'))
+		assert_that(cit.dataframe, has_item('user_id'))
+		df = cit.analyze_events()
+		assert_that(df.empty, equal_to(False))
+		assert_that(df.columns, has_item('number_of_chats_initiated'))
+		assert_that(df.columns, has_item('number_of_unique_users'))
+		assert_that(df.columns, has_item('ratio'))
+		
+
 class TestChatsJoinedTimeseries(AnalyticsPandasTestBase):
 
 	def test_users_joining_chats(self):

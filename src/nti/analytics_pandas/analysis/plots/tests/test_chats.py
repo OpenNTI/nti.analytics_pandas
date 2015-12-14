@@ -26,6 +26,17 @@ class TestChatsPlot(AnalyticsPandasTestBase):
 		_ = citp.explore_chats_initiated()
 		assert_that(len(_), equal_to(3))
 
+	def test_explore_chats_initiated_weekly(self):
+		start_date = '2015-01-01'
+		end_date = '2015-12-31'
+		cit = ChatsInitiatedTimeseries(self.session, start_date, end_date, time_period='weekly')
+		citp = ChatsTimeseriesPlot(cit=cit)
+		_ = citp.explore_chats_initiated(period_breaks='1 week', minor_period_breaks=None,
+					  		 	theme_seaborn_=True)
+		assert_that(len(_), equal_to(3))
+		for plot in _:
+			print(plot.plot)
+
 	def test_analyze_application_type_chats_initiated(self):
 		start_date = '2015-01-01'
 		end_date = '2015-10-19'

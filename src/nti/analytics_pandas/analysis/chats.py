@@ -17,6 +17,7 @@ from ..queries import QueryChatsInitiated
 from .common import analyze_types_
 from .common import add_timestamp_period_
 from .common import get_most_active_users_
+from .common import reset_dataframe
 
 class ChatsInitiatedTimeseries(object):
 	"""
@@ -25,9 +26,10 @@ class ChatsInitiatedTimeseries(object):
 
 	def __init__(self, session, start_date, end_date,
 				 with_application_type=True,
-				 time_period_date=True,
+				 time_period='daily',
 				 with_enrollment_type=True):
 		self.session = session
+		self.time_period = time_period
 		qci = QueryChatsInitiated(self.session)
 
 		self.dataframe = qci.filter_by_period_of_time(start_date, end_date)
@@ -38,8 +40,7 @@ class ChatsInitiatedTimeseries(object):
 				if new_df is not None:
 					self.dataframe = new_df
 
-			if time_period_date:
-				self.dataframe = add_timestamp_period_(self.dataframe)
+			self.dataframe = add_timestamp_period_(self.dataframe, time_period=time_period)
 
 	def analyze_events(self):
 		group_by_items = ['timestamp_period']
@@ -77,9 +78,10 @@ class ChatsJoinedTimeseries(object):
 
 	def __init__(self, session, start_date, end_date,
 				 with_application_type=True,
-				 time_period_date=True,
+				 time_period=True,
 				 with_enrollment_type=True):
 		self.session = session
+		self.time_period = time_period
 		qcj = QueryChatsJoined(self.session)
 
 		self.dataframe = qcj.filter_by_period_of_time(start_date, end_date)
@@ -90,7 +92,7 @@ class ChatsJoinedTimeseries(object):
 				if new_df is not None:
 					self.dataframe = new_df
 
-			if time_period_date:
+			if time_period:
 				self.dataframe = add_timestamp_period_(self.dataframe)
 
 	def get_number_of_users_joining_chat(self):
@@ -154,8 +156,3 @@ class ChatsJoinedTimeseries(object):
 			group_chat_df = self.count_number_of_chats_per_date(group_chat_df)
 			return (chat_df, group_chat_df)
 
-
-def reset_dataframe(df):
-	df.reset_index(inplace=True)
-	df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
-	return df
