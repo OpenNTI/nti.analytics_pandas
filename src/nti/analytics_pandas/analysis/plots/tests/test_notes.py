@@ -32,7 +32,7 @@ class TestNotesCreationPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		nct = NotesCreationTimeseries(self.session, start_date, end_date, course_id)
 		nctp = NotesCreationTimeseriesPlot(nct)
-		_ = nctp.explore_events()
+		nctp.explore_events()
 
 	def test_explore_events_notes_creation_weekly(self):
 		start_date = '2015-01-01'
@@ -40,7 +40,7 @@ class TestNotesCreationPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		nct = NotesCreationTimeseries(self.session, start_date, end_date, course_id, period='weekly')
 		nctp = NotesCreationTimeseriesPlot(nct)
-		_ = nctp.explore_events(period_breaks='1 week', minor_period_breaks=None)
+		nctp.explore_events(period_breaks='1 week', minor_period_breaks=None)
 
 	def test_analyze_device_types(self):
 		start_date = '2015-01-01'
@@ -48,7 +48,7 @@ class TestNotesCreationPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		nct = NotesCreationTimeseries(self.session, start_date, end_date, course_id)
 		nctp = NotesCreationTimeseriesPlot(nct)
-		_ = nctp.analyze_device_types()
+		nctp.analyze_device_types()
 
 	def test_analyze_enrollment_types(self):
 		start_date = '2015-01-01'
@@ -56,7 +56,7 @@ class TestNotesCreationPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		nct = NotesCreationTimeseries(self.session, start_date, end_date, course_id)
 		nctp = NotesCreationTimeseriesPlot(nct)
-		_ = nctp.analyze_enrollment_types()
+		nctp.analyze_enrollment_types()
 
 	def test_analyze_resource_types(self):
 		start_date = '2015-01-01'
@@ -64,7 +64,7 @@ class TestNotesCreationPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		nct = NotesCreationTimeseries(self.session, start_date, end_date, course_id)
 		nctp = NotesCreationTimeseriesPlot(nct)
-		_ = nctp.analyze_resource_types()
+		nctp.analyze_resource_types()
 
 	def test_plot_most_active_users(self):
 		start_date = '2015-01-01'
@@ -72,7 +72,7 @@ class TestNotesCreationPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		nct = NotesCreationTimeseries(self.session, start_date, end_date, course_id)
 		nctp = NotesCreationTimeseriesPlot(nct)
-		_ = nctp.plot_the_most_active_users()
+		nctp.plot_the_most_active_users()
 
 	def test_analyze_sharing_types(self):
 		start_date = '2015-01-01'
@@ -80,7 +80,7 @@ class TestNotesCreationPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		nct = NotesCreationTimeseries(self.session, start_date, end_date, course_id)
 		nctp = NotesCreationTimeseriesPlot(nct)
-		_ = nctp.analyze_sharing_types()
+		nctp.analyze_sharing_types()
 
 	def test_analyze_notes_created_on_videos(self):
 		start_date = '2015-01-01'
@@ -88,7 +88,7 @@ class TestNotesCreationPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		nct = NotesCreationTimeseries(self.session, start_date, end_date, course_id)
 		nctp = NotesCreationTimeseriesPlot(nct)
-		_ = nctp.analyze_notes_created_on_videos(period_breaks='1 day', minor_period_breaks='None')
+		nctp.analyze_notes_created_on_videos(period_breaks='1 day', minor_period_breaks='None')
 
 	def test_analyze_events_per_course_sections(self):
 		start_date = '2015-01-01'
@@ -96,7 +96,7 @@ class TestNotesCreationPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		nct = NotesCreationTimeseries(self.session, start_date, end_date, course_id)
 		nctp = NotesCreationTimeseriesPlot(nct)
-		_ = nctp.analyze_events_per_course_sections()
+		nctp.analyze_events_per_course_sections()
 
 	def test_empty_result(self):
 		start_date = '2015-01-01'
@@ -104,23 +104,22 @@ class TestNotesCreationPlot(AnalyticsPandasTestBase):
 		course_id = ['123']
 		nct = NotesCreationTimeseries(self.session, start_date, end_date, course_id)
 		nctp = NotesCreationTimeseriesPlot(nct)
-		_ = nctp.analyze_events_per_course_sections()
+		nctp.analyze_events_per_course_sections()
 		assert_that(len(_), equal_to(0))
-		_ = nctp.analyze_notes_created_on_videos(period_breaks='1 day', minor_period_breaks='None')
+		nctp.analyze_notes_created_on_videos(period_breaks='1 day', minor_period_breaks='None')
 		assert_that(len(_), equal_to(0))
-		_ = nctp.analyze_sharing_types()
+		nctp.analyze_sharing_types()
 		assert_that(len(_), equal_to(0))
-		_ = nctp.plot_the_most_active_users()
+		nctp.plot_the_most_active_users()
 		assert_that(len(_), equal_to(0))
-		_ = nctp.analyze_resource_types()
+		nctp.analyze_resource_types()
 		assert_that(len(_), equal_to(0))
-		_ = nctp.analyze_device_types()
+		nctp.analyze_device_types()
 		assert_that(len(_), equal_to(0))
-		_ = nctp.explore_events()
+		nctp.explore_events()
 		assert_that(len(_), equal_to(0))
-		_ = nctp.analyze_enrollment_types()
+		nctp.analyze_enrollment_types()
 		assert_that(len(_), equal_to(0))
-
 
 class TestNoteViewsPlot(AnalyticsPandasTestBase):
 
@@ -130,7 +129,7 @@ class TestNoteViewsPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		nvt = NotesViewTimeseries(self.session, start_date, end_date, course_id)
 		nvtp = NotesViewTimeseriesPlot(nvt)
-		_ = nvtp.analyze_total_events_based_on_sharing_type(period_breaks='1 week')
+		nvtp.analyze_total_events_based_on_sharing_type(period_breaks='1 week')
 
 	def test_analyze_total_events_based_on_sharing_type_weekly(self):
 		start_date = '2015-01-01'
@@ -138,15 +137,15 @@ class TestNoteViewsPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		nvt = NotesViewTimeseries(self.session, start_date, end_date, course_id, period='weekly')
 		nvtp = NotesViewTimeseriesPlot(nvt)
-		_ = nvtp.analyze_total_events_based_on_sharing_type(period_breaks='1 week', minor_period_breaks=None)
-	
+		nvtp.analyze_total_events_based_on_sharing_type(period_breaks='1 week', minor_period_breaks=None)
+
 	def test_analyze_total_events_based_on_device_type(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
 		course_id = ['388']
 		nvt = NotesViewTimeseries(self.session, start_date, end_date, course_id)
 		nvtp = NotesViewTimeseriesPlot(nvt)
-		_ = nvtp.analyze_total_events_based_on_device_type(period_breaks='1 week')
+		nvtp.analyze_total_events_based_on_device_type(period_breaks='1 week')
 
 	def test_analyze_total_events_based_on_enrollment_type(self):
 		start_date = '2015-01-01'
@@ -154,7 +153,7 @@ class TestNoteViewsPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		nvt = NotesViewTimeseries(self.session, start_date, end_date, course_id)
 		nvtp = NotesViewTimeseriesPlot(nvt)
-		_ = nvtp.analyze_total_events_based_on_enrollment_type(period_breaks='1 week')
+		nvtp.analyze_total_events_based_on_enrollment_type(period_breaks='1 week')
 
 	def test_analyze_total_events_based_on_resource_type(self):
 		start_date = '2015-01-01'
@@ -162,7 +161,7 @@ class TestNoteViewsPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		nvt = NotesViewTimeseries(self.session, start_date, end_date, course_id)
 		nvtp = NotesViewTimeseriesPlot(nvt)
-		_ = nvtp.analyze_total_events_based_on_resource_type(period_breaks='1 week')
+		nvtp.analyze_total_events_based_on_resource_type(period_breaks='1 week')
 
 	def test_plot_most_active_users(self):
 		start_date = '2015-01-01'
@@ -170,7 +169,7 @@ class TestNoteViewsPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		nvt = NotesViewTimeseries(self.session, start_date, end_date, course_id)
 		nvtp = NotesViewTimeseriesPlot(nvt)
-		_ = nvtp.plot_the_most_active_users()
+		nvtp.plot_the_most_active_users()
 
 	def test_explore_events(self):
 		start_date = '2015-01-01'
@@ -178,7 +177,7 @@ class TestNoteViewsPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		nvt = NotesViewTimeseries(self.session, start_date, end_date, course_id)
 		nvtp = NotesViewTimeseriesPlot(nvt)
-		_ = nvtp.explore_events(period_breaks='1 week')
+		nvtp.explore_events(period_breaks='1 week')
 
 	def test_analyze_unique_events_based_on_sharing_type(self):
 		start_date = '2015-01-01'
@@ -186,7 +185,7 @@ class TestNoteViewsPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		nvt = NotesViewTimeseries(self.session, start_date, end_date, course_id)
 		nvtp = NotesViewTimeseriesPlot(nvt)
-		_ = nvtp.analyze_unique_events_based_on_sharing_type(period_breaks='1 week')
+		nvtp.analyze_unique_events_based_on_sharing_type(period_breaks='1 week')
 
 	def test_analyze_total_events_per_course_sections(self):
 		start_date = '2015-01-01'
@@ -194,7 +193,7 @@ class TestNoteViewsPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		nvt = NotesViewTimeseries(self.session, start_date, end_date, course_id)
 		nvtp = NotesViewTimeseriesPlot(nvt)
-		_ = nvtp.analyze_total_events_per_course_sections()
+		nvtp.analyze_total_events_per_course_sections()
 
 	def test_plot_the_most_viewed_notes_and_its_author(self):
 		start_date = '2015-01-01'
@@ -202,7 +201,7 @@ class TestNoteViewsPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		nvt = NotesViewTimeseries(self.session, start_date, end_date, course_id)
 		nvtp = NotesViewTimeseriesPlot(nvt)
-		_ = nvtp.plot_the_most_viewed_notes_and_its_author()
+		nvtp.plot_the_most_viewed_notes_and_its_author()
 
 	def test_empty_result(self):
 		start_date = '2015-01-01'
@@ -210,23 +209,23 @@ class TestNoteViewsPlot(AnalyticsPandasTestBase):
 		course_id = ['123']
 		nvt = NotesViewTimeseries(self.session, start_date, end_date, course_id)
 		nvtp = NotesViewTimeseriesPlot(nvt)
-		_ = nvtp.plot_the_most_viewed_notes_and_its_author()
+		nvtp.plot_the_most_viewed_notes_and_its_author()
 		assert_that(len(_), equal_to(0))
-		_ = nvtp.analyze_total_events_per_course_sections()
+		nvtp.analyze_total_events_per_course_sections()
 		assert_that(len(_), equal_to(0))
-		_ = nvtp.analyze_unique_events_based_on_sharing_type(period_breaks='1 week')
+		nvtp.analyze_unique_events_based_on_sharing_type(period_breaks='1 week')
 		assert_that(len(_), equal_to(0))
-		_ = nvtp.explore_events(period_breaks='1 week')
+		nvtp.explore_events(period_breaks='1 week')
 		assert_that(len(_), equal_to(0))
-		_ = nvtp.plot_the_most_active_users()
+		nvtp.plot_the_most_active_users()
 		assert_that(len(_), equal_to(0))
-		_ = nvtp.analyze_total_events_based_on_resource_type(period_breaks='1 week')
+		nvtp.analyze_total_events_based_on_resource_type(period_breaks='1 week')
 		assert_that(len(_), equal_to(0))
-		_ = nvtp.analyze_total_events_based_on_enrollment_type(period_breaks='1 week')
+		nvtp.analyze_total_events_based_on_enrollment_type(period_breaks='1 week')
 		assert_that(len(_), equal_to(0))
-		_ = nvtp.analyze_total_events_based_on_device_type(period_breaks='1 week')
+		nvtp.analyze_total_events_based_on_device_type(period_breaks='1 week')
 		assert_that(len(_), equal_to(0))
-		_ = nvtp.analyze_total_events_based_on_sharing_type(period_breaks='1 week')
+		nvtp.analyze_total_events_based_on_sharing_type(period_breaks='1 week')
 		assert_that(len(_), equal_to(0))
 
 
@@ -238,7 +237,7 @@ class TestNoteLikesPlot(AnalyticsPandasTestBase):
 		course_id = ['1068', '1096', '1097', '1098', '1099']
 		nlt = NoteLikesTimeseries(self.session, start_date, end_date, course_id)
 		nltp = NoteLikesTimeseriesPlot(nlt)
-		_ = nltp.explore_events(period_breaks='1 day', minor_period_breaks=None)
+		nltp.explore_events(period_breaks='1 day', minor_period_breaks=None)
 
 	def test_explore_events_weekly(self):
 		start_date = '2015-10-05'
@@ -246,7 +245,7 @@ class TestNoteLikesPlot(AnalyticsPandasTestBase):
 		course_id = ['1068', '1096', '1097', '1098', '1099']
 		nlt = NoteLikesTimeseries(self.session, start_date, end_date, course_id, period='weekly')
 		nltp = NoteLikesTimeseriesPlot(nlt)
-		_ = nltp.explore_events(period_breaks='1 week', minor_period_breaks=None)
+		nltp.explore_events(period_breaks='1 week', minor_period_breaks=None)
 
 	def test_analyze_events_per_device_types(self):
 		start_date = '2015-10-05'
@@ -254,7 +253,7 @@ class TestNoteLikesPlot(AnalyticsPandasTestBase):
 		course_id = ['1068', '1096', '1097', '1098', '1099']
 		nlt = NoteLikesTimeseries(self.session, start_date, end_date, course_id)
 		nltp = NoteLikesTimeseriesPlot(nlt)
-		_ = nltp.analyze_events_per_device_types(period_breaks='1 day', minor_period_breaks=None)
+		nltp.analyze_events_per_device_types(period_breaks='1 day', minor_period_breaks=None)
 
 	def test_analyze_events_per_enrollment_types(self):
 		start_date = '2015-10-05'
@@ -262,7 +261,7 @@ class TestNoteLikesPlot(AnalyticsPandasTestBase):
 		course_id = ['1068', '1096', '1097', '1098', '1099']
 		nlt = NoteLikesTimeseries(self.session, start_date, end_date, course_id)
 		nltp = NoteLikesTimeseriesPlot(nlt)
-		_ = nltp.analyze_events_per_enrollment_types(period_breaks='1 day', minor_period_breaks=None)
+		nltp.analyze_events_per_enrollment_types(period_breaks='1 day', minor_period_breaks=None)
 
 	def test_analyze_events_per_resource_types(self):
 		start_date = '2015-10-05'
@@ -270,7 +269,7 @@ class TestNoteLikesPlot(AnalyticsPandasTestBase):
 		course_id = ['1068', '1096', '1097', '1098', '1099']
 		nlt = NoteLikesTimeseries(self.session, start_date, end_date, course_id)
 		nltp = NoteLikesTimeseriesPlot(nlt)
-		_ = nltp.analyze_events_per_resource_types(period_breaks='1 day', minor_period_breaks=None)
+		nltp.analyze_events_per_resource_types(period_breaks='1 day', minor_period_breaks=None)
 
 	def test_analyze_events_per_course_sections(self):
 		start_date = '2015-10-05'
@@ -278,7 +277,7 @@ class TestNoteLikesPlot(AnalyticsPandasTestBase):
 		course_id = ['1068', '1096', '1097', '1098', '1099']
 		nlt = NoteLikesTimeseries(self.session, start_date, end_date, course_id)
 		nltp = NoteLikesTimeseriesPlot(nlt)
-		_ = nltp.analyze_events_per_course_sections(period_breaks='1 day', minor_period_breaks=None)
+		nltp.analyze_events_per_course_sections(period_breaks='1 day', minor_period_breaks=None)
 
 	def test_empty_result(self):
 		start_date = '2015-10-05'
@@ -286,15 +285,15 @@ class TestNoteLikesPlot(AnalyticsPandasTestBase):
 		course_id = ['123']
 		nlt = NoteLikesTimeseries(self.session, start_date, end_date, course_id)
 		nltp = NoteLikesTimeseriesPlot(nlt)
-		_ = nltp.analyze_events_per_course_sections(period_breaks='1 day', minor_period_breaks=None)
+		nltp.analyze_events_per_course_sections(period_breaks='1 day', minor_period_breaks=None)
 		assert_that(len(_), equal_to(0))
-		_ = nltp.analyze_events_per_resource_types(period_breaks='1 day', minor_period_breaks=None)
+		nltp.analyze_events_per_resource_types(period_breaks='1 day', minor_period_breaks=None)
 		assert_that(len(_), equal_to(0))
-		_ = nltp.analyze_events_per_enrollment_types(period_breaks='1 day', minor_period_breaks=None)
+		nltp.analyze_events_per_enrollment_types(period_breaks='1 day', minor_period_breaks=None)
 		assert_that(len(_), equal_to(0))
-		_ = nltp.analyze_events_per_device_types(period_breaks='1 day', minor_period_breaks=None)
+		nltp.analyze_events_per_device_types(period_breaks='1 day', minor_period_breaks=None)
 		assert_that(len(_), equal_to(0))
-		_ = nltp.explore_events(period_breaks='1 day', minor_period_breaks=None)
+		nltp.explore_events(period_breaks='1 day', minor_period_breaks=None)
 		assert_that(len(_), equal_to(0))
 
 class TestNoteFavoritesPlot(AnalyticsPandasTestBase):
@@ -305,7 +304,7 @@ class TestNoteFavoritesPlot(AnalyticsPandasTestBase):
 		course_id = ['1068', '1096', '1097', '1098', '1099']
 		nft = NoteFavoritesTimeseries(self.session, start_date, end_date, course_id)
 		nftp = NoteFavoritesTimeseriesPlot(nft)
-		_ = nftp.explore_events(period_breaks='1 day', minor_period_breaks=None)
+		nftp.explore_events(period_breaks='1 day', minor_period_breaks=None)
 
 	def test_explore_events_weekly(self):
 		start_date = '2015-10-05'
@@ -313,7 +312,7 @@ class TestNoteFavoritesPlot(AnalyticsPandasTestBase):
 		course_id = ['1068', '1096', '1097', '1098', '1099']
 		nft = NoteFavoritesTimeseries(self.session, start_date, end_date, course_id, period='weekly')
 		nftp = NoteFavoritesTimeseriesPlot(nft)
-		_ = nftp.explore_events(period_breaks='1 week', minor_period_breaks=None)
+		nftp.explore_events(period_breaks='1 week', minor_period_breaks=None)
 
 	def test_analyze_events_per_device_types(self):
 		start_date = '2015-10-05'
@@ -321,7 +320,7 @@ class TestNoteFavoritesPlot(AnalyticsPandasTestBase):
 		course_id = ['1068', '1096', '1097', '1098', '1099']
 		nft = NoteFavoritesTimeseries(self.session, start_date, end_date, course_id)
 		nftp = NoteFavoritesTimeseriesPlot(nft)
-		_ = nftp.analyze_events_per_device_types(period_breaks='1 day', minor_period_breaks=None)
+		nftp.analyze_events_per_device_types(period_breaks='1 day', minor_period_breaks=None)
 
 	def test_analyze_events_per_enrollment_types(self):
 		start_date = '2015-10-05'
@@ -329,7 +328,7 @@ class TestNoteFavoritesPlot(AnalyticsPandasTestBase):
 		course_id = ['1068', '1096', '1097', '1098', '1099']
 		nft = NoteFavoritesTimeseries(self.session, start_date, end_date, course_id)
 		nftp = NoteFavoritesTimeseriesPlot(nft)
-		_ = nftp.analyze_events_per_enrollment_types(period_breaks='1 day', minor_period_breaks=None)
+		nftp.analyze_events_per_enrollment_types(period_breaks='1 day', minor_period_breaks=None)
 
 	def test_analyze_events_per_resource_types(self):
 		start_date = '2015-10-05'
@@ -337,7 +336,7 @@ class TestNoteFavoritesPlot(AnalyticsPandasTestBase):
 		course_id = ['1068', '1096', '1097', '1098', '1099']
 		nft = NoteFavoritesTimeseries(self.session, start_date, end_date, course_id)
 		nftp = NoteFavoritesTimeseriesPlot(nft)
-		_ = nftp.analyze_events_per_resource_types(period_breaks='1 day', minor_period_breaks=None)
+		nftp.analyze_events_per_resource_types(period_breaks='1 day', minor_period_breaks=None)
 
 	def test_analyze_events_per_course_sections(self):
 		start_date = '2015-10-05'
@@ -345,7 +344,7 @@ class TestNoteFavoritesPlot(AnalyticsPandasTestBase):
 		course_id = ['1068', '1096', '1097', '1098', '1099']
 		nft = NoteFavoritesTimeseries(self.session, start_date, end_date, course_id)
 		nftp = NoteFavoritesTimeseriesPlot(nft)
-		_ = nftp.analyze_events_per_course_sections(period_breaks='1 day', minor_period_breaks=None)
+		nftp.analyze_events_per_course_sections(period_breaks='1 day', minor_period_breaks=None)
 
 	def test_empty_result(self):
 		start_date = '2015-10-05'
@@ -353,15 +352,15 @@ class TestNoteFavoritesPlot(AnalyticsPandasTestBase):
 		course_id = ['123']
 		nft = NoteFavoritesTimeseries(self.session, start_date, end_date, course_id)
 		nftp = NoteFavoritesTimeseriesPlot(nft)
-		_ = nftp.analyze_events_per_course_sections(period_breaks='1 day', minor_period_breaks=None)
+		nftp.analyze_events_per_course_sections(period_breaks='1 day', minor_period_breaks=None)
 		assert_that(len(_), equal_to(0))
-		_ = nftp.analyze_events_per_resource_types(period_breaks='1 day', minor_period_breaks=None)
+		nftp.analyze_events_per_resource_types(period_breaks='1 day', minor_period_breaks=None)
 		assert_that(len(_), equal_to(0))
-		_ = nftp.analyze_events_per_enrollment_types(period_breaks='1 day', minor_period_breaks=None)
+		nftp.analyze_events_per_enrollment_types(period_breaks='1 day', minor_period_breaks=None)
 		assert_that(len(_), equal_to(0))
-		_ = nftp.analyze_events_per_device_types(period_breaks='1 day', minor_period_breaks=None)
+		nftp.analyze_events_per_device_types(period_breaks='1 day', minor_period_breaks=None)
 		assert_that(len(_), equal_to(0))
-		_ = nftp.explore_events(period_breaks='1 day', minor_period_breaks=None)
+		nftp.explore_events(period_breaks='1 day', minor_period_breaks=None)
 		assert_that(len(_), equal_to(0))
 
 class TestNotesEventsPlot(AnalyticsPandasTestBase):
@@ -377,7 +376,7 @@ class TestNotesEventsPlot(AnalyticsPandasTestBase):
 
 		net = NotesEventsTimeseries(nct, nvt, nlt, nft)
 		netp = NotesEventsTimeseriesPlot(net)
-		_ = netp.explore_all_events()
+		netp.explore_all_events()
 
 	def test_notes_events_weekly(self):
 		start_date = '2015-01-01'
@@ -390,8 +389,8 @@ class TestNotesEventsPlot(AnalyticsPandasTestBase):
 
 		net = NotesEventsTimeseries(nct, nvt, nlt, nft)
 		netp = NotesEventsTimeseriesPlot(net)
-		_ = netp.explore_all_events(period_breaks='1 week', minor_period_breaks=None)
-		
+		netp.explore_all_events(period_breaks='1 week', minor_period_breaks=None)
+
 	def test_empty_result(self):
 		start_date = '2015-10-05'
 		end_date = '2015-12-04'
@@ -403,5 +402,5 @@ class TestNotesEventsPlot(AnalyticsPandasTestBase):
 
 		net = NotesEventsTimeseries(nct, nvt, nlt, nft)
 		netp = NotesEventsTimeseriesPlot(net)
-		_ = netp.explore_all_events()
+		netp.explore_all_events()
 		assert_that(len(_), equal_to(0))

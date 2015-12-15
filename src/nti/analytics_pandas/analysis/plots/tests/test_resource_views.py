@@ -23,7 +23,7 @@ class TestResourceViewsPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		rvt = ResourceViewsTimeseries(self.session, start_date, end_date, course_id)
 		rvtp = ResourceViewsTimeseriesPlot(rvt)
-		_ = rvtp.explore_events()
+		rvtp.explore_events()
 
 	def test_explore_events_weekly(self):
 		start_date = '2015-01-01'
@@ -31,7 +31,7 @@ class TestResourceViewsPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		rvt = ResourceViewsTimeseries(self.session, start_date, end_date, course_id, period='weekly')
 		rvtp = ResourceViewsTimeseriesPlot(rvt)
-		_ = rvtp.explore_events(period_breaks='1 week', minor_period_breaks=None)
+		rvtp.explore_events(period_breaks='1 week', minor_period_breaks=None)
 
 	def test_analyze_events_per_course_sections(self):
 		start_date = '2015-01-01'
@@ -39,7 +39,7 @@ class TestResourceViewsPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		rvt = ResourceViewsTimeseries(self.session, start_date, end_date, course_id)
 		rvtp = ResourceViewsTimeseriesPlot(rvt)
-		_ = rvtp.analyze_events_per_course_sections()
+		rvtp.analyze_events_per_course_sections()
 
 	def test_analyze_events_per_enrollment_types(self):
 		start_date = '2015-01-01'
@@ -47,7 +47,7 @@ class TestResourceViewsPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		rvt = ResourceViewsTimeseries(self.session, start_date, end_date, course_id)
 		rvtp = ResourceViewsTimeseriesPlot(rvt)
-		_ = rvtp.analyze_enrollment_type()
+		rvtp.analyze_enrollment_type()
 
 	def test_resource_and_device_type_analysis(self):
 		start_date = '2015-01-01'
@@ -55,8 +55,8 @@ class TestResourceViewsPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		rvt = ResourceViewsTimeseries(self.session, start_date, end_date, course_id)
 		rvtp = ResourceViewsTimeseriesPlot(rvt)
-		_ = rvtp.analyze_resource_type()
-		_ = rvtp.analyze_device_type()
+		rvtp.analyze_resource_type()
+		rvtp.analyze_device_type()
 
 	def test_plot_most_active_users(self):
 		start_date = '2015-01-01'
@@ -64,7 +64,7 @@ class TestResourceViewsPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		rvt = ResourceViewsTimeseries(self.session, start_date, end_date, course_id)
 		rvtp = ResourceViewsTimeseriesPlot(rvt)
-		_ = rvtp.plot_most_active_users()
+		rvtp.plot_most_active_users()
 
 	def test_empty_result(self):
 		start_date = '2015-10-05'
@@ -72,15 +72,15 @@ class TestResourceViewsPlot(AnalyticsPandasTestBase):
 		course_id = ['123']
 		rvt = ResourceViewsTimeseries(self.session, start_date, end_date, course_id)
 		rvtp = ResourceViewsTimeseriesPlot(rvt)
-		_ = rvtp.plot_most_active_users()
+		rvtp.plot_most_active_users()
 		assert_that(len(_), equal_to(0))
-		_ = rvtp.analyze_resource_type()
+		rvtp.analyze_resource_type()
 		assert_that(len(_), equal_to(0))
-		_ = rvtp.analyze_device_type()
+		rvtp.analyze_device_type()
 		assert_that(len(_), equal_to(0))
-		_ = rvtp.analyze_enrollment_type()
+		rvtp.analyze_enrollment_type()
 		assert_that(len(_), equal_to(0))
-		_ = rvtp.analyze_events_per_course_sections()
+		rvtp.analyze_events_per_course_sections()
 		assert_that(len(_), equal_to(0))
-		_ = rvtp.explore_events()
+		rvtp.explore_events()
 		assert_that(len(_), equal_to(0))

@@ -23,7 +23,7 @@ class TestHighlightsCreationPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		hct = HighlightsCreationTimeseries(self.session, start_date, end_date, course_id)
 		hctp = HighlightsCreationTimeseriesPlot(hct)
-		_ = hctp.explore_events()
+		hctp.explore_events()
 
 	def test_explore_events_weekly(self):
 		start_date = '2015-01-01'
@@ -31,7 +31,7 @@ class TestHighlightsCreationPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		hct = HighlightsCreationTimeseries(self.session, start_date, end_date, course_id, period='weekly')
 		hctp = HighlightsCreationTimeseriesPlot(hct)
-		_ = hctp.explore_events(period_breaks='1 week', minor_period_breaks=None)
+		hctp.explore_events(period_breaks='1 week', minor_period_breaks=None)
 
 	def test_analyze_device_types(self):
 		start_date = '2015-01-01'
@@ -39,7 +39,7 @@ class TestHighlightsCreationPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		hct = HighlightsCreationTimeseries(self.session, start_date, end_date, course_id)
 		hctp = HighlightsCreationTimeseriesPlot(hct)
-		_ = hctp.analyze_device_types()
+		hctp.analyze_device_types()
 
 	def test_analyze_enrollment_types(self):
 		start_date = '2015-01-01'
@@ -47,7 +47,7 @@ class TestHighlightsCreationPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		hct = HighlightsCreationTimeseries(self.session, start_date, end_date, course_id)
 		hctp = HighlightsCreationTimeseriesPlot(hct)
-		_ = hctp.analyze_enrollment_types()
+		hctp.analyze_enrollment_types()
 
 	def test_analyze_resource_types(self):
 		start_date = '2015-01-01'
@@ -55,7 +55,7 @@ class TestHighlightsCreationPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		hct = HighlightsCreationTimeseries(self.session, start_date, end_date, course_id)
 		hctp = HighlightsCreationTimeseriesPlot(hct)
-		_ = hctp.analyze_resource_types()
+		hctp.analyze_resource_types()
 
 	def test_analyze_events_per_course_sections(self):
 		start_date = '2015-01-01'
@@ -63,7 +63,7 @@ class TestHighlightsCreationPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		hct = HighlightsCreationTimeseries(self.session, start_date, end_date, course_id)
 		hctp = HighlightsCreationTimeseriesPlot(hct)
-		_ = hctp.analyze_events_per_course_sections()
+		hctp.analyze_events_per_course_sections()
 
 	def test_plot_most_active_users(self):
 		start_date = '2015-01-01'
@@ -71,7 +71,7 @@ class TestHighlightsCreationPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		hct = HighlightsCreationTimeseries(self.session, start_date, end_date, course_id)
 		hctp = HighlightsCreationTimeseriesPlot(hct)
-		_ = hctp.plot_the_most_active_users()
+		hctp.plot_the_most_active_users()
 
 	def test_empty_result(self):
 		start_date = '2015-01-01'
@@ -79,15 +79,15 @@ class TestHighlightsCreationPlot(AnalyticsPandasTestBase):
 		course_id = ['123']
 		hct = HighlightsCreationTimeseries(self.session, start_date, end_date, course_id)
 		hctp = HighlightsCreationTimeseriesPlot(hct)
-		_ = hctp.plot_the_most_active_users()
+		hctp.plot_the_most_active_users()
 		assert_that(len(_), equal_to(0))
-		_ = hctp.analyze_events_per_course_sections()
+		hctp.analyze_events_per_course_sections()
 		assert_that(len(_), equal_to(0))
-		_ = hctp.analyze_resource_types()
+		hctp.analyze_resource_types()
 		assert_that(len(_), equal_to(0))
-		_ = hctp.analyze_enrollment_types()
+		hctp.analyze_enrollment_types()
 		assert_that(len(_), equal_to(0))
-		_ = hctp.analyze_device_types()
+		hctp.analyze_device_types()
 		assert_that(len(_), equal_to(0))
-		_ = hctp.explore_events()
+		hctp.explore_events()
 		assert_that(len(_), equal_to(0))

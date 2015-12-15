@@ -34,7 +34,7 @@ from .mixins import AbstractReportView
 class NoteEventsTimeseriesContext(object):
 
 	def __init__(self, session=None, start_date=None, end_date=None, courses=None,
-				 period_breaks='1 week', minor_period_breaks='1 day', 
+				 period_breaks='1 week', minor_period_breaks='1 day',
 				 theme_seaborn_=True, number_of_most_active_user=10, period='daily'):
 		self.session = session
 		self.courses = courses

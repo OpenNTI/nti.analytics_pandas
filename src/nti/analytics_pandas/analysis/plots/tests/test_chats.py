@@ -43,7 +43,6 @@ class TestChatsPlot(AnalyticsPandasTestBase):
 		_ = citp.analyze_application_types()
 		assert_that(len(_), equal_to(3))
 
-
 	def test_analyze_number_of_users_join_chats_per_date(self):
 		start_date = '2015-10-05'
 		end_date = '2015-10-19'

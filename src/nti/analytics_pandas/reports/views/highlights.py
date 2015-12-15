@@ -27,7 +27,7 @@ class HighlightsTimeseriesContext(object):
 
 	def __init__(self, session=None, start_date=None, end_date=None, courses=None,
 				 period_breaks=None, minor_period_breaks=None, theme_seaborn_=True,
-				 number_of_most_active_user=10, period = 'daily'):
+				 number_of_most_active_user=10, period='daily'):
 		self.session = session
 		self.courses = courses
 		self.end_date = end_date

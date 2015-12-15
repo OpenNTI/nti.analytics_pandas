@@ -137,7 +137,7 @@ class CourseDropsTimeseries(object):
 				new_df = qcd.add_device_type(self.dataframe)
 				if new_df is not None:
 					self.dataframe = new_df
-			
+
 			self.dataframe = add_timestamp_period_(self.dataframe, time_period=period)
 
 			if enrollment_type:

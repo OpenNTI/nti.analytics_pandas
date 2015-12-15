@@ -34,7 +34,7 @@ def _parse_args():
 							 help="Report duration end date, use the format %s" % 'yyyy-mm-dd')
 	arg_parser.add_argument('courses',
 							 help="Course/s ID. For example %s" % '1068, 1096, 1097, 1098, 1099')
-	arg_parser.add_argument('-p','--period',
+	arg_parser.add_argument('-p', '--period',
 							 default='daily',
 							 help="Determine how the events will be aggregated. The default value is daily is %s" % "daily")
 	arg_parser.add_argument('-pb', '--period_breaks',
@@ -103,7 +103,7 @@ def process_args():
 class Report(object):
 
 	def __init__(self, Context, View, start_date, end_date, courses,
-				 period_breaks, minor_period_breaks, theme_seaborn_, 
+				 period_breaks, minor_period_breaks, theme_seaborn_,
 				 filepath, period='daily'):
 		self.db = DBConnection()
 		self.context = Context(self.db.session, start_date, end_date, courses,

@@ -138,7 +138,7 @@ class TestAssignmentsTakenPlot(AnalyticsPandasTestBase):
 										 time_period='weekly')
 		attp = AssignmentsTakenTimeseriesPlot(att)
 		_ = attp.analyze_events(period_breaks='1 week', minor_period_breaks=None)
-		
+
 	def test_analyze_events_empty(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
@@ -260,7 +260,7 @@ class TestSelfAssessmentViewsPlot(AnalyticsPandasTestBase):
 											 time_period='weekly')
 		savtp = SelfAssessmentViewsTimeseriesPlot(savt)
 		_ = savtp.analyze_events(period_breaks='1 week', minor_period_breaks=None)
-		
+
 	def test_analyze_events_empty(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
@@ -488,8 +488,8 @@ class TestAssessmentEventsPlot(AnalyticsPandasTestBase):
 											  time_period='weekly')
 		aet = AssessmentEventsTimeseries(avt=avt, att=att, savt=savt, satt=satt)
 		aetp = AssessmentEventsTimeseriesPlot(aet)
-		_ = aetp.combine_events(period_breaks='1 week',minor_period_breaks=None, theme_seaborn_=True)
-		
+		_ = aetp.combine_events(period_breaks='1 week', minor_period_breaks=None, theme_seaborn_=True)
+
 	def test_combine_events_empty(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
