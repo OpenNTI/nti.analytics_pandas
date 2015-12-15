@@ -379,6 +379,19 @@ class TestNotesEventsPlot(AnalyticsPandasTestBase):
 		netp = NotesEventsTimeseriesPlot(net)
 		_ = netp.explore_all_events()
 
+	def test_notes_events_weekly(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		nct = NotesCreationTimeseries(self.session, start_date, end_date, course_id, period='weekly')
+		nvt = NotesViewTimeseries(self.session, start_date, end_date, course_id, period='weekly')
+		nlt = NoteLikesTimeseries(self.session, start_date, end_date, course_id, period='weekly')
+		nft = NoteFavoritesTimeseries(self.session, start_date, end_date, course_id, period='weekly')
+
+		net = NotesEventsTimeseries(nct, nvt, nlt, nft)
+		netp = NotesEventsTimeseriesPlot(net)
+		_ = netp.explore_all_events(period_breaks='1 week', minor_period_breaks=None)
+		
 	def test_empty_result(self):
 		start_date = '2015-10-05'
 		end_date = '2015-12-04'
