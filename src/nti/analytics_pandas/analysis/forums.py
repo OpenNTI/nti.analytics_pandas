@@ -100,7 +100,7 @@ class ForumsCreatedTimeseries(object):
 	"""
 
 	def __init__(self, session, start_date, end_date, course_id=None,
-				 with_device_type=True, time_period_date=True):
+				 with_device_type=True, period='daily'):
 
 		self.session = session
 		qfc = self.query_forums_created = QueryForumsCreated(self.session)
@@ -117,8 +117,8 @@ class ForumsCreatedTimeseries(object):
 				if new_df is not None:
 					self.dataframe = new_df
 
-			if time_period_date:
-				self.dataframe = add_timestamp_period_(self.dataframe)
+			if period:
+				self.dataframe = add_timestamp_period_(self.dataframe, time_period=period)
 
 	def analyze_events(self):
 		group_by_items = ['timestamp_period']
@@ -148,7 +148,7 @@ class ForumsCommentsCreatedTimeseries(object):
 	"""
 
 	def __init__(self, session, start_date, end_date, course_id=None,
-				 with_device_type=True, time_period_date=True,
+				 with_device_type=True, period='daily',
 				 with_context_name=True, with_enrollment_type=True):
 
 		self.session = session
@@ -180,8 +180,8 @@ class ForumsCommentsCreatedTimeseries(object):
 					self.dataframe = new_df
 					categorical_columns.append('enrollment_type')
 
-			if time_period_date:
-				self.dataframe = add_timestamp_period_(self.dataframe)
+			if period:
+				self.dataframe = add_timestamp_period_(self.dataframe, time_period=period)
 
 
 			self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
@@ -237,7 +237,7 @@ class ForumCommentLikesTimeseries(object):
 	"""
 
 	def __init__(self, session, start_date, end_date, course_id=None,
-				 with_device_type=True, time_period_date=True,
+				 with_device_type=True, period='daily',
 				 with_context_name=True, with_enrollment_type=True):
 
 		self.session = session
@@ -265,8 +265,8 @@ class ForumCommentLikesTimeseries(object):
 				if new_df is not None:
 					self.dataframe = new_df
 
-			if time_period_date:
-				self.dataframe = add_timestamp_period_(self.dataframe)
+			if period:
+				self.dataframe = add_timestamp_period_(self.dataframe, time_period=period)
 
 	def analyze_events(self):
 		group_by_items = ['timestamp_period']
@@ -307,7 +307,7 @@ class ForumCommentFavoritesTimeseries(object):
 	"""
 
 	def __init__(self, session, start_date, end_date, course_id=None,
-				 with_device_type=True, time_period_date=True,
+				 with_device_type=True, period='daily',
 				 with_context_name=True, with_enrollment_type=True):
 		self.session = session
 		qfcf = self.query_forum_comment_favorites = QueryForumCommentFavorites(self.session)
@@ -334,8 +334,8 @@ class ForumCommentFavoritesTimeseries(object):
 					if new_df is not None:
 						self.dataframe = new_df
 
-			if time_period_date:
-				self.dataframe = add_timestamp_period_(self.dataframe)
+			if period:
+				self.dataframe = add_timestamp_period_(self.dataframe, time_period=period)
 
 	def analyze_events(self):
 		group_by_items = ['timestamp_period']
