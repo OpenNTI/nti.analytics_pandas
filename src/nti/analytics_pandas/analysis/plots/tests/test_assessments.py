@@ -35,6 +35,16 @@ class TestAssignmentViewsPlot(AnalyticsPandasTestBase):
 		avtp = AssignmentViewsTimeseriesPlot(avt)
 		_ = avtp.analyze_events(period_breaks='1 day', minor_period_breaks=None)
 
+	def test_analyze_events_weekly(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		courses_id = ['1024', '1025', '1026', '1027', '1028']
+		avt = AssignmentViewsTimeseries(self.session, start_date=start_date,
+										end_date=end_date, course_id=courses_id,
+										time_period='weekly')
+		avtp = AssignmentViewsTimeseriesPlot(avt)
+		_ = avtp.analyze_events(period_breaks='1 week', minor_period_breaks=None)
+
 	def test_analyze_events_empty(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
@@ -119,6 +129,16 @@ class TestAssignmentsTakenPlot(AnalyticsPandasTestBase):
 		attp = AssignmentsTakenTimeseriesPlot(att)
 		_ = attp.analyze_events(period_breaks='1 week', minor_period_breaks='1 day')
 
+	def test_analyze_events_weekly(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		courses_id = ['1024', '1025', '1026', '1027', '1028']
+		att = AssignmentsTakenTimeseries(self.session, start_date=start_date,
+										 end_date=end_date, course_id=courses_id,
+										 time_period='weekly')
+		attp = AssignmentsTakenTimeseriesPlot(att)
+		_ = attp.analyze_events(period_breaks='1 week', minor_period_breaks=None)
+		
 	def test_analyze_events_empty(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
@@ -231,6 +251,16 @@ class TestSelfAssessmentViewsPlot(AnalyticsPandasTestBase):
 		savtp = SelfAssessmentViewsTimeseriesPlot(savt)
 		_ = savtp.analyze_events(period_breaks='1 day', minor_period_breaks=None)
 
+	def test_analyze_events_weekly(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		courses_id = ['1024', '1025', '1026', '1027', '1028']
+		savt = SelfAssessmentViewsTimeseries(self.session, start_date=start_date,
+											 end_date=end_date, course_id=courses_id,
+											 time_period='weekly')
+		savtp = SelfAssessmentViewsTimeseriesPlot(savt)
+		_ = savtp.analyze_events(period_breaks='1 week', minor_period_breaks=None)
+		
 	def test_analyze_events_empty(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
@@ -312,6 +342,16 @@ class TestSelfAssessmentsTakenPlot(AnalyticsPandasTestBase):
 											  end_date=end_date, course_id=courses_id)
 		sattp = SelfAssessmentsTakenTimeseriesPlot(satt)
 		_ = sattp.analyze_events(period_breaks='1 week', minor_period_breaks='1 day')
+
+	def test_analyze_events_weekly(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		courses_id = ['1024', '1025', '1026', '1027', '1028']
+		satt = SelfAssessmentsTakenTimeseries(self.session, start_date=start_date,
+											  end_date=end_date, course_id=courses_id,
+											  time_period='weekly')
+		sattp = SelfAssessmentsTakenTimeseriesPlot(satt)
+		_ = sattp.analyze_events(period_breaks='1 week', minor_period_breaks=None)
 
 	def test_analyze_events_empty(self):
 		start_date = u'2015-01-01'
@@ -421,6 +461,35 @@ class TestAssessmentEventsPlot(AnalyticsPandasTestBase):
 		aetp = AssessmentEventsTimeseriesPlot(aet)
 		_ = aetp.combine_events()
 
+	def test_combine_events_weekly(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		courses_id = ['1024', '1025', '1026', '1027', '1028']
+		avt = AssignmentViewsTimeseries(self.session,
+										start_date=start_date,
+										end_date=end_date,
+										course_id=courses_id,
+										time_period='weekly')
+
+		att = AssignmentsTakenTimeseries(self.session,
+										 start_date=start_date,
+										 end_date=end_date,
+										 course_id=courses_id,
+										 time_period='weekly')
+		savt = SelfAssessmentViewsTimeseries(self.session,
+											 start_date=start_date,
+											 end_date=end_date,
+											 course_id=courses_id,
+											 time_period='weekly')
+		satt = SelfAssessmentsTakenTimeseries(self.session,
+											  start_date=start_date,
+											  end_date=end_date,
+											  course_id=courses_id,
+											  time_period='weekly')
+		aet = AssessmentEventsTimeseries(avt=avt, att=att, savt=savt, satt=satt)
+		aetp = AssessmentEventsTimeseriesPlot(aet)
+		_ = aetp.combine_events(period_breaks='1 week',minor_period_breaks=None, theme_seaborn_=True)
+		
 	def test_combine_events_empty(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
