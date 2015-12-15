@@ -32,6 +32,14 @@ class TestCourseCatalogViewsPlot(AnalyticsPandasTestBase):
 		ccvtp = CourseCatalogViewsTimeseriesPlot(ccvt)
 		_ = ccvtp.explore_events()
 
+	def test_explore_events_course_catalog_views_weekly(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		ccvt = CourseCatalogViewsTimeseries(self.session, start_date, end_date, course_id, period='weekly')
+		ccvtp = CourseCatalogViewsTimeseriesPlot(ccvt)
+		_ = ccvtp.explore_events(period_breaks='1 week', minor_period_breaks=None)
+
 	def test_analyze_device_types_plot(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
@@ -61,6 +69,14 @@ class TestCourseEnrollmentsPlot(AnalyticsPandasTestBase):
 		cetp = CourseEnrollmentsTimeseriesPlot(cet)
 		_ = cetp.explore_events()
 
+	def test_explore_events_course_enrollments_weekly(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		cet = CourseEnrollmentsTimeseries(self.session, start_date, end_date, course_id, period='weekly')
+		cetp = CourseEnrollmentsTimeseriesPlot(cet)
+		_ = cetp.explore_events(period_breaks='1 week', minor_period_breaks=None)
+
 	def test_analyze_device_enrollment_types(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
@@ -89,6 +105,14 @@ class TestCourseDropsPlot(AnalyticsPandasTestBase):
 		cdt = CourseDropsTimeseries(self.session, start_date, end_date, course_id)
 		cdtp = CourseDropsTimeseriesPlot(cdt)
 		_ = cdtp.explore_events()
+
+	def test_explore_events_course_drops_weekly(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		cdt = CourseDropsTimeseries(self.session, start_date, end_date, course_id, period='weekly')
+		cdtp = CourseDropsTimeseriesPlot(cdt)
+		_ = cdtp.explore_events(period_breaks='1 week', minor_period_breaks=None)
 
 	def test_analyze_device_types(self):
 		start_date = '2015-01-01'
@@ -131,6 +155,17 @@ class TestEnrollmentsEventsPlot(AnalyticsPandasTestBase):
 		ceetp = CourseEnrollmentsEventsTimeseriesPlot(ceet)
 		_ = ceetp.explore_course_enrollments_vs_drops()
 
+	def test_explore_course_enrollments_vs_drops_weekly(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		cet = CourseEnrollmentsTimeseries(self.session, start_date, end_date, course_id, period='weekly')
+		cdt = CourseDropsTimeseries(self.session, start_date, end_date, course_id, period='weekly')
+		ceet = CourseEnrollmentsEventsTimeseries(cet, cdt=cdt)
+		ceetp = CourseEnrollmentsEventsTimeseriesPlot(ceet)
+		_ = ceetp.explore_course_enrollments_vs_drops(period_breaks='1 week', minor_period_breaks=None)
+
+
 	def test_explore_course_catalog_views_vs_enrollments(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
@@ -140,6 +175,16 @@ class TestEnrollmentsEventsPlot(AnalyticsPandasTestBase):
 		ceet = CourseEnrollmentsEventsTimeseries(cet, ccvt=ccvt)
 		ceetp = CourseEnrollmentsEventsTimeseriesPlot(ceet)
 		_ = ceetp.explore_course_catalog_views_vs_enrollments()
+
+	def test_explore_course_catalog_views_vs_enrollments_weekly(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		cet = CourseEnrollmentsTimeseries(self.session, start_date, end_date, course_id, period='weekly')
+		ccvt = CourseCatalogViewsTimeseries(self.session, start_date, end_date, course_id, period='weekly')
+		ceet = CourseEnrollmentsEventsTimeseries(cet, ccvt=ccvt)
+		ceetp = CourseEnrollmentsEventsTimeseriesPlot(ceet)
+		_ = ceetp.explore_course_catalog_views_vs_enrollments(period_breaks='1 week', minor_period_breaks=None)
 
 	def test_empty_result(self):
 		start_date = '2015-01-01'

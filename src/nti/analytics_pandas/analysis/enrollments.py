@@ -27,7 +27,7 @@ class CourseCatalogViewsTimeseries(object):
 	"""
 
 	def __init__(self, session, start_date, end_date, course_id=None,
-				 with_device_type=True, time_period_date=True):
+				 with_device_type=True, period='daily'):
 		self.session = session
 		qccv = self.query_course_catalog_views = QueryCourseCatalogViews(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -43,8 +43,7 @@ class CourseCatalogViewsTimeseries(object):
 				if new_df is not None:
 					self.dataframe = new_df
 
-			if time_period_date:
-				self.dataframe = add_timestamp_period_(self.dataframe)
+			self.dataframe = add_timestamp_period_(self.dataframe, time_period=period)
 
 	def analyze_events(self):
 		group_by_items = ['timestamp_period']
@@ -75,7 +74,7 @@ class CourseEnrollmentsTimeseries(object):
 	"""
 
 	def __init__(self, session, start_date, end_date, course_id=None,
-				 with_device_type=True, time_period_date=True, enrollment_type=True):
+				 with_device_type=True, period='daily', enrollment_type=True):
 		self.session = session
 		qce = self.query_course_enrollments = QueryCourseEnrollments(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -91,8 +90,7 @@ class CourseEnrollmentsTimeseries(object):
 				if new_df is not None:
 					self.dataframe = new_df
 
-			if time_period_date:
-				self.dataframe = add_timestamp_period_(self.dataframe)
+			self.dataframe = add_timestamp_period_(self.dataframe, time_period=period)
 
 			if enrollment_type:
 				qet = QueryEnrollmentTypes(session)
@@ -123,7 +121,7 @@ class CourseDropsTimeseries(object):
 	"""
 
 	def __init__(self, session, start_date, end_date, course_id=None,
-				 with_device_type=True, time_period_date=True, enrollment_type=True):
+				 with_device_type=True, period='daily', enrollment_type=True):
 
 		self.session = session
 		qcd = self.query_course_drops = QueryCourseDrops(self.session)
@@ -139,9 +137,8 @@ class CourseDropsTimeseries(object):
 				new_df = qcd.add_device_type(self.dataframe)
 				if new_df is not None:
 					self.dataframe = new_df
-
-			if time_period_date:
-				self.dataframe = add_timestamp_period_(self.dataframe)
+			
+			self.dataframe = add_timestamp_period_(self.dataframe, time_period=period)
 
 			if enrollment_type:
 				qet = QueryEnrollmentTypes(session)
