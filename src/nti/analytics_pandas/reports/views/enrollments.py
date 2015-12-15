@@ -35,7 +35,8 @@ class EnrollmentTimeseriesContext(object):
 
 	def __init__(self, session=None, start_date=None, end_date=None, courses=None,
 				 period_breaks='1 week', minor_period_breaks='1 day',
-				 theme_seaborn_=True, number_of_most_active_user=10):
+				 theme_seaborn_=True, number_of_most_active_user=10,
+				 period='daily'):
 		self.session = session
 		self.courses = courses
 		self.end_date = end_date
@@ -44,6 +45,7 @@ class EnrollmentTimeseriesContext(object):
 		self.theme_seaborn_ = theme_seaborn_
 		self.minor_period_breaks = minor_period_breaks
 		self.number_of_most_active_user = number_of_most_active_user
+		self.period = period
 
 Context = EnrollmentTimeseriesContext
 

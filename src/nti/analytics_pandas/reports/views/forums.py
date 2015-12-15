@@ -36,7 +36,7 @@ class ForumsTimeseriesContext(object):
 
 	def __init__(self, session=None, start_date=None, end_date=None, courses=None,
 				 period_breaks=None, minor_period_breaks=None, theme_seaborn_=True,
-				 number_of_most_active_user=10):
+				 number_of_most_active_user=10, period='daily'):
 		self.session = session
 		self.courses = courses
 		self.end_date = end_date
@@ -45,6 +45,7 @@ class ForumsTimeseriesContext(object):
 		self.theme_seaborn_ = theme_seaborn_
 		self.minor_period_breaks = minor_period_breaks
 		self.number_of_most_active_user = number_of_most_active_user
+		self.period = period
 
 Context = ForumsTimeseriesContext
 
