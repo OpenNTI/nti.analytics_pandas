@@ -107,7 +107,7 @@ class AssignmentViewsTimeseries(object):
 
 	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_resource_type=True, with_device_type=True,
-				 time_period_date=True, with_context_name=True,
+				 time_period='daily', with_context_name=True,
 				 with_enrollment_type=True):
 
 		self.session = session
@@ -134,8 +134,7 @@ class AssignmentViewsTimeseries(object):
 					self.dataframe = new_df
 					categorical_columns.append('device_type')
 
-			if time_period_date:
-				self.dataframe = add_timestamp_period_(self.dataframe)
+			self.dataframe = add_timestamp_period_(self.dataframe, time_period=time_period)
 
 			if with_context_name:
 				new_df = qav.add_context_name(self.dataframe, course_id)
@@ -229,7 +228,7 @@ class AssignmentsTakenTimeseries(object):
 
 	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_resource_type=True, with_device_type=True,
-				 time_period_date=True, with_assignment_title=True,
+				 time_period='daily', with_assignment_title=True,
 				 with_context_name=True, with_enrollment_type=True):
 
 		self.session = session
@@ -251,8 +250,7 @@ class AssignmentsTakenTimeseries(object):
 					self.dataframe = new_df
 					categorical_columns.append('device_type')
 
-			if time_period_date:
-				self.dataframe = add_timestamp_period_(self.dataframe)
+			self.dataframe = add_timestamp_period_(self.dataframe, time_period=time_period)
 
 			if with_assignment_title:
 				new_df = qat.add_assignment_title(self.dataframe)
@@ -370,7 +368,7 @@ class SelfAssessmentViewsTimeseries(object):
 
 	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_resource_type=True, with_device_type=True,
-				 time_period_date=True, with_context_name=True,
+				 time_period='daily', with_context_name=True,
 				 with_enrollment_type=True):
 
 		self.session = session
@@ -396,8 +394,8 @@ class SelfAssessmentViewsTimeseries(object):
 					self.dataframe = new_df
 					categorical_columns.append('device_type')
 
-			if time_period_date:
-				self.dataframe = add_timestamp_period_(self.dataframe)
+			
+			self.dataframe = add_timestamp_period_(self.dataframe, time_period=time_period)
 
 			if with_context_name:
 				new_df = qsav.add_context_name(self.dataframe, course_id)
@@ -494,7 +492,7 @@ class SelfAssessmentsTakenTimeseries(object):
 
 	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_resource_type=True, with_device_type=True,
-				 time_period_date=True, with_context_name=True,
+				 time_period='daily', with_context_name=True,
 				 with_enrollment_type=True):
 
 		self.session = session
@@ -528,8 +526,7 @@ class SelfAssessmentsTakenTimeseries(object):
 					self.dataframe = new_df
 					categorical_columns.append('enrollment_type')
 
-			if time_period_date:
-				self.dataframe = add_timestamp_period_(self.dataframe)
+			self.dataframe = add_timestamp_period_(self.dataframe, time_period=time_period)
 
 			self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
