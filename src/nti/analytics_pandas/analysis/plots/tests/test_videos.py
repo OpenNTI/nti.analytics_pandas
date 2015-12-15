@@ -17,13 +17,21 @@ from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
 class TestVideoEventsPlot(AnalyticsPandasTestBase):
 
-	def test_explore_events_topics_created(self):
+	def test_explore_events(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
 		course_id = ['388']
 		vet = VideoEventsTimeseries(self.session, start_date, end_date, course_id)
 		vetp = VideoEventsTimeseriesPlot(vet)
 		_ = vetp.explore_events(period_breaks='1 week', minor_period_breaks='1 day')
+
+	def test_explore_events_weekly(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		vet = VideoEventsTimeseries(self.session, start_date, end_date, course_id, period='weekly')
+		vetp = VideoEventsTimeseriesPlot(vet)
+		_ = vetp.explore_events(period_breaks='1 week', minor_period_breaks=None)
 
 	def test_analyze_video_events_types(self):
 		start_date = '2015-01-01'
