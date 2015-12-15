@@ -25,6 +25,15 @@ class TestBookmarksPlot(AnalyticsPandasTestBase):
 		bctp = BookmarksTimeseriesPlot(bct)
 		_ = bctp.explore_events()
 
+	def test_explore_events_bookmark_creation_weekly(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		bct = BookmarkCreationTimeseries(self.session, start_date, end_date, course_id, 
+										 period='weekly')
+		bctp = BookmarksTimeseriesPlot(bct)
+		_ = bctp.explore_events(period_breaks='1 week', minor_period_breaks = None)
+		
 	def test_analyze_bookmark_creation_resource_type(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
