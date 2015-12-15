@@ -81,7 +81,8 @@ class TopicsTimeseriesReportView(AbstractReportView):
 		self.tct = TopicsCreationTimeseries(self.context.session,
 									   		self.context.start_date,
 									   		self.context.end_date,
-											self.context.courses)
+											self.context.courses,
+											period=self.context.period)
 		if self.tct.dataframe.empty:
 			self.options['has_topics_created_data'] = False
 		else:
@@ -92,7 +93,8 @@ class TopicsTimeseriesReportView(AbstractReportView):
 		self.tvt = TopicViewsTimeseries(self.context.session,
 								   		self.context.start_date,
 								   		self.context.end_date,
-										self.context.courses)
+										self.context.courses,
+										period=self.context.period)
 		if self.tvt.dataframe.empty:
 			self.options['has_topic_views_data'] = False
 		else:
@@ -102,7 +104,8 @@ class TopicsTimeseriesReportView(AbstractReportView):
 		self.tlt = TopicLikesTimeseries(self.context.session,
 								   		self.context.start_date,
 								   		self.context.end_date,
-										self.context.courses)
+										self.context.courses,
+										period=self.context.period)
 
 		if self.tlt.dataframe.empty:
 			self.options['has_topic_likes_data'] = False
@@ -113,7 +116,8 @@ class TopicsTimeseriesReportView(AbstractReportView):
 		self.tft = TopicFavoritesTimeseries(self.context.session,
 									   		self.context.start_date,
 									   		self.context.end_date,
-											self.context.courses)
+											self.context.courses,
+											period=self.context.period)
 		if self.tft.dataframe.empty:
 			self.options['has_topic_favorites_data'] = False
 		else:
