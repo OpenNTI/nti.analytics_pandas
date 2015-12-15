@@ -83,7 +83,8 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 		self.nct = NotesCreationTimeseries(self.context.session,
 										   self.context.start_date,
 										   self.context.end_date,
-										   self.context.courses)
+										   self.context.courses,
+										   period=self.context.period)
 		if self.nct.dataframe.empty:
 			self.options['has_notes_created_data'] = False
 		else:
@@ -93,7 +94,8 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 		self.nvt = NotesViewTimeseries(self.context.session,
 									   self.context.start_date,
 									   self.context.end_date,
-									   self.context.courses)
+									   self.context.courses,
+									   period=self.context.period)
 		if self.nvt.dataframe.empty:
 			self.options['has_note_views_data'] = False
 		else:
@@ -103,7 +105,8 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 		self.nlt = NoteLikesTimeseries(self.context.session,
 									   self.context.start_date,
 									   self.context.end_date,
-									   self.context.courses)
+									   self.context.courses,
+									   period=self.context.period)
 		if self.nlt.dataframe.empty:
 			self.options['has_note_likes_data'] = False
 		else:
@@ -113,7 +116,8 @@ class NoteEventsTimeseriesReportView(AbstractReportView):
 		self.nft = NoteFavoritesTimeseries(self.context.session,
 									   	   self.context.start_date,
 									   	   self.context.end_date,
-									   	   self.context.courses)
+									   	   self.context.courses,
+									   	   period=self.context.period)
 		if self.nlt.dataframe.empty:
 			self.options['has_note_favorites_data'] = False
 		else:

@@ -73,7 +73,8 @@ class HighlightsTimeseriesReportView(AbstractReportView):
 		self.hct = HighlightsCreationTimeseries(self.context.session,
 										   		self.context.start_date,
 										   		self.context.end_date,
-										   		self.context.courses)
+										   		self.context.courses,
+										   		period=self.context.period)
 		if self.hct.dataframe.empty:
 			self.options['has_highlight_data'] = False
 			return self.options

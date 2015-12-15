@@ -69,7 +69,8 @@ class ResourceViewsTimeseriesReportView(AbstractReportView):
 		self.rvt = ResourceViewsTimeseries(self.context.session,
 										   self.context.start_date,
 										   self.context.end_date,
-										   self.context.courses)
+										   self.context.courses,
+										   period=self.context.period)
 		if self.rvt.dataframe.empty:
 			self.options['has_resource_view_events'] = False
 			return self.options
