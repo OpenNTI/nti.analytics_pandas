@@ -73,7 +73,8 @@ class BookmarksTimeseriesReportView(AbstractReportView):
 		self.bct = BookmarkCreationTimeseries(self.context.session,
 										   	  self.context.start_date,
 										   	  self.context.end_date,
-											  self.context.courses)
+											  self.context.courses,
+											  period=self.context.period)
 		if self.bct.dataframe.empty:
 			self.options['has_bookmark_data'] = False
 			return self.options
