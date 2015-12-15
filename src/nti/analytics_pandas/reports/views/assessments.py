@@ -37,7 +37,7 @@ class AssessmentsEventsTimeseriesContext(object):
 
 	def __init__(self, session=None, start_date=None, end_date=None, courses=None,
 				 period_breaks='1 week', minor_period_breaks='1 day',
-				 theme_seaborn_=True, number_of_most_active_user=10):
+				 theme_seaborn_=True, number_of_most_active_user=10, period = 'daily'):
 		self.session = session
 		self.courses = courses
 		self.end_date = end_date
@@ -46,6 +46,7 @@ class AssessmentsEventsTimeseriesContext(object):
 		self.theme_seaborn_ = theme_seaborn_
 		self.minor_period_breaks = minor_period_breaks
 		self.number_of_most_active_user = number_of_most_active_user
+		self.period = period
 
 Context = AssessmentsEventsTimeseriesContext
 
@@ -84,7 +85,8 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 		self.att = AssignmentsTakenTimeseries(self.context.session,
 											  self.context.start_date,
 											  self.context.end_date,
-											  self.context.courses)
+											  self.context.courses,
+											  time_period=self.context.period)
 
 		if self.att.dataframe.empty:
 			self.options['has_assignment_taken_data'] = False
@@ -96,7 +98,8 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 		self.avt = AssignmentViewsTimeseries(self.context.session,
 											 self.context.start_date,
 											 self.context.end_date,
-											 self.context.courses)
+											 self.context.courses,
+											 time_period=self.context.period)
 
 		if self.avt.dataframe.empty:
 			self.options['has_assignment_views_data'] = False
@@ -107,7 +110,8 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 		self.savt = SelfAssessmentViewsTimeseries(self.context.session,
 												  self.context.start_date,
 												  self.context.end_date,
-												  self.context.courses)
+												  self.context.courses,
+												  time_period=self.context.period)
 
 		if self.savt.dataframe.empty:
 			self.options['has_self_assessment_views_data'] = False
@@ -119,7 +123,8 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 		self.satt = SelfAssessmentsTakenTimeseries(self.context.session,
 												   self.context.start_date,
 												   self.context.end_date,
-												   self.context.courses)
+												   self.context.courses,
+												   time_period=self.context.period)
 
 		if self.satt.dataframe.empty:
 			self.options['has_self_assessments_taken_data'] = False
