@@ -40,7 +40,8 @@ def main():
 						 	  period_breaks=args['period_breaks'],
 						 	  minor_period_breaks=args['minor_period_breaks'],
 						 	  theme_seaborn_=args['theme_seaborn'],
-						 	  filepath=filepath)
+						 	  filepath=filepath,
+						 	  period=args['period'])
 	report = report_generator.build()
 	return report
 

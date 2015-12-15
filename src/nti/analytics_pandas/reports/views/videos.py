@@ -79,7 +79,8 @@ class VideosTimeseriesReportView(AbstractReportView):
 		self.vet = VideoEventsTimeseries(self.context.session,
 										 self.context.start_date,
 										 self.context.end_date,
-										 self.context.courses)
+										 self.context.courses,
+										 period=self.context.period)
 		if self.vet.dataframe.empty:
 			self.options['has_video_data'] = False
 		else:
