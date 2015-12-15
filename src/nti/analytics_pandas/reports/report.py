@@ -34,12 +34,15 @@ def _parse_args():
 							 help="Report duration end date, use the format %s" % 'yyyy-mm-dd')
 	arg_parser.add_argument('courses',
 							 help="Course/s ID. For example %s" % '1068, 1096, 1097, 1098, 1099')
+	arg_parser.add_argument('-p','--period',
+							 default='daily',
+							 help="Determine how the events will be aggregated. The default value is daily is %s" % "daily")
 	arg_parser.add_argument('-pb', '--period_breaks',
 							 default=None,
-							 help="Set period breaks on generated plots. The default is %s" % "'1 week'")
+							 help="Set period breaks on generated plots. The default is %s" % "None")
 	arg_parser.add_argument('-mpb', '--minor_period_breaks',
 							 default=None,
-							 help="Set minor period breaks on generated plots. The default is %s" % "'1 day'")
+							 help="Set minor period breaks on generated plots. The default is %s" % "None")
 	arg_parser.add_argument('-ts', '--theme_seaborn',
 							 default=True,
 							 help="Seaborn theme for generated plots. The default it is 1 (true)")
@@ -78,8 +81,16 @@ def process_args():
 	else:
 		args_dict['courses'] = args.courses.split()
 
-	args_dict['period_breaks'] = args.period_breaks
-	args_dict['minor_period_breaks'] = args.minor_period_breaks
+	args_dict['period'] = args.period
+	if args.period == 'daily':
+		args_dict['period_breaks'] = '1 day'
+		args_dict['minor_period_breaks'] = None
+	elif args.period == 'weekly':
+		args_dict['period_breaks'] = '1 week'
+		args_dict['minor_period_breaks'] = None
+	else:
+		args_dict['period_breaks'] = args.period_breaks
+		args_dict['minor_period_breaks'] = args.minor_period_breaks
 
 	if isinstance(args.theme_seaborn, bool):
 		args_dict['theme_seaborn'] = args.theme_seaborn
@@ -92,10 +103,12 @@ def process_args():
 class Report(object):
 
 	def __init__(self, Context, View, start_date, end_date, courses,
-				 period_breaks, minor_period_breaks, theme_seaborn_, filepath):
+				 period_breaks, minor_period_breaks, theme_seaborn_, 
+				 filepath, period='daily'):
 		self.db = DBConnection()
 		self.context = Context(self.db.session, start_date, end_date, courses,
-					  		   period_breaks, minor_period_breaks, theme_seaborn_)
+					  		   period_breaks, minor_period_breaks, theme_seaborn_,
+					  		   period=period)
 		self.view = View(self.context)
 		self.filepath = filepath
 
