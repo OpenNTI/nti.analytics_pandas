@@ -20,7 +20,7 @@ from ..queries import QueryUsers
 from ..utils import get_values_of_series_categorical_index_
 
 def first_date_of_the_week(year, week):
-	ret = datetime.strptime('%04d-%02d-1' % (year, week), '%Y-%W-%w')
+	ret = datetime.strptime('%04d-%02d-2' % (year, week), '%Y-%W-%w')
 	if date(year, 1, 4).isoweekday() > 4:
 		ret -= timedelta(days=7)
 	return ret
