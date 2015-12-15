@@ -24,6 +24,7 @@ from ggplot import geom_bar
 from ggplot import geom_line
 from ggplot import geom_point
 from ggplot import facet_wrap
+from ggplot import date_breaks
 from ggplot import date_format
 from ggplot import element_text
 from ggplot import scale_x_date
@@ -52,17 +53,23 @@ def line_plot_x_axis_date(df,
 		geom_line() + \
 		geom_point() + \
 		ggtitle(_(title)) + \
-		theme(title=element_text(size=10, face="bold")) + \
 		ylab(_(y_axis_label)) + \
 		xlab(_(x_axis_label)) + \
 		ylim(0, y_max)
 
+	if period_breaks == '7 days':
+		print(df)
+	if period_breaks is not None:
+		breaks = date_breaks(period_breaks)
+	else:
+		breaks = period_breaks
+
 	if minor_breaks is not None:
-		line_plot = line_plot + scale_x_date(breaks=period_breaks,
+		line_plot = line_plot + scale_x_date(breaks=breaks,
 											 minor_breaks=minor_breaks,
 											 labels=date_format(DATE_FORMAT))
 	else:
-		line_plot = line_plot + scale_x_date(breaks=period_breaks,
+		line_plot = line_plot + scale_x_date(breaks=breaks,
 											 labels=date_format(DATE_FORMAT))
 	if theme_seaborn_:
 		line_plot = line_plot + theme_seaborn()
