@@ -25,6 +25,14 @@ class TestResourceViewsPlot(AnalyticsPandasTestBase):
 		rvtp = ResourceViewsTimeseriesPlot(rvt)
 		_ = rvtp.explore_events()
 
+	def test_explore_events_weekly(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		rvt = ResourceViewsTimeseries(self.session, start_date, end_date, course_id, period='weekly')
+		rvtp = ResourceViewsTimeseriesPlot(rvt)
+		_ = rvtp.explore_events(period_breaks='1 week', minor_period_breaks=None)
+
 	def test_analyze_events_per_course_sections(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
