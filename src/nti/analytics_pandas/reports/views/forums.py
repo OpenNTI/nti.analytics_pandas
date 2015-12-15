@@ -82,7 +82,8 @@ class ForumsTimeseriesReportView(AbstractReportView):
 		self.fct = ForumsCreatedTimeseries(self.context.session,
 										   self.context.start_date,
 										   self.context.end_date,
-										   self.context.courses)
+										   self.context.courses,
+										   period=self.context.period)
 		data = {}
 
 		if self.fct.dataframe.empty:
@@ -94,7 +95,8 @@ class ForumsTimeseriesReportView(AbstractReportView):
 		self.fcct = ForumsCommentsCreatedTimeseries(self.context.session,
 													self.context.start_date,
 													self.context.end_date,
-													self.context.courses)
+													self.context.courses,
+													period=self.context.period)
 		if self.fcct.dataframe.empty:
 			self.options['has_forum_comments_created_data'] = False
 		else:
@@ -104,7 +106,8 @@ class ForumsTimeseriesReportView(AbstractReportView):
 		self.fclt = ForumCommentLikesTimeseries(self.context.session,
 												self.context.start_date,
 												self.context.end_date,
-												self.context.courses)
+												self.context.courses,
+												period=self.context.period)
 		if self.fclt.dataframe.empty:
 			self.options['has_forum_comment_likes_data'] = False
 		else:
@@ -114,7 +117,8 @@ class ForumsTimeseriesReportView(AbstractReportView):
 		self.fcft = ForumCommentFavoritesTimeseries(self.context.session,
 													self.context.start_date,
 													self.context.end_date,
-													self.context.courses)
+													self.context.courses,
+													period=self.context.period)
 		if self.fcft.dataframe.empty:
 			self.options['has_forum_comment_favorites_data'] = False
 		else:
