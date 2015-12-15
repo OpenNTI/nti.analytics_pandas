@@ -34,6 +34,14 @@ class TestNotesCreationPlot(AnalyticsPandasTestBase):
 		nctp = NotesCreationTimeseriesPlot(nct)
 		_ = nctp.explore_events()
 
+	def test_explore_events_notes_creation_weekly(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		nct = NotesCreationTimeseries(self.session, start_date, end_date, course_id, period='weekly')
+		nctp = NotesCreationTimeseriesPlot(nct)
+		_ = nctp.explore_events(period_breaks='1 week', minor_period_breaks=None)
+
 	def test_analyze_device_types(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
@@ -124,6 +132,14 @@ class TestNoteViewsPlot(AnalyticsPandasTestBase):
 		nvtp = NotesViewTimeseriesPlot(nvt)
 		_ = nvtp.analyze_total_events_based_on_sharing_type(period_breaks='1 week')
 
+	def test_analyze_total_events_based_on_sharing_type_weekly(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		nvt = NotesViewTimeseries(self.session, start_date, end_date, course_id, period='weekly')
+		nvtp = NotesViewTimeseriesPlot(nvt)
+		_ = nvtp.analyze_total_events_based_on_sharing_type(period_breaks='1 week', minor_period_breaks=None)
+	
 	def test_analyze_total_events_based_on_device_type(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
@@ -224,6 +240,14 @@ class TestNoteLikesPlot(AnalyticsPandasTestBase):
 		nltp = NoteLikesTimeseriesPlot(nlt)
 		_ = nltp.explore_events(period_breaks='1 day', minor_period_breaks=None)
 
+	def test_explore_events_weekly(self):
+		start_date = '2015-10-05'
+		end_date = '2015-12-04'
+		course_id = ['1068', '1096', '1097', '1098', '1099']
+		nlt = NoteLikesTimeseries(self.session, start_date, end_date, course_id, period='weekly')
+		nltp = NoteLikesTimeseriesPlot(nlt)
+		_ = nltp.explore_events(period_breaks='1 week', minor_period_breaks=None)
+
 	def test_analyze_events_per_device_types(self):
 		start_date = '2015-10-05'
 		end_date = '2015-12-04'
@@ -282,6 +306,14 @@ class TestNoteFavoritesPlot(AnalyticsPandasTestBase):
 		nft = NoteFavoritesTimeseries(self.session, start_date, end_date, course_id)
 		nftp = NoteFavoritesTimeseriesPlot(nft)
 		_ = nftp.explore_events(period_breaks='1 day', minor_period_breaks=None)
+
+	def test_explore_events_weekly(self):
+		start_date = '2015-10-05'
+		end_date = '2015-12-04'
+		course_id = ['1068', '1096', '1097', '1098', '1099']
+		nft = NoteFavoritesTimeseries(self.session, start_date, end_date, course_id, period='weekly')
+		nftp = NoteFavoritesTimeseriesPlot(nft)
+		_ = nftp.explore_events(period_breaks='1 week', minor_period_breaks=None)
 
 	def test_analyze_events_per_device_types(self):
 		start_date = '2015-10-05'

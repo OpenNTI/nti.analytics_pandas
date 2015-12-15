@@ -94,7 +94,7 @@ class NotesCreationTimeseries(object):
 
 	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_resource_type=True, with_device_type=True,
-				 time_period_date=True, with_context_name=True,
+				 period='daily', with_context_name=True,
 				 with_enrollment_type=True):
 		self.session = session
 		qnc = self.query_notes_created = QueryNotesCreated(self.session)
@@ -132,8 +132,7 @@ class NotesCreationTimeseries(object):
 					self.dataframe = new_df
 					categorical_columns.append('enrollment_type')
 
-			if time_period_date:
-				self.dataframe = add_timestamp_period_(self.dataframe)
+			self.dataframe = add_timestamp_period_(self.dataframe, time_period=period)
 
 			self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
@@ -250,7 +249,7 @@ class NotesViewTimeseries(object):
 
 	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_resource_type=True, with_device_type=True,
-				 time_period_date=True, with_sharing_type=True,
+				 period='daily', with_sharing_type=True,
 				 with_context_name=True, with_enrollment_type=True):
 		self.session = session
 		qnv = self.query_notes_viewed = QueryNotesViewed(self.session)
@@ -276,8 +275,7 @@ class NotesViewTimeseries(object):
 					self.dataframe = new_df
 					categorical_columns.append('resource_type')
 
-			if time_period_date:
-				self.dataframe = add_timestamp_period_(self.dataframe)
+			self.dataframe = add_timestamp_period_(self.dataframe, time_period=period)
 
 			if with_sharing_type:
 				new_df = qnv.add_sharing_type(self.dataframe)
@@ -457,7 +455,7 @@ class NoteLikesTimeseries(object):
 
 	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_resource_type=True, with_device_type=True,
-				 time_period_date=True, with_context_name=True,
+				 period='daily', with_context_name=True,
 				 with_enrollment_type=True):
 		self.session = session
 		qnl = self.query_notes_viewed = QueryNoteLikes(self.session)
@@ -479,8 +477,7 @@ class NoteLikesTimeseries(object):
 				if new_df is not None:
 					self.dataframe = new_df
 
-			if time_period_date:
-				self.dataframe = add_timestamp_period_(self.dataframe)
+			self.dataframe = add_timestamp_period_(self.dataframe, time_period=period)
 
 			if with_context_name:
 				new_df = qnl.add_context_name(self.dataframe, course_id)
@@ -535,7 +532,7 @@ class NoteFavoritesTimeseries(object):
 
 	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_resource_type=True, with_device_type=True,
-				 time_period_date=True, with_context_name=True,
+				 period='daily', with_context_name=True,
 				 with_enrollment_type=True):
 		self.session = session
 		qnf = self.query_notes_viewed = QueryNoteFavorites(self.session)
@@ -557,8 +554,7 @@ class NoteFavoritesTimeseries(object):
 				if new_df is not None:
 					self.dataframe = new_df
 
-			if time_period_date:
-				self.dataframe = add_timestamp_period_(self.dataframe)
+			self.dataframe = add_timestamp_period_(self.dataframe, time_period=period)
 
 			if with_context_name:
 				new_df = qnf.add_context_name(self.dataframe, course_id)
