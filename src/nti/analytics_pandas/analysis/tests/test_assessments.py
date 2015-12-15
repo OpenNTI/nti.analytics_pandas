@@ -393,4 +393,4 @@ class TestAssessmentEventsTimeseries(AnalyticsPandasTestBase):
 		aet = AssessmentEventsTimeseries(att=att, satt=satt)
 		df = aet.analyze_assessments_taken_over_total_enrollments()
 		assert_that(df.columns, has_item('ratio'))
-		assert_that(df.columns, has_item('event_type'))
+		assert_that(df.columns, has_item('assessment_type'))
