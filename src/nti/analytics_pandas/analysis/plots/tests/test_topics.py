@@ -32,7 +32,15 @@ class TestTopicsCreationPlot(AnalyticsPandasTestBase):
 		course_id = ['388']
 		tct = TopicsCreationTimeseries(self.session, start_date, end_date, course_id)
 		tctp = TopicsCreationTimeseriesPlot(tct)
-		_ = tctp.explore_events(period_breaks='1 day', minor_period_breaks='None')
+		_ = tctp.explore_events(period_breaks='1 day', minor_period_breaks=None)
+
+	def test_explore_events_topics_created_weekly(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		tct = TopicsCreationTimeseries(self.session, start_date, end_date, course_id, period='weekly')
+		tctp = TopicsCreationTimeseriesPlot(tct)
+		_ = tctp.explore_events(period_breaks='1 week', minor_period_breaks=None)
 
 	def test_analyze_events_per_course_sections(self):
 		start_date = '2015-01-01'
@@ -82,6 +90,14 @@ class TestTopicViewsPlot(AnalyticsPandasTestBase):
 		tvt = TopicViewsTimeseries(self.session, start_date, end_date, course_id)
 		tvtp = TopicViewsTimeseriesPlot(tvt)
 		_ = tvtp.explore_events(period_breaks='1 week', minor_period_breaks='1 day')
+
+	def test_explore_events_topics_viewed_weekly(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		tvt = TopicViewsTimeseries(self.session, start_date, end_date, course_id, period='weekly')
+		tvtp = TopicViewsTimeseriesPlot(tvt)
+		_ = tvtp.explore_events(period_breaks='1 week', minor_period_breaks=None)
 
 	def test_analyze_device_type(self):
 		start_date = '2015-01-01'
@@ -134,13 +150,21 @@ class TestTopicViewsPlot(AnalyticsPandasTestBase):
 
 class TestTopicLikesPlot(AnalyticsPandasTestBase):
 
-	def test_explore_events_topics_viewed(self):
+	def test_explore_events_topic_likes(self):
 		start_date = '2015-10-05'
 		end_date = '2015-10-27'
 		course_id = ['1068', '1096', '1097', '1098', '1099']
 		tlt = TopicLikesTimeseries(self.session, start_date, end_date, course_id)
 		tltp = TopicLikesTimeseriesPlot(tlt)
 		_ = tltp.explore_events(period_breaks='1 day', minor_period_breaks=None)
+
+	def test_explore_events_topic_likes_weekly(self):
+		start_date = '2015-10-05'
+		end_date = '2015-10-27'
+		course_id = ['1068', '1096', '1097', '1098', '1099']
+		tlt = TopicLikesTimeseries(self.session, start_date, end_date, course_id, period='weekly')
+		tltp = TopicLikesTimeseriesPlot(tlt)
+		_ = tltp.explore_events(period_breaks='1 week', minor_period_breaks=None)
 
 	def test_analyze_events_per_device_types(self):
 		start_date = '2015-10-05'
@@ -183,13 +207,21 @@ class TestTopicLikesPlot(AnalyticsPandasTestBase):
 
 class TestTopicFavoritesPlot(AnalyticsPandasTestBase):
 
-	def test_explore_events_topics_viewed(self):
+	def test_explore_events_topic_favorites(self):
 		start_date = '2015-10-05'
 		end_date = '2015-10-27'
 		course_id = ['1068', '1096', '1097', '1098', '1099']
 		tft = TopicFavoritesTimeseries(self.session, start_date, end_date, course_id)
 		tftp = TopicFavoritesTimeseriesPlot(tft)
 		_ = tftp.explore_events(period_breaks='1 day', minor_period_breaks=None)
+
+	def test_explore_events_topic_favorites_weekly(self):
+		start_date = '2015-10-05'
+		end_date = '2015-10-27'
+		course_id = ['1068', '1096', '1097', '1098', '1099']
+		tft = TopicFavoritesTimeseries(self.session, start_date, end_date, course_id, period='weekly')
+		tftp = TopicFavoritesTimeseriesPlot(tft)
+		_ = tftp.explore_events(period_breaks='1 week', minor_period_breaks=None)
 
 	def test_analyze_events_per_device_types(self):
 		start_date = '2015-10-05'
@@ -243,6 +275,18 @@ class TestTopicsEventsPlot(AnalyticsPandasTestBase):
 		tet = TopicsEventsTimeseries(tct, tvt, tlt, tft)
 		tetp = TopicsEventsTimeseriesPlot(tet)
 		_ = tetp.explore_all_events(period_breaks='1 week', minor_period_breaks='1 day')
+
+	def test_topics_events_weekly(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['388']
+		tct = TopicsCreationTimeseries(self.session, start_date, end_date, course_id, period='weekly')
+		tvt = TopicViewsTimeseries(self.session, start_date, end_date, course_id, period='weekly')
+		tlt = TopicLikesTimeseries(self.session, start_date, end_date, course_id, period='weekly')
+		tft = TopicFavoritesTimeseries(self.session, start_date, end_date, course_id, period='weekly')
+		tet = TopicsEventsTimeseries(tct, tvt, tlt, tft)
+		tetp = TopicsEventsTimeseriesPlot(tet)
+		_ = tetp.explore_all_events(period_breaks='1 week', minor_period_breaks=None)
 
 	def test_empty_result(self):
 		start_date = '2015-01-01'

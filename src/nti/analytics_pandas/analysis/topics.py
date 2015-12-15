@@ -92,7 +92,7 @@ class TopicsCreationTimeseries(object):
 	"""
 
 	def __init__(self, session, start_date, end_date, course_id=None,
-				 with_device_type=True, time_period_date=True,
+				 with_device_type=True, period='daily',
 				 with_context_name=True, with_enrollment_type=True):
 		self.session = session
 		qtc = self.query_topics_created = QueryTopicsCreated(self.session)
@@ -124,8 +124,7 @@ class TopicsCreationTimeseries(object):
 					self.dataframe = new_df
 					categorical_columns.append('enrollment_type')
 
-			if time_period_date:
-				self.dataframe = add_timestamp_period_(self.dataframe)
+			self.dataframe = add_timestamp_period_(self.dataframe, time_period = period)
 
 			self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
@@ -167,7 +166,7 @@ class TopicLikesTimeseries(object):
 	"""
 
 	def __init__(self, session, start_date, end_date, course_id=None,
-				 with_device_type=True, time_period_date=True,
+				 with_device_type=True, period='daily',
 				 with_context_name=True, with_enrollment_type=True):
 		self.session = session
 		qtl = self.query_topic_likes = QueryTopicLikes(self.session)
@@ -199,8 +198,7 @@ class TopicLikesTimeseries(object):
 					self.dataframe = new_df
 					categorical_columns.append('enrollment_type')
 
-			if time_period_date:
-				self.dataframe = add_timestamp_period_(self.dataframe)
+			self.dataframe = add_timestamp_period_(self.dataframe, time_period=period)
 
 			self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
@@ -241,7 +239,7 @@ class TopicViewsTimeseries(object):
 	"""
 
 	def __init__(self, session, start_date, end_date, course_id=None,
-				 with_device_type=True, time_period_date=True,
+				 with_device_type=True, period='daily',
 				 with_context_name=True, with_enrollment_type=True):
 		self.session = session
 		qtv = self.query_topics_viewed = QueryTopicsViewed(self.session)
@@ -273,9 +271,7 @@ class TopicViewsTimeseries(object):
 					self.dataframe = new_df
 					categorical_columns.append('enrollment_type')
 
-
-			if time_period_date:
-				self.dataframe = add_timestamp_period_(self.dataframe)
+			self.dataframe = add_timestamp_period_(self.dataframe, time_period=period)
 
 			self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
@@ -323,7 +319,7 @@ class TopicFavoritesTimeseries(object):
 	"""
 
 	def __init__(self, session, start_date, end_date, course_id=None,
-				 with_device_type=True, time_period_date=True,
+				 with_device_type=True, period='daily',
 				 with_context_name=True, with_enrollment_type=True):
 		self.session = session
 		qtf = self.query_topic_favorites = QueryTopicFavorites(self.session)
@@ -355,8 +351,7 @@ class TopicFavoritesTimeseries(object):
 					self.dataframe = new_df
 					categorical_columns.append('enrollment_type')
 
-			if time_period_date:
-				self.dataframe = add_timestamp_period_(self.dataframe)
+			self.dataframe = add_timestamp_period_(self.dataframe, time_period=period)
 
 			self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
