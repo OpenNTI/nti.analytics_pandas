@@ -80,7 +80,8 @@ class EnrollmentTimeseriesReportView(AbstractReportView):
 		self.ccvt = CourseCatalogViewsTimeseries(self.context.session,
 											   	 self.context.start_date,
 											   	 self.context.end_date,
-												 self.context.courses)
+												 self.context.courses,
+												 period=self.context.period)
 		if self.ccvt.dataframe.empty:
 			self.options['has_course_catalog_view_data'] = False
 		else:
@@ -90,7 +91,8 @@ class EnrollmentTimeseriesReportView(AbstractReportView):
 		self.cet = CourseEnrollmentsTimeseries(self.context.session,
 										   	   self.context.start_date,
 										   	   self.context.end_date,
-											   self.context.courses)
+											   self.context.courses,
+											   period=self.context.period)
 		if self.cet.dataframe.empty:
 			self.options['has_course_enrollment_data'] = False
 		else:
@@ -100,7 +102,8 @@ class EnrollmentTimeseriesReportView(AbstractReportView):
 		self.cdt = CourseDropsTimeseries(self.context.session,
 								   		 self.context.start_date,
 								   		 self.context.end_date,
-										 self.context.courses)
+										 self.context.courses,
+										 period=self.context.period)
 		if self.cdt.dataframe.empty:
 			self.options['has_course_drop_data'] = False
 		else:
