@@ -40,6 +40,10 @@ from .notes import QueryNotesViewed
 from .notes import QueryNotesCreated
 from .notes import QueryNoteFavorites
 
+from .profile_views import QueryEntityProfileViews
+from .profile_views import QueryEntityProfileActivityViews
+from .profile_views import QueryEntityProfileMembershipViews
+
 from .topics import QueryTopicLikes
 from .topics import QueryTopicsViewed
 from .topics import QueryTopicsCreated
