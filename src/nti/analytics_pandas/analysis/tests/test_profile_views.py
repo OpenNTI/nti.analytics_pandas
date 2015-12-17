@@ -25,7 +25,7 @@ class TestEntityProfileViewsTimeseries(AnalyticsPandasTestBase):
 		assert_that(epvt.dataframe, has_item('timestamp_period'))
 		assert_that(epvt.dataframe, has_item('target_id'))
 		assert_that(epvt.dataframe, has_item('user_id'))
-		
+
 		df = epvt.analyze_events()
 		assert_that(df.empty, equal_to(False))
 		assert_that(df.columns, has_item('number_of_profile_views'))

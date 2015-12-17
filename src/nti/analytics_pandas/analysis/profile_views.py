@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-.. $Id: profile_views.py 78936 2015-12-14 16:33:56Z carlos.sanchez $
+.. $Id$
 """
 
 from __future__ import print_function, unicode_literals, absolute_import, division
@@ -13,8 +13,6 @@ import pandas as pd
 
 from ..queries import QueryUsers
 from ..queries import QueryEntityProfileViews
-from ..queries import QueryEntityProfileActivityViews
-from ..queries import QueryEntityProfileMembershipViews
 
 from ..utils import cast_columns_as_category_
 from ..utils import get_values_of_series_categorical_index_
@@ -83,7 +81,7 @@ class EntityProfileViewsTimeseries(object):
 		if df is None or df.empty:
 			return
 		most_viewed_profiles_id = df.groupby('target_id').size().sort_values(ascending=False)[:max_rank_number]
-		most_viewed_profiles_df =most_viewed_profiles_id.to_frame(name='number_of_profile_viewed')
+		most_viewed_profiles_df = most_viewed_profiles_id.to_frame(name='number_of_profile_viewed')
 		most_viewed_profiles_df.reset_index(level=0, inplace=True)
 
 		target_id = get_values_of_series_categorical_index_(most_viewed_profiles_id).tolist()
@@ -96,4 +94,3 @@ class EntityProfileViewsTimeseries(object):
 		most_viewed_profiles_df.sort_values(by='number_of_profile_viewed', ascending=[0], inplace=True)
 		most_viewed_profiles_df.reset_index(inplace=True, drop=True)
 		return most_viewed_profiles_df
-

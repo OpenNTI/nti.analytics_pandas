@@ -19,9 +19,6 @@ from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
 class TestProfileViews(AnalyticsPandasTestBase):
 
-	def setUp(self):
-		super(TestProfileViews, self).setUp()
-
 	def test_query_profile_views(self):
 		start_date = u'2015-10-01'
 		end_date = u'2015-10-15'
@@ -38,7 +35,6 @@ class TestProfileViews(AnalyticsPandasTestBase):
 		df = qepv.add_application_type(dataframe)
 		assert_that(len(dataframe.index), greater_than(0))
 		assert_that(df, has_item('application_type'))
-
 
 	def test_query_profile_activity_views(self):
 		start_date = u'2015-10-01'
@@ -57,7 +53,6 @@ class TestProfileViews(AnalyticsPandasTestBase):
 		assert_that(len(dataframe.index), greater_than(0))
 		assert_that(df, has_item('application_type'))
 
-
 	def test_query_profile_membership_views(self):
 		start_date = u'2015-10-01'
 		end_date = u'2015-10-15'
@@ -74,4 +69,3 @@ class TestProfileViews(AnalyticsPandasTestBase):
 		df = qepmv.add_application_type(dataframe)
 		assert_that(len(dataframe.index), greater_than(0))
 		assert_that(df, has_item('application_type'))
-	

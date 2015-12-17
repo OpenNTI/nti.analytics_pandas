@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-.. $Id: profile_views.py 77690 2015-11-24 10:22:41Z egawati.panjei $
+.. $Id$
 """
 
 from __future__ import print_function, unicode_literals, absolute_import, division
@@ -37,7 +37,6 @@ class QueryEntityProfileViews(TableQueryMixin):
 	def add_application_type(self, dataframe):
 		new_df = add_application_type_(self.session, dataframe)
 		return new_df
-
 
 class QueryEntityProfileActivityViews(TableQueryMixin):
 
@@ -76,5 +75,3 @@ class QueryEntityProfileMembershipViews(TableQueryMixin):
 	def add_application_type(self, dataframe):
 		new_df = add_application_type_(self.session, dataframe)
 		return new_df
-
-
