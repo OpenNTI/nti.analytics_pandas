@@ -13,6 +13,8 @@ from . import MessageFactory as _
 
 import pandas as pd
 
+from zope.i18n import translate
+
 from ggplot import aes
 from ggplot import xlab
 from ggplot import ylab
@@ -305,13 +307,23 @@ def generate_plot_names(event_type):
 
 	return (event_name, user_event_name, ratio_event_name)
 
+def generate_plot_title(title, period):
+	if period is not None:
+		title = translate(_('${title} : ${period}',
+							mapping={'title':title, 'period':period}))
+	return title
+
 
 def generate_three_plots(df, event_title, user_title, ratio_title,
 						 event_y_axis_field, event_y_axis_label,
 						 period_breaks, minor_period_breaks, theme_seaborn_,
-						 event_type=None):
+						 event_type=None, period=None):
 
 	event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
+	event_title = generate_plot_title(event_title, period)
+	user_title = generate_plot_title(user_title, period)
+	ratio_title = generate_plot_title(ratio_title, period)
+
 	plot_event = line_plot_x_axis_date(
 									df=df,
 									x_axis_field='timestamp_period',
@@ -353,7 +365,7 @@ def generate_three_plots(df, event_title, user_title, ratio_title,
 def generate_three_group_by_plots(df, group_by, event_title, user_title, ratio_title,
 								  event_y_axis_field, event_y_axis_label,
 								  period_breaks, minor_period_breaks, theme_seaborn_,
-								  event_type=None):
+								  event_type=None, period=None):
 
 	if 'device_type' in df.columns and 'device_type' in group_by:
 		group_by = 'application_type'
@@ -364,6 +376,10 @@ def generate_three_group_by_plots(df, group_by, event_title, user_title, ratio_t
 		ratio_title = ratio_title.replace('device', 'application')
 
 	event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
+	event_title = generate_plot_title(event_title, period)
+	user_title = generate_plot_title(user_title, period)
+	ratio_title = generate_plot_title(ratio_title, period)
+
 	plot_events = group_line_plot_x_axis_date(
 										df=df,
 										x_axis_field='timestamp_period',
@@ -404,3 +420,4 @@ def generate_three_group_by_plots(df, group_by, event_title, user_title, ratio_t
 										plot_name=ratio_event_name)
 
 	return (plot_events, plot_unique_users, plot_ratio)
+
