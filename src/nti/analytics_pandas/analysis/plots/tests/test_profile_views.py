@@ -18,7 +18,6 @@ from nti.analytics_pandas.analysis.plots.profile_views import EntityProfileViews
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
 class TestProfileViewsPlot(AnalyticsPandasTestBase):
-
 	def test_explore_events(self):
 		start_date = '2015-10-05'
 		end_date = '2015-10-19'
@@ -26,4 +25,11 @@ class TestProfileViewsPlot(AnalyticsPandasTestBase):
 		epvtp = EntityProfileViewsTimeseriesPlot(epvt)
 		_ = epvtp.explore_events()
 		assert_that(len(_), equal_to(3))
-		
+
+	def test_analyze_application_types(self):
+		start_date = '2015-10-05'
+		end_date = '2015-10-19'
+		epvt = EntityProfileViewsTimeseries(self.session, start_date, end_date)
+		epvtp = EntityProfileViewsTimeseriesPlot(epvt)
+		_ = epvtp.analyze_application_types()
+		assert_that(len(_), equal_to(3))

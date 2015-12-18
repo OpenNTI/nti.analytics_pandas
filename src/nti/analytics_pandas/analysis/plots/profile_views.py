@@ -61,3 +61,38 @@ class EntityProfileViewsTimeseriesPlot(object):
 									 period=self.period)
 		return plots
 
+	def analyze_application_types(self, 
+								  period_breaks=None, 
+								  minor_period_breaks=None,
+					   			  theme_seaborn_=True):
+		epvt = self.epvt
+		df = epvt.analyze_application_types()
+		if df is None:
+			return()
+
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		group_by = 'application_type'
+		event_title = _('Number of profile views per application type')
+		user_title = _("Number of unique users viewing profiles per application type")
+		ratio_title = _("Ratio of profile views over unique user per application type")
+		
+		event_type = 'profile_views'
+		event_y_axis_field = 'number_of_profile_views'
+		event_y_axis_label = _('Number of profile views')
+
+		plots = generate_three_group_by_plots(df,
+											  group_by,
+											  event_title,
+											  user_title,
+											  ratio_title,
+											  event_y_axis_field,
+											  event_y_axis_label,
+											  period_breaks,
+											  minor_period_breaks,
+											  theme_seaborn_,
+											  event_type,
+											  period=self.period)
+		return plots
+
