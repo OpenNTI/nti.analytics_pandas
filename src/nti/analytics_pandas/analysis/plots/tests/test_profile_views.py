@@ -49,5 +49,3 @@ class TestProfileViewsPlot(AnalyticsPandasTestBase):
 		epvtp = EntityProfileViewsTimeseriesPlot(epvt)
 		_ = epvtp.plot_the_most_viewed_profiles()
 		assert_that(len(_), equal_to(1))
-		for plot in _:
-			print(plot.plot)
