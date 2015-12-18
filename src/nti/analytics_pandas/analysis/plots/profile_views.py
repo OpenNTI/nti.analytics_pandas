@@ -114,3 +114,19 @@ class EntityProfileViewsTimeseriesPlot(object):
 											plot_name='most_active_user_viewing_profiles')
 		return (plot_users,)
 
+	def plot_the_most_viewed_profiles(self, max_rank_number=10):
+		epvt = self.epvt
+		df = epvt.get_the_most_viewed_profiles(max_rank_number)
+		if df is None:
+			return ()
+
+		plot_profiles = histogram_plot_x_axis_discrete(
+											df=df,
+											x_axis_field='profile' ,
+											y_axis_field='number_of_profile_viewed',
+											x_axis_label=_('Profile'),
+											y_axis_label=_('Number of profile viewed'),
+											title=_('The most viewed profiles'),
+											stat='identity',
+											plot_name='most_viewed_profiles')
+		return (plot_profiles,)
