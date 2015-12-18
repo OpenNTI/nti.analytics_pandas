@@ -33,3 +33,11 @@ class TestProfileViewsPlot(AnalyticsPandasTestBase):
 		epvtp = EntityProfileViewsTimeseriesPlot(epvt)
 		_ = epvtp.analyze_application_types()
 		assert_that(len(_), equal_to(3))
+
+	def test_plot_the_most_active_users(self):
+		start_date = '2015-10-05'
+		end_date = '2015-10-19'
+		epvt = EntityProfileViewsTimeseries(self.session, start_date, end_date)
+		epvtp = EntityProfileViewsTimeseriesPlot(epvt)
+		_ = epvtp.plot_the_most_active_users()
+		assert_that(len(_), equal_to(1))

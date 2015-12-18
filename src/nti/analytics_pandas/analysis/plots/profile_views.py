@@ -20,6 +20,7 @@ from zope.i18n import translate
 from .commons import line_plot_x_axis_date
 from .commons import generate_three_plots
 from .commons import generate_three_group_by_plots
+from .commons import histogram_plot_x_axis_discrete
 
 class EntityProfileViewsTimeseriesPlot(object):
 
@@ -95,4 +96,21 @@ class EntityProfileViewsTimeseriesPlot(object):
 											  event_type,
 											  period=self.period)
 		return plots
+
+	def plot_the_most_active_users(self, max_rank_number=10):
+		epvt = self.epvt
+		users_df = epvt.get_the_most_active_users(max_rank_number)
+		if users_df is None:
+			return ()
+
+		plot_users = histogram_plot_x_axis_discrete(
+											df=users_df,
+											x_axis_field='username' ,
+											y_axis_field='number_of_profile_views',
+											x_axis_label=_('Username'),
+											y_axis_label=_('Number of profile views'),
+											title=_('The most active users viewing profiles'),
+											stat='identity',
+											plot_name='most_active_user_viewing_profiles')
+		return (plot_users,)
 
