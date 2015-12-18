@@ -17,10 +17,51 @@ import numpy as np
 
 from zope.i18n import translate
 
-from .commons import line_plot_x_axis_date
 from .commons import generate_three_plots
 from .commons import generate_three_group_by_plots
 from .commons import histogram_plot_x_axis_discrete
+
+class EntityProfileViewEventsTimeseriesPlot(object):
+	def __init__(self, epvet):
+		"""
+		epvet = EntityProfileViewEventsTimeseries
+		"""
+		self.epvet = epvet
+		self.period = epvet.period
+
+	def combine_events(self, period_breaks=None, minor_period_breaks=None,
+					   theme_seaborn_=True):
+		epvet = self.epvet
+		df = epvet.combine_events()
+		if df.empty:
+			return()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		group_by = 'event_type'
+		event_title = _('Number of profile view events per type')
+		user_title = _("Number of unique users creating profile view events per type")
+		ratio_title = _("Ratio of profile view events over unique user per event type")
+		
+		event_type = 'profile_view_events'
+		event_y_axis_field = 'total_events'
+		event_y_axis_label = _('Number of profile view events')
+
+
+		plots = generate_three_group_by_plots(df,
+											  group_by,
+											  event_title,
+											  user_title,
+											  ratio_title,
+											  event_y_axis_field,
+											  event_y_axis_label,
+											  period_breaks,
+											  minor_period_breaks,
+											  theme_seaborn_,
+											  event_type,
+											  period=self.period)
+		return plots
+
 
 class EntityProfileViewsTimeseriesPlot(object):
 
@@ -79,7 +120,7 @@ class EntityProfileViewsTimeseriesPlot(object):
 		user_title = _("Number of unique users viewing profiles per application type")
 		ratio_title = _("Ratio of profile views over unique user per application type")
 		
-		event_type = 'profile_views'
+		event_type = 'profile_views_per_application_type'
 		event_y_axis_field = 'number_of_profile_views'
 		event_y_axis_label = _('Number of profile views')
 
@@ -188,7 +229,7 @@ class EntityProfileActivityViewsTimeseriesPlot(object):
 		user_title = _("Number of unique users viewing profile activities per application type")
 		ratio_title = _("Ratio of profile activity views over unique user per application type")
 		
-		event_type = 'profile_activity_views'
+		event_type = 'profile_activity_views_per_application_type'
 		event_y_axis_field = 'number_of_profile_activity_views'
 		event_y_axis_label = _('Number of profile activity views')
 
@@ -298,7 +339,7 @@ class EntityProfileMembershipViewsTimeseriesPlot(object):
 		user_title = _("Number of unique users viewing profile memberships per application type")
 		ratio_title = _("Ratio of profile membership views over unique user per application type")
 		
-		event_type = 'profile_membership_views'
+		event_type = 'profile_membership_views_per_application_type'
 		event_y_axis_field = 'number_of_profile_membership_views'
 		event_y_axis_label = _('Number of profile membership views')
 

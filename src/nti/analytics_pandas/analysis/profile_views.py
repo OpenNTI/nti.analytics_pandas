@@ -38,6 +38,15 @@ class EntityProfileViewEventsTimeseries(object):
 		self.epavt = epavt
 		self.epmvt = epmvt
 
+		if epvt is not None:
+			self.period = epvt.period
+		elif epavt is not None:
+			self.period = epavt.period
+		elif epmvt is not None:
+			self.period = epmvt.period
+		else:
+			self.period = None
+
 	def combine_events(self):
 		df = pd.DataFrame(columns=[	'timestamp_period', 'total_events', 'event_type'])
 		if self.epvt is not None:
@@ -57,7 +66,7 @@ class EntityProfileViewEventsTimeseries(object):
 				profile_activity_views_df = self.update_events_dataframe(
 												profile_activity_views_df,
 												column_to_rename='number_of_profile_activity_views',
-												event_type='Profile Activity View')
+												event_type='Activity View')
 				df = df.append(profile_activity_views_df)
 
 		if self.epmvt is not None:
@@ -67,7 +76,7 @@ class EntityProfileViewEventsTimeseries(object):
 				profile_membership_views_df = self.update_events_dataframe(
 													profile_membership_views_df,
 													column_to_rename='number_of_profile_membership_views',
-													event_type='Profile Membership View')
+													event_type='Membership View')
 				df = df.append(profile_membership_views_df)
 
 		df.reset_index(inplace=True, drop=True)

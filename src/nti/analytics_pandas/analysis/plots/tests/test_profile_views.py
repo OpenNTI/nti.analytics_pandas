@@ -13,10 +13,12 @@ from hamcrest import assert_that
 from nti.analytics_pandas.analysis.profile_views import EntityProfileViewsTimeseries
 from nti.analytics_pandas.analysis.profile_views import  EntityProfileActivityViewsTimeseries
 from nti.analytics_pandas.analysis.profile_views import EntityProfileMembershipViewsTimeseries
+from nti.analytics_pandas.analysis.profile_views import EntityProfileViewEventsTimeseries
 
 from nti.analytics_pandas.analysis.plots.profile_views import EntityProfileViewsTimeseriesPlot
 from nti.analytics_pandas.analysis.plots.profile_views import EntityProfileActivityViewsTimeseriesPlot
 from nti.analytics_pandas.analysis.plots.profile_views import EntityProfileMembershipViewsTimeseriesPlot
+from nti.analytics_pandas.analysis.plots.profile_views import EntityProfileViewEventsTimeseriesPlot
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
@@ -118,3 +120,16 @@ class TestProfileMembershipViewsPlot(AnalyticsPandasTestBase):
 		epmvtp = EntityProfileMembershipViewsTimeseriesPlot(epmvt)
 		_ = epmvtp.plot_the_most_viewed_profile_memberships()
 		assert_that(len(_), equal_to(1))
+
+class TestEntityProfileViewEventsTimeseries(AnalyticsPandasTestBase):
+	def test_combined_events(self):
+		start_date = '2015-10-05'
+		end_date = '2015-10-19'
+		epvt = EntityProfileViewsTimeseries(self.session, start_date, end_date)
+		epavt = EntityProfileActivityViewsTimeseries(self.session, start_date, end_date)
+		epmvt = EntityProfileMembershipViewsTimeseries(self.session, start_date, end_date)
+		epvet = EntityProfileViewEventsTimeseries(epvt=epvt, epavt=epavt, epmvt=epmvt)
+		
+		epvetp = EntityProfileViewEventsTimeseriesPlot(epvet)
+		_ = epvetp.combine_events()
+		assert_that(len(_), equal_to(3))
