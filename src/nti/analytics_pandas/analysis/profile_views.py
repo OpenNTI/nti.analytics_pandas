@@ -29,10 +29,10 @@ class EntityProfileViewsTimeseries(object):
 
 	def __init__(self, session, start_date, end_date,
 				 with_application_type=True,
-				 time_period='daily',
+				 period='daily',
 				 with_enrollment_type=True):
 		self.session = session
-		self.time_period = time_period
+		self.period = period
 		qepv = QueryEntityProfileViews(self.session)
 
 		self.dataframe = qepv.filter_by_period_of_time(start_date, end_date)
@@ -44,7 +44,7 @@ class EntityProfileViewsTimeseries(object):
 				if new_df is not None:
 					self.dataframe = new_df
 
-			self.dataframe = add_timestamp_period_(self.dataframe, time_period=time_period)
+			self.dataframe = add_timestamp_period_(self.dataframe, time_period=period)
 			self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def analyze_events(self):
