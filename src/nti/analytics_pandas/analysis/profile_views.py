@@ -24,6 +24,62 @@ from .common import reset_dataframe_
 from .common import add_timestamp_period_
 from .common import get_most_active_users_
 
+class EntityProfileViewEventsTimeseries(object):
+	"""
+	combined all profile views related events
+	"""
+	def __init__(self, epvt=None, epavt=None, epmvt=None):
+		"""
+		epvt = EntityProfileViewsTimeseries
+		epavt = EntityProfileActivityViewsTimeseries
+		epmvt = EntityProfileMembershipViewsTimeseries
+		"""
+		self.epvt = epvt
+		self.epavt = epavt
+		self.epmvt = epmvt
+
+	def combine_events(self):
+		df = pd.DataFrame(columns=[	'timestamp_period', 'total_events', 'event_type'])
+		if self.epvt is not None:
+			epvt = self.epvt
+			profile_views_df = epvt.analyze_events()
+			if profile_views_df is not None:
+				profile_views_df = self.update_events_dataframe(
+												profile_views_df,
+												column_to_rename='number_of_profile_views',
+												event_type='Profile View')
+				df = df.append(profile_views_df)
+
+		if self.epavt is not None:
+			epavt = self.epavt
+			profile_activity_views_df = epavt.analyze_events()
+			if profile_activity_views_df is not None:
+				profile_activity_views_df = self.update_events_dataframe(
+												profile_activity_views_df,
+												column_to_rename='number_of_profile_activity_views',
+												event_type='Profile Activity View')
+				df = df.append(profile_activity_views_df)
+
+		if self.epmvt is not None:
+			epmvt = self.epmvt
+			profile_membership_views_df = epmvt.analyze_events()
+			if profile_membership_views_df is not None:
+				profile_membership_views_df = self.update_events_dataframe(
+													profile_membership_views_df,
+													column_to_rename='number_of_profile_membership_views',
+													event_type='Profile Membership View')
+				df = df.append(profile_membership_views_df)
+
+		df.reset_index(inplace=True, drop=True)
+		return df
+
+	def update_events_dataframe(self, df, column_to_rename, event_type):
+		df.rename(columns={column_to_rename:'total_events'}, inplace=True)
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		df['event_type'] = event_type
+		return df
+
 class EntityProfileViewsTimeseries(object):
 	"""
 	analyze the profile views

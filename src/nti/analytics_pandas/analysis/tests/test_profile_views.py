@@ -14,6 +14,7 @@ from hamcrest import assert_that
 from nti.analytics_pandas.analysis.profile_views import EntityProfileViewsTimeseries
 from nti.analytics_pandas.analysis.profile_views import EntityProfileActivityViewsTimeseries
 from nti.analytics_pandas.analysis.profile_views import EntityProfileMembershipViewsTimeseries
+from nti.analytics_pandas.analysis.profile_views import EntityProfileViewEventsTimeseries
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
@@ -142,3 +143,15 @@ class TestEntityProfileMembershipViewsTimeseries(AnalyticsPandasTestBase):
 		epmvt = EntityProfileMembershipViewsTimeseries(self.session, start_date, end_date)
 		df = epmvt.get_the_most_viewed_profile_memberships()
 		assert_that(df.columns, has_item('number_of_profile_membership_viewed'))
+
+class TestEntityProfileViewEventsTimeseries(AnalyticsPandasTestBase):
+	def test_combined_events(self):
+		start_date = '2015-10-05'
+		end_date = '2015-10-19'
+		epvt = EntityProfileViewsTimeseries(self.session, start_date, end_date)
+		epavt = EntityProfileActivityViewsTimeseries(self.session, start_date, end_date)
+		epmvt = EntityProfileMembershipViewsTimeseries(self.session, start_date, end_date)
+		epvet = EntityProfileViewEventsTimeseries(epvt=epvt, epavt=epavt, epmvt=epmvt)
+		df = epvet.combine_events()
+		assert_that(df.columns, has_item('total_events'))
+		assert_that(df.columns, has_item('event_type'))
