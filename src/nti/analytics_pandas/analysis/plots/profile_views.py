@@ -239,3 +239,113 @@ class EntityProfileActivityViewsTimeseriesPlot(object):
 											stat='identity',
 											plot_name='most_viewed_profile_activities')
 		return (plot_profiles,)
+
+
+class EntityProfileMembershipViewsTimeseriesPlot(object):
+
+	def __init__(self, epmvt):
+		"""
+		epmvt = EntityProfileMembershipViewsTimeseries
+		"""
+		self.epmvt = epmvt
+		self.period = epmvt.period
+
+	def explore_events(self, period_breaks=None, minor_period_breaks=None,
+					   theme_seaborn_=True):
+		epmvt = self.epmvt
+		df = epmvt.analyze_events()
+		if df is None:
+			return()
+
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		event_title = _('Number of profile membership views')
+		user_title = _("Number of unique users viewing profile memberships")
+		ratio_title = _("Ratio of profile membership views over unique user")
+		
+		event_type = 'profile_membership_views'
+		event_y_axis_field = 'number_of_profile_membership_views'
+		event_y_axis_label = _('Number of profile membership views')
+
+		plots = generate_three_plots(df,
+									 event_title,
+									 user_title,
+									 ratio_title,
+									 event_y_axis_field,
+									 event_y_axis_label,
+									 period_breaks,
+									 minor_period_breaks,
+									 theme_seaborn_,
+									 event_type,
+									 period=self.period)
+		return plots
+
+	def analyze_application_types(self, 
+								  period_breaks=None, 
+								  minor_period_breaks=None,
+					   			  theme_seaborn_=True):
+		epmvt = self.epmvt
+		df = epmvt.analyze_application_types()
+		if df is None:
+			return()
+
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		group_by = 'application_type'
+		event_title = _('Number of profile membership views per application type')
+		user_title = _("Number of unique users viewing profile memberships per application type")
+		ratio_title = _("Ratio of profile membership views over unique user per application type")
+		
+		event_type = 'profile_membership_views'
+		event_y_axis_field = 'number_of_profile_membership_views'
+		event_y_axis_label = _('Number of profile membership views')
+
+		plots = generate_three_group_by_plots(df,
+											  group_by,
+											  event_title,
+											  user_title,
+											  ratio_title,
+											  event_y_axis_field,
+											  event_y_axis_label,
+											  period_breaks,
+											  minor_period_breaks,
+											  theme_seaborn_,
+											  event_type,
+											  period=self.period)
+		return plots
+
+	def plot_the_most_active_users(self, max_rank_number=10):
+		epmvt = self.epmvt
+		users_df = epmvt.get_the_most_active_users(max_rank_number)
+		if users_df is None:
+			return ()
+
+		plot_users = histogram_plot_x_axis_discrete(
+											df=users_df,
+											x_axis_field='username' ,
+											y_axis_field='number_of_profile_membership_views',
+											x_axis_label=_('Username'),
+											y_axis_label=_('Number of profile membership views'),
+											title=_('The most active users viewing profile membership'),
+											stat='identity',
+											plot_name='most_active_user_viewing_profile_memberships')
+		return (plot_users,)
+
+	def plot_the_most_viewed_profile_memberships(self, max_rank_number=10):
+		epmvt = self.epmvt
+		df = epmvt.get_the_most_viewed_profile_memberships(max_rank_number)
+		if df is None:
+			return ()
+
+		plot_profiles = histogram_plot_x_axis_discrete(
+											df=df,
+											x_axis_field='profile' ,
+											y_axis_field='number_of_profile_membership_viewed',
+											x_axis_label=_('Profile'),
+											y_axis_label=_('Number of profile membership viewed'),
+											title=_('The most viewed profile memberships'),
+											stat='identity',
+											plot_name='most_viewed_profile_memberships')
+		return (plot_profiles,)
