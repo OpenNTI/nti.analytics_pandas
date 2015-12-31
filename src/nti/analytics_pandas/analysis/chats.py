@@ -93,7 +93,7 @@ class ChatsJoinedTimeseries(object):
 					self.dataframe = new_df
 
 			if time_period:
-				self.dataframe = add_timestamp_period_(self.dataframe)
+				self.dataframe = add_timestamp_period_(self.dataframe, time_period=time_period)
 
 	def get_number_of_users_joining_chat(self):
 		group_by_items = ['timestamp_period', 'chat_id']
