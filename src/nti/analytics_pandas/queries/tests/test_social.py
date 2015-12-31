@@ -15,6 +15,10 @@ from nti.analytics_pandas.queries.social import QueryDynamicFriendsListsCreated
 from nti.analytics_pandas.queries.social import QueryDynamicFriendsListsMemberAdded
 from nti.analytics_pandas.queries.social import QueryDynamicFriendsListsMemberRemoved
 
+from nti.analytics_pandas.queries.social import QueryFriendsListsCreated
+from nti.analytics_pandas.queries.social import QueryFriendsListsMemberAdded
+from nti.analytics_pandas.queries.social import QueryFriendsListsMemberRemoved
+
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
 class TestDynamicFriendsLists(AnalyticsPandasTestBase):
@@ -46,6 +50,34 @@ class TestDynamicFriendsLists(AnalyticsPandasTestBase):
 		end_date = u'2015-10-19'
 		qdflmr = QueryDynamicFriendsListsMemberRemoved(self.session)
 		dataframe = qdflmr.filter_by_period_of_time(start_date, end_date)
+		assert_that(len(dataframe.index), equal_to(0))
+
+
+class TestFriendsLists(AnalyticsPandasTestBase):
+
+	def test_query_friend_lists_created(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-10-19'
+		qflc = QueryFriendsListsCreated(self.session)
+		dataframe = qflc.filter_by_period_of_time(start_date, end_date)
+		assert_that(len(dataframe.index), greater_than(0))
+
+	def test_query_friend_list_member_added(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-10-19'
+		qflma = QueryFriendsListsMemberAdded(self.session)
+		dataframe = qflma.filter_by_period_of_time(start_date, end_date)
+		assert_that(len(dataframe.index), greater_than(0))
+
+	def test_query_friend_list_member_removed(self):
+		"""
+		check result againts query:
+		select * from FriendsListsMemberRemoved where date(timestamp) between '2015-01-01' and '2015-10-19'
+		"""
+		start_date = u'2015-01-01'
+		end_date = u'2015-10-19'
+		qflmr = QueryFriendsListsMemberRemoved(self.session)
+		dataframe = qflmr.filter_by_period_of_time(start_date, end_date)
 		assert_that(len(dataframe.index), equal_to(0))
 
 

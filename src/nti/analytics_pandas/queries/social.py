@@ -65,6 +65,7 @@ class QueryDynamicFriendsListsMemberAdded(TableQueryMixin):
 		new_df = add_application_type_(self.session, dataframe)
 		return new_df
 
+
 class QueryDynamicFriendsListsMemberRemoved(TableQueryMixin):
 
 	table = DynamicFriendsListsMemberRemoved
@@ -77,6 +78,63 @@ class QueryDynamicFriendsListsMemberRemoved(TableQueryMixin):
 								   dflmr.dfl_id,
 								   dflmr.target_id
 								   ).filter(dflmr.timestamp.between(start_date, end_date))
+		dataframe = orm_dataframe(query, self.columns)
+		return dataframe
+
+	def add_application_type(self, dataframe):
+		new_df = add_application_type_(self.session, dataframe)
+		return new_df
+
+class QueryFriendsListsCreated(TableQueryMixin):
+
+	table = FriendsListsCreated
+
+	def filter_by_period_of_time(self, start_date=None, end_date=None):
+		flc = self.table
+		query = self.session.query(flc.timestamp,
+								   flc.deleted,
+								   flc.friends_list_ds_id,
+								   flc.friends_list_id,
+								   flc.session_id,
+								   flc.user_id).filter(flc.timestamp.between(start_date, end_date))
+		dataframe = orm_dataframe(query, self.columns)
+		return dataframe
+
+	def add_application_type(self, dataframe):
+		new_df = add_application_type_(self.session, dataframe)
+		return new_df
+
+class QueryFriendsListsMemberAdded(TableQueryMixin):
+
+	table = FriendsListsMemberAdded
+
+	def filter_by_period_of_time(self, start_date=None, end_date=None):
+		flma = self.table
+		query = self.session.query(flma.timestamp,
+								   flma.session_id,
+								   flma.user_id,
+								   flma.friends_list_id,
+								   flma.target_id
+								   ).filter(flma.timestamp.between(start_date, end_date))
+		dataframe = orm_dataframe(query, self.columns)
+		return dataframe
+
+	def add_application_type(self, dataframe):
+		new_df = add_application_type_(self.session, dataframe)
+		return new_df
+
+class QueryFriendsListsMemberRemoved(TableQueryMixin):
+
+	table = FriendsListsMemberRemoved
+
+	def filter_by_period_of_time(self, start_date=None, end_date=None):
+		flmr = self.table
+		query = self.session.query(flmr.timestamp,
+								   flmr.session_id,
+								   flmr.user_id,
+								   flmr.friends_list_id,
+								   flmr.target_id
+								   ).filter(flmr.timestamp.between(start_date, end_date))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
