@@ -44,6 +44,15 @@ from .profile_views import QueryEntityProfileViews
 from .profile_views import QueryEntityProfileActivityViews
 from .profile_views import QueryEntityProfileMembershipViews
 
+from .social import QueryContactsAdded
+from .social import QueryContactsRemoved
+from .social import QueryDynamicFriendsListsCreated
+from .social import QueryDynamicFriendsListsMemberAdded
+from .social import QueryDynamicFriendsListsMemberRemoved
+from .social import QueryFriendsListsCreated
+from .social import QueryFriendsListsMemberAdded
+from .social import QueryFriendsListsMemberRemoved
+
 from .topics import QueryTopicLikes
 from .topics import QueryTopicsViewed
 from .topics import QueryTopicsCreated
