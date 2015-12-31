@@ -26,6 +26,58 @@ from .common import reset_dataframe_
 from .common import add_timestamp_period_
 from .common import get_most_active_users_
 
+
+class ContactsEventsTimeseries(object):
+	"""
+	combined all contacts related events
+	"""
+	def __init__(self, cat=None, crt=None):
+		"""
+		cat = ContactsAddedTimeseries
+		crt = ContactsRemovedTimeseries
+		"""
+		self.cat = cat
+		self.crt = crt
+
+		if cat is not None:
+			self.period = cat.period
+		elif crt is not None:
+			self.period = crt.period
+		else:
+			self.period = None
+
+	def combine_events(self):
+		df = pd.DataFrame(columns=[	'timestamp_period', 'total_events', 'event_type'])
+		if self.cat is not None:
+			cat = self.cat
+			contacts_added_df = cat.analyze_events()
+			if contacts_added_df is not None:
+				contacts_added_df = self.update_events_dataframe(
+												contacts_added_df,
+												column_to_rename='number_of_contacts_added',
+												event_type='Contacts Added')
+				df = df.append(contacts_added_df)
+
+		if self.crt is not None:
+			crt = self.crt
+			contacts_removed_df = crt.analyze_events()
+			if contacts_removed_df is not None:
+				contacts_removed_df = self.update_events_dataframe(
+												contacts_removed_df,
+												column_to_rename='number_of_contacts_removed',
+												event_type='Contacts Removed')
+				df = df.append(contacts_removed_df)
+
+		df.reset_index(inplace=True, drop=True)
+		return df
+
+	def update_events_dataframe(self, df, column_to_rename, event_type):
+		df.rename(columns={column_to_rename:'total_events'}, inplace=True)
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		df['event_type'] = event_type
+		return df
+
 class ContactsAddedTimeseries(object):
 	"""
 	analyze the number of contacts added
@@ -33,9 +85,9 @@ class ContactsAddedTimeseries(object):
 
 	def __init__(self, session, start_date, end_date,
 				 with_application_type=True,
-				 time_period='daily'):
+				 period='daily'):
 		self.session = session
-		self.time_period = time_period
+		self.period = period
 		qca = QueryContactsAdded(self.session)
 
 		self.dataframe = qca.filter_by_period_of_time(start_date, end_date)
@@ -46,7 +98,7 @@ class ContactsAddedTimeseries(object):
 				if new_df is not None:
 					self.dataframe = new_df
 
-			self.dataframe = add_timestamp_period_(self.dataframe, time_period=time_period)
+			self.dataframe = add_timestamp_period_(self.dataframe, time_period=period)
 
 	def analyze_events(self):
 		group_by_items = ['timestamp_period']
@@ -84,9 +136,9 @@ class ContactsRemovedTimeseries(object):
 
 	def __init__(self, session, start_date, end_date,
 				 with_application_type=True,
-				 time_period='daily'):
+				 period='daily'):
 		self.session = session
-		self.time_period = time_period
+		self.period = period
 		qcr = QueryContactsRemoved(self.session)
 
 		self.dataframe = qcr.filter_by_period_of_time(start_date, end_date)
@@ -97,7 +149,7 @@ class ContactsRemovedTimeseries(object):
 				if new_df is not None:
 					self.dataframe = new_df
 
-			self.dataframe = add_timestamp_period_(self.dataframe, time_period=time_period)
+			self.dataframe = add_timestamp_period_(self.dataframe, time_period=period)
 
 	def analyze_events(self):
 		group_by_items = ['timestamp_period']

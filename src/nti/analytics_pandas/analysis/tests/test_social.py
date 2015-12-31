@@ -12,12 +12,25 @@ from hamcrest import has_item
 from hamcrest import assert_that
 
 from nti.analytics_pandas.analysis.social import ContactsAddedTimeseries
+from nti.analytics_pandas.analysis.social import ContactsEventsTimeseries
 from nti.analytics_pandas.analysis.social import ContactsRemovedTimeseries
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
-class TestContactsAddedTimeseries(AnalyticsPandasTestBase):
+class TestContactsEventsTimeseries(AnalyticsPandasTestBase):
+	def test_combined_events(self):
+		start_date = '2015-01-01'
+		end_date = '2015-10-19'
+		cat = ContactsAddedTimeseries(self.session, start_date, end_date)
+		crt = ContactsRemovedTimeseries(self.session, start_date, end_date)
+		cet = ContactsEventsTimeseries(cat=cat, crt=crt)
+		df = cet.combine_events()
+		assert_that(df.empty, equal_to(False))
+		assert_that(df.columns, has_item('timestamp_period'))
+		assert_that(df.columns, has_item('total_events'))
+		assert_that(df.columns, has_item('event_type'))
 
+class TestContactsAddedTimeseries(AnalyticsPandasTestBase):
 	def test_analyze_events(self):
 		start_date = '2015-01-01'
 		end_date = '2015-10-19'
