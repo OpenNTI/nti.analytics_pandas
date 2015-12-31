@@ -39,7 +39,6 @@ class ChatsInitiatedTimeseries(object):
 				new_df = qci.add_application_type(self.dataframe)
 				if new_df is not None:
 					self.dataframe = new_df
-
 			self.dataframe = add_timestamp_period_(self.dataframe, time_period=time_period)
 
 	def analyze_events(self):

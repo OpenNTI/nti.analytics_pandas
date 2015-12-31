@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-.. $Id: social.py 78654 2015-12-09 17:07:38Z carlos.sanchez $
+.. $Id$
 """
 
 from __future__ import print_function, unicode_literals, absolute_import, division
@@ -11,21 +11,18 @@ logger = __import__('logging').getLogger(__name__)
 
 from nti.analytics_database.social import ContactsAdded
 from nti.analytics_database.social import ContactsRemoved
-
-from nti.analytics_database.social import DynamicFriendsListsCreated
-from nti.analytics_database.social import DynamicFriendsListsMemberAdded
-from nti.analytics_database.social import DynamicFriendsListsMemberRemoved
-
 from nti.analytics_database.social import FriendsListsCreated
 from nti.analytics_database.social import FriendsListsMemberAdded
 from nti.analytics_database.social import FriendsListsMemberRemoved
+from nti.analytics_database.social import DynamicFriendsListsCreated
+from nti.analytics_database.social import DynamicFriendsListsMemberAdded
+from nti.analytics_database.social import DynamicFriendsListsMemberRemoved
 
 from .mixins import TableQueryMixin
 
 from .common import add_application_type_
 
 from . import orm_dataframe
-
 
 class QueryContactsAdded(TableQueryMixin):
 
@@ -36,8 +33,7 @@ class QueryContactsAdded(TableQueryMixin):
 		query = self.session.query(ca.timestamp,
 								   ca.session_id,
 								   ca.user_id,
-								   ca.target_id
-								   ).filter(ca.timestamp.between(start_date, end_date))
+								   ca.target_id).filter(ca.timestamp.between(start_date, end_date))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
@@ -54,8 +50,7 @@ class QueryContactsRemoved(TableQueryMixin):
 		query = self.session.query(cr.timestamp,
 								   cr.session_id,
 								   cr.user_id,
-								   cr.target_id
-								   ).filter(cr.timestamp.between(start_date, end_date))
+								   cr.target_id).filter(cr.timestamp.between(start_date, end_date))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
@@ -92,15 +87,13 @@ class QueryDynamicFriendsListsMemberAdded(TableQueryMixin):
 								   dflma.session_id,
 								   dflma.user_id,
 								   dflma.dfl_id,
-								   dflma.target_id
-								   ).filter(dflma.timestamp.between(start_date, end_date))
+								   dflma.target_id).filter(dflma.timestamp.between(start_date, end_date))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
 	def add_application_type(self, dataframe):
 		new_df = add_application_type_(self.session, dataframe)
 		return new_df
-
 
 class QueryDynamicFriendsListsMemberRemoved(TableQueryMixin):
 
@@ -150,8 +143,7 @@ class QueryFriendsListsMemberAdded(TableQueryMixin):
 								   flma.session_id,
 								   flma.user_id,
 								   flma.friends_list_id,
-								   flma.target_id
-								   ).filter(flma.timestamp.between(start_date, end_date))
+								   flma.target_id).filter(flma.timestamp.between(start_date, end_date))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
@@ -169,8 +161,7 @@ class QueryFriendsListsMemberRemoved(TableQueryMixin):
 								   flmr.session_id,
 								   flmr.user_id,
 								   flmr.friends_list_id,
-								   flmr.target_id
-								   ).filter(flmr.timestamp.between(start_date, end_date))
+								   flmr.target_id).filter(flmr.timestamp.between(start_date, end_date))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 

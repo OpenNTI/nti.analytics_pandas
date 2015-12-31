@@ -7,20 +7,18 @@ __docformat__ = "restructuredtext en"
 # disable: accessing protected members, too many methods
 # pylint: disable=W0212,R0904
 
+from hamcrest import equal_to
 from hamcrest import assert_that
 from hamcrest import greater_than
-from hamcrest import equal_to
 
 from nti.analytics_pandas.queries.social import QueryContactsAdded
 from nti.analytics_pandas.queries.social import QueryContactsRemoved
-
-from nti.analytics_pandas.queries.social import QueryDynamicFriendsListsCreated
-from nti.analytics_pandas.queries.social import QueryDynamicFriendsListsMemberAdded
-from nti.analytics_pandas.queries.social import QueryDynamicFriendsListsMemberRemoved
-
 from nti.analytics_pandas.queries.social import QueryFriendsListsCreated
 from nti.analytics_pandas.queries.social import QueryFriendsListsMemberAdded
 from nti.analytics_pandas.queries.social import QueryFriendsListsMemberRemoved
+from nti.analytics_pandas.queries.social import QueryDynamicFriendsListsCreated
+from nti.analytics_pandas.queries.social import QueryDynamicFriendsListsMemberAdded
+from nti.analytics_pandas.queries.social import QueryDynamicFriendsListsMemberRemoved
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
@@ -71,7 +69,6 @@ class TestDynamicFriendsLists(AnalyticsPandasTestBase):
 		dataframe = qdflmr.filter_by_period_of_time(start_date, end_date)
 		assert_that(len(dataframe.index), equal_to(0))
 
-
 class TestFriendsLists(AnalyticsPandasTestBase):
 
 	def test_query_friend_lists_created(self):
@@ -98,5 +95,3 @@ class TestFriendsLists(AnalyticsPandasTestBase):
 		qflmr = QueryFriendsListsMemberRemoved(self.session)
 		dataframe = qflmr.filter_by_period_of_time(start_date, end_date)
 		assert_that(len(dataframe.index), equal_to(0))
-
-

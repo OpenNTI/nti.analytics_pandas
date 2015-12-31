@@ -14,14 +14,13 @@ from hamcrest import assert_that
 from nti.analytics_pandas.analysis.social import ContactsAddedTimeseries
 from nti.analytics_pandas.analysis.social import ContactsEventsTimeseries
 from nti.analytics_pandas.analysis.social import ContactsRemovedTimeseries
-
-from nti.analytics_pandas.analysis.social import DynamicFriendsListsMemberAddedTimeseries
-
 from nti.analytics_pandas.analysis.social import FriendsListsMemberAddedTimeseries
+from nti.analytics_pandas.analysis.social import DynamicFriendsListsMemberAddedTimeseries
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
 class TestContactsEventsTimeseries(AnalyticsPandasTestBase):
+
 	def test_combined_events(self):
 		start_date = '2015-01-01'
 		end_date = '2015-10-19'
@@ -35,6 +34,7 @@ class TestContactsEventsTimeseries(AnalyticsPandasTestBase):
 		assert_that(df.columns, has_item('event_type'))
 
 class TestContactsAddedTimeseries(AnalyticsPandasTestBase):
+
 	def test_analyze_events(self):
 		start_date = '2015-01-01'
 		end_date = '2015-10-19'
@@ -60,6 +60,7 @@ class TestContactsAddedTimeseries(AnalyticsPandasTestBase):
 		assert_that(df.columns, has_item('ratio'))
 
 class TestContactsRemovedTimeseries(AnalyticsPandasTestBase):
+
 	def test_analyze_events(self):
 		start_date = '2015-01-01'
 		end_date = '2015-10-19'
@@ -85,20 +86,21 @@ class TestContactsRemovedTimeseries(AnalyticsPandasTestBase):
 		assert_that(df.columns, has_item('ratio'))
 
 class TestDynamicFriendsListsMemberAddedTimeseries(AnalyticsPandasTestBase):
+
 	def test_analyze_number_of_friend_list_members_added(self):
 		start_date = '2015-01-01'
 		end_date = '2015-10-19'
 		dflmat = DynamicFriendsListsMemberAddedTimeseries(self.session, start_date, end_date)
 		df = dflmat.analyze_number_of_friend_list_members_added()
 		assert_that(df, equal_to(None))
-		"""
-		assert_that(df.empty, equal_to(False))
-		assert_that(df.columns, has_item('timestamp_period'))
-		assert_that(df.columns, has_item('total_number_of_dynamic_friend_list_members_added'))
-		assert_that(df.columns, has_item('number_of_friend_lists'))
-		"""
+
+# 		assert_that(df.empty, equal_to(False))
+# 		assert_that(df.columns, has_item('timestamp_period'))
+# 		assert_that(df.columns, has_item('total_number_of_dynamic_friend_list_members_added'))
+# 		assert_that(df.columns, has_item('number_of_friend_lists'))
 
 class TestFriendsListsMemberAddedTimeseries(AnalyticsPandasTestBase):
+
 	def test_analyze_number_of_friend_list_members_added(self):
 		start_date = '2015-01-01'
 		end_date = '2015-10-19'

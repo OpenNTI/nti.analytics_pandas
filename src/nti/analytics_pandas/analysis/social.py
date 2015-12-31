@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-.. $Id: social.py 78936 2015-12-14 16:33:56Z carlos.sanchez $
+.. $Id$
 """
 
 from __future__ import print_function, unicode_literals, absolute_import, division
@@ -13,14 +13,8 @@ import pandas as pd
 
 from ..queries import QueryContactsAdded
 from ..queries import QueryContactsRemoved
-
-from ..queries import QueryDynamicFriendsListsCreated
-from ..queries import QueryDynamicFriendsListsMemberAdded
-from ..queries import QueryDynamicFriendsListsMemberRemoved
-
-from ..queries import QueryFriendsListsCreated
 from ..queries import QueryFriendsListsMemberAdded
-from ..queries import QueryFriendsListsMemberRemoved
+from ..queries import QueryDynamicFriendsListsMemberAdded
 
 from .common import analyze_types_
 from .common import reset_dataframe_
@@ -287,7 +281,6 @@ class FriendsListsMemberAddedTimeseries(object):
 		if df is not None:
 			df = df.groupby(['timestamp_period']).agg({'number_of_friend_list_members_added' :[pd.Series.mean, pd.Series.sum],
 													   'friends_list_id' : pd.Series.nunique})
-
 			levels = df.columns.levels
 			labels = df.columns.labels
 			df.columns = levels[1][labels[1]]
