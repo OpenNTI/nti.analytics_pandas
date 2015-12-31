@@ -200,7 +200,7 @@ class DynamicFriendsListsMemberAddedTimeseries(object):
 				if new_df is not None:
 					self.dataframe = new_df
 
-			if time_period:
+			if period:
 				self.dataframe = add_timestamp_period_(self.dataframe, time_period=period)
 
 	def get_number_of_friend_list_members(self):
@@ -239,3 +239,61 @@ class DynamicFriendsListsMemberAddedTimeseries(object):
 			df = reset_dataframe_(df)
 			return df
 
+class FriendsListsMemberAddedTimeseries(object):
+	"""
+	analyze friend lists member added
+	"""
+
+	def __init__(self, session, start_date, end_date,
+				 with_application_type=True,
+				 period=True):
+		self.session = session
+		self.period = period
+		qflma = QueryFriendsListsMemberAdded(session)
+
+		self.dataframe = qflma.filter_by_period_of_time(start_date, end_date)
+
+		if not self.dataframe.empty:
+			if with_application_type:
+				new_df = qflma.add_application_type(self.dataframe)
+				if new_df is not None:
+					self.dataframe = new_df
+
+			if period:
+				self.dataframe = add_timestamp_period_(self.dataframe, time_period=period)
+
+	def get_number_of_friend_list_members(self):
+		group_by_items = ['timestamp_period', 'friends_list_id']
+		df = self.build_dataframe(group_by_items)
+		if df is not None:
+			df = reset_dataframe_(df)
+		return df
+
+	def get_application_types_used_to_add_members(self):
+		group_by_items = ['timestamp_period', 'application_type']
+		df = self.build_dataframe(group_by_items)
+		return df
+
+	def build_dataframe(self, group_by_columns):
+		agg_columns = {	'target_id'	: pd.Series.count }
+		df = analyze_types_(self.dataframe, group_by_columns, agg_columns)
+		if df is not None:
+			df.rename(columns={	'target_id' :'number_of_friend_list_members_added'},
+						inplace=True)
+		return df
+
+	def analyze_number_of_friend_list_members_added(self):
+		df = self.get_number_of_friend_list_members()
+		if df is not None:
+			df = df.groupby(['timestamp_period']).agg({'number_of_friend_list_members_added' :[pd.Series.mean, pd.Series.sum],
+													   'friends_list_id' : pd.Series.nunique})
+
+			levels = df.columns.levels
+			labels = df.columns.labels
+			df.columns = levels[1][labels[1]]
+			df.rename(columns={	'mean' :'average_number_of_friend_list_members_added',
+								'sum'  :'total_number_of_friend_list_members_added',
+								'nunique' :'number_of_friend_lists'},
+				 	  inplace=True)
+			df = reset_dataframe_(df)
+			return df

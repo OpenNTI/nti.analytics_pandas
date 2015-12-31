@@ -17,6 +17,8 @@ from nti.analytics_pandas.analysis.social import ContactsRemovedTimeseries
 
 from nti.analytics_pandas.analysis.social import DynamicFriendsListsMemberAddedTimeseries
 
+from nti.analytics_pandas.analysis.social import FriendsListsMemberAddedTimeseries
+
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
 class TestContactsEventsTimeseries(AnalyticsPandasTestBase):
@@ -95,3 +97,15 @@ class TestDynamicFriendsListsMemberAddedTimeseries(AnalyticsPandasTestBase):
 		assert_that(df.columns, has_item('total_number_of_dynamic_friend_list_members_added'))
 		assert_that(df.columns, has_item('number_of_friend_lists'))
 		"""
+
+class TestFriendsListsMemberAddedTimeseries(AnalyticsPandasTestBase):
+	def test_analyze_number_of_friend_list_members_added(self):
+		start_date = '2015-01-01'
+		end_date = '2015-10-19'
+		flmat = FriendsListsMemberAddedTimeseries(self.session, start_date, end_date)
+		df = flmat.analyze_number_of_friend_list_members_added()
+		assert_that(df.empty, equal_to(False))
+		assert_that(df.columns, has_item('timestamp_period'))
+		assert_that(df.columns, has_item('average_number_of_friend_list_members_added'))
+		assert_that(df.columns, has_item('total_number_of_friend_list_members_added'))
+		assert_that(df.columns, has_item('number_of_friend_lists'))
