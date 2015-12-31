@@ -27,6 +27,42 @@ from .common import add_application_type_
 from . import orm_dataframe
 
 
+class QueryContactsAdded(TableQueryMixin):
+
+	table = ContactsAdded
+
+	def filter_by_period_of_time(self, start_date=None, end_date=None):
+		ca = self.table
+		query = self.session.query(ca.timestamp,
+								   ca.session_id,
+								   ca.user_id,
+								   ca.target_id
+								   ).filter(ca.timestamp.between(start_date, end_date))
+		dataframe = orm_dataframe(query, self.columns)
+		return dataframe
+
+	def add_application_type(self, dataframe):
+		new_df = add_application_type_(self.session, dataframe)
+		return new_df
+
+class QueryContactsRemoved(TableQueryMixin):
+
+	table = ContactsRemoved
+
+	def filter_by_period_of_time(self, start_date=None, end_date=None):
+		cr = self.table
+		query = self.session.query(cr.timestamp,
+								   cr.session_id,
+								   cr.user_id,
+								   cr.target_id
+								   ).filter(cr.timestamp.between(start_date, end_date))
+		dataframe = orm_dataframe(query, self.columns)
+		return dataframe
+
+	def add_application_type(self, dataframe):
+		new_df = add_application_type_(self.session, dataframe)
+		return new_df
+
 class QueryDynamicFriendsListsCreated(TableQueryMixin):
 
 	table = DynamicFriendsListsCreated

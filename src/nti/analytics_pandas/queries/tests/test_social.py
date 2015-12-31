@@ -11,6 +11,9 @@ from hamcrest import assert_that
 from hamcrest import greater_than
 from hamcrest import equal_to
 
+from nti.analytics_pandas.queries.social import QueryContactsAdded
+from nti.analytics_pandas.queries.social import QueryContactsRemoved
+
 from nti.analytics_pandas.queries.social import QueryDynamicFriendsListsCreated
 from nti.analytics_pandas.queries.social import QueryDynamicFriendsListsMemberAdded
 from nti.analytics_pandas.queries.social import QueryDynamicFriendsListsMemberRemoved
@@ -20,6 +23,22 @@ from nti.analytics_pandas.queries.social import QueryFriendsListsMemberAdded
 from nti.analytics_pandas.queries.social import QueryFriendsListsMemberRemoved
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
+
+class TestContacts(AnalyticsPandasTestBase):
+
+	def test_query_contacts_added(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-10-19'
+		qca = QueryContactsAdded(self.session)
+		dataframe = qca.filter_by_period_of_time(start_date, end_date)
+		assert_that(len(dataframe.index), greater_than(0))
+
+	def test_query_contacts_removed(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-10-19'
+		qcr = QueryContactsRemoved(self.session)
+		dataframe = qcr.filter_by_period_of_time(start_date, end_date)
+		assert_that(len(dataframe.index), greater_than(0))
 
 class TestDynamicFriendsLists(AnalyticsPandasTestBase):
 
