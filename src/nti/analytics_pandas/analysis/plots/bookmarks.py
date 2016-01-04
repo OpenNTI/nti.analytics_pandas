@@ -30,6 +30,7 @@ class BookmarksTimeseriesPlot(object):
 		bct = BookmarkCreationTimeseries
 		"""
 		self.bct = bct
+		self.period = bct.period
 
 	def explore_events(self, period_breaks='1 day', minor_period_breaks=None,
 					   theme_seaborn_=True):
@@ -63,7 +64,8 @@ class BookmarksTimeseriesPlot(object):
 									 period_breaks,
 									 minor_period_breaks,
 									 theme_seaborn_,
-									 event_type)
+									 event_type,
+									 period=self.period)
 		return plots
 
 	def analyze_events_per_course_sections(self, period_breaks='1 week',
@@ -98,7 +100,8 @@ class BookmarksTimeseriesPlot(object):
 												period_breaks,
 												minor_period_breaks,
 												theme_seaborn_,
-												event_type)
+												event_type,
+												period=self.period)
 			plots['all_section_plots'] = all_section_plots
 
 		section_plots_dict = {}
@@ -126,7 +129,8 @@ class BookmarksTimeseriesPlot(object):
 										period_breaks,
 										minor_period_breaks,
 										theme_seaborn_,
-										event_type)
+										event_type,
+										period=self.period)
 			key = 'section_%s' % (course_id)
 			section_plots_dict[key] = section_plots
 		plots['section_plots'] = section_plots_dict
@@ -163,7 +167,8 @@ class BookmarksTimeseriesPlot(object):
 											  period_breaks,
 											  minor_period_breaks,
 											  theme_seaborn_,
-											  event_type)
+											  event_type,
+											  period=self.period)
 		plots_dict['line_plots'] = plots
 
 		resource_df.reset_index(inplace=True)
@@ -210,7 +215,8 @@ class BookmarksTimeseriesPlot(object):
 											  period_breaks,
 											  minor_period_breaks,
 											  theme_seaborn_,
-											  event_type)
+											  event_type,
+											  period=self.period)
 		return plots
 
 	def analyze_enrollment_types(self, period_breaks='1 week', minor_period_breaks='1 day',
@@ -242,7 +248,8 @@ class BookmarksTimeseriesPlot(object):
 											  period_breaks,
 											  minor_period_breaks,
 											  theme_seaborn_,
-											  event_type)
+											  event_type,
+											  period=self.period)
 		return plots
 
 	def analyze_resource_device_types(self, period_breaks='1 week', minor_period_breaks='1 day',):

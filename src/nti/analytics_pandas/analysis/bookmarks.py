@@ -31,6 +31,7 @@ class BookmarkCreationTimeseries(object):
 				 period='daily', with_context_name=True,
 				 with_enrollment_type=True):
 		self.session = session
+		self.period = period
 		qbc = self.query_bookmarks_created = QueryBookmarksCreated(self.session)
 		if isinstance (course_id, (tuple, list)):
 			self.dataframe = qbc.filter_by_course_id_and_period_of_time(start_date,
