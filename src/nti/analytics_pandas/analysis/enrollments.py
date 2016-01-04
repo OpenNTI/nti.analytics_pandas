@@ -29,6 +29,7 @@ class CourseCatalogViewsTimeseries(object):
 	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_device_type=True, period='daily'):
 		self.session = session
+		self.period = period
 		qccv = self.query_course_catalog_views = QueryCourseCatalogViews(self.session)
 		if isinstance (course_id, (tuple, list)):
 			self.dataframe = qccv.filter_by_period_of_time_and_course_id(start_date,
@@ -76,6 +77,7 @@ class CourseEnrollmentsTimeseries(object):
 	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_device_type=True, period='daily', enrollment_type=True):
 		self.session = session
+		self.period = period
 		qce = self.query_course_enrollments = QueryCourseEnrollments(self.session)
 		if isinstance (course_id, (tuple, list)):
 			self.dataframe = qce.filter_by_period_of_time_and_course_id(start_date,
@@ -124,6 +126,7 @@ class CourseDropsTimeseries(object):
 				 with_device_type=True, period='daily', enrollment_type=True):
 
 		self.session = session
+		self.period = period
 		qcd = self.query_course_drops = QueryCourseDrops(self.session)
 		if isinstance (course_id, (tuple, list)):
 			self.dataframe = qcd.filter_by_period_of_time_and_course_id(start_date,
@@ -181,6 +184,7 @@ class CourseEnrollmentsEventsTimeseries(object):
 		self.cet = cet
 		self.cdt = cdt
 		self.ccvt = ccvt
+		self.period = cet.period
 
 	def explore_course_enrollments_vs_drops(self):
 		df = pd.DataFrame(columns=[	'timestamp_period', 'total_events', 'event_type'])

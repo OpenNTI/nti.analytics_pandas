@@ -47,7 +47,11 @@ def line_plot_x_axis_date(df,
 						  period_breaks,
 						  minor_breaks=None,
 						  theme_seaborn_=True,
-						  plot_name=None):
+						  plot_name=None,
+						  period=None):
+	
+	if period is not None:
+		title = generate_plot_title(title, period)
 
 	y_max = pd.Series.max(df[y_axis_field]) + 1
 	line_plot = \
@@ -91,7 +95,11 @@ def scatter_plot_x_axis_date(df,
 						  	 period_breaks,
 						  	 minor_breaks=None,
 						  	 theme_seaborn_=True,
-						  	 plot_name=None):
+						  	 plot_name=None,
+						  	 period=None):
+	
+	if period is not None:
+		title = generate_plot_title(title, period)
 
 	y_max = pd.Series.max(df[y_axis_field]) + 1
 	scatter_plot = \
@@ -126,7 +134,10 @@ def group_line_plot_x_axis_date(df,
 								group_by,
 								minor_breaks=None,
 								theme_seaborn_=True,
-								plot_name=None):
+								plot_name=None,
+								period=None):
+	if period is not None:
+		title = generate_plot_title(title, period)
 
 	y_max = pd.Series.max(df[y_axis_field]) + 1
 	line_plot = \
@@ -165,8 +176,11 @@ def group_scatter_plot_x_axis_date(df,
 								   group_by,
 								   minor_breaks=None,
 								   theme_seaborn_=True,
-								   plot_name=None):
-
+								   plot_name=None,
+								   period=None):
+	if period is not None:
+		title = generate_plot_title(title, period)
+		
 	y_max = pd.Series.max(df[y_axis_field]) + 1
 	scatter_plot = \
 		ggplot(df, aes(x=x_axis_field, y=y_axis_field, color=group_by)) + \
