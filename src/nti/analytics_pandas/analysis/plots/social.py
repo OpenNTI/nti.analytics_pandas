@@ -53,6 +53,9 @@ class ContactsEventsTimeseriesPlot(object):
 
 class ContactsAddedTimeseriesPlot(object):
 	def __init__(self, cat):
+		"""
+		cat = ContactsAddedTimeseries
+		"""
 		self.cat  = cat
 		self.period = cat.period
 
@@ -99,7 +102,7 @@ class ContactsAddedTimeseriesPlot(object):
 			return ()
 		df.reset_index(inplace=True)
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
-		
+
 		group_by = 'application_type'
 		event_title = _('Number of contacts added per application type')
 		user_title = _('Number of unique users adding contacts per application type')
@@ -121,3 +124,78 @@ class ContactsAddedTimeseriesPlot(object):
 											  event_type,
 											  period=self.period)
 		return plots
+
+class ContactsRemovedTimeseriesPlot(object):
+	def __init__(self, crt):
+		"""
+		crt = ContactsRemovedTimeseries
+		"""
+		self.crt  = crt
+		self.period = crt.period
+
+	def analyze_events(self, 
+					   period_breaks=None,
+					   minor_period_breaks=None,
+					   theme_seaborn_=True):
+		crt = self.crt
+		df = crt.analyze_events()
+		if df is None:
+			return ()
+
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		event_title = _('Number of contacts removed during period of time')
+		user_title = _('Number of unique users removing contacts during period of time')
+		ratio_title = _('Ratio of contacts removed over unique users during period of time')
+		event_type = 'contacts_removed'
+		event_y_axis_field = 'number_of_contacts_removed'
+		event_y_axis_label = _('Number of contacts removed')
+
+		plots = generate_three_plots(
+								 df,
+								 event_title,
+								 user_title,
+								 ratio_title,
+								 event_y_axis_field,
+								 event_y_axis_label,
+								 period_breaks,
+								 minor_period_breaks,
+								 theme_seaborn_,
+								 event_type,
+								 period=self.period)
+		return plots
+
+	def analyze_application_types(self,
+								  period_breaks=None,
+								  minor_period_breaks=None,
+								  theme_seaborn_=True):
+		crt = self.crt
+		df = crt.analyze_application_types()
+		if df is None:
+			return ()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		group_by = 'application_type'
+		event_title = _('Number of contacts removed per application type')
+		user_title = _('Number of unique users removing contacts per application type')
+		ratio_title = _('Ratio of contacts removed over unique users per application type')
+		event_type = 'contacts_removed'
+		event_y_axis_field = 'number_of_contacts_removed'
+		event_y_axis_label = _('Number of contacts removed')
+
+		plots = generate_three_group_by_plots(df,
+											  group_by,
+											  event_title,
+											  user_title,
+											  ratio_title,
+											  event_y_axis_field,
+											  event_y_axis_label,
+											  period_breaks,
+											  minor_period_breaks,
+											  theme_seaborn_,
+											  event_type,
+											  period=self.period)
+		return plots
+
