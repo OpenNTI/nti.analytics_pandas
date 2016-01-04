@@ -52,6 +52,15 @@ class TestContactsAddedTimeseriesPlot(AnalyticsPandasTestBase):
 		_ = catp.analyze_application_types(period_breaks='1 week')
 		assert_that(len(_), equal_to(3))
 
+	def test_plot_the_most_active_users(self):
+		start_date = '2015-06-01'
+		end_date = '2015-10-19'
+		period = 'weekly'
+		cat = ContactsAddedTimeseries(self.session, start_date, end_date, period=period)
+		catp = ContactsAddedTimeseriesPlot(cat)
+		_ = catp.plot_the_most_active_users()
+		assert_that(len(_), equal_to(1))
+
 class TestContactsRemovedTimeseriesPlot(AnalyticsPandasTestBase):
 	def test_analyze_events(self):
 		start_date = '2015-06-01'
@@ -70,3 +79,12 @@ class TestContactsRemovedTimeseriesPlot(AnalyticsPandasTestBase):
 		crtp = ContactsRemovedTimeseriesPlot(crt)
 		_ = crtp.analyze_application_types(period_breaks='1 week')
 		assert_that(len(_), equal_to(3))
+
+	def test_plot_the_most_active_users(self):
+		start_date = '2015-06-01'
+		end_date = '2015-10-19'
+		period = 'weekly'
+		crt = ContactsAddedTimeseries(self.session, start_date, end_date, period=period)
+		crtp = ContactsAddedTimeseriesPlot(crt)
+		_ = crtp.plot_the_most_active_users()
+		assert_that(len(_), equal_to(1))

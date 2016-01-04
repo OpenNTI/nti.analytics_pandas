@@ -16,6 +16,8 @@ from ..queries import QueryContactsRemoved
 from ..queries import QueryFriendsListsMemberAdded
 from ..queries import QueryDynamicFriendsListsMemberAdded
 
+from ..utils import cast_columns_as_category_
+
 from .common import analyze_types_
 from .common import reset_dataframe_
 from .common import add_timestamp_period_
@@ -87,12 +89,14 @@ class ContactsAddedTimeseries(object):
 		self.dataframe = qca.filter_by_period_of_time(start_date, end_date)
 
 		if not self.dataframe.empty:
+			categorical_columns = ['user_id']
 			if with_application_type:
 				new_df = qca.add_application_type(self.dataframe)
 				if new_df is not None:
 					self.dataframe = new_df
 
 			self.dataframe = add_timestamp_period_(self.dataframe, time_period=period)
+			self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def analyze_events(self):
 		group_by_items = ['timestamp_period']
@@ -138,12 +142,14 @@ class ContactsRemovedTimeseries(object):
 		self.dataframe = qcr.filter_by_period_of_time(start_date, end_date)
 
 		if not self.dataframe.empty:
+			categorical_columns = ['user_id']
 			if with_application_type:
 				new_df = qcr.add_application_type(self.dataframe)
 				if new_df is not None:
 					self.dataframe = new_df
 
 			self.dataframe = add_timestamp_period_(self.dataframe, time_period=period)
+			self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def analyze_events(self):
 		group_by_items = ['timestamp_period']

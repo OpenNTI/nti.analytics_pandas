@@ -16,6 +16,7 @@ from . import MessageFactory as _
 from .commons import line_plot_x_axis_date
 from .commons import generate_three_plots
 from .commons import generate_three_group_by_plots
+from .commons import histogram_plot_x_axis_discrete
 
 class ContactsEventsTimeseriesPlot(object):
 	def __init__(self, cet):
@@ -125,6 +126,23 @@ class ContactsAddedTimeseriesPlot(object):
 											  period=self.period)
 		return plots
 
+	def plot_the_most_active_users(self, max_rank_number=10):
+		cat = self.cat
+		users_df = cat.get_the_most_active_users(max_rank_number)
+		if users_df is None:
+			return ()
+
+		plot_users = histogram_plot_x_axis_discrete(
+											df=users_df,
+											x_axis_field='username' ,
+											y_axis_field='number_of_contacts_added',
+											x_axis_label=_('Username'),
+											y_axis_label=_('Number of contacts added'),
+											title=_('The most active users adding contacts'),
+											stat='identity',
+											plot_name='most_active_users_adding_contacts')
+		return (plot_users,)
+
 class ContactsRemovedTimeseriesPlot(object):
 	def __init__(self, crt):
 		"""
@@ -198,4 +216,21 @@ class ContactsRemovedTimeseriesPlot(object):
 											  event_type,
 											  period=self.period)
 		return plots
+
+	def plot_the_most_active_users(self, max_rank_number=10):
+		crt = self.crt
+		users_df = crt.get_the_most_active_users(max_rank_number)
+		if users_df is None:
+			return ()
+
+		plot_users = histogram_plot_x_axis_discrete(
+											df=users_df,
+											x_axis_field='username' ,
+											y_axis_field='number_of_contacts_removed',
+											x_axis_label=_('Username'),
+											y_axis_label=_('Number of contacts removed'),
+											title=_('The most active users removing contacts'),
+											stat='identity',
+											plot_name='most_active_users_removing_contacts')
+		return (plot_users,)
 
