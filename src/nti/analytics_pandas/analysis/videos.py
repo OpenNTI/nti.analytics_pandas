@@ -27,6 +27,7 @@ class VideoEventsTimeseries(object):
 				 with_device_type=True, period='daily',
 				 with_context_name=True, with_enrollment_type=True):
 		self.session = session
+		self.period = period
 		qve = self.query_videos_event = QueryVideoEvents(self.session)
 		if isinstance (course_id, (tuple, list)):
 			self.dataframe = qve.filter_by_period_of_time_and_course_id(start_date,

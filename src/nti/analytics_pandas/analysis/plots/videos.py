@@ -27,6 +27,7 @@ class VideoEventsTimeseriesPlot(object):
 		vet = VideoEventsTimeseries
 		"""
 		self.vet = vet
+		self.period = vet.period
 
 	def explore_events(self, period_breaks='1 day', minor_period_breaks=None,
 					   theme_seaborn_=True, video_event_type='watch'):
@@ -81,7 +82,8 @@ class VideoEventsTimeseriesPlot(object):
 									 period_breaks,
 									 minor_period_breaks,
 									 theme_seaborn_,
-									 event_type)
+									 event_type,
+									 period=self.period)
 		return plots
 
 	def generate_group_by_plots(self,
@@ -106,7 +108,8 @@ class VideoEventsTimeseriesPlot(object):
 											  period_breaks,
 											  minor_period_breaks,
 											  theme_seaborn_,
-											  event_type)
+											  event_type,
+											  period=self.period)
 		return plots
 
 	def analyze_video_events_device_types(self, period_breaks='1 week',
