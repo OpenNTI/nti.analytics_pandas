@@ -32,6 +32,7 @@ class  ResourceViewsTimeseriesPlot(object):
 		rvt = ResourceViewsTimeseries
 		"""
 		self.rvt = rvt
+		self.period = rvt.period
 
 	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day',
 						theme_seaborn_=True):
@@ -146,7 +147,8 @@ class  ResourceViewsTimeseriesPlot(object):
 									 period_breaks,
 									 minor_period_breaks,
 									 theme_seaborn_,
-									 event_type)
+									 event_type,
+									 period=self.period)
 		unique_event_name = None
 		if event_type is not None:
 			unique_event_name = 'unique_event_%s' % event_type
@@ -160,7 +162,8 @@ class  ResourceViewsTimeseriesPlot(object):
 											period_breaks=period_breaks,
 											minor_breaks=minor_period_breaks,
 											theme_seaborn_=theme_seaborn_,
-											plot_name=unique_event_name)
+											plot_name=unique_event_name,
+											period=self.period)
 		plots = plots + (plot_unique_resources,)
 		return plots
 
@@ -188,7 +191,8 @@ class  ResourceViewsTimeseriesPlot(object):
 											  period_breaks,
 											  minor_period_breaks,
 											  theme_seaborn_,
-											  event_type)
+											  event_type,
+											  period=self.period)
 		unique_event_name = None
 		if event_type is not None:
 			unique_event_name = 'unique_event_%s' % event_type
@@ -206,7 +210,8 @@ class  ResourceViewsTimeseriesPlot(object):
 											group_by=group_by,
 											minor_breaks=minor_period_breaks,
 											theme_seaborn_=theme_seaborn_,
-											plot_name=unique_event_name)
+											plot_name=unique_event_name,
+											period=self.period)
 		plots = plots + (plot_unique_resources,)
 		return plots
 
