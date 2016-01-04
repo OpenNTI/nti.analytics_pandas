@@ -181,7 +181,7 @@ class ContactsRemovedTimeseriesPlot(object):
 		event_title = _('Number of contacts removed per application type')
 		user_title = _('Number of unique users removing contacts per application type')
 		ratio_title = _('Ratio of contacts removed over unique users per application type')
-		event_type = 'contacts_removed'
+		event_type = 'contacts_removed_per_application_type'
 		event_y_axis_field = 'number_of_contacts_removed'
 		event_y_axis_label = _('Number of contacts removed')
 
