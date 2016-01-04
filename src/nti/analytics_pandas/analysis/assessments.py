@@ -36,6 +36,18 @@ class AssessmentEventsTimeseries(object):
 		self.savt = savt
 		self.satt = satt
 
+		if self.avt is not None:
+			self.period = avt.period
+
+		if self.att is not None:		
+			self.period = att.period
+
+		if self.savt is not None:
+			self.period = savt.period
+
+		if self.satt is not None:
+			self.period = satt.period
+
 	def combine_events(self):
 		df = pd.DataFrame(columns=[	'timestamp_period', 'total_events', 'event_type'])
 		if self.avt is not None:
@@ -107,10 +119,11 @@ class AssignmentViewsTimeseries(object):
 
 	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_resource_type=True, with_device_type=True,
-				 time_period='daily', with_context_name=True,
+				 period='daily', with_context_name=True,
 				 with_enrollment_type=True):
 
 		self.session = session
+		self.period = period
 		qav = self.query_assignment_view = QueryAssignmentViews(self.session)
 		if isinstance (course_id, (tuple, list)):
 			self.dataframe = qav.filter_by_course_id_and_period_of_time(start_date,
@@ -134,7 +147,7 @@ class AssignmentViewsTimeseries(object):
 					self.dataframe = new_df
 					categorical_columns.append('device_type')
 
-			self.dataframe = add_timestamp_period_(self.dataframe, time_period=time_period)
+			self.dataframe = add_timestamp_period_(self.dataframe, time_period=period)
 
 			if with_context_name:
 				new_df = qav.add_context_name(self.dataframe, course_id)
@@ -228,10 +241,11 @@ class AssignmentsTakenTimeseries(object):
 
 	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_resource_type=True, with_device_type=True,
-				 time_period='daily', with_assignment_title=True,
+				 period='daily', with_assignment_title=True,
 				 with_context_name=True, with_enrollment_type=True):
 
 		self.session = session
+		self.period = period
 		self.course_id = course_id
 		qat = self.query_assignments_taken = QueryAssignmentsTaken(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -250,7 +264,7 @@ class AssignmentsTakenTimeseries(object):
 					self.dataframe = new_df
 					categorical_columns.append('device_type')
 
-			self.dataframe = add_timestamp_period_(self.dataframe, time_period=time_period)
+			self.dataframe = add_timestamp_period_(self.dataframe, time_period=period)
 
 			if with_assignment_title:
 				new_df = qat.add_assignment_title(self.dataframe)
@@ -368,10 +382,11 @@ class SelfAssessmentViewsTimeseries(object):
 
 	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_resource_type=True, with_device_type=True,
-				 time_period='daily', with_context_name=True,
+				 period='daily', with_context_name=True,
 				 with_enrollment_type=True):
 
 		self.session = session
+		self.period = period
 		qsav = self.query_self_assessment_view = QuerySelfAssessmentViews(self.session)
 		if isinstance (course_id, (tuple, list)):
 			self.dataframe = qsav.filter_by_course_id_and_period_of_time(start_date,
@@ -395,7 +410,7 @@ class SelfAssessmentViewsTimeseries(object):
 					categorical_columns.append('device_type')
 
 			
-			self.dataframe = add_timestamp_period_(self.dataframe, time_period=time_period)
+			self.dataframe = add_timestamp_period_(self.dataframe, time_period=period)
 
 			if with_context_name:
 				new_df = qsav.add_context_name(self.dataframe, course_id)
@@ -492,10 +507,11 @@ class SelfAssessmentsTakenTimeseries(object):
 
 	def __init__(self, session, start_date, end_date, course_id=None,
 				 with_resource_type=True, with_device_type=True,
-				 time_period='daily', with_context_name=True,
+				 period='daily', with_context_name=True,
 				 with_enrollment_type=True):
 
 		self.session = session
+		self.period = period
 		self.course_id = course_id
 		qsat = self.query_self_assessments_taken = QuerySelfAssessmentsTaken(self.session)
 		if isinstance (course_id, (tuple, list)):
@@ -526,7 +542,7 @@ class SelfAssessmentsTakenTimeseries(object):
 					self.dataframe = new_df
 					categorical_columns.append('enrollment_type')
 
-			self.dataframe = add_timestamp_period_(self.dataframe, time_period=time_period)
+			self.dataframe = add_timestamp_period_(self.dataframe, time_period=period)
 
 			self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 

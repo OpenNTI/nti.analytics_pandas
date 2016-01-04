@@ -86,7 +86,7 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 											  self.context.start_date,
 											  self.context.end_date,
 											  self.context.courses,
-											  time_period=self.context.period)
+											  period=self.context.period)
 
 		if self.att.dataframe.empty:
 			self.options['has_assignment_taken_data'] = False
@@ -99,7 +99,7 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 											 self.context.start_date,
 											 self.context.end_date,
 											 self.context.courses,
-											 time_period=self.context.period)
+											 period=self.context.period)
 
 		if self.avt.dataframe.empty:
 			self.options['has_assignment_views_data'] = False
@@ -111,7 +111,7 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 												  self.context.start_date,
 												  self.context.end_date,
 												  self.context.courses,
-												  time_period=self.context.period)
+												  period=self.context.period)
 
 		if self.savt.dataframe.empty:
 			self.options['has_self_assessment_views_data'] = False
@@ -124,7 +124,7 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 												   self.context.start_date,
 												   self.context.end_date,
 												   self.context.courses,
-												   time_period=self.context.period)
+												   period=self.context.period)
 
 		if self.satt.dataframe.empty:
 			self.options['has_self_assessments_taken_data'] = False

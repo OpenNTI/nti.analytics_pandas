@@ -30,6 +30,7 @@ class AssessmentEventsTimeseriesPlot(object):
 		aet = AssessmentEventsTimeseries
 		"""
 		self.aet = aet
+		self.period = aet.period
 
 	def combine_events(self, period_breaks='1 week',
 					   minor_period_breaks='1 day', theme_seaborn_=True):
@@ -55,7 +56,8 @@ class AssessmentEventsTimeseriesPlot(object):
 											  period_breaks,
 											  minor_period_breaks,
 											  theme_seaborn_,
-											  event_type)
+											  event_type,
+											  period=self.period)
 		return plots
 
 	def analyze_assessments_taken_over_total_enrollments(self,
@@ -94,6 +96,7 @@ class AssignmentViewsTimeseriesPlot(object):
 		avt = AssignmentViewsTimeseries
 		"""
 		self.avt = avt
+		self.period = avt.period
 
 	def analyze_events(self, period_breaks='1 week', minor_period_breaks='1 day', theme_seaborn_=True):
 		avt = self.avt
@@ -118,7 +121,8 @@ class AssignmentViewsTimeseriesPlot(object):
 									 period_breaks,
 									 minor_period_breaks,
 									 theme_seaborn_,
-									 event_type)
+									 event_type,
+									 period=self.period)
 		return plots
 
 	def analyze_events_per_course_sections(self, period_breaks='1 week',
@@ -152,7 +156,8 @@ class AssignmentViewsTimeseriesPlot(object):
 															  period_breaks,
 															  minor_period_breaks,
 															  theme_seaborn_,
-															  event_type)
+															  event_type,
+															  period=self.period)
 			plots['all_section_plots'] = all_section_plots
 
 		section_plots_dict = {}
@@ -181,7 +186,8 @@ class AssignmentViewsTimeseriesPlot(object):
 												 period_breaks,
 												 minor_period_breaks,
 												 theme_seaborn_,
-												 event_type)
+												 event_type,
+												 period=self.period)
 			key = 'section_%s' % (course_id)
 			section_plots_dict[key] = section_plots
 		plots['section_plots'] = section_plots_dict
@@ -214,7 +220,8 @@ class AssignmentViewsTimeseriesPlot(object):
 											  period_breaks,
 											  minor_period_breaks,
 											  theme_seaborn_,
-											  event_type)
+											  event_type,
+											  period=self.period)
 		return plots
 
 	def analyze_events_group_by_enrollment_type(self, period_breaks='1 week',
@@ -244,7 +251,8 @@ class AssignmentViewsTimeseriesPlot(object):
 											  period_breaks,
 											  minor_period_breaks,
 											  theme_seaborn_,
-											  event_type)
+											  event_type,
+											  period=self.period)
 		return plots
 
 class AssignmentsTakenTimeseriesPlot(object):
@@ -254,6 +262,7 @@ class AssignmentsTakenTimeseriesPlot(object):
 		att = AssignmentsTakenTimeseries
 		"""
 		self.att = att
+		self.period = att.period
 
 	def analyze_events(self, period_breaks='1 week', minor_period_breaks='1 day',
 					   theme_seaborn_=True):
@@ -280,7 +289,8 @@ class AssignmentsTakenTimeseriesPlot(object):
 									 period_breaks,
 									 minor_period_breaks,
 									 theme_seaborn_,
-									 event_type)
+									 event_type,
+									 period=self.period)
 		return plots
 
 	def analyze_events_per_course_sections(self, period_breaks='1 week',
@@ -315,7 +325,8 @@ class AssignmentsTakenTimeseriesPlot(object):
 															  period_breaks,
 															  minor_period_breaks,
 															  theme_seaborn_,
-															  event_type)
+															  event_type,
+															  period=self.period)
 			plots['all_section_plots'] = all_section_plots
 
 		section_plots_dict = {}
@@ -343,7 +354,8 @@ class AssignmentsTakenTimeseriesPlot(object):
 												 period_breaks,
 												 minor_period_breaks,
 												 theme_seaborn_,
-												 event_type)
+												 event_type,
+												 period=self.period)
 			key = 'section_%s' % (course_id)
 			section_plots_dict[key] = section_plots
 		plots['section_plots'] = section_plots_dict
@@ -376,7 +388,8 @@ class AssignmentsTakenTimeseriesPlot(object):
 											  period_breaks,
 											  minor_period_breaks,
 											  theme_seaborn_,
-											  event_type)
+											  event_type,
+											  period=self.period)
 		return plots
 
 	def analyze_events_group_by_enrollment_type(self, period_breaks='1 week',
@@ -406,7 +419,8 @@ class AssignmentsTakenTimeseriesPlot(object):
 											  period_breaks,
 											  minor_period_breaks,
 											  theme_seaborn_,
-											  event_type)
+											  event_type,
+											  period=self.period)
 		return plots
 
 	def analyze_assignment_taken_over_total_enrollments(self):
@@ -458,6 +472,7 @@ class SelfAssessmentViewsTimeseriesPlot(object):
 		savt =SelfAssessmentViewsTimeseries
 		"""
 		self.savt = savt
+		self.period = savt.period
 
 	def analyze_events(self, period_breaks='1 week',
 					   minor_period_breaks='1 day',
@@ -484,7 +499,8 @@ class SelfAssessmentViewsTimeseriesPlot(object):
 									 period_breaks,
 									 minor_period_breaks,
 									 theme_seaborn_,
-									 event_type)
+									 event_type,
+									 period=self.period)
 		return plots
 
 	def analyze_events_per_course_sections(self, period_breaks='1 week',
@@ -518,7 +534,8 @@ class SelfAssessmentViewsTimeseriesPlot(object):
 															  period_breaks,
 															  minor_period_breaks,
 															  theme_seaborn_,
-															  event_type)
+															  event_type,
+															  period=self.period)
 			plots['all_section_plots'] = all_section_plots
 
 		section_plots_dict = {}
@@ -545,7 +562,8 @@ class SelfAssessmentViewsTimeseriesPlot(object):
 												 period_breaks,
 												 minor_period_breaks,
 												 theme_seaborn_,
-												 event_type)
+												 event_type,
+												 period=self.period)
 			key = 'section_%s' % (course_id)
 			section_plots_dict[key] = section_plots
 		plots['section_plots'] = section_plots_dict
@@ -578,7 +596,8 @@ class SelfAssessmentViewsTimeseriesPlot(object):
 											  period_breaks,
 											  minor_period_breaks,
 											  theme_seaborn_,
-											  event_type)
+											  event_type,
+											  period=self.period)
 		return plots
 
 	def analyze_events_group_by_enrollment_type(self, period_breaks='1 week',
@@ -608,7 +627,8 @@ class SelfAssessmentViewsTimeseriesPlot(object):
 											  period_breaks,
 											  minor_period_breaks,
 											  theme_seaborn_,
-											  event_type)
+											  event_type,
+											  period=self.period)
 		return plots
 
 class SelfAssessmentsTakenTimeseriesPlot(object):
@@ -618,6 +638,7 @@ class SelfAssessmentsTakenTimeseriesPlot(object):
 		satt =SelfAssessmentsTakenTimeseries
 		"""
 		self.satt = satt
+		self.period = satt.period
 
 	def analyze_events(self, period_breaks='1 week', minor_period_breaks='1 day',
 						theme_seaborn_=True):
@@ -643,7 +664,8 @@ class SelfAssessmentsTakenTimeseriesPlot(object):
 									 period_breaks,
 									 minor_period_breaks,
 									 theme_seaborn_,
-									 event_type)
+									 event_type,
+									 period=self.period)
 		return plots
 
 	def analyze_events_per_course_sections(self, period_breaks='1 week',
@@ -677,7 +699,8 @@ class SelfAssessmentsTakenTimeseriesPlot(object):
 															  period_breaks,
 															  minor_period_breaks,
 															  theme_seaborn_,
-															  event_type)
+															  event_type,
+															  period=self.period)
 			plots['all_section_plots'] = all_section_plots
 
 		section_plots_dict = {}
@@ -705,7 +728,8 @@ class SelfAssessmentsTakenTimeseriesPlot(object):
 										period_breaks,
 										minor_period_breaks,
 										theme_seaborn_,
-										event_type)
+										event_type,
+										period=self.period)
 			key = 'section_%s' % (course_id)
 			section_plots_dict[key] = section_plots
 		plots['section_plots'] = section_plots_dict
@@ -739,7 +763,8 @@ class SelfAssessmentsTakenTimeseriesPlot(object):
 										period_breaks,
 										minor_period_breaks,
 										theme_seaborn_,
-										event_type)
+										event_type,
+										period=self.period)
 		return plots
 
 	def analyze_events_group_by_enrollment_type(self, period_breaks='1 week',
@@ -769,7 +794,8 @@ class SelfAssessmentsTakenTimeseriesPlot(object):
 											  period_breaks,
 											  minor_period_breaks,
 											  theme_seaborn_,
-											  event_type)
+											  event_type,
+											  period=self.period)
 		return plots
 
 	def analyze_self_assessments_taken_over_total_enrollments_ts(self,
