@@ -30,6 +30,7 @@ class NotesEventsTimeseriesPlot(object):
 		net = NotesEventsTimeseries
 		"""
 		self.net = net
+		self.period = net.period
 
 	def explore_all_events(self, period_breaks='1 week', minor_period_breaks='1 day',
 							theme_seaborn_=True):
@@ -55,7 +56,8 @@ class NotesEventsTimeseriesPlot(object):
 											  period_breaks,
 											  minor_period_breaks,
 											  theme_seaborn_,
-											  event_type)
+											  event_type,
+											  period=self.period)
 		return plots
 
 class NotesCreationTimeseriesPlot(object):
@@ -65,6 +67,7 @@ class NotesCreationTimeseriesPlot(object):
 		nct = NotesCreationTimeseries
 		"""
 		self.nct = nct
+		self.period = nct.period
 
 	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day',
 						theme_seaborn_=True):
@@ -161,7 +164,8 @@ class NotesCreationTimeseriesPlot(object):
 									 period_breaks,
 									 minor_period_breaks,
 									 theme_seaborn_,
-									 event_type)
+									 event_type,
+									 period=self.period)
 		return plots
 
 	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day',
@@ -297,7 +301,8 @@ class NotesCreationTimeseriesPlot(object):
 											  period_breaks,
 											  minor_period_breaks,
 											  theme_seaborn_,
-											  event_type)
+											  event_type,
+											  period=self.period)
 		return plots
 
 	def analyze_notes_created_on_videos(self, period_breaks='1 week',
@@ -352,6 +357,7 @@ class NotesViewTimeseriesPlot(object):
 		nvt = NotesViewTimeseries
 		"""
 		self.nvt = nvt
+		self.period = nvt.period
 
 	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day',
 						theme_seaborn_=True):
@@ -449,7 +455,8 @@ class NotesViewTimeseriesPlot(object):
 									 period_breaks,
 									 minor_period_breaks,
 									 theme_seaborn_,
-									 event_type)
+									 event_type,
+									 period=self.period)
 		return plots
 
 	def generate_group_by_plots(self, df, group_by, event_title, user_title, ratio_title,
@@ -467,7 +474,8 @@ class NotesViewTimeseriesPlot(object):
 											  period_breaks,
 											  minor_period_breaks,
 											  theme_seaborn_,
-											  event_type)
+											  event_type,
+											  period=self.period)
 		return plots
 
 	def analyze_total_events_based_on_sharing_type(self, period_breaks='1 week',
@@ -642,6 +650,7 @@ class NoteLikesTimeseriesPlot(object):
 		nlt = NoteLikesTimeseries
 		"""
 		self.nlt = nlt
+		self.period = nlt.period
 
 	def explore_events(self, period_breaks='1 week',
 					   minor_period_breaks='1 day',
@@ -817,7 +826,8 @@ class NoteLikesTimeseriesPlot(object):
 									 period_breaks,
 									 minor_period_breaks,
 									 theme_seaborn_,
-									 event_type)
+									 event_type,
+									 period=self.period)
 		return plots
 
 	def generate_group_by_plots(self, df, group_by, event_title, user_title, ratio_title,
@@ -835,7 +845,8 @@ class NoteLikesTimeseriesPlot(object):
 											  period_breaks,
 											  minor_period_breaks,
 											  theme_seaborn_,
-											  event_type)
+											  event_type,
+											  period=self.period)
 		return plots
 
 class NoteFavoritesTimeseriesPlot(object):
@@ -845,6 +856,7 @@ class NoteFavoritesTimeseriesPlot(object):
 		nft = NoteFavoritesTimeseries
 		"""
 		self.nft = nft
+		self.period = nft.period
 
 	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day',
 						theme_seaborn_=True):
@@ -1018,7 +1030,8 @@ class NoteFavoritesTimeseriesPlot(object):
 									 period_breaks,
 									 minor_period_breaks,
 									 theme_seaborn_,
-									 event_type)
+									 event_type,
+									 period=self.period)
 		return plots
 
 	def generate_group_by_plots(self, df, group_by, event_title, user_title, ratio_title,
@@ -1036,5 +1049,6 @@ class NoteFavoritesTimeseriesPlot(object):
 											  period_breaks,
 											  minor_period_breaks,
 											  theme_seaborn_,
-											  event_type)
+											  event_type,
+											  period=self.period)
 		return plots

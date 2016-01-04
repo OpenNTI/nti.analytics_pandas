@@ -40,6 +40,15 @@ class NotesEventsTimeseries(object):
 		self.nlt = nlt
 		self.nft = nft
 
+		if nct is not None:
+			self.period = nct.period
+		elif nvt is not None:
+			self.period = nvt.period
+		elif nlt is not None:
+			self.period = nlt.period
+		elif nft is not None:
+			self.period = nft.period
+
 	def combine_all_events(self):
 		"""
 		put all notes related events (create, view, like and favorite) into one dataframe
@@ -97,6 +106,7 @@ class NotesCreationTimeseries(object):
 				 period='daily', with_context_name=True,
 				 with_enrollment_type=True):
 		self.session = session
+		self.period = period
 		qnc = self.query_notes_created = QueryNotesCreated(self.session)
 		if isinstance (course_id, (tuple, list)):
 			self.dataframe = qnc.filter_by_period_of_time_and_course_id(start_date,
@@ -252,6 +262,7 @@ class NotesViewTimeseries(object):
 				 period='daily', with_sharing_type=True,
 				 with_context_name=True, with_enrollment_type=True):
 		self.session = session
+		self.period = period
 		qnv = self.query_notes_viewed = QueryNotesViewed(self.session)
 		if isinstance (course_id, (tuple, list)):
 			self.dataframe = qnv.filter_by_period_of_time_and_course_id(start_date,
@@ -458,6 +469,7 @@ class NoteLikesTimeseries(object):
 				 period='daily', with_context_name=True,
 				 with_enrollment_type=True):
 		self.session = session
+		self.period = period
 		qnl = self.query_notes_viewed = QueryNoteLikes(self.session)
 		if isinstance (course_id, (tuple, list)):
 			self.dataframe = qnl.filter_by_period_of_time_and_course_id(start_date,
@@ -535,6 +547,7 @@ class NoteFavoritesTimeseries(object):
 				 period='daily', with_context_name=True,
 				 with_enrollment_type=True):
 		self.session = session
+		self.period = period
 		qnf = self.query_notes_viewed = QueryNoteFavorites(self.session)
 		if isinstance (course_id, (tuple, list)):
 			self.dataframe = qnf.filter_by_period_of_time_and_course_id(start_date,
