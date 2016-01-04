@@ -144,7 +144,7 @@ class EntityProfileViewsTimeseries(object):
 		return users_df
 
 	def get_the_most_viewed_profiles(self, max_rank_number=10):
-		most_viewed_profiles_df = get_the_most_viewed_profile(df =self.dataframe,
+		most_viewed_profiles_df = get_the_most_viewed_profile(df=self.dataframe,
 															  field_name='number_of_profile_viewed',
 															  max_rank_number=max_rank_number,
 															  session=self.session)
@@ -205,7 +205,7 @@ class EntityProfileActivityViewsTimeseries(object):
 		return users_df
 
 	def get_the_most_viewed_profile_activities(self, max_rank_number=10):
-		most_viewed_profiles_df = get_the_most_viewed_profile(df =self.dataframe,
+		most_viewed_profiles_df = get_the_most_viewed_profile(df=self.dataframe,
 															  field_name='number_of_profile_activity_viewed',
 															  max_rank_number=max_rank_number,
 															  session=self.session)
@@ -266,7 +266,7 @@ class EntityProfileMembershipViewsTimeseries(object):
 		return users_df
 
 	def get_the_most_viewed_profile_memberships(self, max_rank_number=10):
-		most_viewed_profiles_df = get_the_most_viewed_profile(df =self.dataframe,
+		most_viewed_profiles_df = get_the_most_viewed_profile(df=self.dataframe,
 															  field_name='number_of_profile_membership_viewed',
 															  max_rank_number=max_rank_number,
 															  session=self.session)

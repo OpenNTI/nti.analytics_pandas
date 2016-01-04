@@ -15,14 +15,15 @@ from nti.analytics_pandas.analysis.social import ContactsEventsTimeseries
 from nti.analytics_pandas.analysis.social import ContactsRemovedTimeseries
 from nti.analytics_pandas.analysis.social import FriendsListsMemberAddedTimeseries
 
-from nti.analytics_pandas.analysis.plots.social import ContactsEventsTimeseriesPlot
 from nti.analytics_pandas.analysis.plots.social import ContactsAddedTimeseriesPlot
+from nti.analytics_pandas.analysis.plots.social import ContactsEventsTimeseriesPlot
 from nti.analytics_pandas.analysis.plots.social import ContactsRemovedTimeseriesPlot
 from nti.analytics_pandas.analysis.plots.social import FriendsListsMemberAddedTimeseriesPlot
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
 class TestContactsEventsTimeseriesPlot(AnalyticsPandasTestBase):
+
 	def test_combine_events(self):
 		start_date = '2015-06-01'
 		end_date = '2015-10-19'
@@ -34,8 +35,8 @@ class TestContactsEventsTimeseriesPlot(AnalyticsPandasTestBase):
 		_ = cetp.combine_events(period_breaks='1 week')
 		assert_that(len(_), equal_to(3))
 
-
 class TestContactsAddedTimeseriesPlot(AnalyticsPandasTestBase):
+
 	def test_analyze_events(self):
 		start_date = '2015-06-01'
 		end_date = '2015-10-19'
@@ -44,7 +45,7 @@ class TestContactsAddedTimeseriesPlot(AnalyticsPandasTestBase):
 		catp = ContactsAddedTimeseriesPlot(cat)
 		_ = catp.analyze_events(period_breaks='1 week')
 		assert_that(len(_), equal_to(3))
-		
+
 	def test_analyze_application_types(self):
 		start_date = '2015-06-01'
 		end_date = '2015-10-19'
@@ -64,6 +65,7 @@ class TestContactsAddedTimeseriesPlot(AnalyticsPandasTestBase):
 		assert_that(len(_), equal_to(1))
 
 class TestContactsRemovedTimeseriesPlot(AnalyticsPandasTestBase):
+
 	def test_analyze_events(self):
 		start_date = '2015-06-01'
 		end_date = '2015-10-19'
@@ -72,7 +74,7 @@ class TestContactsRemovedTimeseriesPlot(AnalyticsPandasTestBase):
 		crtp = ContactsRemovedTimeseriesPlot(crt)
 		_ = crtp.analyze_events(period_breaks='1 week')
 		assert_that(len(_), equal_to(3))
-		
+
 	def test_analyze_application_types(self):
 		start_date = '2015-06-01'
 		end_date = '2015-10-19'
@@ -92,6 +94,7 @@ class TestContactsRemovedTimeseriesPlot(AnalyticsPandasTestBase):
 		assert_that(len(_), equal_to(1))
 
 class TestFriendsListsMemberAddedTimeseriesPlot(AnalyticsPandasTestBase):
+
 	def test_analyze_number_of_friend_list_members_added(self):
 		start_date = '2015-06-01'
 		end_date = '2015-10-19'

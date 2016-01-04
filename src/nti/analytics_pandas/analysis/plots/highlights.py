@@ -233,14 +233,14 @@ class HighlightsCreationTimeseriesPlot(object):
 		ratio_title = _('Ratio of highlights created over unique users grouped by resource types')
 		event_type = 'highlights_created_per_resource_types'
 		plots = self.generate_group_by_plots(
-									df, 
+									df,
 									group_by,
-									event_title, 
-									user_title, 
+									event_title,
+									user_title,
 									ratio_title,
-									period_breaks, 
+									period_breaks,
 									minor_period_breaks,
-									theme_seaborn_, 
+									theme_seaborn_,
 									event_type)
 
 		return plots

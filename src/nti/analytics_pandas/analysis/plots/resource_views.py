@@ -35,7 +35,7 @@ class  ResourceViewsTimeseriesPlot(object):
 		self.period = rvt.period
 
 	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day',
-						theme_seaborn_=True):
+					   theme_seaborn_=True):
 		"""
 		return scatter plots of resource views during period of time
 		it consists of:
@@ -198,7 +198,7 @@ class  ResourceViewsTimeseriesPlot(object):
 			unique_event_name = 'unique_event_%s' % event_type
 		if 'device_type' in group_by:
 			group_by = 'application_type'
-			unique_resource_title = unique_resource_title.replace('device' ,'application')
+			unique_resource_title = unique_resource_title.replace('device' , 'application')
 		plot_unique_resources = group_line_plot_x_axis_date(
 											df=df,
 											x_axis_field='timestamp_period',
@@ -383,7 +383,7 @@ class  ResourceViewsTimeseriesPlot(object):
 		return plots
 
 	def analyze_enrollment_type(self, period_breaks='1 week', minor_period_breaks='1 day',
-							theme_seaborn_=True):
+								theme_seaborn_=True):
 		"""
 		plot course resource views based on enrollment type
 		"""
@@ -414,8 +414,9 @@ class  ResourceViewsTimeseriesPlot(object):
 									event_type)
 		return plots
 
-	def analyze_device_type_scatter_plot(self, period_breaks='1 week', minor_period_breaks='1 day',
-										theme_seaborn_=True):
+	def analyze_device_type_scatter_plot(self, period_breaks='1 week', 
+										 minor_period_breaks='1 day',
+										 theme_seaborn_=True):
 		"""
 		plot course resource views based on device type (user agent)
 		"""

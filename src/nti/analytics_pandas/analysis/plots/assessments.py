@@ -393,8 +393,8 @@ class AssignmentsTakenTimeseriesPlot(object):
 		return plots
 
 	def analyze_events_group_by_enrollment_type(self, period_breaks='1 week',
-											minor_period_breaks='1 day',
-											theme_seaborn_=True):
+												minor_period_breaks='1 day',
+												theme_seaborn_=True):
 		att = self.att
 		df = att.analyze_events_group_by_enrollment_type()
 		if df is None :
@@ -768,8 +768,8 @@ class SelfAssessmentsTakenTimeseriesPlot(object):
 		return plots
 
 	def analyze_events_group_by_enrollment_type(self, period_breaks='1 week',
-											minor_period_breaks='1 day',
-											theme_seaborn_=True):
+												minor_period_breaks='1 day',
+												theme_seaborn_=True):
 		satt = self.satt
 		df = satt.analyze_events_group_by_enrollment_type()
 		if df is None :

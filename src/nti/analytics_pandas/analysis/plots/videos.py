@@ -150,9 +150,9 @@ class VideoEventsTimeseriesPlot(object):
 		return plots
 
 	def analyze_video_events_enrollment_types(self, period_breaks='1 week',
-										  minor_period_breaks='1 day',
-										  video_event_type='WATCH',
-										  theme_seaborn_=True):
+										 	  minor_period_breaks='1 day',
+										  	  video_event_type='WATCH',
+										  	  theme_seaborn_=True):
 		"""
 		given a video event type (WATCH or SKIP) return plots of video events during period of time
 		it consists of:
@@ -277,7 +277,7 @@ class VideoEventsTimeseriesPlot(object):
 											minor_period_breaks,
 											theme_seaborn_,
 											event_type)
-			key = 'section_%s' %(course_id)
+			key = 'section_%s' % (course_id)
 			section_plots_dict[key] = section_plots
 		plots['section_plots'] = section_plots_dict
 		return plots

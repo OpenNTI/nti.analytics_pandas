@@ -65,7 +65,6 @@ class HighlightsCreationTimeseries(object):
 					categorical_columns.append('enrollment_type')
 
 			self.dataframe = add_timestamp_period_(self.dataframe, time_period=period)
-
 			self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def analyze_events(self):

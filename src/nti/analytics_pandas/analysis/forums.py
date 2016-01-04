@@ -111,7 +111,7 @@ class ForumsCreatedTimeseries(object):
 				 with_device_type=True, period='daily'):
 
 		self.session = session
-		self.period  = period
+		self.period = period
 		qfc = self.query_forums_created = QueryForumsCreated(self.session)
 		if isinstance (course_id, (tuple, list)):
 			self.dataframe = qfc.filter_by_period_of_time_and_course_id(start_date,
@@ -161,7 +161,7 @@ class ForumsCommentsCreatedTimeseries(object):
 				 with_context_name=True, with_enrollment_type=True):
 
 		self.session = session
-		self.period  = period
+		self.period = period
 		qfcc = self.query_forums_comments_created = QueryForumsCommentsCreated(self.session)
 		if isinstance (course_id, (tuple, list)):
 			self.dataframe = qfcc.filter_by_period_of_time_and_course_id(start_date,
@@ -192,7 +192,6 @@ class ForumsCommentsCreatedTimeseries(object):
 
 			if period:
 				self.dataframe = add_timestamp_period_(self.dataframe, time_period=period)
-
 
 			self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
@@ -250,7 +249,7 @@ class ForumCommentLikesTimeseries(object):
 				 with_device_type=True, period='daily',
 				 with_context_name=True, with_enrollment_type=True):
 		self.session = session
-		self.period  = period
+		self.period = period
 		qfcl = self.query_forum_comment_likes = QueryForumCommentLikes(self.session)
 		if isinstance (course_id, (tuple, list)):
 			self.dataframe = qfcl.filter_by_period_of_time_and_course_id(start_date,
@@ -320,7 +319,7 @@ class ForumCommentFavoritesTimeseries(object):
 				 with_device_type=True, period='daily',
 				 with_context_name=True, with_enrollment_type=True):
 		self.session = session
-		self.period  = period
+		self.period = period
 		qfcf = self.query_forum_comment_favorites = QueryForumCommentFavorites(self.session)
 		if isinstance (course_id, (tuple, list)):
 			self.dataframe = qfcf.filter_by_period_of_time_and_course_id(start_date,

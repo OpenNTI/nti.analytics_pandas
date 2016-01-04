@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-.. $Id: social.py 78747 2015-12-10 15:54:52Z carlos.sanchez $
+.. $Id$
 """
 
 from __future__ import print_function, unicode_literals, absolute_import, division
@@ -9,23 +9,24 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
-import pandas as pd 
+import pandas as pd
 
 from . import MessageFactory as _
 
-from .commons import line_plot_x_axis_date
 from .commons import generate_three_plots
+from .commons import line_plot_x_axis_date
 from .commons import generate_three_group_by_plots
 from .commons import histogram_plot_x_axis_discrete
 
 class ContactsEventsTimeseriesPlot(object):
+
 	def __init__(self, cet):
 		"""
 		cet = ContactsEventsTimeseries
 		"""
 		self.cet = cet
 
-	def combine_events(self, 
+	def combine_events(self,
 					   period_breaks=None,
 					   minor_period_breaks=None,
 					   theme_seaborn_=True):
@@ -53,14 +54,15 @@ class ContactsEventsTimeseriesPlot(object):
 		return plots
 
 class ContactsAddedTimeseriesPlot(object):
+
 	def __init__(self, cat):
 		"""
 		cat = ContactsAddedTimeseries
 		"""
-		self.cat  = cat
+		self.cat = cat
 		self.period = cat.period
 
-	def analyze_events(self, 
+	def analyze_events(self,
 					   period_breaks=None,
 					   minor_period_breaks=None,
 					   theme_seaborn_=True):
@@ -144,14 +146,15 @@ class ContactsAddedTimeseriesPlot(object):
 		return (plot_users,)
 
 class ContactsRemovedTimeseriesPlot(object):
+
 	def __init__(self, crt):
 		"""
 		crt = ContactsRemovedTimeseries
 		"""
-		self.crt  = crt
+		self.crt = crt
 		self.period = crt.period
 
-	def analyze_events(self, 
+	def analyze_events(self,
 					   period_breaks=None,
 					   minor_period_breaks=None,
 					   theme_seaborn_=True):
@@ -235,6 +238,7 @@ class ContactsRemovedTimeseriesPlot(object):
 		return (plot_users,)
 
 class FriendsListsMemberAddedTimeseriesPlot(object):
+
 	def __init__(self, flmat):
 		"""
 		flmat = FriendsListsMemberAddedTimeseries
@@ -242,7 +246,7 @@ class FriendsListsMemberAddedTimeseriesPlot(object):
 		self.flmat = flmat
 		self.period = flmat.period
 
-	def analyze_number_of_friend_list_members_added(self, 
+	def analyze_number_of_friend_list_members_added(self,
 					   								period_breaks=None,
 					   								minor_period_breaks=None,
 					  	 							theme_seaborn_=True):
@@ -289,5 +293,3 @@ class FriendsListsMemberAddedTimeseriesPlot(object):
 		return (plot_average_number_of_friend_list_members_added,
 				plot_total_number_of_friend_list_members_added,
 				plot_number_of_friend_lists)
-
-	

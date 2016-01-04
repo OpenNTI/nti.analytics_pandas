@@ -31,7 +31,7 @@ class TopicsEventsTimeseriesPlot(object):
 		self.period = tet.period
 
 	def explore_all_events(self, period_breaks='1 week', minor_period_breaks='1 day',
-							theme_seaborn_=True):
+						   theme_seaborn_=True):
 		tet = self.tet
 		df = tet.combine_all_events_per_date()
 		if len(df.index) <= 0:
@@ -68,7 +68,7 @@ class TopicsCreationTimeseriesPlot(object):
 		self.period = tct.period
 
 	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day',
-						theme_seaborn_=True):
+					   theme_seaborn_=True):
 		"""
 		return plots of topics created during period of time
 		it consists of:
@@ -174,8 +174,8 @@ class TopicsCreationTimeseriesPlot(object):
 		return plots
 
 	def analyze_events_per_enrollment_types(self, period_breaks='1 week',
-										minor_period_breaks='1 day',
-										theme_seaborn_=True):
+											minor_period_breaks='1 day',
+											theme_seaborn_=True):
 		tct = self.tct
 		df = tct.analyze_events_per_enrollment_types()
 		if df is None:
@@ -258,7 +258,7 @@ class TopicViewsTimeseriesPlot(object):
 		self.period = tvt.period
 
 	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day',
-						theme_seaborn_=True):
+					   theme_seaborn_=True):
 		"""
 		return plots of topics viewed during period of time
 		it consists of:
@@ -345,7 +345,7 @@ class TopicViewsTimeseriesPlot(object):
 		return plots
 
 	def analyze_device_types(self, period_breaks='1 day', minor_period_breaks=None,
-							theme_seaborn_=True):
+							 theme_seaborn_=True):
 		"""
 		return plots of topics viewed grouped by device type during period of time
 		it consists of:
@@ -487,7 +487,7 @@ class TopicLikesTimeseriesPlot(object):
 		self.period = tlt.period
 
 	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day',
-						theme_seaborn_=True):
+					   theme_seaborn_=True):
 		"""
 		return plots of topic likes during period of time
 		it consists of:
@@ -604,8 +604,8 @@ class TopicLikesTimeseriesPlot(object):
 		return plots
 
 	def analyze_events_per_enrollment_types(self, period_breaks='1 day',
-										minor_period_breaks=None,
-										theme_seaborn_=True):
+											minor_period_breaks=None,
+											theme_seaborn_=True):
 		"""
 		return plots of topic likes grouped by enrollment  types
 		it consists of:
@@ -696,7 +696,7 @@ class TopicFavoritesTimeseriesPlot(object):
 		self.period = tft.period
 
 	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day',
-						theme_seaborn_=True):
+					   theme_seaborn_=True):
 		"""
 		return plots of topic favorites during period of time
 		it consists of:
@@ -812,8 +812,8 @@ class TopicFavoritesTimeseriesPlot(object):
 		return plots
 
 	def analyze_events_per_enrollment_types(self, period_breaks='1 day',
-										minor_period_breaks=None,
-										theme_seaborn_=True):
+											minor_period_breaks=None,
+											theme_seaborn_=True):
 		"""
 		return plots of topic favorites grouped by enrollment  types
 		it consists of:

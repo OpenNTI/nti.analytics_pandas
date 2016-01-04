@@ -187,7 +187,7 @@ class BookmarksTimeseriesPlot(object):
 		return plots_dict
 
 	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day',
-							theme_seaborn_=True):
+							 theme_seaborn_=True):
 		"""
 		plot bookmark creation based on device type
 		"""
@@ -219,8 +219,9 @@ class BookmarksTimeseriesPlot(object):
 											  period=self.period)
 		return plots
 
-	def analyze_enrollment_types(self, period_breaks='1 week', minor_period_breaks='1 day',
-							theme_seaborn_=True):
+	def analyze_enrollment_types(self, period_breaks='1 week', 
+								 minor_period_breaks='1 day',
+								 theme_seaborn_=True):
 		"""
 		plot bookmark creation based on enrollment types
 		"""

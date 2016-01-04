@@ -38,7 +38,7 @@ class AssessmentEventsTimeseries(object):
 
 		if self.avt is not None:
 			self.period = avt.period
-		elif self.att is not None:		
+		elif self.att is not None:
 			self.period = att.period
 		elif self.savt is not None:
 			self.period = savt.period
@@ -406,7 +406,7 @@ class SelfAssessmentViewsTimeseries(object):
 					self.dataframe = new_df
 					categorical_columns.append('device_type')
 
-			
+
 			self.dataframe = add_timestamp_period_(self.dataframe, time_period=period)
 
 			if with_context_name:

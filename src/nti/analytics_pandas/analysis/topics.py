@@ -136,8 +136,7 @@ class TopicsCreationTimeseries(object):
 					self.dataframe = new_df
 					categorical_columns.append('enrollment_type')
 
-			self.dataframe = add_timestamp_period_(self.dataframe, time_period = period)
-
+			self.dataframe = add_timestamp_period_(self.dataframe, time_period=period)
 			self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def analyze_events(self):
@@ -212,7 +211,6 @@ class TopicLikesTimeseries(object):
 					categorical_columns.append('enrollment_type')
 
 			self.dataframe = add_timestamp_period_(self.dataframe, time_period=period)
-
 			self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def analyze_events(self):
@@ -286,7 +284,6 @@ class TopicViewsTimeseries(object):
 					categorical_columns.append('enrollment_type')
 
 			self.dataframe = add_timestamp_period_(self.dataframe, time_period=period)
-
 			self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def analyze_events(self):
@@ -367,14 +364,12 @@ class TopicFavoritesTimeseries(object):
 					categorical_columns.append('enrollment_type')
 
 			self.dataframe = add_timestamp_period_(self.dataframe, time_period=period)
-
 			self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def analyze_events(self):
 		group_by_items = ['timestamp_period']
 		df = self.build_dataframe(group_by_items, self.dataframe)
 		return df
-
 
 	def analyze_events_per_course_sections(self):
 		group_by_items = ['timestamp_period', 'course_id', 'context_name']
