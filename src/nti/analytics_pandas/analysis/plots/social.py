@@ -234,3 +234,60 @@ class ContactsRemovedTimeseriesPlot(object):
 											plot_name='most_active_users_removing_contacts')
 		return (plot_users,)
 
+class FriendsListsMemberAddedTimeseriesPlot(object):
+	def __init__(self, flmat):
+		"""
+		flmat = FriendsListsMemberAddedTimeseries
+		"""
+		self.flmat = flmat
+		self.period = flmat.period
+
+	def analyze_number_of_friend_list_members_added(self, 
+					   								period_breaks=None,
+					   								minor_period_breaks=None,
+					  	 							theme_seaborn_=True):
+		flmat = self.flmat
+		df = flmat.analyze_number_of_friend_list_members_added()
+		if df is None:
+			return ()
+		plot_average_number_of_friend_list_members_added = line_plot_x_axis_date(
+															df=df,
+															x_axis_field='timestamp_period',
+															y_axis_field='average_number_of_friend_list_members_added',
+															x_axis_label='Date',
+															y_axis_label='Average number of friend list members added',
+															title='Average number of friend list members added during time period',
+															period_breaks=period_breaks,
+															minor_breaks=minor_period_breaks,
+															theme_seaborn_=theme_seaborn_,
+															plot_name='average_number_of_friend_list_members_added')
+
+		plot_total_number_of_friend_list_members_added = line_plot_x_axis_date(
+															df=df,
+															x_axis_field='timestamp_period',
+															y_axis_field='total_number_of_friend_list_members_added',
+															x_axis_label='Date',
+															y_axis_label='Total number of friend list members added',
+															title='Total number of friend list members added during time period',
+															period_breaks=period_breaks,
+															minor_breaks=minor_period_breaks,
+															theme_seaborn_=theme_seaborn_,
+															plot_name='total_number_of_friend_list_members_added')
+
+		plot_number_of_friend_lists = line_plot_x_axis_date(
+													  df=df,
+													  x_axis_field='timestamp_period',
+													  y_axis_field='number_of_friend_lists',
+													  x_axis_label='Date',
+													  y_axis_label='Number of friend lists',
+													  title='Number of friend lists during time period',
+													  period_breaks=period_breaks,
+													  minor_breaks=minor_period_breaks,
+													  theme_seaborn_=theme_seaborn_,
+													  plot_name='number_of_friend_lists')
+
+		return (plot_average_number_of_friend_list_members_added,
+				plot_total_number_of_friend_list_members_added,
+				plot_number_of_friend_lists)
+
+	

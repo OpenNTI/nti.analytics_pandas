@@ -13,10 +13,12 @@ from hamcrest import assert_that
 from nti.analytics_pandas.analysis.social import ContactsAddedTimeseries
 from nti.analytics_pandas.analysis.social import ContactsEventsTimeseries
 from nti.analytics_pandas.analysis.social import ContactsRemovedTimeseries
+from nti.analytics_pandas.analysis.social import FriendsListsMemberAddedTimeseries
 
 from nti.analytics_pandas.analysis.plots.social import ContactsEventsTimeseriesPlot
 from nti.analytics_pandas.analysis.plots.social import ContactsAddedTimeseriesPlot
 from nti.analytics_pandas.analysis.plots.social import ContactsRemovedTimeseriesPlot
+from nti.analytics_pandas.analysis.plots.social import FriendsListsMemberAddedTimeseriesPlot
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
@@ -88,3 +90,13 @@ class TestContactsRemovedTimeseriesPlot(AnalyticsPandasTestBase):
 		crtp = ContactsAddedTimeseriesPlot(crt)
 		_ = crtp.plot_the_most_active_users()
 		assert_that(len(_), equal_to(1))
+
+class TestFriendsListsMemberAddedTimeseriesPlot(AnalyticsPandasTestBase):
+	def test_analyze_number_of_friend_list_members_added(self):
+		start_date = '2015-06-01'
+		end_date = '2015-10-19'
+		period = 'weekly'
+		flmat = FriendsListsMemberAddedTimeseries(self.session, start_date, end_date, period=period)
+		flmatp = FriendsListsMemberAddedTimeseriesPlot(flmat)
+		_ = flmatp.analyze_number_of_friend_list_members_added(period_breaks='1 week')
+		assert_that(len(_), equal_to(3))
