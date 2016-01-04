@@ -29,6 +29,7 @@ class HighlightsCreationTimeseries(object):
 				 period='daily', with_context_name=True,
 				 with_enrollment_type=True):
 		self.session = session
+		self.period = period
 		qhc = self.query_highlights_created = QueryHighlightsCreated(self.session)
 		if isinstance (course_id, (tuple, list)):
 			self.dataframe = qhc.filter_by_period_of_time_and_course_id(start_date,

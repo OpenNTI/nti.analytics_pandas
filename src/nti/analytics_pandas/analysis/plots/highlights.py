@@ -28,6 +28,7 @@ class HighlightsCreationTimeseriesPlot(object):
 		hct = HighlightsCreationTimeseries
 		"""
 		self.hct = hct
+		self.period = hct.period
 
 	def explore_events(self, period_breaks='1 week',
 					   minor_period_breaks='1 day',
@@ -184,7 +185,8 @@ class HighlightsCreationTimeseriesPlot(object):
 									 period_breaks,
 									 minor_period_breaks,
 									 theme_seaborn_,
-									 event_type)
+									 event_type,
+									 period=self.period)
 		return plots
 
 	def generate_group_by_plots(self,
@@ -209,7 +211,8 @@ class HighlightsCreationTimeseriesPlot(object):
 											  period_breaks,
 											  minor_period_breaks,
 											  theme_seaborn_,
-											  event_type)
+											  event_type,
+											  period=self.period)
 		return plots
 
 	def analyze_resource_types(self,
