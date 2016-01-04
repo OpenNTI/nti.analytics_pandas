@@ -42,7 +42,7 @@ class HighlightsCreationTimeseriesPlot(object):
 		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 
 		event_title = _('Number of highlights created during period of time')
-		user_title = _('Number of unique users created highlights during period of time')
+		user_title = _('Number of unique users creating highlights during period of time')
 		ratio_title = _('Ratio of highlights created over unique users during period of time')
 		event_type = 'highlights_created'
 		plots = self.generate_plots(df,

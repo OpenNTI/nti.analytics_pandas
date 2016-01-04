@@ -9,6 +9,8 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
+import pandas as pd 
+
 from . import MessageFactory as _
 
 from .commons import line_plot_x_axis_date
@@ -49,3 +51,73 @@ class ContactsEventsTimeseriesPlot(object):
 											  period=cet.period)
 		return plots
 
+class ContactsAddedTimeseriesPlot(object):
+	def __init__(self, cat):
+		self.cat  = cat
+		self.period = cat.period
+
+	def analyze_events(self, 
+					   period_breaks=None,
+					   minor_period_breaks=None,
+					   theme_seaborn_=True):
+		cat = self.cat
+		df = cat.analyze_events()
+		if df is None:
+			return ()
+
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		event_title = _('Number of contacts added during period of time')
+		user_title = _('Number of unique users adding contacts during period of time')
+		ratio_title = _('Ratio of contacts added over unique users during period of time')
+		event_type = 'contacts_added'
+		event_y_axis_field = 'number_of_contacts_added'
+		event_y_axis_label = _('Number of contacts added')
+
+		plots = generate_three_plots(
+								 df,
+								 event_title,
+								 user_title,
+								 ratio_title,
+								 event_y_axis_field,
+								 event_y_axis_label,
+								 period_breaks,
+								 minor_period_breaks,
+								 theme_seaborn_,
+								 event_type,
+								 period=self.period)
+		return plots
+
+	def analyze_application_types(self,
+								  period_breaks=None,
+								  minor_period_breaks=None,
+								  theme_seaborn_=True):
+		cat = self.cat
+		df = cat.analyze_application_types()
+		if df is None:
+			return ()
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+		
+		group_by = 'application_type'
+		event_title = _('Number of contacts added per application type')
+		user_title = _('Number of unique users adding contacts per application type')
+		ratio_title = _('Ratio of contacts added over unique users per application type')
+		event_type = 'contacts_added_per_application_type'
+		event_y_axis_field = 'number_of_contacts_added'
+		event_y_axis_label = _('Number of contacts added')
+
+		plots = generate_three_group_by_plots(df,
+											  group_by,
+											  event_title,
+											  user_title,
+											  ratio_title,
+											  event_y_axis_field,
+											  event_y_axis_label,
+											  period_breaks,
+											  minor_period_breaks,
+											  theme_seaborn_,
+											  event_type,
+											  period=self.period)
+		return plots

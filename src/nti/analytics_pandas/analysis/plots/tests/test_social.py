@@ -15,6 +15,7 @@ from nti.analytics_pandas.analysis.social import ContactsEventsTimeseries
 from nti.analytics_pandas.analysis.social import ContactsRemovedTimeseries
 
 from nti.analytics_pandas.analysis.plots.social import ContactsEventsTimeseriesPlot
+from nti.analytics_pandas.analysis.plots.social import ContactsAddedTimeseriesPlot
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
@@ -28,4 +29,24 @@ class TestContactsEventsTimeseriesPlot(AnalyticsPandasTestBase):
 		cet = ContactsEventsTimeseries(cat=cat, crt=crt)
 		cetp = ContactsEventsTimeseriesPlot(cet)
 		_ = cetp.combine_events(period_breaks='1 week')
+		assert_that(len(_), equal_to(3))
+
+
+class TestContactsAddedTimeseriesPlot(AnalyticsPandasTestBase):
+	def test_analyze_events(self):
+		start_date = '2015-06-01'
+		end_date = '2015-10-19'
+		period = 'weekly'
+		cat = ContactsAddedTimeseries(self.session, start_date, end_date, period=period)
+		catp = ContactsAddedTimeseriesPlot(cat)
+		_ = catp.analyze_events(period_breaks='1 week')
+		assert_that(len(_), equal_to(3))
+		
+	def test_analyze_application_types(self):
+		start_date = '2015-06-01'
+		end_date = '2015-10-19'
+		period = 'weekly'
+		cat = ContactsAddedTimeseries(self.session, start_date, end_date, period=period)
+		catp = ContactsAddedTimeseriesPlot(cat)
+		_ = catp.analyze_application_types(period_breaks='1 week')
 		assert_that(len(_), equal_to(3))
