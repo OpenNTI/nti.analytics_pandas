@@ -39,6 +39,17 @@ class TopicsEventsTimeseries(object):
 		self.tlt = tlt
 		self.tft = tft
 
+		if tct is not None:
+			self.period = tct.period
+		elif tvt is not None:
+			self.period = tvt.period
+		elif tlt is not None:
+			self.period = tlt.period
+		elif tft is not None:
+			self.period = tft.period
+		else:
+			self.period = None
+
 	def combine_all_events_per_date(self):
 		"""
 		put all topics related events (create, view, like and favorite) into one dataframe
@@ -95,6 +106,7 @@ class TopicsCreationTimeseries(object):
 				 with_device_type=True, period='daily',
 				 with_context_name=True, with_enrollment_type=True):
 		self.session = session
+		self.period = period
 		qtc = self.query_topics_created = QueryTopicsCreated(self.session)
 		if isinstance (course_id, (tuple, list)):
 			self.dataframe = qtc.filter_by_period_of_time_and_course_id(start_date,
@@ -169,6 +181,7 @@ class TopicLikesTimeseries(object):
 				 with_device_type=True, period='daily',
 				 with_context_name=True, with_enrollment_type=True):
 		self.session = session
+		self.period = period
 		qtl = self.query_topic_likes = QueryTopicLikes(self.session)
 		if isinstance (course_id, (tuple, list)):
 			self.dataframe = qtl.filter_by_period_of_time_and_course_id(start_date,
@@ -242,6 +255,7 @@ class TopicViewsTimeseries(object):
 				 with_device_type=True, period='daily',
 				 with_context_name=True, with_enrollment_type=True):
 		self.session = session
+		self.period = period
 		qtv = self.query_topics_viewed = QueryTopicsViewed(self.session)
 		if isinstance (course_id, (tuple, list)):
 			self.dataframe = qtv.filter_by_period_of_time_and_course_id(start_date,
@@ -322,6 +336,7 @@ class TopicFavoritesTimeseries(object):
 				 with_device_type=True, period='daily',
 				 with_context_name=True, with_enrollment_type=True):
 		self.session = session
+		self.period = period
 		qtf = self.query_topic_favorites = QueryTopicFavorites(self.session)
 		if isinstance (course_id, (tuple, list)):
 			self.dataframe = qtf.filter_by_period_of_time_and_course_id(start_date,

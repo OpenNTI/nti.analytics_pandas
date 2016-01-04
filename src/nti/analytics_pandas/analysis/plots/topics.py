@@ -28,6 +28,7 @@ class TopicsEventsTimeseriesPlot(object):
 		tet = TopicsEventsTimeseries
 		"""
 		self.tet = tet
+		self.period = tet.period
 
 	def explore_all_events(self, period_breaks='1 week', minor_period_breaks='1 day',
 							theme_seaborn_=True):
@@ -53,7 +54,8 @@ class TopicsEventsTimeseriesPlot(object):
 											  period_breaks,
 											  minor_period_breaks,
 											  theme_seaborn_,
-											  event_type)
+											  event_type,
+											  period=self.period)
 		return plots
 
 class TopicsCreationTimeseriesPlot(object):
@@ -63,6 +65,7 @@ class TopicsCreationTimeseriesPlot(object):
 		tct = TopicsCreationTimeseries
 		"""
 		self.tct = tct
+		self.period = tct.period
 
 	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day',
 						theme_seaborn_=True):
@@ -215,7 +218,8 @@ class TopicsCreationTimeseriesPlot(object):
 									 period_breaks,
 									 minor_period_breaks,
 									 theme_seaborn_,
-									 event_type)
+									 event_type,
+									 period=self.period)
 		return plots
 
 	def generate_group_by_plots(self,
@@ -240,7 +244,8 @@ class TopicsCreationTimeseriesPlot(object):
 											  period_breaks,
 											  minor_period_breaks,
 											  theme_seaborn_,
-											  event_type)
+											  event_type,
+											  period=self.period)
 		return plots
 
 class TopicViewsTimeseriesPlot(object):
@@ -250,6 +255,7 @@ class TopicViewsTimeseriesPlot(object):
 		tvt = TopicViewsTimeseries
 		"""
 		self.tvt = tvt
+		self.period = tvt.period
 
 	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day',
 						theme_seaborn_=True):
@@ -422,7 +428,8 @@ class TopicViewsTimeseriesPlot(object):
 									 period_breaks,
 									 minor_period_breaks,
 									 theme_seaborn_,
-									 event_type)
+									 event_type,
+									 period=self.period)
 		return plots
 
 	def generate_group_by_plots(self,
@@ -447,7 +454,8 @@ class TopicViewsTimeseriesPlot(object):
 											  period_breaks,
 											  minor_period_breaks,
 											  theme_seaborn_,
-											  event_type)
+											  event_type,
+											  period=self.period)
 		return plots
 
 	def plot_the_most_active_users(self, max_rank_number=10):
@@ -476,6 +484,7 @@ class TopicLikesTimeseriesPlot(object):
 		tlt = TopicLikesTimeseries
 		"""
 		self.tlt = tlt
+		self.period = tlt.period
 
 	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day',
 						theme_seaborn_=True):
@@ -647,7 +656,8 @@ class TopicLikesTimeseriesPlot(object):
 									 period_breaks,
 									 minor_period_breaks,
 									 theme_seaborn_,
-									 event_type)
+									 event_type,
+									 period=self.period)
 		return plots
 
 	def generate_group_by_plots(self,
@@ -672,7 +682,8 @@ class TopicLikesTimeseriesPlot(object):
 											  period_breaks,
 											  minor_period_breaks,
 											  theme_seaborn_,
-											  event_type)
+											  event_type,
+											  period=self.period)
 		return plots
 
 class TopicFavoritesTimeseriesPlot(object):
@@ -682,6 +693,7 @@ class TopicFavoritesTimeseriesPlot(object):
 		tft = TopicFavoritesTimeseries
 		"""
 		self.tft = tft
+		self.period = tft.period
 
 	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day',
 						theme_seaborn_=True):
@@ -852,7 +864,8 @@ class TopicFavoritesTimeseriesPlot(object):
 									 period_breaks,
 									 minor_period_breaks,
 									 theme_seaborn_,
-									 event_type)
+									 event_type,
+									 period=self.period)
 		return plots
 
 	def generate_group_by_plots(self,
@@ -877,5 +890,6 @@ class TopicFavoritesTimeseriesPlot(object):
 											  period_breaks,
 											  minor_period_breaks,
 											  theme_seaborn_,
-											  event_type)
+											  event_type,
+											  period=self.period)
 		return plots
