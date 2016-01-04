@@ -38,14 +38,11 @@ class AssessmentEventsTimeseries(object):
 
 		if self.avt is not None:
 			self.period = avt.period
-
-		if self.att is not None:		
+		elif self.att is not None:		
 			self.period = att.period
-
-		if self.savt is not None:
+		elif self.savt is not None:
 			self.period = savt.period
-
-		if self.satt is not None:
+		elif self.satt is not None:
 			self.period = satt.period
 
 	def combine_events(self):

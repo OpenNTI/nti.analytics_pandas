@@ -30,6 +30,7 @@ class ForumsEventsTimeseriesPlot(object):
 		fet = ForumsEventsTimeseries
 		"""
 		self.fet = fet
+		self.period = fet.period
 
 	def explore_all_events(self, period_breaks='1 week',
 						   minor_period_breaks='1 day',
@@ -57,7 +58,8 @@ class ForumsEventsTimeseriesPlot(object):
 											  period_breaks,
 											  minor_period_breaks,
 											  theme_seaborn_,
-											  event_type)
+											  event_type,
+											  period=self.period)
 		return plots
 
 class ForumsCreatedTimeseriesPlot(object):
@@ -67,6 +69,7 @@ class ForumsCreatedTimeseriesPlot(object):
 		fct = ForumsCreatedTimeseries
 		"""
 		self.fct = fct
+		self.period = fct.period
 
 	def explore_events(self, period_breaks='1 week',
 					   minor_period_breaks='1 day',
@@ -100,7 +103,8 @@ class ForumsCreatedTimeseriesPlot(object):
 									 period_breaks,
 									 minor_period_breaks,
 									 theme_seaborn_,
-									 event_type)
+									 event_type,
+									 period=self.period)
 		return plots
 
 	def analyze_device_types(self, period_breaks='1 week',
@@ -141,7 +145,8 @@ class ForumsCreatedTimeseriesPlot(object):
 											  period_breaks,
 											  minor_period_breaks,
 											  theme_seaborn_,
-											  event_type)
+											  event_type,
+											  period=self.period)
 		return plots
 
 class ForumsCommentsCreatedTimeseriesPlot(object):
@@ -151,6 +156,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 		fcct = ForumsCommentsCreatedTimeseries
 		"""
 		self.fcct = fcct
+		self.period = fcct.period
 
 	def explore_events(self, period_breaks='1 week',
 					   minor_period_breaks='1 day',
@@ -280,7 +286,8 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 									 period_breaks,
 									 minor_period_breaks,
 									 theme_seaborn_,
-									 event_type)
+									 event_type,
+									 period=self.period)
 
 		avg_event_name = 'average_comment_%s' % event_type
 		plot_average_comment_length = line_plot_x_axis_date(
@@ -293,7 +300,8 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 				period_breaks=period_breaks,
 				minor_breaks=minor_period_breaks,
 				theme_seaborn_=theme_seaborn_,
-				plot_name=avg_event_name)
+				plot_name=avg_event_name,
+				period=self.period)
 
 		plots = plots + (plot_average_comment_length,)
 		return plots
@@ -321,7 +329,8 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 											  period_breaks,
 											  minor_period_breaks,
 											  theme_seaborn_,
-											  event_type)
+											  event_type,
+											  period=self.period)
 
 		avg_event_name = u'average_comment_%s' % event_type
 		if 'device_type' in group_by:
@@ -338,7 +347,8 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 				group_by=group_by,
 				minor_breaks=minor_period_breaks,
 				theme_seaborn_=theme_seaborn_,
-				plot_name=avg_event_name)
+				plot_name=avg_event_name,
+				period=self.period)
 
 		plots = plots + (plot_average_comment_length,)
 		return plots
@@ -443,6 +453,7 @@ class ForumCommentLikesTimeseriesPlot(object):
 		fclt = ForumCommentLikesTimeseries
 		"""
 		self.fclt = fclt
+		self.period = fclt.period
 
 	def analyze_events(self, period_breaks='1 week', minor_period_breaks='1 day',
 						theme_seaborn_=True):
@@ -610,7 +621,8 @@ class ForumCommentLikesTimeseriesPlot(object):
 									 period_breaks,
 									 minor_period_breaks,
 									 theme_seaborn_,
-									 event_type)
+									 event_type,
+									 period=self.period)
 		return plots
 
 	def generate_group_by_plots(self,
@@ -635,7 +647,8 @@ class ForumCommentLikesTimeseriesPlot(object):
 											  period_breaks,
 											  minor_period_breaks,
 											  theme_seaborn_,
-											  event_type)
+											  event_type,
+											  period=self.period)
 		return plots
 
 class ForumCommentFavoritesTimeseriesPlot(object):
@@ -645,6 +658,7 @@ class ForumCommentFavoritesTimeseriesPlot(object):
 		fcft = ForumCommentFavoritesTimeseries
 		"""
 		self.fcft = fcft
+		self.period = fcft.period
 
 	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day',
 						theme_seaborn_=True):
@@ -815,7 +829,8 @@ class ForumCommentFavoritesTimeseriesPlot(object):
 									 period_breaks,
 									 minor_period_breaks,
 									 theme_seaborn_,
-									 event_type)
+									 event_type,
+									 period=self.period)
 		return plots
 
 	def generate_group_by_plots(self,
@@ -840,5 +855,6 @@ class ForumCommentFavoritesTimeseriesPlot(object):
 											  period_breaks,
 											  minor_period_breaks,
 											  theme_seaborn_,
-											  event_type)
+											  event_type,
+											  period=self.period)
 		return plots
