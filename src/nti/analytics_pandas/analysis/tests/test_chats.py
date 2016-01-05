@@ -49,7 +49,7 @@ class TestChatsInitiatedTimeseries(AnalyticsPandasTestBase):
 	def test_chats_initiated_weekly(self):
 		start_date = '2015-10-05'
 		end_date = '2015-10-19'
-		cit = ChatsInitiatedTimeseries(self.session, start_date, end_date, time_period='weekly')
+		cit = ChatsInitiatedTimeseries(self.session, start_date, end_date, period='weekly')
 		assert_that(cit.dataframe, has_item('timestamp'))
 		assert_that(cit.dataframe, has_item('timestamp_period'))
 		assert_that(cit.dataframe, has_item('chat_id'))

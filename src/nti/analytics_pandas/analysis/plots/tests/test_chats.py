@@ -30,7 +30,7 @@ class TestChatsPlot(AnalyticsPandasTestBase):
 	def test_explore_chats_initiated_weekly(self):
 		start_date = '2015-01-01'
 		end_date = '2015-12-31'
-		cit = ChatsInitiatedTimeseries(self.session, start_date, end_date, time_period='weekly')
+		cit = ChatsInitiatedTimeseries(self.session, start_date, end_date, period='weekly')
 		citp = ChatsTimeseriesPlot(cit=cit)
 		_ = citp.explore_chats_initiated(period_breaks='1 week', minor_period_breaks=None, theme_seaborn_=True)
 		assert_that(len(_), equal_to(3))

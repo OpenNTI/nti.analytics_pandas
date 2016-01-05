@@ -25,6 +25,13 @@ class ChatsTimeseriesPlot(object):
 		self.cit = cit
 		self.cjt = cjt
 
+		if cit is not None:
+			self.period = cit.period
+		elif cjt is not None:
+			self.period = cjt.period
+		else:
+			self.period = None
+
 	def explore_chats_initiated(self, period_breaks='1 day', minor_period_breaks=None,
 					  		 	theme_seaborn_=True):
 		cit = self.cit
@@ -51,7 +58,8 @@ class ChatsTimeseriesPlot(object):
 									 period_breaks,
 									 minor_period_breaks,
 									 theme_seaborn_,
-									 event_type)
+									 event_type,
+									 period=self.period)
 		return plots
 
 	def analyze_application_types(self, period_breaks='1 day', minor_period_breaks=None,
@@ -82,7 +90,8 @@ class ChatsTimeseriesPlot(object):
 											  period_breaks,
 											  minor_period_breaks,
 											  theme_seaborn_,
-											  event_type)
+											  event_type,
+											  period=self.period)
 		return plots
 
 	def analyze_number_of_users_join_chats_per_date(self,
@@ -109,7 +118,8 @@ class ChatsTimeseriesPlot(object):
 															period_breaks=period_breaks,
 															minor_breaks=minor_period_breaks,
 															theme_seaborn_=theme_seaborn_,
-															plot_name='average_number_user_join_chats')
+															plot_name='average_number_user_join_chats',
+															period=self.period)
 
 		plot_total_number_of_users_chatting_each_date = line_plot_x_axis_date(
 															df=df,
@@ -121,7 +131,8 @@ class ChatsTimeseriesPlot(object):
 															period_breaks=period_breaks,
 															minor_breaks=minor_period_breaks,
 															theme_seaborn_=theme_seaborn_,
-															plot_name='total_number_user_join_chats')
+															plot_name='total_number_user_join_chats',
+															period=self.period)
 
 		plot_number_of_chats_created = line_plot_x_axis_date(
 													  df=df,
@@ -133,7 +144,8 @@ class ChatsTimeseriesPlot(object):
 													  period_breaks=period_breaks,
 													  minor_breaks=minor_period_breaks,
 													  theme_seaborn_=theme_seaborn_,
-													  plot_name='chats_created')
+													  plot_name='chats_created',
+													  period=self.period)
 
 		return (plot_average_number_of_users_chatting_each_date,
 				plot_total_number_of_users_chatting_each_date,
@@ -163,7 +175,8 @@ class ChatsTimeseriesPlot(object):
 										period_breaks=period_breaks,
 										minor_breaks=minor_period_breaks,
 										theme_seaborn_=theme_seaborn_,
-										plot_name='one_one_chats')
+										plot_name='one_one_chats',
+										period=self.period)
 			plots['one_one_chats'] = plot_one_one_chats
 
 		if not group_chat_df.empty:
@@ -177,6 +190,7 @@ class ChatsTimeseriesPlot(object):
 										period_breaks=period_breaks,
 										minor_breaks=minor_period_breaks,
 										theme_seaborn_=theme_seaborn_,
-										plot_name='group_chats')
+										plot_name='group_chats',
+										period=self.period)
 			plots['group_chats'] = plot_group_chats
 		return plots
