@@ -68,6 +68,12 @@
 		for=".enrollments.EnrollmentTimeseriesReportView"
 		layer="*" />
 
+	<!-- Social related events report -->
+	<z3c:template
+		template="../templates/social.rml"
+		for=".social.SocialTimeseriesReportView"
+		layer="*" />
+
 	<!-- Macros -->
 	<z3c:macro
 		template="../templates/std_report_macros.pt"

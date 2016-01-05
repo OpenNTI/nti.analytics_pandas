@@ -1,0 +1,28 @@
+<metal:block
+	xmlns:tal="http://xml.zope.org/namespaces/tal"
+	xmlns:metal="http://xml.zope.org/namespaces/metal"
+	tal:define="options view/options">
+	
+	<para style="normal" spaceAfter=".5in" >
+		This document presents an overview of social related event activities from <strong>${context/start_date}</strong> through <strong>${context/end_date}</strong>.
+	</para>
+	<hr width="100%" />
+
+	<tal:block tal:condition="python: options['has_contacts_added_data']">
+		<setNextTemplate name="main"/>
+		<nextPage />
+		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+			Overview of Contacts Added
+		</h1>
+		<hr width="100%" />
+		<tal:block tal:define="contacts_added options/data/contacts_added">
+			<illustration width="5in" height="3in"
+					  	  tal:define="event contacts_added/event_contacts_added;
+					  	  			  user_event contacts_added/user_contacts_added;
+								      ratio_event contacts_added/ratio_contacts_added"
+					      metal:use-macro="macro:three_plots_event">
+			</illustration>
+		</tal:block>
+	</tal:block>
+
+</metal:block>

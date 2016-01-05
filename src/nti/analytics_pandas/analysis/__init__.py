@@ -49,6 +49,11 @@ from .plots import CourseEnrollmentsTimeseriesPlot
 from .plots import CourseCatalogViewsTimeseriesPlot
 from .plots import CourseEnrollmentsEventsTimeseriesPlot
 
+from .plots import ContactsEventsTimeseriesPlot
+from .plots import ContactsAddedTimeseriesPlot
+from .plots import ContactsRemovedTimeseriesPlot
+from .plots import FriendsListsMemberAddedTimeseriesPlot
+
 from.assessments import AssignmentViewsTimeseries
 from.assessments import AssignmentsTakenTimeseries
 from.assessments import AssessmentEventsTimeseries
@@ -78,6 +83,12 @@ from .notes import NotesViewTimeseries
 from .notes import NotesEventsTimeseries
 from .notes import NotesCreationTimeseries
 from .notes import NoteFavoritesTimeseries
+
+from .social import ContactsEventsTimeseries
+from .social import ContactsAddedTimeseries
+from .social import ContactsRemovedTimeseries
+from .social import DynamicFriendsListsMemberAddedTimeseries
+from .social import FriendsListsMemberAddedTimeseries
 
 from .topics import TopicViewsTimeseries
 from .topics import TopicLikesTimeseries
