@@ -40,8 +40,8 @@ from .notes import NoteFavoritesTimeseriesPlot
 
 from .resource_views import ResourceViewsTimeseriesPlot
 
-from .social import ContactsEventsTimeseriesPlot
 from .social import ContactsAddedTimeseriesPlot
+from .social import ContactsEventsTimeseriesPlot
 from .social import ContactsRemovedTimeseriesPlot
 from .social import FriendsListsMemberAddedTimeseriesPlot
 

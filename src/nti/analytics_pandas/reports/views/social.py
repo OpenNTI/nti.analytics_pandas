@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*
 """
-.. $Id: social.py 78996 2015-12-15 14:34:05Z egawati.panjei $
+.. $Id$
 """
 
 from __future__ import print_function, unicode_literals, absolute_import, division
@@ -13,18 +13,10 @@ from . import MessageFactory as _
 
 from zope import interface
 
-from ...analysis import ContactsEventsTimeseriesPlot
-from ...analysis import ContactsAddedTimeseriesPlot
-from ...analysis import ContactsRemovedTimeseriesPlot
-from ...analysis import FriendsListsMemberAddedTimeseriesPlot
-
-from ...analysis import ContactsEventsTimeseries
 from ...analysis import ContactsAddedTimeseries
-from ...analysis import ContactsRemovedTimeseries
-from ...analysis import FriendsListsMemberAddedTimeseries
+from ...analysis import ContactsAddedTimeseriesPlot
 
 from .commons import build_plot_images_dictionary
-from .commons import build_images_dict_from_plot_dict
 
 from .mixins import AbstractReportView
 
@@ -64,7 +56,7 @@ class SocialTimeseriesReportView(AbstractReportView):
 										   self.context.start_date,
 										   self.context.end_date,
 										   period=self.context.period)
-		
+
 		if self.cat.dataframe.empty:
 			self.options['has_contacts_added_data'] = False
 		else:

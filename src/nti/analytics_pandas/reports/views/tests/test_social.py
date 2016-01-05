@@ -78,13 +78,13 @@ class TestHighlightsEvents(AnalyticsPandasTestBase):
 		period_breaks = '1 week'
 		minor_period_breaks = None
 		theme_seaborn_ = True
-		context = Context(session=self.session, 
-						  start_date=start_date, 
+		context = Context(session=self.session,
+						  start_date=start_date,
 						  end_date=end_date,
-				 		  period_breaks=period_breaks, 
-				 		  minor_period_breaks=minor_period_breaks, 
+				 		  period_breaks=period_breaks,
+				 		  minor_period_breaks=minor_period_breaks,
 				 		  theme_seaborn_=theme_seaborn_,
-				 		  number_of_most_active_user=10, 
+				 		  number_of_most_active_user=10,
 				 		  period=period)
 		assert_that(context.start_date, equal_to('2015-06-01'))
 
