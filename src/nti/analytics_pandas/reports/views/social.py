@@ -77,6 +77,7 @@ class SocialTimeseriesReportView(AbstractReportView):
 		self.catp = ContactsAddedTimeseriesPlot(self.cat)
 		data = self.get_contacts_added_plots(data)
 		data = self.get_contacts_added_plots_per_application_type(data)
+		data = self.get_the_most_active_users(data)
 		return data
 
 	def get_contacts_added_plots(self, data):
@@ -96,6 +97,15 @@ class SocialTimeseriesReportView(AbstractReportView):
 			self.options['has_contacts_added_per_application_type'] = True
 		else:
 			self.options['has_contacts_added_per_application_type'] = False
+		return data
+
+	def get_the_most_active_users(self, data):
+		plot = self.catp.plot_the_most_active_users(max_rank_number=self.context.number_of_most_active_user)
+		if plot:
+			data['contacts_added_users'] = build_plot_images_dictionary(plot)
+			self.options['has_contacts_added_users'] = True
+		else:
+			self.options['has_contacts_added_users'] = False
 		return data
 
 View = SocialTimeseriesReport = SocialTimeseriesReportView
