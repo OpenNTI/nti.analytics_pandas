@@ -86,7 +86,8 @@ class AssessmentEventsTimeseriesPlot(object):
 								group_by='assessment_type',
 								minor_breaks=minor_period_breaks,
 								theme_seaborn_=theme_seaborn_,
-								plot_name='ratio_assessments_taken')
+								plot_name='ratio_assessments_taken',
+								period=self.period)
 		return (plot,)
 
 class AssignmentViewsTimeseriesPlot(object):
@@ -462,7 +463,8 @@ class AssignmentsTakenTimeseriesPlot(object):
 								period_breaks=period_breaks,
 								minor_breaks=minor_period_breaks,
 								theme_seaborn_=theme_seaborn_,
-								plot_name='assignments_taken_over_total_enrollments')
+								plot_name='assignments_taken_over_total_enrollments',
+								period=self.period)
 		return (plot,)
 
 class SelfAssessmentViewsTimeseriesPlot(object):
@@ -818,5 +820,6 @@ class SelfAssessmentsTakenTimeseriesPlot(object):
 								period_breaks=period_breaks,
 								minor_breaks=minor_period_breaks,
 								theme_seaborn_=theme_seaborn_,
-								plot_name='self_assessments_taken_over_total_enrollments')
+								plot_name='self_assessments_taken_over_total_enrollments',
+								period=self.period)
 		return (plot,)
