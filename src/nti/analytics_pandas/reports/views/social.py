@@ -76,6 +76,7 @@ class SocialTimeseriesReportView(AbstractReportView):
 	def generate_contacts_added_plots(self, data):
 		self.catp = ContactsAddedTimeseriesPlot(self.cat)
 		data = self.get_contacts_added_plots(data)
+		data = self.get_contacts_added_plots_per_application_type(data)
 		return data
 
 	def get_contacts_added_plots(self, data):
@@ -84,6 +85,17 @@ class SocialTimeseriesReportView(AbstractReportView):
 										 self.context.theme_seaborn_)
 		if plots:
 			data['contacts_added'] = build_plot_images_dictionary(plots)
+		return data
+
+	def get_contacts_added_plots_per_application_type(self, data):
+		plots = self.catp.analyze_application_types(self.context.period_breaks,
+										 			self.context.minor_period_breaks,
+										 			self.context.theme_seaborn_)
+		if plots:
+			data['contacts_added_per_application_type'] = build_plot_images_dictionary(plots)
+			self.options['has_contacts_added_per_application_type'] = True
+		else:
+			self.options['has_contacts_added_per_application_type'] = False
 		return data
 
 View = SocialTimeseriesReport = SocialTimeseriesReportView
