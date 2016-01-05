@@ -11,8 +11,8 @@ logger = __import__('logging').getLogger(__name__)
 
 from . import MessageFactory as _
 
-from .commons import line_plot_x_axis_date
 from .commons import generate_three_plots
+from .commons import line_plot_x_axis_date
 from .commons import generate_three_group_by_plots
 
 class ChatsTimeseriesPlot(object):
@@ -32,7 +32,8 @@ class ChatsTimeseriesPlot(object):
 		else:
 			self.period = None
 
-	def explore_chats_initiated(self, period_breaks='1 day', minor_period_breaks=None,
+	def explore_chats_initiated(self, period_breaks='1 day',
+								minor_period_breaks=None,
 					  		 	theme_seaborn_=True):
 		cit = self.cit
 		if cit is None:
@@ -152,7 +153,8 @@ class ChatsTimeseriesPlot(object):
 				plot_number_of_chats_created)
 
 	def analyze_chat_and_group_chat(self, period_breaks='1 day',
-									minor_period_breaks=None, theme_seaborn_=True):
+									minor_period_breaks=None,
+									theme_seaborn_=True):
 		cjt = self.cjt
 		if cjt is None:
 			return ()
