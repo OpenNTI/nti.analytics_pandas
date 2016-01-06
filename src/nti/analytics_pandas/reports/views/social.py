@@ -13,6 +13,10 @@ from . import MessageFactory as _
 
 from zope import interface
 
+from ...analysis import ChatsInitiatedTimeseries
+from ...analysis import ChatsJoinedTimeseries
+from ...analysis import ChatsTimeseriesPlot
+
 from ...analysis import ContactsAddedTimeseries
 from ...analysis import ContactsAddedTimeseriesPlot
 
@@ -62,6 +66,8 @@ class SocialTimeseriesReportView(AbstractReportView):
 			self.options['has_combined_contact_event_data'] = False
 		if 'has_friendlist_members_added_data' not in keys:
 			self.options['has_friendlist_members_added_data'] = False
+		if 'has_chats_data' not in keys:
+			self.options['has_chats_data'] = False
 		self.options['data'] = data
 		return self.options
 
@@ -103,8 +109,33 @@ class SocialTimeseriesReportView(AbstractReportView):
 			self.options['has_friendlist_members_added_data'] = True
 			data = self.generate_friendlist_members_added_plots(data)
 
+		self.cit = ChatsInitiatedTimeseries(self.context.session,
+										   	self.context.start_date,
+										    self.context.end_date,
+										    period=self.context.period)
+		self.cjt = ChatsJoinedTimeseries(self.context.session,
+									   	 self.context.start_date,
+									     self.context.end_date,
+									     period=self.context.period)
+
+		if not self.cit.dataframe.empty or not self.cjt.dataframe.empty:
+			self.options['has_chats_data'] = True
+			self.ctp = ChatsTimeseriesPlot(cit=self.cit, cjt=self.cjt)
+			data = self.generate_chats_initiated_plots(data)
+
 		self._build_data(data)
 		return self.options
+
+	def generate_chats_initiated_plots(self, data):
+		plots = self.ctp.explore_chats_initiated(self.context.period_breaks,
+												 self.context.minor_period_breaks,
+												 self.context.theme_seaborn_)
+		if plots:
+			data['chats_initiated'] = build_plot_images_dictionary(plots)
+			self.options['has_chats_initiated'] = True
+		else:
+			self.options['has_chats_initiated'] = False
+		return data
 
 	def generate_contacts_added_plots(self, data):
 		self.catp = ContactsAddedTimeseriesPlot(self.cat)

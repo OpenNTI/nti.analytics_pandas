@@ -139,4 +139,23 @@
 			</illustration>
 		</tal:block>
 	</tal:block>
+
+	<tal:block tal:condition="python: options['has_chats_data']">
+		<tal:block tal:condition="python: options['has_chats_initiated']">
+			<setNextTemplate name="main"/>
+			<nextPage />
+			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+				Overview of Chats Initiated
+			</h1>
+			<hr width="100%" />
+			<tal:block tal:define="chats_initiated options/data/chats_initiated">
+				<illustration width="5in" height="3in"
+						  	  tal:define="event chats_initiated/event_chats_initiated;
+						  	  			  user_event chats_initiated/user_chats_initiated;
+									      ratio_event chats_initiated/ratio_chats_initiated"
+						      metal:use-macro="macro:three_plots_event">
+				</illustration>
+			</tal:block>
+		</tal:block>
+	</tal:block>
 </metal:block>
