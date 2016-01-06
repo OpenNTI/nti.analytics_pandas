@@ -13,6 +13,8 @@ from .. import MessageFactory
 
 from .plots import BookmarksTimeseriesPlot
 
+from .plots import ChatsTimeseriesPlot
+
 from .plots import NoteLikesTimeseriesPlot
 from .plots import NotesViewTimeseriesPlot
 from .plots import NotesEventsTimeseriesPlot
@@ -62,6 +64,9 @@ from.assessments import SelfAssessmentViewsTimeseries
 from.assessments import SelfAssessmentsTakenTimeseries
 
 from .bookmarks import BookmarkCreationTimeseries
+
+from .chats import ChatsInitiatedTimeseries
+from .chats import ChatsJoinedTimeseries
 
 from .enrollments import CourseCatalogViewsTimeseries
 from .enrollments import CourseDropsTimeseries

@@ -19,6 +19,8 @@ from.assessments import SelfAssessmentsTakenTimeseriesPlot
 
 from .bookmarks import BookmarksTimeseriesPlot
 
+from .chats import ChatsTimeseriesPlot
+
 from .enrollments import CourseDropsTimeseriesPlot
 from .enrollments import CourseEnrollmentsTimeseriesPlot
 from .enrollments import CourseCatalogViewsTimeseriesPlot

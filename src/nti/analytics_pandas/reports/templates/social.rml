@@ -8,6 +8,23 @@
 	</para>
 	<hr width="100%" />
 
+	<tal:block tal:condition="python: options['has_combined_contact_event_data']">
+		<setNextTemplate name="main"/>
+		<nextPage />
+		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+			Overview of Contact Related Events
+		</h1>
+		<hr width="100%" />
+		<tal:block tal:define="combine_contact_events options/data/combine_contact_events">
+			<illustration width="5in" height="3in"
+					  	  tal:define="event combine_contact_events/event_combine_contact_events;
+					  	  			  user_event combine_contact_events/user_combine_contact_events;
+								      ratio_event combine_contact_events/ratio_combine_contact_events"
+					      metal:use-macro="macro:three_plots_event">
+			</illustration>
+		</tal:block>
+	</tal:block>
+
 	<tal:block tal:condition="python: options['has_contacts_added_data']">
 		<setNextTemplate name="main"/>
 		<nextPage />

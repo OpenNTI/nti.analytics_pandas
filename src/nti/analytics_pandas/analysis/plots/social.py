@@ -36,7 +36,7 @@ class ContactsEventsTimeseriesPlot(object):
 		event_title = _('Number of contact related events grouped by event type during period of time')
 		user_title = _('Number of unique users creating contact events during period of time')
 		ratio_title = _('Ratio of contact related events over unique user on each available date')
-		event_type = 'event_type'
+		event_type = 'combine_contact_events'
 		event_y_axis_field = 'total_events'
 		event_y_axis_label = _('Number of contact related events')
 		plots = generate_three_group_by_plots(df,

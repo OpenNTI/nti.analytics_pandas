@@ -19,6 +19,9 @@ from ...analysis import ContactsAddedTimeseriesPlot
 from ...analysis import ContactsRemovedTimeseries
 from ...analysis import ContactsRemovedTimeseriesPlot
 
+from ...analysis import ContactsEventsTimeseries
+from ...analysis import ContactsEventsTimeseriesPlot
+
 from ...analysis import FriendsListsMemberAddedTimeseries
 from ...analysis import FriendsListsMemberAddedTimeseriesPlot
 
@@ -55,6 +58,8 @@ class SocialTimeseriesReportView(AbstractReportView):
 			self.options['has_contacts_added_data'] = False
 		if 'has_contacts_removed_data' not in keys:
 			self.options['has_contacts_removed_data'] = False
+		if 'has_combined_contact_event_data' not in keys:
+			self.options['has_combined_contact_event_data'] = False
 		if 'has_friendlist_members_added_data' not in keys:
 			self.options['has_friendlist_members_added_data'] = False
 		self.options['data'] = data
@@ -82,6 +87,11 @@ class SocialTimeseriesReportView(AbstractReportView):
 		else:
 			self.options['has_contacts_removed_data'] = True
 			data = self.generate_contacts_removed_plots(data)
+
+
+		if not self.cat.dataframe.empty and not self.crt.dataframe.empty:
+			self.cet = ContactsEventsTimeseries(cat=self.cat, crt=self.crt)
+			data = self.generate_combined_contact_related_events(data)
 
 		self.flmat = FriendsListsMemberAddedTimeseries(self.context.session,
 												   	   self.context.start_date,
@@ -164,6 +174,16 @@ class SocialTimeseriesReportView(AbstractReportView):
 			self.options['has_contacts_removed_users'] = True
 		else:
 			self.options['has_contacts_removed_users'] = False
+		return data
+
+	def generate_combined_contact_related_events(self, data):
+		self.cetp = ContactsEventsTimeseriesPlot(self.cet)
+		plot = self.cetp.combine_events(self.context.period_breaks,
+										self.context.minor_period_breaks,
+										self.context.theme_seaborn_)
+		if plot : 
+			data['combine_contact_events'] = build_plot_images_dictionary(plot)
+			self.options['has_combined_contact_event_data'] = True
 		return data
 
 	def generate_friendlist_members_added_plots(self, data):
