@@ -32,6 +32,9 @@ from .notes import NoteEventsTimeseriesReportView
 from .resource_views import ResourceViewsTimeseriesContext
 from .resource_views import ResourceViewsTimeseriesReportView
 
+from .social import SocialTimeseriesContext
+from .social import SocialTimeseriesReportView
+
 from .topics import TopicsTimeseriesContext
 from .topics import TopicsTimeseriesReportView
 

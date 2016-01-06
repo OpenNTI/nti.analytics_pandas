@@ -32,8 +32,6 @@ def _parse_args():
 							 help="Report duration start date, use the format %s" % 'yyyy-mm-dd')
 	arg_parser.add_argument('end_date',
 							 help="Report duration end date, use the format %s" % 'yyyy-mm-dd')
-	arg_parser.add_argument('courses',
-							 help="Course/s ID. For example %s" % '1068, 1096, 1097, 1098, 1099')
 	arg_parser.add_argument('-p', '--period',
 							 default='daily',
 							 help="Determine how the events will be aggregated. The default value is daily is %s" % "daily")
@@ -49,7 +47,7 @@ def _parse_args():
 	arg_parser.add_argument('-o', '--output',
 							 default='output',
 							 help="The output directory. The default is: %s" % 'output')
-	return arg_parser.parse_args()
+	return arg_parser
 
 def _configure_logging(level='INFO'):
 	numeric_level = getattr(logging, level.upper(), None)
@@ -70,16 +68,21 @@ configure_config = _configure_config
 def str2bool(v):
 	return v.lower() in ("yes", "true", "t", "1")
 
-def process_args():
-	args = _parse_args()
+def process_args(social=False):
+	arg_parser = _parse_args()
+	if not social:
+		arg_parser.add_argument('courses',
+							     help="Course/s ID. For example %s" % '1068, 1096, 1097, 1098, 1099')
+	args = arg_parser.parse_args()
 	args_dict = {}
 	args_dict['start_date'] = args.start_date
 	args_dict['end_date'] = args.end_date
 
-	if ',' in args.courses:
-		args_dict['courses'] = args.courses.split(',')
-	else:
-		args_dict['courses'] = args.courses.split()
+	if not social:
+		if ',' in args.courses:
+			args_dict['courses'] = args.courses.split(',')
+		else:
+			args_dict['courses'] = args.courses.split()
 
 	args_dict['period'] = args.period
 	if args.period == 'daily':
@@ -106,9 +109,14 @@ class Report(object):
 				 period_breaks, minor_period_breaks, theme_seaborn_,
 				 filepath, period='daily'):
 		self.db = DBConnection()
-		self.context = Context(self.db.session, start_date, end_date, courses,
-					  		   period_breaks, minor_period_breaks, theme_seaborn_,
-					  		   period=period)
+		if not courses:
+			self.context = Context(self.db.session, start_date, end_date,
+						  		   period_breaks, minor_period_breaks, theme_seaborn_,
+						  		   period=period)
+		else:
+			self.context = Context(self.db.session, start_date, end_date, courses,
+						  		   period_breaks, minor_period_breaks, theme_seaborn_,
+						  		   period=period)
 		self.view = View(self.context)
 		self.filepath = filepath
 
