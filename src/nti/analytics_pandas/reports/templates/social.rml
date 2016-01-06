@@ -56,4 +56,53 @@
 			</tal:block>
 		</tal:block>
 	</tal:block>
+
+	<tal:block tal:condition="python: options['has_contacts_removed_data']">
+		<setNextTemplate name="main"/>
+		<nextPage />
+		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+			Overview of Contacts Removed
+		</h1>
+		<hr width="100%" />
+		<tal:block tal:define="contacts_removed options/data/contacts_removed">
+			<illustration width="5in" height="3in"
+					  	  tal:define="event contacts_removed/event_contacts_removed;
+					  	  			  user_event contacts_removed/user_contacts_removed;
+								      ratio_event contacts_removed/ratio_contacts_removed"
+					      metal:use-macro="macro:three_plots_event">
+			</illustration>
+		</tal:block>
+
+		<tal:block tal:condition="python: options['has_contacts_removed_per_application_type']">
+			<setNextTemplate name="main"/>
+			<nextPage />
+			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+				Contacts Removed per Application Type
+			</h1>
+			<hr width="100%" />
+			<tal:block tal:define="contacts_removed options/data/contacts_removed_per_application_type">
+				<illustration width="5in" height="3in"
+						  	  tal:define="event contacts_removed/event_contacts_removed_per_application_type;
+						  	  			  user_event contacts_removed/user_contacts_removed_per_application_type;
+									      ratio_event contacts_removed/ratio_contacts_removed_per_application_type"
+						      metal:use-macro="macro:three_plots_event">
+				</illustration>
+			</tal:block>
+		</tal:block>
+
+		<tal:block tal:condition="python: options['has_contacts_removed_users']">
+			<setNextTemplate name="main"/>
+			<nextPage />
+			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+				The most active users removing contacts
+			</h1>
+			<hr width="100%" />
+			<tal:block tal:define="contacts_removed_users options/data/contacts_removed_users">
+				<illustration width="5in" height="3in"
+						  	  tal:define="event contacts_removed_users/most_active_users_removing_contacts"
+						      metal:use-macro="macro:one_plot_event">
+				</illustration>
+			</tal:block>
+		</tal:block>
+	</tal:block>
 </metal:block>
