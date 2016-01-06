@@ -105,4 +105,21 @@
 			</tal:block>
 		</tal:block>
 	</tal:block>
+
+	<tal:block tal:condition="python: options['has_friendlist_members_added_data']">
+		<setNextTemplate name="main"/>
+		<nextPage />
+		<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+			Overview of Friend List Members Added
+		</h1>
+		<hr width="100%" />
+		<tal:block tal:define="fl_members_added options/data/friendlist_members_added">
+			<illustration width="5in" height="3in"
+					  	  tal:define="plot_1 fl_members_added/average_number_of_friend_list_members_added;
+					  	  			  plot_2 fl_members_added/total_number_of_friend_list_members_added;
+								      plot_3 fl_members_added/number_of_friend_lists"
+					      metal:use-macro="macro:three_plots">
+			</illustration>
+		</tal:block>
+	</tal:block>
 </metal:block>

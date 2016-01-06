@@ -145,4 +145,19 @@
 		</image>
 	</illustration>
 
+	<illustration width="5in" height="3in" 
+				  metal:define-macro="three_plots">
+		<!--! To use, define a variable plot_1, plot_2, plot_3 around the invocation -->
+		<image tal:attributes="file plot_1"
+			   x="0" y="0" width="450" height="200" showBoundary="no" preserveAspectRatio="yes">
+		</image>
+		<image tal:attributes="file plot_2"
+			   x="300" y="0" width="450" height="200" showBoundary="no" preserveAspectRatio="yes">
+		</image>
+
+		<image tal:attributes="file plot_3"
+			   x="0" y="-210" width="450" height="200" showBoundary="no" preserveAspectRatio="yes">
+		</image>
+	</illustration>
+
 </document>
