@@ -156,6 +156,23 @@
 						      metal:use-macro="macro:three_plots_event">
 				</illustration>
 			</tal:block>
+
+			<tal:block tal:condition="python: options['has_chats_initiated_per_application_type']">
+				<setNextTemplate name="main"/>
+				<nextPage />
+				<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+					Chats Initiated per Application Type
+				</h1>
+				<hr width="100%" />
+				<tal:block tal:define="chats_initiated options/data/chats_initiated_per_application_type">
+					<illustration width="5in" height="3in"
+							  	  tal:define="event chats_initiated/event_chats_initiated_per_application_type;
+							  	  			  user_event chats_initiated/user_chats_initiated_per_application_type;
+										      ratio_event chats_initiated/ratio_chats_initiated_per_application_type"
+							      metal:use-macro="macro:three_plots_event">
+					</illustration>
+				</tal:block>
+			</tal:block>
 		</tal:block>
 	</tal:block>
 </metal:block>

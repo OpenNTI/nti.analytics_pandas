@@ -77,7 +77,7 @@ class ChatsTimeseriesPlot(object):
 		event_title = _('Number of chats initiated per application types')
 		user_title = _('Number of unique users initiating chats per application types')
 		ratio_title = _('Ratio of chats initiated over unique user per application types')
-		event_type = 'chats_initiated'
+		event_type = 'chats_initiated_per_application_type'
 		event_y_axis_field = 'number_of_chats_initiated'
 		event_y_axis_label = _('Number of chats initiated')
 
