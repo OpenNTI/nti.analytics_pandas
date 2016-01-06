@@ -174,5 +174,22 @@
 				</tal:block>
 			</tal:block>
 		</tal:block>
+
+		<tal:block tal:condition="python: options['has_users_join_chats']">
+			<setNextTemplate name="main"/>
+			<nextPage />
+			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+				Overview of Users Joining Chats
+			</h1>
+			<hr width="100%" />
+			<tal:block tal:define="users_join_chats options/data/users_join_chats">
+				<illustration width="5in" height="3in"
+						  	  tal:define="plot_1 users_join_chats/average_number_user_join_chats;
+						  	  			  plot_2 users_join_chats/total_number_user_join_chats;
+									      plot_3 users_join_chats/chats_created"
+						      metal:use-macro="macro:three_plots">
+				</illustration>
+			</tal:block>
+		</tal:block>
 	</tal:block>
 </metal:block>

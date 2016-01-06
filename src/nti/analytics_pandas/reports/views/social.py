@@ -123,6 +123,7 @@ class SocialTimeseriesReportView(AbstractReportView):
 			self.ctp = ChatsTimeseriesPlot(cit=self.cit, cjt=self.cjt)
 			data = self.generate_chats_initiated_plots(data)
 			data = self.generate_chats_initiated_plots_per_application_type(data)
+			data = self.get_number_of_users_join_chats_per_date_plots(data)
 		self._build_data(data)
 		return self.options
 
@@ -146,6 +147,18 @@ class SocialTimeseriesReportView(AbstractReportView):
 			self.options['has_chats_initiated_per_application_type'] = True
 		else:
 			self.options['has_chats_initiated_per_application_type'] = False
+		return data
+
+	def get_number_of_users_join_chats_per_date_plots(self, data):
+		plots = self.ctp.analyze_number_of_users_join_chats_per_date(
+												   self.context.period_breaks,
+												   self.context.minor_period_breaks,
+												   self.context.theme_seaborn_)
+		if plots:
+			data['users_join_chats'] = build_plot_images_dictionary(plots)
+			self.options['has_users_join_chats'] = True
+		else:
+			self.options['has_users_join_chats'] = False
 		return data
 
 	def generate_contacts_added_plots(self, data):
