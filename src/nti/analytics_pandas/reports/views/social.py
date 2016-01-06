@@ -13,9 +13,9 @@ from . import MessageFactory as _
 
 from zope import interface
 
-from ...analysis import ChatsInitiatedTimeseries
-from ...analysis import ChatsJoinedTimeseries
 from ...analysis import ChatsTimeseriesPlot
+from ...analysis import ChatsJoinedTimeseries
+from ...analysis import ChatsInitiatedTimeseries
 
 from ...analysis import ContactsAddedTimeseries
 from ...analysis import ContactsAddedTimeseriesPlot
@@ -39,6 +39,7 @@ class SocialTimeseriesContext(object):
 	def __init__(self, session=None, start_date=None, end_date=None,
 				 period_breaks=None, minor_period_breaks=None, theme_seaborn_=True,
 				 number_of_most_active_user=10, period='daily'):
+		self.period = period
 		self.session = session
 		self.end_date = end_date
 		self.start_date = start_date
@@ -46,7 +47,6 @@ class SocialTimeseriesContext(object):
 		self.theme_seaborn_ = theme_seaborn_
 		self.minor_period_breaks = minor_period_breaks
 		self.number_of_most_active_user = number_of_most_active_user
-		self.period = period
 
 Context = SocialTimeseriesContext
 
@@ -86,8 +86,8 @@ class SocialTimeseriesReportView(AbstractReportView):
 
 		self.crt = ContactsRemovedTimeseries(self.context.session,
 										   	 self.context.start_date,
-										     self.context.end_date,
-										     period=self.context.period)
+											 self.context.end_date,
+											 period=self.context.period)
 		if self.crt.dataframe.empty:
 			self.options['has_contacts_removed_data'] = False
 		else:
@@ -101,8 +101,8 @@ class SocialTimeseriesReportView(AbstractReportView):
 
 		self.flmat = FriendsListsMemberAddedTimeseries(self.context.session,
 												   	   self.context.start_date,
-												       self.context.end_date,
-												       period=self.context.period)
+													   self.context.end_date,
+													   period=self.context.period)
 		if self.flmat.dataframe.empty:
 			self.options['has_friendlist_members_added_data'] = False
 		else:
@@ -111,12 +111,12 @@ class SocialTimeseriesReportView(AbstractReportView):
 
 		self.cit = ChatsInitiatedTimeseries(self.context.session,
 										   	self.context.start_date,
-										    self.context.end_date,
-										    period=self.context.period)
+											self.context.end_date,
+											period=self.context.period)
 		self.cjt = ChatsJoinedTimeseries(self.context.session,
 									   	 self.context.start_date,
-									     self.context.end_date,
-									     period=self.context.period)
+										 self.context.end_date,
+										 period=self.context.period)
 
 		if not self.cit.dataframe.empty or not self.cjt.dataframe.empty:
 			self.options['has_chats_data'] = True
@@ -164,8 +164,8 @@ class SocialTimeseriesReportView(AbstractReportView):
 
 	def generate_one_one_and_group_chat_plots(self, data):
 		plot = self.ctp.analyze_one_one_and_group_chat(self.context.period_breaks,
-												       self.context.minor_period_breaks,
-												       self.context.theme_seaborn_)
+													   self.context.minor_period_breaks,
+													   self.context.theme_seaborn_)
 		if plot:
 			print(plot)
 			data['one_one_and_group_chat'] = build_plot_images_dictionary(plot)
@@ -249,7 +249,7 @@ class SocialTimeseriesReportView(AbstractReportView):
 		plot = self.cetp.combine_events(self.context.period_breaks,
 										self.context.minor_period_breaks,
 										self.context.theme_seaborn_)
-		if plot : 
+		if plot :
 			data['combine_contact_events'] = build_plot_images_dictionary(plot)
 			self.options['has_combined_contact_event_data'] = True
 		return data

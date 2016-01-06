@@ -72,7 +72,7 @@ def process_args(social=False):
 	arg_parser = _parse_args()
 	if not social:
 		arg_parser.add_argument('courses',
-							     help="Course/s ID. For example %s" % '1068, 1096, 1097, 1098, 1099')
+								 help="Course/s ID. For example %s" % '1068, 1096, 1097, 1098, 1099')
 	args = arg_parser.parse_args()
 	args_dict = {}
 	args_dict['start_date'] = args.start_date
