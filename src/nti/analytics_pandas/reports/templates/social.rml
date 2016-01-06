@@ -191,5 +191,20 @@
 				</illustration>
 			</tal:block>
 		</tal:block>
+
+		<tal:block tal:condition="python: options['has_one_one_or_group_chats']">
+			<setNextTemplate name="main"/>
+			<nextPage />
+			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+				Overviews of One one or Group Chats
+			</h1>
+			<hr width="100%" />
+			<tal:block tal:define="one_one_and_group_chat options/data/one_one_and_group_chat">
+				<illustration width="5in" height="3in"
+						  	  tal:define="event one_one_and_group_chat/chats"
+						      metal:use-macro="macro:one_plot_event">
+				</illustration>
+			</tal:block>
+		</tal:block>
 	</tal:block>
 </metal:block>

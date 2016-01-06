@@ -14,6 +14,7 @@ from . import MessageFactory as _
 from .commons import generate_three_plots
 from .commons import line_plot_x_axis_date
 from .commons import generate_three_group_by_plots
+from .commons import group_line_plot_x_axis_date
 
 class ChatsTimeseriesPlot(object):
 
@@ -196,3 +197,27 @@ class ChatsTimeseriesPlot(object):
 										period=self.period)
 			plots['group_chats'] = plot_group_chats
 		return plots
+
+	def analyze_one_one_and_group_chat(self, period_breaks='1 day',
+									   minor_period_breaks=None,
+									   theme_seaborn_=True):
+		cjt = self.cjt
+		if cjt is None:
+			return ()
+		if cjt.dataframe.empty:
+			return ()
+
+		df = cjt.analyze_one_one_and_group_chat()
+		plot = group_line_plot_x_axis_date( df=df,
+											x_axis_field='timestamp_period',
+											y_axis_field='number_of_chats',
+											x_axis_label='Date',
+											y_axis_label='Number of chats',
+											title='Number of one one or group chats',
+											period_breaks=period_breaks,
+											group_by = 'chat_type',
+											minor_breaks=minor_period_breaks,
+											theme_seaborn_=theme_seaborn_,
+											plot_name='chats',
+											period=self.period)
+		return (plot,)

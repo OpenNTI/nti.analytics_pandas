@@ -124,6 +124,7 @@ class SocialTimeseriesReportView(AbstractReportView):
 			data = self.generate_chats_initiated_plots(data)
 			data = self.generate_chats_initiated_plots_per_application_type(data)
 			data = self.get_number_of_users_join_chats_per_date_plots(data)
+			data = self.generate_one_one_and_group_chat_plots(data)
 		self._build_data(data)
 		return self.options
 
@@ -159,6 +160,18 @@ class SocialTimeseriesReportView(AbstractReportView):
 			self.options['has_users_join_chats'] = True
 		else:
 			self.options['has_users_join_chats'] = False
+		return data
+
+	def generate_one_one_and_group_chat_plots(self, data):
+		plot = self.ctp.analyze_one_one_and_group_chat(self.context.period_breaks,
+												       self.context.minor_period_breaks,
+												       self.context.theme_seaborn_)
+		if plot:
+			print(plot)
+			data['one_one_and_group_chat'] = build_plot_images_dictionary(plot)
+			self.options['has_one_one_or_group_chats'] = True
+		else:
+			self.options['has_one_one_or_group_chats'] = False
 		return data
 
 	def generate_contacts_added_plots(self, data):
