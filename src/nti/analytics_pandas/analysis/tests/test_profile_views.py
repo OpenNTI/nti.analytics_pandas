@@ -60,6 +60,13 @@ class TestEntityProfileViewsTimeseries(AnalyticsPandasTestBase):
 		df = epvt.get_the_most_viewed_profiles()
 		assert_that(df.columns, has_item('number_of_profile_viewed'))
 
+	def test_analyze_views_by_owner_or_by_others(self):
+		start_date = '2015-10-05'
+		end_date = '2015-10-19'
+		epvt = EntityProfileViewsTimeseries(self.session, start_date, end_date)
+		df = epvt.analyze_views_by_owner_or_by_others()
+		assert_that(df.columns, has_item('viewers'))
+
 class TestEntityProfileActivityViewsTimeseries(AnalyticsPandasTestBase):
 
 	def test_analyze_events(self):
