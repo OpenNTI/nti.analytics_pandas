@@ -28,6 +28,7 @@ class EntityProfileViewEventsTimeseries(object):
 	"""
 	combined all profile views related events
 	"""
+
 	def __init__(self, epvt=None, epavt=None, epmvt=None):
 		"""
 		epvt = EntityProfileViewsTimeseries
