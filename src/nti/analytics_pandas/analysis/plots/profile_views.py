@@ -13,10 +13,6 @@ from . import MessageFactory as _
 
 import pandas as pd
 
-import numpy as np
-
-from zope.i18n import translate
-
 from .commons import generate_three_plots
 from .commons import generate_three_group_by_plots
 from .commons import histogram_plot_x_axis_discrete
@@ -42,11 +38,10 @@ class EntityProfileViewEventsTimeseriesPlot(object):
 		event_title = _('Number of profile view events per type')
 		user_title = _("Number of unique users creating profile view events per type")
 		ratio_title = _("Ratio of profile view events over unique user per event type")
-		
+
 		event_type = 'profile_view_events'
 		event_y_axis_field = 'total_events'
 		event_y_axis_label = _('Number of profile view events')
-
 
 		plots = generate_three_group_by_plots(df,
 											  group_by,
@@ -61,7 +56,6 @@ class EntityProfileViewEventsTimeseriesPlot(object):
 											  event_type,
 											  period=self.period)
 		return plots
-
 
 class EntityProfileViewsTimeseriesPlot(object):
 
@@ -85,7 +79,7 @@ class EntityProfileViewsTimeseriesPlot(object):
 		event_title = _('Number of profile views')
 		user_title = _("Number of unique users viewing profiles")
 		ratio_title = _("Ratio of profile views over unique user")
-		
+
 		event_type = 'profile_views'
 		event_y_axis_field = 'number_of_profile_views'
 		event_y_axis_label = _('Number of profile views')
@@ -103,8 +97,8 @@ class EntityProfileViewsTimeseriesPlot(object):
 									 period=self.period)
 		return plots
 
-	def analyze_application_types(self, 
-								  period_breaks=None, 
+	def analyze_application_types(self,
+								  period_breaks=None,
 								  minor_period_breaks=None,
 					   			  theme_seaborn_=True):
 		epvt = self.epvt
@@ -119,7 +113,7 @@ class EntityProfileViewsTimeseriesPlot(object):
 		event_title = _('Number of profile views per application type')
 		user_title = _("Number of unique users viewing profiles per application type")
 		ratio_title = _("Ratio of profile views over unique user per application type")
-		
+
 		event_type = 'profile_views_per_application_type'
 		event_y_axis_field = 'number_of_profile_views'
 		event_y_axis_label = _('Number of profile views')
@@ -138,10 +132,10 @@ class EntityProfileViewsTimeseriesPlot(object):
 											  period=self.period)
 		return plots
 
-	def analyze_views_by_owner_or_by_others(self, 
-										    period_breaks=None, 
-										    minor_period_breaks=None,
-							   			    theme_seaborn_=True):
+	def analyze_views_by_owner_or_by_others(self,
+											period_breaks=None,
+											minor_period_breaks=None,
+							   				theme_seaborn_=True):
 		epvt = self.epvt
 		df = epvt.analyze_views_by_owner_or_by_others()
 		if df is None:
@@ -154,7 +148,7 @@ class EntityProfileViewsTimeseriesPlot(object):
 		event_title = _('Number of profile views per viewer type')
 		user_title = _('Number of unique users viewing profiles per viewer type')
 		ratio_title = _('Ratio of profile views over unique user per viewer type')
-		
+
 		event_type = 'profile_views_per_viewer_type'
 		event_y_axis_field = 'number_of_profile_views'
 		event_y_axis_label = _('Number of profile views')
@@ -229,7 +223,7 @@ class EntityProfileActivityViewsTimeseriesPlot(object):
 		event_title = _('Number of profile activity views')
 		user_title = _("Number of unique users viewing profile activities")
 		ratio_title = _("Ratio of profile activity views over unique user")
-		
+
 		event_type = 'profile_activity_views'
 		event_y_axis_field = 'number_of_profile_activity_views'
 		event_y_axis_label = _('Number of profile activity views')
@@ -247,8 +241,8 @@ class EntityProfileActivityViewsTimeseriesPlot(object):
 									 period=self.period)
 		return plots
 
-	def analyze_application_types(self, 
-								  period_breaks=None, 
+	def analyze_application_types(self,
+								  period_breaks=None,
 								  minor_period_breaks=None,
 					   			  theme_seaborn_=True):
 		epavt = self.epavt
@@ -263,7 +257,7 @@ class EntityProfileActivityViewsTimeseriesPlot(object):
 		event_title = _('Number of profile activity views per application type')
 		user_title = _("Number of unique users viewing profile activities per application type")
 		ratio_title = _("Ratio of profile activity views over unique user per application type")
-		
+
 		event_type = 'profile_activity_views_per_application_type'
 		event_y_axis_field = 'number_of_profile_activity_views'
 		event_y_axis_label = _('Number of profile activity views')
@@ -282,8 +276,8 @@ class EntityProfileActivityViewsTimeseriesPlot(object):
 											  period=self.period)
 		return plots
 
-	def analyze_views_by_owner_or_by_others(self, 
-									 		period_breaks=None, 
+	def analyze_views_by_owner_or_by_others(self,
+									 		period_breaks=None,
 									  		minor_period_breaks=None,
 									   		theme_seaborn_=True):
 		epavt = self.epavt
@@ -298,7 +292,7 @@ class EntityProfileActivityViewsTimeseriesPlot(object):
 		event_title = _('Number of profile activity views per viewer type')
 		user_title = _("Number of unique users viewing profile activities per viewer type")
 		ratio_title = _("Ratio of profile activity views over unique user per per viewer type")
-		
+
 		event_type = 'profile_activity_views_per_viewer_type'
 		event_y_axis_field = 'number_of_profile_activity_views'
 		event_y_axis_label = _('Number of profile activity views')
@@ -351,7 +345,6 @@ class EntityProfileActivityViewsTimeseriesPlot(object):
 											plot_name='most_viewed_profile_activities')
 		return (plot_profiles,)
 
-
 class EntityProfileMembershipViewsTimeseriesPlot(object):
 
 	def __init__(self, epmvt):
@@ -374,7 +367,7 @@ class EntityProfileMembershipViewsTimeseriesPlot(object):
 		event_title = _('Number of profile membership views')
 		user_title = _("Number of unique users viewing profile memberships")
 		ratio_title = _("Ratio of profile membership views over unique user")
-		
+
 		event_type = 'profile_membership_views'
 		event_y_axis_field = 'number_of_profile_membership_views'
 		event_y_axis_label = _('Number of profile membership views')
@@ -392,8 +385,8 @@ class EntityProfileMembershipViewsTimeseriesPlot(object):
 									 period=self.period)
 		return plots
 
-	def analyze_application_types(self, 
-								  period_breaks=None, 
+	def analyze_application_types(self,
+								  period_breaks=None,
 								  minor_period_breaks=None,
 					   			  theme_seaborn_=True):
 		epmvt = self.epmvt
@@ -408,7 +401,7 @@ class EntityProfileMembershipViewsTimeseriesPlot(object):
 		event_title = _('Number of profile membership views per application type')
 		user_title = _("Number of unique users viewing profile memberships per application type")
 		ratio_title = _("Ratio of profile membership views over unique user per application type")
-		
+
 		event_type = 'profile_membership_views_per_application_type'
 		event_y_axis_field = 'number_of_profile_membership_views'
 		event_y_axis_label = _('Number of profile membership views')
@@ -427,10 +420,10 @@ class EntityProfileMembershipViewsTimeseriesPlot(object):
 											  period=self.period)
 		return plots
 
-	def analyze_views_by_owner_or_by_others(self, 
-										    period_breaks=None, 
-										    minor_period_breaks=None,
-							   			    theme_seaborn_=True):
+	def analyze_views_by_owner_or_by_others(self,
+											period_breaks=None,
+											minor_period_breaks=None,
+							   				theme_seaborn_=True):
 		epmvt = self.epmvt
 		df = epmvt.analyze_views_by_owner_or_by_others()
 		if df is None:
@@ -443,7 +436,7 @@ class EntityProfileMembershipViewsTimeseriesPlot(object):
 		event_title = _('Number of profile membership views per viewer type')
 		user_title = _("Number of unique users viewing profile memberships per viewer type")
 		ratio_title = _("Ratio of profile membership views over unique user per viewer type")
-		
+
 		event_type = 'profile_membership_views_per_viewer_type'
 		event_y_axis_field = 'number_of_profile_membership_views'
 		event_y_axis_label = _('Number of profile membership views')

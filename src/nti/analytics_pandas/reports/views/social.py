@@ -39,7 +39,6 @@ from ...analysis import EntityProfileMembershipViewsTimeseries
 from ...analysis import EntityProfileMembershipViewsTimeseriesPlot
 
 from ...analysis import EntityProfileViewEventsTimeseries
-from ...analysis import EntityProfileViewEventsTimeseriesPlot
 
 from .commons import build_plot_images_dictionary
 
@@ -308,7 +307,7 @@ class SocialTimeseriesReportView(AbstractReportView):
 		return data
 
 	def generate_profile_view_plots(self, data):
-		self.epvtp= EntityProfileViewsTimeseriesPlot(self.epvt)
+		self.epvtp = EntityProfileViewsTimeseriesPlot(self.epvt)
 		data = self.get_profile_view_plots(data)
 		data = self.get_profile_view_plots_per_application_type(data)
 		data = self.get_profile_view_plots_per_viewer_type(data)
@@ -369,7 +368,7 @@ class SocialTimeseriesReportView(AbstractReportView):
 
 
 	def generate_profile_activity_view_plots(self, data):
-		self.epavtp= EntityProfileActivityViewsTimeseriesPlot(self.epavt)
+		self.epavtp = EntityProfileActivityViewsTimeseriesPlot(self.epavt)
 		data = self.get_profile_activity_view_plots(data)
 		data = self.get_profile_activity_view_plots_per_application_type(data)
 		data = self.get_profile_activity_view_plots_per_viewer_type(data)
@@ -401,8 +400,8 @@ class SocialTimeseriesReportView(AbstractReportView):
 
 	def get_profile_activity_view_plots_per_viewer_type(self, data):
 		plots = self.epavtp.analyze_views_by_owner_or_by_others(self.context.period_breaks,
-															   self.context.minor_period_breaks,
-															   self.context.theme_seaborn_)
+															    self.context.minor_period_breaks,
+															    self.context.theme_seaborn_)
 		if plots:
 			data['profile_activity_views_per_viewer_type'] = build_plot_images_dictionary(plots)
 			self.options['has_profile_activity_views_per_viewer_type'] = True
@@ -429,7 +428,7 @@ class SocialTimeseriesReportView(AbstractReportView):
 		return data
 
 	def generate_profile_membership_view_plots(self, data):
-		self.epmvtp= EntityProfileMembershipViewsTimeseriesPlot(self.epmvt)
+		self.epmvtp = EntityProfileMembershipViewsTimeseriesPlot(self.epmvt)
 		data = self.get_profile_membership_view_plots(data)
 		data = self.get_profile_membership_view_plots_per_application_type(data)
 		data = self.get_profile_membership_view_plots_per_viewer_type(data)
@@ -439,8 +438,8 @@ class SocialTimeseriesReportView(AbstractReportView):
 
 	def get_profile_membership_view_plots(self, data):
 		plots = self.epmvtp.explore_events(self.context.period_breaks,
-										  self.context.minor_period_breaks,
-										  self.context.theme_seaborn_)
+										   self.context.minor_period_breaks,
+										   self.context.theme_seaborn_)
 		if plots:
 			data['profile_membership_views'] = build_plot_images_dictionary(plots)
 			self.options['has_profile_membership_views'] = True
@@ -450,8 +449,8 @@ class SocialTimeseriesReportView(AbstractReportView):
 
 	def get_profile_membership_view_plots_per_application_type(self, data):
 		plots = self.epmvtp.analyze_application_types(self.context.period_breaks,
-													 self.context.minor_period_breaks,
-													 self.context.theme_seaborn_)
+													  self.context.minor_period_breaks,
+													  self.context.theme_seaborn_)
 		if plots:
 			data['profile_membership_views_per_application_type'] = build_plot_images_dictionary(plots)
 			self.options['has_profile_membership_views_per_application_type'] = True
@@ -461,8 +460,8 @@ class SocialTimeseriesReportView(AbstractReportView):
 
 	def get_profile_membership_view_plots_per_viewer_type(self, data):
 		plots = self.epmvtp.analyze_views_by_owner_or_by_others(self.context.period_breaks,
-															   self.context.minor_period_breaks,
-															   self.context.theme_seaborn_)
+															    self.context.minor_period_breaks,
+															    self.context.theme_seaborn_)
 		if plots:
 			data['profile_membership_views_per_viewer_type'] = build_plot_images_dictionary(plots)
 			self.options['has_profile_membership_views_per_viewer_type'] = True

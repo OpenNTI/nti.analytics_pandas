@@ -51,15 +51,15 @@ from .plots import CourseEnrollmentsTimeseriesPlot
 from .plots import CourseCatalogViewsTimeseriesPlot
 from .plots import CourseEnrollmentsEventsTimeseriesPlot
 
-from .plots import ContactsEventsTimeseriesPlot
 from .plots import ContactsAddedTimeseriesPlot
+from .plots import ContactsEventsTimeseriesPlot
 from .plots import ContactsRemovedTimeseriesPlot
 from .plots import FriendsListsMemberAddedTimeseriesPlot
 
 from .plots import EntityProfileViewsTimeseriesPlot
+from .plots import EntityProfileViewEventsTimeseriesPlot
 from .plots import EntityProfileActivityViewsTimeseriesPlot
 from .plots import EntityProfileMembershipViewsTimeseriesPlot
-from .plots import EntityProfileViewEventsTimeseriesPlot
 
 from.assessments import AssignmentViewsTimeseries
 from.assessments import AssignmentsTakenTimeseries
@@ -70,20 +70,20 @@ from.assessments import SelfAssessmentsTakenTimeseries
 
 from .bookmarks import BookmarkCreationTimeseries
 
-from .chats import ChatsInitiatedTimeseries
 from .chats import ChatsJoinedTimeseries
+from .chats import ChatsInitiatedTimeseries
 
-from .enrollments import CourseCatalogViewsTimeseries
 from .enrollments import CourseDropsTimeseries
 from .enrollments import CourseEnrollmentsTimeseries
+from .enrollments import CourseCatalogViewsTimeseries
 from .enrollments import CourseEnrollmentsEventsTimeseries
 
 from .highlights import HighlightsCreationTimeseries
 
 from .profile_views import EntityProfileViewsTimeseries
+from .profile_views import EntityProfileViewEventsTimeseries
 from .profile_views import EntityProfileActivityViewsTimeseries
 from .profile_views import EntityProfileMembershipViewsTimeseries
-from .profile_views import EntityProfileViewEventsTimeseries
 
 from .resource_views import ResourceViewsTimeseries
 
@@ -99,11 +99,11 @@ from .notes import NotesEventsTimeseries
 from .notes import NotesCreationTimeseries
 from .notes import NoteFavoritesTimeseries
 
-from .social import ContactsEventsTimeseries
 from .social import ContactsAddedTimeseries
+from .social import ContactsEventsTimeseries
 from .social import ContactsRemovedTimeseries
-from .social import DynamicFriendsListsMemberAddedTimeseries
 from .social import FriendsListsMemberAddedTimeseries
+from .social import DynamicFriendsListsMemberAddedTimeseries
 
 from .topics import TopicViewsTimeseries
 from .topics import TopicLikesTimeseries
