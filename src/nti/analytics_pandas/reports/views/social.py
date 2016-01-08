@@ -157,6 +157,8 @@ class SocialTimeseriesReportView(AbstractReportView):
 			self.options['has_profile_view_events'] = True
 			if not self.epvt.dataframe.empty:
 				data = self.generate_profile_view_plots(data)
+			if not self.epavt.dataframe.empty:
+				data = self.generate_profile_activity_view_plots(data)
 		else:
 			self.options['has_profile_view_events'] = False
 
@@ -361,6 +363,67 @@ class SocialTimeseriesReportView(AbstractReportView):
 			self.options['has_most_viewed_profiles'] = True
 		else:
 			self.options['has_most_viewed_profiles'] = False
+		return data
+
+
+	def generate_profile_activity_view_plots(self, data):
+		self.epavtp= EntityProfileActivityViewsTimeseriesPlot(self.epavt)
+		data = self.get_profile_activity_view_plots(data)
+		data = self.get_profile_activity_view_plots_per_application_type(data)
+		data = self.get_profile_activity_view_plots_per_viewer_type(data)
+		data = self.get_profile_activity_views_most_active_users_plot(data)
+		data = self.get_the_most_viewed_profile_activities_plot(data)
+		return data
+
+	def get_profile_activity_view_plots(self, data):
+		plots = self.epavtp.explore_events(self.context.period_breaks,
+										   self.context.minor_period_breaks,
+										   self.context.theme_seaborn_)
+		if plots:
+			data['profile_activity_views'] = build_plot_images_dictionary(plots)
+			self.options['has_profile_activity_views'] = True
+		else:
+			self.options['has_profile_activity_views'] = False
+		return data
+
+	def get_profile_activity_view_plots_per_application_type(self, data):
+		plots = self.epavtp.analyze_application_types(self.context.period_breaks,
+													  self.context.minor_period_breaks,
+													  self.context.theme_seaborn_)
+		if plots:
+			data['profile_activity_views_per_application_type'] = build_plot_images_dictionary(plots)
+			self.options['has_profile_activity_views_per_application_type'] = True
+		else:
+			self.options['has_profile_activity_views_per_application_type'] = False
+		return data
+
+	def get_profile_activity_view_plots_per_viewer_type(self, data):
+		plots = self.epavtp.analyze_views_by_owner_or_by_others(self.context.period_breaks,
+															   self.context.minor_period_breaks,
+															   self.context.theme_seaborn_)
+		if plots:
+			data['profile_activity_views_per_viewer_type'] = build_plot_images_dictionary(plots)
+			self.options['has_profile_activity_views_per_viewer_type'] = True
+		else:
+			self.options['has_profile_activity_views_per_viewer_type'] = False
+		return data
+
+	def get_profile_activity_views_most_active_users_plot(self, data):
+		plots = self.epavtp.plot_the_most_active_users(max_rank_number=self.context.number_of_most_active_user)
+		if plots:
+			data['profile_activity_views_most_active_users'] = build_plot_images_dictionary(plots)
+			self.options['has_profile_activity_views_most_active_users'] = True
+		else:
+			self.options['has_profile_activity_views_most_active_users'] = False
+		return data
+
+	def get_the_most_viewed_profile_activities_plot(self, data):
+		plots = self.epavtp.plot_the_most_viewed_profile_activities(max_rank_number=self.context.number_of_most_active_user)
+		if plots:
+			data['most_viewed_profile_activities'] = build_plot_images_dictionary(plots)
+			self.options['has_most_viewed_profile_activities'] = True
+		else:
+			self.options['has_most_viewed_profile_activities'] = False
 		return data
 
 View = SocialTimeseriesReport = SocialTimeseriesReportView

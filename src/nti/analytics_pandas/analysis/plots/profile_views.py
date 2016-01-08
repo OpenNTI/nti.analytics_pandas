@@ -282,10 +282,10 @@ class EntityProfileActivityViewsTimeseriesPlot(object):
 											  period=self.period)
 		return plots
 
-	def analyze_analyze_views_by_owner_or_by_others(self, 
-									 			    period_breaks=None, 
-									  			    minor_period_breaks=None,
-									   			    theme_seaborn_=True):
+	def analyze_views_by_owner_or_by_others(self, 
+									 		period_breaks=None, 
+									  		minor_period_breaks=None,
+									   		theme_seaborn_=True):
 		epavt = self.epavt
 		df = epavt.analyze_views_by_owner_or_by_others()
 		if df is None:
