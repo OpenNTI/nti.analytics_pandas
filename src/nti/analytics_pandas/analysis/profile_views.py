@@ -153,11 +153,6 @@ class EntityProfileViewsTimeseries(object):
 
 	def analyze_views_by_owner_or_by_others(self):
 		df = self.dataframe.copy(deep=True)
-		def viewers (row):
-			if row['user_id'] == row['target_id']:
-				return 'owner'
-			else:
-				return 'others'
 		df['viewers'] = df.apply(lambda x : viewers(x), axis=1)
 		group_by_items = ['timestamp_period', 'viewers']
 		new_df = self.build_dataframe(df, group_by_items)
@@ -190,18 +185,18 @@ class EntityProfileActivityViewsTimeseries(object):
 
 	def analyze_events(self):
 		group_by_items = ['timestamp_period']
-		df = self.build_dataframe(group_by_items)
+		df = self.build_dataframe(self.dataframe, group_by_items)
 		return df
 
 	def analyze_application_types(self):
 		group_by_items = ['timestamp_period', 'application_type']
-		df = self.build_dataframe(group_by_items)
+		df = self.build_dataframe(self.dataframe, group_by_items)
 		return df
 
-	def build_dataframe(self, group_by_columns):
+	def build_dataframe(self, dataframe, group_by_columns):
 		agg_columns = {	'target_id' 	: pd.Series.count,
 						'user_id'		: pd.Series.nunique }
-		df = analyze_types_(self.dataframe, group_by_columns, agg_columns)
+		df = analyze_types_(dataframe, group_by_columns, agg_columns)
 		if df is not None:
 			df.rename(columns={	'target_id'	:'number_of_profile_activity_views',
 								'user_id'	:'number_of_unique_users'},
@@ -223,6 +218,13 @@ class EntityProfileActivityViewsTimeseries(object):
 															  max_rank_number=max_rank_number,
 															  session=self.session)
 		return most_viewed_profiles_df
+
+	def analyze_views_by_owner_or_by_others(self):
+		df = self.dataframe.copy(deep=True)
+		df['viewers'] = df.apply(lambda x : viewers(x), axis=1)
+		group_by_items = ['timestamp_period', 'viewers']
+		new_df = self.build_dataframe(df, group_by_items)
+		return new_df
 
 class EntityProfileMembershipViewsTimeseries(object):
 	"""
@@ -251,18 +253,18 @@ class EntityProfileMembershipViewsTimeseries(object):
 
 	def analyze_events(self):
 		group_by_items = ['timestamp_period']
-		df = self.build_dataframe(group_by_items)
+		df = self.build_dataframe(self.dataframe, group_by_items)
 		return df
 
 	def analyze_application_types(self):
 		group_by_items = ['timestamp_period', 'application_type']
-		df = self.build_dataframe(group_by_items)
+		df = self.build_dataframe(self.dataframe, group_by_items)
 		return df
 
-	def build_dataframe(self, group_by_columns):
+	def build_dataframe(self, dataframe, group_by_columns):
 		agg_columns = {	'target_id' 	: pd.Series.count,
 						'user_id'		: pd.Series.nunique }
-		df = analyze_types_(self.dataframe, group_by_columns, agg_columns)
+		df = analyze_types_(dataframe, group_by_columns, agg_columns)
 		if df is not None:
 			df.rename(columns={	'target_id'	:'number_of_profile_membership_views',
 								'user_id'	:'number_of_unique_users'},
@@ -284,6 +286,19 @@ class EntityProfileMembershipViewsTimeseries(object):
 															  max_rank_number=max_rank_number,
 															  session=self.session)
 		return most_viewed_profiles_df
+
+	def analyze_views_by_owner_or_by_others(self):
+		df = self.dataframe.copy(deep=True)
+		df['viewers'] = df.apply(lambda x : viewers(x), axis=1)
+		group_by_items = ['timestamp_period', 'viewers']
+		new_df = self.build_dataframe(df, group_by_items)
+		return new_df
+
+def viewers (row):
+	if row['user_id'] == row['target_id']:
+		return 'owner'
+	else:
+		return 'others'
 
 def get_the_most_viewed_profile(df, field_name, max_rank_number, session):
 	if df is None or df.empty:

@@ -39,6 +39,14 @@ class TestProfileViewsPlot(AnalyticsPandasTestBase):
 		_ = epvtp.analyze_application_types()
 		assert_that(len(_), equal_to(3))
 
+	def test_analyze_viewer_types(self):
+		start_date = '2015-10-05'
+		end_date = '2015-10-19'
+		epvt = EntityProfileViewsTimeseries(self.session, start_date, end_date)
+		epvtp = EntityProfileViewsTimeseriesPlot(epvt)
+		_ = epvtp.analyze_views_by_owner_or_by_others()
+		assert_that(len(_), equal_to(3))
+
 	def test_plot_the_most_active_users(self):
 		start_date = '2015-10-05'
 		end_date = '2015-10-19'
@@ -72,6 +80,14 @@ class TestProfileActivityViewsPlot(AnalyticsPandasTestBase):
 		_ = epavtp.analyze_application_types()
 		assert_that(len(_), equal_to(3))
 
+	def test_analyze_views_by_owner_or_by_others(self):
+		start_date = '2015-10-05'
+		end_date = '2015-10-19'
+		epavt = EntityProfileActivityViewsTimeseries(self.session, start_date, end_date)
+		epavtp = EntityProfileActivityViewsTimeseriesPlot(epavt)
+		_ = epavtp.analyze_analyze_views_by_owner_or_by_others()
+		assert_that(len(_), equal_to(3))
+
 	def test_plot_the_most_active_users(self):
 		start_date = '2015-10-05'
 		end_date = '2015-10-19'
@@ -103,6 +119,14 @@ class TestProfileMembershipViewsPlot(AnalyticsPandasTestBase):
 		epmvt = EntityProfileMembershipViewsTimeseries(self.session, start_date, end_date)
 		epmvtp = EntityProfileMembershipViewsTimeseriesPlot(epmvt)
 		_ = epmvtp.analyze_application_types()
+		assert_that(len(_), equal_to(3))
+
+	def test_analyze_views_by_owner_or_by_others(self):
+		start_date = '2015-10-05'
+		end_date = '2015-10-19'
+		epmvt = EntityProfileMembershipViewsTimeseries(self.session, start_date, end_date)
+		epmvtp = EntityProfileMembershipViewsTimeseriesPlot(epmvt)
+		_ = epmvtp.analyze_views_by_owner_or_by_others()
 		assert_that(len(_), equal_to(3))
 
 	def test_plot_the_most_active_users(self):

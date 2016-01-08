@@ -109,6 +109,13 @@ class TestEntityProfileActivityViewsTimeseries(AnalyticsPandasTestBase):
 		df = epavt.get_the_most_viewed_profile_activities()
 		assert_that(df.columns, has_item('number_of_profile_activity_viewed'))
 
+	def test_analyze_views_by_owner_or_by_others(self):
+		start_date = '2015-10-05'
+		end_date = '2015-10-19'
+		epavt = EntityProfileActivityViewsTimeseries(self.session, start_date, end_date)
+		df = epavt.analyze_views_by_owner_or_by_others()
+		assert_that(df.columns, has_item('viewers'))
+
 class TestEntityProfileMembershipViewsTimeseries(AnalyticsPandasTestBase):
 
 	def test_analyze_events(self):
@@ -150,6 +157,13 @@ class TestEntityProfileMembershipViewsTimeseries(AnalyticsPandasTestBase):
 		epmvt = EntityProfileMembershipViewsTimeseries(self.session, start_date, end_date)
 		df = epmvt.get_the_most_viewed_profile_memberships()
 		assert_that(df.columns, has_item('number_of_profile_membership_viewed'))
+
+	def test_analyze_views_by_owner_or_by_others(self):
+		start_date = '2015-10-05'
+		end_date = '2015-10-19'
+		epmvt = EntityProfileMembershipViewsTimeseries(self.session, start_date, end_date)
+		df = epmvt.analyze_views_by_owner_or_by_others()
+		assert_that(df.columns, has_item('viewers'))
 
 class TestEntityProfileViewEventsTimeseries(AnalyticsPandasTestBase):
 	def test_combined_events(self):

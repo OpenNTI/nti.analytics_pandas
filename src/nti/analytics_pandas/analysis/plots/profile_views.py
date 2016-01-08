@@ -138,6 +138,41 @@ class EntityProfileViewsTimeseriesPlot(object):
 											  period=self.period)
 		return plots
 
+	def analyze_views_by_owner_or_by_others(self, 
+										    period_breaks=None, 
+										    minor_period_breaks=None,
+							   			    theme_seaborn_=True):
+		epvt = self.epvt
+		df = epvt.analyze_views_by_owner_or_by_others()
+		if df is None:
+			return()
+
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		group_by = 'viewers'
+		event_title = _('Number of profile views per viewer type')
+		user_title = _('Number of unique users viewing profiles per viewer type')
+		ratio_title = _('Ratio of profile views over unique user per viewer type')
+		
+		event_type = 'profile_views_per_viewer_type'
+		event_y_axis_field = 'number_of_profile_views'
+		event_y_axis_label = _('Number of profile views')
+
+		plots = generate_three_group_by_plots(df,
+											  group_by,
+											  event_title,
+											  user_title,
+											  ratio_title,
+											  event_y_axis_field,
+											  event_y_axis_label,
+											  period_breaks,
+											  minor_period_breaks,
+											  theme_seaborn_,
+											  event_type,
+											  period=self.period)
+		return plots
+
 	def plot_the_most_active_users(self, max_rank_number=10):
 		epvt = self.epvt
 		users_df = epvt.get_the_most_active_users(max_rank_number)
@@ -230,6 +265,41 @@ class EntityProfileActivityViewsTimeseriesPlot(object):
 		ratio_title = _("Ratio of profile activity views over unique user per application type")
 		
 		event_type = 'profile_activity_views_per_application_type'
+		event_y_axis_field = 'number_of_profile_activity_views'
+		event_y_axis_label = _('Number of profile activity views')
+
+		plots = generate_three_group_by_plots(df,
+											  group_by,
+											  event_title,
+											  user_title,
+											  ratio_title,
+											  event_y_axis_field,
+											  event_y_axis_label,
+											  period_breaks,
+											  minor_period_breaks,
+											  theme_seaborn_,
+											  event_type,
+											  period=self.period)
+		return plots
+
+	def analyze_analyze_views_by_owner_or_by_others(self, 
+									 			    period_breaks=None, 
+									  			    minor_period_breaks=None,
+									   			    theme_seaborn_=True):
+		epavt = self.epavt
+		df = epavt.analyze_views_by_owner_or_by_others()
+		if df is None:
+			return()
+
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		group_by = 'viewers'
+		event_title = _('Number of profile activity views per viewer type')
+		user_title = _("Number of unique users viewing profile activities per viewer type")
+		ratio_title = _("Ratio of profile activity views over unique user per per viewer type")
+		
+		event_type = 'profile_activity_views_per_viewer_type'
 		event_y_axis_field = 'number_of_profile_activity_views'
 		event_y_axis_label = _('Number of profile activity views')
 
@@ -340,6 +410,41 @@ class EntityProfileMembershipViewsTimeseriesPlot(object):
 		ratio_title = _("Ratio of profile membership views over unique user per application type")
 		
 		event_type = 'profile_membership_views_per_application_type'
+		event_y_axis_field = 'number_of_profile_membership_views'
+		event_y_axis_label = _('Number of profile membership views')
+
+		plots = generate_three_group_by_plots(df,
+											  group_by,
+											  event_title,
+											  user_title,
+											  ratio_title,
+											  event_y_axis_field,
+											  event_y_axis_label,
+											  period_breaks,
+											  minor_period_breaks,
+											  theme_seaborn_,
+											  event_type,
+											  period=self.period)
+		return plots
+
+	def analyze_views_by_owner_or_by_others(self, 
+										    period_breaks=None, 
+										    minor_period_breaks=None,
+							   			    theme_seaborn_=True):
+		epmvt = self.epmvt
+		df = epmvt.analyze_views_by_owner_or_by_others()
+		if df is None:
+			return()
+
+		df.reset_index(inplace=True)
+		df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
+
+		group_by = 'viewers'
+		event_title = _('Number of profile membership views per viewer type')
+		user_title = _("Number of unique users viewing profile memberships per viewer type")
+		ratio_title = _("Ratio of profile membership views over unique user per viewer type")
+		
+		event_type = 'profile_membership_views_per_viewer_type'
 		event_y_axis_field = 'number_of_profile_membership_views'
 		event_y_axis_label = _('Number of profile membership views')
 
