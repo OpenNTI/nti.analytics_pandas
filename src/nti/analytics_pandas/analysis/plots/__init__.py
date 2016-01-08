@@ -40,6 +40,11 @@ from .notes import NotesEventsTimeseriesPlot
 from .notes import NotesCreationTimeseriesPlot
 from .notes import NoteFavoritesTimeseriesPlot
 
+from .profile_views import EntityProfileViewsTimeseriesPlot
+from .profile_views import EntityProfileActivityViewsTimeseriesPlot
+from .profile_views import EntityProfileMembershipViewsTimeseriesPlot
+from .profile_views import EntityProfileViewEventsTimeseriesPlot
+
 from .resource_views import ResourceViewsTimeseriesPlot
 
 from .social import ContactsAddedTimeseriesPlot

@@ -56,6 +56,11 @@ from .plots import ContactsAddedTimeseriesPlot
 from .plots import ContactsRemovedTimeseriesPlot
 from .plots import FriendsListsMemberAddedTimeseriesPlot
 
+from .plots import EntityProfileViewsTimeseriesPlot
+from .plots import EntityProfileActivityViewsTimeseriesPlot
+from .plots import EntityProfileMembershipViewsTimeseriesPlot
+from .plots import EntityProfileViewEventsTimeseriesPlot
+
 from.assessments import AssignmentViewsTimeseries
 from.assessments import AssignmentsTakenTimeseries
 from.assessments import AssessmentEventsTimeseries
@@ -74,6 +79,11 @@ from .enrollments import CourseEnrollmentsTimeseries
 from .enrollments import CourseEnrollmentsEventsTimeseries
 
 from .highlights import HighlightsCreationTimeseries
+
+from .profile_views import EntityProfileViewsTimeseries
+from .profile_views import EntityProfileActivityViewsTimeseries
+from .profile_views import EntityProfileMembershipViewsTimeseries
+from .profile_views import EntityProfileViewEventsTimeseries
 
 from .resource_views import ResourceViewsTimeseries
 

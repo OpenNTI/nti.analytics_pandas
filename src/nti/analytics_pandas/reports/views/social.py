@@ -29,6 +29,18 @@ from ...analysis import ContactsEventsTimeseriesPlot
 from ...analysis import FriendsListsMemberAddedTimeseries
 from ...analysis import FriendsListsMemberAddedTimeseriesPlot
 
+from ...analysis import EntityProfileViewsTimeseries
+from ...analysis import EntityProfileViewsTimeseriesPlot
+
+from ...analysis import EntityProfileActivityViewsTimeseries
+from ...analysis import EntityProfileActivityViewsTimeseriesPlot
+
+from ...analysis import EntityProfileMembershipViewsTimeseries
+from ...analysis import EntityProfileMembershipViewsTimeseriesPlot
+
+from ...analysis import EntityProfileViewEventsTimeseries
+from ...analysis import EntityProfileViewEventsTimeseriesPlot
+
 from .commons import build_plot_images_dictionary
 
 from .mixins import AbstractReportView
@@ -68,6 +80,8 @@ class SocialTimeseriesReportView(AbstractReportView):
 			self.options['has_friendlist_members_added_data'] = False
 		if 'has_chats_data' not in keys:
 			self.options['has_chats_data'] = False
+		if 'has_profile_view_events' not in keys:
+			self.options['has_profile_view_events'] = False
 		self.options['data'] = data
 		return self.options
 
@@ -125,6 +139,27 @@ class SocialTimeseriesReportView(AbstractReportView):
 			data = self.generate_chats_initiated_plots_per_application_type(data)
 			data = self.get_number_of_users_join_chats_per_date_plots(data)
 			data = self.generate_one_one_and_group_chat_plots(data)
+
+		self.epvt = EntityProfileViewsTimeseries(self.context.session,
+											   	 self.context.start_date,
+												 self.context.end_date,
+												 period=self.context.period)
+		self.epavt = EntityProfileActivityViewsTimeseries(self.context.session,
+													   	  self.context.start_date,
+														  self.context.end_date,
+														  period=self.context.period)
+		self.epmvt = EntityProfileMembershipViewsTimeseries(self.context.session,
+														   	self.context.start_date,
+															self.context.end_date,
+															period=self.context.period)
+		self.epvet = EntityProfileViewEventsTimeseries(epvt=self.epvt, epavt=self.epavt, epmvt=self.epmvt)
+		if self.epvet.period is not None:
+			self.options['has_profile_view_events'] = True
+			if not self.epvt.dataframe.empty:
+				data = self.generate_profile_view_plots(data)
+		else:
+			self.options['has_profile_view_events'] = False
+
 		self._build_data(data)
 		return self.options
 
@@ -266,6 +301,66 @@ class SocialTimeseriesReportView(AbstractReportView):
 										self.context.theme_seaborn_)
 		if plots:
 			data['friendlist_members_added'] = build_plot_images_dictionary(plots)
+		return data
+
+	def generate_profile_view_plots(self, data):
+		self.epvtp= EntityProfileViewsTimeseriesPlot(self.epvt)
+		data = self.get_profile_view_plots(data)
+		data = self.get_profile_view_plots_per_application_type(data)
+		data = self.get_profile_view_plots_per_viewer_type(data)
+		data = self.get_profile_views_most_active_users_plot(data)
+		data = self.get_the_most_viewed_profiles_plot(data)
+		return data
+
+	def get_profile_view_plots(self, data):
+		plots = self.epvtp.explore_events(self.context.period_breaks,
+										  self.context.minor_period_breaks,
+										  self.context.theme_seaborn_)
+		if plots:
+			data['profile_views'] = build_plot_images_dictionary(plots)
+			self.options['has_profile_views'] = True
+		else:
+			self.options['has_profile_views'] = False
+		return data
+
+	def get_profile_view_plots_per_application_type(self, data):
+		plots = self.epvtp.analyze_application_types(self.context.period_breaks,
+													 self.context.minor_period_breaks,
+													 self.context.theme_seaborn_)
+		if plots:
+			data['profile_views_per_application_type'] = build_plot_images_dictionary(plots)
+			self.options['has_profile_views_per_application_type'] = True
+		else:
+			self.options['has_profile_views_per_application_type'] = False
+		return data
+
+	def get_profile_view_plots_per_viewer_type(self, data):
+		plots = self.epvtp.analyze_views_by_owner_or_by_others(self.context.period_breaks,
+															   self.context.minor_period_breaks,
+															   self.context.theme_seaborn_)
+		if plots:
+			data['profile_views_per_viewer_type'] = build_plot_images_dictionary(plots)
+			self.options['has_profile_views_per_viewer_type'] = True
+		else:
+			self.options['has_profile_views_per_viewer_type'] = False
+		return data
+
+	def get_profile_views_most_active_users_plot(self, data):
+		plots = self.epvtp.plot_the_most_active_users(max_rank_number=self.context.number_of_most_active_user)
+		if plots:
+			data['profile_views_most_active_users'] = build_plot_images_dictionary(plots)
+			self.options['has_profile_views_most_active_users'] = True
+		else:
+			self.options['has_profile_views_most_active_users'] = False
+		return data
+
+	def get_the_most_viewed_profiles_plot(self, data):
+		plots = self.epvtp.plot_the_most_viewed_profiles(max_rank_number=self.context.number_of_most_active_user)
+		if plots:
+			data['most_viewed_profiles'] = build_plot_images_dictionary(plots)
+			self.options['has_most_viewed_profiles'] = True
+		else:
+			self.options['has_most_viewed_profiles'] = False
 		return data
 
 View = SocialTimeseriesReport = SocialTimeseriesReportView
