@@ -132,7 +132,10 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 			self.options['has_self_assessments_taken_data'] = True
 			data = self.generate_self_assessment_taken_plots(data)
 
-		self.aet = AssessmentEventsTimeseries(avt=self.avt, att=self.att, savt=self.savt, satt=self.satt)
+		self.aet = AssessmentEventsTimeseries(avt=self.avt, 
+											  att=self.att, 
+											  savt=self.savt, 
+											  satt=self.satt)
 		data = self.generate_combined_assessment_event_plots(data)
 
 		self._build_data(data)
@@ -358,8 +361,8 @@ class AssessmentsEventsTimeseriesReportView(AbstractReportView):
 	def get_self_assessments_taken_over_total_enrollments_ts(self, data):
 		plots = self.sattp.analyze_self_assessments_taken_over_total_enrollments_ts(
 																self.context.period_breaks,
-															    self.context.minor_period_breaks,
-															    self.context.theme_seaborn_)
+																self.context.minor_period_breaks,
+																self.context.theme_seaborn_)
 		self.options['has_self_assessments_taken_over_total_enrollments_ts'] = False
 		if plots:
 			data['self_assessments_taken_over_total_enrollments_ts'] = build_plot_images_dictionary(plots)
