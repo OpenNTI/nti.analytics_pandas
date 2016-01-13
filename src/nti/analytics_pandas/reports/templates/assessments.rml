@@ -318,6 +318,21 @@
 			</tal:block>
 		</tal:block>
 
+		<tal:block tal:condition="python: options['has_self_assessments_taken_over_total_enrollments_ts']">
+			<setNextTemplate name="main"/>
+			<nextPage />
+			<h1 style="h1" fontSize="14" spaceBefore=".3in" spaceAfter=".3in">
+				Self Assessments Taken vs Enrollment Count
+			</h1>
+			<hr width="100%" />
+			<tal:block tal:define="self_assessments_taken options/data/self_assessments_taken_over_total_enrollments_ts">
+				<illustration width="5in" height="3in"
+							  tal:define="event self_assessments_taken/self_assessments_taken_over_total_enrollments"
+							  metal:use-macro="macro:one_plot_event">
+				</illustration>
+			</tal:block>
+		</tal:block>
+
 	</tal:block>
 
 </metal:block>
