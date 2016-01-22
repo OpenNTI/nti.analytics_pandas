@@ -9,15 +9,19 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
+import ast
 import pandas as pd
 
 from ..queries import QueryAssignmentViews
 from ..queries import QueryAssignmentsTaken
+from ..queries import QueryAssignmentDetails
+
 from ..queries import QueryCourseEnrollments
 from ..queries import QuerySelfAssessmentViews
 from ..queries import QuerySelfAssessmentsTaken
 
 from ..utils import cast_columns_as_category_
+from ..utils import get_values_of_series_categorical_index_
 
 from .common import analyze_types_
 from .common import add_timestamp_period_
@@ -253,7 +257,7 @@ class AssignmentsTakenTimeseries(object):
 			self.dataframe = qat.filter_by_period_of_time(start_date, end_date)
 
 		if not self.dataframe.empty:
-			categorical_columns = ['assignment_taken_id', 'user_id']
+			categorical_columns = ['user_id']
 
 			if with_device_type:
 				new_df = qat.add_device_type(self.dataframe)
@@ -371,6 +375,35 @@ class AssignmentsTakenTimeseries(object):
 
 			df['ratio'] = df['assignments_taken'] / total_enrollments
 			return df
+
+	def analyze_question_types(self): 
+		assignment_taken_ids = get_values_of_series_categorical_index_(self.dataframe['assignment_taken_id']).tolist()
+		qad = QueryAssignmentDetails(self.session)
+		assignment_details_df = qad.get_submission_given_assignment_taken_id(assignment_taken_ids)
+		assignment_details_df['question_type'] = assignment_details_df['submission'].apply(lambda x: get_question_type(x))
+		df = self.dataframe[['timestamp_period', 'assignment_taken_id']]	
+		new_df = assignment_details_df.merge(df, how='left')
+		return new_df
+
+def get_question_type(submission_value):
+	try : 
+		value = ast.literal_eval(submission_value)
+		if value == "<FILE_UPLOADED>":
+			return 'file upload'
+		elif isinstance(value, dict):
+			return 'order/matching'
+		elif isinstance(value, list):
+			return 'multiple choice multiple answer'
+		elif isinstance(value, int):
+			return 'multiple choice'
+		else:
+			count_space = value.count(' ')
+			if count_space > 25:
+				return 'essay'
+			else:
+				return 'short answer'
+	except ValueError:
+		return 'null'
 
 class SelfAssessmentViewsTimeseries(object):
 	"""

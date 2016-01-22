@@ -13,8 +13,10 @@ from ..utils import orm_dataframe
 
 from .assessments import QueryAssignmentViews
 from .assessments import QueryAssignmentsTaken
+from .assessments import QueryAssignmentDetails
 from .assessments import QuerySelfAssessmentViews
 from .assessments import QuerySelfAssessmentsTaken
+from .assessments import QuerySelfAssessmentDetails
 
 from .bookmarks import QueryBookmarksCreated
 

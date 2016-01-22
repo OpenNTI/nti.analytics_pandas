@@ -207,6 +207,18 @@ class TestAssignmentsTakenTimeseries(AnalyticsPandasTestBase):
 		assert_that(df.columns, has_item('assignments_taken'))
 		assert_that(df.columns, has_item('ratio'))
 
+	def test_analyze_analyze_question_types(self):
+		start_date = u'2015-01-01'
+		end_date = u'2015-05-31'
+		courses_id = ['1024', '1025', '1026', '1027', '1028']
+		att = AssignmentsTakenTimeseries(self.session,
+										 start_date=start_date,
+										 end_date=end_date,
+										 course_id=courses_id)
+		df = att.analyze_question_types()
+		assert_that(df.columns, has_item('submission'))
+		assert_that(df.columns, has_item('question_type'))
+
 class TestSelfAssessmentViewsTimeseries(AnalyticsPandasTestBase):
 
 	def setUp(self):

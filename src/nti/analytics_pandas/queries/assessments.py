@@ -11,8 +11,11 @@ logger = __import__('logging').getLogger(__name__)
 
 from nti.analytics_database.assessments import AssignmentViews
 from nti.analytics_database.assessments import AssignmentsTaken
+from nti.analytics_database.assessments import AssignmentDetails
+
 from nti.analytics_database.assessments import SelfAssessmentViews
 from nti.analytics_database.assessments import SelfAssessmentsTaken
+from nti.analytics_database.assessments import SelfAssessmentDetails
 
 from .mixins import TableQueryMixin
 
@@ -129,6 +132,18 @@ class QueryAssignmentsTaken(TableQueryMixin):
 		new_df = add_enrollment_type_(self.session, dataframe, course_id)
 		return new_df
 
+class QueryAssignmentDetails(TableQueryMixin):
+
+	table = AssignmentDetails
+
+	def get_submission_given_assignment_taken_id (self, assignment_taken_ids ):
+		ad = self.table
+		query = self.session.query(ad.submission,
+								   ad.assignment_taken_id).filter(ad.assignment_taken_id.in_(assignment_taken_ids))
+		dataframe = orm_dataframe(query, self.columns)
+		return dataframe
+
+
 class QuerySelfAssessmentViews(TableQueryMixin):
 
 	table = SelfAssessmentViews
@@ -220,3 +235,14 @@ class QuerySelfAssessmentsTaken(TableQueryMixin):
 	def add_enrollment_type(self, dataframe, course_id):
 		new_df = add_enrollment_type_(self.session, dataframe, course_id)
 		return new_df
+
+class QuerySelfAssessmentDetails(TableQueryMixin):
+
+	table = SelfAssessmentDetails
+
+	def get_submission_given_self_assessment_id(self, self_assessment_ids ):
+		sad = self.table
+		query = self.session.query(sad.submission,
+								   sad.self_assessment_id).filter(sad.self_assessment_id.in_(self_assessment_ids))
+		dataframe = orm_dataframe(query, self.columns)
+		return dataframe
