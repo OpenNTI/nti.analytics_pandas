@@ -401,7 +401,7 @@ def get_question_type(submission_value):
 			if count_space > 25:
 				return 'essay'
 			else:
-				return 'short answer'
+				return 'free response'
 	except ValueError:
 		return 'null'
 
