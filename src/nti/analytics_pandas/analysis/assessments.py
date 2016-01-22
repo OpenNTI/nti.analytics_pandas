@@ -12,19 +12,18 @@ logger = __import__('logging').getLogger(__name__)
 import ast
 import pandas as pd
 
-from ..queries import QueryAssignmentViews
-from ..queries import QueryAssignmentsTaken
-from ..queries import QueryAssignmentDetails
+from nti.analytics_pandas.analysis.common import analyze_types_
+from nti.analytics_pandas.analysis.common import add_timestamp_period_
 
-from ..queries import QueryCourseEnrollments
-from ..queries import QuerySelfAssessmentViews
-from ..queries import QuerySelfAssessmentsTaken
+from nti.analytics_pandas.queries import QueryAssignmentViews
+from nti.analytics_pandas.queries import QueryAssignmentsTaken
+from nti.analytics_pandas.queries import QueryAssignmentDetails
+from nti.analytics_pandas.queries import QueryCourseEnrollments
+from nti.analytics_pandas.queries import QuerySelfAssessmentViews
+from nti.analytics_pandas.queries import QuerySelfAssessmentsTaken
 
-from ..utils import cast_columns_as_category_
-from ..utils import get_values_of_series_categorical_index_
-
-from .common import analyze_types_
-from .common import add_timestamp_period_
+from nti.analytics_pandas.utils import cast_columns_as_category_
+from nti.analytics_pandas.utils import get_values_of_series_categorical_index_
 
 class AssessmentEventsTimeseries(object):
 
@@ -376,17 +375,19 @@ class AssignmentsTakenTimeseries(object):
 			df['ratio'] = df['assignments_taken'] / total_enrollments
 			return df
 
-	def analyze_question_types(self): 
-		assignment_taken_ids = get_values_of_series_categorical_index_(self.dataframe['assignment_taken_id']).tolist()
+	def analyze_question_types(self):
+		token = self.dataframe['assignment_taken_id']
+		assignment_taken_ids = get_values_of_series_categorical_index_(token).tolist()
 		qad = QueryAssignmentDetails(self.session)
 		assignment_details_df = qad.get_submission_given_assignment_taken_id(assignment_taken_ids)
-		assignment_details_df['question_type'] = assignment_details_df['submission'].apply(lambda x: get_question_type(x))
-		df = self.dataframe[['timestamp_period', 'assignment_taken_id']]	
+		assignment_details_df['question_type'] = \
+				assignment_details_df['submission'].apply(lambda x: get_question_type(x))
+		df = self.dataframe[['timestamp_period', 'assignment_taken_id']]
 		new_df = assignment_details_df.merge(df, how='left')
 		return new_df
 
 def get_question_type(submission_value):
-	try : 
+	try:
 		value = ast.literal_eval(submission_value)
 		if value == "<FILE_UPLOADED>":
 			return 'file upload'
@@ -438,7 +439,6 @@ class SelfAssessmentViewsTimeseries(object):
 				if new_df is not None:
 					self.dataframe = new_df
 					categorical_columns.append('device_type')
-
 
 			self.dataframe = add_timestamp_period_(self.dataframe, time_period=period)
 
@@ -573,7 +573,6 @@ class SelfAssessmentsTakenTimeseries(object):
 					categorical_columns.append('enrollment_type')
 
 			self.dataframe = add_timestamp_period_(self.dataframe, time_period=period)
-
 			self.dataframe = cast_columns_as_category_(self.dataframe, categorical_columns)
 
 	def analyze_events(self):
