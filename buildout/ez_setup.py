@@ -37,7 +37,7 @@ except ImportError:
     
 LATEST = "21.2.2"
 DEFAULT_VERSION = LATEST
-DEFAULT_URL = "https://pypi.io/packages/source/s/setuptools/"
+DEFAULT_URL = "https://pypi.python.org/packages/94/ed/99b4cc83113d8f46234f8f4e47e0040977cac546de4d5f8bca9f52b54841/"
 DEFAULT_SAVE_DIR = os.curdir
 
 
