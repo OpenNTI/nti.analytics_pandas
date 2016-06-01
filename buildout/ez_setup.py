@@ -35,9 +35,9 @@ try:
 except ImportError:
     USER_SITE = None
     
-LATEST = "21.2.2"
+LATEST = "22.0.0"
 DEFAULT_VERSION = LATEST
-DEFAULT_URL = "https://pypi.python.org/packages/94/ed/99b4cc83113d8f46234f8f4e47e0040977cac546de4d5f8bca9f52b54841/"
+DEFAULT_URL = "https://downloads.nextthought.com/deps/eggs/"
 DEFAULT_SAVE_DIR = os.curdir
 
 
@@ -350,22 +350,7 @@ def _resolve_version(version):
     """
     Resolve LATEST version
     """
-    if version is not LATEST:
-        return version
-
-    meta_url = urljoin(DEFAULT_URL, '/pypi/setuptools/json')
-    resp = urlopen(meta_url)
-    with contextlib.closing(resp):
-        try:
-            charset = resp.info().get_content_charset()
-        except Exception:
-            # Python 2 compat; assume UTF-8
-            charset = 'UTF-8'
-        reader = codecs.getreader(charset)
-        doc = json.load(reader(resp))
-
-    return str(doc['info']['version'])
-
+    return LATEST
 
 def _build_install_args(options):
     """
