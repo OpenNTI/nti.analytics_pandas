@@ -35,9 +35,11 @@ try:
 except ImportError:
     USER_SITE = None
     
-LATEST = "22.0.0"
+LATEST = "22.0.5"
 DEFAULT_VERSION = LATEST
-DEFAULT_URL = "https://downloads.nextthought.com/deps/eggs/"
+DEFAULT_URL_NT = "https://downloads.nextthought.com/deps/eggs/"
+DEFAULT_URL_PYPI = "https://pypi.io/packages/source/s/setuptools/"
+DEFAULT_URL = DEFAULT_URL_PYPI
 DEFAULT_SAVE_DIR = os.curdir
 
 
