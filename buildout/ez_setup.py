@@ -35,7 +35,7 @@ try:
 except ImportError:
     USER_SITE = None
     
-LATEST = "25.1.5"
+LATEST = "25.1.6"
 DEFAULT_VERSION = LATEST
 DEFAULT_URL_NT = "https://downloads.nextthought.com/deps/eggs/"
 DEFAULT_URL_PYPI = "https://pypi.io/packages/source/s/setuptools/"
