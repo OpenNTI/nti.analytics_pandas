@@ -9,7 +9,7 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
-from nti.common.property import Lazy
+from nti.property.property import Lazy
 
 class TableQueryMixin(object):
 

@@ -19,13 +19,14 @@ import os
 
 from z3c.rml import rml2pdf
 
+from nti.analytics_pandas.reports.views.commons import cleanup_temporary_file
+
 from nti.analytics_pandas.reports.views.enrollments import View
 from nti.analytics_pandas.reports.views.enrollments import Context
-from nti.analytics_pandas.reports.views.commons import cleanup_temporary_file
 
 from nti.analytics_pandas.reports.z3c_zpt import ViewPageTemplateFile
 
-from nti.common.property import Lazy
+from nti.property.property import Lazy
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
