@@ -9,6 +9,8 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
+import six
+
 class StringFolder(object):
 	"""
 	source : http://www.mobify.com/blog/sqlalchemy-memory-magic/
@@ -32,7 +34,7 @@ class StringFolder(object):
 		:return: a string or unicode object.
 		"""
 		# If s is not a string or unicode object, return it unchanged
-		if not isinstance(s, basestring):
+		if not isinstance(s, six.string_types):
 			return s
 
 		# If s is already a string, then str() has no effect.

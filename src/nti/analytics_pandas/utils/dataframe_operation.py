@@ -21,11 +21,10 @@ def get_values_of_series_categorical_index_(categorical_series):
 	index = categorical_series.index.values
 	if isinstance(index, Categorical) or hasattr(index, 'get_values'):
 		return index.get_values()
-	else:
-		return index
+	return index
 
 def cast_columns_as_category_(df, list_of_columns):
 	if len(df.index) > 0:
-		for column in list_of_columns:
+		for column in list_of_columns or ():
 			df[column] = df[column].astype('category')
 	return df

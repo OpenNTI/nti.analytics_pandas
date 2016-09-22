@@ -9,11 +9,7 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
-try:
-	from cStringIO import StringIO
-except ImportError:
-	from StringIO import StringIO
-
+from io import StringIO
 from matplotlib import pyplot as plt
 
 class Image(object):
@@ -38,12 +34,11 @@ def save_plot_(plot, image_filename, image_type='png'):
 	"""
 	ega: please keep this function for further reference
 	"""
-	plt.figure.Figure = plot.draw()
 	buf = StringIO()
+	plt.figure.Figure = plot.draw()
 	plt.savefig(buf, format=image_type)
 	plt.close()
 	image_filename = u'%s.%s' % (image_filename, image_type)
 	image = Image.process(image_filename, buf)
 	return image
 save_plot = save_plot_
-

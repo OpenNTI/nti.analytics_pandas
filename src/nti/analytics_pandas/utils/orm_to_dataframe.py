@@ -17,7 +17,7 @@ def create_row(obj, columns):
 
 def orm_dataframe(orm_query, columns):
 	"""
-	takes sqlachemy orm query and a list of its columns and transform it to pandas dataframe
+	Takes sqlachemy orm query and a list of its columns and transform it to pandas dataframe
 	"""
 	result = DataFrame([create_row(i, columns) for i in orm_query])
 	return result
