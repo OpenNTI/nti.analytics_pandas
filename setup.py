@@ -25,6 +25,7 @@ TESTS_REQUIRE = [
 	'nose-pudb',
 	'nose-progressive',
 	'nose2[coverage_plugin]',
+	'Pillow',
 	'pyhamcrest',
 	'nti.nose_traceback_info',
 	'nti.testing',
