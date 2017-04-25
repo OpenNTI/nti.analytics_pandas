@@ -17,6 +17,8 @@ from hamcrest import greater_than
 
 import os
 
+from zope.cachedescriptors.property import Lazy
+
 from z3c.rml import rml2pdf
 
 from nti.analytics_pandas.reports.views.commons import cleanup_temporary_file

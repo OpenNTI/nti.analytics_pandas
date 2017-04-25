@@ -9,7 +9,8 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
-from nti.property.property import Lazy
+from zope.cachedescriptors.property import Lazy
+
 
 class TableQueryMixin(object):
 
