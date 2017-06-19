@@ -488,7 +488,7 @@ class TestAssessmentEventsPlot(AnalyticsPandasTestBase):
 											  period='weekly')
 		aet = AssessmentEventsTimeseries(avt=avt, att=att, savt=savt, satt=satt)
 		aetp = AssessmentEventsTimeseriesPlot(aet)
-		_ = aetp.combine_events(period_breaks='1 week', minor_period_breaks=None, theme_seaborn_=True)
+		_ = aetp.combine_events(period_breaks='1 week', minor_period_breaks=None, theme_bw_=True)
 
 	def test_combine_events_empty(self):
 		start_date = u'2015-01-01'
