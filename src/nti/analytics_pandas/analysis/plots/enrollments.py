@@ -27,7 +27,7 @@ class CourseCatalogViewsTimeseriesPlot(object):
 		self.ccvt = ccvt
 		self.period = ccvt.period
 
-	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day', theme_seaborn_=True):
+	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day', theme_bw_=True):
 		"""
 		return scatter plots of course catalog views during period of time
 		it consists of:
@@ -55,7 +55,7 @@ class CourseCatalogViewsTimeseriesPlot(object):
 									 event_y_axis_label,
 									 period_breaks,
 									 minor_period_breaks,
-									 theme_seaborn_,
+									 theme_bw_,
 									 event_type,
 									 period=self.period)
 
@@ -74,7 +74,7 @@ class CourseCatalogViewsTimeseriesPlot(object):
 		plots = plots + (plot_average_time_length,)
 		return plots
 
-	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day', theme_seaborn_=True):
+	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day', theme_bw_=True):
 		"""
 		plot course catalog views based on user agent (device type)
 		the plots consists of:
@@ -103,7 +103,7 @@ class CourseCatalogViewsTimeseriesPlot(object):
 											  event_y_axis_label,
 											  period_breaks,
 											  minor_period_breaks,
-											  theme_seaborn_,
+											  theme_bw_,
 											  event_type,
 											  period=self.period)
 
@@ -132,7 +132,7 @@ class CourseEnrollmentsTimeseriesPlot(object):
 		self.cet = cet
 		self.period = cet.period
 
-	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day', theme_seaborn_=True):
+	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day', theme_bw_=True):
 		"""
 		return scatter plots of course enrollments during period of time
 		"""
@@ -152,12 +152,12 @@ class CourseEnrollmentsTimeseriesPlot(object):
 										title=_('Number of enrollments during period of time'),
 										period_breaks=period_breaks,
 										minor_breaks=minor_period_breaks,
-										theme_seaborn_=theme_seaborn_,
+										theme_bw_=theme_bw_,
 										plot_name='course_enrollments',
 										period=self.period)
 		return (plot_course_enrollments,)
 
-	def analyze_device_enrollment_types(self, period_breaks='1 month', minor_period_breaks='1 week', theme_seaborn_=True):
+	def analyze_device_enrollment_types(self, period_breaks='1 month', minor_period_breaks='1 week', theme_bw_=True):
 		"""
 		return plots of the course enrollments grouped by user agent (device_type) and enrollment type
 		"""
@@ -179,7 +179,7 @@ class CourseEnrollmentsTimeseriesPlot(object):
 										period_breaks=period_breaks,
 										group_by='device_type',
 										minor_breaks=minor_period_breaks,
-										theme_seaborn_=theme_seaborn_,
+										theme_bw_=theme_bw_,
 										plot_name='course_enrollments_per_device_types',
 										period=self.period)
 
@@ -193,7 +193,7 @@ class CourseEnrollmentsTimeseriesPlot(object):
 										period_breaks=period_breaks,
 										group_by='enrollment_type',
 										minor_breaks=minor_period_breaks,
-										theme_seaborn_=theme_seaborn_,
+										theme_bw_=theme_bw_,
 										plot_name='course_enrollments_per_enrollment_types',
 										period=self.period)
 
@@ -208,7 +208,7 @@ class CourseDropsTimeseriesPlot(object):
 		self.cdt = cdt
 		self.period = cdt.period
 
-	def explore_events(self, period_breaks='1 month', minor_period_breaks='1 week', theme_seaborn_=True):
+	def explore_events(self, period_breaks='1 month', minor_period_breaks='1 week', theme_bw_=True):
 		"""
 		return scatter plots of course enrollments during period of time
 		"""
@@ -228,12 +228,12 @@ class CourseDropsTimeseriesPlot(object):
 										title=_('Number of course drops during period of time'),
 										period_breaks=period_breaks,
 										minor_breaks=minor_period_breaks,
-										theme_seaborn_=theme_seaborn_,
+										theme_bw_=theme_bw_,
 										plot_name='course_drops',
 										period=self.period)
 		return (plot_course_drops,)
 
-	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day', theme_seaborn_=True):
+	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day', theme_bw_=True):
 		"""
 		return plots of the course drops grouped by user agent (device_type)
 		"""
@@ -254,13 +254,13 @@ class CourseDropsTimeseriesPlot(object):
 										period_breaks=period_breaks,
 										group_by='device_type',
 										minor_breaks=minor_period_breaks,
-										theme_seaborn_=theme_seaborn_,
+										theme_bw_=theme_bw_,
 										plot_name='course_drops_per_device_types',
 										period=self.period)
 
 		return (plot_course_drops_by_device,)
 
-	def analyze_enrollment_types(self, period_breaks='1 week', minor_period_breaks='1 day', theme_seaborn_=True):
+	def analyze_enrollment_types(self, period_breaks='1 week', minor_period_breaks='1 day', theme_bw_=True):
 		"""
 		return plots of the course drops grouped by enrollment types
 		"""
@@ -283,7 +283,7 @@ class CourseDropsTimeseriesPlot(object):
 										period_breaks=period_breaks,
 										group_by='enrollment_type',
 										minor_breaks=minor_period_breaks,
-										theme_seaborn_=theme_seaborn_,
+										theme_bw_=theme_bw_,
 										plot_name='course_drops_per_enrollment_types',
 										period=self.period)
 
@@ -300,7 +300,7 @@ class CourseEnrollmentsEventsTimeseriesPlot(object):
 
 	def explore_course_enrollments_vs_drops(self, period_breaks='1 week',
 											minor_period_breaks='1 day',
-											theme_seaborn_=True):
+											theme_bw_=True):
 		ceet = self.ceet
 		df = ceet.explore_course_enrollments_vs_drops()
 		if len(df.index) <= 0:
@@ -316,7 +316,7 @@ class CourseEnrollmentsEventsTimeseriesPlot(object):
 										period_breaks=period_breaks,
 										group_by='event_type',
 										minor_breaks=minor_period_breaks,
-										theme_seaborn_=theme_seaborn_,
+										theme_bw_=theme_bw_,
 										plot_name='course_enrollments_vs_drops',
 										period=self.period)
 
@@ -324,7 +324,7 @@ class CourseEnrollmentsEventsTimeseriesPlot(object):
 
 	def explore_course_catalog_views_vs_enrollments(self, period_breaks='1 week',
 													minor_period_breaks='1 day',
-													theme_seaborn_=True):
+													theme_bw_=True):
 		ceet = self.ceet
 		df = ceet.explore_course_catalog_views_vs_enrollments()
 		if len(df.index) <= 0:
@@ -340,7 +340,7 @@ class CourseEnrollmentsEventsTimeseriesPlot(object):
 									period_breaks=period_breaks,
 									group_by='event_type',
 									minor_breaks=minor_period_breaks,
-									theme_seaborn_=theme_seaborn_,
+									theme_bw_=theme_bw_,
 									plot_name='course_enrollments_vs_catalog_views',
 									period=self.period)
 

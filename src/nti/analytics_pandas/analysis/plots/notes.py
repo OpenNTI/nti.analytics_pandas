@@ -33,7 +33,7 @@ class NotesEventsTimeseriesPlot(object):
 		self.period = net.period
 
 	def explore_all_events(self, period_breaks='1 week', minor_period_breaks='1 day',
-							theme_seaborn_=True):
+							theme_bw_=True):
 		net = self.net
 		df = net.combine_all_events()
 		if len(df.index) <= 0:
@@ -55,7 +55,7 @@ class NotesEventsTimeseriesPlot(object):
 											  event_y_axis_label,
 											  period_breaks,
 											  minor_period_breaks,
-											  theme_seaborn_,
+											  theme_bw_,
 											  event_type,
 											  period=self.period)
 		return plots
@@ -70,7 +70,7 @@ class NotesCreationTimeseriesPlot(object):
 		self.period = nct.period
 
 	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day',
-						theme_seaborn_=True):
+						theme_bw_=True):
 		nct = self.nct
 		df = nct.analyze_events()
 		if df is None:
@@ -89,13 +89,13 @@ class NotesCreationTimeseriesPlot(object):
 									ratio_title,
 									period_breaks,
 									minor_period_breaks,
-									theme_seaborn_,
+									theme_bw_,
 									event_type)
 		return (plots)
 
 	def analyze_events_per_course_sections(self, period_breaks='1 week',
 										   minor_period_breaks='1 day',
-										   theme_seaborn_=True):
+										   theme_bw_=True):
 		nct = self.nct
 		df = nct.analyze_events_per_course_sections()
 		if df is None:
@@ -119,7 +119,7 @@ class NotesCreationTimeseriesPlot(object):
 															ratio_title,
 															period_breaks,
 															minor_period_breaks,
-															theme_seaborn_,
+															theme_bw_,
 															event_type)
 			plots['all_section_plots'] = all_section_plots
 
@@ -142,7 +142,7 @@ class NotesCreationTimeseriesPlot(object):
 												ratio_title,
 												period_breaks,
 												minor_period_breaks,
-												theme_seaborn_,
+												theme_bw_,
 												event_type)
 			key = 'section_plots_%s' % course_id
 			section_plots_dict[key] = section_plots
@@ -150,7 +150,7 @@ class NotesCreationTimeseriesPlot(object):
 		return plots
 
 	def generate_plots(self, df, event_title, user_title, ratio_title,
-					   period_breaks, minor_period_breaks, theme_seaborn_,
+					   period_breaks, minor_period_breaks, theme_bw_,
 					   event_type=None):
 
 		event_y_axis_field = 'number_of_notes_created'
@@ -163,13 +163,13 @@ class NotesCreationTimeseriesPlot(object):
 									 event_y_axis_label,
 									 period_breaks,
 									 minor_period_breaks,
-									 theme_seaborn_,
+									 theme_bw_,
 									 event_type,
 									 period=self.period)
 		return plots
 
 	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day',
-							theme_seaborn_=True):
+							theme_bw_=True):
 
 		nct = self.nct
 		dataframe = nct.dataframe
@@ -187,12 +187,12 @@ class NotesCreationTimeseriesPlot(object):
 												   ratio_title,
 												   period_breaks,
 												   minor_period_breaks,
-												   theme_seaborn_,
+												   theme_bw_,
 												   event_type)
 		return device_plots
 
 	def analyze_enrollment_types(self, period_breaks='1 week', minor_period_breaks='1 day',
-							theme_seaborn_=True):
+							theme_bw_=True):
 
 		nct = self.nct
 		dataframe = nct.dataframe
@@ -211,13 +211,13 @@ class NotesCreationTimeseriesPlot(object):
 												ratio_title,
 												period_breaks,
 												minor_period_breaks,
-												theme_seaborn_,
+												theme_bw_,
 												event_type)
 		return enrollment_plots
 
 	def analyze_resource_types(self, period_breaks='1 week',
 							   minor_period_breaks='1 day',
-							   theme_seaborn_=True):
+							   theme_bw_=True):
 		nct = self.nct
 		df = nct.analyze_resource_types()
 
@@ -233,7 +233,7 @@ class NotesCreationTimeseriesPlot(object):
 													 ratio_title,
 													 period_breaks,
 													 minor_period_breaks,
-													 theme_seaborn_,
+													 theme_bw_,
 													 event_type)
 
 		return resource_plots
@@ -257,7 +257,7 @@ class NotesCreationTimeseriesPlot(object):
 
 	def analyze_sharing_types(self, period_breaks='1 week',
 							  minor_period_breaks='1 day',
-							  theme_seaborn_=True):
+							  theme_bw_=True):
 		nct = self.nct
 		dataframe = nct.dataframe
 		df = nct.analyze_sharing_types(dataframe)
@@ -274,13 +274,13 @@ class NotesCreationTimeseriesPlot(object):
 													ratio_title,
 													period_breaks,
 													minor_period_breaks,
-													theme_seaborn_,
+													theme_bw_,
 													event_type)
 
 		return sharing_plots
 
 	def generate_group_by_plot(self, df, group_by, event_title, user_title, ratio_title,
-							   period_breaks, minor_period_breaks, theme_seaborn_,
+							   period_breaks, minor_period_breaks, theme_bw_,
 							   event_type=None):
 		if df is None:
 			return ()
@@ -300,14 +300,14 @@ class NotesCreationTimeseriesPlot(object):
 											  event_y_axis_label,
 											  period_breaks,
 											  minor_period_breaks,
-											  theme_seaborn_,
+											  theme_bw_,
 											  event_type,
 											  period=self.period)
 		return plots
 
 	def analyze_notes_created_on_videos(self, period_breaks='1 week',
 										minor_period_breaks='1 day',
-										theme_seaborn_=True):
+										theme_bw_=True):
 
 		nct = self.nct
 		df = nct.analyze_notes_created_on_videos()
@@ -329,7 +329,7 @@ class NotesCreationTimeseriesPlot(object):
 													ratio_title,
 													period_breaks,
 													minor_period_breaks,
-													theme_seaborn_,
+													theme_bw_,
 													event_type)
 		plots['sharing'] = sharing_plots
 		# generate device types plots
@@ -345,7 +345,7 @@ class NotesCreationTimeseriesPlot(object):
 												   ratio_title,
 												   period_breaks,
 												   minor_period_breaks,
-												   theme_seaborn_,
+												   theme_bw_,
 												   event_type)
 		plots['user_agent'] = device_plots
 		return plots
@@ -360,7 +360,7 @@ class NotesViewTimeseriesPlot(object):
 		self.period = nvt.period
 
 	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day',
-						theme_seaborn_=True):
+						theme_bw_=True):
 		nvt = self.nvt
 		df = nvt.analyze_total_events()
 		if df is None:
@@ -381,13 +381,13 @@ class NotesViewTimeseriesPlot(object):
 							ratio_title,
 							period_breaks,
 							minor_period_breaks,
-							theme_seaborn_,
+							theme_bw_,
 							event_type)
 		return (plots)
 
 	def analyze_total_events_per_course_sections(self, period_breaks='1 week',
 												 minor_period_breaks='1 day',
-												 theme_seaborn_=True):
+												 theme_bw_=True):
 		nvt = self.nvt
 		df = nvt.analyze_total_events_per_course_sections()
 		if df is None:
@@ -411,7 +411,7 @@ class NotesViewTimeseriesPlot(object):
 															 ratio_title,
 															 period_breaks,
 															 minor_period_breaks,
-															 theme_seaborn_,
+															 theme_bw_,
 															 event_type)
 			plots['all_section_plots'] = all_section_plots
 
@@ -434,7 +434,7 @@ class NotesViewTimeseriesPlot(object):
 												ratio_title,
 												period_breaks,
 												minor_period_breaks,
-												theme_seaborn_,
+												theme_bw_,
 												event_type)
 			key = 'section_plots_%s' % course_id
 			section_plots_dict[key] = section_plots
@@ -443,7 +443,7 @@ class NotesViewTimeseriesPlot(object):
 
 	def generate_plots(self, df, event_title, user_title,
 					   ratio_title, period_breaks, minor_period_breaks,
-					   theme_seaborn_, event_type):
+					   theme_bw_, event_type):
 		event_y_axis_field = 'number_of_note_views'
 		event_y_axis_label = _('Number of note views')
 		plots = generate_three_plots(df,
@@ -454,14 +454,14 @@ class NotesViewTimeseriesPlot(object):
 									 event_y_axis_label,
 									 period_breaks,
 									 minor_period_breaks,
-									 theme_seaborn_,
+									 theme_bw_,
 									 event_type,
 									 period=self.period)
 		return plots
 
 	def generate_group_by_plots(self, df, group_by, event_title, user_title, ratio_title,
 							   period_breaks, minor_period_breaks,
-							   theme_seaborn_, event_type):
+							   theme_bw_, event_type):
 		event_y_axis_field = 'number_of_note_views'
 		event_y_axis_label = _('Number of note views')
 		plots = generate_three_group_by_plots(df,
@@ -473,14 +473,14 @@ class NotesViewTimeseriesPlot(object):
 											  event_y_axis_label,
 											  period_breaks,
 											  minor_period_breaks,
-											  theme_seaborn_,
+											  theme_bw_,
 											  event_type,
 											  period=self.period)
 		return plots
 
 	def analyze_total_events_based_on_sharing_type(self, period_breaks='1 week',
 												   minor_period_breaks='1 day',
-												   theme_seaborn_=True):
+												   theme_bw_=True):
 		nvt = self.nvt
 		df = nvt.analyze_total_events_based_on_sharing_type()
 		if df is None:
@@ -500,7 +500,7 @@ class NotesViewTimeseriesPlot(object):
 											ratio_title,
 											period_breaks,
 											minor_period_breaks,
-											theme_seaborn_,
+											theme_bw_,
 											event_type)
 
 		return plots
@@ -523,7 +523,7 @@ class NotesViewTimeseriesPlot(object):
 
 	def analyze_total_events_based_on_device_type(self, period_breaks='1 week',
 												  minor_period_breaks='1 day',
-												  theme_seaborn_=True):
+												  theme_bw_=True):
 		nvt = self.nvt
 		df = nvt.analyze_total_events_based_on_device_type()
 		if df is None:
@@ -543,14 +543,14 @@ class NotesViewTimeseriesPlot(object):
 											 ratio_title,
 											 period_breaks,
 											 minor_period_breaks,
-											 theme_seaborn_,
+											 theme_bw_,
 											 event_type)
 
 		return plots
 
 	def analyze_total_events_based_on_enrollment_type(self, period_breaks='1 week',
 												  minor_period_breaks='1 day',
-												  theme_seaborn_=True):
+												  theme_bw_=True):
 		nvt = self.nvt
 		df = nvt.analyze_total_events_based_on_enrollment_type()
 		if df is None:
@@ -570,14 +570,14 @@ class NotesViewTimeseriesPlot(object):
 											 ratio_title,
 											 period_breaks,
 											 minor_period_breaks,
-											 theme_seaborn_,
+											 theme_bw_,
 											 event_type)
 
 		return plots
 
 	def analyze_total_events_based_on_resource_type(self, period_breaks='1 week',
 													minor_period_breaks='1 day',
-													theme_seaborn_=True):
+													theme_bw_=True):
 		nvt = self.nvt
 		df = nvt.analyze_total_events_based_on_resource_type()
 		if df is None:
@@ -597,13 +597,13 @@ class NotesViewTimeseriesPlot(object):
 											 ratio_title,
 											 period_breaks,
 											 minor_period_breaks,
-											 theme_seaborn_,
+											 theme_bw_,
 											 event_type)
 		return (plots)
 
 	def analyze_unique_events_based_on_sharing_type(self, period_breaks='1 week',
 													minor_period_breaks='1 day',
-													theme_seaborn_=True):
+													theme_bw_=True):
 		nvt = self.nvt
 		df = nvt.analyze_unique_events_based_on_sharing_type()
 		if df is None:
@@ -622,7 +622,7 @@ class NotesViewTimeseriesPlot(object):
 										period_breaks=period_breaks,
 										group_by='sharing',
 										minor_breaks=minor_period_breaks,
-										theme_seaborn_=theme_seaborn_,
+										theme_bw_=theme_bw_,
 										plot_name='unique_note_views_per_sharing_types')
 		return (plot_unique_notes_viewed,)
 
@@ -654,7 +654,7 @@ class NoteLikesTimeseriesPlot(object):
 
 	def explore_events(self, period_breaks='1 week',
 					   minor_period_breaks='1 day',
-					   theme_seaborn_=True):
+					   theme_bw_=True):
 
 		nlt = self.nlt
 		df = nlt.analyze_events()
@@ -673,13 +673,13 @@ class NoteLikesTimeseriesPlot(object):
 									ratio_title,
 									period_breaks,
 									minor_period_breaks,
-									theme_seaborn_,
+									theme_bw_,
 									event_type)
 		return plots
 
 	def analyze_events_per_course_sections(self, period_breaks='1 week',
 										   minor_period_breaks='1 day',
-										   theme_seaborn_=True):
+										   theme_bw_=True):
 		nlt = self.nlt
 		df = nlt.analyze_events_per_course_sections()
 		if df is None:
@@ -702,7 +702,7 @@ class NoteLikesTimeseriesPlot(object):
 															 ratio_title,
 															 period_breaks,
 															 minor_period_breaks,
-															 theme_seaborn_,
+															 theme_bw_,
 															 event_type)
 			plots.append(all_section_plots)
 
@@ -725,13 +725,13 @@ class NoteLikesTimeseriesPlot(object):
 												ratio_title,
 												period_breaks,
 												minor_period_breaks,
-												theme_seaborn_)
+												theme_bw_)
 			plots.append(section_plots)
 		return plots
 
 	def analyze_events_per_device_types(self, period_breaks='1 week',
 										minor_period_breaks='1 day',
-										theme_seaborn_=True):
+										theme_bw_=True):
 
 		nlt = self.nlt
 		df = nlt.analyze_events_per_device_types()
@@ -753,13 +753,13 @@ class NoteLikesTimeseriesPlot(object):
 									ratio_title,
 									period_breaks,
 									minor_period_breaks,
-									theme_seaborn_,
+									theme_bw_,
 									event_type)
 		return plots
 
 	def analyze_events_per_enrollment_types(self, period_breaks='1 week',
 										minor_period_breaks='1 day',
-										theme_seaborn_=True):
+										theme_bw_=True):
 
 		nlt = self.nlt
 		df = nlt.analyze_events_per_enrollment_types()
@@ -781,13 +781,13 @@ class NoteLikesTimeseriesPlot(object):
 									ratio_title,
 									period_breaks,
 									minor_period_breaks,
-									theme_seaborn_,
+									theme_bw_,
 									event_type)
 		return plots
 
 	def analyze_events_per_resource_types(self, period_breaks='1 week',
 										  minor_period_breaks='1 day',
-										  theme_seaborn_=True):
+										  theme_bw_=True):
 
 		nlt = self.nlt
 		df = nlt.analyze_events_per_resource_types()
@@ -809,12 +809,12 @@ class NoteLikesTimeseriesPlot(object):
 									ratio_title,
 									period_breaks,
 									minor_period_breaks,
-									theme_seaborn_,
+									theme_bw_,
 									event_type)
 		return plots
 
 	def generate_plots(self, df, event_title, user_title, ratio_title, period_breaks,
-					   minor_period_breaks, theme_seaborn_, event_type=None):
+					   minor_period_breaks, theme_bw_, event_type=None):
 		event_y_axis_field = 'number_of_note_likes'
 		event_y_axis_label = _('Number of note likes')
 		plots = generate_three_plots(df,
@@ -825,13 +825,13 @@ class NoteLikesTimeseriesPlot(object):
 									 event_y_axis_label,
 									 period_breaks,
 									 minor_period_breaks,
-									 theme_seaborn_,
+									 theme_bw_,
 									 event_type,
 									 period=self.period)
 		return plots
 
 	def generate_group_by_plots(self, df, group_by, event_title, user_title, ratio_title,
-								period_breaks, minor_period_breaks, theme_seaborn_,
+								period_breaks, minor_period_breaks, theme_bw_,
 								event_type=None):
 		event_y_axis_field = 'number_of_note_likes'
 		event_y_axis_label = _('Number of note likes')
@@ -844,7 +844,7 @@ class NoteLikesTimeseriesPlot(object):
 											  event_y_axis_label,
 											  period_breaks,
 											  minor_period_breaks,
-											  theme_seaborn_,
+											  theme_bw_,
 											  event_type,
 											  period=self.period)
 		return plots
@@ -859,7 +859,7 @@ class NoteFavoritesTimeseriesPlot(object):
 		self.period = nft.period
 
 	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day',
-						theme_seaborn_=True):
+						theme_bw_=True):
 		nft = self.nft
 		df = nft.analyze_events()
 		if df is None:
@@ -877,13 +877,13 @@ class NoteFavoritesTimeseriesPlot(object):
 									ratio_title,
 									period_breaks,
 									minor_period_breaks,
-									theme_seaborn_,
+									theme_bw_,
 									event_type)
 		return plots
 
 	def analyze_events_per_course_sections(self, period_breaks='1 week',
 										   minor_period_breaks='1 day',
-										   theme_seaborn_=True):
+										   theme_bw_=True):
 		nft = self.nft
 		df = nft.analyze_events_per_course_sections()
 		if df is None:
@@ -906,7 +906,7 @@ class NoteFavoritesTimeseriesPlot(object):
 															 ratio_title,
 															 period_breaks,
 															 minor_period_breaks,
-															 theme_seaborn_,
+															 theme_bw_,
 															 event_type)
 			plots.append(all_section_plots)
 
@@ -928,7 +928,7 @@ class NoteFavoritesTimeseriesPlot(object):
 												ratio_title,
 												period_breaks,
 												minor_period_breaks,
-												theme_seaborn_,
+												theme_bw_,
 												event_type)
 			plots.append(section_plots)
 
@@ -936,7 +936,7 @@ class NoteFavoritesTimeseriesPlot(object):
 
 	def analyze_events_per_device_types(self, period_breaks='1 week',
 										minor_period_breaks='1 day',
-										theme_seaborn_=True):
+										theme_bw_=True):
 		nft = self.nft
 		df = nft.analyze_events_per_device_types()
 		if df is None:
@@ -957,13 +957,13 @@ class NoteFavoritesTimeseriesPlot(object):
 									ratio_title,
 									period_breaks,
 									minor_period_breaks,
-									theme_seaborn_,
+									theme_bw_,
 									event_type)
 		return plots
 
 	def analyze_events_per_enrollment_types(self, period_breaks='1 week',
 										minor_period_breaks='1 day',
-										theme_seaborn_=True):
+										theme_bw_=True):
 		nft = self.nft
 		df = nft.analyze_events_per_enrollment_types()
 		if df is None:
@@ -984,14 +984,14 @@ class NoteFavoritesTimeseriesPlot(object):
 									ratio_title,
 									period_breaks,
 									minor_period_breaks,
-									theme_seaborn_,
+									theme_bw_,
 									event_type)
 		return plots
 
 
 	def analyze_events_per_resource_types(self, period_breaks='1 week',
 										  minor_period_breaks='1 day',
-										  theme_seaborn_=True):
+										  theme_bw_=True):
 		nft = self.nft
 		df = nft.analyze_events_per_resource_types()
 		if df is None:
@@ -1012,12 +1012,12 @@ class NoteFavoritesTimeseriesPlot(object):
 									ratio_title,
 									period_breaks,
 									minor_period_breaks,
-									theme_seaborn_,
+									theme_bw_,
 									event_type)
 		return plots
 
 	def generate_plots(self, df, event_title, user_title, ratio_title,
-					   period_breaks, minor_period_breaks, theme_seaborn_,
+					   period_breaks, minor_period_breaks, theme_bw_,
 					   event_type=None):
 		event_y_axis_field = 'number_of_note_favorites'
 		event_y_axis_label = _('Number of note favorites')
@@ -1029,13 +1029,13 @@ class NoteFavoritesTimeseriesPlot(object):
 									 event_y_axis_label,
 									 period_breaks,
 									 minor_period_breaks,
-									 theme_seaborn_,
+									 theme_bw_,
 									 event_type,
 									 period=self.period)
 		return plots
 
 	def generate_group_by_plots(self, df, group_by, event_title, user_title, ratio_title,
-								period_breaks, minor_period_breaks, theme_seaborn_,
+								period_breaks, minor_period_breaks, theme_bw_,
 								event_type=None):
 		event_y_axis_field = 'number_of_note_favorites'
 		event_y_axis_label = _('Number of note favorites')
@@ -1048,7 +1048,7 @@ class NoteFavoritesTimeseriesPlot(object):
 											  event_y_axis_label,
 											  period_breaks,
 											  minor_period_breaks,
-											  theme_seaborn_,
+											  theme_bw_,
 											  event_type,
 											  period=self.period)
 		return plots

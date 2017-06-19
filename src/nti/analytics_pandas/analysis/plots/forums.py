@@ -34,7 +34,7 @@ class ForumsEventsTimeseriesPlot(object):
 
 	def explore_all_events(self, period_breaks='1 week',
 						   minor_period_breaks='1 day',
-						   theme_seaborn_=True):
+						   theme_bw_=True):
 
 		fet = self.fet
 		df = fet.combine_all_events_per_date()
@@ -57,7 +57,7 @@ class ForumsEventsTimeseriesPlot(object):
 											  event_y_axis_label,
 											  period_breaks,
 											  minor_period_breaks,
-											  theme_seaborn_,
+											  theme_bw_,
 											  event_type,
 											  period=self.period)
 		return plots
@@ -73,7 +73,7 @@ class ForumsCreatedTimeseriesPlot(object):
 
 	def explore_events(self, period_breaks='1 week',
 					   minor_period_breaks='1 day',
-					   theme_seaborn_=True):
+					   theme_bw_=True):
 		"""
 		return scatter plots of forums creation during period of time
 		it consists of:
@@ -102,14 +102,14 @@ class ForumsCreatedTimeseriesPlot(object):
 									 event_y_axis_label,
 									 period_breaks,
 									 minor_period_breaks,
-									 theme_seaborn_,
+									 theme_bw_,
 									 event_type,
 									 period=self.period)
 		return plots
 
 	def analyze_device_types(self, period_breaks='1 week',
 							 minor_period_breaks='1 day',
-							 theme_seaborn_=True):
+							 theme_bw_=True):
 		"""
 		return scatter plots of forums creation grouped by device type during period of time
 		it consists of:
@@ -144,7 +144,7 @@ class ForumsCreatedTimeseriesPlot(object):
 											  event_y_axis_label,
 											  period_breaks,
 											  minor_period_breaks,
-											  theme_seaborn_,
+											  theme_bw_,
 											  event_type,
 											  period=self.period)
 		return plots
@@ -160,7 +160,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 
 	def explore_events(self, period_breaks='1 week',
 					   minor_period_breaks='1 day',
-					   theme_seaborn_=True):
+					   theme_bw_=True):
 		"""
 		return scatter plots of forum comments creation during period of time
 		it consists of:
@@ -188,13 +188,13 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 									title_users,
 									title_ratio,
 									title_avg_length,
-									theme_seaborn_,
+									theme_bw_,
 									event_type)
 		return plots
 
 	def analyze_comments_per_section(self, period_breaks='1 week',
 									 minor_period_breaks='1 day',
-									 theme_seaborn_=True):
+									 theme_bw_=True):
 		"""
 		return scatter plots of forum comments creation grouped by course section during period of time
 		it consists of:
@@ -228,7 +228,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 															 title_users,
 															 title_ratio,
 															 title_avg_length,
-															 theme_seaborn_,
+															 theme_bw_,
 															 event_type)
 			plots['all_section_plots'] = all_section_plots
 
@@ -257,7 +257,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 												title_users,
 												title_ratio,
 												title_avg_length,
-												theme_seaborn_,
+												theme_bw_,
 												event_type)
 			key = 'section_%s' % (course_id)
 			section_plots_dict[key] = section_plots
@@ -273,7 +273,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 					   user_title,
 					   ratio_title,
 					   title_avg_length,
-					   theme_seaborn_,
+					   theme_bw_,
 					   event_type=None):
 		event_y_axis_field = 'number_of_comment_created'
 		event_y_axis_label = _('Number of forum comments created')
@@ -285,7 +285,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 									 event_y_axis_label,
 									 period_breaks,
 									 minor_period_breaks,
-									 theme_seaborn_,
+									 theme_bw_,
 									 event_type,
 									 period=self.period)
 
@@ -299,7 +299,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 				title=title_avg_length,
 				period_breaks=period_breaks,
 				minor_breaks=minor_period_breaks,
-				theme_seaborn_=theme_seaborn_,
+				theme_bw_=theme_bw_,
 				plot_name=avg_event_name,
 				period=self.period)
 
@@ -315,7 +315,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 								user_title,
 								ratio_title,
 								title_avg_length,
-								theme_seaborn_,
+								theme_bw_,
 								event_type=None):
 		event_y_axis_field = 'number_of_comment_created'
 		event_y_axis_label = _('Number of forum comments created')
@@ -328,7 +328,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 											  event_y_axis_label,
 											  period_breaks,
 											  minor_period_breaks,
-											  theme_seaborn_,
+											  theme_bw_,
 											  event_type,
 											  period=self.period)
 
@@ -346,7 +346,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 				period_breaks=period_breaks,
 				group_by=group_by,
 				minor_breaks=minor_period_breaks,
-				theme_seaborn_=theme_seaborn_,
+				theme_bw_=theme_bw_,
 				plot_name=avg_event_name,
 				period=self.period)
 
@@ -356,7 +356,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 	def analyze_device_types(self,
 							 period_breaks='1 week',
 							 minor_period_breaks='1 day',
-							 theme_seaborn_=True):
+							 theme_bw_=True):
 		"""
 		return scatter plots of forum comments creation grouped by device_type during
 		period of time it consists of:
@@ -387,14 +387,14 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 											 title_users,
 											 title_ratio,
 											 title_avg_length,
-											 theme_seaborn_,
+											 theme_bw_,
 											 event_type)
 		return plots
 
 	def analyze_enrollment_types(self,
 							 	 period_breaks='1 week',
 							 	 minor_period_breaks='1 day',
-							 	 theme_seaborn_=True):
+							 	 theme_bw_=True):
 		"""
 		return plots of forum comments creation grouped by enrollment_type during period of time
 		it consists of:
@@ -425,7 +425,7 @@ class ForumsCommentsCreatedTimeseriesPlot(object):
 											 title_users,
 											 title_ratio,
 											 title_avg_length,
-											 theme_seaborn_,
+											 theme_bw_,
 											 event_type)
 		return plots
 
@@ -456,7 +456,7 @@ class ForumCommentLikesTimeseriesPlot(object):
 		self.period = fclt.period
 
 	def analyze_events(self, period_breaks='1 week', minor_period_breaks='1 day',
-						theme_seaborn_=True):
+						theme_bw_=True):
 		"""
 		return plots of forum comment likes during period of time
 		it consists of:
@@ -482,14 +482,14 @@ class ForumCommentLikesTimeseriesPlot(object):
 									ratio_title,
 									period_breaks,
 									minor_period_breaks,
-									theme_seaborn_,
+									theme_bw_,
 									event_type)
 		return plots
 
 
 	def analyze_events_per_course_sections(self, period_breaks='1 week',
 											minor_period_breaks='1 day',
-											theme_seaborn_=True):
+											theme_bw_=True):
 		fclt = self.fclt
 		df = fclt.analyze_events_per_course_sections()
 		if df is None:
@@ -513,7 +513,7 @@ class ForumCommentLikesTimeseriesPlot(object):
 															 ratio_title,
 															 period_breaks,
 															 minor_period_breaks,
-															 theme_seaborn_,
+															 theme_bw_,
 															 event_type)
 			plots['all_section_plots'] = all_section_plots
 
@@ -531,7 +531,7 @@ class ForumCommentLikesTimeseriesPlot(object):
 												ratio_title,
 												period_breaks,
 												minor_period_breaks,
-												theme_seaborn_,
+												theme_bw_,
 												event_type)
 			key = 'section_%s' % (course_id)
 			section_plots_dict[key] = section_plots
@@ -540,7 +540,7 @@ class ForumCommentLikesTimeseriesPlot(object):
 
 	def analyze_device_types(self, period_breaks='1 week',
 							 minor_period_breaks='1 day',
-							 theme_seaborn_=True):
+							 theme_bw_=True):
 		"""
 		plot the number of comments liked on each available date during time period.
 		It also shows the number of unique users liking comments
@@ -565,13 +565,13 @@ class ForumCommentLikesTimeseriesPlot(object):
 											 ratio_title,
 											 period_breaks,
 											 minor_period_breaks,
-											 theme_seaborn_,
+											 theme_bw_,
 											 event_type)
 		return plots
 
 	def analyze_enrollment_types(self, period_breaks='1 week',
 								 minor_period_breaks='1 day',
-								 theme_seaborn_=True):
+								 theme_bw_=True):
 		"""
 		plot the number of comments liked per enrollment types on each available date during time period.
 		It also shows the number of unique users liking comments
@@ -596,7 +596,7 @@ class ForumCommentLikesTimeseriesPlot(object):
 											 ratio_title,
 											 period_breaks,
 											 minor_period_breaks,
-											 theme_seaborn_,
+											 theme_bw_,
 											 event_type)
 		return plots
 
@@ -607,7 +607,7 @@ class ForumCommentLikesTimeseriesPlot(object):
 					   ratio_title,
 					   period_breaks,
 					   minor_period_breaks,
-					   theme_seaborn_,
+					   theme_bw_,
 					   event_type=None):
 
 		event_y_axis_field = 'number_of_likes'
@@ -620,7 +620,7 @@ class ForumCommentLikesTimeseriesPlot(object):
 									 event_y_axis_label,
 									 period_breaks,
 									 minor_period_breaks,
-									 theme_seaborn_,
+									 theme_bw_,
 									 event_type,
 									 period=self.period)
 		return plots
@@ -633,7 +633,7 @@ class ForumCommentLikesTimeseriesPlot(object):
 								ratio_title,
 								period_breaks,
 								minor_period_breaks,
-								theme_seaborn_,
+								theme_bw_,
 								event_type=None):
 		event_y_axis_field = 'number_of_likes'
 		event_y_axis_label = _('Number of forum comment likes')
@@ -646,7 +646,7 @@ class ForumCommentLikesTimeseriesPlot(object):
 											  event_y_axis_label,
 											  period_breaks,
 											  minor_period_breaks,
-											  theme_seaborn_,
+											  theme_bw_,
 											  event_type,
 											  period=self.period)
 		return plots
@@ -661,7 +661,7 @@ class ForumCommentFavoritesTimeseriesPlot(object):
 		self.period = fcft.period
 
 	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day',
-						theme_seaborn_=True):
+						theme_bw_=True):
 		"""
 		return plots of forum comment favorites during period of time
 		it consists of:
@@ -686,14 +686,14 @@ class ForumCommentFavoritesTimeseriesPlot(object):
 									ratio_title,
 									period_breaks,
 									minor_period_breaks,
-									theme_seaborn_,
+									theme_bw_,
 									event_type)
 		return plots
 
 	def analyze_events_per_course_sections(self,
 										   period_breaks='1 week',
 										   minor_period_breaks='1 day',
-										   theme_seaborn_=True):
+										   theme_bw_=True):
 		fcft = self.fcft
 		df = fcft.analyze_events_per_course_sections()
 		if df is None:
@@ -717,7 +717,7 @@ class ForumCommentFavoritesTimeseriesPlot(object):
 															 ratio_title,
 															 period_breaks,
 															 minor_period_breaks,
-															 theme_seaborn_,
+															 theme_bw_,
 															 event_type)
 			plots['all_section_plots'] = all_section_plots
 
@@ -741,7 +741,7 @@ class ForumCommentFavoritesTimeseriesPlot(object):
 												ratio_title,
 												period_breaks,
 												minor_period_breaks,
-												theme_seaborn_)
+												theme_bw_)
 			key = 'section_%s' % (course_id)
 			section_plots_dict[key] = section_plots
 		plots['section_plots'] = section_plots_dict
@@ -749,7 +749,7 @@ class ForumCommentFavoritesTimeseriesPlot(object):
 
 	def analyze_device_types(self, period_breaks='1 week',
 							 minor_period_breaks='1 day',
-							 theme_seaborn_=True):
+							 theme_bw_=True):
 		"""
 		plot the number of comment favorites on each available date during time period.
 		It also shows the number of unique users adding favorites
@@ -774,13 +774,13 @@ class ForumCommentFavoritesTimeseriesPlot(object):
 											 ratio_title,
 											 period_breaks,
 											 minor_period_breaks,
-											 theme_seaborn_,
+											 theme_bw_,
 											 event_type)
 		return plots
 
 	def analyze_enrollment_types(self, period_breaks='1 week',
 								 minor_period_breaks='1 day',
-								 theme_seaborn_=True):
+								 theme_bw_=True):
 		"""
 		plot the number of comment favorites per enrollment types on each available date during time period.
 		It also shows the number of unique users adding favorites
@@ -805,7 +805,7 @@ class ForumCommentFavoritesTimeseriesPlot(object):
 											 ratio_title,
 											 period_breaks,
 											 minor_period_breaks,
-											 theme_seaborn_,
+											 theme_bw_,
 											 event_type)
 		return plots
 
@@ -816,7 +816,7 @@ class ForumCommentFavoritesTimeseriesPlot(object):
 					   ratio_title,
 					   period_breaks,
 					   minor_period_breaks,
-					   theme_seaborn_,
+					   theme_bw_,
 					   event_type=None):
 		event_y_axis_field = 'number_of_favorites'
 		event_y_axis_label = _('Number of forum comment favorites')
@@ -828,7 +828,7 @@ class ForumCommentFavoritesTimeseriesPlot(object):
 									 event_y_axis_label,
 									 period_breaks,
 									 minor_period_breaks,
-									 theme_seaborn_,
+									 theme_bw_,
 									 event_type,
 									 period=self.period)
 		return plots
@@ -841,7 +841,7 @@ class ForumCommentFavoritesTimeseriesPlot(object):
 								ratio_title,
 								period_breaks,
 								minor_period_breaks,
-								theme_seaborn_,
+								theme_bw_,
 								event_type=None):
 		event_y_axis_field = 'number_of_favorites'
 		event_y_axis_label = _('Number of forum comment favorites')
@@ -854,7 +854,7 @@ class ForumCommentFavoritesTimeseriesPlot(object):
 											  event_y_axis_label,
 											  period_breaks,
 											  minor_period_breaks,
-											  theme_seaborn_,
+											  theme_bw_,
 											  event_type,
 											  period=self.period)
 		return plots

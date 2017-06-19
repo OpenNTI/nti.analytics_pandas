@@ -30,7 +30,7 @@ from ggplot import date_breaks
 from ggplot import date_format
 from ggplot import element_text
 from ggplot import scale_x_date
-from ggplot import theme_seaborn
+from ggplot.themes import theme_bw
 from ggplot import geom_histogram
 from ggplot import scale_x_discrete
 
@@ -46,7 +46,7 @@ def line_plot_x_axis_date(df,
 						  title,
 						  period_breaks,
 						  minor_breaks=None,
-						  theme_seaborn_=True,
+						  theme_bw_=True,
 						  plot_name=None,
 						  period=None):
 
@@ -77,8 +77,8 @@ def line_plot_x_axis_date(df,
 	else:
 		line_plot = line_plot + scale_x_date(breaks=breaks,
 											 labels=date_format(DATE_FORMAT))
-	if theme_seaborn_:
-		line_plot = line_plot + theme_seaborn()
+	if theme_bw_:
+		line_plot = line_plot + theme_bw()
 
 	if plot_name is not None:
 		plot = Plot.process(plot_name, line_plot)
@@ -94,7 +94,7 @@ def scatter_plot_x_axis_date(df,
 						  	 title,
 						  	 period_breaks,
 						  	 minor_breaks=None,
-						  	 theme_seaborn_=True,
+						  	 theme_bw_=True,
 						  	 plot_name=None,
 						  	 period=None):
 
@@ -115,8 +115,8 @@ def scatter_plot_x_axis_date(df,
 											   minor_breaks=minor_breaks,
 											   labels=date_format(DATE_FORMAT))
 
-	if theme_seaborn_:
-		scatter_plot = scatter_plot + theme_seaborn()
+	if theme_bw_:
+		scatter_plot = scatter_plot + theme_bw()
 
 	if plot_name is not None:
 		plot = Plot.process(plot_name, scatter_plot)
@@ -133,7 +133,7 @@ def group_line_plot_x_axis_date(df,
 								period_breaks,
 								group_by,
 								minor_breaks=None,
-								theme_seaborn_=True,
+								theme_bw_=True,
 								plot_name=None,
 								period=None):
 	if period is not None:
@@ -157,8 +157,8 @@ def group_line_plot_x_axis_date(df,
 	else:
 		line_plot = line_plot + scale_x_date(breaks=period_breaks,
 											 labels=date_format(DATE_FORMAT))
-	if theme_seaborn_ :
-		line_plot = line_plot + theme_seaborn()
+	if theme_bw_ :
+		line_plot = line_plot + theme_bw()
 
 	if plot_name is not None:
 		plot = Plot.process(plot_name, line_plot)
@@ -175,7 +175,7 @@ def group_scatter_plot_x_axis_date(df,
 								   period_breaks,
 								   group_by,
 								   minor_breaks=None,
-								   theme_seaborn_=True,
+								   theme_bw_=True,
 								   plot_name=None,
 								   period=None):
 	if period is not None:
@@ -198,8 +198,8 @@ def group_scatter_plot_x_axis_date(df,
 	else:
 		scatter_plot = scatter_plot + scale_x_date(breaks=period_breaks,
 											 	   labels=date_format(DATE_FORMAT))
-	if theme_seaborn_:
-		scatter_plot = scatter_plot + theme_seaborn()
+	if theme_bw_:
+		scatter_plot = scatter_plot + theme_bw()
 
 	if plot_name is not None:
 		plot = Plot.process(plot_name, scatter_plot)
@@ -266,7 +266,7 @@ def histogram_plot_x_axis_discrete(df,
 								   y_axis_label,
 								   title,
 								   stat,
-								   theme_seaborn_=True,
+								   theme_bw_=True,
 								   plot_name=None):
 	hist_plot = ggplot(df, aes(x=x_axis_field, y=y_axis_field)) + \
 				geom_histogram(stat=stat) + \
@@ -291,7 +291,7 @@ def bar_plot_with_fill(df,
 					   title,
 					   stat,
 					   fill,
-					   theme_seaborn_=True,
+					   theme_bw_=True,
 					   plot_name=None):
 
 	bar_plot = ggplot(df, aes(x=x_axis_field, y=y_axis_field, fill=fill)) + \
@@ -329,7 +329,7 @@ def generate_plot_title(title, period):
 
 def generate_three_plots(df, event_title, user_title, ratio_title,
 						 event_y_axis_field, event_y_axis_label,
-						 period_breaks, minor_period_breaks, theme_seaborn_,
+						 period_breaks, minor_period_breaks, theme_bw_,
 						 event_type=None, period=None):
 
 	event_name, user_event_name, ratio_event_name = generate_plot_names(event_type)
@@ -346,7 +346,7 @@ def generate_three_plots(df, event_title, user_title, ratio_title,
 									title=event_title,
 									period_breaks=period_breaks,
 									minor_breaks=minor_period_breaks,
-									theme_seaborn_=theme_seaborn_,
+									theme_bw_=theme_bw_,
 									plot_name=event_name)
 
 	plot_unique_users = line_plot_x_axis_date(
@@ -358,7 +358,7 @@ def generate_three_plots(df, event_title, user_title, ratio_title,
 									title=user_title,
 									period_breaks=period_breaks,
 									minor_breaks=minor_period_breaks,
-									theme_seaborn_=theme_seaborn_,
+									theme_bw_=theme_bw_,
 									plot_name=user_event_name)
 
 	plot_ratio = line_plot_x_axis_date(
@@ -370,14 +370,14 @@ def generate_three_plots(df, event_title, user_title, ratio_title,
 									title=ratio_title,
 									period_breaks=period_breaks,
 									minor_breaks=minor_period_breaks,
-									theme_seaborn_=theme_seaborn_,
+									theme_bw_=theme_bw_,
 									plot_name=ratio_event_name)
 
 	return (plot_event, plot_unique_users, plot_ratio)
 
 def generate_three_group_by_plots(df, group_by, event_title, user_title, ratio_title,
 								  event_y_axis_field, event_y_axis_label,
-								  period_breaks, minor_period_breaks, theme_seaborn_,
+								  period_breaks, minor_period_breaks, theme_bw_,
 								  event_type=None, period=None):
 
 	if 'device_type' in df.columns and 'device_type' in group_by:
@@ -403,7 +403,7 @@ def generate_three_group_by_plots(df, group_by, event_title, user_title, ratio_t
 										period_breaks=period_breaks,
 										group_by=group_by,
 										minor_breaks=minor_period_breaks,
-										theme_seaborn_=theme_seaborn_,
+										theme_bw_=theme_bw_,
 										plot_name=event_name)
 
 	plot_unique_users = group_line_plot_x_axis_date(
@@ -416,7 +416,7 @@ def generate_three_group_by_plots(df, group_by, event_title, user_title, ratio_t
 										period_breaks=period_breaks,
 										group_by=group_by,
 										minor_breaks=minor_period_breaks,
-										theme_seaborn_=theme_seaborn_,
+										theme_bw_=theme_bw_,
 										plot_name=user_event_name)
 
 	plot_ratio = group_line_plot_x_axis_date(
@@ -429,7 +429,7 @@ def generate_three_group_by_plots(df, group_by, event_title, user_title, ratio_t
 										period_breaks=period_breaks,
 										group_by=group_by,
 										minor_breaks=minor_period_breaks,
-										theme_seaborn_=theme_seaborn_,
+										theme_bw_=theme_bw_,
 										plot_name=ratio_event_name)
 
 	return (plot_events, plot_unique_users, plot_ratio)

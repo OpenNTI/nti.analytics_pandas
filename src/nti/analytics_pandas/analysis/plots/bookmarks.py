@@ -33,7 +33,7 @@ class BookmarksTimeseriesPlot(object):
 		self.period = bct.period
 
 	def explore_events(self, period_breaks='1 day', minor_period_breaks=None,
-					   theme_seaborn_=True):
+					   theme_bw_=True):
 		"""
 		return scatter plots of bookmarks creation during period of time
 		it consists of:
@@ -63,14 +63,14 @@ class BookmarksTimeseriesPlot(object):
 									 event_y_axis_label,
 									 period_breaks,
 									 minor_period_breaks,
-									 theme_seaborn_,
+									 theme_bw_,
 									 event_type,
 									 period=self.period)
 		return plots
 
 	def analyze_events_per_course_sections(self, period_breaks='1 week',
 										   minor_period_breaks='1 day',
-										   theme_seaborn_=True):
+										   theme_bw_=True):
 		bct = self.bct
 		df = bct.analyze_events_per_course_sections()
 		if df is None:
@@ -99,7 +99,7 @@ class BookmarksTimeseriesPlot(object):
 												event_y_axis_label,
 												period_breaks,
 												minor_period_breaks,
-												theme_seaborn_,
+												theme_bw_,
 												event_type,
 												period=self.period)
 			plots['all_section_plots'] = all_section_plots
@@ -128,7 +128,7 @@ class BookmarksTimeseriesPlot(object):
 										event_y_axis_label,
 										period_breaks,
 										minor_period_breaks,
-										theme_seaborn_,
+										theme_bw_,
 										event_type,
 										period=self.period)
 			key = 'section_%s' % (course_id)
@@ -138,7 +138,7 @@ class BookmarksTimeseriesPlot(object):
 
 	def analyze_resource_types(self, period_breaks='1 week',
 							   minor_period_breaks='1 day',
-							   theme_seaborn_=True):
+							   theme_bw_=True):
 		"""
 		plot bookmark creation based on resource type
 		"""
@@ -166,7 +166,7 @@ class BookmarksTimeseriesPlot(object):
 											  event_y_axis_label,
 											  period_breaks,
 											  minor_period_breaks,
-											  theme_seaborn_,
+											  theme_bw_,
 											  event_type,
 											  period=self.period)
 		plots_dict['line_plots'] = plots
@@ -187,7 +187,7 @@ class BookmarksTimeseriesPlot(object):
 		return plots_dict
 
 	def analyze_device_types(self, period_breaks='1 week', minor_period_breaks='1 day',
-							 theme_seaborn_=True):
+							 theme_bw_=True):
 		"""
 		plot bookmark creation based on device type
 		"""
@@ -214,14 +214,14 @@ class BookmarksTimeseriesPlot(object):
 											  event_y_axis_label,
 											  period_breaks,
 											  minor_period_breaks,
-											  theme_seaborn_,
+											  theme_bw_,
 											  event_type,
 											  period=self.period)
 		return plots
 
 	def analyze_enrollment_types(self, period_breaks='1 week', 
 								 minor_period_breaks='1 day',
-								 theme_seaborn_=True):
+								 theme_bw_=True):
 		"""
 		plot bookmark creation based on enrollment types
 		"""
@@ -248,7 +248,7 @@ class BookmarksTimeseriesPlot(object):
 											  event_y_axis_label,
 											  period_breaks,
 											  minor_period_breaks,
-											  theme_seaborn_,
+											  theme_bw_,
 											  event_type,
 											  period=self.period)
 		return plots

@@ -29,7 +29,7 @@ class ContactsEventsTimeseriesPlot(object):
 	def combine_events(self,
 					   period_breaks=None,
 					   minor_period_breaks=None,
-					   theme_seaborn_=True):
+					   theme_bw_=True):
 		cet = self.cet
 		df = cet.combine_events()
 		group_by = 'event_type'
@@ -48,7 +48,7 @@ class ContactsEventsTimeseriesPlot(object):
 											  event_y_axis_label,
 											  period_breaks,
 											  minor_period_breaks,
-											  theme_seaborn_,
+											  theme_bw_,
 											  event_type,
 											  period=cet.period)
 		return plots
@@ -65,7 +65,7 @@ class ContactsAddedTimeseriesPlot(object):
 	def analyze_events(self,
 					   period_breaks=None,
 					   minor_period_breaks=None,
-					   theme_seaborn_=True):
+					   theme_bw_=True):
 		cat = self.cat
 		df = cat.analyze_events()
 		if df is None:
@@ -90,7 +90,7 @@ class ContactsAddedTimeseriesPlot(object):
 								 event_y_axis_label,
 								 period_breaks,
 								 minor_period_breaks,
-								 theme_seaborn_,
+								 theme_bw_,
 								 event_type,
 								 period=self.period)
 		return plots
@@ -98,7 +98,7 @@ class ContactsAddedTimeseriesPlot(object):
 	def analyze_application_types(self,
 								  period_breaks=None,
 								  minor_period_breaks=None,
-								  theme_seaborn_=True):
+								  theme_bw_=True):
 		cat = self.cat
 		df = cat.analyze_application_types()
 		if df is None:
@@ -123,7 +123,7 @@ class ContactsAddedTimeseriesPlot(object):
 											  event_y_axis_label,
 											  period_breaks,
 											  minor_period_breaks,
-											  theme_seaborn_,
+											  theme_bw_,
 											  event_type,
 											  period=self.period)
 		return plots
@@ -157,7 +157,7 @@ class ContactsRemovedTimeseriesPlot(object):
 	def analyze_events(self,
 					   period_breaks=None,
 					   minor_period_breaks=None,
-					   theme_seaborn_=True):
+					   theme_bw_=True):
 		crt = self.crt
 		df = crt.analyze_events()
 		if df is None:
@@ -182,7 +182,7 @@ class ContactsRemovedTimeseriesPlot(object):
 								 event_y_axis_label,
 								 period_breaks,
 								 minor_period_breaks,
-								 theme_seaborn_,
+								 theme_bw_,
 								 event_type,
 								 period=self.period)
 		return plots
@@ -190,7 +190,7 @@ class ContactsRemovedTimeseriesPlot(object):
 	def analyze_application_types(self,
 								  period_breaks=None,
 								  minor_period_breaks=None,
-								  theme_seaborn_=True):
+								  theme_bw_=True):
 		crt = self.crt
 		df = crt.analyze_application_types()
 		if df is None:
@@ -215,7 +215,7 @@ class ContactsRemovedTimeseriesPlot(object):
 											  event_y_axis_label,
 											  period_breaks,
 											  minor_period_breaks,
-											  theme_seaborn_,
+											  theme_bw_,
 											  event_type,
 											  period=self.period)
 		return plots
@@ -249,7 +249,7 @@ class FriendsListsMemberAddedTimeseriesPlot(object):
 	def analyze_number_of_friend_list_members_added(self,
 					   								period_breaks=None,
 					   								minor_period_breaks=None,
-					  	 							theme_seaborn_=True):
+					  	 							theme_bw_=True):
 		flmat = self.flmat
 		df = flmat.analyze_number_of_friend_list_members_added()
 		if df is None:
@@ -263,7 +263,7 @@ class FriendsListsMemberAddedTimeseriesPlot(object):
 															title='Average number of friend list members added during time period',
 															period_breaks=period_breaks,
 															minor_breaks=minor_period_breaks,
-															theme_seaborn_=theme_seaborn_,
+															theme_bw_=theme_bw_,
 															plot_name='average_number_of_friend_list_members_added')
 
 		plot_total_number_of_friend_list_members_added = line_plot_x_axis_date(
@@ -275,7 +275,7 @@ class FriendsListsMemberAddedTimeseriesPlot(object):
 															title='Total number of friend list members added during time period',
 															period_breaks=period_breaks,
 															minor_breaks=minor_period_breaks,
-															theme_seaborn_=theme_seaborn_,
+															theme_bw_=theme_bw_,
 															plot_name='total_number_of_friend_list_members_added')
 
 		plot_number_of_friend_lists = line_plot_x_axis_date(
@@ -287,7 +287,7 @@ class FriendsListsMemberAddedTimeseriesPlot(object):
 													  title='Number of friend lists during time period',
 													  period_breaks=period_breaks,
 													  minor_breaks=minor_period_breaks,
-													  theme_seaborn_=theme_seaborn_,
+													  theme_bw_=theme_bw_,
 													  plot_name='number_of_friend_lists')
 
 		return (plot_average_number_of_friend_list_members_added,

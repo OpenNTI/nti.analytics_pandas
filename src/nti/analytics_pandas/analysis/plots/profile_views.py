@@ -26,7 +26,7 @@ class EntityProfileViewEventsTimeseriesPlot(object):
 		self.period = epvet.period
 
 	def combine_events(self, period_breaks=None, minor_period_breaks=None,
-					   theme_seaborn_=True):
+					   theme_bw_=True):
 		epvet = self.epvet
 		df = epvet.combine_events()
 		if df.empty:
@@ -52,7 +52,7 @@ class EntityProfileViewEventsTimeseriesPlot(object):
 											  event_y_axis_label,
 											  period_breaks,
 											  minor_period_breaks,
-											  theme_seaborn_,
+											  theme_bw_,
 											  event_type,
 											  period=self.period)
 		return plots
@@ -67,7 +67,7 @@ class EntityProfileViewsTimeseriesPlot(object):
 		self.period = epvt.period
 
 	def explore_events(self, period_breaks=None, minor_period_breaks=None,
-					   theme_seaborn_=True):
+					   theme_bw_=True):
 		epvt = self.epvt
 		df = epvt.analyze_events()
 		if df is None:
@@ -92,7 +92,7 @@ class EntityProfileViewsTimeseriesPlot(object):
 									 event_y_axis_label,
 									 period_breaks,
 									 minor_period_breaks,
-									 theme_seaborn_,
+									 theme_bw_,
 									 event_type,
 									 period=self.period)
 		return plots
@@ -100,7 +100,7 @@ class EntityProfileViewsTimeseriesPlot(object):
 	def analyze_application_types(self,
 								  period_breaks=None,
 								  minor_period_breaks=None,
-					   			  theme_seaborn_=True):
+					   			  theme_bw_=True):
 		epvt = self.epvt
 		df = epvt.analyze_application_types()
 		if df is None:
@@ -127,7 +127,7 @@ class EntityProfileViewsTimeseriesPlot(object):
 											  event_y_axis_label,
 											  period_breaks,
 											  minor_period_breaks,
-											  theme_seaborn_,
+											  theme_bw_,
 											  event_type,
 											  period=self.period)
 		return plots
@@ -135,7 +135,7 @@ class EntityProfileViewsTimeseriesPlot(object):
 	def analyze_views_by_owner_or_by_others(self,
 											period_breaks=None,
 											minor_period_breaks=None,
-							   				theme_seaborn_=True):
+							   				theme_bw_=True):
 		epvt = self.epvt
 		df = epvt.analyze_views_by_owner_or_by_others()
 		if df is None:
@@ -162,7 +162,7 @@ class EntityProfileViewsTimeseriesPlot(object):
 											  event_y_axis_label,
 											  period_breaks,
 											  minor_period_breaks,
-											  theme_seaborn_,
+											  theme_bw_,
 											  event_type,
 											  period=self.period)
 		return plots
@@ -211,7 +211,7 @@ class EntityProfileActivityViewsTimeseriesPlot(object):
 		self.period = epavt.period
 
 	def explore_events(self, period_breaks=None, minor_period_breaks=None,
-					   theme_seaborn_=True):
+					   theme_bw_=True):
 		epavt = self.epavt
 		df = epavt.analyze_events()
 		if df is None:
@@ -236,7 +236,7 @@ class EntityProfileActivityViewsTimeseriesPlot(object):
 									 event_y_axis_label,
 									 period_breaks,
 									 minor_period_breaks,
-									 theme_seaborn_,
+									 theme_bw_,
 									 event_type,
 									 period=self.period)
 		return plots
@@ -244,7 +244,7 @@ class EntityProfileActivityViewsTimeseriesPlot(object):
 	def analyze_application_types(self,
 								  period_breaks=None,
 								  minor_period_breaks=None,
-					   			  theme_seaborn_=True):
+					   			  theme_bw_=True):
 		epavt = self.epavt
 		df = epavt.analyze_application_types()
 		if df is None:
@@ -271,7 +271,7 @@ class EntityProfileActivityViewsTimeseriesPlot(object):
 											  event_y_axis_label,
 											  period_breaks,
 											  minor_period_breaks,
-											  theme_seaborn_,
+											  theme_bw_,
 											  event_type,
 											  period=self.period)
 		return plots
@@ -279,7 +279,7 @@ class EntityProfileActivityViewsTimeseriesPlot(object):
 	def analyze_views_by_owner_or_by_others(self,
 									 		period_breaks=None,
 									  		minor_period_breaks=None,
-									   		theme_seaborn_=True):
+									   		theme_bw_=True):
 		epavt = self.epavt
 		df = epavt.analyze_views_by_owner_or_by_others()
 		if df is None:
@@ -306,7 +306,7 @@ class EntityProfileActivityViewsTimeseriesPlot(object):
 											  event_y_axis_label,
 											  period_breaks,
 											  minor_period_breaks,
-											  theme_seaborn_,
+											  theme_bw_,
 											  event_type,
 											  period=self.period)
 		return plots
@@ -355,7 +355,7 @@ class EntityProfileMembershipViewsTimeseriesPlot(object):
 		self.period = epmvt.period
 
 	def explore_events(self, period_breaks=None, minor_period_breaks=None,
-					   theme_seaborn_=True):
+					   theme_bw_=True):
 		epmvt = self.epmvt
 		df = epmvt.analyze_events()
 		if df is None:
@@ -380,7 +380,7 @@ class EntityProfileMembershipViewsTimeseriesPlot(object):
 									 event_y_axis_label,
 									 period_breaks,
 									 minor_period_breaks,
-									 theme_seaborn_,
+									 theme_bw_,
 									 event_type,
 									 period=self.period)
 		return plots
@@ -388,7 +388,7 @@ class EntityProfileMembershipViewsTimeseriesPlot(object):
 	def analyze_application_types(self,
 								  period_breaks=None,
 								  minor_period_breaks=None,
-					   			  theme_seaborn_=True):
+					   			  theme_bw_=True):
 		epmvt = self.epmvt
 		df = epmvt.analyze_application_types()
 		if df is None:
@@ -415,7 +415,7 @@ class EntityProfileMembershipViewsTimeseriesPlot(object):
 											  event_y_axis_label,
 											  period_breaks,
 											  minor_period_breaks,
-											  theme_seaborn_,
+											  theme_bw_,
 											  event_type,
 											  period=self.period)
 		return plots
@@ -423,7 +423,7 @@ class EntityProfileMembershipViewsTimeseriesPlot(object):
 	def analyze_views_by_owner_or_by_others(self,
 											period_breaks=None,
 											minor_period_breaks=None,
-							   				theme_seaborn_=True):
+							   				theme_bw_=True):
 		epmvt = self.epmvt
 		df = epmvt.analyze_views_by_owner_or_by_others()
 		if df is None:
@@ -450,7 +450,7 @@ class EntityProfileMembershipViewsTimeseriesPlot(object):
 											  event_y_axis_label,
 											  period_breaks,
 											  minor_period_breaks,
-											  theme_seaborn_,
+											  theme_bw_,
 											  event_type,
 											  period=self.period)
 		return plots

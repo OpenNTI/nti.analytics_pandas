@@ -31,7 +31,7 @@ class TopicsEventsTimeseriesPlot(object):
 		self.period = tet.period
 
 	def explore_all_events(self, period_breaks='1 week', minor_period_breaks='1 day',
-						   theme_seaborn_=True):
+						   theme_bw_=True):
 		tet = self.tet
 		df = tet.combine_all_events_per_date()
 		if len(df.index) <= 0:
@@ -53,7 +53,7 @@ class TopicsEventsTimeseriesPlot(object):
 											  event_y_axis_label,
 											  period_breaks,
 											  minor_period_breaks,
-											  theme_seaborn_,
+											  theme_bw_,
 											  event_type,
 											  period=self.period)
 		return plots
@@ -68,7 +68,7 @@ class TopicsCreationTimeseriesPlot(object):
 		self.period = tct.period
 
 	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day',
-					   theme_seaborn_=True):
+					   theme_bw_=True):
 		"""
 		return plots of topics created during period of time
 		it consists of:
@@ -93,13 +93,13 @@ class TopicsCreationTimeseriesPlot(object):
 									ratio_title,
 									period_breaks,
 									minor_period_breaks,
-									theme_seaborn_,
+									theme_bw_,
 									event_type)
 		return plots
 
 	def analyze_events_per_course_sections(self, period_breaks='1 week',
 										   minor_period_breaks='1 day',
-										   theme_seaborn_=True):
+										   theme_bw_=True):
 		tct = self.tct
 		df = tct.analyze_events_per_course_sections()
 		if df is None:
@@ -123,7 +123,7 @@ class TopicsCreationTimeseriesPlot(object):
 															 ratio_title,
 															 period_breaks,
 															 minor_period_breaks,
-															 theme_seaborn_,
+															 theme_bw_,
 															 event_type)
 			plots['all_section_plots'] = all_section_plots
 
@@ -141,7 +141,7 @@ class TopicsCreationTimeseriesPlot(object):
 												ratio_title,
 												period_breaks,
 												minor_period_breaks,
-												theme_seaborn_,
+												theme_bw_,
 												event_type)
 			key = 'section_%s' % (course_id)
 			section_plots_dict[key] = section_plots
@@ -150,7 +150,7 @@ class TopicsCreationTimeseriesPlot(object):
 
 	def analyze_events_per_device_types(self, period_breaks='1 week',
 										minor_period_breaks='1 day',
-										theme_seaborn_=True):
+										theme_bw_=True):
 		tct = self.tct
 		df = tct.analyze_events_per_device_types()
 		if df is None:
@@ -169,13 +169,13 @@ class TopicsCreationTimeseriesPlot(object):
 											 ratio_title,
 											 period_breaks,
 											 minor_period_breaks,
-											 theme_seaborn_,
+											 theme_bw_,
 											 event_type)
 		return plots
 
 	def analyze_events_per_enrollment_types(self, period_breaks='1 week',
 											minor_period_breaks='1 day',
-											theme_seaborn_=True):
+											theme_bw_=True):
 		tct = self.tct
 		df = tct.analyze_events_per_enrollment_types()
 		if df is None:
@@ -194,7 +194,7 @@ class TopicsCreationTimeseriesPlot(object):
 											 ratio_title,
 											 period_breaks,
 											 minor_period_breaks,
-											 theme_seaborn_,
+											 theme_bw_,
 											 event_type)
 		return plots
 
@@ -205,7 +205,7 @@ class TopicsCreationTimeseriesPlot(object):
 					   ratio_title,
 					   period_breaks,
 					   minor_period_breaks,
-					   theme_seaborn_,
+					   theme_bw_,
 					   event_type=None):
 		event_y_axis_field = 'number_of_topics_created'
 		event_y_axis_label = _('Number of topics created')
@@ -217,7 +217,7 @@ class TopicsCreationTimeseriesPlot(object):
 									 event_y_axis_label,
 									 period_breaks,
 									 minor_period_breaks,
-									 theme_seaborn_,
+									 theme_bw_,
 									 event_type,
 									 period=self.period)
 		return plots
@@ -230,7 +230,7 @@ class TopicsCreationTimeseriesPlot(object):
 								ratio_title,
 								period_breaks,
 								minor_period_breaks,
-								theme_seaborn_,
+								theme_bw_,
 								event_type=None):
 		event_y_axis_field = 'number_of_topics_created'
 		event_y_axis_label = _('Number of topics created')
@@ -243,7 +243,7 @@ class TopicsCreationTimeseriesPlot(object):
 											  event_y_axis_label,
 											  period_breaks,
 											  minor_period_breaks,
-											  theme_seaborn_,
+											  theme_bw_,
 											  event_type,
 											  period=self.period)
 		return plots
@@ -258,7 +258,7 @@ class TopicViewsTimeseriesPlot(object):
 		self.period = tvt.period
 
 	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day',
-					   theme_seaborn_=True):
+					   theme_bw_=True):
 		"""
 		return plots of topics viewed during period of time
 		it consists of:
@@ -283,13 +283,13 @@ class TopicViewsTimeseriesPlot(object):
 									ratio_title,
 									period_breaks,
 									minor_period_breaks,
-									theme_seaborn_,
+									theme_bw_,
 									event_type)
 		return plots
 
 	def analyze_events_per_course_sections(self, period_breaks='1 week',
 										   minor_period_breaks='1 day',
-										   theme_seaborn_=True):
+										   theme_bw_=True):
 
 		tvt = self.tvt
 		df = tvt.analyze_events_per_course_sections()
@@ -313,7 +313,7 @@ class TopicViewsTimeseriesPlot(object):
 															 ratio_title,
 															 period_breaks,
 															 minor_period_breaks,
-															 theme_seaborn_,
+															 theme_bw_,
 															 event_type)
 			plots['all_section_plots'] = all_section_plots
 
@@ -337,7 +337,7 @@ class TopicViewsTimeseriesPlot(object):
 												ratio_title,
 												period_breaks,
 												minor_period_breaks,
-												theme_seaborn_,
+												theme_bw_,
 												event_type)
 			key = 'section_%s' % (course_id)
 			section_plots_dict[key] = section_plots
@@ -345,7 +345,7 @@ class TopicViewsTimeseriesPlot(object):
 		return plots
 
 	def analyze_device_types(self, period_breaks='1 day', minor_period_breaks=None,
-							 theme_seaborn_=True):
+							 theme_bw_=True):
 		"""
 		return plots of topics viewed grouped by device type during period of time
 		it consists of:
@@ -372,12 +372,12 @@ class TopicViewsTimeseriesPlot(object):
 											 ratio_title,
 											 period_breaks,
 											 minor_period_breaks,
-											 theme_seaborn_,
+											 theme_bw_,
 											 event_type)
 		return plots
 
 	def analyze_enrollment_types(self, period_breaks='1 day', minor_period_breaks=None,
-							theme_seaborn_=True):
+							theme_bw_=True):
 		"""
 		return plots of topics viewed grouped by enrollment type during period of time
 		it consists of:
@@ -404,7 +404,7 @@ class TopicViewsTimeseriesPlot(object):
 											 ratio_title,
 											 period_breaks,
 											 minor_period_breaks,
-											 theme_seaborn_,
+											 theme_bw_,
 											 event_type)
 		return plots
 
@@ -415,7 +415,7 @@ class TopicViewsTimeseriesPlot(object):
 					   ratio_title,
 					   period_breaks,
 					   minor_period_breaks,
-					   theme_seaborn_,
+					   theme_bw_,
 					   event_type=None):
 		event_y_axis_field = 'number_of_topics_viewed'
 		event_y_axis_label = _('Number of topics viewed')
@@ -427,7 +427,7 @@ class TopicViewsTimeseriesPlot(object):
 									 event_y_axis_label,
 									 period_breaks,
 									 minor_period_breaks,
-									 theme_seaborn_,
+									 theme_bw_,
 									 event_type,
 									 period=self.period)
 		return plots
@@ -440,7 +440,7 @@ class TopicViewsTimeseriesPlot(object):
 								ratio_title,
 								period_breaks,
 								minor_period_breaks,
-								theme_seaborn_,
+								theme_bw_,
 								event_type=None):
 		event_y_axis_field = 'number_of_topics_viewed'
 		event_y_axis_label = _('Number of topics viewed')
@@ -453,7 +453,7 @@ class TopicViewsTimeseriesPlot(object):
 											  event_y_axis_label,
 											  period_breaks,
 											  minor_period_breaks,
-											  theme_seaborn_,
+											  theme_bw_,
 											  event_type,
 											  period=self.period)
 		return plots
@@ -487,7 +487,7 @@ class TopicLikesTimeseriesPlot(object):
 		self.period = tlt.period
 
 	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day',
-					   theme_seaborn_=True):
+					   theme_bw_=True):
 		"""
 		return plots of topic likes during period of time
 		it consists of:
@@ -512,14 +512,14 @@ class TopicLikesTimeseriesPlot(object):
 									ratio_title,
 									period_breaks,
 									minor_period_breaks,
-									theme_seaborn_,
+									theme_bw_,
 									event_type)
 		return plots
 
 	def analyze_events_per_course_sections(self,
 										   period_breaks='1 week',
 										   minor_period_breaks='1 day',
-										   theme_seaborn_=True):
+										   theme_bw_=True):
 		tlt = self.tlt
 		df = tlt.analyze_events_per_course_sections()
 		if df is None:
@@ -542,7 +542,7 @@ class TopicLikesTimeseriesPlot(object):
 															 ratio_title,
 															 period_breaks,
 															 minor_period_breaks,
-															 theme_seaborn_,
+															 theme_bw_,
 															 event_type)
 			plots.append(all_section_plots)
 
@@ -565,14 +565,14 @@ class TopicLikesTimeseriesPlot(object):
 												ratio_title,
 												period_breaks,
 												minor_period_breaks,
-												theme_seaborn_,
+												theme_bw_,
 												event_type)
 			plots.append(section_plots)
 		return plots
 
 	def analyze_events_per_device_types(self, period_breaks='1 day',
 										minor_period_breaks=None,
-										theme_seaborn_=True):
+										theme_bw_=True):
 		"""
 		return plots of topic likes grouped by device  types
 		it consists of:
@@ -599,13 +599,13 @@ class TopicLikesTimeseriesPlot(object):
 											 ratio_title,
 											 period_breaks,
 											 minor_period_breaks,
-											 theme_seaborn_,
+											 theme_bw_,
 											 event_type)
 		return plots
 
 	def analyze_events_per_enrollment_types(self, period_breaks='1 day',
 											minor_period_breaks=None,
-											theme_seaborn_=True):
+											theme_bw_=True):
 		"""
 		return plots of topic likes grouped by enrollment  types
 		it consists of:
@@ -632,7 +632,7 @@ class TopicLikesTimeseriesPlot(object):
 											 ratio_title,
 											 period_breaks,
 											 minor_period_breaks,
-											 theme_seaborn_,
+											 theme_bw_,
 											 event_type)
 		return plots
 
@@ -643,7 +643,7 @@ class TopicLikesTimeseriesPlot(object):
 					   ratio_title,
 					   period_breaks,
 					   minor_period_breaks,
-					   theme_seaborn_,
+					   theme_bw_,
 					   event_type=None):
 		event_y_axis_field = 'number_of_topic_likes'
 		event_y_axis_label = _('Number of topic likes')
@@ -655,7 +655,7 @@ class TopicLikesTimeseriesPlot(object):
 									 event_y_axis_label,
 									 period_breaks,
 									 minor_period_breaks,
-									 theme_seaborn_,
+									 theme_bw_,
 									 event_type,
 									 period=self.period)
 		return plots
@@ -668,7 +668,7 @@ class TopicLikesTimeseriesPlot(object):
 								ratio_title,
 								period_breaks,
 								minor_period_breaks,
-								theme_seaborn_,
+								theme_bw_,
 								event_type=None):
 		event_y_axis_field = 'number_of_topic_likes'
 		event_y_axis_label = _('Number of topic likes')
@@ -681,7 +681,7 @@ class TopicLikesTimeseriesPlot(object):
 											  event_y_axis_label,
 											  period_breaks,
 											  minor_period_breaks,
-											  theme_seaborn_,
+											  theme_bw_,
 											  event_type,
 											  period=self.period)
 		return plots
@@ -696,7 +696,7 @@ class TopicFavoritesTimeseriesPlot(object):
 		self.period = tft.period
 
 	def explore_events(self, period_breaks='1 week', minor_period_breaks='1 day',
-					   theme_seaborn_=True):
+					   theme_bw_=True):
 		"""
 		return plots of topic favorites during period of time
 		it consists of:
@@ -721,13 +721,13 @@ class TopicFavoritesTimeseriesPlot(object):
 									ratio_title,
 									period_breaks,
 									minor_period_breaks,
-									theme_seaborn_,
+									theme_bw_,
 									event_type)
 		return plots
 
 	def analyze_events_per_course_sections(self, period_breaks='1 week',
 										   minor_period_breaks='1 day',
-										   theme_seaborn_=True):
+										   theme_bw_=True):
 		tft = self.tft
 		df = tft.analyze_events_per_course_sections()
 		if df is None:
@@ -751,7 +751,7 @@ class TopicFavoritesTimeseriesPlot(object):
 															 ratio_title,
 															 period_breaks,
 															 minor_period_breaks,
-															 theme_seaborn_,
+															 theme_bw_,
 															 event_type)
 			plots.append(all_section_plots)
 
@@ -773,14 +773,14 @@ class TopicFavoritesTimeseriesPlot(object):
 												ratio_title,
 												period_breaks,
 												minor_period_breaks,
-												theme_seaborn_,
+												theme_bw_,
 												event_type)
 			plots.append(section_plots)
 		return plots
 
 	def analyze_events_per_device_types(self, period_breaks='1 day',
 										minor_period_breaks=None,
-										theme_seaborn_=True):
+										theme_bw_=True):
 		"""
 		return plots of topic favorites grouped by device  types
 		it consists of:
@@ -807,13 +807,13 @@ class TopicFavoritesTimeseriesPlot(object):
 											 ratio_title,
 											 period_breaks,
 											 minor_period_breaks,
-											 theme_seaborn_,
+											 theme_bw_,
 											 event_type)
 		return plots
 
 	def analyze_events_per_enrollment_types(self, period_breaks='1 day',
 											minor_period_breaks=None,
-											theme_seaborn_=True):
+											theme_bw_=True):
 		"""
 		return plots of topic favorites grouped by enrollment  types
 		it consists of:
@@ -840,7 +840,7 @@ class TopicFavoritesTimeseriesPlot(object):
 											 ratio_title,
 											 period_breaks,
 											 minor_period_breaks,
-											 theme_seaborn_,
+											 theme_bw_,
 											 event_type)
 		return plots
 
@@ -851,7 +851,7 @@ class TopicFavoritesTimeseriesPlot(object):
 					   ratio_title,
 					   period_breaks,
 					   minor_period_breaks,
-					   theme_seaborn_,
+					   theme_bw_,
 					   event_type=None):
 		event_y_axis_field = 'number_of_topic_favorites'
 		event_y_axis_label = _('Number of topic favorites')
@@ -863,7 +863,7 @@ class TopicFavoritesTimeseriesPlot(object):
 									 event_y_axis_label,
 									 period_breaks,
 									 minor_period_breaks,
-									 theme_seaborn_,
+									 theme_bw_,
 									 event_type,
 									 period=self.period)
 		return plots
@@ -876,7 +876,7 @@ class TopicFavoritesTimeseriesPlot(object):
 								ratio_title,
 								period_breaks,
 								minor_period_breaks,
-								theme_seaborn_,
+								theme_bw_,
 								event_type=None):
 		event_y_axis_field = 'number_of_topic_favorites'
 		event_y_axis_label = _('Number of topic favorites')
@@ -889,7 +889,7 @@ class TopicFavoritesTimeseriesPlot(object):
 											  event_y_axis_label,
 											  period_breaks,
 											  minor_period_breaks,
-											  theme_seaborn_,
+											  theme_bw_,
 											  event_type,
 											  period=self.period)
 		return plots

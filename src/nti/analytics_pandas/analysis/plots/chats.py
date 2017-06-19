@@ -36,7 +36,7 @@ class ChatsTimeseriesPlot(object):
 	def explore_chats_initiated(self, 
 								period_breaks='1 day',
 								minor_period_breaks=None,
-					  		 	theme_seaborn_=True):
+					  		 	theme_bw_=True):
 		cit = self.cit
 		if cit is None:
 			return ()
@@ -60,7 +60,7 @@ class ChatsTimeseriesPlot(object):
 									 event_y_axis_label,
 									 period_breaks,
 									 minor_period_breaks,
-									 theme_seaborn_,
+									 theme_bw_,
 									 event_type,
 									 period=self.period)
 		return plots
@@ -68,7 +68,7 @@ class ChatsTimeseriesPlot(object):
 	def analyze_application_types(self, 
 								  period_breaks='1 day',
 								  minor_period_breaks=None,
-					  		 	  theme_seaborn_=True):
+					  		 	  theme_bw_=True):
 		cit = self.cit
 		if cit is None:
 			return ()
@@ -94,7 +94,7 @@ class ChatsTimeseriesPlot(object):
 											  event_y_axis_label,
 											  period_breaks,
 											  minor_period_breaks,
-											  theme_seaborn_,
+											  theme_bw_,
 											  event_type,
 											  period=self.period)
 		return plots
@@ -102,7 +102,7 @@ class ChatsTimeseriesPlot(object):
 	def analyze_number_of_users_join_chats_per_date(self,
 													period_breaks='1 day',
 													minor_period_breaks=None,
-													theme_seaborn_=True):
+													theme_bw_=True):
 
 		cjt = self.cjt
 		if cjt is None:
@@ -122,7 +122,7 @@ class ChatsTimeseriesPlot(object):
 															title='Average number of users join chats',
 															period_breaks=period_breaks,
 															minor_breaks=minor_period_breaks,
-															theme_seaborn_=theme_seaborn_,
+															theme_bw_=theme_bw_,
 															plot_name='average_number_user_join_chats',
 															period=self.period)
 
@@ -135,7 +135,7 @@ class ChatsTimeseriesPlot(object):
 															title='Total number of users join chats',
 															period_breaks=period_breaks,
 															minor_breaks=minor_period_breaks,
-															theme_seaborn_=theme_seaborn_,
+															theme_bw_=theme_bw_,
 															plot_name='total_number_user_join_chats',
 															period=self.period)
 
@@ -148,7 +148,7 @@ class ChatsTimeseriesPlot(object):
 													  title='Number of chats created',
 													  period_breaks=period_breaks,
 													  minor_breaks=minor_period_breaks,
-													  theme_seaborn_=theme_seaborn_,
+													  theme_bw_=theme_bw_,
 													  plot_name='chats_created',
 													  period=self.period)
 
@@ -159,7 +159,7 @@ class ChatsTimeseriesPlot(object):
 	def analyze_chat_and_group_chat(self, 
 									period_breaks='1 day',
 									minor_period_breaks=None,
-									theme_seaborn_=True):
+									theme_bw_=True):
 		cjt = self.cjt
 		if cjt is None:
 			return ()
@@ -181,7 +181,7 @@ class ChatsTimeseriesPlot(object):
 										title='Number of 1-1 chats',
 										period_breaks=period_breaks,
 										minor_breaks=minor_period_breaks,
-										theme_seaborn_=theme_seaborn_,
+										theme_bw_=theme_bw_,
 										plot_name='one_one_chats',
 										period=self.period)
 			plots['one_one_chats'] = plot_one_one_chats
@@ -196,7 +196,7 @@ class ChatsTimeseriesPlot(object):
 										title='Number of group chats',
 										period_breaks=period_breaks,
 										minor_breaks=minor_period_breaks,
-										theme_seaborn_=theme_seaborn_,
+										theme_bw_=theme_bw_,
 										plot_name='group_chats',
 										period=self.period)
 			plots['group_chats'] = plot_group_chats
@@ -205,7 +205,7 @@ class ChatsTimeseriesPlot(object):
 	def analyze_one_one_and_group_chat(self, 
 									   period_breaks='1 day',
 									   minor_period_breaks=None,
-									   theme_seaborn_=True):
+									   theme_bw_=True):
 		cjt = self.cjt
 		if cjt is None:
 			return ()
@@ -223,7 +223,7 @@ class ChatsTimeseriesPlot(object):
 									period_breaks=period_breaks,
 									group_by='chat_type',
 									minor_breaks=minor_period_breaks,
-									theme_seaborn_=theme_seaborn_,
+									theme_bw_=theme_bw_,
 									plot_name='chats',
 									period=self.period)
 		return (plot,)

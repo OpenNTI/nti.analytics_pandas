@@ -41,7 +41,7 @@ class TestAssignmentViewsPlot(AnalyticsPandasTestBase):
 		courses_id = ['1024', '1025', '1026', '1027', '1028']
 		avt = AssignmentViewsTimeseries(self.session, start_date=start_date,
 										end_date=end_date, course_id=courses_id,
-										time_period='weekly')
+										period='weekly')
 		avtp = AssignmentViewsTimeseriesPlot(avt)
 		_ = avtp.analyze_events(period_breaks='1 week', minor_period_breaks=None)
 
@@ -135,7 +135,7 @@ class TestAssignmentsTakenPlot(AnalyticsPandasTestBase):
 		courses_id = ['1024', '1025', '1026', '1027', '1028']
 		att = AssignmentsTakenTimeseries(self.session, start_date=start_date,
 										 end_date=end_date, course_id=courses_id,
-										 time_period='weekly')
+										 period='weekly')
 		attp = AssignmentsTakenTimeseriesPlot(att)
 		_ = attp.analyze_events(period_breaks='1 week', minor_period_breaks=None)
 
@@ -257,7 +257,7 @@ class TestSelfAssessmentViewsPlot(AnalyticsPandasTestBase):
 		courses_id = ['1024', '1025', '1026', '1027', '1028']
 		savt = SelfAssessmentViewsTimeseries(self.session, start_date=start_date,
 											 end_date=end_date, course_id=courses_id,
-											 time_period='weekly')
+											 period='weekly')
 		savtp = SelfAssessmentViewsTimeseriesPlot(savt)
 		_ = savtp.analyze_events(period_breaks='1 week', minor_period_breaks=None)
 
@@ -349,7 +349,7 @@ class TestSelfAssessmentsTakenPlot(AnalyticsPandasTestBase):
 		courses_id = ['1024', '1025', '1026', '1027', '1028']
 		satt = SelfAssessmentsTakenTimeseries(self.session, start_date=start_date,
 											  end_date=end_date, course_id=courses_id,
-											  time_period='weekly')
+											  period='weekly')
 		sattp = SelfAssessmentsTakenTimeseriesPlot(satt)
 		_ = sattp.analyze_events(period_breaks='1 week', minor_period_breaks=None)
 
@@ -469,23 +469,23 @@ class TestAssessmentEventsPlot(AnalyticsPandasTestBase):
 										start_date=start_date,
 										end_date=end_date,
 										course_id=courses_id,
-										time_period='weekly')
+										period='weekly')
 
 		att = AssignmentsTakenTimeseries(self.session,
 										 start_date=start_date,
 										 end_date=end_date,
 										 course_id=courses_id,
-										 time_period='weekly')
+										 period='weekly')
 		savt = SelfAssessmentViewsTimeseries(self.session,
 											 start_date=start_date,
 											 end_date=end_date,
 											 course_id=courses_id,
-											 time_period='weekly')
+											 period='weekly')
 		satt = SelfAssessmentsTakenTimeseries(self.session,
 											  start_date=start_date,
 											  end_date=end_date,
 											  course_id=courses_id,
-											  time_period='weekly')
+											  period='weekly')
 		aet = AssessmentEventsTimeseries(avt=avt, att=att, savt=savt, satt=satt)
 		aetp = AssessmentEventsTimeseriesPlot(aet)
 		_ = aetp.combine_events(period_breaks='1 week', minor_period_breaks=None, theme_seaborn_=True)

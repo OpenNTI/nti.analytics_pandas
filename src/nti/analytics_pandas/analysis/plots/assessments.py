@@ -34,7 +34,7 @@ class AssessmentEventsTimeseriesPlot(object):
 
 	def combine_events(self, period_breaks='1 week',
 					   minor_period_breaks='1 day', 
-					   theme_seaborn_=True):
+					   theme_bw_=True):
 		aet = self.aet
 		df = aet.combine_events()
 		if len(df.index) <= 0:
@@ -56,7 +56,7 @@ class AssessmentEventsTimeseriesPlot(object):
 											  event_y_axis_label,
 											  period_breaks,
 											  minor_period_breaks,
-											  theme_seaborn_,
+											  theme_bw_,
 											  event_type,
 											  period=self.period)
 		return plots
@@ -64,7 +64,7 @@ class AssessmentEventsTimeseriesPlot(object):
 	def analyze_assessments_taken_over_total_enrollments(self,
 														 period_breaks='1 week',
 					   									 minor_period_breaks='1 day',
-					   									 theme_seaborn_=True):
+					   									 theme_bw_=True):
 		aet = self.aet
 		df = aet.analyze_assessments_taken_over_total_enrollments()
 		if df is None:
@@ -86,7 +86,7 @@ class AssessmentEventsTimeseriesPlot(object):
 								period_breaks=period_breaks,
 								group_by='assessment_type',
 								minor_breaks=minor_period_breaks,
-								theme_seaborn_=theme_seaborn_,
+								theme_bw_=theme_bw_,
 								plot_name='ratio_assessments_taken',
 								period=self.period)
 		return (plot,)
@@ -103,7 +103,7 @@ class AssignmentViewsTimeseriesPlot(object):
 	def analyze_events(self, 
 					   period_breaks='1 week',
 					   minor_period_breaks='1 day', 
-					   theme_seaborn_=True):
+					   theme_bw_=True):
 		avt = self.avt
 		df = avt.analyze_events()
 		if df is None :
@@ -125,7 +125,7 @@ class AssignmentViewsTimeseriesPlot(object):
 									 event_y_axis_label,
 									 period_breaks,
 									 minor_period_breaks,
-									 theme_seaborn_,
+									 theme_bw_,
 									 event_type,
 									 period=self.period)
 		return plots
@@ -133,7 +133,7 @@ class AssignmentViewsTimeseriesPlot(object):
 	def analyze_events_per_course_sections(self, 
 										   period_breaks='1 week',
 										   minor_period_breaks='1 day',
-										   theme_seaborn_=True):
+										   theme_bw_=True):
 		avt = self.avt
 		df = avt.analyze_events_per_course_sections()
 		if df is None:
@@ -161,7 +161,7 @@ class AssignmentViewsTimeseriesPlot(object):
 															  event_y_axis_label,
 															  period_breaks,
 															  minor_period_breaks,
-															  theme_seaborn_,
+															  theme_bw_,
 															  event_type,
 															  period=self.period)
 			plots['all_section_plots'] = all_section_plots
@@ -191,7 +191,7 @@ class AssignmentViewsTimeseriesPlot(object):
 												 event_y_axis_label,
 												 period_breaks,
 												 minor_period_breaks,
-												 theme_seaborn_,
+												 theme_bw_,
 												 event_type,
 												 period=self.period)
 			key = 'section_%s' % (course_id)
@@ -202,7 +202,7 @@ class AssignmentViewsTimeseriesPlot(object):
 	def analyze_events_group_by_device_type(self,
 											period_breaks='1 week',
 											minor_period_breaks='1 day',
-											theme_seaborn_=True):
+											theme_bw_=True):
 		avt = self.avt
 		df = avt.analyze_events_group_by_device_type()
 		if df is None :
@@ -226,7 +226,7 @@ class AssignmentViewsTimeseriesPlot(object):
 											  event_y_axis_label,
 											  period_breaks,
 											  minor_period_breaks,
-											  theme_seaborn_,
+											  theme_bw_,
 											  event_type,
 											  period=self.period)
 		return plots
@@ -234,7 +234,7 @@ class AssignmentViewsTimeseriesPlot(object):
 	def analyze_events_group_by_enrollment_type(self, 
 												period_breaks='1 week',
 												minor_period_breaks='1 day',
-												theme_seaborn_=True):
+												theme_bw_=True):
 		avt = self.avt
 		df = avt.analyze_events_group_by_enrollment_type()
 		if df is None :
@@ -258,7 +258,7 @@ class AssignmentViewsTimeseriesPlot(object):
 											  event_y_axis_label,
 											  period_breaks,
 											  minor_period_breaks,
-											  theme_seaborn_,
+											  theme_bw_,
 											  event_type,
 											  period=self.period)
 		return plots
@@ -273,7 +273,7 @@ class AssignmentsTakenTimeseriesPlot(object):
 		self.period = att.period
 
 	def analyze_events(self, period_breaks='1 week', minor_period_breaks='1 day',
-					   theme_seaborn_=True):
+					   theme_bw_=True):
 
 		att = self.att
 		df = att.analyze_events()
@@ -296,7 +296,7 @@ class AssignmentsTakenTimeseriesPlot(object):
 									 event_y_axis_label,
 									 period_breaks,
 									 minor_period_breaks,
-									 theme_seaborn_,
+									 theme_bw_,
 									 event_type,
 									 period=self.period)
 		return plots
@@ -304,7 +304,7 @@ class AssignmentsTakenTimeseriesPlot(object):
 	def analyze_events_per_course_sections(self, 
 										   period_breaks='1 week',
 										   minor_period_breaks='1 day',
-										   theme_seaborn_=True):
+										   theme_bw_=True):
 
 		att = self.att
 		df = att.analyze_events_per_course_sections()
@@ -333,7 +333,7 @@ class AssignmentsTakenTimeseriesPlot(object):
 															  event_y_axis_label,
 															  period_breaks,
 															  minor_period_breaks,
-															  theme_seaborn_,
+															  theme_bw_,
 															  event_type,
 															  period=self.period)
 			plots['all_section_plots'] = all_section_plots
@@ -362,7 +362,7 @@ class AssignmentsTakenTimeseriesPlot(object):
 												 event_y_axis_label,
 												 period_breaks,
 												 minor_period_breaks,
-												 theme_seaborn_,
+												 theme_bw_,
 												 event_type,
 												 period=self.period)
 			key = 'section_%s' % (course_id)
@@ -373,7 +373,7 @@ class AssignmentsTakenTimeseriesPlot(object):
 	def analyze_events_group_by_device_type(self, 
 											period_breaks='1 week',
 											minor_period_breaks='1 day',
-											theme_seaborn_=True):
+											theme_bw_=True):
 		att = self.att
 		df = att.analyze_events_group_by_device_type()
 		if df is None :
@@ -397,7 +397,7 @@ class AssignmentsTakenTimeseriesPlot(object):
 											  event_y_axis_label,
 											  period_breaks,
 											  minor_period_breaks,
-											  theme_seaborn_,
+											  theme_bw_,
 											  event_type,
 											  period=self.period)
 		return plots
@@ -405,7 +405,7 @@ class AssignmentsTakenTimeseriesPlot(object):
 	def analyze_events_group_by_enrollment_type(self, 
 												period_breaks='1 week',
 												minor_period_breaks='1 day',
-												theme_seaborn_=True):
+												theme_bw_=True):
 		att = self.att
 		df = att.analyze_events_group_by_enrollment_type()
 		if df is None :
@@ -429,7 +429,7 @@ class AssignmentsTakenTimeseriesPlot(object):
 											  event_y_axis_label,
 											  period_breaks,
 											  minor_period_breaks,
-											  theme_seaborn_,
+											  theme_bw_,
 											  event_type,
 											  period=self.period)
 		return plots
@@ -457,7 +457,7 @@ class AssignmentsTakenTimeseriesPlot(object):
 	def analyze_assignment_taken_over_total_enrollments_ts(self, 
 														   period_breaks='1 week',
 														   minor_period_breaks='1 day',
-														   theme_seaborn_=True):
+														   theme_bw_=True):
 		att = self.att
 		df = att.analyze_assignment_taken_over_total_enrollments_ts()
 		if df is None:
@@ -473,7 +473,7 @@ class AssignmentsTakenTimeseriesPlot(object):
 								title='Ratio of Assignments Taken over Total Enrollments',
 								period_breaks=period_breaks,
 								minor_breaks=minor_period_breaks,
-								theme_seaborn_=theme_seaborn_,
+								theme_bw_=theme_bw_,
 								plot_name='assignments_taken_over_total_enrollments',
 								period=self.period)
 		return (plot,)
@@ -489,7 +489,7 @@ class SelfAssessmentViewsTimeseriesPlot(object):
 
 	def analyze_events(self, period_breaks='1 week',
 					   minor_period_breaks='1 day',
-					   theme_seaborn_=True):
+					   theme_bw_=True):
 		savt = self.savt
 		df = savt.analyze_events()
 		if df is None :
@@ -511,7 +511,7 @@ class SelfAssessmentViewsTimeseriesPlot(object):
 									 event_y_axis_label,
 									 period_breaks,
 									 minor_period_breaks,
-									 theme_seaborn_,
+									 theme_bw_,
 									 event_type,
 									 period=self.period)
 		return plots
@@ -519,7 +519,7 @@ class SelfAssessmentViewsTimeseriesPlot(object):
 	def analyze_events_per_course_sections(self, 
 										   period_breaks='1 week',
 										   minor_period_breaks='1 day',
-										   theme_seaborn_=True):
+										   theme_bw_=True):
 		savt = self.savt
 		df = savt.analyze_events_per_course_sections()
 		if df is None:
@@ -547,7 +547,7 @@ class SelfAssessmentViewsTimeseriesPlot(object):
 															  event_y_axis_label,
 															  period_breaks,
 															  minor_period_breaks,
-															  theme_seaborn_,
+															  theme_bw_,
 															  event_type,
 															  period=self.period)
 			plots['all_section_plots'] = all_section_plots
@@ -575,7 +575,7 @@ class SelfAssessmentViewsTimeseriesPlot(object):
 												 event_y_axis_label,
 												 period_breaks,
 												 minor_period_breaks,
-												 theme_seaborn_,
+												 theme_bw_,
 												 event_type,
 												 period=self.period)
 			key = 'section_%s' % (course_id)
@@ -586,7 +586,7 @@ class SelfAssessmentViewsTimeseriesPlot(object):
 	def analyze_events_group_by_device_type(self, 
 											period_breaks='1 week',
 											minor_period_breaks='1 day',
-											theme_seaborn_=True):
+											theme_bw_=True):
 		savt = self.savt
 		df = savt.analyze_events_group_by_device_type()
 		if df is None :
@@ -610,7 +610,7 @@ class SelfAssessmentViewsTimeseriesPlot(object):
 											  event_y_axis_label,
 											  period_breaks,
 											  minor_period_breaks,
-											  theme_seaborn_,
+											  theme_bw_,
 											  event_type,
 											  period=self.period)
 		return plots
@@ -618,7 +618,7 @@ class SelfAssessmentViewsTimeseriesPlot(object):
 	def analyze_events_group_by_enrollment_type(self, 
 												period_breaks='1 week',
 												minor_period_breaks='1 day',
-												theme_seaborn_=True):
+												theme_bw_=True):
 		savt = self.savt
 		df = savt.analyze_events_group_by_enrollment_type()
 		if df is None :
@@ -642,7 +642,7 @@ class SelfAssessmentViewsTimeseriesPlot(object):
 											  event_y_axis_label,
 											  period_breaks,
 											  minor_period_breaks,
-											  theme_seaborn_,
+											  theme_bw_,
 											  event_type,
 											  period=self.period)
 		return plots
@@ -659,7 +659,7 @@ class SelfAssessmentsTakenTimeseriesPlot(object):
 	def analyze_events(self, 
 					   period_breaks='1 week',
 					   minor_period_breaks='1 day',
-					   theme_seaborn_=True):
+					   theme_bw_=True):
 		satt = self.satt
 		df = satt.analyze_events()
 		if df is None :
@@ -681,7 +681,7 @@ class SelfAssessmentsTakenTimeseriesPlot(object):
 									 event_y_axis_label,
 									 period_breaks,
 									 minor_period_breaks,
-									 theme_seaborn_,
+									 theme_bw_,
 									 event_type,
 									 period=self.period)
 		return plots
@@ -689,7 +689,7 @@ class SelfAssessmentsTakenTimeseriesPlot(object):
 	def analyze_events_per_course_sections(self, 
 										   period_breaks='1 week',
 										   minor_period_breaks='1 day',
-										   theme_seaborn_=True):
+										   theme_bw_=True):
 		satt = self.satt
 		df = satt.analyze_events_per_course_sections()
 		if df is None:
@@ -717,7 +717,7 @@ class SelfAssessmentsTakenTimeseriesPlot(object):
 															  event_y_axis_label,
 															  period_breaks,
 															  minor_period_breaks,
-															  theme_seaborn_,
+															  theme_bw_,
 															  event_type,
 															  period=self.period)
 			plots['all_section_plots'] = all_section_plots
@@ -746,7 +746,7 @@ class SelfAssessmentsTakenTimeseriesPlot(object):
 										event_y_axis_label,
 										period_breaks,
 										minor_period_breaks,
-										theme_seaborn_,
+										theme_bw_,
 										event_type,
 										period=self.period)
 			key = 'section_%s' % (course_id)
@@ -757,7 +757,7 @@ class SelfAssessmentsTakenTimeseriesPlot(object):
 	def analyze_events_group_by_device_type(self, 
 											period_breaks='1 week',
 											minor_period_breaks='1 day',
-											theme_seaborn_=True):
+											theme_bw_=True):
 		satt = self.satt
 		df = satt.analyze_events_group_by_device_type()
 		if df is None :
@@ -782,7 +782,7 @@ class SelfAssessmentsTakenTimeseriesPlot(object):
 										event_y_axis_label,
 										period_breaks,
 										minor_period_breaks,
-										theme_seaborn_,
+										theme_bw_,
 										event_type,
 										period=self.period)
 		return plots
@@ -790,7 +790,7 @@ class SelfAssessmentsTakenTimeseriesPlot(object):
 	def analyze_events_group_by_enrollment_type(self, 
 												period_breaks='1 week',
 												minor_period_breaks='1 day',
-												theme_seaborn_=True):
+												theme_bw_=True):
 		satt = self.satt
 		df = satt.analyze_events_group_by_enrollment_type()
 		if df is None :
@@ -814,7 +814,7 @@ class SelfAssessmentsTakenTimeseriesPlot(object):
 											  event_y_axis_label,
 											  period_breaks,
 											  minor_period_breaks,
-											  theme_seaborn_,
+											  theme_bw_,
 											  event_type,
 											  period=self.period)
 		return plots
@@ -822,7 +822,7 @@ class SelfAssessmentsTakenTimeseriesPlot(object):
 	def analyze_self_assessments_taken_over_total_enrollments_ts(self,
 																 period_breaks='1 week',
 														   		 minor_period_breaks='1 day',
-														   		 theme_seaborn_=True):
+														   		 theme_bw_=True):
 		satt = self.satt
 		df = satt.analyze_self_assessments_taken_over_total_enrollments_ts()
 		if df is None:
@@ -838,7 +838,7 @@ class SelfAssessmentsTakenTimeseriesPlot(object):
 								title='Ratio of Self Assessments Taken over Total Enrollments',
 								period_breaks=period_breaks,
 								minor_breaks=minor_period_breaks,
-								theme_seaborn_=theme_seaborn_,
+								theme_bw_=theme_bw_,
 								plot_name='self_assessments_taken_over_total_enrollments',
 								period=self.period)
 		return (plot,)
