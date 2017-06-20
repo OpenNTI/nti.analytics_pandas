@@ -28,7 +28,7 @@ class SharedConfiguringTestLayer(ZopeComponentLayer,
                                  GCLayerMixin,
                                  ConfiguringLayerMixin):
 
-    #set_up_packages = ('nti.analytics_pandas',)
+    set_up_packages = ('nti.analytics_pandas',)
 
     @classmethod
     def setUp(cls):
