@@ -9,4 +9,13 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
+from zope import component
+
 from .db_connection import DBConnection
+from .interfaces import IDBConnection
+
+def get_analytics_db(strict=True):
+    if strict:
+        return component.getUtility(IDBConnection)
+    else:
+        return component.queryUtility(IDBConnection)

@@ -11,11 +11,15 @@ logger = __import__('logging').getLogger(__name__)
 
 from pandas import DataFrame
 
+from zope import interface
+
 from sqlalchemy.pool import StaticPool
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy import create_engine as sqlalchemy_create_engine
 
 from nti.analytics_database import Base
+
+from nti.analytics_pandas.databases.interfaces import IDBConnection
 
 from ..utils.string_folder import StringFolder
 
@@ -45,6 +49,7 @@ def create_sessionmaker(engine, autoflush=True, twophase=True):
 def create_session(sessionmaker):
 	return scoped_session(sessionmaker)
 
+@interface.implementer(IDBConnection)
 class DBConnection(object):
 
 	def __init__(self):
