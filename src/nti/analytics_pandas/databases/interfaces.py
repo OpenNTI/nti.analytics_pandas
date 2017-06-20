@@ -15,3 +15,4 @@ class IDBConnection(interface.Interface):
     """
     Representation of a pandas analyitcs database
     """
+    
