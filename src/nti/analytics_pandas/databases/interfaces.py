@@ -11,9 +11,8 @@ logger = __import__('logging').getLogger(__name__)
 
 from zope import interface
 
+
 class IDBConnection(interface.Interface):
     """
     Representation of a pandas analyitcs database
     """
-
-    
