@@ -46,7 +46,7 @@ setup(
     tests_require=TESTS_REQUIRE,
     install_requires=[
         'setuptools',
-        # 'ggplot',
+        'ggplot',
         'matplotlib',
         'nti.analytics_database',
         'numpy',
