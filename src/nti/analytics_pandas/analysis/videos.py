@@ -27,7 +27,7 @@ class VideoEventsTimeseries(object):
     """
 
     def __init__(self, session, start_date, end_date, course_id=None,
-                 with_device_type=True, period='daily',
+                 with_device_type=True, period=u'daily',
                  with_context_name=True, with_enrollment_type=True):
         self.period = period
         self.session = session
