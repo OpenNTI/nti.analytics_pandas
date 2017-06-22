@@ -52,7 +52,7 @@ setup(
         'numpy',
         'pandas',
         'pymysql',
-        # 'scipy', required by ggplot, does not work very well with buildout
+        'six',
         'sqlalchemy',
         'user_agents',
         'zope.component',
