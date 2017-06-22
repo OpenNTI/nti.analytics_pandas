@@ -11,12 +11,6 @@ logger = __import__('logging').getLogger(__name__)
 
 import six
 
-try:
-    _intern = intern
-except NameError:
-    import sys
-    _intern = getattr(sys, 'intern')
-
 
 class StringFolder(object):
     """
@@ -25,6 +19,8 @@ class StringFolder(object):
     This object may be safely deleted or go out of scope when
     strings have been folded.
     """
+
+    __slots__ = ('unicode_map',)
 
     def __init__(self):
         self.unicode_map = {}
@@ -49,7 +45,7 @@ class StringFolder(object):
         # If s is Unicode and can't be encoded as a string, this try
         # will raise a UnicodeEncodeError.
         try:
-            return _intern(str(s))
+            return six.moves.intern(str(s))
         except UnicodeEncodeError:
             # Fall through and handle s as Unicode
             pass
