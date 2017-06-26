@@ -73,6 +73,7 @@ def add_application_type_(session, dataframe):
 			return
 		user_agents_id = user_agents_id[~np.isnan(user_agents_id)].tolist()
 		qua = QueryUserAgents(session)
+		
 		user_agent_df = qua.get_user_agents_by_id(user_agents_id)
 		user_agent_df = qua.add_application_type(user_agent_df)
 
