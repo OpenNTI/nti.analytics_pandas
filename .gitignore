@@ -9,4 +9,4 @@
 build/
 dist/
 /.tox/
-.DS_Store
+/.DS_Store
