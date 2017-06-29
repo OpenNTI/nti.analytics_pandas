@@ -123,16 +123,6 @@ class TestNotes(AnalyticsPandasTestBase):
 		dataframe = qnf.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
 		assert_that(len(dataframe.index), equal_to(1))
 
-# 	def test_query_note_favorites_add_device_type(self):
-# 		start_date = u'2015-01-01'
-# 		end_date = u'2015-05-31'
-# 		course_id = ['1024']
-# 		qnf = QueryNoteFavorites(self.session)
-# 		dataframe = qnf.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
-# 		assert_that(len(dataframe.index), equal_to(0))
-# 		new_df = qnf.add_device_type(dataframe)
-# 		assert_that(new_df, equal_to(None))
-
 	def test_query_note_favorites_add_resource_type(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'

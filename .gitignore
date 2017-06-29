@@ -3,8 +3,10 @@
 /.project
 /.pydevproject
 /.settings/
+*.DStore
 
 # Distribution / packaging
 build/
 dist/
 /.tox/
+.DS_Store
