@@ -32,12 +32,12 @@ class TestConnection(AnalyticsPandasTestBase):
 		super(TestConnection, self).setUp()
 
 	def test_query_get_session_by_id(self):
-		result = get_session_by_id(self.session, 1)
-		assert_that (result.user_id, equal_to(184))
+		result = get_session_by_id(self.session, 2)
+		assert_that (result.user_id, equal_to(1))
 
 	def test_query_count_session(self):
 		result = self.session.query(Sessions).count()
-		assert_that(result, greater_than(100000))
+		assert_that(result, greater_than(0))
 
 	def test_query_session(self):
 		query = self.session.query(Sessions).limit(10)

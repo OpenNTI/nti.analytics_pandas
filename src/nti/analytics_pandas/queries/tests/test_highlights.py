@@ -25,23 +25,23 @@ class TestHighlights(AnalyticsPandasTestBase):
 		end_date = u'2015-05-31'
 		qhc = QueryHighlightsCreated(self.session)
 		dataframe = qhc.filter_by_period_of_time(start_date, end_date)
-		assert_that(len(dataframe.index), equal_to(3411))
+		assert_that(len(dataframe.index), equal_to(1))
 
 	def test_query_highlights_created_by_period_of_time_and_course_id(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
-		course_id = ['388']
+		course_id = ['1024']
 		qhc = QueryHighlightsCreated(self.session)
 		dataframe = qhc.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
-		assert_that(len(dataframe.index), equal_to(779))
+		assert_that(len(dataframe.index), equal_to(1))
 
 	def test_query_highlights_created_add_device_type(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
-		course_id = ['388']
+		course_id = ['1024']
 		qhc = QueryHighlightsCreated(self.session)
 		dataframe = qhc.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
-		assert_that(len(dataframe.index), equal_to(779))
+		assert_that(len(dataframe.index), equal_to(1))
 		new_df = qhc.add_device_type(dataframe)
 		assert_that(len(dataframe.index), equal_to(len(new_df.index)))
 		assert_that(new_df.columns, has_item('device_type'))
@@ -49,10 +49,10 @@ class TestHighlights(AnalyticsPandasTestBase):
 	def test_query_highlights_created_add_resource_type(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
-		course_id = ['388']
+		course_id = ['1024']
 		qhc = QueryHighlightsCreated(self.session)
 		dataframe = qhc.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
-		assert_that(len(dataframe.index), equal_to(779))
+		assert_that(len(dataframe.index), equal_to(1))
 		new_df = qhc.add_resource_type(dataframe)
 		assert_that(len(dataframe.index), equal_to(len(new_df.index)))
 		assert_that(new_df.columns, has_item('resource_type'))

@@ -371,14 +371,13 @@ class AssignmentsTakenTimeseries(object):
 
 			qce = QueryCourseEnrollments(self.session)
 			total_enrollments = qce.count_enrollments(self.course_id)
-
 			df['ratio'] = df['assignments_taken'] / total_enrollments
 			return df
 
 	def analyze_question_types(self):
 		token = self.dataframe['assignment_taken_id']
 		assignment_taken_ids = get_values_of_series_categorical_index_(token).tolist()
-		qad = QueryAssignmentDetails(self.session)
+		qad =  QueryAssignmentDetails(self.session)
 		assignment_details_df = qad.get_submission_given_assignment_taken_id(assignment_taken_ids)
 		assignment_details_df['question_type'] = \
 				assignment_details_df['submission'].apply(lambda x: get_question_type(x))
@@ -645,6 +644,5 @@ class SelfAssessmentsTakenTimeseries(object):
 
 			qce = QueryCourseEnrollments(self.session)
 			total_enrollments = qce.count_enrollments(self.course_id)
-
 			df['ratio'] = df['self_assessment_taken'] / total_enrollments
 			return df

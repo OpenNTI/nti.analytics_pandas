@@ -1,0 +1,2 @@
+session_id,user_id,ip_addr,user_agent_id,start_time,end_time
+2,1,127.0.0.1,1,"2017-10-09 8:00:00","2017-10-09 10:00:00"

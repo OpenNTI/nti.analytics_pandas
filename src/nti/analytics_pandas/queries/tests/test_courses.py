@@ -19,42 +19,43 @@ class TestCourses(AnalyticsPandasTestBase):
 
 	def test_filter_by_context_name(self):
 		qc = QueryCourses(self.session)
-		context_name = u'%ANTH%'
+		context_name = u'name'
 		dataframe = qc.filter_by_context_name(context_name)
 		assert_that(len(dataframe.index), equal_to(6))
 
-		context_name = u'%ANTH%1613%'
+		context_name = u'another_name'
 		dataframe = qc.filter_by_context_name(context_name)
-		assert_that(len(dataframe.index), equal_to(3))
+		assert_that(len(dataframe.index), equal_to(1))
 
 	def test_filter_by_context_ids(self):
 		qc = QueryCourses(self.session)
-		context_ids = ['1068', '1096', '1097', '1098', '1099']
+		context_ids = ['1024']
 		dataframe = qc.filter_by_context_ids(context_ids)
-		assert_that(len(dataframe.index), equal_to(5))
+		assert_that(len(dataframe.index), equal_to(1))
 
 	def test_get_context_name(self):
 		qc = QueryCourses(self.session)
-		context_ids = ['1068', '1096', '1097', '1098', '1099']
+		context_ids = ['1024']
 		dataframe = qc.get_context_name(context_ids)
-		assert_that(len(dataframe.index), equal_to(5))
+		assert_that(len(dataframe.index), equal_to(1))
 
 	def test_get_course_id(self):
 		qc = QueryCourses(self.session)
-		context_name = '%EDMA%'
+		context_name = 'name'
 		dataframe = qc.get_course_id(context_name)
-		assert_that(len(dataframe.index), equal_to(5))
+		assert_that(len(dataframe.index), equal_to(6))
 		course_ids = dataframe['context_id'].tolist()
-		assert_that(course_ids, has_item(1068))
-		assert_that(course_ids, has_item(1096))
-		assert_that(course_ids, has_item(1097))
-		assert_that(course_ids, has_item(1098))
-		assert_that(course_ids, has_item(1099))
+		assert_that(course_ids, has_item(1024))
+		assert_that(course_ids, has_item(1025))
+		assert_that(course_ids, has_item(1026))
+		assert_that(course_ids, has_item(1027))
+		assert_that(course_ids, has_item(1028))
+		assert_that(course_ids, has_item(1029))
 
-		dataframe = qc.get_course_id(context_name, start_date='2015-10-04', end_date='2015-12-13')
-		assert_that(len(dataframe.index), equal_to(5))
-		assert_that(course_ids, has_item(1068))
-		assert_that(course_ids, has_item(1096))
-		assert_that(course_ids, has_item(1097))
-		assert_that(course_ids, has_item(1098))
-		assert_that(course_ids, has_item(1099))
+		dataframe = qc.get_course_id(context_name, start_date='2015-01-01', end_date='2015-05-31')
+		assert_that(course_ids, has_item(1024))
+		assert_that(course_ids, has_item(1025))
+		assert_that(course_ids, has_item(1026))
+		assert_that(course_ids, has_item(1027))
+		assert_that(course_ids, has_item(1028))
+		assert_that(course_ids, has_item(1029))

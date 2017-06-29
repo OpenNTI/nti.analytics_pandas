@@ -120,8 +120,8 @@ class QueryAssignmentsTaken(TableQueryMixin):
 
 	@classmethod
 	def _label_assignment_title(cls, assignment_id):
-		idx = assignment_id.rfind(':') + 1
-		title = assignment_id[idx:]
+		idx = str(assignment_id).rfind(':') + 1
+		title = str(assignment_id)[idx:]
 		return title
 
 	def add_context_name(self, dataframe, course_id):
