@@ -28,23 +28,23 @@ class TestNotes(AnalyticsPandasTestBase):
 		end_date = u'2015-05-31'
 		qnc = QueryNotesCreated(self.session)
 		dataframe = qnc.filter_by_period_of_time(start_date, end_date)
-		assert_that(len(dataframe.index), equal_to(688))
+		assert_that(len(dataframe.index), equal_to(1))
 
 	def test_query_notes_created_by_period_of_time_and_course_id(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
-		course_id = ['388']
+		course_id = ['1024']
 		qnc = QueryNotesCreated(self.session)
 		dataframe = qnc.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
-		assert_that(len(dataframe.index), equal_to(34))
+		assert_that(len(dataframe.index), equal_to(1))
 
 	def test_query_notes_created_add_device_type(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
-		course_id = ['388']
+		course_id = ['1024']
 		qnc = QueryNotesCreated(self.session)
 		dataframe = qnc.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
-		assert_that(len(dataframe.index), equal_to(34))
+		assert_that(len(dataframe.index), equal_to(1))
 		new_df = qnc.add_device_type(dataframe)
 		assert_that(len(dataframe.index), equal_to(len(new_df.index)))
 		assert_that(new_df.columns, has_item('device_type'))
@@ -52,10 +52,10 @@ class TestNotes(AnalyticsPandasTestBase):
 	def test_query_notes_created_add_resource_type(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
-		course_id = ['388']
+		course_id = ['1024']
 		qnc = QueryNotesCreated(self.session)
 		dataframe = qnc.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
-		assert_that(len(dataframe.index), equal_to(34))
+		assert_that(len(dataframe.index), equal_to(1))
 		new_df = qnc.add_resource_type(dataframe)
 		assert_that(len(dataframe.index), equal_to(len(new_df.index)))
 		assert_that(new_df.columns, has_item('resource_type'))
@@ -65,23 +65,23 @@ class TestNotes(AnalyticsPandasTestBase):
 		end_date = u'2015-05-31'
 		qnv = QueryNotesViewed(self.session)
 		dataframe = qnv.filter_by_period_of_time(start_date, end_date)
-		assert_that(len(dataframe.index), equal_to(7471))
+		assert_that(len(dataframe.index), equal_to(1))
 
 	def test_query_notes_viewed_by_period_of_time_and_course_id(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
-		course_id = ['388']
+		course_id = ['1024']
 		qnv = QueryNotesViewed(self.session)
 		dataframe = qnv.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
-		assert_that(len(dataframe.index), equal_to(157))
+		assert_that(len(dataframe.index), equal_to(1))
 
 	def test_query_notes_viewed_add_device_type(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
-		course_id = ['388']
+		course_id = ['1024']
 		qnv = QueryNotesViewed(self.session)
 		dataframe = qnv.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
-		assert_that(len(dataframe.index), equal_to(157))
+		assert_that(len(dataframe.index), equal_to(1))
 		new_df = qnv.add_device_type(dataframe)
 		assert_that(len(dataframe.index), equal_to(len(new_df.index)))
 		assert_that(new_df.columns, has_item('device_type'))
@@ -89,10 +89,10 @@ class TestNotes(AnalyticsPandasTestBase):
 	def test_query_notes_viewed_add_resource_type(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
-		course_id = ['388']
+		course_id = ['1024']
 		qnv = QueryNotesViewed(self.session)
 		dataframe = qnv.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
-		assert_that(len(dataframe.index), equal_to(157))
+		assert_that(len(dataframe.index), equal_to(1))
 		new_df = qnv.add_resource_type(dataframe)
 		assert_that(len(dataframe.index), equal_to(len(new_df.index)))
 		assert_that(new_df.columns, has_item('resource_type'))
@@ -100,10 +100,10 @@ class TestNotes(AnalyticsPandasTestBase):
 	def test_query_notes_viewed_add_sharing_type(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
-		course_id = ['388']
+		course_id = ['1024']
 		qnv = QueryNotesViewed(self.session)
 		dataframe = qnv.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
-		assert_that(len(dataframe.index), equal_to(157))
+		assert_that(len(dataframe.index), equal_to(1))
 		new_df = qnv.add_sharing_type(dataframe)
 		assert_that(len(dataframe.index), equal_to(len(new_df.index)))
 		assert_that(new_df.columns, has_item('sharing'))
@@ -113,25 +113,25 @@ class TestNotes(AnalyticsPandasTestBase):
 		end_date = u'2015-05-31'
 		qnf = QueryNoteFavorites(self.session)
 		dataframe = qnf.filter_by_period_of_time(start_date, end_date)
-		assert_that(len(dataframe.index), equal_to(5))
+		assert_that(len(dataframe.index), equal_to(1))
 
 	def test_query_note_favorites_by_period_of_time_and_course_id(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
-		course_id = ['388']
+		course_id = ['1024']
 		qnf = QueryNoteFavorites(self.session)
 		dataframe = qnf.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
-		assert_that(len(dataframe.index), equal_to(0))
+		assert_that(len(dataframe.index), equal_to(1))
 
-	def test_query_note_favorites_add_device_type(self):
-		start_date = u'2015-01-01'
-		end_date = u'2015-05-31'
-		course_id = ['388']
-		qnf = QueryNoteFavorites(self.session)
-		dataframe = qnf.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
-		assert_that(len(dataframe.index), equal_to(0))
-		new_df = qnf.add_device_type(dataframe)
-		assert_that(new_df, equal_to(None))
+# 	def test_query_note_favorites_add_device_type(self):
+# 		start_date = u'2015-01-01'
+# 		end_date = u'2015-05-31'
+# 		course_id = ['1024']
+# 		qnf = QueryNoteFavorites(self.session)
+# 		dataframe = qnf.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
+# 		assert_that(len(dataframe.index), equal_to(0))
+# 		new_df = qnf.add_device_type(dataframe)
+# 		assert_that(new_df, equal_to(None))
 
 	def test_query_note_favorites_add_resource_type(self):
 		start_date = u'2015-01-01'
@@ -148,32 +148,12 @@ class TestNotes(AnalyticsPandasTestBase):
 		end_date = u'2015-05-31'
 		qnl = QueryNoteLikes(self.session)
 		dataframe = qnl.filter_by_period_of_time(start_date, end_date)
-		assert_that(len(dataframe.index), equal_to(18))
+		assert_that(len(dataframe.index), equal_to(1))
 
 	def test_query_note_likes_by_period_of_time_and_course_id(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
-		course_id = ['388']
+		course_id = ['1024']
 		qnl = QueryNoteLikes(self.session)
 		dataframe = qnl.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
-		assert_that(len(dataframe.index), equal_to(0))
-
-	def test_query_note_likes_add_device_type(self):
-		start_date = u'2015-01-01'
-		end_date = u'2015-05-31'
-		course_id = ['388']
-		qnl = QueryNoteLikes(self.session)
-		dataframe = qnl.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
-		assert_that(len(dataframe.index), equal_to(0))
-		new_df = qnl.add_device_type(dataframe)
-		assert_that(new_df, equal_to(None))
-
-	def test_query_note_likes_add_resource_type(self):
-		start_date = u'2015-01-01'
-		end_date = u'2015-05-31'
-		course_id = ['388']
-		qnl = QueryNoteLikes(self.session)
-		dataframe = qnl.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
-		assert_that(len(dataframe.index), equal_to(0))
-		new_df = qnl.add_resource_type(dataframe)
-		assert_that(new_df, equal_to(None))
+		assert_that(len(dataframe.index), equal_to(1))

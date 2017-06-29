@@ -26,7 +26,7 @@ class TestTopicsEDA(AnalyticsPandasTestBase):
 	def test_topics_creation_based_on_timestamp_date(self):
 		start_date = '2015-10-05'
 		end_date = '2015-10-20'
-		course_id = ['1068', '1096', '1097', '1098', '1099']
+		course_id = ['1024']
 		tct = TopicsCreationTimeseries(self.session, start_date, end_date, course_id)
 		assert_that(tct.dataframe.columns, has_item('device_type'))
 		assert_that(tct.dataframe.columns, has_item('context_name'))
@@ -51,9 +51,9 @@ class TestTopicsEDA(AnalyticsPandasTestBase):
 	def test_topic_views_based_on_timestamp_date(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
-		course_id = ['388']
+		course_id = ['1024']
 		tvt = TopicViewsTimeseries(self.session, start_date, end_date, course_id)
-		assert_that(len(tvt.dataframe.index), equal_to(1610))
+		assert_that(len(tvt.dataframe.index), equal_to(1))
 		assert_that(tvt.dataframe.columns, has_item('device_type'))
 		assert_that(tvt.dataframe.columns, has_item('context_name'))
 		assert_that(tvt.dataframe.columns, has_item('enrollment_type'))
@@ -68,7 +68,7 @@ class TestTopicsEDA(AnalyticsPandasTestBase):
 	def test_topic_likes_based_on_timestamp_date(self):
 		start_date = '2015-10-05'
 		end_date = '2015-10-20'
-		course_id = ['1068', '1096', '1097', '1098', '1099']
+		course_id = ['1024']
 		tlt = TopicLikesTimeseries(self.session, start_date, end_date, course_id)
 		assert_that(tlt.dataframe.columns, has_item('device_type'))
 		assert_that(tlt.dataframe.columns, has_item('enrollment_type'))
@@ -89,7 +89,7 @@ class TestTopicsEDA(AnalyticsPandasTestBase):
 	def test_topic_favorites_based_on_timestamp_date(self):
 		start_date = '2015-10-05'
 		end_date = '2015-10-20'
-		course_id = ['1068', '1096', '1097', '1098', '1099']
+		course_id = ['1024']
 		tft = TopicFavoritesTimeseries(self.session, start_date, end_date, course_id)
 		assert_that(tft.dataframe.columns, has_item('device_type'))
 		assert_that(tft.dataframe.columns, has_item('enrollment_type'))
@@ -110,11 +110,11 @@ class TestTopicsEDA(AnalyticsPandasTestBase):
 	def test_topics_events(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
-		course_id = ['388']
+		course_id = ['1024']
 		tct = TopicsCreationTimeseries(self.session, start_date, end_date, course_id)
 		tvt = TopicViewsTimeseries(self.session, start_date, end_date, course_id)
 		tlt = TopicLikesTimeseries(self.session, start_date, end_date, course_id)
 		tft = TopicFavoritesTimeseries(self.session, start_date, end_date, course_id)
 		tet = TopicsEventsTimeseries(tct, tvt, tlt, tft)
 		df = tet.combine_all_events_per_date()
-		assert_that(len(df.index), equal_to(115))
+		assert_that(len(df.index), equal_to(4))

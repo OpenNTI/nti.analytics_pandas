@@ -35,9 +35,7 @@ def save_plot_(plot, image_filename, image_type='png'):
 	ega: please keep this function for further reference
 	"""
 	buf = StringIO()
-	plt.figure.Figure = plot.draw()
-	plt.savefig(buf, format=image_type)
-	plt.close()
+	plot.save(image_filename)
 	image_filename = u'%s.%s' % (image_filename, image_type)
 	image = Image.process(image_filename, buf)
 	return image

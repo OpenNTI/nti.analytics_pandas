@@ -1,0 +1,2 @@
+timestamp,context_path,entity_root_context_id,course_id,time_length,video_event_type,video_start_time,video_end_time,with_transcript,video_view_id,play_speed,resource_id,user_id,session_id
+"2015-04-30 10:00:00",context,1,1024,500,WATCH,3,5,1,1,suprfast,1,1,2

@@ -28,23 +28,23 @@ class TestEnrollments(AnalyticsPandasTestBase):
 		end_date = u'2015-05-31'
 		qccv = QueryCourseCatalogViews(self.session)
 		dataframe = qccv.filter_by_period_of_time(start_date, end_date)
-		assert_that(len(dataframe.index), equal_to(4886))
+		assert_that(len(dataframe.index), equal_to(1))
 
 	def test_query_course_catalog_views_by_period_of_time_and_course_id(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
-		course_id = ['388']
+		course_id = ['1024']
 		qccv = QueryCourseCatalogViews(self.session)
 		dataframe = qccv.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
-		assert_that(len(dataframe.index), equal_to(409))
+		assert_that(len(dataframe.index), equal_to(1))
 
 	def test_query_course_catalog_views_add_device_type(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
-		course_id = ['388']
+		course_id = ['1024']
 		qccv = QueryCourseCatalogViews(self.session)
 		dataframe = qccv.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
-		assert_that(len(dataframe.index), equal_to(409))
+		assert_that(len(dataframe.index), equal_to(1))
 		new_df = qccv.add_device_type(dataframe)
 		assert_that(len(dataframe.index), equal_to(len(new_df.index)))
 		assert_that(new_df.columns, has_item('device_type'))
@@ -54,23 +54,23 @@ class TestEnrollments(AnalyticsPandasTestBase):
 		end_date = u'2015-05-31'
 		qce = QueryCourseEnrollments(self.session)
 		dataframe = qce.filter_by_period_of_time(start_date, end_date)
-		assert_that(len(dataframe.index), equal_to(2696))
+		assert_that(len(dataframe.index), equal_to(2))
 
 	def test_query_course_enrollments_by_period_of_time_and_course_id(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
-		course_id = ['388']
+		course_id = ['1024']
 		qce = QueryCourseEnrollments(self.session)
 		dataframe = qce.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
-		assert_that(len(dataframe.index), equal_to(570))
+		assert_that(len(dataframe.index), equal_to(2))
 
 	def test_query_course_enrollments_add_device_type(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
-		course_id = ['388']
+		course_id = ['1024']
 		qce = QueryCourseEnrollments(self.session)
 		dataframe = qce.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
-		assert_that(len(dataframe.index), equal_to(570))
+		assert_that(len(dataframe.index), equal_to(2))
 		new_df = qce.add_device_type(dataframe)
 		assert_that(len(dataframe.index), equal_to(len(new_df.index)))
 		assert_that(new_df.columns, has_item('device_type'))
@@ -80,23 +80,23 @@ class TestEnrollments(AnalyticsPandasTestBase):
 		end_date = u'2015-05-31'
 		qcd = QueryCourseDrops(self.session)
 		dataframe = qcd.filter_by_period_of_time(start_date, end_date)
-		assert_that(len(dataframe.index), equal_to(180))
+		assert_that(len(dataframe.index), equal_to(1))
 
 	def test_query_course_drops_by_period_of_time_and_course_id(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
-		course_id = ['388']
+		course_id = ['1024']
 		qcd = QueryCourseDrops(self.session)
 		dataframe = qcd.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
-		assert_that(len(dataframe.index), equal_to(23))
+		assert_that(len(dataframe.index), equal_to(1))
 
 	def test_query_course_drops_add_device_type(self):
 		start_date = u'2015-01-01'
 		end_date = u'2015-05-31'
-		course_id = ['388']
+		course_id = ['1024']
 		qcd = QueryCourseDrops(self.session)
 		dataframe = qcd.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
-		assert_that(len(dataframe.index), equal_to(23))
+		assert_that(len(dataframe.index), equal_to(1))
 		new_df = qcd.add_device_type(dataframe)
 		assert_that(len(dataframe.index), equal_to(len(new_df.index)))
 		assert_that(new_df.columns, has_item('device_type'))
@@ -104,10 +104,10 @@ class TestEnrollments(AnalyticsPandasTestBase):
 	def test_query_enrollment_types(self):
 		qet = QueryEnrollmentTypes(self.session)
 		dataframe = qet.get_enrollment_types()
-		assert_that(len(dataframe.index), equal_to(5))
+		assert_that(len(dataframe.index), equal_to(1))
 
 	def test_count_enrollments(self):
-		course_id = ['388']
+		course_id = ['1024']
 		qce = QueryCourseEnrollments(self.session)
 		enrollments_number = qce.count_enrollments(course_id)
-		assert_that(enrollments_number, equal_to(723))
+		assert_that(enrollments_number, equal_to(2))

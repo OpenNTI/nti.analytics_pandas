@@ -28,7 +28,7 @@ class TestAssessments(AnalyticsPandasTestBase):
 		course_id = ['1024', '1025', '1026', '1027', '1028']
 		qav = QueryAssignmentViews(self.session)
 		dataframe = qav.filter_by_course_id_and_period_of_time(start_date, end_date, course_id)
-		assert_that(len(dataframe.index), equal_to(43))
+		assert_that(len(dataframe.index), equal_to(1))
 
 	def test_query_assignment_taken_by_time_period_course_id(self):
 		start_date = u'2015-01-01'
@@ -36,7 +36,7 @@ class TestAssessments(AnalyticsPandasTestBase):
 		course_id = ['1024', '1025', '1026', '1027', '1028']
 		qat = QueryAssignmentsTaken(self.session)
 		dataframe = qat.filter_by_course_id_and_period_of_time(start_date, end_date, course_id)
-		assert_that(len(dataframe.index), equal_to(4433))
+		assert_that(len(dataframe.index), equal_to(2))
 
 	def test_query_self_assessment_views_by_time_period_course_id(self):
 		start_date = u'2015-01-01'
@@ -44,7 +44,7 @@ class TestAssessments(AnalyticsPandasTestBase):
 		course_id = ['1024', '1025', '1026', '1027', '1028']
 		qsav = QuerySelfAssessmentViews(self.session)
 		dataframe = qsav.filter_by_course_id_and_period_of_time(start_date, end_date, course_id)
-		assert_that(len(dataframe.index), equal_to(17))
+		assert_that(len(dataframe.index), equal_to(1))
 
 	def test_query_self_assessments_taken_by_time_period_course_id(self):
 		start_date = u'2015-01-01'
@@ -52,4 +52,4 @@ class TestAssessments(AnalyticsPandasTestBase):
 		course_id = ['1024', '1025', '1026', '1027', '1028']
 		qsat = QuerySelfAssessmentsTaken(self.session)
 		dataframe = qsat.filter_by_course_id_and_period_of_time(start_date, end_date, course_id)
-		assert_that(len(dataframe.index), equal_to(5612))
+		assert_that(len(dataframe.index), equal_to(1))

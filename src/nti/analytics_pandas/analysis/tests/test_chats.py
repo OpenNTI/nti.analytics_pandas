@@ -32,20 +32,6 @@ class TestChatsInitiatedTimeseries(AnalyticsPandasTestBase):
 		assert_that(df.columns, has_item('number_of_unique_users'))
 		assert_that(df.columns, has_item('ratio'))
 
-	def test_analyze_application_types(self):
-		start_date = '2015-10-05'
-		end_date = '2015-10-19'
-		cit = ChatsInitiatedTimeseries(self.session, start_date, end_date)
-		df = cit.analyze_application_types()
-		"""
-		#why None?
-		#because the session_id in table chatsinitiated are NULL for the given time period
-		#compare with the following query:
-			select distinct session_id from chatsinitiated
-			where date(timestamp) between '2015-10-05' and '2015-10-19'
-		"""
-		assert_that(df, equal_to(None))
-
 	def test_chats_initiated_weekly(self):
 		start_date = '2015-10-05'
 		end_date = '2015-10-19'

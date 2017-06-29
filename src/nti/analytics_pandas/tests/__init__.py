@@ -109,7 +109,7 @@ class AnalyticsPandasTestBase(unittest.TestCase):
     def _read_sample_data(self, engine):
         # run from nti.analytics_pandas directory
         import re
-        path = os.path.join(os.getcwd(), "src/nti/analytics_pandas/tests")
+        path = os.path.join(os.getcwd(), "src/nti/analytics_pandas/tests/testdb")
         for file in glob.glob(os.path.join(path,"*.csv")):
             try:
                 tablename = re.split("\W+", file)[-2]

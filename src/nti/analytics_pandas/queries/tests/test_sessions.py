@@ -32,19 +32,19 @@ class TestSessions(AnalyticsPandasTestBase):
 
 	def test_user_agents(self):
 		qua = QueryUserAgents(self.session)
-		user_agents_id = [2944, 742, 1894, 245, 732]
+		user_agents_id = [1]
 		dataframe = qua.get_user_agents_by_id(user_agents_id)
-		assert_that(len(dataframe.index), 5)
+		assert_that(len(dataframe.index), equal_to(1))
 		assert_that(dataframe.columns, has_item('user_agent_id'))
 		assert_that(dataframe.columns, has_item('user_agent'))
 
 	def test_user_agents_device(self):
 		qua = QueryUserAgents(self.session)
-		user_agents_id = [2944, 742, 1894, 245, 732, 2932]
+		user_agents_id = [1]
 		
 		dataframe = qua.get_user_agents_by_id(user_agents_id)
 		new_df = qua.add_device_type(dataframe)
 		assert_that(len(dataframe.index), equal_to(len(new_df.index)))
 
-		index = dataframe[dataframe['user_agent_id'] == np.int(2932)].index.tolist()
-		assert_that(dataframe['device_type'].iloc[index[0]], equal_to(u'iPad'))
+		index = dataframe[dataframe['user_agent_id'] == np.int(1)].index.tolist()
+		assert_that(dataframe['device_type'].iloc[index[0]], equal_to(u'Web App'))

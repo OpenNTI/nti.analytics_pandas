@@ -78,7 +78,6 @@ class QueryResources(TableQueryMixin):
 			elif 'problem' in resource_ds_id:
 				return _(u'problems')
 			else:
-				print(resource_ds_id)
 				return _(u'relatedworkref')
 
 		# assignment
@@ -145,8 +144,7 @@ class QueryResources(TableQueryMixin):
 
 		if 'problem' in resource_ds_id:
 			return _(u'problems')
-
-		print(resource_ds_id)
+		
 		return _(u'unknown')
 
 	def add_resource_type(self, dataframe):

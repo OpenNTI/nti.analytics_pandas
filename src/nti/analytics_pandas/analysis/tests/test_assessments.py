@@ -43,7 +43,7 @@ class TestAssignmentViewsTimeseries(AnalyticsPandasTestBase):
 		assert_that(avt.dataframe.columns, has_item('context_name'))
 		assert_that(avt.dataframe.columns, has_item('enrollment_type'))
 		df = avt.analyze_events()
-		assert_that(len(df.index), equal_to(6))
+		assert_that(len(df.index), equal_to(1))
 		assert_that(df.columns, has_item('number_assignments_viewed'))
 		assert_that(df.columns, has_item('number_of_unique_users'))
 		assert_that(df.columns, has_item('ratio'))
@@ -140,7 +140,7 @@ class TestAssignmentsTakenTimeseries(AnalyticsPandasTestBase):
 										 end_date=end_date,
 										 course_id=courses_id)
 		df = att.analyze_events()
-		assert_that(len(df.index), equal_to(129))
+		assert_that(len(df.index), equal_to(1))
 		assert_that(df.columns, has_item('number_assignments_taken'))
 		assert_that(df.columns, has_item('number_of_unique_users'))
 		assert_that(df.columns, has_item('ratio'))
@@ -242,7 +242,7 @@ class TestSelfAssessmentViewsTimeseries(AnalyticsPandasTestBase):
 		assert_that(savt.dataframe.columns, has_item('context_name'))
 		assert_that(savt.dataframe.columns, has_item('enrollment_type'))
 		df = savt.analyze_events()
-		assert_that(len(df.index), equal_to(3))
+		assert_that(len(df.index), equal_to(1))
 		assert_that(df.columns, has_item('number_self_assessments_viewed'))
 		assert_that(df.columns, has_item('number_of_unique_users'))
 		assert_that(df.columns, has_item('ratio'))
@@ -315,7 +315,7 @@ class TestSelfAssessmentsTakenTimeseries(AnalyticsPandasTestBase):
 		assert_that(satt.dataframe.columns, has_item('context_name'))
 		assert_that(satt.dataframe.columns, has_item('enrollment_type'))
 		df = satt.analyze_events()
-		assert_that(len(df.index), equal_to(85))
+		assert_that(len(df.index), equal_to(1))
 		assert_that(df.columns, has_item('number_self_assessments_taken'))
 		assert_that(df.columns, has_item('number_of_unique_users'))
 		assert_that(df.columns, has_item('ratio'))
@@ -388,7 +388,7 @@ class TestAssessmentEventsTimeseries(AnalyticsPandasTestBase):
 											  course_id=courses_id)
 		aet = AssessmentEventsTimeseries(avt=avt, att=att, savt=savt, satt=satt)
 		df = aet.combine_events()
-		assert_that(len(df.index), equal_to(223))
+		assert_that(len(df.index), equal_to(4))
 
 	def test_over_total_enrollments(self):
 		start_date = u'2015-01-01'

@@ -165,8 +165,7 @@ class ResourceViewsTimeseries(object):
 			resource_id, resource_display_name, resource_type, and number_of_views
 		"""
 		temp_df = self.dataframe
-
-		most_views = temp_df.groupby('resource_id').size().order(ascending=False)[:max_rank_number]
+		most_views = temp_df.groupby('resource_id').size().sort_values(ascending=False)[:max_rank_number]
 		df = most_views.to_frame(name='number_of_views')
 		df.reset_index(level=0, inplace=True)
 

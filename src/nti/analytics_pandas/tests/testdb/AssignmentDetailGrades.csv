@@ -1,0 +1,2 @@
+timestamp,question_id,question_part_id,assignment_details_id,is_correct,grade_num,grader,grade,assignment_taken_id,user_id,session_id
+"2015-10-10 10:0:00",QUESTION,1024,2,0,43.0,1,grade,1,2,2

@@ -55,7 +55,7 @@ class TestSavePlot(AnalyticsPandasTestBase):
 	def test_save_resource_views_plots(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'
-		course_id = ['388']
+		course_id = ['1024']
 		rvt = ResourceViewsTimeseries(self.session, start_date, end_date, course_id)
 		rvtp = ResourceViewsTimeseriesPlot(rvt)
 		plots = rvtp.explore_events()
