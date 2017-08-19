@@ -1,6 +1,5 @@
 [run]
-source = nti.base
-
+source = nti.analytics_pandas
 
 [report]
 exclude_lines =
