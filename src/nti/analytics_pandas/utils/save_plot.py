@@ -11,33 +11,39 @@ logger = __import__('logging').getLogger(__name__)
 
 from io import StringIO
 
+import matplotlib
+matplotlib.use('Agg')
+
 from matplotlib import pyplot as plt
+
 
 class Image(object):
 
-	@classmethod
-	def process(cls, filename, data):
-		me = cls()
-		me.filename = filename
-		me.data = data
-		return me
+    @classmethod
+    def process(cls, filename, data):
+        me = cls()
+        me.filename = filename
+        me.data = data
+        return me
+
 
 class Plot(object):
 
-	@classmethod
-	def process(cls, plot_name, plot):
-		me = cls()
-		me.plot_name = plot_name
-		me.plot = plot
-		return me
+    @classmethod
+    def process(cls, plot_name, plot):
+        me = cls()
+        me.plot_name = plot_name
+        me.plot = plot
+        return me
+
 
 def save_plot_(plot, image_filename, image_type='png'):
-	"""
-	ega: please keep this function for further reference
-	"""
-	buf = StringIO()
-	plot.save(image_filename)
-	image_filename = u'%s.%s' % (image_filename, image_type)
-	image = Image.process(image_filename, buf)
-	return image
+    """
+    ega: please keep this function for further reference
+    """
+    buf = StringIO()
+    plot.save(image_filename)
+    image_filename = u'%s.%s' % (image_filename, image_type)
+    image = Image.process(image_filename, buf)
+    return image
 save_plot = save_plot_
