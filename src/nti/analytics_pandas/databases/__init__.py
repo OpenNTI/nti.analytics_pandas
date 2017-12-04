@@ -4,18 +4,26 @@
 .. $Id$
 """
 
-from __future__ import print_function, unicode_literals, absolute_import, division
-__docformat__ = "restructuredtext en"
-
-logger = __import__('logging').getLogger(__name__)
+from __future__ import division
+from __future__ import print_function
+from __future__ import absolute_import
 
 from zope import component
 
-from .db_connection import DBConnection
-from .interfaces import IDBConnection
+from nti.analytics_database.interfaces import IAnalyticsDatabase
+
+from nti.analytics_pandas.databases.db_connection import DBConnection
+
+from nti.analytics_pandas.databases.interfaces import IDBConnection
+
+logger = __import__('logging').getLogger(__name__)
+
 
 def get_analytics_db(strict=True):
     if strict:
-        return component.getUtility(IDBConnection)
+        database = component.getUtility(IAnalyticsDatabase)
     else:
-        return component.queryUtility(IDBConnection)
+        database = component.queryUtility(IDBConnection)
+    if database is not None:
+        return DBConnection(database)
+    return None

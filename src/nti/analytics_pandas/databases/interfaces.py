@@ -4,10 +4,11 @@
 .. $Id:
 """
 
-from __future__ import print_function, unicode_literals, absolute_import, division
-__docformat__ = "restructuredtext en"
+from __future__ import division
+from __future__ import print_function
+from __future__ import absolute_import
 
-logger = __import__('logging').getLogger(__name__)
+# pylint: disable=inherit-non-class
 
 from zope import interface
 
@@ -16,3 +17,12 @@ class IDBConnection(interface.Interface):
     """
     Representation of a pandas analyitcs database
     """
+
+    engine = interface.Attribute("SQLAlchemy engine")
+    session = interface.Attribute("SQLAlchemy session")
+    sessionmaker = interface.Attribute("SQLAlchemy session maker")
+
+    def close():
+        """
+        close the session
+        """
