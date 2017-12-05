@@ -4,23 +4,20 @@
 .. $Id$
 """
 
-from __future__ import print_function, unicode_literals, absolute_import, division
-__docformat__ = "restructuredtext en"
+from __future__ import division
+from __future__ import print_function
+from __future__ import absolute_import
+
+from io import BytesIO
 
 logger = __import__('logging').getLogger(__name__)
-
-from io import StringIO
-
-import matplotlib
-matplotlib.use('Agg')
-
-from matplotlib import pyplot as plt
 
 
 class Image(object):
 
     @classmethod
     def process(cls, filename, data):
+        # pylint: disable=attribute-defined-outside-init
         me = cls()
         me.filename = filename
         me.data = data
@@ -31,6 +28,7 @@ class Plot(object):
 
     @classmethod
     def process(cls, plot_name, plot):
+        # pylint: disable=attribute-defined-outside-init
         me = cls()
         me.plot_name = plot_name
         me.plot = plot
@@ -41,7 +39,7 @@ def save_plot_(plot, image_filename, image_type='png'):
     """
     ega: please keep this function for further reference
     """
-    buf = StringIO()
+    buf = BytesIO()
     plot.save(image_filename)
     image_filename = u'%s.%s' % (image_filename, image_type)
     image = Image.process(image_filename, buf)
