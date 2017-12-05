@@ -4,14 +4,15 @@
 .. $Id$
 """
 
-from __future__ import print_function, absolute_import, division
-__docformat__ = "restructuredtext en"
-
-logger = __import__('logging').getLogger(__name__)
+from __future__ import division
+from __future__ import print_function
+from __future__ import absolute_import
 
 from pandas import DataFrame
 
 from pandas.core.categorical import Categorical
+
+logger = __import__('logging').getLogger(__name__)
 
 
 def get_values_of_series_categorical_index_(categorical_series):

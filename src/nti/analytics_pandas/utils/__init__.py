@@ -4,17 +4,16 @@
 .. $Id$
 """
 
-from __future__ import print_function, unicode_literals, absolute_import, division
-__docformat__ = "restructuredtext en"
+from __future__ import division
+from __future__ import print_function
+from __future__ import absolute_import
 
-logger = __import__('logging').getLogger(__name__)
+from nti.analytics_pandas.utils.dataframe_operation import cast_columns_as_category_
+from nti.analytics_pandas.utils.dataframe_operation import get_values_of_series_categorical_index_
 
-from .save_plot import Plot
-from .save_plot import save_plot_
+from nti.analytics_pandas.utils.orm_to_dataframe import orm_dataframe
 
-from .string_folder import StringFolder
+from nti.analytics_pandas.utils.save_plot import Plot
+from nti.analytics_pandas.utils.save_plot import save_plot_
 
-from .orm_to_dataframe import orm_dataframe
-
-from .dataframe_operation import cast_columns_as_category_
-from .dataframe_operation import get_values_of_series_categorical_index_
+from nti.analytics_pandas.utils.string_folder import StringFolder
