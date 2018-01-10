@@ -40,8 +40,9 @@ def save_plot_(plot, image_filename, image_type='png'):
     ega: please keep this function for further reference
     """
     buf = BytesIO()
-    plot.save(image_filename)
     image_filename = u'%s.%s' % (image_filename, image_type)
+    plot.save(image_filename)
+    plot.fig.savefig(buf, format=image_type)
     image = Image.process(image_filename, buf)
     return image
 save_plot = save_plot_
