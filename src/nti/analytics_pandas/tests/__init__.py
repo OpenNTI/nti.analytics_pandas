@@ -1,23 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from __future__ import print_function, unicode_literals, absolute_import, division
-__docformat__ = "restructuredtext en"
+from __future__ import division
+from __future__ import print_function
+from __future__ import absolute_import
 
-# disable: accessing protected members, too many methods
-# pylint: disable=W0212,R0904
+# pylint: disable=protected-access,too-many-public-methods,arguments-differ
 
-import unittest
 import os
-import importlib
+import re
 import glob
+import unittest
+
 import pandas
 
-# there is a bug in matplotlib 1.5.0 that is requiring a back end in OSX
-# https://github.com/pypa/virtualenv/issues/54
-# https://github.com/pypa/virtualenv/issues/609
-# (reported in http://matplotlib.org/faq/virtualenv_faq.html#osx)
-# as work around include the last two lines below execute
 # echo "backend: TXAgg" > ~/.matplotlib/matplotlibrc
 # import matplotlib
 # matplotlib.use('PS')
@@ -28,7 +24,6 @@ from nti.testing.layers import GCLayerMixin
 from nti.testing.layers import ZopeComponentLayer
 from nti.testing.layers import ConfiguringLayerMixin
 
-from nti.analytics_database import *
 
 class SharedConfiguringTestLayer(ZopeComponentLayer,
                                  GCLayerMixin,
@@ -53,9 +48,14 @@ class SharedConfiguringTestLayer(ZopeComponentLayer,
     def testTearDown(cls):
         pass
 
-from sqlalchemy.pool import StaticPool
-from sqlalchemy.orm import sessionmaker, scoped_session
+
 from sqlalchemy import create_engine as sqlalchemy_create_engine
+
+from sqlalchemy.pool import StaticPool
+
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import scoped_session
+
 
 def create_engine(dburi='sqlite://', pool_size=30, max_overflow=10, pool_recycle=300):
     try:
@@ -82,19 +82,33 @@ def create_sessionmaker(engine, autoflush=False, twophase=False):
     return result
 
 
-def create_session(sessionmaker):
-    return scoped_session(sessionmaker)
+def create_session(session_maker):
+    return scoped_session(session_maker)
+
 
 from nti.analytics_database import Base
 
-# Only a few of the tables appear in the metadata, 
+# Only a few of the tables appear in the metadata,
 # so we have to import some modules so they are known
 from nti.analytics_database.mime_types import FileMimeTypes
+
+
+def read_sample_data(engine):
+    # run from nti.analytics_pandas directory
+    path = os.path.join(os.path.dirname(__file__), "testdb")
+    for source in glob.glob(os.path.join(path, "*.csv")):
+        try:
+            tablename = re.split(r"\W+", source)[-2]
+            df = pandas.read_csv(source)
+            df.to_sql(con=engine, name=tablename, if_exists='replace')
+        except Exception:  # pylint: broad-except
+            pass
+
 
 class AnalyticsPandasTestBase(unittest.TestCase):
 
     def setUp(self):
-        dburi="sqlite://"
+        dburi = "sqlite://"
         self.engine = create_engine(dburi=dburi)
         self.metadata = getattr(Base, 'metadata')
         self.metadata.create_all(bind=self.engine)
@@ -103,17 +117,10 @@ class AnalyticsPandasTestBase(unittest.TestCase):
         self.session = create_session(self.sessionmaker)
 
     def tearDown(self):
+        # pylint: disable=no-member
         self.session.commit()
         self.session.close()
 
     def _read_sample_data(self, engine):
         # run from nti.analytics_pandas directory
-        import re
-        path = os.path.join(os.getcwd(), "src/nti/analytics_pandas/tests/testdb")
-        for file in glob.glob(os.path.join(path,"*.csv")):
-            try:
-                tablename = re.split("\W+", file)[-2]
-                df = pandas.read_csv(file)
-                df.to_sql(con=engine, name=tablename, if_exists='replace')
-            except:
-                continue
+        read_sample_data(engine)
