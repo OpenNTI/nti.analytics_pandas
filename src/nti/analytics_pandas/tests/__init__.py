@@ -7,13 +7,6 @@ from __future__ import absolute_import
 
 # pylint: disable=protected-access,too-many-public-methods,arguments-differ
 
-import os
-import re
-import glob
-import unittest
-
-import pandas
-
 # echo "backend: TXAgg" > ~/.matplotlib/matplotlibrc
 # import matplotlib
 # matplotlib.use('PS')
@@ -49,44 +42,18 @@ class SharedConfiguringTestLayer(ZopeComponentLayer,
         pass
 
 
-from sqlalchemy import create_engine as sqlalchemy_create_engine
+import os
+import re
+import glob
+import unittest
 
-from sqlalchemy.pool import StaticPool
+import pandas
 
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.orm import scoped_session
+from zope import component
 
+from nti.analytics_database.database import AnalyticsDB
 
-def create_engine(dburi='sqlite://', pool_size=30, max_overflow=10, pool_recycle=300):
-    try:
-        if dburi == 'sqlite://':
-            result = sqlalchemy_create_engine(dburi,
-                                              connect_args={'check_same_thread': False},
-                                              poolclass=StaticPool)
-
-        else:
-            result = sqlalchemy_create_engine(dburi,
-                                              pool_size=pool_size,
-                                              max_overflow=max_overflow,
-                                              pool_recycle=pool_recycle)
-    except TypeError:
-        # SQLite does not use pooling anymore.
-        result = sqlalchemy_create_engine(dburi)
-    return result
-
-
-def create_sessionmaker(engine, autoflush=False, twophase=False):
-    result = sessionmaker(bind=engine,
-                          autoflush=autoflush,
-                          twophase=twophase)
-    return result
-
-
-def create_session(session_maker):
-    return scoped_session(session_maker)
-
-
-from nti.analytics_database import Base
+from nti.analytics_database.interfaces import IAnalyticsDB
 
 # Only a few of the tables appear in the metadata,
 # so we have to import some modules so they are known
@@ -108,19 +75,32 @@ def read_sample_data(engine):
 class AnalyticsPandasTestBase(unittest.TestCase):
 
     def setUp(self):
-        dburi = "sqlite://"
-        self.engine = create_engine(dburi=dburi)
-        self.metadata = getattr(Base, 'metadata')
-        self.metadata.create_all(bind=self.engine)
-        self._read_sample_data(self.engine)
-        self.sessionmaker = create_sessionmaker(self.engine)
-        self.session = create_session(self.sessionmaker)
+        self.db = AnalyticsDB(dburi="sqlite://", 
+                              defaultSQLite=True,
+                              autocommit=True)
+        component.getGlobalSiteManager().registerUtility(self.db, IAnalyticsDB)
+        self._read_sample_data(self.db.engine)
 
     def tearDown(self):
+        component.getGlobalSiteManager().unregisterUtility(self.db, IAnalyticsDB)
         # pylint: disable=no-member
-        self.session.commit()
-        self.session.close()
+        self.db.session.commit()
+        self.db.session.close()
 
     def _read_sample_data(self, engine):
         # run from nti.analytics_pandas directory
         read_sample_data(engine)
+    
+    @property
+    def session(self):
+        # pylint: disable=no-member
+        return self.db.session
+    
+    @property
+    def engine(self):
+        # pylint: disable=no-member
+        return self.db.engine
+    
+    @property
+    def sessionmaker(self):
+        return self.db.sessionmaker
