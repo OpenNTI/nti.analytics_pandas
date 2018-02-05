@@ -40,7 +40,7 @@ class QueryTopicsCreated(TableQueryMixin):
 								   tc.topic_ds_id,
 								   tc.forum_id,
 								   tc.entity_root_context_id,
-								   tc.course_id).filter(tc.timestamp.between(start_date, end_date))
+								   tc.root_context_id.label('course_id')).filter(tc.timestamp.between(start_date, end_date))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
@@ -57,7 +57,7 @@ class QueryTopicsCreated(TableQueryMixin):
 								   tc.topic_ds_id,
 								   tc.forum_id,
 								   tc.entity_root_context_id,
-								   tc.course_id).filter(tc.timestamp.between(start_date, end_date)).filter(tc.course_id.in_(course_id))
+								   tc.root_context_id.label('course_id')).filter(tc.timestamp.between(start_date, end_date)).filter(tc.root_context_id.in_(course_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
@@ -82,7 +82,7 @@ class QueryTopicsViewed(TableQueryMixin):
 		query = self.session.query(tv.timestamp,
 								   tv.user_id,
 								   tv.session_id,
-								   tv.course_id,
+								   tv.root_context_id.label('course_id'),
 								   tv.forum_id,
 								   tv.topic_id,
 								   tv.time_length,
@@ -99,7 +99,7 @@ class QueryTopicsViewed(TableQueryMixin):
 								   tv.topic_id,
 								   tv.time_length,
 								   tv.context_path,
-								   tv.course_id).filter(tv.timestamp.between(start_date, end_date)).filter(tv.course_id.in_(course_id))
+								   tv.root_context_id.label('course_id')).filter(tv.timestamp.between(start_date, end_date)).filter(tv.root_context_id.in_(course_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
@@ -126,7 +126,7 @@ class QueryTopicFavorites(TableQueryMixin):
 								   tf.user_id,
 								   tf.topic_id,
 								   tf.creator_id,
-								   tf.course_id).filter(tf.timestamp.between(start_date, end_date))
+								   tf.root_context_id.label('course_id')).filter(tf.timestamp.between(start_date, end_date))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
@@ -137,7 +137,7 @@ class QueryTopicFavorites(TableQueryMixin):
 								   tf.user_id,
 								   tf.topic_id,
 								   tf.creator_id,
-								   tf.course_id).filter(tf.timestamp.between(start_date, end_date)).filter(tf.course_id.in_(course_id))
+								   tf.root_context_id.label('course_id')).filter(tf.timestamp.between(start_date, end_date)).filter(tf.root_context_id.in_(course_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
@@ -164,7 +164,7 @@ class QueryTopicLikes(TableQueryMixin):
 								   tl.user_id,
 								   tl.topic_id,
 								   tl.creator_id,
-								   tl.course_id).filter(tl.timestamp.between(start_date, end_date))
+								   tl.root_context_id.label('course_id')).filter(tl.timestamp.between(start_date, end_date))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
@@ -175,7 +175,7 @@ class QueryTopicLikes(TableQueryMixin):
 								   tl.user_id,
 								   tl.topic_id,
 								   tl.creator_id,
-								   tl.course_id).filter(tl.timestamp.between(start_date, end_date)).filter(tl.course_id.in_(course_id))
+								   tl.root_context_id.label('course_id')).filter(tl.timestamp.between(start_date, end_date)).filter(tl.root_context_id.in_(course_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
