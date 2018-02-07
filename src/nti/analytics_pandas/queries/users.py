@@ -4,16 +4,17 @@
 .. $Id$
 """
 
-from __future__ import print_function, absolute_import, division
-__docformat__ = "restructuredtext en"
-
-logger = __import__('logging').getLogger(__name__)
+from __future__ import division
+from __future__ import print_function
+from __future__ import absolute_import
 
 from nti.analytics_database.users import Users
 
 from nti.analytics_pandas.queries.mixins import TableQueryMixin
 
 from nti.analytics_pandas.utils.dataframe_operation import orm_dataframe
+
+logger = __import__('logging').getLogger(__name__)
 
 
 class QueryUsers(TableQueryMixin):

@@ -13,12 +13,12 @@ from nti.analytics_database.boards import TopicsViewed
 from nti.analytics_database.boards import TopicsCreated
 from nti.analytics_database.boards import TopicFavorites
 
-from nti.analytics_pandas.queries.mixins import TableQueryMixin
-
 from nti.analytics_pandas.queries.common import add_device_type_
 from nti.analytics_pandas.queries.common import add_context_name_
 
 from nti.analytics_pandas.queries.enrollments import add_enrollment_type_
+
+from nti.analytics_pandas.queries.mixins import TableQueryMixin
 
 from nti.analytics_pandas.utils import orm_dataframe
 
