@@ -34,7 +34,7 @@ class QueryHighlightsCreated(TableQueryMixin):
 								hc.resource_id,
 								hc.session_id,
 								hc.user_id,
-								hc.course_id).filter(hc.timestamp.between(start_date, end_date))
+								hc.root_context_id.label('course_id')).filter(hc.timestamp.between(start_date, end_date))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
@@ -47,7 +47,7 @@ class QueryHighlightsCreated(TableQueryMixin):
 								hc.resource_id,
 								hc.session_id,
 								hc.user_id,
-								hc.course_id).filter(hc.timestamp.between(start_date, end_date)).filter(hc.course_id.in_(course_id))
+								hc.root_context_id.label('course_id')).filter(hc.timestamp.between(start_date, end_date)).filter(hc.root_context_id.in_(course_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
