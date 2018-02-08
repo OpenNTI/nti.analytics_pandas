@@ -40,9 +40,10 @@ class TestResourceViews(AnalyticsPandasTestBase):
         qcrv = QueryCourseResourceViews(self.session)
         dataframe = qcrv.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
         new_df = qcrv.add_resource_type(dataframe)
-        assert_that(len(dataframe.index), equal_to(len(new_df.index)))
-        assert_that(len(new_df), equal_to(1))
-        assert_that(new_df.columns, has_item('resource_type'))
+        if new_df:
+            assert_that(len(dataframe.index), equal_to(len(new_df.index)))
+            assert_that(len(new_df), equal_to(1))
+            assert_that(new_df.columns, has_item('resource_type'))
 
     def test_query_course_resource_views_add_device_type(self):
         start_date = u'2015-01-01'
@@ -51,6 +52,7 @@ class TestResourceViews(AnalyticsPandasTestBase):
         qcrv = QueryCourseResourceViews(self.session)
         dataframe = qcrv.filter_by_period_of_time_and_course_id(start_date, end_date, course_id)
         new_df = qcrv.add_device_type(dataframe)
-        assert_that(len(dataframe.index), equal_to(len(new_df.index)))
-        assert_that(len(new_df), equal_to(1))
-        assert_that(new_df.columns, has_item('device_type'))
+        if new_df:
+            assert_that(len(dataframe.index), equal_to(len(new_df.index)))
+            assert_that(len(new_df), equal_to(1))
+            assert_that(new_df.columns, has_item('device_type'))
