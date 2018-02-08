@@ -17,13 +17,13 @@ from nti.analytics_database.assessments import SelfAssessmentViews
 from nti.analytics_database.assessments import SelfAssessmentsTaken
 from nti.analytics_database.assessments import SelfAssessmentDetails
 
-from .mixins import TableQueryMixin
+from nti.analytics_pandas.queries.mixins import TableQueryMixin
 
-from .common import add_device_type_
-from .common import add_context_name_
-from .common import add_resource_type_
+from nti.analytics_pandas.queries.common import add_device_type_
+from nti.analytics_pandas.queries.common import add_context_name_
+from nti.analytics_pandas.queries.common import add_resource_type_
 
-from .enrollments import add_enrollment_type_
+from nti.analytics_pandas.queries.enrollments import add_enrollment_type_
 
 from . import orm_dataframe
 
@@ -35,14 +35,13 @@ class QueryAssignmentViews(TableQueryMixin):
 		av = self.table
 		query = self.session.query(	av.timestamp,
 									av.context_path,
-									av.course_id,
 									av.time_length,
 									av.assignment_view_id,
 									av.resource_id,
 									av.session_id,
 									av.user_id,
 									av.assignment_id,
-									av.entity_root_context_id).filter(av.timestamp.between(start_date, end_date))
+									av.root_context_id.label('course_id')).filter(av.timestamp.between(start_date, end_date))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
@@ -56,8 +55,7 @@ class QueryAssignmentViews(TableQueryMixin):
 									av.session_id,
 									av.user_id,
 									av.assignment_id,
-									av.entity_root_context_id,
-									av.course_id).filter(av.timestamp.between(start_date, end_date)).filter(av.course_id.in_(course_id))
+									av.root_context_id.label('course_id')).filter(av.timestamp.between(start_date, end_date)).filter(av.root_context_id.in_(course_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
@@ -152,14 +150,13 @@ class QuerySelfAssessmentViews(TableQueryMixin):
 		sav = self.table
 		query = self.session.query(	sav.timestamp,
 									sav.context_path,
-									sav.course_id,
+									sav.root_context_id.label('course_id'),
 									sav.time_length,
 									sav.self_assessment_view_id,
 									sav.resource_id,
 									sav.session_id,
 									sav.user_id,
-									sav.assignment_id,
-									sav.entity_root_context_id).filter(sav.timestamp.between(start_date, end_date))
+									sav.assignment_id).filter(sav.timestamp.between(start_date, end_date))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
@@ -173,8 +170,7 @@ class QuerySelfAssessmentViews(TableQueryMixin):
 									sav.session_id,
 									sav.user_id,
 									sav.assignment_id,
-									sav.entity_root_context_id,
-									sav.course_id).filter(sav.timestamp.between(start_date, end_date)).filter(sav.course_id.in_(course_id))
+									sav.root_context_id.label('course_id')).filter(sav.timestamp.between(start_date, end_date)).filter(sav.root_context_id.in_(course_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 

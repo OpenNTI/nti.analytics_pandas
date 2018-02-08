@@ -33,7 +33,7 @@ class QueryBookmarksCreated(TableQueryMixin):
 								   bc.resource_id,
 								   bc.session_id,
 								   bc.user_id,
-								   bc.course_id).filter(bc.timestamp.between(start_date, end_date))
+								   bc.root_context_id.label('course_id')).filter(bc.timestamp.between(start_date, end_date))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
@@ -45,7 +45,7 @@ class QueryBookmarksCreated(TableQueryMixin):
 								   bc.resource_id,
 								   bc.session_id,
 								   bc.user_id,
-								   bc.course_id).filter(bc.timestamp.between(start_date, end_date)).filter(bc.course_id.in_(course_id))
+								   bc.root_context_id.label('course_id')).filter(bc.timestamp.between(start_date, end_date)).filter(bc.root_context_id.in_(course_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
 
