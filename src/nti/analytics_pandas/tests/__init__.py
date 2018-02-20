@@ -11,53 +11,21 @@ from __future__ import absolute_import
 # import matplotlib
 # matplotlib.use('PS')
 
+import os
+import re
+import glob
+
+import pandas
+
+from zope import component
+
 from zope.testing import cleanup as testing_cleanup
 
 from nti.testing.layers import GCLayerMixin
 from nti.testing.layers import ZopeComponentLayer
 from nti.testing.layers import ConfiguringLayerMixin
 
-
-class SharedConfiguringTestLayer(ZopeComponentLayer,
-                                 GCLayerMixin,
-                                 ConfiguringLayerMixin):
-
-    set_up_packages = ('nti.analytics_pandas',)
-
-    @classmethod
-    def setUp(cls):
-        cls.setUpPackages()
-
-    @classmethod
-    def tearDown(cls):
-        cls.tearDownPackages()
-        testing_cleanup.cleanUp()
-
-    @classmethod
-    def testSetUp(cls, test=None):
-        pass
-
-    @classmethod
-    def testTearDown(cls):
-        pass
-
-
-import os
-import re
-import glob
-import unittest
-
-import pandas
-
-from zope import component
-
-from nti.analytics_database.database import AnalyticsDB
-
-from nti.analytics_database.interfaces import IAnalyticsDB
-
-# Only a few of the tables appear in the metadata,
-# so we have to import some modules so they are known
-from nti.analytics_database.mime_types import FileMimeTypes
+from nti.analytics_database.interfaces import IAnalyticsDatabase
 
 
 def read_sample_data(engine):
@@ -72,35 +40,50 @@ def read_sample_data(engine):
             pass
 
 
+class SharedConfiguringTestLayer(ZopeComponentLayer,
+                                 GCLayerMixin,
+                                 ConfiguringLayerMixin):
+
+    set_up_packages = ('nti.analytics_pandas',)
+
+    @classmethod
+    def setUp(cls):
+        cls.setUpPackages()
+        cls.database = component.getUtility(IAnalyticsDatabase)
+        read_sample_data(cls.database.engine)
+
+    @classmethod
+    def tearDown(cls):
+        cls.tearDownPackages()
+        testing_cleanup.cleanUp()
+        cls.database.session.close()
+
+    @classmethod
+    def testSetUp(cls, test=None):
+        pass
+
+    @classmethod
+    def testTearDown(cls):
+        pass
+
+
+import unittest
+
+
 class AnalyticsPandasTestBase(unittest.TestCase):
 
-    def setUp(self):
-        self.db = AnalyticsDB(dburi="sqlite://", 
-                              defaultSQLite=True,
-                              autocommit=True)
-        component.getGlobalSiteManager().registerUtility(self.db, IAnalyticsDB)
-        self._read_sample_data(self.db.engine)
+    layer = SharedConfiguringTestLayer
 
-    def tearDown(self):
-        component.getGlobalSiteManager().unregisterUtility(self.db, IAnalyticsDB)
-        # pylint: disable=no-member
-        self.db.session.commit()
-        self.db.session.close()
-
-    def _read_sample_data(self, engine):
-        # run from nti.analytics_pandas directory
-        read_sample_data(engine)
-    
     @property
     def session(self):
         # pylint: disable=no-member
-        return self.db.session
-    
+        return self.layer.database.session
+
     @property
     def engine(self):
         # pylint: disable=no-member
-        return self.db.engine
-    
+        return self.layer.database.engine
+
     @property
     def sessionmaker(self):
-        return self.db.sessionmaker
+        return self.layer.database.sessionmaker
