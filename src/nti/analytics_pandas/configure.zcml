@@ -11,11 +11,21 @@
 
 	<include package="nti.analytics_database" file="meta.zcml" />
 
-	<configure zcml:condition="have testmode">
-		<adb:registerAnalyticsDB defaultSQLite="True" 
-								 dburi="sqlite://" 
-								 autocommit="True"
-								 testmode="True" />
+	<!-- Non devmode is config driven -->
+	<configure zcml:condition="have devmode">
+
+		<!-- In-memory sqlite for test mode -->
+		<configure zcml:condition="have testmode">
+			<adb:registerAnalyticsDB defaultSQLite="True"
+									 dburi="sqlite://"
+									 autocommit="True"
+									 testmode="True" />
+		</configure>
+
+		<configure zcml:condition="not-have testmode">
+			<adb:registerAnalyticsDB defaultSQLite="True" />
+		</configure>
+
 	</configure>
 
 </configure>
