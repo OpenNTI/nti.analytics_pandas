@@ -48,6 +48,11 @@ class TestTopicsEDA(AnalyticsPandasTestBase):
 		assert_that(total_events, equal_to(total_topics_created))
 		assert_that(total_events, equal_to(len(tct.dataframe.index)))
 
+		tct.get_data()
+		assert_that(len(tct.df_by_timestamp.index), equal_to(len(event_df.index)))
+		assert_that(len(tct.df_per_course_sections.index), equal_to(len(context_df.index)))
+		assert_that(len(tct.df_per_device_types.index), equal_to(len(device_type_df.index)))
+
 	def test_topic_views_based_on_timestamp_date(self):
 		start_date = '2015-01-01'
 		end_date = '2015-05-31'

@@ -107,6 +107,10 @@ class TopicsCreationTimeseries(object):
 				 with_context_name=True, with_enrollment_type=True):
 		self.session = session
 		self.period = period
+		self.with_device_type = with_device_type
+		self.with_enrollment_type = with_enrollment_type
+		self.with_context_name = with_context_name
+
 		qtc = self.query_topics_created = QueryTopicsCreated(self.session)
 		if isinstance (course_id, (tuple, list)):
 			self.dataframe = qtc.filter_by_period_of_time_and_course_id(start_date,
@@ -169,6 +173,20 @@ class TopicsCreationTimeseries(object):
 						inplace=True)
 			df['ratio'] = df['number_of_topics_created'] / df['number_of_unique_users']
 		return df
+
+	def get_data(self):
+		self.df_by_timestamp = None
+		self.df_per_device_types = None
+		self.df_per_enrollment_type = None
+		self.df_per_course_sections = None
+		if not self.dataframe.empty:
+			self.df_by_timestamp = self.analyze_events()
+			if self.with_context_name:
+				self.df_per_course_sections = self.analyze_events_per_course_sections()
+			if self.with_device_type:
+				self.df_per_device_types = self.analyze_events_per_device_types()
+			if self.with_enrollment_type:
+				self.df_per_enrollment_type = self.analyze_events_per_enrollment_types()
 
 
 class TopicLikesTimeseries(object):
