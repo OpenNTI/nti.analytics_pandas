@@ -94,3 +94,27 @@ def reset_dataframe_(df):
 	df.reset_index(inplace=True)
 	df['timestamp_period'] = pd.to_datetime(df['timestamp_period'])
 	return df
+
+
+def get_data(table,
+	         with_context_name=True, 
+			 with_device_type=True, 
+			 with_enrollment_type=True):
+	data = {}
+	if not table.dataframe.empty:
+		df_by_timestamp = table.analyze_events()
+		df_by_timestamp = reset_dataframe_(df_by_timestamp)
+		data['df_by_timestamp'] = df_by_timestamp
+		if with_context_name:
+			df_per_course_sections = table.analyze_events_per_course_sections()
+			df_per_course_sections = reset_dataframe_(df_per_course_sections)
+			data['df_per_course_sections'] = df_per_course_sections
+		if with_device_type:
+			df_per_device_types = table.analyze_events_per_device_types()
+			df_per_device_types = reset_dataframe_(df_per_device_types)
+			data['df_per_device_types'] = df_per_device_types
+		if with_enrollment_type:
+			df_per_enrollment_type = table.analyze_events_per_enrollment_types()
+			df_per_enrollment_type = reset_dataframe_(df_per_enrollment_type)
+			data['df_per_enrollment_type'] = df_per_enrollment_type
+	return data
