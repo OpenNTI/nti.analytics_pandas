@@ -4,10 +4,9 @@
 .. $Id$
 """
 
-from __future__ import print_function, unicode_literals, absolute_import, division
-__docformat__ = "restructuredtext en"
-
-logger = __import__('logging').getLogger(__name__)
+from __future__ import division
+from __future__ import print_function
+from __future__ import absolute_import
 
 from datetime import date
 from datetime import datetime
@@ -15,9 +14,11 @@ from datetime import timedelta
 
 import pandas as pd
 
-from ..queries import QueryUsers
+from nti.analytics_pandas.queries import QueryUsers
 
-from ..utils import get_values_of_series_categorical_index_
+from nti.analytics_pandas.utils import get_values_of_series_categorical_index_
+
+logger = __import__('logging').getLogger(__name__)
 
 def first_date_of_the_week(year, week):
 	ret = datetime.strptime('%04d-%02d-2' % (year, week), '%Y-%W-%w')
