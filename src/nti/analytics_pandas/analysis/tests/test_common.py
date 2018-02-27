@@ -16,6 +16,7 @@ import numpy as np
 from nti.analytics_pandas.analysis.common import get_data
 
 from nti.analytics_pandas.analysis.topics import TopicsCreationTimeseries
+from nti.analytics_pandas.analysis.topics import TopicViewsTimeseries
 
 from nti.analytics_pandas.tests import AnalyticsPandasTestBase
 
@@ -40,3 +41,19 @@ class TestCommonFunctions(AnalyticsPandasTestBase):
 		total_events = np.sum(context_df['number_of_topics_created'])
 		assert_that(total_events, equal_to(total_topics_created))
 		assert_that(total_events, equal_to(len(tct.dataframe.index)))
+
+	def test_get_topics_viewed_data(self):
+		start_date = '2015-01-01'
+		end_date = '2015-05-31'
+		course_id = ['1024']
+		tvt = TopicViewsTimeseries(self.session, start_date, end_date, course_id)
+		assert_that(tvt.dataframe.columns, has_item('device_type'))
+		assert_that(tvt.dataframe.columns, has_item('context_name'))
+		assert_that(tvt.dataframe.columns, has_item('enrollment_type'))
+
+		data = get_data(tvt)
+		assert_that(data['df_by_timestamp'], has_item('number_of_unique_users'))
+		assert_that(data['df_by_timestamp'], has_item('number_of_topics_viewed'))
+		assert_that(data['df_by_timestamp'], has_item('ratio'))
+		total_topics_viewed = np.sum(data['df_by_timestamp']['number_of_topics_viewed'])
+		assert_that(total_topics_viewed, equal_to(len(tvt.dataframe.index)))

@@ -83,7 +83,7 @@ class TestTopicsEDA(AnalyticsPandasTestBase):
 		assert_that(total_events, equal_to(len(tlt.dataframe.index)))
 
 		df = tlt.dataframe
-		device_type_df = tlt.analyze_events_per_device_types(df)
+		device_type_df = tlt.analyze_events_per_device_types()
 		total_events = np.sum(device_type_df['number_of_topic_likes'])
 		assert_that(total_events, equal_to(len(tlt.dataframe.index)))
 
@@ -104,7 +104,7 @@ class TestTopicsEDA(AnalyticsPandasTestBase):
 		assert_that(total_events, equal_to(len(tft.dataframe.index)))
 
 		df = tft.dataframe
-		device_type_df = tft.analyze_events_per_device_types(df)
+		device_type_df = tft.analyze_events_per_device_types()
 		total_events = np.sum(device_type_df['number_of_topic_favorites'])
 		assert_that(total_events, equal_to(len(tft.dataframe.index)))
 

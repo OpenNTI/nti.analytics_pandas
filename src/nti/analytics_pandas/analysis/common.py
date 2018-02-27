@@ -133,11 +133,17 @@ def get_data(table,
             df_per_course_sections = reset_dataframe_(df_per_course_sections)
             data['df_per_course_sections'] = df_per_course_sections
         if with_device_type:
-            df_per_device_types = table.analyze_events_per_device_types()
+            if hasattr(table, 'analyze_events_per_device_types'):
+                df_per_device_types = table.analyze_events_per_device_types()
+            else:
+                df_per_device_types = table.analyze_device_types()
             df_per_device_types = reset_dataframe_(df_per_device_types)
             data['df_per_device_types'] = df_per_device_types
         if with_enrollment_type:
-            df_per_enrollment_type = table.analyze_events_per_enrollment_types()
+            if hasattr(table, 'analyze_events_per_enrollment_types'):
+                df_per_enrollment_type = table.analyze_events_per_enrollment_types()
+            else:
+                df_per_enrollment_type = table.analyze_enrollment_types()
             df_per_enrollment_type = reset_dataframe_(df_per_enrollment_type)
             data['df_per_enrollment_type'] = df_per_enrollment_type
     return data

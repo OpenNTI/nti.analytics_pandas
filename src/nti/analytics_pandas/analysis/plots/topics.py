@@ -581,7 +581,7 @@ class TopicLikesTimeseriesPlot(object):
 			- ratio of topic likes over unique users
 		"""
 		tlt = self.tlt
-		df = tlt.analyze_events_per_device_types(tlt.dataframe)
+		df = tlt.analyze_events_per_device_types()
 		if df is None:
 			return ()
 		df.reset_index(inplace=True)
@@ -614,7 +614,7 @@ class TopicLikesTimeseriesPlot(object):
 			- ratio of topic likes over unique users
 		"""
 		tlt = self.tlt
-		df = tlt.analyze_events_per_enrollment_types(tlt.dataframe)
+		df = tlt.analyze_events_per_enrollment_types()
 		if df is None:
 			return ()
 		df.reset_index(inplace=True)
@@ -789,7 +789,7 @@ class TopicFavoritesTimeseriesPlot(object):
 			- ratio of topic likes over unique users
 		"""
 		tft = self.tft
-		df = tft.analyze_events_per_device_types(tft.dataframe)
+		df = tft.analyze_events_per_device_types()
 		if df is None:
 			return ()
 		df.reset_index(inplace=True)
@@ -822,7 +822,7 @@ class TopicFavoritesTimeseriesPlot(object):
 			- ratio of topic likes over unique users
 		"""
 		tft = self.tft
-		df = tft.analyze_events_per_enrollment_types(tft.dataframe)
+		df = tft.analyze_events_per_enrollment_types()
 		if df is None:
 			return ()
 		df.reset_index(inplace=True)
