@@ -241,14 +241,14 @@ class TopicLikesTimeseries(object):
 		df = self.build_dataframe(group_by_items, self.dataframe)
 		return df
 
-	def analyze_events_per_device_types(self, dataframe):
+	def analyze_events_per_device_types(self):
 		group_by_items = ['timestamp_period', 'device_type']
-		df = self.build_dataframe(group_by_items, dataframe)
+		df = self.build_dataframe(group_by_items, self.dataframe)
 		return df
 
-	def analyze_events_per_enrollment_types(self, dataframe):
+	def analyze_events_per_enrollment_types(self):
 		group_by_items = ['timestamp_period', 'enrollment_type']
-		df = self.build_dataframe(group_by_items, dataframe)
+		df = self.build_dataframe(group_by_items, self.dataframe)
 		return df
 
 	def build_dataframe(self, group_by_items, dataframe):
@@ -394,14 +394,14 @@ class TopicFavoritesTimeseries(object):
 		df = self.build_dataframe(group_by_items, self.dataframe)
 		return df
 
-	def analyze_events_per_device_types(self, dataframe):
+	def analyze_events_per_device_types(self):
 		group_by_items = ['timestamp_period', 'device_type']
-		df = self.build_dataframe(group_by_items, dataframe)
+		df = self.build_dataframe(group_by_items, self.dataframe)
 		return df
 
-	def analyze_events_per_enrollment_types(self, dataframe):
+	def analyze_events_per_enrollment_types(self):
 		group_by_items = ['timestamp_period', 'enrollment_type']
-		df = self.build_dataframe(group_by_items, dataframe)
+		df = self.build_dataframe(group_by_items, self.dataframe)
 		return df
 
 	def build_dataframe(self, group_by_items, dataframe):
