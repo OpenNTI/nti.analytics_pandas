@@ -74,3 +74,7 @@ class TestCourses(AnalyticsPandasTestBase):
 		assert_that(course_ids, has_item(1029))
 		assert_that(course_ids, has_item(1030))
 
+		course_names = dataframe['context_name'].tolist()
+		assert_that(course_names, has_item(u'name'))
+		assert_that(course_names, has_item(u'another_name'))
+

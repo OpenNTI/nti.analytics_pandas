@@ -65,6 +65,6 @@ class QueryCourses(TableQueryMixin):
 
 	def get_course_given_ntiid(self, context_ds_id):
 		c = self.table
-		query = self.session.query(c.context_id).filter(c.context_ds_id.like(context_ds_id))
+		query = self.session.query(c.context_id, c.context_name).filter(c.context_ds_id.like(context_ds_id))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
