@@ -62,3 +62,9 @@ class QueryCourses(TableQueryMixin):
 			query = query.filter(and_(c.start_date >= start_date, c.end_date <= end_date))
 		dataframe = orm_dataframe(query, self.columns)
 		return dataframe
+
+	def get_course_given_ntiid(self, context_ds_id):
+		c = self.table
+		query = self.session.query(c.context_id).filter(c.context_ds_id.like(context_ds_id))
+		dataframe = orm_dataframe(query, self.columns)
+		return dataframe
