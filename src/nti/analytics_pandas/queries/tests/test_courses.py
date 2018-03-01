@@ -59,3 +59,18 @@ class TestCourses(AnalyticsPandasTestBase):
 		assert_that(course_ids, has_item(1027))
 		assert_that(course_ids, has_item(1028))
 		assert_that(course_ids, has_item(1029))
+
+	def test_get_course_given_ntiid(self):
+		qc = QueryCourses(self.session)
+		context_ds_id = u'ds'
+		dataframe = qc.get_course_given_ntiid(context_ds_id)
+		assert_that(len(dataframe.index), equal_to(7))
+		course_ids = dataframe['context_id'].tolist()
+		assert_that(course_ids, has_item(1024))
+		assert_that(course_ids, has_item(1025))
+		assert_that(course_ids, has_item(1026))
+		assert_that(course_ids, has_item(1027))
+		assert_that(course_ids, has_item(1028))
+		assert_that(course_ids, has_item(1029))
+		assert_that(course_ids, has_item(1030))
+
