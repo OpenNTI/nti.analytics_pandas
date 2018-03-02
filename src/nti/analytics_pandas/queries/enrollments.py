@@ -173,5 +173,9 @@ def add_enrollment_type_(session, dataframe, course_ids):
 	enrollment_types_df = qet.get_enrollment_types_given_type_id(types_id)
 	enrollment_types_df.rename(columns={'type_name':'enrollment_type'}, inplace=True)
 
+	if enrollment_types_df.empty:
+		enrollment_types_df = enrollments_df[['type_id']]
+		enrollment_types_df['enrollment_type'] = np.nan
+
 	new_df = dataframe.merge(enrollments_df, how='left').merge(enrollment_types_df, how='left')
 	return new_df
