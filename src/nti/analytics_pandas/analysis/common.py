@@ -70,6 +70,14 @@ def explore_ratio_of_events_over_unique_users_based_timestamp_date_(events_df,
 
 
 def analyze_types_(df, group_by_items, agg_columns=None):
+    if 'device_type' in group_by_items and 'device_type' in df.columns:
+        df['device_type'] = df['device_type'].astype(str)
+        df['device_type'] = df['device_type'].replace('nan', 'Unknown')
+
+    if 'enrollment_type' in group_by_items and 'enrollment_type' in df.columns:
+        df['enrollment_type'] = df['enrollment_type'].astype(str)
+        df['enrollment_type'] = df['enrollment_type'].replace('nan', 'Unknown')
+
     if len(df.index) > 0:
         check = set(group_by_items) & set(df.columns)
         if len(check) == len(group_by_items):
@@ -132,14 +140,14 @@ def get_data(table,
             df_per_course_sections = table.analyze_events_per_course_sections()
             df_per_course_sections = reset_dataframe_(df_per_course_sections)
             data['df_per_course_sections'] = df_per_course_sections
-        if with_device_type:
+        if with_device_type and 'device_type' in table.dataframe.columns:
             if hasattr(table, 'analyze_events_per_device_types'):
                 df_per_device_types = table.analyze_events_per_device_types()
             else:
                 df_per_device_types = table.analyze_device_types()
             df_per_device_types = reset_dataframe_(df_per_device_types)
             data['df_per_device_types'] = df_per_device_types
-        if with_enrollment_type:
+        if with_enrollment_type and 'enrollment_type' in table.dataframe.columns:
             if hasattr(table, 'analyze_events_per_enrollment_types'):
                 df_per_enrollment_type = table.analyze_events_per_enrollment_types()
             else:
