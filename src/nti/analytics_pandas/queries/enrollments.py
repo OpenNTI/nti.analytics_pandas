@@ -10,6 +10,7 @@ __docformat__ = "restructuredtext en"
 logger = __import__('logging').getLogger(__name__)
 
 import numpy as np
+import pandas as pd
 
 from nti.analytics_database.enrollments import CourseDrops
 from nti.analytics_database.enrollments import EnrollmentTypes
@@ -159,6 +160,9 @@ def add_enrollment_type_(session, dataframe, course_ids):
 	if enrollments_df.empty:
 		enrollments_df = dataframe[['user_id']]
 		enrollments_df['type_id'] = np.nan
+	elif enrollments_df.shape[0] < len(users_id):
+		user_id_df = pd.DataFrame(users_id, columns=['user_id'])
+		enrollments_df = enrollments_df.merge(user_id_df, how='outer')
 
 	types_id = np.unique(enrollments_df['type_id'].values.ravel())
 	if len(types_id) == 1 and types_id[0] is None:
