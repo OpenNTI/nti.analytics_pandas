@@ -70,6 +70,14 @@ def explore_ratio_of_events_over_unique_users_based_timestamp_date_(events_df,
 
 
 def analyze_types_(df, group_by_items, agg_columns=None):
+    if 'device_type' in group_by_items:
+        df['device_type'] = df['device_type'].astype(str)
+        df['device_type'] = df['device_type'].replace('nan', 'Unknown')
+
+    if 'enrollment_type' in group_by_items:
+        df['enrollment_type'] = df['enrollment_type'].astype(str)
+        df['enrollment_type'] = df['enrollment_type'].replace('nan', 'Unknown')
+
     if len(df.index) > 0:
         check = set(group_by_items) & set(df.columns)
         if len(check) == len(group_by_items):
