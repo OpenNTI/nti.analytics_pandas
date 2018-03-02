@@ -155,6 +155,11 @@ def add_enrollment_type_(session, dataframe, course_ids):
 
 	qce = QueryCourseEnrollments(session)
 	enrollments_df = qce.filter_by_course_id_user_id(course_ids, users_id)
+
+	if enrollments_df.empty:
+		enrollments_df = dataframe[['user_id']]
+		enrollments_df['type_id'] = np.nan
+
 	types_id = np.unique(enrollments_df['type_id'].values.ravel())
 	if len(types_id) == 1 and types_id[0] is None:
 		return
