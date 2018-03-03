@@ -35,7 +35,7 @@ class TestResourceViewsEDA(AnalyticsPandasTestBase):
 		assert_that(df.columns, has_item('number_of_unique_users'))
 		assert_that(df.columns, has_item('number_of_resource_views'))
 
-		df = rvt.analyze_events_based_on_device_type()
+		df = rvt.analyze_device_types()
 		assert_that(df.columns, has_item('number_of_unique_users'))
 		assert_that(df.columns, has_item('number_of_resource_views'))
 

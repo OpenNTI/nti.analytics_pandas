@@ -106,7 +106,7 @@ class ResourceViewsTimeseries(object):
 		df = self.build_dataframe(group_by_columns)
 		return df
 
-	def analyze_events_based_on_device_type(self):
+	def analyze_device_types(self):
 		"""
 		group course resource views dataframe by timestamp_period and device_type
 		count the number of unique users, number of resource views and number of unique
@@ -117,7 +117,7 @@ class ResourceViewsTimeseries(object):
 		df = self.build_dataframe(group_by_columns)
 		return df
 
-	def analyze_events_based_on_enrollment_type(self):
+	def analyze_enrollment_types(self):
 		"""
 		group course resource views dataframe by timestamp_period and enrollment_type
 		count the number of unique users, number of resource views and number of unique

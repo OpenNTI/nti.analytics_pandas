@@ -357,7 +357,7 @@ class  ResourceViewsTimeseriesPlot(object):
 		"""
 
 		rvt = self.rvt
-		df = rvt.analyze_events_based_on_device_type()
+		df = rvt.analyze_device_types()
 		if df is None:
 			return ()
 
@@ -389,7 +389,7 @@ class  ResourceViewsTimeseriesPlot(object):
 		"""
 
 		rvt = self.rvt
-		df = rvt.analyze_events_based_on_enrollment_type()
+		df = rvt.analyze_enrollment_types()
 		if df is None:
 			return ()
 
@@ -422,7 +422,7 @@ class  ResourceViewsTimeseriesPlot(object):
 		"""
 
 		rvt = self.rvt
-		df = rvt.analyze_events_based_on_device_type()
+		df = rvt.analyze_device_types()
 		if df is None:
 			return ()
 
