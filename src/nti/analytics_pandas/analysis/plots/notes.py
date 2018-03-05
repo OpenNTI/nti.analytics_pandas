@@ -173,7 +173,7 @@ class NotesCreationTimeseriesPlot(object):
 
 		nct = self.nct
 		dataframe = nct.dataframe
-		df = nct.analyze_device_types(dataframe)
+		df = nct.analyze_device_types()
 
 		group_by = 'device_type'
 		event_title = _('Number of notes created grouped by device types')
@@ -196,7 +196,7 @@ class NotesCreationTimeseriesPlot(object):
 
 		nct = self.nct
 		dataframe = nct.dataframe
-		df = nct.analyze_enrollment_types(dataframe)
+		df = nct.analyze_enrollment_types()
 
 		group_by = 'enrollment_type'
 		event_title = _('Number of notes created grouped by enrollment types')
@@ -260,7 +260,7 @@ class NotesCreationTimeseriesPlot(object):
 							  theme_bw_=True):
 		nct = self.nct
 		dataframe = nct.dataframe
-		df = nct.analyze_sharing_types(dataframe)
+		df = nct.analyze_sharing_types()
 
 		event_title = _('Number of notes created grouped by sharing types')
 		user_title = _('Number of unique users creating notes grouped by sharing types')
