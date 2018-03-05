@@ -166,24 +166,24 @@ class NotesCreationTimeseries(object):
 		df = self.build_dataframe(self.dataframe, group_by_items)
 		return df
 
-	def analyze_device_types(self, dataframe):
+	def analyze_device_types(self):
 		"""
 		group notes created dataframe by timestamp_period and device_type
 		count the number of notes created, unique users and ratio in each group
 		return the result as dataframe
 		"""
 		group_by_items = ['timestamp_period', 'device_type']
-		df = self.build_dataframe(dataframe, group_by_items)
+		df = self.build_dataframe(self.dataframe, group_by_items)
 		return df
 
-	def analyze_enrollment_types(self, dataframe):
+	def analyze_enrollment_types(self):
 		"""
 		group notes created dataframe by timestamp_period and enrollment_type
 		count the number of notes created, unique users and ratio in each group
 		return the result as dataframe
 		"""
 		group_by_items = ['timestamp_period', 'enrollment_type']
-		df = self.build_dataframe(dataframe, group_by_items)
+		df = self.build_dataframe(self.dataframe, group_by_items)
 		return df
 
 	def analyze_resource_types(self):
@@ -225,14 +225,14 @@ class NotesCreationTimeseries(object):
 							inplace=True)
 		return users_df
 
-	def analyze_sharing_types(self, dataframe):
+	def analyze_sharing_types(self):
 		"""
 		group notes created dataframe by timestamp_period and sharing types
 		count the number of notes created, unique users and ratio in each group
 		return the result as dataframe
 		"""
 		group_by_items = ['timestamp_period', 'sharing']
-		df = self.build_dataframe(dataframe, group_by_items)
+		df = self.build_dataframe(self.dataframe, group_by_items)
 		return df
 
 	def analyze_notes_created_on_videos(self):
@@ -248,8 +248,8 @@ class NotesCreationTimeseries(object):
 		dataframe = self.dataframe[['timestamp_period', 'resource_type',
 									'device_type', 'note_id', 'user_id', 'sharing']]
 		dataframe = dataframe.loc[((dataframe['resource_type'] == 'video') | (dataframe['resource_type'] == 'slide video'))]
-		sharing_df = self.analyze_sharing_types(dataframe)
-		device_df = self.analyze_device_types(dataframe)
+		sharing_df = self.analyze_sharing_types()
+		device_df = self.analyze_device_types()
 		return (sharing_df, device_df)
 
 class NotesViewTimeseries(object):

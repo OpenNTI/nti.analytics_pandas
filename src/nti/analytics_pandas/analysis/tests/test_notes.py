@@ -38,7 +38,7 @@ class TestNotesEDA(AnalyticsPandasTestBase):
 		assert_that(dataframe.columns, has_item('context_name'))
 		assert_that(dataframe.columns, has_item('enrollment_type'))
 
-		df = nct.analyze_device_types(dataframe)
+		df = nct.analyze_device_types()
 		assert_that(df.columns, has_item('number_of_unique_users'))
 		assert_that(df.columns, has_item('number_of_notes_created'))
 		assert_that(df.columns, has_item('ratio'))
@@ -56,7 +56,7 @@ class TestNotesEDA(AnalyticsPandasTestBase):
 		df = nct.get_the_most_active_users()
 		assert_that(len(df.index), equal_to(1))
 
-		df = nct.analyze_sharing_types(dataframe)
+		df = nct.analyze_sharing_types()
 		assert_that(df.columns, has_item('number_of_unique_users'))
 		assert_that(df.columns, has_item('number_of_notes_created'))
 		assert_that(df.columns, has_item('ratio'))
