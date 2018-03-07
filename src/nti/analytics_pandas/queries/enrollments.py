@@ -156,14 +156,14 @@ def add_enrollment_type_(session, dataframe, course_ids):
 
 	qce = QueryCourseEnrollments(session)
 	enrollments_df = qce.filter_by_course_id_user_id(course_ids, users_id)
-
+	
 	if enrollments_df.empty:
-		enrollments_df = dataframe[['user_id']]
+		enrollments_df = pd.DataFrame(users_id, columns=['user_id'])
 		enrollments_df['type_id'] = np.nan
 	elif enrollments_df.shape[0] < len(users_id):
 		user_id_df = pd.DataFrame(users_id, columns=['user_id'])
 		enrollments_df = enrollments_df.merge(user_id_df, how='outer')
-
+	
 	types_id = np.unique(enrollments_df['type_id'].values.ravel())
 	if len(types_id) == 1 and types_id[0] is None:
 		return
@@ -172,10 +172,10 @@ def add_enrollment_type_(session, dataframe, course_ids):
 	qet = QueryEnrollmentTypes(session)
 	enrollment_types_df = qet.get_enrollment_types_given_type_id(types_id)
 	enrollment_types_df.rename(columns={'type_name':'enrollment_type'}, inplace=True)
-
+	
 	if enrollment_types_df.empty:
-		enrollment_types_df = enrollments_df[['type_id']]
+		enrollment_types_df = pd.DataFrame(types_id, columns=['type_id'])
 		enrollment_types_df['enrollment_type'] = np.nan
-
+		
 	new_df = dataframe.merge(enrollments_df, how='left').merge(enrollment_types_df, how='left')
 	return new_df
