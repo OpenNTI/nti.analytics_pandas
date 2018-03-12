@@ -109,6 +109,11 @@ class CourseEnrollmentsTimeseries(object):
 		df = self.build_dataframe(group_by_items, self.dataframe)
 		return df
 
+	def analyze_enrollment_types(self):
+		group_by_items = ['timestamp_period', 'type_name']
+		df = self.build_dataframe(group_by_items, self.dataframe)
+		return df
+
 	def build_dataframe(self, group_by_items, base_dataframe):
 		agg_columns = {	'user_id'	: pd.Series.nunique,
 						'session_id': pd.Series.nunique}
